@@ -7,7 +7,7 @@ import exnihiloadscensio.tiles.TileBarrel;
 import exnihiloadscensio.util.Util;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -19,7 +19,7 @@ public class RenderBarrel extends TileEntitySpecialRenderer<TileBarrel>
     public void renderTileEntityAt(TileBarrel tile, double x, double y, double z, float partialTicks, int destroyStage)
     {
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer buffer = tessellator.getBuffer();
+        BufferBuilder buffer = tessellator.getBuffer();
         
         GlStateManager.pushMatrix();
         GlStateManager.translate(x, y, z);

@@ -29,7 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.File;
 
-@Mod(modid = ExNihiloAdscensio.MODID, name = "Ex Nihilo Adscensio", version = "0.1.5")
+@Mod(modid = ExNihiloAdscensio.MODID, name = "Ex Nihilo Adscensio", version = "0.1.0")
 public class ExNihiloAdscensio {
 
 	public static final String MODID = "exnihiloadscensio";

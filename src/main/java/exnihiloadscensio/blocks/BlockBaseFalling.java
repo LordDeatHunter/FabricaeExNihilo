@@ -1,5 +1,6 @@
 package exnihiloadscensio.blocks;
 
+import exnihiloadscensio.util.Data;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -19,8 +20,7 @@ public class BlockBaseFalling extends BlockFalling
         setUnlocalizedName(name);
         setRegistryName(name);
         setSoundType(sound);
-        GameRegistry.register(this);
-        GameRegistry.register(new ItemBlock(this).setRegistryName(name));
+        Data.BLOCKS.add(this);
     }
     
     @SideOnly(Side.CLIENT)

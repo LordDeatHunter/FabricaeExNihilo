@@ -22,13 +22,13 @@ buildscript {
         }
     }
     dependencies {
-        classpath "net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT"
+        classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
     }
 }
 
 apply plugin: "net.minecraftforge.gradle.forge"
 
-version = "1.11.2-0.1.0"
+version = "1.12-0.1.0"
 group= "exnihiloadscensio" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "exnihiloadscensio"
 
@@ -36,9 +36,9 @@ sourceCompatibility=1.8
 targetCompatibility=1.8
 
 minecraft {
-    version = "1.11.2-13.20.0.2226"
+    version = "1.12-14.21.1.2406"
     runDir = "run"
-	mappings = "snapshot_20161220"
+	mappings = "snapshot_20170710"
 }
 
 repositories
@@ -70,10 +70,10 @@ repositories
 
 dependencies
 {
-    deobfCompile "mezz.jei:jei_1.11.2:4.2.0.+:api"
-    runtime "mezz.jei:jei_1.11.2:4.2.0.+"
+    deobfCompile "mezz.jei:jei_1.12:4.7.1.+:api"
+    runtime "mezz.jei:jei_1.12:4.7.1.+"
     
-    deobfCompile "slimeknights.mantle:Mantle:1.11-1.2.+"
+    deobfCompile "slimeknights.mantle:Mantle:1.12-1.3.+"
     // TODO: Add back TConstruct support once it has updated
     // deobfCompile "slimeknights:TConstruct:1.10.2-2.6.+"
     
@@ -81,11 +81,10 @@ dependencies
     // deobfCompile "com.enderio.core:EnderCore:1.10.2-0.4.1.65-beta"
     // deobfCompile "com.enderio:EnderIO:1.10.2-3.1.+"
     
-    deobfCompile "mcp.mobius.waila:Hwyla:1.8.7-B21_1.11:api"
-    runtime "mcp.mobius.waila:Hwyla:1.8.7-B21_1.11"
+    deobfCompile "mcp.mobius.waila:Hwyla:1.8.19-B33_1.12:api"
+    runtime "mcp.mobius.waila:Hwyla:1.8.19-B33_1.12"
 
-    // runtime "com.github.mcjty:compatlayer:1.11.2-0.1.6" // Required for TheOneProbe
-    // runtime "mcjty.theoneprobe:TheOneProbe:1.1x-1.4.1-51"
+    // runtime "mcjty.theoneprobe:TheOneProbe:1.12-1.4.+"
 
     compileOnly "org.projectlombok:lombok:1.16.10"
 }

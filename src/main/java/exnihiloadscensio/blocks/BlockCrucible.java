@@ -3,6 +3,7 @@ package exnihiloadscensio.blocks;
 import exnihiloadscensio.items.ItemBlockMeta;
 import exnihiloadscensio.registries.CrucibleRegistry;
 import exnihiloadscensio.tiles.TileCrucible;
+import exnihiloadscensio.util.Data;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.IProbeInfoAccessor;
@@ -41,8 +42,7 @@ public class BlockCrucible extends Block implements IProbeInfoAccessor {
 		String name = "blockCrucible";
 		setUnlocalizedName(name);
 		setRegistryName(name);
-		GameRegistry.<Block>register(this);
-		GameRegistry.register(new ItemBlockMeta(this).setRegistryName(name));
+        Data.BLOCKS.add(this);
 		this.setHardness(2.0f);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FIRED, false));
 	}

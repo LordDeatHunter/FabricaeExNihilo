@@ -5,7 +5,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -37,7 +37,7 @@ public class RenderProjectileStone extends Render<ProjectileStone>
         TextureAtlasSprite texture = getTexture(Blocks.STONE.getDefaultState());
         
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer buffer = tessellator.getBuffer();
+        BufferBuilder buffer = tessellator.getBuffer();
         
         GlStateManager.pushMatrix();
         GlStateManager.translate(x, y, z);
@@ -69,7 +69,7 @@ public class RenderProjectileStone extends Render<ProjectileStone>
         GlStateManager.popMatrix();
     }
     
-    private static void bufferCuboid(VertexBuffer buffer, double size, double minU, double minV, double maxU, double maxV, double x1, double y1, double z1, double x2, double y2, double z2)
+    private static void bufferCuboid(BufferBuilder buffer, double size, double minU, double minV, double maxU, double maxV, double x1, double y1, double z1, double x2, double y2, double z2)
     {
         size /= 16.0;
         

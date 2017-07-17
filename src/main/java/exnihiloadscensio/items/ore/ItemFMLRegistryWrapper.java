@@ -3,21 +3,23 @@ package exnihiloadscensio.items.ore;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.FMLControlledNamespacedRegistry;
-import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
+import net.minecraftforge.registries.RegistryBuilder;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 
 /**
- * Helper class for those who are using a {@link FMLControlledNamespacedRegistry} to store objects that are used for
+ * Helper class for those who are using a {@link RegistryBuilder} to store objects that are used for
  * sub items in an ItemStack.
  *
  * @param <T> - The {@link IForgeRegistryEntry} type that the registry contains.
  */
 public class ItemFMLRegistryWrapper<T extends IForgeRegistryEntry<T>> {
 
+
+
     public static final int INVALID_ID = Short.MAX_VALUE - 1;
-    private final FMLControlledNamespacedRegistry<T> registry;
+    private final RegistryBuilder<T> registry;
     private final Item item;
     private String defaultPrefix = "minecraft";
 
@@ -25,7 +27,7 @@ public class ItemFMLRegistryWrapper<T extends IForgeRegistryEntry<T>> {
      * @param registry - The registry to get data from.
      * @param item     - The Item to create a stack for
      */
-    public ItemFMLRegistryWrapper(FMLControlledNamespacedRegistry<T> registry, Item item) {
+    public ItemFMLRegistryWrapper(RegistryBuilder<T> registry, Item item) {
         this.registry = registry;
         this.item = item;
     }
@@ -33,23 +35,23 @@ public class ItemFMLRegistryWrapper<T extends IForgeRegistryEntry<T>> {
     /**
      * @see #getStack(ResourceLocation, int)
      */
-    public ItemStack getStack(String name) {
-        return getStack(name, 1);
-    }
+    //public ItemStack getStack(String name) {
+    //    return getStack(name, 1);
+    //}
 
     /**
      * @see #getStack(ResourceLocation, int)
      */
-    public ItemStack getStack(String name, int amount) {
-        return getStack(name.contains(":") ? new ResourceLocation(name) : new ResourceLocation(getDefaultPrefix(), name), amount);
-    }
+    //public ItemStack getStack(String name, int amount) {
+    //    return getStack(name.contains(":") ? new ResourceLocation(name) : new ResourceLocation(getDefaultPrefix(), name), amount);
+    //}
 
     /**
      * @see #getStack(ResourceLocation, int)
      */
-    public ItemStack getStack(ResourceLocation objectKey) {
-        return getStack(objectKey, 1);
-    }
+    //public ItemStack getStack(ResourceLocation objectKey) {
+    //    return getStack(objectKey, 1);
+    //}
 
     /**
      * Creates an ItemStack based on the provided {@link T}'s int ID in the registry.
@@ -59,10 +61,10 @@ public class ItemFMLRegistryWrapper<T extends IForgeRegistryEntry<T>> {
      *
      * @return the ItemStack for the Entry
      */
-    public ItemStack getStack(ResourceLocation objectKey, int amount) {
-        int meta = getRegistry().getId(objectKey);
-        return new ItemStack(getItem(), amount, meta == -1 ? INVALID_ID : meta);
-    }
+    //public ItemStack getStack(ResourceLocation objectKey, int amount) {
+    //    int meta = getRegistry().getId(objectKey);
+    //    return new ItemStack(getItem(), amount, meta == -1 ? INVALID_ID : meta);
+    //}
 
     /**
      * Creates an ItemStack based on the provided {@link T}'s int ID in the registry.
@@ -73,15 +75,15 @@ public class ItemFMLRegistryWrapper<T extends IForgeRegistryEntry<T>> {
      *
      * @return the ItemStack for the Entry
      */
-    public ItemStack getStack(Item customItem, ResourceLocation objectKey, int amount) {
-        int meta = getRegistry().getId(objectKey);
-        return new ItemStack(customItem, amount, meta == -1 ? INVALID_ID : meta);
-    }
+    //public ItemStack getStack(Item customItem, ResourceLocation objectKey, int amount) {
+    //    int meta = getRegistry().getId(objectKey);
+    //    return new ItemStack(customItem, amount, meta == -1 ? INVALID_ID : meta);
+    //}
 
-    @Nullable
-    public T getType(ItemStack stack) {
-        return getRegistry().getObjectById(stack.getItemDamage());
-    }
+    //@Nullable
+    //public T getType(ItemStack stack) {
+    //    return getRegistry().getObjectById(stack.getItemDamage());
+    //}
 
     /**
      * @return the default prefix for ResourceLocations
@@ -106,7 +108,7 @@ public class ItemFMLRegistryWrapper<T extends IForgeRegistryEntry<T>> {
     /**
      * @return the used registry.
      */
-    public FMLControlledNamespacedRegistry<T> getRegistry() {
+    public RegistryBuilder<T> getRegistry() {
         return registry;
     }
 
@@ -116,4 +118,5 @@ public class ItemFMLRegistryWrapper<T extends IForgeRegistryEntry<T>> {
     public Item getItem() {
         return item;
     }
+
 }

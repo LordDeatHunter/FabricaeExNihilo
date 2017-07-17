@@ -1,6 +1,7 @@
 package exnihiloadscensio.items.ore;
 
 import exnihiloadscensio.ExNihiloAdscensio;
+import exnihiloadscensio.util.Data;
 import lombok.Getter;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -34,8 +35,8 @@ public class ItemOre extends Item {
 		setRegistryName("itemOre"+StringUtils.capitalize(ore.getName()));
 		setCreativeTab(ExNihiloAdscensio.tabExNihilo);
 		setHasSubtypes(true);
-		GameRegistry.<Item>register(this);
-	}
+        Data.ITEMS.add(this);
+    }
 
 	@Override @SideOnly(Side.CLIENT)
 	public void getSubItems(@Nonnull Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {

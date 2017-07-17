@@ -2,6 +2,7 @@ package exnihiloadscensio.items;
 
 import exnihiloadscensio.ExNihiloAdscensio;
 import exnihiloadscensio.blocks.BlockInfestedLeaves;
+import exnihiloadscensio.util.Data;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -40,7 +41,7 @@ public class ItemResource extends Item {
 		setUnlocalizedName("itemMaterial");
 		setRegistryName("itemMaterial");
 		setHasSubtypes(true);
-		GameRegistry.register(this);
+        Data.ITEMS.add(this);
 
 		names.add(0, "removed");
 		names.add(1, PORCELAIN_CLAY);

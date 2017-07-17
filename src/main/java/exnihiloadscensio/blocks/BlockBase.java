@@ -1,5 +1,6 @@
 package exnihiloadscensio.blocks;
 
+import exnihiloadscensio.util.Data;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -17,8 +18,7 @@ public class BlockBase extends Block
         super(mat);
         setUnlocalizedName(name);
         setRegistryName(name);
-        GameRegistry.register(this);
-        GameRegistry.register(new ItemBlock(this).setRegistryName(name));
+        Data.BLOCKS.add(this);
     }
     
     @SideOnly(Side.CLIENT)

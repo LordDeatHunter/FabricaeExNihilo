@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -24,7 +24,7 @@ import java.util.List;
 public class RenderInfestedLeaves extends TileEntitySpecialRenderer<TileInfestedLeaves>
 {
     @Override
-    public void renderTileEntityAt(TileInfestedLeaves tile, double x, double y, double z, float partialTicks, int destroyStage)
+    public void render(TileInfestedLeaves tile, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
     {
         if(tile != null)
         {
@@ -50,7 +50,7 @@ public class RenderInfestedLeaves extends TileEntitySpecialRenderer<TileInfested
             }
             
             Tessellator tessellator = Tessellator.getInstance();
-            VertexBuffer buffer = tessellator.getBuffer();
+            BufferBuilder buffer = tessellator.getBuffer();
             
             bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
             

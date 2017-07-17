@@ -62,11 +62,11 @@ public class Util {
 		if (player != null) {
 			Vec3d motion = new Vec3d(player.posX - stackCoordX, player.posY - stackCoordY, player.posZ - stackCoordZ);
 			motion.normalize();
-			droppedEntity.motionX = motion.xCoord;
-			droppedEntity.motionY = motion.yCoord;
-			droppedEntity.motionZ = motion.zCoord;
+			droppedEntity.motionX = motion.x;
+			droppedEntity.motionY = motion.y;
+			droppedEntity.motionZ = motion.z;
 			double offset = 0.25D;
-			droppedEntity.move(MoverType.SELF, motion.xCoord * offset, motion.yCoord * offset, motion.zCoord * offset);
+			droppedEntity.move(MoverType.SELF, motion.x * offset, motion.y * offset, motion.z * offset);
 		}
 
 		droppedEntity.motionX *= speedFactor;
