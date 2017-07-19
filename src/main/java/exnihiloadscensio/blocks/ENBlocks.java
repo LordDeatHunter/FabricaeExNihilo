@@ -46,7 +46,6 @@ public class ENBlocks {
         
         barrelStone = new BlockBarrel(1, Material.ROCK);
         barrelStone.setCreativeTab(ExNihiloAdscensio.tabExNihilo);
-        GameRegistry.registerTileEntityWithAlternatives(TileBarrel.class, "blockBarrel0", "blockBarrel1");
 		
 		infestedLeaves = new BlockInfestedLeaves();
 		GameRegistry.registerTileEntity(TileInfestedLeaves.class, "blockInfestedLeaves");

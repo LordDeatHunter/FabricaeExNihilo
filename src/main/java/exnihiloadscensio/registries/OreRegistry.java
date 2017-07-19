@@ -137,8 +137,8 @@ public class OreRegistry {
 
 	public static void doRecipes() {
 		for (ItemOre ore : itemOreRegistry) {
-			GameRegistry.addRecipe(new ItemStack(ore, 1, 1),
-					new Object[] { "xx", "xx", 'x', new ItemStack(ore, 1, 0) });
+			//GameRegistry.addRecipe(new ItemStack(ore, 1, 1),
+			//		new Object[] { "xx", "xx", 'x', new ItemStack(ore, 1, 0) });
 
 			ItemStack smeltingResult;
 

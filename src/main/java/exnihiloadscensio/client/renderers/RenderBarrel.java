@@ -16,7 +16,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 public class RenderBarrel extends TileEntitySpecialRenderer<TileBarrel>
 {
     @Override
-    public void renderTileEntityAt(TileBarrel tile, double x, double y, double z, float partialTicks, int destroyStage)
+    public void render(TileBarrel tile, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
     {
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder buffer = tessellator.getBuffer();

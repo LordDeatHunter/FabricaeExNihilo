@@ -1,6 +1,8 @@
 package exnihiloadscensio.items;
 
 import exnihiloadscensio.blocks.BlockSieve.MeshType;
+import exnihiloadscensio.util.Data;
+import exnihiloadscensio.util.IHasModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -13,7 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 
-public class ItemMesh extends Item {
+public class ItemMesh extends Item implements IHasModel {
 	
 	public ItemMesh() {
 		super();
@@ -21,7 +23,7 @@ public class ItemMesh extends Item {
 		this.setUnlocalizedName("itemMesh");
 		this.setRegistryName("itemMesh");
 		this.setMaxStackSize(1);
-		GameRegistry.<Item>register(this);
+        Data.ITEMS.add(this);
 	}
 	
 	@Override
@@ -49,10 +51,11 @@ public class ItemMesh extends Item {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-    public void getSubItems(@Nonnull Item item, CreativeTabs tab, NonNullList<ItemStack> subItems)
+    public void getSubItems(@Nonnull CreativeTabs tab, NonNullList<ItemStack> list)
     {
+        if (this.isInCreativeTab(tab))
         for (int i = 1 ; i < MeshType.values().length ; i++) { //0 is the "none" case.
-        	subItems.add(new ItemStack(item, 1, i));
+            list.add(new ItemStack(this, 1, i));
         }
     }
 	

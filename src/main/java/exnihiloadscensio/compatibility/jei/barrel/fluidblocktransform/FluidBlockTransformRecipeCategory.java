@@ -37,7 +37,12 @@ public class FluidBlockTransformRecipeCategory implements IRecipeCategory<FluidB
     {
         return "Fluid Block Transform";
     }
-    
+
+    @Override
+    public String getModName() {
+        return ExNihiloAdscensio.MODID;
+    }
+
     @Override @Nonnull
     public IDrawable getBackground()
     {

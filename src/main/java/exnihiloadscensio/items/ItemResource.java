@@ -3,6 +3,7 @@ package exnihiloadscensio.items;
 import exnihiloadscensio.ExNihiloAdscensio;
 import exnihiloadscensio.blocks.BlockInfestedLeaves;
 import exnihiloadscensio.util.Data;
+import exnihiloadscensio.util.IHasModel;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -24,7 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 
-public class ItemResource extends Item {
+public class ItemResource extends Item implements IHasModel {
 
 	public static final String PORCELAIN_CLAY = "porcelain_clay";
 	public static final String SILKWORM = "silkworm";
@@ -57,9 +58,10 @@ public class ItemResource extends Item {
 	}
 
 	@Override @SideOnly(Side.CLIENT)
-	public void getSubItems(@Nonnull Item item, CreativeTabs tabs, NonNullList<ItemStack> list) {
+	public void getSubItems(@Nonnull CreativeTabs tab, NonNullList<ItemStack> list) {
+        if (this.isInCreativeTab(tab))
 		for (int i = 1; i < names.size(); i++) {
-			list.add(new ItemStack(this, 1, i));
+            list.add(new ItemStack(this, 1, i));
 		}
 	}
 

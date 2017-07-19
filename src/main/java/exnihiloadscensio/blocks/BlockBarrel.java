@@ -6,6 +6,7 @@ import exnihiloadscensio.barrel.modes.fluid.BarrelModeFluid;
 import exnihiloadscensio.barrel.modes.transform.BarrelModeFluidTransform;
 import exnihiloadscensio.config.Config;
 import exnihiloadscensio.tiles.TileBarrel;
+import exnihiloadscensio.util.IHasModel;
 import exnihiloadscensio.util.Util;
 import lombok.Getter;
 import mcjty.theoneprobe.api.IProbeHitData;
@@ -25,6 +26,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;
@@ -98,20 +100,13 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider, IProb
 	    
 	    return super.getLightValue(state, world, pos);
 	}
-	
-	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
+
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ, IFluidHandler handler)
 	{
 		if (world.isRemote || world.getTileEntity(pos) == null)
 			return true;
 
-		return ((TileBarrel) world.getTileEntity(pos)).onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
-	}
-	
-	@Override @Deprecated
-	public boolean isFullyOpaque(IBlockState state)
-	{
-		return false;
+		return ((TileBarrel) world.getTileEntity(pos)).onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ, handler);
 	}
 	
 	@Override @Deprecated
@@ -139,7 +134,7 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider, IProb
 	}
 	
     @Override
-    public boolean isBlockSolid(IBlockAccess world, @Nonnull BlockPos pos, EnumFacing side)
+    public boolean isTopSolid(IBlockState state)
     {
         return false;
     }

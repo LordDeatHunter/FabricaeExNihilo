@@ -59,17 +59,17 @@ public class TileBarrel extends TileEntity implements ITickable {
 		tank = new BarrelFluidHandler(this);
 	}
 
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ, IFluidHandler handler)
     {
         if (mode == null || mode.getName().equals("fluid"))
         {
             ItemStack stack = player.getHeldItem(hand);
-            FluidActionResult result = FluidUtil.interactWithFluidHandler(stack, getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side), player);
+            Boolean result = FluidUtil.interactWithFluidHandler(player, hand, handler);
 
-            if (result.isSuccess())
+            if (result)
             {
             	if (!player.isCreative()) {
-					player.setHeldItem(hand, result.getResult());
+                    stack.shrink(1);
 				}
 
             	PacketHandler.sendNBTUpdate(this);
@@ -95,10 +95,10 @@ public class TileBarrel extends TileEntity implements ITickable {
             		&& bucketStack.getFluid() == tankStack.getFluid()
             		&& tank.fill(FluidUtil.getFluidContained(stack), false) != 0) {
             	tank.drain(Fluid.BUCKET_VOLUME, true);
-               	result = FluidUtil.interactWithFluidHandler(stack, tank, player);
+               	result = FluidUtil.interactWithFluidHandler(player, hand, handler);
 
-               	if (result.isSuccess() && !player.isCreative()) {
-					player.setHeldItem(hand, result.getResult());
+               	if (result && !player.isCreative()) {
+                    stack.shrink(1);
 				}
 
                	PacketHandler.sendNBTUpdate(this);

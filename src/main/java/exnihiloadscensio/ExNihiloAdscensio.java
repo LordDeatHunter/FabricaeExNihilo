@@ -59,6 +59,8 @@ public class ExNihiloAdscensio {
 
 		Config.doNormalConfig(new File(configDirectory, "ExNihiloAdscensio.cfg"));
 
+        MinecraftForge.EVENT_BUS.register(new ModRegistry());
+
 		ENCapabilities.init();
 		ENItems.init();
 		ENBlocks.init();

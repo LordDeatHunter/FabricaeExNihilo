@@ -3,6 +3,8 @@ package exnihiloadscensio.items;
 import com.google.common.collect.Lists;
 import exnihiloadscensio.ExNihiloAdscensio;
 import exnihiloadscensio.entities.ProjectileStone;
+import exnihiloadscensio.util.Data;
+import exnihiloadscensio.util.IHasModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,7 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemPebble extends Item
+public class ItemPebble extends Item implements IHasModel
 {
     private static List<String> names = Lists.newArrayList("stone", "granite", "diorite", "andesite");
     
@@ -30,7 +32,7 @@ public class ItemPebble extends Item
         setRegistryName("itemPebble");
         setCreativeTab(ExNihiloAdscensio.tabExNihilo);
         setHasSubtypes(true);
-        GameRegistry.register(this);
+        Data.ITEMS.add(this);
     }
 
     @Override @Nonnull
@@ -39,8 +41,9 @@ public class ItemPebble extends Item
     }
     
     @Override @SideOnly(Side.CLIENT)
-    public void getSubItems(@Nullable Item item, CreativeTabs tabs, NonNullList<ItemStack> list)
+    public void getSubItems(@Nullable CreativeTabs tab, NonNullList<ItemStack> list)
     {
+        if (this.isInCreativeTab(tab))
         for (int i = 0; i < names.size(); i++)
         {
             list.add(new ItemStack(this, 1, i));

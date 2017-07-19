@@ -48,7 +48,12 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe>
     {
         return "Compost";
     }
-    
+
+    @Override
+    public String getModName() {
+        return ExNihiloAdscensio.MODID;
+    }
+
     @Override @Nonnull
     public IDrawable getBackground()
     {

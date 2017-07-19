@@ -1,6 +1,8 @@
 package exnihiloadscensio.items.seeds;
 
 import exnihiloadscensio.ExNihiloAdscensio;
+import exnihiloadscensio.util.Data;
+import exnihiloadscensio.util.IHasModel;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -23,7 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;
 
-public class ItemSeedBase extends Item implements IPlantable {
+public class ItemSeedBase extends Item implements IPlantable, IHasModel {
 
 	private IBlockState plant;
 	private EnumPlantType type;
@@ -36,8 +38,8 @@ public class ItemSeedBase extends Item implements IPlantable {
 		this.plant = plant;
 		this.name = name;
 		type = EnumPlantType.Plains;
-		
-		GameRegistry.<Item>register(this);
+
+        Data.ITEMS.add(this);
 	}
 	
 	@Override

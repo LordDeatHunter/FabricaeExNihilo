@@ -51,7 +51,12 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
 		return "Sieve";
 	}
 
-	@Override @Nonnull
+    @Override
+    public String getModName() {
+        return ExNihiloAdscensio.MODID;
+    }
+
+    @Override @Nonnull
 	public IDrawable getBackground() {
 		return background;
 	}

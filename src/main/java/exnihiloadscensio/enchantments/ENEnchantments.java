@@ -8,9 +8,10 @@ public class ENEnchantments {
 	public static EnchantmentLuckOfTheSea luckOfTheSea = new EnchantmentLuckOfTheSea();
 	
     public static void init() {
-        GameRegistry.register(efficiency);
-        GameRegistry.register(fortune);
-        GameRegistry.register(luckOfTheSea);
+        //TODO: Re-implement enchantments
+        //GameRegistry.register(efficiency);
+        //GameRegistry.register(fortune);
+        //GameRegistry.register(luckOfTheSea);
     }
     
 }

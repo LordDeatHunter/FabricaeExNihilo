@@ -55,7 +55,12 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe>
     {
         return "Hammer";
     }
-    
+
+    @Override
+    public String getModName() {
+        return ExNihiloAdscensio.MODID;
+    }
+
     @Override @Nonnull
     public IDrawable getBackground()
     {

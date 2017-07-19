@@ -13,6 +13,7 @@ import exnihiloadscensio.util.ItemInfo;
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
@@ -153,7 +154,7 @@ public class CompostRegistry {
 	            ItemFood food = (ItemFood) item;
 	            
 	            NonNullList<ItemStack> stacks = NonNullList.create();
-	            food.getSubItems(food, null, stacks);
+	            food.getSubItems(CreativeTabs.FOOD, stacks);
 	            
 	            for(ItemStack foodStack : stacks)
 	            {

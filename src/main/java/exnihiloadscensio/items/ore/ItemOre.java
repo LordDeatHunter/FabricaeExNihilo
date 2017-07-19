@@ -2,6 +2,7 @@ package exnihiloadscensio.items.ore;
 
 import exnihiloadscensio.ExNihiloAdscensio;
 import exnihiloadscensio.util.Data;
+import exnihiloadscensio.util.IHasModel;
 import lombok.Getter;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -18,7 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 import javax.annotation.Nonnull;
 
 @SuppressWarnings("deprecation")
-public class ItemOre extends Item {
+public class ItemOre extends Item implements IHasModel {
 
 	@Getter
 	private boolean registerIngot;
@@ -39,12 +40,13 @@ public class ItemOre extends Item {
     }
 
 	@Override @SideOnly(Side.CLIENT)
-	public void getSubItems(@Nonnull Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
-		subItems.add(new ItemStack(this, 1, 0)); //Piece
-		subItems.add(new ItemStack(this, 1, 1)); //Chunk
-		subItems.add(new ItemStack(this, 1, 2)); //Dust
+	public void getSubItems(@Nonnull CreativeTabs tab, NonNullList<ItemStack> list) {
+        if (this.isInCreativeTab(tab))
+        list.add(new ItemStack(this, 1, 0)); //Piece
+        list.add(new ItemStack(this, 1, 1)); //Chunk
+        list.add(new ItemStack(this, 1, 2)); //Dust
 		if (registerIngot)
-			subItems.add(new ItemStack(this, 1, 3)); //Ingot
+            list.add(new ItemStack(this, 1, 3)); //Ingot
 	}
 
 	@SideOnly(Side.CLIENT)

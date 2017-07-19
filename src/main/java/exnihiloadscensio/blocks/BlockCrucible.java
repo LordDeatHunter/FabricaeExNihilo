@@ -4,6 +4,7 @@ import exnihiloadscensio.items.ItemBlockMeta;
 import exnihiloadscensio.registries.CrucibleRegistry;
 import exnihiloadscensio.tiles.TileCrucible;
 import exnihiloadscensio.util.Data;
+import exnihiloadscensio.util.IHasModel;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.IProbeInfoAccessor;
@@ -27,13 +28,14 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 
-public class BlockCrucible extends Block implements IProbeInfoAccessor {
+public class BlockCrucible extends Block implements IProbeInfoAccessor, IHasModel {
 
 	public static final PropertyBool FIRED = PropertyBool.create("fired");
 
@@ -81,9 +83,9 @@ public class BlockCrucible extends Block implements IProbeInfoAccessor {
 	}
 
 	@Override
-	public void getSubBlocks(@Nonnull Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
-		list.add(new ItemStack(itemIn, 1, 0));
-		list.add(new ItemStack(itemIn, 1, 1));
+	public void getSubBlocks(@Nonnull CreativeTabs itemIn, NonNullList<ItemStack> items) {
+        items.add(new ItemStack(this, 1, 0));
+        items.add(new ItemStack(this, 1, 1));
 	}
 
 	@Override @Nonnull
@@ -92,23 +94,17 @@ public class BlockCrucible extends Block implements IProbeInfoAccessor {
 		return new ItemStack(Item.getItemFromBlock(this), 1, this.getMetaFromState(world.getBlockState(pos)));
 	}
 
-	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ, IFluidHandler handler) {
 		if (world.isRemote)
 			return true;
 
 		TileCrucible te = (TileCrucible) world.getTileEntity(pos);
 
 		if (te != null) {
-			return te.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
+			return te.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ, handler);
 		} else {
 			return true;
 		}
-	}
-
-	@Override @Deprecated
-	public boolean isFullyOpaque(IBlockState state) {
-		return false;
 	}
 
 	@Override @Deprecated

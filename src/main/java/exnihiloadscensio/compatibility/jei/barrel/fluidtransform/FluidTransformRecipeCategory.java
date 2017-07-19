@@ -46,7 +46,12 @@ public class FluidTransformRecipeCategory implements IRecipeCategory<FluidTransf
     {
         return "Fluid Transform";
     }
-    
+
+    @Override
+    public String getModName() {
+        return ExNihiloAdscensio.MODID;
+    }
+
     @Override @Nonnull
     public IDrawable getBackground()
     {

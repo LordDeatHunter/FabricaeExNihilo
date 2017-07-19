@@ -228,12 +228,6 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbe
 	}
 
 	@Override @Deprecated
-	public boolean isFullyOpaque(IBlockState state)
-	{
-		return false;
-	}
-
-	@Override @Deprecated
 	public boolean isFullBlock(IBlockState state)
 	{
 		return false;

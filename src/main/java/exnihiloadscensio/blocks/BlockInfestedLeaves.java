@@ -3,6 +3,8 @@ package exnihiloadscensio.blocks;
 import exnihiloadscensio.config.Config;
 import exnihiloadscensio.items.tools.ICrook;
 import exnihiloadscensio.tiles.TileInfestedLeaves;
+import exnihiloadscensio.util.Data;
+import exnihiloadscensio.util.IHasModel;
 import exnihiloadscensio.util.Util;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
@@ -35,14 +37,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class BlockInfestedLeaves extends BlockLeaves implements ITileEntityProvider, IProbeInfoAccessor {
+public class BlockInfestedLeaves extends BlockLeaves implements ITileEntityProvider, IProbeInfoAccessor, IHasModel {
 
 	public BlockInfestedLeaves() {
 		super();
 		this.setUnlocalizedName("blockInfestedLeaves");
 		this.setRegistryName("blockInfestedLeaves");
-		GameRegistry.<Block>register(this);
-		GameRegistry.register(new ItemBlock(this).setRegistryName("blockInfestedLeaves"));
+        Data.BLOCKS.add(this);
 		this.setDefaultState(
 				this.blockState.getBaseState().withProperty(CHECK_DECAY, false).withProperty(DECAYABLE, false));
 		this.leavesFancy = true;

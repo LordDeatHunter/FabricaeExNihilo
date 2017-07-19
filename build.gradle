@@ -60,11 +60,11 @@ repositories
         name "tterrag"
         url "http://maven.tterrag.com"
     }
-
-    maven {
-        // Required for CompatLayer which is required for TheOneProbe
-        name "mcjty"
-        url "http://maven.k-4u.nl"
+	
+	maven {
+	    // Required for RedstoneFlux which is required for TheOneProbe
+        name = "CoFH Maven"
+        url = "http://maven.covers1624.net"
     }
 }
 
@@ -84,7 +84,8 @@ dependencies
     deobfCompile "mcp.mobius.waila:Hwyla:1.8.19-B33_1.12:api"
     runtime "mcp.mobius.waila:Hwyla:1.8.19-B33_1.12"
 
-    // runtime "mcjty.theoneprobe:TheOneProbe:1.12-1.4.+"
+	deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.+"
+    // runtime "mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.+"
 
     compileOnly "org.projectlombok:lombok:1.16.10"
 }

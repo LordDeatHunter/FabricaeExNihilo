@@ -28,6 +28,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -232,18 +234,18 @@ public class TileCrucible extends TileEntity implements ITickable {
 		return solidProportion > fluidProportion ? solidProportion : fluidProportion;
 	}
 	
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ, IFluidHandler handler) {
 		ItemStack stack = player.getHeldItem(hand);
 
 		if (stack.isEmpty()) {
 			return false;
 		}
 
-		FluidActionResult result = FluidUtil.interactWithFluidHandler(stack, tank, player);
+		Boolean result = FluidUtil.interactWithFluidHandler(player, hand, handler);
 
-		if (result.isSuccess()) {
+		if (result) {
 			if (!player.isCreative()) {
-				player.setHeldItem(hand, result.getResult());
+				stack.shrink(1);
 			}
 
 			PacketHandler.sendNBTUpdate(this);

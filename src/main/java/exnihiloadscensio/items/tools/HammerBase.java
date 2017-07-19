@@ -4,6 +4,8 @@ package exnihiloadscensio.items.tools;
 import com.google.common.collect.Sets;
 
 import exnihiloadscensio.registries.HammerRegistry;
+import exnihiloadscensio.util.Data;
+import exnihiloadscensio.util.IHasModel;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -15,7 +17,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class HammerBase extends ItemTool implements IHammer  {
+public class HammerBase extends ItemTool implements IHammer, IHasModel {
 
 	int miningLevel;
 
@@ -24,7 +26,7 @@ public class HammerBase extends ItemTool implements IHammer  {
 		super(material, Sets.newHashSet(new Block[]{}));
 		this.setUnlocalizedName(name);
 		this.setRegistryName(name);
-		GameRegistry.<Item>register(this);
+        Data.ITEMS.add(this);
 		this.setMaxDamage(maxUses);
 		this.miningLevel = material.getHarvestLevel();
 	}

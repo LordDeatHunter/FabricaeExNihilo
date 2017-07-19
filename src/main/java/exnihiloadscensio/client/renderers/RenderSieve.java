@@ -13,8 +13,8 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 public class RenderSieve extends TileEntitySpecialRenderer<TileSieve> {
 	@Override
-	public void renderTileEntityAt(TileSieve te, double x, double y, double z,
-			float partialTicks, int destroyStage) 
+	public void render(TileSieve te, double x, double y, double z,
+			float partialTicks, int destroyStage, float alpha)
 	{
 		Tessellator tes = Tessellator.getInstance();
         BufferBuilder wr = tes.getBuffer();

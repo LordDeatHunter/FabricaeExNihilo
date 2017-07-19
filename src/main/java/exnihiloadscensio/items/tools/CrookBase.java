@@ -2,6 +2,8 @@ package exnihiloadscensio.items.tools;
 
 import com.google.common.collect.Sets;
 import exnihiloadscensio.registries.CrookRegistry;
+import exnihiloadscensio.util.Data;
+import exnihiloadscensio.util.IHasModel;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -15,7 +17,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 
-public class CrookBase extends ItemTool implements ICrook {
+public class CrookBase extends ItemTool implements ICrook, IHasModel {
 
 	int miningLevel;
 
@@ -25,7 +27,7 @@ public class CrookBase extends ItemTool implements ICrook {
 		
 		this.setUnlocalizedName(name);
 		this.setRegistryName(name);
-		GameRegistry.<Item>register(this);
+        Data.ITEMS.add(this);
 		this.setMaxDamage(maxUses);
 
 	}

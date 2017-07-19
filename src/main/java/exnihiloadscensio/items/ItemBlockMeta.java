@@ -1,12 +1,13 @@
 package exnihiloadscensio.items;
 
+import exnihiloadscensio.util.IHasModel;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 
-public class ItemBlockMeta extends ItemBlock {
+public class ItemBlockMeta extends ItemBlock implements IHasModel {
 
 	public ItemBlockMeta(Block block) {
 		super(block);

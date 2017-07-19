@@ -221,7 +221,7 @@ public class CompatJEI implements IModPlugin
             if(compostMeta == -1)
             {
                 NonNullList<ItemStack> subItems = NonNullList.create();
-                compostItem.getSubItems(compostItem, null, subItems);
+                //compostItem.getSubItems(compostItem, null, subItems);
                 
                 for(ItemStack subItem : subItems)
                 {

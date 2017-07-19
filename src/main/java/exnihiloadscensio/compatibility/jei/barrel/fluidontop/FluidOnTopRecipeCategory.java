@@ -37,7 +37,12 @@ public class FluidOnTopRecipeCategory implements IRecipeCategory<FluidOnTopRecip
     {
         return "Fluid On Top";
     }
-    
+
+    @Override
+    public String getModName() {
+        return ExNihiloAdscensio.MODID;
+    }
+
     @Override @Nonnull
     public IDrawable getBackground()
     {

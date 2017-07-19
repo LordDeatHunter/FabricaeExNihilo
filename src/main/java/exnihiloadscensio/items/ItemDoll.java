@@ -2,6 +2,8 @@ package exnihiloadscensio.items;
 
 import exnihiloadscensio.ExNihiloAdscensio;
 import exnihiloadscensio.blocks.ENBlocks;
+import exnihiloadscensio.util.Data;
+import exnihiloadscensio.util.IHasModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.monster.EntityBlaze;
@@ -22,7 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 
-public class ItemDoll extends Item {
+public class ItemDoll extends Item implements IHasModel {
 	
 	public static final String BLAZE = "blaze";
 	public static final String ENDERMAN = "enderman";
@@ -36,7 +38,7 @@ public class ItemDoll extends Item {
 		
 		setCreativeTab(ExNihiloAdscensio.tabExNihilo);
 		setHasSubtypes(true);
-		GameRegistry.register(this);
+        Data.ITEMS.add(this);
 		
 		names.add(BLAZE);
 		names.add(ENDERMAN);
@@ -73,7 +75,8 @@ public class ItemDoll extends Item {
 	}
 
 	@Override @SideOnly(Side.CLIENT)
-	public void getSubItems(@Nullable Item item, CreativeTabs tabs, NonNullList<ItemStack> list) {
+	public void getSubItems(@Nullable CreativeTabs tab, NonNullList<ItemStack> list) {
+        if (this.isInCreativeTab(tab))
 		for (int i = 0; i < names.size(); i++)
 			list.add(new ItemStack(this, 1, i));
 	}
