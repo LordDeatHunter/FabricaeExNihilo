@@ -5,11 +5,11 @@ import lombok.Getter;
 
 @AllArgsConstructor
 public class OreSiftable {
-	
-	@Getter
-	private int meshLevel;
-	
-	@Getter
-	private float chance;
+
+    @Getter
+    private int meshLevel;
+
+    @Getter
+    private float chance;
 
 }

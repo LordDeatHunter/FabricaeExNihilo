@@ -5,19 +5,16 @@ import lombok.Getter;
 import lombok.Setter;
 
 @EqualsAndHashCode
-public class CapabilityHeat implements ICapabilityHeat
-{
+public class CapabilityHeat implements ICapabilityHeat {
     @Getter
     @Setter
     int heatRate;
-    
-    public CapabilityHeat()
-    {
-        
+
+    public CapabilityHeat() {
+
     }
-    
-    public CapabilityHeat(int heatRate)
-    {
+
+    public CapabilityHeat(int heatRate) {
         this.heatRate = heatRate;
     }
 }

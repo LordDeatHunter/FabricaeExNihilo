@@ -14,56 +14,53 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MessageBarrelModeUpdate implements IMessage {
 
-	public MessageBarrelModeUpdate(){}
+    private String modeName;
+    private int x, y, z;
 
-	private String modeName;
-	private int x, y, z;
-	public MessageBarrelModeUpdate(String modeName, BlockPos pos)
-	{
-		this.x = pos.getX();
-		this.y = pos.getY();
-		this.z = pos.getZ();
-		this.modeName = modeName;
-	}
+    public MessageBarrelModeUpdate() {
+    }
 
-	@Override
-	public void toBytes(ByteBuf buf)
-	{
-		buf.writeInt(x);
-		buf.writeInt(y);
-		buf.writeInt(z);
-		ByteBufUtils.writeUTF8String(buf, modeName);
-	}
+    public MessageBarrelModeUpdate(String modeName, BlockPos pos) {
+        this.x = pos.getX();
+        this.y = pos.getY();
+        this.z = pos.getZ();
+        this.modeName = modeName;
+    }
 
-	@Override
-	public void fromBytes(ByteBuf buf)
-	{
-		this.x = buf.readInt();
-		this.y = buf.readInt();
-		this.z = buf.readInt();
-		this.modeName = ByteBufUtils.readUTF8String(buf);
-	}
+    @Override
+    public void toBytes(ByteBuf buf) {
+        buf.writeInt(x);
+        buf.writeInt(y);
+        buf.writeInt(z);
+        ByteBufUtils.writeUTF8String(buf, modeName);
+    }
 
-	public static class MessageBarrelModeUpdateHandler implements IMessageHandler<MessageBarrelModeUpdate, IMessage> 
-	{
-		@Override @SideOnly(Side.CLIENT)
-		public IMessage onMessage(final MessageBarrelModeUpdate msg, MessageContext ctx)
-		{
-			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
-				@Override @SideOnly(Side.CLIENT)
-				public void run()
-				{
-					TileEntity entity =  Minecraft.getMinecraft().player.getEntityWorld().getTileEntity(new BlockPos(msg.x, msg.y, msg.z));
-					if (entity instanceof TileBarrel)
-					{
-						TileBarrel te = (TileBarrel) entity;
-						te.setMode(msg.modeName);
-						
-						//Minecraft.getMinecraft().thePlayer.worldObj.notifyBlockUpdate(new BlockPos(msg.x, msg.y, msg.z));
-					}
-				}
-			});
-			return null;
-		}
-	}
+    @Override
+    public void fromBytes(ByteBuf buf) {
+        this.x = buf.readInt();
+        this.y = buf.readInt();
+        this.z = buf.readInt();
+        this.modeName = ByteBufUtils.readUTF8String(buf);
+    }
+
+    public static class MessageBarrelModeUpdateHandler implements IMessageHandler<MessageBarrelModeUpdate, IMessage> {
+        @Override
+        @SideOnly(Side.CLIENT)
+        public IMessage onMessage(final MessageBarrelModeUpdate msg, MessageContext ctx) {
+            Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+                @Override
+                @SideOnly(Side.CLIENT)
+                public void run() {
+                    TileEntity entity = Minecraft.getMinecraft().player.getEntityWorld().getTileEntity(new BlockPos(msg.x, msg.y, msg.z));
+                    if (entity instanceof TileBarrel) {
+                        TileBarrel te = (TileBarrel) entity;
+                        te.setMode(msg.modeName);
+
+                        //Minecraft.getMinecraft().thePlayer.worldObj.notifyBlockUpdate(new BlockPos(msg.x, msg.y, msg.z));
+                    }
+                }
+            });
+            return null;
+        }
+    }
 }

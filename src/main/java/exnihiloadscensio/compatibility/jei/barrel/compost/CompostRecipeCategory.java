@@ -19,33 +19,31 @@ import net.minecraft.util.ResourceLocation;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe>
-{
+public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
     public static final String UID = "exnihiloadscensio:compost";
     private static final ResourceLocation texture = new ResourceLocation(ExNihiloAdscensio.MODID, "textures/gui/jei_compost.png");
-    
+
     private final IDrawableStatic background;
     private final IDrawableStatic slotHighlight;
-    
+
     private boolean hasHighlight;
     private int highlightX;
     private int highlightY;
-    
-    public CompostRecipeCategory(IGuiHelper helper)
-    {
+
+    public CompostRecipeCategory(IGuiHelper helper) {
         this.background = helper.createDrawable(texture, 0, 0, 166, 128);
         this.slotHighlight = helper.createDrawable(texture, 166, 0, 18, 18);
     }
-    
-    @Override @Nonnull
-    public String getUid()
-    {
+
+    @Override
+    @Nonnull
+    public String getUid() {
         return UID;
     }
-    
-    @Override @Nonnull
-    public String getTitle()
-    {
+
+    @Override
+    @Nonnull
+    public String getTitle() {
         return "Compost";
     }
 
@@ -54,27 +52,24 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe>
         return ExNihiloAdscensio.MODID;
     }
 
-    @Override @Nonnull
-    public IDrawable getBackground()
-    {
+    @Override
+    @Nonnull
+    public IDrawable getBackground() {
         return background;
     }
-    
+
     @Override
-    public void drawExtras(@Nonnull Minecraft minecraft)
-    {
-        if (hasHighlight)
-        {
+    public void drawExtras(@Nonnull Minecraft minecraft) {
+        if (hasHighlight) {
             slotHighlight.draw(minecraft, highlightX, highlightY);
         }
     }
 
-    private void setRecipe(IRecipeLayout layout, CompostRecipe recipe)
-    {
+    private void setRecipe(IRecipeLayout layout, CompostRecipe recipe) {
         // Block
         layout.getItemStacks().init(0, false, 74, 9);
         layout.getItemStacks().set(0, (ItemStack) recipe.getOutputs().get(0));
-        
+
         IFocus<?> focus = layout.getFocus();
 
         if (focus != null) {
@@ -85,8 +80,7 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe>
 
             int slotIndex = 1;
 
-            for (int i = 0; i < recipe.getInputs().size(); i++)
-            {
+            for (int i = 0; i < recipe.getInputs().size(); i++) {
                 final int slotX = 2 + (i % 9 * 18);
                 final int slotY = 36 + (i / 9 * 18);
 
@@ -95,8 +89,7 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe>
                 layout.getItemStacks().init(slotIndex + i, true, slotX, slotY);
                 layout.getItemStacks().set(slotIndex + i, inputStack);
 
-                if (mightHaveHighlight && ItemStack.areItemsEqual(focusStack, inputStack))
-                {
+                if (mightHaveHighlight && ItemStack.areItemsEqual(focusStack, inputStack)) {
                     highlightX = slotX;
                     highlightY = slotY;
 
@@ -105,32 +98,27 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe>
                 }
             }
         }
-        
+
         layout.getItemStacks().addTooltipCallback(new CompostTooltipCallback());
     }
-    
+
     @Override
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull CompostRecipe recipeWrapper, @Nonnull IIngredients ingredients)
-    {
+    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull CompostRecipe recipeWrapper, @Nonnull IIngredients ingredients) {
         // I learn from the best
         setRecipe(recipeLayout, recipeWrapper);
     }
 
     @Override
-    public IDrawable getIcon()
-    {
+    public IDrawable getIcon() {
         return null;
     }
 
-    private class CompostTooltipCallback implements ITooltipCallback<ItemStack>
-    {
+    private class CompostTooltipCallback implements ITooltipCallback<ItemStack> {
         @Override
-        public void onTooltip(int slotIndex, boolean input, @Nonnull ItemStack ingredient, @Nonnull List<String> tooltip)
-        {
-            if (input)
-            {
+        public void onTooltip(int slotIndex, boolean input, @Nonnull ItemStack ingredient, @Nonnull List<String> tooltip) {
+            if (input) {
                 Compostable entry = CompostRegistry.getItem(new ItemInfo(ingredient));
-                
+
                 tooltip.add(String.format("Value: %.1f%%", 100.0F * entry.getValue()));
             }
         }

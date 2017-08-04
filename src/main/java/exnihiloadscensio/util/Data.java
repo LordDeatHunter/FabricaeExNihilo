@@ -9,8 +9,8 @@ import java.util.List;
 
 public class Data {
 
-    public static final List<Item> ITEMS = new ArrayList<Item>();
-    public static final List<Block> BLOCKS = new ArrayList<Block>();
-    public static final List<IRecipe> RECIPES = new ArrayList<IRecipe>();
+    public static final List<Item> ITEMS = new ArrayList<>();
+    public static final List<Block> BLOCKS = new ArrayList<>();
+    public static final List<IRecipe> RECIPES = new ArrayList<>();
 
 }

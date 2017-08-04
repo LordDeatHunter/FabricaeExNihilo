@@ -1,7 +1,7 @@
 {
     "forge_marker": 1,
     "defaults": {
-        "model": "exnihiloadscensio:blockinfestedleaves"
+        "model": "exnihiloadscensio:block_infested_leaves"
     },
     "variants": {
         "decayable": {

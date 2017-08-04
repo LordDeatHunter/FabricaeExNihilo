@@ -1,7 +1,7 @@
 {
     "forge_marker": 1,
     "defaults": {
-        "model": "exnihiloadscensio:blockbarrel0"
+        "model": "exnihiloadscensio:block_barrel0"
     },
     "variants": {
         "normal": [

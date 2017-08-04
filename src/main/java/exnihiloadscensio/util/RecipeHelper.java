@@ -18,14 +18,14 @@ import java.util.List;
 
 public class RecipeHelper {
 
-    private static int j = 0;
-    private static final String MODID = ExNihiloAdscensio.MODID;
-    private static final String MODNAME = "Ex Nihilo Adscensio";
     /*
      * This needs to be looped through and passed in a RegistryEvent.Register<IRecipe>, it should also be populated during that event.
      * Yes, I could do it here with @EventBusSubcriber, but I won't.
      */
     public static final List<IRecipe> RECIPES = Data.RECIPES;
+    private static final String MODID = ExNihiloAdscensio.MODID;
+    private static final String MODNAME = "Ex Nihilo Adscensio";
+    private static int j = 0;
 
     /*
      * This adds the recipe to the list of crafting recipes.  Since who cares about names, it adds it as recipesX, where X is the current recipe you are adding.

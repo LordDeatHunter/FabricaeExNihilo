@@ -1,6 +1,5 @@
 package exnihiloadscensio.blocks;
 
-import exnihiloadscensio.items.ItemBlockMeta;
 import exnihiloadscensio.registries.CrucibleRegistry;
 import exnihiloadscensio.tiles.TileCrucible;
 import exnihiloadscensio.util.Data;
@@ -29,7 +28,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -37,124 +35,131 @@ import javax.annotation.Nonnull;
 
 public class BlockCrucible extends Block implements IProbeInfoAccessor, IHasModel {
 
-	public static final PropertyBool FIRED = PropertyBool.create("fired");
+    public static final PropertyBool FIRED = PropertyBool.create("fired");
 
-	public BlockCrucible() {
-		super(Material.ROCK);
-		String name = "blockCrucible";
-		setUnlocalizedName(name);
-		setRegistryName(name);
+    public BlockCrucible() {
+        super(Material.ROCK);
+        String name = "block_crucible";
+        setUnlocalizedName(name);
+        setRegistryName(name);
         Data.BLOCKS.add(this);
-		this.setHardness(2.0f);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(FIRED, false));
-	}
+        this.setHardness(2.0f);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FIRED, false));
+    }
 
-	@Override
-	public TileEntity createTileEntity(@Nonnull World worldIn, @Nonnull IBlockState state) {
-		if (state.getValue(FIRED))
-			return new TileCrucible();
+    @Override
+    public TileEntity createTileEntity(@Nonnull World worldIn, @Nonnull IBlockState state) {
+        if (state.getValue(FIRED))
+            return new TileCrucible();
 
-		return null;
-	}
+        return null;
+    }
 
-	@Override
-	public boolean hasTileEntity(IBlockState state) {
-		return state.getValue(FIRED);
-	}
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return state.getValue(FIRED);
+    }
 
-	@Override @Nonnull
-	public BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, FIRED);
-	}
+    @Override
+    @Nonnull
+    public BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, FIRED);
+    }
 
-	@Override @Nonnull @Deprecated
-	public IBlockState getStateFromMeta(int meta) {
-		return getDefaultState().withProperty(FIRED, meta != 0);
-	}
+    @Override
+    @Nonnull
+    @Deprecated
+    public IBlockState getStateFromMeta(int meta) {
+        return getDefaultState().withProperty(FIRED, meta != 0);
+    }
 
-	@Override
-	public int getMetaFromState(IBlockState state) {
-		return state.getValue(FIRED) ? 1 : 0;
-	}
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(FIRED) ? 1 : 0;
+    }
 
-	@Override
-	public int damageDropped(IBlockState state) {
-		return getMetaFromState(state);
-	}
+    @Override
+    public int damageDropped(IBlockState state) {
+        return getMetaFromState(state);
+    }
 
-	@Override
-	public void getSubBlocks(@Nonnull CreativeTabs itemIn, NonNullList<ItemStack> items) {
+    @Override
+    public void getSubBlocks(@Nonnull CreativeTabs itemIn, NonNullList<ItemStack> items) {
         items.add(new ItemStack(this, 1, 0));
         items.add(new ItemStack(this, 1, 1));
-	}
+    }
 
-	@Override @Nonnull
-	public ItemStack getPickBlock(@Nonnull IBlockState state, RayTraceResult target, @Nonnull World world, @Nonnull BlockPos pos,
-			EntityPlayer player) {
-		return new ItemStack(Item.getItemFromBlock(this), 1, this.getMetaFromState(world.getBlockState(pos)));
-	}
+    @Override
+    @Nonnull
+    public ItemStack getPickBlock(@Nonnull IBlockState state, RayTraceResult target, @Nonnull World world, @Nonnull BlockPos pos,
+                                  EntityPlayer player) {
+        return new ItemStack(Item.getItemFromBlock(this), 1, this.getMetaFromState(world.getBlockState(pos)));
+    }
 
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ, IFluidHandler handler) {
-		if (world.isRemote)
-			return true;
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ, IFluidHandler handler) {
+        if (world.isRemote)
+            return true;
 
-		TileCrucible te = (TileCrucible) world.getTileEntity(pos);
+        TileCrucible te = (TileCrucible) world.getTileEntity(pos);
 
-		if (te != null) {
-			return te.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ, handler);
-		} else {
-			return true;
-		}
-	}
+        if (te != null) {
+            return te.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ, handler);
+        } else {
+            return true;
+        }
+    }
 
-	@Override @Deprecated
-	public boolean isFullBlock(IBlockState state) {
-		return false;
-	}
+    @Override
+    @Deprecated
+    public boolean isFullBlock(IBlockState state) {
+        return false;
+    }
 
-	@Override @Deprecated
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
-	}
+    @Override
+    @Deprecated
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
 
-	@Override @Deprecated
-	public boolean isFullCube(IBlockState state) {
-		return false;
-	}
+    @Override
+    @Deprecated
+    public boolean isFullCube(IBlockState state) {
+        return false;
+    }
 
-	@SideOnly(Side.CLIENT)
-	public void initModel() {
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0,
-				new ModelResourceLocation(getRegistryName(), "inventory"));
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 1,
-				new ModelResourceLocation(getRegistryName(), "inventory"));
-	}
+    @SideOnly(Side.CLIENT)
+    public void initModel() {
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0,
+                new ModelResourceLocation(getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 1,
+                new ModelResourceLocation(getRegistryName(), "inventory"));
+    }
 
-	@Override
-	public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world,
-			IBlockState blockState, IProbeHitData data) {
-		TileCrucible crucible = (TileCrucible) world.getTileEntity(data.getPos());
+    @Override
+    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world,
+                             IBlockState blockState, IProbeHitData data) {
+        TileCrucible crucible = (TileCrucible) world.getTileEntity(data.getPos());
 
-		if (crucible == null)
-			return;
+        if (crucible == null)
+            return;
 
-		ItemStack solid = crucible.getCurrentItem() == null ? null : crucible.getCurrentItem().getItemStack();
-		FluidStack liquid = crucible.getTank().getFluid();
+        ItemStack solid = crucible.getCurrentItem() == null ? null : crucible.getCurrentItem().getItemStack();
+        FluidStack liquid = crucible.getTank().getFluid();
 
-		String solidName = solid == null ? "None" : solid.getDisplayName();
-		String liquidName = liquid == null ? "None" : liquid.getLocalizedName();
+        String solidName = solid == null ? "None" : solid.getDisplayName();
+        String liquidName = liquid == null ? "None" : liquid.getLocalizedName();
 
-		int solidAmount = Math.max(0, crucible.getSolidAmount());
+        int solidAmount = Math.max(0, crucible.getSolidAmount());
 
-		ItemStack toMelt = crucible.getItemHandler().getStackInSlot(0);
+        ItemStack toMelt = crucible.getItemHandler().getStackInSlot(0);
 
-		if (!toMelt.isEmpty()) {
-			solidAmount += CrucibleRegistry.getMeltable(toMelt).getAmount() * toMelt.getCount();
-		}
+        if (!toMelt.isEmpty()) {
+            solidAmount += CrucibleRegistry.getMeltable(toMelt).getAmount() * toMelt.getCount();
+        }
 
-		probeInfo.text(String.format("Solid (%s): %d", solidName, solidAmount));
-		probeInfo.text(String.format("Liquid (%s): %d", liquidName, crucible.getTank().getFluidAmount()));
-		probeInfo.text("Rate: " + crucible.getHeatRate() + "x");
-	}
+        probeInfo.text(String.format("Solid (%s): %d", solidName, solidAmount));
+        probeInfo.text(String.format("Liquid (%s): %d", liquidName, crucible.getTank().getFluidAmount()));
+        probeInfo.text("Rate: " + crucible.getHeatRate() + "x");
+    }
 
 }

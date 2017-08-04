@@ -7,10 +7,10 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Siftable {
 
-	@Getter
-	private ItemInfo drop;
-	@Getter
-	private float chance;
-	@Getter
-	private int meshLevel;
+    @Getter
+    private ItemInfo drop;
+    @Getter
+    private float chance;
+    @Getter
+    private int meshLevel;
 }

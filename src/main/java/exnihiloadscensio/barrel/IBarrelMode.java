@@ -20,36 +20,36 @@ import net.minecraftforge.items.ItemStackHandler;
 import java.util.List;
 
 public interface IBarrelMode {
-	
-	public void writeToNBT(NBTTagCompound tag);
-	
-	public void readFromNBT(NBTTagCompound tag);
-	
-	public boolean isTriggerItemStack(ItemStack stack);
-	
-	public boolean isTriggerFluidStack(FluidStack stack);
-	
-	public String getName();
-	
-	public boolean onBlockActivated(World world, TileBarrel barrel, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ);
-	
-	@SideOnly(Side.CLIENT)
-	public TextureAtlasSprite getTextureForRender(TileBarrel barrel);
-	
-	public Color getColorForRender();
-	
-	public float getFilledLevelForRender(TileBarrel barrel);
-	
-	public void update(TileBarrel barrel);
-	
-	public boolean addItem(ItemStack stack, TileBarrel barrel);
-	
-	public ItemStackHandler getHandler(TileBarrel barrel);
-	
-	public FluidTank getFluidHandler(TileBarrel barrel);
-	
-	public boolean canFillWithFluid(TileBarrel barrel);
-	
-	public List<String> getWailaTooltip(TileBarrel barrel, List<String> currenttip);
+
+    public void writeToNBT(NBTTagCompound tag);
+
+    public void readFromNBT(NBTTagCompound tag);
+
+    public boolean isTriggerItemStack(ItemStack stack);
+
+    public boolean isTriggerFluidStack(FluidStack stack);
+
+    public String getName();
+
+    public boolean onBlockActivated(World world, TileBarrel barrel, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ);
+
+    @SideOnly(Side.CLIENT)
+    public TextureAtlasSprite getTextureForRender(TileBarrel barrel);
+
+    public Color getColorForRender();
+
+    public float getFilledLevelForRender(TileBarrel barrel);
+
+    public void update(TileBarrel barrel);
+
+    public boolean addItem(ItemStack stack, TileBarrel barrel);
+
+    public ItemStackHandler getHandler(TileBarrel barrel);
+
+    public FluidTank getFluidHandler(TileBarrel barrel);
+
+    public boolean canFillWithFluid(TileBarrel barrel);
+
+    public List<String> getWailaTooltip(TileBarrel barrel, List<String> currenttip);
 
 }

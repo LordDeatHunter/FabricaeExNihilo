@@ -1,7 +1,7 @@
 {
     "forge_marker": 1,
     "defaults": {
-        "model": "exnihiloadscensio:blocksieve"
+        "model": "exnihiloadscensio:block_sieve"
     },
     "variants": {
         "mesh": {

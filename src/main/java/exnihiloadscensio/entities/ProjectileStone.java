@@ -1,6 +1,6 @@
 package exnihiloadscensio.entities;
 
-import exnihiloadscensio.items.ENItems;
+import exnihiloadscensio.ModItems;
 import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
@@ -14,72 +14,57 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class ProjectileStone extends EntityThrowable
-{
+public class ProjectileStone extends EntityThrowable {
     @Setter
     private ItemStack stack;
-    
-    public ProjectileStone(World worldIn)
-    {
+
+    public ProjectileStone(World worldIn) {
         super(worldIn);
     }
-    
-    public ProjectileStone(World worldIn, EntityLivingBase thrower)
-    {
+
+    public ProjectileStone(World worldIn, EntityLivingBase thrower) {
         super(worldIn, thrower);
     }
-    
-    public ProjectileStone(World worldIn, double x, double y, double z)
-    {
+
+    public ProjectileStone(World worldIn, double x, double y, double z) {
         super(worldIn, x, y, z);
     }
-    
+
     @Override
-    protected void onImpact(RayTraceResult result)
-    {
-        if (result.entityHit != null)
-        {
+    protected void onImpact(RayTraceResult result) {
+        if (result.entityHit != null) {
             result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, getThrower()), (int) (Math.random() * (4.0F / 3.0F)));
-        }
-        else if (!getEntityWorld().isRemote)
-        {
+        } else if (!getEntityWorld().isRemote) {
             setDead();
-            
-            if(stack != null)
-            {
+
+            if (stack != null) {
                 getEntityWorld().spawnEntity(new EntityItem(getEntityWorld(), posX, posY, posZ, stack));
             }
         }
-        
-        for (int j = 0; j < 8; ++j)
-        {
+
+        for (int j = 0; j < 8; ++j) {
             getEntityWorld().spawnParticle(EnumParticleTypes.BLOCK_CRACK, posX, posY, posZ, 0.0D, 0.0D, 0.0D, Block.getStateId(Blocks.STONE.getDefaultState()));
         }
     }
-    
+
     @Override
-    public void writeEntityToNBT(NBTTagCompound tag)
-    {
+    public void writeEntityToNBT(NBTTagCompound tag) {
         super.writeEntityToNBT(tag);
-        
+
         NBTTagCompound stackTag = new NBTTagCompound();
         stack.writeToNBT(stackTag);
-        
+
         tag.setTag("pebbleStack", stackTag);
     }
-    
+
     @Override
-    public void readEntityFromNBT(NBTTagCompound tag)
-    {
+    public void readEntityFromNBT(NBTTagCompound tag) {
         super.readEntityFromNBT(tag);
-        
-        if(tag.hasKey("pebbleStack"))
-        {
+
+        if (tag.hasKey("pebbleStack")) {
             stack = new ItemStack((NBTTagCompound) tag.getTag("pebbleStack"));
-        }
-        else
-        {
-            stack = new ItemStack(ENItems.pebbles);
+        } else {
+            stack = new ItemStack(ModItems.pebbles);
         }
     }
 }

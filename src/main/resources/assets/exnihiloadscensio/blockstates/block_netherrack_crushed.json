@@ -1,7 +1,7 @@
 {
     "forge_marker": 1,
     "defaults": {
-        "model": "exnihiloadscensio:blocknetherrackcrushed"
+        "model": "exnihiloadscensio:block_netherrack_crushed"
     },
     "variants": {
         "normal": [

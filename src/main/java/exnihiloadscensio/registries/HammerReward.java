@@ -6,13 +6,13 @@ import net.minecraft.item.ItemStack;
 
 @AllArgsConstructor
 public class HammerReward {
-	
-	@Getter
-	private ItemStack stack;
-	@Getter
-	private int miningLevel;
-	@Getter
-	private float chance;
-	@Getter
-	private float fortuneChance;
+
+    @Getter
+    private ItemStack stack;
+    @Getter
+    private int miningLevel;
+    @Getter
+    private float chance;
+    @Getter
+    private float fortuneChance;
 }

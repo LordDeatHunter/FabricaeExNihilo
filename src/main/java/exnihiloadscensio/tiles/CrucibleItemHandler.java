@@ -9,28 +9,31 @@ import javax.annotation.Nonnull;
 
 public class CrucibleItemHandler extends ItemStackHandler {
 
-	@Setter
-	private TileCrucible te;
-	
-	public CrucibleItemHandler() {
-		super(1);
-	}
+    @Setter
+    private TileCrucible te;
 
-	@Override @Nonnull
-	public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-		if (CrucibleRegistry.canBeMelted(stack)) {
-			return super.insertItem(slot, stack, simulate);
-		}
-		
-		return stack;
-	}
-	@Override @Nonnull
-	public ItemStack extractItem(int slot, int amount, boolean simulate) {
-		return ItemStack.EMPTY;
-	}
+    public CrucibleItemHandler() {
+        super(1);
+    }
 
-	@Override
-	protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
-		return te.getCurrentItem() == null ? 4 : 3;
-	}
+    @Override
+    @Nonnull
+    public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+        if (CrucibleRegistry.canBeMelted(stack)) {
+            return super.insertItem(slot, stack, simulate);
+        }
+
+        return stack;
+    }
+
+    @Override
+    @Nonnull
+    public ItemStack extractItem(int slot, int amount, boolean simulate) {
+        return ItemStack.EMPTY;
+    }
+
+    @Override
+    protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
+        return te.getCurrentItem() == null ? 4 : 3;
+    }
 }

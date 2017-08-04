@@ -1,12 +1,9 @@
 package exnihiloadscensio.items.ore;
 
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.IForgeRegistryEntry;
-
-import javax.annotation.Nullable;
+import net.minecraftforge.registries.RegistryBuilder;
 
 /**
  * Helper class for those who are using a {@link RegistryBuilder} to store objects that are used for
@@ -15,7 +12,6 @@ import javax.annotation.Nullable;
  * @param <T> - The {@link IForgeRegistryEntry} type that the registry contains.
  */
 public class ItemFMLRegistryWrapper<T extends IForgeRegistryEntry<T>> {
-
 
 
     public static final int INVALID_ID = Short.MAX_VALUE - 1;
@@ -94,7 +90,7 @@ public class ItemFMLRegistryWrapper<T extends IForgeRegistryEntry<T>> {
 
     /**
      * Sets a default {@link ResourceLocation} prefix to use when using Strings to lookup entries.
-     *
+     * <p>
      * Allows lookups via {@code key_name} instead of {@code prefix:key_name}
      *
      * @param defaultPrefix - The default prefix to use for ResourceLocations.

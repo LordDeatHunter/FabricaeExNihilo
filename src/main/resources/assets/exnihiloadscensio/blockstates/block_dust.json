@@ -1,7 +1,7 @@
 {
     "forge_marker": 1,
     "defaults": {
-        "model": "exnihiloadscensio:blockbarrel1"
+        "model": "exnihiloadscensio:block_dust"
     },
     "variants": {
         "normal": [

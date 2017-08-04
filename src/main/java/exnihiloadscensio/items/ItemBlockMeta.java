@@ -9,19 +9,20 @@ import javax.annotation.Nonnull;
 
 public class ItemBlockMeta extends ItemBlock implements IHasModel {
 
-	public ItemBlockMeta(Block block) {
-		super(block);
-		this.setMaxDamage(0);
-		this.setHasSubtypes(true);
-	}
+    public ItemBlockMeta(Block block) {
+        super(block);
+        this.setMaxDamage(0);
+        this.setHasSubtypes(true);
+    }
 
-	public int getMetadata(int damage) {
-		return damage;
-	}
+    public int getMetadata(int damage) {
+        return damage;
+    }
 
-	@Override @Nonnull
-	public String getUnlocalizedName(ItemStack stack) {
-		return super.getUnlocalizedName(stack) + "." + stack.getItemDamage();
-	}
+    @Override
+    @Nonnull
+    public String getUnlocalizedName(ItemStack stack) {
+        return super.getUnlocalizedName(stack) + "." + stack.getItemDamage();
+    }
 
 }

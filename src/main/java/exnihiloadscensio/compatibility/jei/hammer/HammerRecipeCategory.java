@@ -26,33 +26,31 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 
-public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe>
-{
+public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
     public static final String UID = "exnihiloadscensio:hammer";
     private static final ResourceLocation texture = new ResourceLocation(ExNihiloAdscensio.MODID, "textures/gui/jei_hammer.png");
-    
+
     private final IDrawableStatic background;
     private final IDrawableStatic slotHighlight;
-    
+
     private boolean hasHighlight;
     private int highlightX;
     private int highlightY;
-    
-    public HammerRecipeCategory(IGuiHelper helper)
-    {
+
+    public HammerRecipeCategory(IGuiHelper helper) {
         this.background = helper.createDrawable(texture, 0, 0, 166, 128);
         this.slotHighlight = helper.createDrawable(texture, 166, 0, 18, 18);
     }
-    
-    @Override @Nonnull
-    public String getUid()
-    {
+
+    @Override
+    @Nonnull
+    public String getUid() {
         return UID;
     }
-    
-    @Override @Nonnull
-    public String getTitle()
-    {
+
+    @Override
+    @Nonnull
+    public String getTitle() {
         return "Hammer";
     }
 
@@ -61,27 +59,24 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe>
         return ExNihiloAdscensio.MODID;
     }
 
-    @Override @Nonnull
-    public IDrawable getBackground()
-    {
+    @Override
+    @Nonnull
+    public IDrawable getBackground() {
         return background;
     }
-    
+
     @Override
-    public void drawExtras(@Nonnull Minecraft minecraft)
-    {
-        if (hasHighlight)
-        {
+    public void drawExtras(@Nonnull Minecraft minecraft) {
+        if (hasHighlight) {
             slotHighlight.draw(minecraft, highlightX, highlightY);
         }
     }
 
-    private void setRecipe(IRecipeLayout recipeLayout, HammerRecipe recipeWrapper)
-    {
+    private void setRecipe(IRecipeLayout recipeLayout, HammerRecipe recipeWrapper) {
         // Block
         recipeLayout.getItemStacks().init(0, true, 74, 9);
         recipeLayout.getItemStacks().set(0, (ItemStack) recipeWrapper.getInputs().get(0));
-        
+
         IFocus<?> focus = recipeLayout.getFocus();
 
         if (focus != null) {
@@ -89,8 +84,7 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe>
 
             int slotIndex = 1;
 
-            for (int i = 0; i < recipeWrapper.getOutputs().size(); i++)
-            {
+            for (int i = 0; i < recipeWrapper.getOutputs().size(); i++) {
                 final int slotX = 2 + (i % 9 * 18);
                 final int slotY = 36 + (i / 9 * 18);
 
@@ -101,89 +95,77 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe>
 
                 ItemStack focusStack = (ItemStack) focus.getValue();
 
-                if (focus.getMode() == IFocus.Mode.OUTPUT && !focusStack.isEmpty() && focusStack.getItem() == outputStack.getItem() && focusStack.getItemDamage() == outputStack.getItemDamage())
-                {
+                if (focus.getMode() == IFocus.Mode.OUTPUT && !focusStack.isEmpty() && focusStack.getItem() == outputStack.getItem() && focusStack.getItemDamage() == outputStack.getItemDamage()) {
                     highlightX = slotX;
                     highlightY = slotY;
                 }
             }
         }
-        
+
         recipeLayout.getItemStacks().addTooltipCallback(new HammerTooltipCallback(recipeWrapper));
     }
-    
+
     @Override
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull HammerRecipe recipeWrapper, @Nonnull IIngredients ingredients)
-    {
+    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull HammerRecipe recipeWrapper, @Nonnull IIngredients ingredients) {
         // I learn from the best
         setRecipe(recipeLayout, recipeWrapper);
     }
 
     @Override
-    public IDrawable getIcon()
-    {
+    public IDrawable getIcon() {
         return null;
     }
 
-    private class HammerTooltipCallback implements ITooltipCallback<ItemStack>
-    {
+    private class HammerTooltipCallback implements ITooltipCallback<ItemStack> {
         private HammerRecipe recipe;
-        
-        private HammerTooltipCallback(HammerRecipe recipeWrapper)
-        {
+
+        private HammerTooltipCallback(HammerRecipe recipeWrapper) {
             this.recipe = recipeWrapper;
         }
-        
-        @Override @SideOnly(Side.CLIENT)
-        public void onTooltip(int slotIndex, boolean input, @Nonnull ItemStack ingredient, @Nonnull List<String> tooltip)
-        {
-            if (!input)
-            {
+
+        @Override
+        @SideOnly(Side.CLIENT)
+        public void onTooltip(int slotIndex, boolean input, @Nonnull ItemStack ingredient, @Nonnull List<String> tooltip) {
+            if (!input) {
                 ItemStack blockStack = (ItemStack) recipe.getInputs().get(0);
                 Block blockBase = Block.getBlockFromItem(blockStack.getItem());
-                
+
                 @SuppressWarnings("deprecation")
                 IBlockState block = blockBase.getStateFromMeta(blockStack.getMetadata());
-                
+
                 List<HammerReward> allRewards = HammerRegistry.getRewards(block);
-                
+
                 allRewards.removeIf(reward -> !reward.getStack().getItem().equals(ingredient.getItem()) || reward.getStack().getMetadata() != ingredient.getMetadata());
-                
+
                 // Level, Outputs
                 Map<Integer, List<HammerReward>> tieredOutputs = Maps.newHashMap();
-                
-                for(HammerReward reward : allRewards)
-                {
+
+                for (HammerReward reward : allRewards) {
                     List<HammerReward> stacks = tieredOutputs.get(reward.getMiningLevel());
-                    
-                    if(stacks == null)
-                    {
+
+                    if (stacks == null) {
                         stacks = Lists.newArrayList(reward);
                         tieredOutputs.put(reward.getMiningLevel(), stacks);
-                    }
-                    else
-                    {
+                    } else {
                         stacks.add(reward);
                     }
                 }
-                
+
                 tieredOutputs.forEach((level, rewards) -> rewards.sort((rewardA, rewardB) -> Float.compare(rewardB.getChance(), rewardA.getChance())));
-                
+
                 List<Integer> levelOrder = Lists.newArrayList(tieredOutputs.keySet());
                 levelOrder.sort((levelA, levelB) -> Integer.compare(levelB, levelA));
-                
-                for(int level : levelOrder)
-                {
+
+                for (int level : levelOrder) {
                     tooltip.add(I18n.format("jei.hammer.hammerLevel." + level));
-                    
+
                     List<HammerReward> rewards = tieredOutputs.get(level);
-                    
-                    for(HammerReward reward : rewards)
-                    {
+
+                    for (HammerReward reward : rewards) {
                         float chance = 100.0F * reward.getChance();
-                        
+
                         String format = chance >= 10 ? " - %3.0f%% (x%d)" : "%1.1f%% - (x%d)";
-                        
+
                         tooltip.add(String.format(format, chance, reward.getStack().getCount()));
                     }
                 }

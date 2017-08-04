@@ -6,12 +6,12 @@ import net.minecraft.item.ItemStack;
 
 @AllArgsConstructor
 public class CrookReward {
-	
-	@Getter
-	private ItemStack stack;
-	@Getter
-	private float chance;
-	@Getter
-	private float fortuneChance;
+
+    @Getter
+    private ItemStack stack;
+    @Getter
+    private float chance;
+    @Getter
+    private float fortuneChance;
 
 }

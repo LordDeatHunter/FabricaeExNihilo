@@ -11,29 +11,26 @@ import net.minecraft.util.text.TextComponentTranslation;
 import javax.annotation.Nonnull;
 import java.io.File;
 
-public class CommandReloadConfig extends CommandBase
-{
+public class CommandReloadConfig extends CommandBase {
     @Override
-    public int getRequiredPermissionLevel()
-    {
+    public int getRequiredPermissionLevel() {
         return 3;
     }
-    
-    @Override @Nonnull
-    public String getName()
-    {
-        return "enreloadconfig";
-    }
 
-    @Override @Nonnull
-    public String getUsage(@Nonnull ICommandSender sender)
-    {
+    @Override
+    @Nonnull
+    public String getName() {
         return "enreloadconfig";
     }
 
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) throws CommandException
-    {
+    @Nonnull
+    public String getUsage(@Nonnull ICommandSender sender) {
+        return "enreloadconfig";
+    }
+
+    @Override
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) throws CommandException {
         ExNihiloAdscensio.loadConfigs();
         Config.doNormalConfig(new File(ExNihiloAdscensio.configDirectory, "ExNihiloAdscensio.cfg"));
         sender.sendMessage(new TextComponentTranslation("commands.enreloadconfig.confirm"));

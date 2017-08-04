@@ -13,55 +13,53 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MessageNBTUpdate implements IMessage {
-	
-	public MessageNBTUpdate(){}
 
-	private int x, y, z;
-	private NBTTagCompound tag;
-	public MessageNBTUpdate(TileEntity te)
-	{
-		this.x = te.getPos().getX();
-		this.y = te.getPos().getY();
-		this.z = te.getPos().getZ();
-		this.tag = te.writeToNBT(new NBTTagCompound());
-	}
+    private int x, y, z;
+    private NBTTagCompound tag;
 
-	@Override
-	public void toBytes(ByteBuf buf)
-	{
-		buf.writeInt(x);
-		buf.writeInt(y);
-		buf.writeInt(z);
-		ByteBufUtils.writeTag(buf, tag);
-	}
+    public MessageNBTUpdate() {
+    }
 
-	@Override
-	public void fromBytes(ByteBuf buf)
-	{
-		this.x = buf.readInt();
-		this.y = buf.readInt();
-		this.z = buf.readInt();
-		this.tag = ByteBufUtils.readTag(buf);
-	}
+    public MessageNBTUpdate(TileEntity te) {
+        this.x = te.getPos().getX();
+        this.y = te.getPos().getY();
+        this.z = te.getPos().getZ();
+        this.tag = te.writeToNBT(new NBTTagCompound());
+    }
 
-	public static class MessageNBTUpdateHandler implements IMessageHandler<MessageNBTUpdate, IMessage> 
-	{
-		@Override @SideOnly(Side.CLIENT)
-		public IMessage onMessage(final MessageNBTUpdate msg, MessageContext ctx)
-		{
-			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
-				@Override @SideOnly(Side.CLIENT)
-				public void run()
-				{
-					TileEntity entity =  Minecraft.getMinecraft().player.getEntityWorld().getTileEntity(new BlockPos(msg.x, msg.y, msg.z));
+    @Override
+    public void toBytes(ByteBuf buf) {
+        buf.writeInt(x);
+        buf.writeInt(y);
+        buf.writeInt(z);
+        ByteBufUtils.writeTag(buf, tag);
+    }
 
-					if (entity != null) {
-						entity.readFromNBT(msg.tag);
-					}
-				}
-			});
-			return null;
-		}
-	}
+    @Override
+    public void fromBytes(ByteBuf buf) {
+        this.x = buf.readInt();
+        this.y = buf.readInt();
+        this.z = buf.readInt();
+        this.tag = ByteBufUtils.readTag(buf);
+    }
+
+    public static class MessageNBTUpdateHandler implements IMessageHandler<MessageNBTUpdate, IMessage> {
+        @Override
+        @SideOnly(Side.CLIENT)
+        public IMessage onMessage(final MessageNBTUpdate msg, MessageContext ctx) {
+            Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+                @Override
+                @SideOnly(Side.CLIENT)
+                public void run() {
+                    TileEntity entity = Minecraft.getMinecraft().player.getEntityWorld().getTileEntity(new BlockPos(msg.x, msg.y, msg.z));
+
+                    if (entity != null) {
+                        entity.readFromNBT(msg.tag);
+                    }
+                }
+            });
+            return null;
+        }
+    }
 
 }

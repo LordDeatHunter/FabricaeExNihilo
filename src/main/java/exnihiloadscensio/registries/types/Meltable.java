@@ -4,12 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
-@AllArgsConstructor @EqualsAndHashCode
+@AllArgsConstructor
+@EqualsAndHashCode
 public class Meltable {
-	
-	@Getter
-	private String fluid;
-	@Getter
-	private int amount;
+
+    @Getter
+    private String fluid;
+    @Getter
+    private int amount;
 
 }

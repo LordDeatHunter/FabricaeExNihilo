@@ -1,6 +1,5 @@
 package exnihiloadscensio;
 
-import exnihiloadscensio.blocks.ENBlocks;
 import exnihiloadscensio.capabilities.ENCapabilities;
 import exnihiloadscensio.command.CommandReloadConfig;
 import exnihiloadscensio.config.Config;
@@ -8,8 +7,8 @@ import exnihiloadscensio.enchantments.ENEnchantments;
 import exnihiloadscensio.entities.ENEntities;
 import exnihiloadscensio.handlers.HandlerCrook;
 import exnihiloadscensio.handlers.HandlerHammer;
-import exnihiloadscensio.items.ENItems;
 import exnihiloadscensio.networking.PacketHandler;
+import exnihiloadscensio.proxy.CommonProxy;
 import exnihiloadscensio.registries.*;
 import exnihiloadscensio.registries.manager.ExNihiloDefaultRecipes;
 import exnihiloadscensio.util.LogUtil;
@@ -32,111 +31,114 @@ import java.io.File;
 @Mod(modid = ExNihiloAdscensio.MODID, name = "Ex Nihilo Adscensio", version = "0.1.0")
 public class ExNihiloAdscensio {
 
-	public static final String MODID = "exnihiloadscensio";
+    public static final String MODID = "exnihiloadscensio";
 
-	@SidedProxy(serverSide = "exnihiloadscensio.CommonProxy", clientSide = "exnihiloadscensio.client.ClientProxy")
-	public static CommonProxy proxy;
+    @SidedProxy(serverSide = "exnihiloadscensio.proxy.CommonProxy", clientSide = "exnihiloadscensio.proxy.ServerProxy")
+    public static CommonProxy proxy;
 
-	@Instance(MODID)
-	public static ExNihiloAdscensio instance;
+    @Instance(MODID)
+    public static ExNihiloAdscensio instance;
 
-	public static File configDirectory;
+    public static File configDirectory;
 
-	public static boolean configsLoaded = false;
-	
-	public static ExNihiloDefaultRecipes defaultRecipes;
+    public static boolean configsLoaded = false;
 
-	static {
-		FluidRegistry.enableUniversalBucket();
-	}
+    public static ExNihiloDefaultRecipes defaultRecipes;
+    public static CreativeTabs tabExNihilo = new CreativeTabs("exNihilo") {
+        @Override
+        @SideOnly(Side.CLIENT)
+        public ItemStack getTabIconItem() {
+            return new ItemStack(Item.getItemFromBlock(ModBlocks.sieve), 1);
+        }
+    };
 
-	@EventHandler
-	public static void preInit(FMLPreInitializationEvent event) {
-		LogUtil.setup();
+    static {
+        FluidRegistry.enableUniversalBucket();
+    }
 
-		configDirectory = new File(event.getModConfigurationDirectory(), "exnihiloadscensio");
-		configDirectory.mkdirs();
+    @EventHandler
+    public static void preInit(FMLPreInitializationEvent event) {
+        proxy.preInit(event);
 
-		Config.doNormalConfig(new File(configDirectory, "ExNihiloAdscensio.cfg"));
+        LogUtil.setup();
 
-        MinecraftForge.EVENT_BUS.register(new ModRegistry());
+        configDirectory = new File(event.getModConfigurationDirectory(), "exnihiloadscensio");
+        configDirectory.mkdirs();
 
-		ENCapabilities.init();
-		ENItems.init();
-		ENBlocks.init();
-		ENEntities.init();
-		ENEnchantments.init();
-		proxy.initModels();
-		proxy.registerRenderers();
+        Config.doNormalConfig(new File(configDirectory, "ExNihiloAdscensio.cfg"));
 
-		PacketHandler.initPackets();
-		
-		defaultRecipes = new ExNihiloDefaultRecipes();
+        // MinecraftForge.EVENT_BUS.register(new ModRegistry()); TODO: MOVE EVERYTHING OVER
 
-		MinecraftForge.EVENT_BUS.register(new HandlerHammer());
+        ENCapabilities.init();
+        ENEntities.init();
+        ENEnchantments.init();
 
-		MinecraftForge.EVENT_BUS.register(new HandlerCrook());
+        // proxy.registerRenderers(); TODO: move to correct event
 
-		if (Config.enableBarrels) {
-			BarrelModeRegistry.registerDefaults();
-		}
-	}
+        PacketHandler.initPackets();
 
-	@EventHandler
-	public static void init(FMLInitializationEvent event) {
-		OreRegistry.loadJson(new File(configDirectory, "OreRegistry.json"));
-		proxy.registerConfigs(configDirectory);
-		loadConfigs();
+        defaultRecipes = new ExNihiloDefaultRecipes();
 
-		Recipes.init();
-		OreRegistry.doRecipes();
+        MinecraftForge.EVENT_BUS.register(new HandlerHammer());
 
-		proxy.initOreModels();
-		proxy.registerColorHandlers();
-	}
+        MinecraftForge.EVENT_BUS.register(new HandlerCrook());
 
-	@EventHandler
-	public static void postInit(FMLPostInitializationEvent event) {
+        if (Config.enableBarrels) {
+            BarrelModeRegistry.registerDefaults();
+        }
+    }
 
-		if (Loader.isModLoaded("tconstruct") && Config.doTICCompat) {
-			// CompatTConstruct.postInit();
-		}
-		if (Loader.isModLoaded("EnderIO") && Config.doEnderIOCompat) {
-			// CompatEIO.postInit();
-		}
-	}
+    @EventHandler
+    public static void init(FMLInitializationEvent event) {
+        proxy.init(event)
+        ;
+        OreRegistry.loadJson(new File(configDirectory, "OreRegistry.json"));
+        proxy.registerConfigs(configDirectory);
+        loadConfigs();
 
-	public static void loadConfigs() {
-		configsLoaded = true;
+        Recipes.init();
+        OreRegistry.doRecipes();
 
-		CompostRegistry.loadJson(new File(configDirectory, "CompostRegistry.json"));
-		HammerRegistry.loadJson(new File(configDirectory, "HammerRegistry.json"));
-		FluidBlockTransformerRegistry.loadJson(new File(configDirectory, "FluidBlockTransformerRegistry.json"));
-		FluidOnTopRegistry.loadJson(new File(configDirectory, "FluidOnTopRegistry.json"));
-		HeatRegistry.loadJson(new File(configDirectory, "HeatRegistry.json"));
-		CrucibleRegistry.loadJson(new File(configDirectory, "CrucibleRegistry.json"));
-		SieveRegistry.loadJson(new File(configDirectory, "SieveRegistry.json"));
-		CrookRegistry.loadJson(new File(configDirectory, "CrookRegistry.json"));
-		FluidTransformRegistry.loadJson(new File(configDirectory, "FluidTransformRegistry.json"));
-		BarrelLiquidBlacklistRegistry.loadJson(new File(configDirectory, "BarrelLiquidBlacklistRegistry.json"));
+        proxy.initOreModels();
+        proxy.registerColorHandlers();
+    }
 
-	}
+    @EventHandler
+    public static void postInit(FMLPostInitializationEvent event) {
+        proxy.postInit(event);
 
-	@EventHandler
-	public static void serverStart(FMLServerStartingEvent event) {
-		event.registerServerCommand(new CommandReloadConfig());
-	}
+        if (Loader.isModLoaded("tconstruct") && Config.doTICCompat) {
+            // CompatTConstruct.postInit();
+        }
+        if (Loader.isModLoaded("EnderIO") && Config.doEnderIOCompat) {
+            // CompatEIO.postInit();
+        }
+    }
 
-	public static CreativeTabs tabExNihilo = new CreativeTabs("exNihilo") {
-		@Override @SideOnly(Side.CLIENT)
-		public ItemStack getTabIconItem() {
-			return new ItemStack(Item.getItemFromBlock(ENBlocks.sieve), 1);
-		}
-	};
+    public static void loadConfigs() {
+        configsLoaded = true;
 
-	@EventHandler
-	public static void modMapping(FMLModIdMappingEvent event) {
+        CompostRegistry.loadJson(new File(configDirectory, "CompostRegistry.json"));
+        HammerRegistry.loadJson(new File(configDirectory, "HammerRegistry.json"));
+        FluidBlockTransformerRegistry.loadJson(new File(configDirectory, "FluidBlockTransformerRegistry.json"));
+        FluidOnTopRegistry.loadJson(new File(configDirectory, "FluidOnTopRegistry.json"));
+        HeatRegistry.loadJson(new File(configDirectory, "HeatRegistry.json"));
+        CrucibleRegistry.loadJson(new File(configDirectory, "CrucibleRegistry.json"));
+        SieveRegistry.loadJson(new File(configDirectory, "SieveRegistry.json"));
+        CrookRegistry.loadJson(new File(configDirectory, "CrookRegistry.json"));
+        FluidTransformRegistry.loadJson(new File(configDirectory, "FluidTransformRegistry.json"));
+        BarrelLiquidBlacklistRegistry.loadJson(new File(configDirectory, "BarrelLiquidBlacklistRegistry.json"));
 
-	}
+    }
+
+    @EventHandler
+    public static void serverStart(FMLServerStartingEvent event) {
+        event.registerServerCommand(new CommandReloadConfig());
+    }
+
+    @EventHandler
+    public static void modMapping(FMLModIdMappingEvent event) {
+
+    }
 
 }

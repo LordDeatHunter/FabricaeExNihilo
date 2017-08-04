@@ -1,5 +1,5 @@
 {
-    "parent": "exnihiloadscensio:block/blockcrucible",
+    "parent": "exnihiloadscensio:block/block_crucible",
     "textures": {
         "particle": "exnihiloadscensio:blocks/blockcrucibleunfired",
         "top": "exnihiloadscensio:blocks/blockcrucibleunfired",
