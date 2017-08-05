@@ -3,7 +3,7 @@
     "textures": {
         "texture": "#texture"
     },
-    "name": "meshbase",
+    "name": "mesh_base",
     "display": {
         "thirdperson_righthand": {
             "rotation": [

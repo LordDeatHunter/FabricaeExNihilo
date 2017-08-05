@@ -4,5 +4,5 @@
         "particle": "minecraft:blocks/stone",
         "texture": "minecraft:blocks/stone"
     },
-    "name": "blockbarrel1"
+    "name": "block_barrel1"
 }

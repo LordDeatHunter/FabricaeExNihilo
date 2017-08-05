@@ -5,7 +5,8 @@
         "transform": "forge:default-item"
     },
     "variants": {
-        "type": {
+      "inventory": [{}],
+      "type": {
         	"blank": {
         		"textures": {
         			"layer0": "exnihiloadscensio:items/doll"

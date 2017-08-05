@@ -8,22 +8,22 @@
         "type": {
             "stone": {
                 "textures": {
-                    "layer0": "exnihiloadscensio:items/itempebble"
+                    "layer0": "exnihiloadscensio:items/item_pebble"
                 }
             },
             "granite": {
                 "textures": {
-                    "layer0": "exnihiloadscensio:items/itempebble"
+                    "layer0": "exnihiloadscensio:items/item_pebble"
                 }
             },
             "diorite": {
                 "textures": {
-                    "layer0": "exnihiloadscensio:items/itempebble"
+                    "layer0": "exnihiloadscensio:items/item_pebble"
                 }
             },
             "andesite": {
                 "textures": {
-                    "layer0": "exnihiloadscensio:items/itempebble"
+                    "layer0": "exnihiloadscensio:items/item_pebble"
                 }
             }
         }

@@ -1,5 +1,6 @@
 package exnihiloadscensio.blocks;
 
+import exnihiloadscensio.ExNihiloAdscensio;
 import exnihiloadscensio.registries.CrucibleRegistry;
 import exnihiloadscensio.tiles.TileCrucible;
 import exnihiloadscensio.util.Data;
@@ -13,6 +14,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,9 +24,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -32,6 +36,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlockCrucible extends Block implements IProbeInfoAccessor, IHasModel {
 
@@ -42,6 +48,9 @@ public class BlockCrucible extends Block implements IProbeInfoAccessor, IHasMode
         String name = "block_crucible";
         setUnlocalizedName(name);
         setRegistryName(name);
+
+
+
         Data.BLOCKS.add(this);
         this.setHardness(2.0f);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FIRED, false));
@@ -85,8 +94,10 @@ public class BlockCrucible extends Block implements IProbeInfoAccessor, IHasMode
 
     @Override
     public void getSubBlocks(@Nonnull CreativeTabs itemIn, NonNullList<ItemStack> items) {
-        items.add(new ItemStack(this, 1, 0));
-        items.add(new ItemStack(this, 1, 1));
+        if (itemIn == ExNihiloAdscensio.tabExNihilo){
+            items.add(new ItemStack(this, 1, 0));
+            items.add(new ItemStack(this, 1, 1));
+        }
     }
 
     @Override
@@ -127,12 +138,14 @@ public class BlockCrucible extends Block implements IProbeInfoAccessor, IHasMode
         return false;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
-    public void initModel() {
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0,
-                new ModelResourceLocation(getRegistryName(), "inventory"));
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 1,
-                new ModelResourceLocation(getRegistryName(), "inventory"));
+    public void initModel(ModelRegistryEvent e) {
+        ModelResourceLocation unfired = new ModelResourceLocation(getRegistryName(),"fired=false");
+        ModelResourceLocation fired = new ModelResourceLocation(getRegistryName(), "fired=true");
+
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, unfired);
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 1, fired);
     }
 
     @Override

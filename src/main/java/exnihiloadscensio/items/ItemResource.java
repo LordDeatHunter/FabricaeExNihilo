@@ -18,6 +18,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -103,14 +104,14 @@ public class ItemResource extends Item implements IHasModel {
         return EnumActionResult.PASS;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
-    public void initModel() {
+    public void initModel(ModelRegistryEvent e) {
         for (int i = 0; i < names.size(); i++) {
             String variant = "type=" + names.get(i);
 
-            ModelLoader.setCustomModelResourceLocation(this, i, new ModelResourceLocation("exnihiloadscensio:itemMaterial", variant));
+            ModelLoader.setCustomModelResourceLocation(this, i, new ModelResourceLocation(getRegistryName(), variant));
         }
     }
-
 
 }

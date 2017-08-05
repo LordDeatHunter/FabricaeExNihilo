@@ -4,7 +4,7 @@
         "particle": "minecraft:blocks/planks_oak",
         "texture": "minecraft:blocks/planks_oak"
     },
-    "name": "blockbarrel0",
+    "name": "block_barrel0",
     "elements": [
         {
             "from": [

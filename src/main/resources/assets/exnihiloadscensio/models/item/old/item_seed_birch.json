@@ -1,0 +1,10 @@
+{
+    "parent": "item/handheld",
+    "defaults": {
+        "model": "builtin/generated",
+        "transform": "forge:default-item"
+    },
+    "textures": {
+        "layer0": "exnihiloadscensio:items/seedbirch"
+    }
+}

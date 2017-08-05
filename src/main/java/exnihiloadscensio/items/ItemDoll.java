@@ -4,6 +4,7 @@ import exnihiloadscensio.ExNihiloAdscensio;
 import exnihiloadscensio.ModFluids;
 import exnihiloadscensio.util.Data;
 import exnihiloadscensio.util.IHasModel;
+import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.monster.EntityBlaze;
@@ -13,15 +14,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ItemDoll extends Item implements IHasModel {
 
@@ -84,11 +88,22 @@ public class ItemDoll extends Item implements IHasModel {
     }
 
     @SideOnly(Side.CLIENT)
-    public void initModel() {
-        for (int i = 0; i < names.size(); i++) {
+    @Override
+    public void initModel(ModelRegistryEvent event) {
+
+        /*for (int i = 0; i < names.size(); i++) {
             String variant = "type=" + names.get(i);
             ModelLoader.setCustomModelResourceLocation(this, i, new ModelResourceLocation("exnihiloadscensio:itemDoll", variant));
+        }*/
+
+        List<ModelResourceLocation> locations = new ArrayList<>();
+        for (int i = 0; i < names.size(); i++) {
+            locations.add(new ModelResourceLocation(getRegistryName() , "type="+names.get(i)));
         }
+
+        ModelBakery.registerItemVariants(this, locations.toArray(new ModelResourceLocation[0]));
+        ModelLoader.setCustomMeshDefinition(this, stack -> locations.get(stack.getMetadata()));
+
     }
 
 }

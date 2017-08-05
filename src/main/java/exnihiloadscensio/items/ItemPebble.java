@@ -6,6 +6,9 @@ import exnihiloadscensio.ModItems;
 import exnihiloadscensio.entities.ProjectileStone;
 import exnihiloadscensio.util.Data;
 import exnihiloadscensio.util.IHasModel;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,12 +17,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemPebble extends Item implements IHasModel {
@@ -74,11 +79,25 @@ public class ItemPebble extends Item implements IHasModel {
         return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }
 
-    @SideOnly(Side.CLIENT)
-    public void initModel() {
-        for (int i = 0; i < names.size(); i++) {
-            String variant = "type=" + names.get(i);
-            ModelLoader.setCustomModelResourceLocation(this, i, new ModelResourceLocation("exnihiloadscensio:itemPebble", variant));
+    public String getPebbleType(ItemStack stack){
+        if (stack.getMetadata() >= names.size() || stack.getMetadata() < 0){
+            return names.get(0);
+        }else {
+            return names.get(stack.getMetadata());
         }
+    }
+
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void initModel(ModelRegistryEvent e) {
+        List<ModelResourceLocation> locations = new ArrayList<>();
+        for (int i = 0; i < names.size(); i++) {
+            locations.add(new ModelResourceLocation(getRegistryName(),  "type="+names.get(i)));
+        }
+
+        ModelBakery.registerItemVariants(this, locations.toArray(new ModelResourceLocation[0]));
+        ModelLoader.setCustomMeshDefinition(this, stack -> locations.get(stack.getMetadata()));
+
     }
 }

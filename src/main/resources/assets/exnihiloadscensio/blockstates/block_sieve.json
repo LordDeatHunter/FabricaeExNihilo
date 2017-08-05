@@ -9,28 +9,28 @@
             "string": {
                 "submodel": {
                     "mesh": {
-                        "model": "exnihiloadscensio:meshstring"
+                        "model": "exnihiloadscensio:mesh_string"
                     }
                 }
             },
             "flint": {
                 "submodel": {
                     "mesh": {
-                        "model": "exnihiloadscensio:meshflint"
+                        "model": "exnihiloadscensio:mesh_flint"
                     }
                 }
             },
             "iron": {
                 "submodel": {
                     "mesh": {
-                        "model": "exnihiloadscensio:meshiron"
+                        "model": "exnihiloadscensio:mesh_iron"
                     }
                 }
             },
             "diamond": {
                 "submodel": {
                     "mesh": {
-                        "model": "exnihiloadscensio:meshdiamond"
+                        "model": "exnihiloadscensio:mesh_diamond"
                     }
                 }
             }

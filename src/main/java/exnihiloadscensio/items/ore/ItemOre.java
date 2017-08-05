@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -49,9 +50,9 @@ public class ItemOre extends Item implements IHasModel {
             list.add(new ItemStack(this, 1, 3)); //Ingot
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
-    public void initModel() {
-
+    public void initModel(ModelRegistryEvent e) {
         ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation("exnihiloadscensio:itemOre", "type=piece"));
         ModelLoader.setCustomModelResourceLocation(this, 1, new ModelResourceLocation("exnihiloadscensio:itemOre", "type=hunk"));
         ModelLoader.setCustomModelResourceLocation(this, 2, new ModelResourceLocation("exnihiloadscensio:itemOre", "type=dust"));
