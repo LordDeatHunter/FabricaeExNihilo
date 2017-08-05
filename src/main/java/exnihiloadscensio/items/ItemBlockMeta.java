@@ -13,6 +13,7 @@ public class ItemBlockMeta extends ItemBlock implements IHasModel {
         super(block);
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
+        this.setRegistryName(block.getRegistryName());
     }
 
     public int getMetadata(int damage) {

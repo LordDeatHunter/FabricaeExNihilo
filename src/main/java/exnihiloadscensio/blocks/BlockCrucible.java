@@ -11,6 +11,7 @@ import mcjty.theoneprobe.api.IProbeInfoAccessor;
 import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -38,6 +39,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class BlockCrucible extends Block implements IProbeInfoAccessor, IHasModel {
 
@@ -119,6 +121,8 @@ public class BlockCrucible extends Block implements IProbeInfoAccessor, IHasMode
             return true;
         }
     }
+
+
 
     @Override
     @Deprecated

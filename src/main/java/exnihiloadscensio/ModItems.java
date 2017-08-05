@@ -1,5 +1,6 @@
 package exnihiloadscensio;
 
+import exnihiloadscensio.blocks.ItemBlockCrucible;
 import exnihiloadscensio.items.*;
 import exnihiloadscensio.items.seeds.ItemSeedBase;
 import exnihiloadscensio.items.tools.CrookBase;
@@ -7,6 +8,7 @@ import exnihiloadscensio.items.tools.HammerBase;
 import exnihiloadscensio.registries.OreRegistry;
 import exnihiloadscensio.util.Data;
 import exnihiloadscensio.util.IHasModel;
+import exnihiloadscensio.util.IHasSpecialRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -39,6 +41,8 @@ public class ModItems {
     public static ItemPebble pebbles;
 
     public static ItemDoll dolls;
+
+    public static ItemBlockCrucible itemBlockCrucible;
 
     public static ArrayList<ItemSeedBase> itemSeeds = new ArrayList<>();
 
@@ -96,7 +100,12 @@ public class ModItems {
             registry.register(item);
         }
         for (Block block : Data.BLOCKS)
-            registry.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
+            if (!(block instanceof IHasSpecialRegistry)){
+                registry.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
+            }
+
+        registry.register(new ItemBlockCrucible(ModBlocks.crucible));
+
     }
 
     @SideOnly(Side.CLIENT)
