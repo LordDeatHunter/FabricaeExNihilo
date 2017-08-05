@@ -5,6 +5,7 @@ import exnihiloadscensio.registries.CrucibleRegistry;
 import exnihiloadscensio.tiles.TileCrucible;
 import exnihiloadscensio.util.Data;
 import exnihiloadscensio.util.IHasModel;
+import exnihiloadscensio.util.IHasSpecialRegistry;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.IProbeInfoAccessor;
@@ -41,7 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class BlockCrucible extends Block implements IProbeInfoAccessor, IHasModel {
+public class BlockCrucible extends Block implements IProbeInfoAccessor, IHasModel, IHasSpecialRegistry {
 
     public static final PropertyBool FIRED = PropertyBool.create("fired");
 
