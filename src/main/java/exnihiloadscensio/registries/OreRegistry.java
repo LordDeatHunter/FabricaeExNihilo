@@ -26,7 +26,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -159,15 +158,15 @@ public class OreRegistry {
         final ItemMeshDefinition ORES = stack -> {
             switch (stack.getItemDamage()) {
                 case 0:
-                    return new ModelResourceLocation("exnihiloadscensio:itemOre", "type=piece");
+                    return new ModelResourceLocation("exnihiloadscensio:item_ore", "type=piece");
                 case 1:
-                    return new ModelResourceLocation("exnihiloadscensio:itemOre", "type=hunk");
+                    return new ModelResourceLocation("exnihiloadscensio:item_ore", "type=hunk");
                 case 2:
-                    return new ModelResourceLocation("exnihiloadscensio:itemOre", "type=dust");
+                    return new ModelResourceLocation("exnihiloadscensio:item_ore", "type=dust");
                 case 3:
-                    return new ModelResourceLocation("exnihiloadscensio:itemOre", "type=ingot");
+                    return new ModelResourceLocation("exnihiloadscensio:item_ore", "type=ingot");
                 default:
-                    return new ModelResourceLocation(stack.getItem().getRegistryName() == null ? new ResourceLocation("exnihiloadscensio:itemOre") : stack.getItem().getRegistryName(), "inventory");
+                    return new ModelResourceLocation(stack.getItem().getRegistryName() == null ? new ResourceLocation("exnihiloadscensio:item_ore") : stack.getItem().getRegistryName(), "inventory");
             }
         };
         for (ItemOre ore : itemOreRegistry) {

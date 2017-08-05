@@ -172,8 +172,8 @@ public class ExNihiloDefaultRecipes implements ISieveDefaultRegistryProvider, IH
         CompostRegistry.register(Items.FISH, 2, 0.15f, dirtState, new Color("FF771C"));
         CompostRegistry.register(Items.FISH, 3, 0.15f, dirtState, new Color("DBFAFF"));
 
-        //CompostRegistry.register(ModItems.Silkworm, 0, 0.04f, ColorRegistry.color("silkworm_raw"));
-        //CompostRegistry.register(ModItems.SilkwormCooked, 0, 0.04f, ColorRegistry.color("silkworm_cooked"));
+        CompostRegistry.register(ModItems.resources, ItemResource.getMetaFromName(ItemResource.SILKWORM), 0.04f, dirtState, new Color("ff9966"));
+        CompostRegistry.register(ModItems.cookedSilkworm, 0, 0.04f, dirtState, new Color("cc6600"));
 
         CompostRegistry.register(Items.APPLE, 0, 0.10f, dirtState, new Color("FFF68F"));
         CompostRegistry.register(Items.MELON, 0, 0.04f, dirtState, new Color("FF443B"));

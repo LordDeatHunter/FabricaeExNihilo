@@ -7,11 +7,11 @@ import java.util.ArrayList;
 public class RegistryManager {
 
     @Getter
-    private static ArrayList<ISieveDefaultRegistryProvider> defaultSieveRecipeHandlers = new ArrayList<ISieveDefaultRegistryProvider>();
+    private static ArrayList<ISieveDefaultRegistryProvider> defaultSieveRecipeHandlers = new ArrayList<>();
     @Getter
-    private static ArrayList<IHammerDefaultRegistryProvider> defaultHammerRecipeHandlers = new ArrayList<IHammerDefaultRegistryProvider>();
+    private static ArrayList<IHammerDefaultRegistryProvider> defaultHammerRecipeHandlers = new ArrayList<>();
     @Getter
-    private static ArrayList<ICompostDefaultRegistryProvider> defaultCompostRecipeHandlers = new ArrayList<ICompostDefaultRegistryProvider>();
+    private static ArrayList<ICompostDefaultRegistryProvider> defaultCompostRecipeHandlers = new ArrayList<>();
 
 
     public static void registerSieveDefaultRecipeHandler(ISieveDefaultRegistryProvider provider) {

@@ -105,7 +105,7 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbe
                 return true;
             }
 
-            ArrayList<BlockPos> toSift = new ArrayList<BlockPos>();
+            ArrayList<BlockPos> toSift = new ArrayList<>();
             for (int xOffset = -1 * Config.sieveSimilarRadius; xOffset <= Config.sieveSimilarRadius; xOffset++) {
                 for (int zOffset = -1 * Config.sieveSimilarRadius; zOffset <= Config.sieveSimilarRadius; zOffset++) {
                     TileEntity entity = world.getTileEntity(pos.add(xOffset, 0, zOffset));
@@ -168,7 +168,7 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbe
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        MeshType type = (MeshType) state.getValue(MESH);
+        MeshType type = state.getValue(MESH);
         return type.getID();
     }
 
@@ -237,7 +237,7 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbe
         private int id;
         private String name;
 
-        private MeshType(int id, String name) {
+        MeshType(int id, String name) {
             this.id = id;
             this.name = name;
         }

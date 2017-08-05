@@ -61,6 +61,10 @@ public class ItemResource extends Item implements IHasModel {
         return new ItemStack(ModItems.resources, quantity, names.indexOf(name));
     }
 
+    public static int getMetaFromName(String name){
+        return names.indexOf(name);
+    }
+
     @Override
     @Nonnull
     public String getUnlocalizedName(ItemStack stack) {

@@ -8,7 +8,7 @@
         "type": {
         	"removed": {
         		"textures": {
-        			"layer0": "exnihiloadscensio:items/itempebble"
+        			"layer0": "exnihiloadscensio:items/item_pebble"
         		}
         	},
             "porcelain_clay": {

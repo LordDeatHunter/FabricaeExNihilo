@@ -33,7 +33,7 @@ public class ItemOre extends Item implements IHasModel {
         this.ore = ore;
         registerIngot = ore.getResult() == null;
         setUnlocalizedName(ExNihiloAdscensio.MODID + ".ore." + ore.getName());
-        setRegistryName("itemOre" + StringUtils.capitalize(ore.getName()));
+        setRegistryName("item_ore" + StringUtils.capitalize(ore.getName()));
         setCreativeTab(ExNihiloAdscensio.tabExNihilo);
         setHasSubtypes(true);
         Data.ITEMS.add(this);
@@ -53,11 +53,11 @@ public class ItemOre extends Item implements IHasModel {
     @Override
     @SideOnly(Side.CLIENT)
     public void initModel(ModelRegistryEvent e) {
-        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation("exnihiloadscensio:itemOre", "type=piece"));
-        ModelLoader.setCustomModelResourceLocation(this, 1, new ModelResourceLocation("exnihiloadscensio:itemOre", "type=hunk"));
-        ModelLoader.setCustomModelResourceLocation(this, 2, new ModelResourceLocation("exnihiloadscensio:itemOre", "type=dust"));
+        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation("exnihiloadscensio:item_ore", "type=piece"));
+        ModelLoader.setCustomModelResourceLocation(this, 1, new ModelResourceLocation("exnihiloadscensio:item_ore", "type=hunk"));
+        ModelLoader.setCustomModelResourceLocation(this, 2, new ModelResourceLocation("exnihiloadscensio:item_ore", "type=dust"));
         if (registerIngot)
-            ModelLoader.setCustomModelResourceLocation(this, 3, new ModelResourceLocation("exnihiloadscensio:itemOre", "type=ingot"));
+            ModelLoader.setCustomModelResourceLocation(this, 3, new ModelResourceLocation("exnihiloadscensio:item_ore", "type=ingot"));
     }
 
     @Override

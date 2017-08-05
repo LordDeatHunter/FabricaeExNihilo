@@ -67,13 +67,9 @@ public class ExNihiloAdscensio {
 
         Config.doNormalConfig(new File(configDirectory, "ExNihiloAdscensio.cfg"));
 
-        // MinecraftForge.EVENT_BUS.register(new ModRegistry()); TODO: MOVE EVERYTHING OVER
-
         ENCapabilities.init();
         ENEntities.init();
         ENEnchantments.init();
-
-        // proxy.registerRenderers(); TODO: move to correct event
 
         PacketHandler.initPackets();
 

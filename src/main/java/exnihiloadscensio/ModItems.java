@@ -42,8 +42,6 @@ public class ModItems {
 
     public static ItemDoll dolls;
 
-    public static ItemBlockCrucible itemBlockCrucible;
-
     public static ArrayList<ItemSeedBase> itemSeeds = new ArrayList<>();
 
     @SuppressWarnings("deprecation")
