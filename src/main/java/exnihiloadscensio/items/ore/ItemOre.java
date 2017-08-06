@@ -33,21 +33,23 @@ public class ItemOre extends Item implements IHasModel {
         this.ore = ore;
         registerIngot = ore.getResult() == null;
         setUnlocalizedName(ExNihiloAdscensio.MODID + ".ore." + ore.getName());
-        setRegistryName("item_ore" + StringUtils.capitalize(ore.getName()));
+        setRegistryName("item_ore_" + StringUtils.lowerCase(ore.getName()));
         setCreativeTab(ExNihiloAdscensio.tabExNihilo);
         setHasSubtypes(true);
+
         Data.ITEMS.add(this);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(@Nonnull CreativeTabs tab, NonNullList<ItemStack> list) {
-        if (this.isInCreativeTab(tab))
+        if (this.isInCreativeTab(tab)){
             list.add(new ItemStack(this, 1, 0)); //Piece
-        list.add(new ItemStack(this, 1, 1)); //Chunk
-        list.add(new ItemStack(this, 1, 2)); //Dust
-        if (registerIngot)
-            list.add(new ItemStack(this, 1, 3)); //Ingot
+            list.add(new ItemStack(this, 1, 1)); //Chunk
+            list.add(new ItemStack(this, 1, 2)); //Dust
+            if (registerIngot)
+                list.add(new ItemStack(this, 1, 3)); //Ingot
+        }
     }
 
     @Override

@@ -42,16 +42,15 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void init(FMLInitializationEvent event) {
         super.init(event);
+
+        OreRegistry.initModels();
+        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new RenderOrePiece(), OreRegistry.getItemOreRegistry().toArray(new ItemOre[0]));
+
     }
 
     @Override
     public void postInit(FMLPostInitializationEvent event) {
         super.postInit(event);
-    }
-
-    @Override
-    public void initOreModels() {
-        OreRegistry.initModels();
     }
 
     @Override
@@ -65,11 +64,6 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileSieve.class, new RenderSieve());
         ClientRegistry.bindTileEntitySpecialRenderer(TileInfestedLeaves.class, new RenderInfestedLeaves());
         RenderingRegistry.registerEntityRenderingHandler(ProjectileStone.class, new RenderProjectileStone.Factory());
-    }
-
-    @Override
-    public void registerColorHandlers() {
-        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new RenderOrePiece(), OreRegistry.getItemOreRegistry().toArray(new ItemOre[0]));
     }
 
     @Override

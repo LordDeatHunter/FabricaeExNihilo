@@ -51,17 +51,11 @@ public abstract class CommonProxy {
 
     }
 
-    public void initOreModels() {
-    }
-
     public boolean runningOnServer() {
         return true;
     }
 
     public void fixModels() {
-    }
-
-    public void registerColorHandlers() {
     }
 
     public void registerConfigs(File configDirectory) {

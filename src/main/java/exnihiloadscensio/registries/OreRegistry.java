@@ -3,6 +3,8 @@ package exnihiloadscensio.registries;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import exnihiloadscensio.ExNihiloAdscensio;
+import exnihiloadscensio.items.ore.EnumOreSubtype;
 import exnihiloadscensio.items.ore.ItemOre;
 import exnihiloadscensio.items.ore.Ore;
 import exnihiloadscensio.json.CustomBlockInfoJson;
@@ -21,6 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
@@ -47,48 +50,41 @@ public class OreRegistry {
     // Inconsistency at its finest
 
     public static void registerDefaults() {
-        registerOre("gold", new Color("FFFF00"), new ItemInfo(Items.GOLD_INGOT, 0));
-        registerOre("iron", new Color("BF8040"), new ItemInfo(Items.IRON_INGOT, 0));
+        register("gold", new Color("FFFF00"), new ItemInfo(Items.GOLD_INGOT, 0));
+        register("iron", new Color("BF8040"), new ItemInfo(Items.IRON_INGOT, 0));
 
+        //TODO: better way --> those will never grab as I check what there is in preinit, not what there might be
         if (OreDictionary.getOres("oreCopper").size() > 0) {
-            registerOre("copper", new Color("FF9933"), null);
+            register("copper", new Color("FF9933"), null);
         }
 
         if (OreDictionary.getOres("oreTin").size() > 0) {
-            registerOre("tin", new Color("E6FFF2"), null);
+            register("tin", new Color("E6FFF2"), null);
         }
 
         if (OreDictionary.getOres("oreAluminium").size() > 0 || OreDictionary.getOres("oreAluminum").size() > 0) {
-            registerOre("aluminium", new Color("BFBFBF"), null);
+            register("aluminium", new Color("BFBFBF"), null);
         }
 
         if (OreDictionary.getOres("oreLead").size() > 0) {
-            registerOre("lead", new Color("330066"), null);
+            register("lead", new Color("330066"), null);
         }
 
         if (OreDictionary.getOres("oreSilver").size() > 0) {
-            registerOre("silver", new Color("F2F2F2"), null);
+            register("silver", new Color("F2F2F2"), null);
         }
 
         if (OreDictionary.getOres("oreNickel").size() > 0) {
-            registerOre("nickel", new Color("FFFFCC"), null);
+            register("nickel", new Color("FFFFCC"), null);
         }
 
         if (OreDictionary.getOres("oreArdite").size() > 0) {
-            registerOre("ardite", new Color("FF751A"), null);
+            register("ardite", new Color("FF751A"), null);
         }
 
         if (OreDictionary.getOres("oreCobalt").size() > 0) {
-            registerOre("cobalt", new Color("3333FF"), null);
+            register("cobalt", new Color("3333FF"), null);
         }
-    }
-
-    /**
-     * Use register instead
-     */
-    @Deprecated
-    public static Ore registerOre(String name, Color color, ItemInfo info) {
-        return register(name, color, info);
     }
 
     /**
@@ -134,8 +130,12 @@ public class OreRegistry {
 
     public static void doRecipes() {
         for (ItemOre ore : itemOreRegistry) {
-            //GameRegistry.addRecipe(new ItemStack(ore, 1, 1),
-            //		new Object[] { "xx", "xx", 'x', new ItemStack(ore, 1, 0) });
+            ResourceLocation group = new ResourceLocation(ExNihiloAdscensio.MODID, "exores");
+            ResourceLocation baseName = new ResourceLocation(ExNihiloAdscensio.MODID, "ore_compression_");
+
+            GameRegistry.addShapedRecipe(new ResourceLocation(baseName.getResourceDomain(), baseName.getResourcePath() + ore.getOre().getName()), group,
+                    new ItemStack(ore, 1, EnumOreSubtype.CHUNK.getMeta()),
+                    "xx", "xx", 'x', new ItemStack(ore, 1, EnumOreSubtype.PIECE.getMeta()));
 
             ItemStack smeltingResult;
 
@@ -148,11 +148,15 @@ public class OreRegistry {
                 smeltingResult = ore.getOre().getResult().getItemStack();
             }
 
-            FurnaceRecipes.instance().addSmeltingRecipe(new ItemStack(ore, 1, 1), smeltingResult, 0.7f);
-            FurnaceRecipes.instance().addSmeltingRecipe(new ItemStack(ore, 1, 2), smeltingResult, 0.7f);
+            FurnaceRecipes.instance().addSmeltingRecipe(new ItemStack(ore, 1, EnumOreSubtype.CHUNK.getMeta()), smeltingResult, 0.7f);
+            FurnaceRecipes.instance().addSmeltingRecipe(new ItemStack(ore, 1, EnumOreSubtype.DUST.getMeta()), smeltingResult, 0.7f);
         }
     }
 
+    /**
+     * Must be called in init or later,
+     * in the model event there is no getRenderItem() yet
+     */
     @SideOnly(Side.CLIENT)
     public static void initModels() {
         final ItemMeshDefinition ORES = stack -> {
@@ -172,9 +176,9 @@ public class OreRegistry {
         for (ItemOre ore : itemOreRegistry) {
             ModelLoader.setCustomMeshDefinition(ore, ORES);
             ModelBakery.registerItemVariants(ore, new ModelResourceLocation("exnihiloadscensio:itemOre", "type=piece"),
-                    new ModelResourceLocation("exnihiloadscensio:itemOre", "type=hunk"),
-                    new ModelResourceLocation("exnihiloadscensio:itemOre", "type=dust"),
-                    new ModelResourceLocation("exnihiloadscensio:itemOre", "type=ingot"));
+                    new ModelResourceLocation("exnihiloadscensio:item_ore", "type=hunk"),
+                    new ModelResourceLocation("exnihiloadscensio:item_ore", "type=dust"),
+                    new ModelResourceLocation("exnihiloadscensio:item_ore", "type=ingot"));
             Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(ore, ORES);
         }
     }
@@ -213,5 +217,4 @@ public class OreRegistry {
             e.printStackTrace();
         }
     }
-
 }

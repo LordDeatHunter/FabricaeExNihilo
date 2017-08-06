@@ -113,8 +113,6 @@ public class ModItems {
                 ((IHasModel) item).initModel(e);
             }
         }
-
-        OreRegistry.initModels();
     }
 
 }

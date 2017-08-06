@@ -33,7 +33,7 @@ public class ExNihiloAdscensio {
 
     public static final String MODID = "exnihiloadscensio";
 
-    @SidedProxy(serverSide = "exnihiloadscensio.proxy.CommonProxy", clientSide = "exnihiloadscensio.proxy.ServerProxy")
+    @SidedProxy(serverSide = "exnihiloadscensio.proxy.ServerProxy", clientSide = "exnihiloadscensio.proxy.ClientProxy")
     public static CommonProxy proxy;
 
     @Instance(MODID)
@@ -67,6 +67,11 @@ public class ExNihiloAdscensio {
 
         Config.doNormalConfig(new File(configDirectory, "ExNihiloAdscensio.cfg"));
 
+
+        OreRegistry.loadJson(new File(configDirectory, "OreRegistry.json"));
+        proxy.registerConfigs(configDirectory);
+        loadConfigs();
+
         ENCapabilities.init();
         ENEntities.init();
         ENEnchantments.init();
@@ -86,17 +91,11 @@ public class ExNihiloAdscensio {
 
     @EventHandler
     public static void init(FMLInitializationEvent event) {
-        proxy.init(event)
-        ;
-        OreRegistry.loadJson(new File(configDirectory, "OreRegistry.json"));
-        proxy.registerConfigs(configDirectory);
-        loadConfigs();
+        proxy.init(event);
 
         Recipes.init();
         OreRegistry.doRecipes();
 
-        proxy.initOreModels();
-        proxy.registerColorHandlers();
     }
 
     @EventHandler
