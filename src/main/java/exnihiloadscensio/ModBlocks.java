@@ -1,6 +1,7 @@
 package exnihiloadscensio;
 
 import exnihiloadscensio.blocks.*;
+import exnihiloadscensio.tiles.TileBarrel;
 import exnihiloadscensio.tiles.TileCrucible;
 import exnihiloadscensio.tiles.TileInfestedLeaves;
 import exnihiloadscensio.tiles.TileSieve;
@@ -46,6 +47,7 @@ public class ModBlocks {
 
         barrelStone = new BlockBarrel(1, Material.ROCK);
         barrelStone.setCreativeTab(ExNihiloAdscensio.tabExNihilo);
+        GameRegistry.registerTileEntity(TileBarrel.class, "block_barrel");
 
         infestedLeaves = new BlockInfestedLeaves();
         GameRegistry.registerTileEntity(TileInfestedLeaves.class, "block_infested_leaves");

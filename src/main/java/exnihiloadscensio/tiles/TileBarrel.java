@@ -60,10 +60,13 @@ public class TileBarrel extends TileEntity implements ITickable {
         tank = new BarrelFluidHandler(this);
     }
 
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ, IFluidHandler handler) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (mode == null || mode.getName().equals("fluid")) {
             ItemStack stack = player.getHeldItem(hand);
-            Boolean result = FluidUtil.interactWithFluidHandler(player, hand, handler);
+
+            IFluidHandler fluidHandler = getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
+            boolean result = false;
+            if (fluidHandler != null) result = FluidUtil.interactWithFluidHandler(player, hand, fluidHandler);
 
             if (result) {
                 if (!player.isCreative()) {
@@ -92,7 +95,7 @@ public class TileBarrel extends TileEntity implements ITickable {
                     && bucketStack.getFluid() == tankStack.getFluid()
                     && tank.fill(FluidUtil.getFluidContained(stack), false) != 0) {
                 tank.drain(Fluid.BUCKET_VOLUME, true);
-                result = FluidUtil.interactWithFluidHandler(player, hand, handler);
+                result = FluidUtil.interactWithFluidHandler(player, hand, fluidHandler);
 
                 if (result && !player.isCreative()) {
                     stack.shrink(1);
