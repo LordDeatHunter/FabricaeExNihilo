@@ -6,6 +6,8 @@ import com.google.gson.reflect.TypeToken;
 import exnihiloadscensio.items.ItemResource;
 import exnihiloadscensio.json.CustomBlockInfoJson;
 import exnihiloadscensio.json.CustomItemStackJson;
+import exnihiloadscensio.registries.manager.ExNihiloRegistryManager;
+import exnihiloadscensio.registries.manager.ICrookDefaultRegistryProvider;
 import exnihiloadscensio.registries.types.CrookReward;
 import exnihiloadscensio.util.BlockInfo;
 import net.minecraft.block.Block;
@@ -24,21 +26,10 @@ public class CrookRegistry {
     private static Map<BlockInfo, List<CrookReward>> externalRegistry = new HashMap<>();
     private static Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(ItemStack.class, new CustomItemStackJson()).registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson()).create();
 
-    // Why you so inconsistent?
-    @Deprecated
-    /*
-     * Call register instead
-	 */
-    public static void addCrookRecipe(IBlockState state, ItemStack reward, float chance, float fortuneChance) {
-        register(new BlockInfo(state), reward, chance, fortuneChance);
-    }
-
-    @Deprecated
-    /*
-     * Call register instead
-     */
-    public static void addCrookRecipe(BlockInfo info, ItemStack reward, float chance, float fortuneChance) {
-        register(info, reward, chance, fortuneChance);
+    public static void registerDefaults() {
+        for (ICrookDefaultRegistryProvider iCrookDefaultRegistryProvider : ExNihiloRegistryManager.getDefaultCrookRecipeHandlers()) {
+            iCrookDefaultRegistryProvider.registerCrookRecipeDefaults();
+        }
     }
 
     public static void register(BlockInfo info, ItemStack reward, float chance, float fortuneChance) {
@@ -75,11 +66,6 @@ public class CrookRegistry {
             return null;
 
         return (ArrayList<CrookReward>) registry.get(info);
-    }
-
-    public static void registerDefaults() {
-        registerInternal(new BlockInfo(Blocks.LEAVES, -1), ItemResource.getResourceStack(ItemResource.SILKWORM), 0.1f, 0f);
-        registerInternal(new BlockInfo(Blocks.LEAVES2, -1), ItemResource.getResourceStack(ItemResource.SILKWORM), 0.1f, 0f);
     }
 
     public static void loadJson(File file) {

@@ -7,7 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import exnihiloadscensio.json.CustomBlockInfoJson;
 import exnihiloadscensio.json.CustomItemInfoJson;
 import exnihiloadscensio.registries.manager.ISieveDefaultRegistryProvider;
-import exnihiloadscensio.registries.manager.RegistryManager;
+import exnihiloadscensio.registries.manager.ExNihiloRegistryManager;
 import exnihiloadscensio.registries.types.Siftable;
 import exnihiloadscensio.util.BlockInfo;
 import exnihiloadscensio.util.ItemInfo;
@@ -115,7 +115,7 @@ public class SieveRegistry {
     }
 
     public static void registerDefaults() {
-        for (ISieveDefaultRegistryProvider provider : RegistryManager.getDefaultSieveRecipeHandlers()) {
+        for (ISieveDefaultRegistryProvider provider : ExNihiloRegistryManager.getDefaultSieveRecipeHandlers()) {
             provider.registerSieveRecipeDefaults();
         }
     }

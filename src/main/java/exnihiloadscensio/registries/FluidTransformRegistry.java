@@ -4,10 +4,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihiloadscensio.json.CustomBlockInfoJson;
+import exnihiloadscensio.registries.manager.ExNihiloRegistryManager;
+import exnihiloadscensio.registries.manager.IFluidTransformDefaultRegistryProvider;
 import exnihiloadscensio.registries.types.FluidTransformer;
 import exnihiloadscensio.util.BlockInfo;
 import lombok.Getter;
 import net.minecraft.init.Blocks;
+import net.minecraftforge.registries.RegistryManager;
 
 import java.io.File;
 import java.io.FileReader;
@@ -68,7 +71,9 @@ public class FluidTransformRegistry {
     }
 
     public static void registerDefaults() {
-        registerInternal("water", "witchwater", 12000, new BlockInfo[]{new BlockInfo(Blocks.MYCELIUM.getDefaultState())}, new BlockInfo[]{new BlockInfo(Blocks.BROWN_MUSHROOM.getDefaultState()), new BlockInfo(Blocks.RED_MUSHROOM.getDefaultState())});
+        for (IFluidTransformDefaultRegistryProvider provider : ExNihiloRegistryManager.getDefaultFluidTransformRecipeHandlers()) {
+            provider.registerFluidTransformRecipeDefaults();
+        }
     }
 
     public static void loadJson(File file) {

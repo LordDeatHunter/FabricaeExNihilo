@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihiloadscensio.json.CustomItemStackJson;
 import exnihiloadscensio.registries.manager.IHammerDefaultRegistryProvider;
-import exnihiloadscensio.registries.manager.RegistryManager;
+import exnihiloadscensio.registries.manager.ExNihiloRegistryManager;
 import exnihiloadscensio.util.ItemInfo;
 import lombok.Getter;
 import net.minecraft.block.Block;
@@ -119,7 +119,7 @@ public class HammerRegistry {
     }
 
     public static void registerDefaults() {
-        for (IHammerDefaultRegistryProvider provider : RegistryManager.getDefaultHammerRecipeHandlers()) {
+        for (IHammerDefaultRegistryProvider provider : ExNihiloRegistryManager.getDefaultHammerRecipeHandlers()) {
             provider.registerHammerRecipeDefaults();
         }
     }

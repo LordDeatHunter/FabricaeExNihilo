@@ -5,6 +5,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihiloadscensio.ModBlocks;
 import exnihiloadscensio.json.CustomItemInfoJson;
+import exnihiloadscensio.registries.manager.ExNihiloRegistryManager;
+import exnihiloadscensio.registries.manager.IFluidBlockDefaultRegistryProvider;
+import exnihiloadscensio.registries.manager.IFluidTransformDefaultRegistryProvider;
 import exnihiloadscensio.registries.types.FluidBlockTransformer;
 import exnihiloadscensio.util.ItemInfo;
 import lombok.Getter;
@@ -96,9 +99,8 @@ public class FluidBlockTransformerRegistry {
     }
 
     public static void registerDefaults() {
-        registerInternal(FluidRegistry.WATER, new ItemInfo(new ItemStack(ModBlocks.dust)), new ItemInfo(new ItemStack(Blocks.CLAY)));
-        registerInternal(FluidRegistry.LAVA, new ItemInfo(new ItemStack(Items.REDSTONE)), new ItemInfo(new ItemStack(Blocks.NETHERRACK)));
-        registerInternal(FluidRegistry.LAVA, new ItemInfo(new ItemStack(Items.GLOWSTONE_DUST)), new ItemInfo(new ItemStack(Blocks.END_STONE)));
-        registerInternal("witchwater", new ItemInfo(new ItemStack(Blocks.SAND)), new ItemInfo(new ItemStack(Blocks.SOUL_SAND)));
+        for (IFluidBlockDefaultRegistryProvider provider : ExNihiloRegistryManager.getDefaultFluidBlockRecipeHandlers()) {
+            provider.registerFluidBlockRecipeDefaults();
+        }
     }
 }

@@ -4,12 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihiloadscensio.json.CustomItemInfoJson;
+import exnihiloadscensio.registries.manager.ExNihiloRegistryManager;
+import exnihiloadscensio.registries.manager.IFluidOnTopDefaultRegistryProvider;
 import exnihiloadscensio.registries.types.FluidFluidBlock;
 import exnihiloadscensio.util.ItemInfo;
 import lombok.Getter;
-import net.minecraft.init.Blocks;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 
 import java.io.File;
 import java.io.FileReader;
@@ -87,7 +87,8 @@ public class FluidOnTopRegistry {
     }
 
     public static void registerDefaults() {
-        registerInternal(FluidRegistry.LAVA, FluidRegistry.WATER, new ItemInfo(Blocks.OBSIDIAN.getDefaultState()));
-        registerInternal(FluidRegistry.WATER, FluidRegistry.LAVA, new ItemInfo(Blocks.COBBLESTONE.getDefaultState()));
+        for (IFluidOnTopDefaultRegistryProvider provider : ExNihiloRegistryManager.getDefaultFluidOnTopRecipeHandlers()) {
+            provider.registerFluidOnTopRecipeDefaults();
+        }
     }
 }

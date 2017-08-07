@@ -10,6 +10,8 @@ import exnihiloadscensio.items.ore.Ore;
 import exnihiloadscensio.json.CustomBlockInfoJson;
 import exnihiloadscensio.json.CustomItemInfoJson;
 import exnihiloadscensio.json.CustomOreJson;
+import exnihiloadscensio.registries.manager.ExNihiloRegistryManager;
+import exnihiloadscensio.registries.manager.IOreDefaultRegistryProvider;
 import exnihiloadscensio.texturing.Color;
 import exnihiloadscensio.util.BlockInfo;
 import exnihiloadscensio.util.ItemInfo;
@@ -18,7 +20,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -28,7 +29,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 import org.apache.commons.lang3.StringUtils;
 
@@ -53,40 +53,8 @@ public class OreRegistry {
     // Inconsistency at its finest
 
     public static void registerDefaults() {
-        register("gold", new Color("FFFF00"), new ItemInfo(Items.GOLD_INGOT, 0));
-        register("iron", new Color("BF8040"), new ItemInfo(Items.IRON_INGOT, 0));
-
-        //TODO: better way --> those will never grab as I check what there is in preinit, not what there might be
-        if (OreDictionary.getOres("oreCopper").size() > 0) {
-            register("copper", new Color("FF9933"), null);
-        }
-
-        if (OreDictionary.getOres("oreTin").size() > 0) {
-            register("tin", new Color("E6FFF2"), null);
-        }
-
-        if (OreDictionary.getOres("oreAluminium").size() > 0 || OreDictionary.getOres("oreAluminum").size() > 0) {
-            register("aluminium", new Color("BFBFBF"), null);
-        }
-
-        if (OreDictionary.getOres("oreLead").size() > 0) {
-            register("lead", new Color("330066"), null);
-        }
-
-        if (OreDictionary.getOres("oreSilver").size() > 0) {
-            register("silver", new Color("F2F2F2"), null);
-        }
-
-        if (OreDictionary.getOres("oreNickel").size() > 0) {
-            register("nickel", new Color("FFFFCC"), null);
-        }
-
-        if (OreDictionary.getOres("oreArdite").size() > 0) {
-            register("ardite", new Color("FF751A"), null);
-        }
-
-        if (OreDictionary.getOres("oreCobalt").size() > 0) {
-            register("cobalt", new Color("3333FF"), null);
+        for (IOreDefaultRegistryProvider iOreDefaultRegistryProvider : ExNihiloRegistryManager.getDefaultOreRecipeHandlers()) {
+            iOreDefaultRegistryProvider.registerOreRecipeDefaults();
         }
     }
 

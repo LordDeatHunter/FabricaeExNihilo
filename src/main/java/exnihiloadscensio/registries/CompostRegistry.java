@@ -6,7 +6,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihiloadscensio.json.CustomItemInfoJson;
 import exnihiloadscensio.registries.manager.ICompostDefaultRegistryProvider;
-import exnihiloadscensio.registries.manager.RegistryManager;
+import exnihiloadscensio.registries.manager.ExNihiloRegistryManager;
 import exnihiloadscensio.registries.types.Compostable;
 import exnihiloadscensio.texturing.Color;
 import exnihiloadscensio.util.ItemInfo;
@@ -108,7 +108,7 @@ public class CompostRegistry {
     }
 
     public static void registerDefaults() {
-        for (ICompostDefaultRegistryProvider provider : RegistryManager.getDefaultCompostRecipeHandlers()) {
+        for (ICompostDefaultRegistryProvider provider : ExNihiloRegistryManager.getDefaultCompostRecipeHandlers()) {
             provider.registerCompostRecipeDefaults();
         }
     }
