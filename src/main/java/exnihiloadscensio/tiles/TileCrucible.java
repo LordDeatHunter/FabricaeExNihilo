@@ -40,7 +40,7 @@ import javax.annotation.Nonnull;
 
 public class TileCrucible extends TileEntity implements ITickable {
 
-    private static final int MAX_ITEMS = 4;
+    public static final int MAX_ITEMS = 4;
     @Getter
     private FluidTank tank;
     @Getter
@@ -253,7 +253,9 @@ public class TileCrucible extends TileEntity implements ITickable {
         ItemStack insertStack = itemHandler.insertItem(0, addStack, true);
         if (!ItemStack.areItemStacksEqual(addStack, insertStack)) {
             itemHandler.insertItem(0, addStack, false);
+
             if (currentItem == null) currentItem = new ItemInfo(stack);
+
             if (!player.isCreative()) stack.shrink(1);
 
             PacketHandler.sendNBTUpdate(this);

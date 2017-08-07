@@ -1,6 +1,7 @@
 package exnihiloadscensio.tiles;
 
 import exnihiloadscensio.registries.CrucibleRegistry;
+import exnihiloadscensio.registries.types.Meltable;
 import lombok.Setter;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
@@ -20,7 +21,10 @@ public class CrucibleItemHandler extends ItemStackHandler {
     @Nonnull
     public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
         if (CrucibleRegistry.canBeMelted(stack)) {
-            return super.insertItem(slot, stack, simulate);
+            Meltable meltable = CrucibleRegistry.getMeltable(stack);
+            if ((meltable.getAmount() + meltable.getAmount() * getStackInSlot(0).getCount() + te.getSolidAmount()) <= (meltable.getAmount() * TileCrucible.MAX_ITEMS)){
+                return super.insertItem(slot, stack, simulate);
+            }
         }
 
         return stack;
@@ -30,10 +34,5 @@ public class CrucibleItemHandler extends ItemStackHandler {
     @Nonnull
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
         return ItemStack.EMPTY;
-    }
-
-    @Override
-    protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
-        return te.getCurrentItem() == null ? 4 : 3;
     }
 }
