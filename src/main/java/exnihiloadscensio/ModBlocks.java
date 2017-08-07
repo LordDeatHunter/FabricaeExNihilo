@@ -29,7 +29,7 @@ public class ModBlocks {
     public static BlockSieve sieve;
 
 
-    public static void init() {
+    public static void preInit() {
         dust = new BlockBaseFalling(SoundType.CLOTH, "block_dust");
         dust.setCreativeTab(ExNihiloAdscensio.tabExNihilo);
         dust.setHardness(0.7F);
@@ -63,8 +63,6 @@ public class ModBlocks {
     }
 
     public static void registerBlocks(IForgeRegistry<Block> registry) {
-        init();
-
         for (Block block : Data.BLOCKS) {
             registry.register(block);
         }

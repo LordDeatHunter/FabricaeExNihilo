@@ -13,17 +13,17 @@
             },
             "granite": {
                 "textures": {
-                    "layer0": "exnihiloadscensio:items/item_pebble"
+                    "layer0": "exnihiloadscensio:items/item_pebble_granite"
                 }
             },
             "diorite": {
                 "textures": {
-                    "layer0": "exnihiloadscensio:items/item_pebble"
+                    "layer0": "exnihiloadscensio:items/item_pebble_diorite"
                 }
             },
             "andesite": {
                 "textures": {
-                    "layer0": "exnihiloadscensio:items/item_pebble"
+                    "layer0": "exnihiloadscensio:items/item_pebble_andesite"
                 }
             }
         }

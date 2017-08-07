@@ -19,6 +19,7 @@ import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.ResourceLocation;
@@ -27,6 +28,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.registries.ForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistry;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -215,6 +218,12 @@ public class OreRegistry {
             fw.close();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void registerToGameRegistry(IForgeRegistry<Item> itemRegistry){
+        for (ItemOre itemOre : itemOreRegistry) {
+            itemRegistry.register(itemOre);
         }
     }
 }

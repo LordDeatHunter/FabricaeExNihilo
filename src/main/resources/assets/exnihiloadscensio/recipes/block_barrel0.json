@@ -1,18 +1,14 @@
 {
   "result": {
-    "item": "exnihiloadscensio:block_sieve"
+    "item": "exnihiloadscensio:block_barrel0"
   },
   "pattern": [
     "x x",
-    "xyx",
-    "s s"
+    "x x",
+    "xyx"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
-    "s": {
-      "type": "forge:ore_dict",
-      "ore": "stickWood"
-    },
     "x": {
       "type": "forge:ore_dict",
       "ore": "plankWood"

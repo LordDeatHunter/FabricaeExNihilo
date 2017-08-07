@@ -45,7 +45,7 @@ public class ModItems {
     public static ArrayList<ItemSeedBase> itemSeeds = new ArrayList<>();
 
     @SuppressWarnings("deprecation")
-    public static void init() {
+    public static void preInit() {
         hammerWood = new HammerBase("hammer_wood", 64, Item.ToolMaterial.WOOD);
         hammerWood.setCreativeTab(ExNihiloAdscensio.tabExNihilo);
 
@@ -71,7 +71,6 @@ public class ModItems {
         mesh.setCreativeTab(ExNihiloAdscensio.tabExNihilo);
 
         resources = new ItemResource();
-        OreDictionary.registerOre("clay_porcelain", ItemResource.getResourceStack("porcelain_clay"));
 
         cookedSilkworm = new ItemCookedSilkworm();
 
@@ -92,17 +91,20 @@ public class ModItems {
     }
 
     public static void registerItems(IForgeRegistry<Item> registry) {
-        init();
-
         for (Item item : Data.ITEMS) {
-            registry.register(item);
+            if (!(item instanceof IHasSpecialRegistry)){
+                registry.register(item);
+            }
         }
+
         for (Block block : Data.BLOCKS)
             if (!(block instanceof IHasSpecialRegistry)){
                 registry.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
             }
 
         registry.register(new ItemBlockCrucible(ModBlocks.crucible));
+
+        OreDictionary.registerOre("clayPorcelain", ItemResource.getResourceStack("porcelain_clay"));
 
     }
 

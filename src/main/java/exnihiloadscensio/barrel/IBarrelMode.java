@@ -21,35 +21,35 @@ import java.util.List;
 
 public interface IBarrelMode {
 
-    public void writeToNBT(NBTTagCompound tag);
+    void writeToNBT(NBTTagCompound tag);
 
-    public void readFromNBT(NBTTagCompound tag);
+    void readFromNBT(NBTTagCompound tag);
 
-    public boolean isTriggerItemStack(ItemStack stack);
+    boolean isTriggerItemStack(ItemStack stack);
 
-    public boolean isTriggerFluidStack(FluidStack stack);
+    boolean isTriggerFluidStack(FluidStack stack);
 
-    public String getName();
+    String getName();
 
-    public boolean onBlockActivated(World world, TileBarrel barrel, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ);
+    boolean onBlockActivated(World world, TileBarrel barrel, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ);
 
     @SideOnly(Side.CLIENT)
-    public TextureAtlasSprite getTextureForRender(TileBarrel barrel);
+    TextureAtlasSprite getTextureForRender(TileBarrel barrel);
 
-    public Color getColorForRender();
+    Color getColorForRender();
 
-    public float getFilledLevelForRender(TileBarrel barrel);
+    float getFilledLevelForRender(TileBarrel barrel);
 
-    public void update(TileBarrel barrel);
+    void update(TileBarrel barrel);
 
-    public boolean addItem(ItemStack stack, TileBarrel barrel);
+    boolean addItem(ItemStack stack, TileBarrel barrel);
 
-    public ItemStackHandler getHandler(TileBarrel barrel);
+    ItemStackHandler getHandler(TileBarrel barrel);
 
-    public FluidTank getFluidHandler(TileBarrel barrel);
+    FluidTank getFluidHandler(TileBarrel barrel);
 
-    public boolean canFillWithFluid(TileBarrel barrel);
+    boolean canFillWithFluid(TileBarrel barrel);
 
-    public List<String> getWailaTooltip(TileBarrel barrel, List<String> currenttip);
+    List<String> getWailaTooltip(TileBarrel barrel, List<String> currenttip);
 
 }

@@ -67,10 +67,14 @@ public class ExNihiloAdscensio {
 
         Config.doNormalConfig(new File(configDirectory, "ExNihiloAdscensio.cfg"));
 
+        ModItems.preInit();
+        ModBlocks.preInit();
 
-        OreRegistry.loadJson(new File(configDirectory, "OreRegistry.json"));
+
+
         proxy.registerConfigs(configDirectory);
-        loadConfigs();
+
+
 
         ENCapabilities.init();
         ENEntities.init();
@@ -93,8 +97,10 @@ public class ExNihiloAdscensio {
     public static void init(FMLInitializationEvent event) {
         proxy.init(event);
 
+        loadConfigs();
+
         Recipes.init();
-        OreRegistry.doRecipes();
+        // OreRegistry.doRecipes();
 
     }
 

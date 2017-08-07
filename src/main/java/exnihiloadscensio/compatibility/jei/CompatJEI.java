@@ -35,6 +35,7 @@ import exnihiloadscensio.util.ItemInfo;
 import exnihiloadscensio.util.LogUtil;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
+import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
@@ -50,6 +51,7 @@ import java.util.Map;
 
 @JEIPlugin
 public class CompatJEI implements IModPlugin {
+
     @Override
     public void registerItemSubtypes(@Nonnull ISubtypeRegistry subtypeRegistry) {
     }
@@ -57,6 +59,18 @@ public class CompatJEI implements IModPlugin {
     @Override
     public void registerIngredients(@Nonnull IModIngredientRegistration registry) {
     }
+
+    @Override
+    public void registerCategories(IRecipeCategoryRegistration registry) {
+        registry.addRecipeCategories(new SieveRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        registry.addRecipeCategories(new HammerRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        registry.addRecipeCategories(new FluidOnTopRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        registry.addRecipeCategories(new FluidTransformRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        registry.addRecipeCategories(new FluidBlockTransformRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        registry.addRecipeCategories(new CompostRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+    }
+
+
 
     @Override
     @SideOnly(Side.CLIENT)
@@ -67,7 +81,6 @@ public class CompatJEI implements IModPlugin {
             ExNihiloAdscensio.loadConfigs();
         }
 
-        registry.addRecipeCategories(new SieveRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
         registry.addRecipeHandlers(new SieveRecipeHandler());
 
         List<SieveRecipe> sieveRecipes = Lists.newArrayList();
@@ -89,7 +102,6 @@ public class CompatJEI implements IModPlugin {
         registry.addRecipes(sieveRecipes);
         registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.sieve), SieveRecipeCategory.UID);
 
-        registry.addRecipeCategories(new HammerRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
         registry.addRecipeHandlers(new HammerRecipeHandler());
 
         List<HammerRecipe> hammerRecipes = Lists.newArrayList();
@@ -115,7 +127,6 @@ public class CompatJEI implements IModPlugin {
         registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.hammerIron), HammerRecipeCategory.UID);
         registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.hammerDiamond), HammerRecipeCategory.UID);
 
-        registry.addRecipeCategories(new FluidTransformRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
         registry.addRecipeHandlers(new FluidTransformRecipeHandler());
 
         List<FluidTransformRecipe> fluidTransformRecipes = Lists.newArrayList();
@@ -136,7 +147,6 @@ public class CompatJEI implements IModPlugin {
         registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.barrelWood), FluidTransformRecipeCategory.UID);
         registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.barrelStone), FluidTransformRecipeCategory.UID);
 
-        registry.addRecipeCategories(new FluidOnTopRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
         registry.addRecipeHandlers(new FluidOnTopRecipeHandler());
 
         List<FluidOnTopRecipe> fluidOnTopRecipes = Lists.newArrayList();
@@ -156,7 +166,6 @@ public class CompatJEI implements IModPlugin {
         registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.barrelWood), FluidOnTopRecipeCategory.UID);
         registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.barrelStone), FluidOnTopRecipeCategory.UID);
 
-        registry.addRecipeCategories(new FluidBlockTransformRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
         registry.addRecipeHandlers(new FluidBlockTransformRecipeHandler());
 
         List<FluidBlockTransformRecipe> fluidBlockTransformRecipes = Lists.newArrayList();
@@ -176,7 +185,6 @@ public class CompatJEI implements IModPlugin {
         registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.barrelWood), FluidBlockTransformRecipeCategory.UID);
         registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.barrelStone), FluidBlockTransformRecipeCategory.UID);
 
-        registry.addRecipeCategories(new CompostRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
         registry.addRecipeHandlers(new CompostRecipeHandler());
 
         List<CompostRecipe> compostRecipes = Lists.newArrayList();

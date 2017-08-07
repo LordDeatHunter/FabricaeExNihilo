@@ -25,23 +25,13 @@ public class BarrelLiquidBlacklistRegistry {
     public static void register(int level, String fluid) {
         registerInternal(level, fluid);
 
-        List<String> list = externalBlacklist.get(level);
-
-        if (list == null) {
-            list = new ArrayList<>();
-            externalBlacklist.put(level, list);
-        }
+        List<String> list = externalBlacklist.computeIfAbsent(level, k -> new ArrayList<>());
 
         list.add(fluid);
     }
 
     private static void registerInternal(int level, String fluid) {
-        List<String> list = blacklist.get(level);
-
-        if (list == null) {
-            list = new ArrayList<>();
-            blacklist.put(level, list);
-        }
+        List<String> list = blacklist.computeIfAbsent(level, k -> new ArrayList<>());
 
         list.add(fluid);
     }

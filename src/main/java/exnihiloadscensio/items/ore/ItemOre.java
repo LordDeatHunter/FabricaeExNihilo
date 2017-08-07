@@ -3,6 +3,7 @@ package exnihiloadscensio.items.ore;
 import exnihiloadscensio.ExNihiloAdscensio;
 import exnihiloadscensio.util.Data;
 import exnihiloadscensio.util.IHasModel;
+import exnihiloadscensio.util.IHasSpecialRegistry;
 import lombok.Getter;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -19,7 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import javax.annotation.Nonnull;
 
 @SuppressWarnings("deprecation")
-public class ItemOre extends Item implements IHasModel {
+public class ItemOre extends Item implements IHasModel, IHasSpecialRegistry {
 
     @Getter
     private boolean registerIngot;

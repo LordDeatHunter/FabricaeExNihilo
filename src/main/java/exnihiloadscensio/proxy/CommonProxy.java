@@ -1,8 +1,10 @@
 package exnihiloadscensio.proxy;
 
+import exnihiloadscensio.ExNihiloAdscensio;
 import exnihiloadscensio.ModBlocks;
 import exnihiloadscensio.ModItems;
 import exnihiloadscensio.Recipes;
+import exnihiloadscensio.registries.OreRegistry;
 import exnihiloadscensio.util.Data;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -12,6 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.File;
@@ -24,8 +27,6 @@ public abstract class CommonProxy {
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         ModBlocks.registerBlocks(event.getRegistry());
-
-        // GameRegistry.registerTileEntity(BlinkingTileEntity.class, ModTut.MODID + "_blinkingblock"); TODO: REGISTER TEs
     }
 
     @SubscribeEvent
@@ -33,10 +34,17 @@ public abstract class CommonProxy {
         ModItems.registerItems(event.getRegistry());
     }
 
+    @SubscribeEvent(priority = EventPriority.LOW)
+    public static void registerItemsLower(RegistryEvent.Register<Item> event) {
+        OreRegistry.loadJson(new File(ExNihiloAdscensio.configDirectory, "OreRegistry.json"));
+        OreRegistry.registerToGameRegistry(event.getRegistry());
+    }
+
     @SubscribeEvent
     public static void onRecipeRegistry(RegistryEvent.Register<IRecipe> e) {
-        Recipes.init();
+        // Recipes.init();
         e.getRegistry().registerAll(Data.RECIPES.toArray(new IRecipe[RECIPES.size()]));
+        OreRegistry.doRecipes();
     }
 
     public void preInit(FMLPreInitializationEvent event) {
@@ -53,9 +61,6 @@ public abstract class CommonProxy {
 
     public boolean runningOnServer() {
         return true;
-    }
-
-    public void fixModels() {
     }
 
     public void registerConfigs(File configDirectory) {
