@@ -1,9 +1,7 @@
 package exnihiloadscensio.blocks;
 
-import exnihiloadscensio.ModBlocks;
 import exnihiloadscensio.ModFluids;
 import exnihiloadscensio.util.Data;
-import exnihiloadscensio.util.IHasModel;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -17,13 +15,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 
-public class BlockFluidWitchwater extends BlockFluidClassic implements IHasModel {
+public class BlockFluidWitchwater extends BlockFluidClassic{
 
     public BlockFluidWitchwater() {
         super(ModFluids.fluidWitchwater, Material.WATER);
 
         this.setRegistryName("witchwater");
         this.setUnlocalizedName("witchwater");
+
         Data.BLOCKS.add(this);
     }
 
@@ -101,5 +100,4 @@ public class BlockFluidWitchwater extends BlockFluidClassic implements IHasModel
             player.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 210, 0));
         }
     }
-
 }

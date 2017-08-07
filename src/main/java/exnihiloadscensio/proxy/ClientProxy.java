@@ -1,6 +1,7 @@
 package exnihiloadscensio.proxy;
 
 import exnihiloadscensio.ModBlocks;
+import exnihiloadscensio.ModFluids;
 import exnihiloadscensio.ModItems;
 import exnihiloadscensio.client.renderers.*;
 import exnihiloadscensio.entities.ProjectileStone;
@@ -20,16 +21,20 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.File;
 
 @Mod.EventBusSubscriber
+@SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
 
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
         ModBlocks.initModels(event);
         ModItems.initModels(event);
+        ModFluids.initModels();
 
         registerRenderers();
     }

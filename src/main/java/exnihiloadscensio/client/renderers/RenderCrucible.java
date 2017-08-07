@@ -1,8 +1,11 @@
 package exnihiloadscensio.client.renderers;
 
+import exnihiloadscensio.texturing.Color;
+import exnihiloadscensio.texturing.SpriteColor;
 import exnihiloadscensio.tiles.TileCrucible;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -12,19 +15,25 @@ import org.lwjgl.opengl.GL11;
 
 public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucible> {
     @Override
-    public void render(TileCrucible te, double x, double y, double z,
-                       float partialTicks, int destroyStage, float alpha) {
+    public void render(TileCrucible te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         Tessellator tes = Tessellator.getInstance();
         BufferBuilder wr = tes.getBuffer();
 
+
+        RenderHelper.disableStandardItemLighting();
         GlStateManager.pushMatrix();
         GlStateManager.translate(x, y, z);
-        if (te.getTexture() != null) {
-            TextureAtlasSprite icon = te.getTexture();
+        SpriteColor sprite = te.getSpriteAndColor();
+
+        if (sprite != null) {
+            TextureAtlasSprite icon = sprite.getSprite();
             double minU = (double) icon.getMinU();
             double maxU = (double) icon.getMaxU();
             double minV = (double) icon.getMinV();
             double maxV = (double) icon.getMaxV();
+
+            // determine the tint for the fluid/block
+            Color color = sprite.getColor();
 
             this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 
@@ -44,6 +53,7 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucible> {
         GlStateManager.disableBlend();
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();
+        RenderHelper.enableStandardItemLighting();
 
     }
 

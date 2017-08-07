@@ -1,15 +1,13 @@
 package exnihiloadscensio.proxy;
 
-import exnihiloadscensio.ExNihiloAdscensio;
-import exnihiloadscensio.ModBlocks;
-import exnihiloadscensio.ModItems;
-import exnihiloadscensio.Recipes;
+import exnihiloadscensio.*;
 import exnihiloadscensio.registries.OreRegistry;
 import exnihiloadscensio.util.Data;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -48,7 +46,7 @@ public abstract class CommonProxy {
     }
 
     public void preInit(FMLPreInitializationEvent event) {
-
+        ModFluids.init();
     }
 
     public void init(FMLInitializationEvent event) {

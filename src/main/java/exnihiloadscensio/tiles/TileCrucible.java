@@ -5,6 +5,8 @@ import exnihiloadscensio.networking.PacketHandler;
 import exnihiloadscensio.registries.CrucibleRegistry;
 import exnihiloadscensio.registries.HeatRegistry;
 import exnihiloadscensio.registries.types.Meltable;
+import exnihiloadscensio.texturing.Color;
+import exnihiloadscensio.texturing.SpriteColor;
 import exnihiloadscensio.util.BlockInfo;
 import exnihiloadscensio.util.ItemInfo;
 import exnihiloadscensio.util.LogUtil;
@@ -12,6 +14,7 @@ import exnihiloadscensio.util.Util;
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -145,48 +148,63 @@ public class TileCrucible extends TileEntity implements ITickable {
 
     @SuppressWarnings("deprecation")
     @SideOnly(Side.CLIENT)
-    public TextureAtlasSprite getTexture() {
-        int noItems = itemHandler.getStackInSlot(0).isEmpty() ? 0 :
-                itemHandler.getStackInSlot(0).getCount();
+    public SpriteColor getSpriteAndColor() {
+        int noItems = itemHandler.getStackInSlot(0).isEmpty() ? 0 : itemHandler.getStackInSlot(0).getCount();
         if (noItems == 0 && currentItem == null && tank.getFluidAmount() == 0) //Empty!
             return null;
 
+        FluidStack fluid = tank.getFluid();
         if (noItems == 0 && currentItem == null) //Nothing being melted.
-        {
-            if (tank.getFluid() == null) {
-                return Util.getTextureFromBlockState(Blocks.AIR.getDefaultState());
-            }
-
-            return Util.getTextureFromBlockState(tank.getFluid().getFluid().getBlock().getDefaultState());
-        }
+            return new SpriteColor(Util.getTextureFromFluidStack(fluid), new Color(fluid.getFluid().getColor(), false));
 
         double solidProportion = ((double) noItems) / MAX_ITEMS;
 
-        if (currentItem != null) {
+        if (currentItem != null)
+        {
             Meltable meltable = CrucibleRegistry.getMeltable(currentItem);
 
-            if (meltable != null) {
+            if(meltable != null)
+            {
                 solidProportion += ((double) solidAmount) / (MAX_ITEMS * meltable.getAmount());
-            } else {
+            }
+            else
+            {
                 LogUtil.throwing(new NullPointerException("Meltable is null! Item is " + currentItem.getItem().getUnlocalizedName()));
             }
         }
 
         double fluidProportion = ((double) tank.getFluidAmount()) / tank.getCapacity();
+
         if (fluidProportion > solidProportion) {
-            if (tank.getFluid() == null || tank.getFluid().getFluid() == null || tank.getFluid().getFluid().getBlock() == null)
+            if (fluid == null || fluid.getFluid() == null)
                 return null;
 
-            return Util.getTextureFromBlockState(tank.getFluid().getFluid().getBlock().getDefaultState());
-        } else {
+            return new SpriteColor(Util.getTextureFromFluidStack(fluid), new Color(fluid.getFluid().getColor(), false));
+        }
+        else {
+            IBlockState block = null;
+            Color color = Util.whiteColor;
+
             if (currentItem != null) {
-                IBlockState block = Block.getBlockFromItem(currentItem.getItem())
-                        .getStateFromMeta(currentItem.getMeta());
-                return Util.getTextureFromBlockState(block);
+                Meltable meltable = CrucibleRegistry.getMeltable(currentItem);
+                BlockInfo override = meltable.getTextureOverride();
+
+                if (override == null) {
+                    if (Block.getBlockFromItem(currentItem.getItem()) != Blocks.AIR) {
+                        block = Block.getBlockFromItem(currentItem.getItem())
+                                .getStateFromMeta(currentItem.getMeta());
+                    }
+                }
+                else {
+                    block = override.getBlockState();
+                }
+
+                if(block != null) {
+                    color = new Color(Minecraft.getMinecraft().getBlockColors().colorMultiplier(block, world, pos, 0), true);
+                }
             }
-            IBlockState block = Block.getBlockFromItem(itemHandler.getStackInSlot(0).getItem())
-                    .getStateFromMeta(itemHandler.getStackInSlot(0).getItemDamage());
-            return Util.getTextureFromBlockState(block);
+
+            return new SpriteColor(Util.getTextureFromBlockState(block), color);
         }
     }
 
@@ -203,7 +221,8 @@ public class TileCrucible extends TileEntity implements ITickable {
         float solidProportion = ((float) noItems) / MAX_ITEMS;
         if (currentItem != null) {
             Meltable meltable = CrucibleRegistry.getMeltable(currentItem);
-            solidProportion += ((double) solidAmount) / (MAX_ITEMS * meltable.getAmount());
+            if (meltable != null)
+                solidProportion += ((double) solidAmount) / (MAX_ITEMS * meltable.getAmount());
         }
 
         return solidProportion > fluidProportion ? solidProportion : fluidProportion;
@@ -244,7 +263,7 @@ public class TileCrucible extends TileEntity implements ITickable {
     @SuppressWarnings("unchecked")
     @Override
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing facing) {
-        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+    	if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             itemHandler.setTe(this);
             return (T) itemHandler;
         }
