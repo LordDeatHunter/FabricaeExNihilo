@@ -37,15 +37,15 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucible> {
 
             this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 
-            wr.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_NORMAL);
+            wr.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
             //wr.begin(GL11.GL_QUADS, new VertexFormat().addElement(DefaultVertexFormats.POSITION_3F).addElement(DefaultVertexFormats.COLOR_4UB).addElement(DefaultVertexFormats.NORMAL_3B));
             // Offset by bottome of crucible, which is 4 pixels above the base of the block
             float fillAmount = (12F / 16F) * te.getFilledAmount() + (4F / 16F);
 
-            wr.pos(0.125F, fillAmount, 0.125F).tex(minU, minV).normal(0, 1, 0).endVertex();
-            wr.pos(0.125F, fillAmount, 0.875F).tex(minU, maxV).normal(0, 1, 0).endVertex();
-            wr.pos(0.875F, fillAmount, 0.875F).tex(maxU, maxV).normal(0, 1, 0).endVertex();
-            wr.pos(0.875F, fillAmount, 0.125F).tex(maxU, minV).normal(0, 1, 0).endVertex();
+            wr.pos(0.125F, fillAmount, 0.125F).tex(minU, minV).color(color.r, color.g, color.b, color.a).normal(0, 1, 0).endVertex();
+            wr.pos(0.125F, fillAmount, 0.875F).tex(minU, maxV).color(color.r, color.g, color.b, color.a).normal(0, 1, 0).endVertex();
+            wr.pos(0.875F, fillAmount, 0.875F).tex(maxU, maxV).color(color.r, color.g, color.b, color.a).normal(0, 1, 0).endVertex();
+            wr.pos(0.875F, fillAmount, 0.125F).tex(maxU, minV).color(color.r, color.g, color.b, color.a).normal(0, 1, 0).endVertex();
 
             tes.draw();
         }

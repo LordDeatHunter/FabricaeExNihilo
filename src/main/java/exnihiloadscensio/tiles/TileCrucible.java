@@ -253,7 +253,9 @@ public class TileCrucible extends TileEntity implements ITickable {
         ItemStack insertStack = itemHandler.insertItem(0, addStack, true);
         if (!ItemStack.areItemStacksEqual(addStack, insertStack)) {
             itemHandler.insertItem(0, addStack, false);
-            stack.shrink(1);
+            if (currentItem == null) currentItem = new ItemInfo(stack);
+            if (!player.isCreative()) stack.shrink(1);
+
             PacketHandler.sendNBTUpdate(this);
             return true;
         }

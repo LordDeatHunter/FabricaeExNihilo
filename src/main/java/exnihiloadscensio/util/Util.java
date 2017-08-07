@@ -77,6 +77,9 @@ public class Util {
 
     @SideOnly(Side.CLIENT)
     public static TextureAtlasSprite getTextureFromBlockState(IBlockState state) {
+        if (state == null)
+            return Minecraft.getMinecraft().getTextureMapBlocks().getMissingSprite();
+
         return Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(state);
     }
 
