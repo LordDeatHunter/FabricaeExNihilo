@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "exnihilocreatio:block_sieve"
+  },
+  "pattern": [
+    "x x",
+    "xyx",
+    "s s"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "type": "forge:ore_dict",
+      "ore": "stickWood"
+    },
+    "x": {
+      "type": "forge:ore_dict",
+      "ore": "plankWood"
+    },
+    "y": {
+      "type": "forge:ore_dict",
+      "ore": "slabWood"
+    }
+  }
+}

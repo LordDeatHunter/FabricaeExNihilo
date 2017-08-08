@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "exnihilocreatio:item_material",
+    "data": 5,
+    "count": 6
+  },
+  "pattern": [
+    "xyx",
+    " x ",
+    "x x"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "x": {
+      "type": "forge:ore_dict",
+      "ore": "clayPorcelain"
+    },
+    "y": {
+      "type": "forge:ore_dict",
+      "ore": "gemEmerald"
+    }
+  }
+}

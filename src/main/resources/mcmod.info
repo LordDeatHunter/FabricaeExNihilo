@@ -1,7 +1,7 @@
 [
 {
-  "modid": "exnihiloadscensio",
-  "name": "Ex Nihilo Adscensio",
+  "modid": "exnihilocreatio",
+  "name": "Ex Nihilo Creatio",
   "description": "\"From nothing, with progression\"",
   "version": "${version}",
   "mcversion": "${mcversion}",

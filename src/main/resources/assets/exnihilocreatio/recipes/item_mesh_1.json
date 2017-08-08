@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "exnihilocreatio:item_mesh",
+    "data": 1
+  },
+  "pattern": [
+    "xxx",
+    "xxx",
+    "xxx"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "x": {
+      "item": "minecraft:string"
+    }
+  }
+}

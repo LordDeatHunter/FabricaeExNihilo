@@ -29,8 +29,8 @@ buildscript {
 apply plugin: "net.minecraftforge.gradle.forge"
 
 version = "1.12-0.1.0"
-group= "exnihiloadscensio" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "exnihiloadscensio"
+group= "exnihilocreatio" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "exnihilocreatio"
 
 sourceCompatibility=1.8
 targetCompatibility=1.8

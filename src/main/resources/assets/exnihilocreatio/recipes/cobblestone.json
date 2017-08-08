@@ -1,0 +1,16 @@
+{
+  "result": {
+    "item": "minecraft:cobblestone"
+  },
+  "pattern": [
+    "xx",
+    "xx"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "x": {
+      "item": "exnihilocreatio:item_pebble",
+      "data": 0
+    }
+  }
+}

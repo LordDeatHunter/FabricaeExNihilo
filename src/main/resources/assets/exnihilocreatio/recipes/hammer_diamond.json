@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "exnihilocreatio:hammer_diamond"
+  },
+  "pattern": [
+    " x ",
+    " yx",
+    "y  "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "x": {
+      "type": "forge:ore_dict",
+      "ore": "gemDiamond"
+    },
+    "y": {
+      "type": "forge:ore_dict",
+      "ore": "stickWood"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "exnihilocreatio:block_barrel1"
+  },
+  "pattern": [
+    "x x",
+    "x x",
+    "xyx"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "x": {
+      "type": "forge:ore_dict",
+      "ore": "stone"
+    },
+    "y": {
+      "item": "minecraft:stone_slab",
+      "data": 0
+    }
+  }
+}
