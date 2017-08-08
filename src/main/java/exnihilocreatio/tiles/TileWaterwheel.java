@@ -97,45 +97,4 @@ public class TileWaterwheel extends BaseTileEntity implements ITickable, IRotati
     public void setEffectivePerTickRotation(float rotation) {
         perTickEffective = rotation;
     }
-
-    /*
-    @Override
-    public RotationalPowerLineManager checkForLineManager() {
-        BlockPos pos1;
-        BlockPos pos2;
-        switch (axis){
-
-            default:
-            case X:
-                pos1 = pos.add(0, 0,1);
-                pos2 = pos.add(0, 0,-1);
-                break;
-            case Y:
-                pos1 = pos.add(1, 0,0);
-                pos2 = pos.add(-1, 0,0);
-                break;
-        }
-
-        TileEntity te = world.getTileEntity(pos1);
-        if (te != null && te instanceof IRotationalPowerMember){
-            IRotationalPowerMember rpm = (IRotationalPowerMember) te;
-            manager = rpm.getRotationalLineManager();
-            return manager;
-        }else {
-            te = world.getTileEntity(pos2);
-            if (te != null && te instanceof IRotationalPowerMember){
-                IRotationalPowerMember rpm = (IRotationalPowerMember) te;
-                manager = rpm.getRotationalLineManager();
-                return manager;
-            }else {
-                manager = new RotationalPowerLineManager();
-                return manager;
-            }
-        }
-    }
-
-    @Override
-    public RotationalPowerLineManager getRotationalLineManager() {
-        return manager;
-    } */
 }

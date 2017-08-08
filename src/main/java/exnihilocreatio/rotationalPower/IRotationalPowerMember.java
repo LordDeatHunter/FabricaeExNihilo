@@ -11,8 +11,4 @@ public interface IRotationalPowerMember {
     default void addEffectiveRotation(float rotation){
         setEffectivePerTickRotation(getOwnRotation() + rotation);
     }
-
-    // RotationalPowerLineManager checkForLineManager();
-
-    // RotationalPowerLineManager getRotationalLineManager();
 }
