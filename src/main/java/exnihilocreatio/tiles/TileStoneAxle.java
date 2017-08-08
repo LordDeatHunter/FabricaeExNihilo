@@ -1,85 +1,90 @@
 package exnihilocreatio.tiles;
 
+import exnihilocreatio.rotationalPower.IRotationalPowerMember;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nonnull;
 
-public class TileStoneAxle extends BaseTileEntity implements ITickable {
-    public float rotation = 0;
+public class TileStoneAxle extends BaseTileEntity implements ITickable, IRotationalPowerMember {
+    public float rotationValue = 0;
     public float perTick = 0F;
 
-    private EnumFacing.Axis axis = EnumFacing.Axis.X;
+    public float perTickEffective = 0F;
+
+    public EnumFacing facing = EnumFacing.NORTH;
 
     public boolean canTurn = true;
 
-    int counter = 0;
+    private int counter = -1;
 
     private float lastPerTick = perTick;
     @Override
     public void update() {
+        counter++;
+
         if (counter % 10 == 0){
-            IBlockState left;
-            IBlockState right;
-            switch (axis){
-                case X:
-                    left = world.getBlockState(pos.add(0, 0, -1));
-                    right = world.getBlockState(pos.add(0, 0, 1));
-                    break;
-                case Z:
-                default:
-                    left = world.getBlockState(pos.add(-1, 0, 0));
-                    right = world.getBlockState(pos.add(1, 0, 0));
-                    break;
-            }
+            float lastPerTickEffective = perTickEffective;
+            perTickEffective = calcEffectivePerTickRotation(facing);
 
-            boolean lIsWater = left.getBlock() == Blocks.WATER;
-            boolean rIsWater = right.getBlock() == Blocks.WATER;
-
-            lastPerTick = perTick;
-            perTick = 0F;
-            if (lIsWater){
-                perTick += 2F;
-            }
-
-            if (rIsWater){
-                perTick += -2F;
-            }
-
-            if (lastPerTick != perTick){
+            if (lastPerTickEffective != perTickEffective){
                 markDirty();
             }
         }
-
-
     }
 
 
     @Override
     @Nonnull
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
+        if (facing != null)
+            tag.setString("facing", facing.getName());
+        tag.setFloat("rot", rotationValue);
 
         return super.writeToNBT(tag);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound tag) {
-
         super.readFromNBT(tag);
+        if (tag.hasKey("facing"))
+            facing = EnumFacing.byName(tag.getString("facing"));
+        if (tag.hasKey("rot"))
+            rotationValue = tag.getFloat("rot");
     }
 
-    public EnumFacing.Axis getAxis() {
-        return axis;
+    @Override
+    public float getOwnRotation() {
+        return 0;
     }
 
-    public void setAxis(EnumFacing.Axis axis) {
-        if (axis == EnumFacing.Axis.Y){
-            this.axis = EnumFacing.Axis.X;
+    @Override
+    public float getEffectivePerTickRotation(EnumFacing direction) {
+        if (facing == direction){
+            return perTickEffective;
         }else {
-            this.axis = axis;
+            return 0;
         }
+    }
+
+    private float calcEffectivePerTickRotation(EnumFacing direction) {
+        if (facing == direction){
+            BlockPos posProvider = pos.offset(facing.getOpposite());
+            TileEntity te = world.getTileEntity(posProvider);
+            if (te != null && te instanceof IRotationalPowerMember){
+                return ((IRotationalPowerMember) te).getEffectivePerTickRotation(facing) + getOwnRotation();
+            }
+            else return getOwnRotation();
+        }else return 0;
+    }
+
+    @Override
+    public void setEffectivePerTickRotation(float rotation) {
+        perTickEffective = rotation;
     }
 }

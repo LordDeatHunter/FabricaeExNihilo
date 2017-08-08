@@ -13,6 +13,8 @@ import net.minecraft.util.math.BlockPos;
 import javax.annotation.Nonnull;
 
 public class TileWaterwheel extends BaseTileEntity implements ITickable, IRotationalPowerProvider {
+    public static final float ROTATION_PER_WHEEL = 0.5F;
+
     public float rotationValue = 0;
     public float perTickRotationOwn = 0F;
     public float perTickEffective = 0F;
@@ -21,10 +23,11 @@ public class TileWaterwheel extends BaseTileEntity implements ITickable, IRotati
 
     public boolean canTurn = true;
 
-    private int counter = 0;
-    private float lastPerTick = perTickRotationOwn;
+    private int counter = -1;
+
     @Override
     public void update() {
+        counter++;
         if (counter % 10 == 0){
             IBlockState left;
             IBlockState right;
@@ -46,22 +49,22 @@ public class TileWaterwheel extends BaseTileEntity implements ITickable, IRotati
             boolean lIsWater = left.getBlock() == Blocks.WATER;
             boolean rIsWater = right.getBlock() == Blocks.WATER;
 
-            lastPerTick = perTickRotationOwn;
             perTickRotationOwn = 0F;
             if (lIsWater){
-                perTickRotationOwn += 2F;
+                perTickRotationOwn += ROTATION_PER_WHEEL;
             }
 
             if (rIsWater){
-                perTickRotationOwn += -2F;
+                perTickRotationOwn -= ROTATION_PER_WHEEL;
             }
 
-            if (lastPerTick != perTickRotationOwn){
+            float lastPerTickEffective = perTickEffective;
+            perTickEffective = calcEffectivePerTickRotation(facing);
+
+            if (lastPerTickEffective != perTickEffective){
                 markDirty();
             }
         }
-
-
     }
 
 
@@ -69,12 +72,18 @@ public class TileWaterwheel extends BaseTileEntity implements ITickable, IRotati
     @Nonnull
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 
+        tag.setString("facing", facing.getName());
+        tag.setFloat("rot", rotationValue);
+
         return super.writeToNBT(tag);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
+
+        facing = EnumFacing.byName(tag.getString("facing"));
+        rotationValue = tag.getFloat("rot");
     }
 
     @Override
@@ -83,17 +92,27 @@ public class TileWaterwheel extends BaseTileEntity implements ITickable, IRotati
     }
 
     @Override
-    public float getEffectivePerTickRotation() {
-        BlockPos posProvider = pos.offset(facing.getOpposite());
-        System.out.println("posProvider = " + posProvider);
-        TileEntity te = world.getTileEntity(posProvider);
-        if (te != null && te instanceof IRotationalPowerMember){
-            return ((IRotationalPowerMember) te).getEffectivePerTickRotation() + getOwnRotation();
+    public float getEffectivePerTickRotation(EnumFacing direction) {
+        if (facing == direction){
+            return perTickEffective;
+        }else {
+            return 0;
         }
-        else return getOwnRotation();
     }
 
-    @Override
+    private float calcEffectivePerTickRotation(EnumFacing direction) {
+        if (facing == direction){
+            BlockPos posProvider = pos.offset(facing.getOpposite());
+            TileEntity te = world.getTileEntity(posProvider);
+            if (te != null && te instanceof IRotationalPowerMember){
+                return ((IRotationalPowerMember) te).getEffectivePerTickRotation(facing) + getOwnRotation();
+            }
+            else return getOwnRotation();
+        }else return 0;
+    }
+
+
+        @Override
     public void setEffectivePerTickRotation(float rotation) {
         perTickEffective = rotation;
     }

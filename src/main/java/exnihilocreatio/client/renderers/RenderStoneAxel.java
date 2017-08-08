@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
@@ -37,18 +36,38 @@ public class RenderStoneAxel extends TileEntitySpecialRenderer<TileStoneAxle> {
 
         GlStateManager.translate(.5, 0.5, .5);
 
-        if (te.getAxis() == EnumFacing.Axis.X)
-            GlStateManager.rotate(90, 0, 1, 0);
+        switch (te.facing) {
 
-        if (te.canTurn){
-            te.rotation = (te.rotation + te.perTick) % 360;
+            case DOWN:
+                break;
+            case UP:
+                break;
+            case NORTH:
+                break;
+            case SOUTH:
+                GlStateManager.rotate(180, 0, 1, 0);
+                break;
+            case WEST:
+                GlStateManager.rotate(90, 0, 1, 0);
+                break;
+            case EAST:
+                GlStateManager.rotate(-90, 0, 1, 0);
+                break;
         }
 
-        GlStateManager.rotate(te.rotation, 0, 0, 1);
+        GlStateManager.blendFunc(770, 771);
+        GlStateManager.enableBlend();
+        GlStateManager.disableCull();
 
+        if (te.canTurn){
+            te.rotationValue = (te.rotationValue + te.perTickEffective) % 360;
+        }
+
+        GlStateManager.rotate(te.rotationValue, 0, 0, 1);
 
         RenderHelper.disableStandardItemLighting();
         this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+
         if (Minecraft.isAmbientOcclusionEnabled()) {
             GlStateManager.shadeModel(GL11.GL_SMOOTH);
         } else {
@@ -72,6 +91,9 @@ public class RenderStoneAxel extends TileEntitySpecialRenderer<TileStoneAxle> {
         tessellator.draw();
 
         RenderHelper.enableStandardItemLighting();
+        GlStateManager.disableBlend();
+        GlStateManager.enableCull();
+
         GlStateManager.popMatrix();
     }
 }

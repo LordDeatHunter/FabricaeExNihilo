@@ -56,7 +56,7 @@ public class RenderWaterwheel extends TileEntitySpecialRenderer<TileWaterwheel> 
         }
 
         if (te.canTurn){
-            te.rotationValue = (te.rotationValue + te.getEffectivePerTickRotation()) % 360;
+            te.rotationValue = (te.rotationValue + te.perTickEffective) % 360;
         }
 
         GlStateManager.rotate(te.rotationValue, 0, 0, 1);

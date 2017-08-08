@@ -76,7 +76,6 @@ public class BlockStoneAxle extends BlockBase implements ITileEntityProvider {
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         TileStoneAxle te = getTe(worldIn, pos);
-        te.setAxis(placer.getHorizontalFacing().getAxis());
-
+        te.facing = placer.getHorizontalFacing();
     }
 }
