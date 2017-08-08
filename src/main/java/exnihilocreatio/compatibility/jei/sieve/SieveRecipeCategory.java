@@ -74,7 +74,7 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
         //Mesh
         recipeLayout.getItemStacks().init(0, true, 61, 9);
         recipeLayout.getItemStacks().set(0, (ItemStack) recipeWrapper.getInputs().get(0));
-        //Block
+        //BlockStoneAxle
         recipeLayout.getItemStacks().init(1, true, 87, 9);
         recipeLayout.getItemStacks().set(1, (ItemStack) recipeWrapper.getInputs().get(1));
 

@@ -28,7 +28,7 @@ public class CustomBlockInfoJson implements JsonDeserializer<BlockInfo>, JsonSer
         Block block = Block.getBlockFromName(name);
 
         if (block == null) {
-            LogUtil.error("Error parsing JSON: Invalid Block: " + json.toString());
+            LogUtil.error("Error parsing JSON: Invalid BlockStoneAxle: " + json.toString());
             LogUtil.error("This may result in crashing or other undefined behavior");
         }
 

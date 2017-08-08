@@ -73,7 +73,7 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
     }
 
     private void setRecipe(IRecipeLayout recipeLayout, HammerRecipe recipeWrapper) {
-        // Block
+        // BlockStoneAxle
         recipeLayout.getItemStacks().init(0, true, 74, 9);
         recipeLayout.getItemStacks().set(0, (ItemStack) recipeWrapper.getInputs().get(0));
 

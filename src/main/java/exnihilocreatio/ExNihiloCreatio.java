@@ -15,6 +15,7 @@ import exnihilocreatio.util.LogUtil;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Loader;
@@ -23,12 +24,14 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.File;
 
 @Mod(modid = ExNihiloCreatio.MODID, name = "Ex Nihilo Creatio", version = "0.1.0")
+@Mod.EventBusSubscriber
 public class ExNihiloCreatio {
 
     public static final String MODID = "exnihilocreatio";
@@ -114,6 +117,11 @@ public class ExNihiloCreatio {
         if (Loader.isModLoaded("EnderIO") && Config.doEnderIOCompat) {
             // CompatEIO.postInit();
         }
+    }
+
+    @SubscribeEvent
+    public static void registerModels(ModelRegistryEvent event){
+        proxy.registerModels(event);
     }
 
     public static void loadConfigs() {

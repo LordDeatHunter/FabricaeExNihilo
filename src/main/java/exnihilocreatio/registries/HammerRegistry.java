@@ -70,7 +70,7 @@ public class HammerRegistry {
     /**
      * Adds a new Hammer recipe for use with Ex Nihilo hammers.
      *
-     * @param state         Block State
+     * @param state         BlockStoneAxle State
      * @param reward        Reward
      * @param miningLevel   Mining level of hammer. 0 = Wood/Gold, 1 = Stone, 2 = Iron, 3 = Diamond. Can be higher, but will need corresponding tool material.
      * @param chance        Chance of drop

@@ -66,7 +66,7 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
     }
 
     private void setRecipe(IRecipeLayout layout, CompostRecipe recipe) {
-        // Block
+        // BlockStoneAxle
         layout.getItemStacks().init(0, false, 74, 9);
         layout.getItemStacks().set(0, (ItemStack) recipe.getOutputs().get(0));
 

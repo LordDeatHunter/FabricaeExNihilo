@@ -1,10 +1,7 @@
 package exnihilocreatio;
 
 import exnihilocreatio.blocks.*;
-import exnihilocreatio.tiles.TileBarrel;
-import exnihilocreatio.tiles.TileCrucible;
-import exnihilocreatio.tiles.TileInfestedLeaves;
-import exnihilocreatio.tiles.TileSieve;
+import exnihilocreatio.tiles.*;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
 import net.minecraft.block.Block;
@@ -27,6 +24,9 @@ public class ModBlocks {
     public static BlockInfestedLeaves infestedLeaves;
     public static BlockCrucible crucible;
     public static BlockSieve sieve;
+
+    public static BlockWaterwheel watermill;
+    public static BlockStoneAxle axle_stone;
 
 
     public static void preInit() {
@@ -60,6 +60,14 @@ public class ModBlocks {
         sieve = new BlockSieve();
         sieve.setCreativeTab(ExNihiloCreatio.tabExNihilo);
         GameRegistry.registerTileEntity(TileSieve.class, "block_sieve");
+
+
+        watermill = new BlockWaterwheel();
+        GameRegistry.registerTileEntity(TileWaterwheel.class, "block_waterwheel");
+
+        axle_stone = new BlockStoneAxle();
+        GameRegistry.registerTileEntity(TileStoneAxle.class, "block_axle_stone");
+
     }
 
     public static void registerBlocks(IForgeRegistry<Block> registry) {
