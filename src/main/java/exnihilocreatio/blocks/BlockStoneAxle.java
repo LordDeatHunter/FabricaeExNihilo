@@ -12,6 +12,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -20,6 +21,9 @@ import javax.annotation.Nullable;
 
 public class BlockStoneAxle extends BlockBase implements ITileEntityProvider {
     public static final IProperty<Boolean> IS_AXLE = PropertyBool.create("is_axle");
+    private static final AxisAlignedBB hitboxEW = new AxisAlignedBB(0,0,0, 1, .5, .5).offset(0, 0.25, 0.25);
+    private static final AxisAlignedBB hitboxSN = new AxisAlignedBB(0,0,0, .5, .5, 1).offset(0.25, 0.25, 0);
+
 
     public BlockStoneAxle() {
         super(Material.WOOD, "block_axle_stone");
@@ -69,7 +73,7 @@ public class BlockStoneAxle extends BlockBase implements ITileEntityProvider {
         return false;
     }
 
-    private TileStoneAxle getTe(World world, BlockPos pos){
+    private TileStoneAxle getTe(IBlockAccess world, BlockPos pos){
         return (TileStoneAxle) world.getTileEntity(pos);
     }
 
@@ -77,5 +81,59 @@ public class BlockStoneAxle extends BlockBase implements ITileEntityProvider {
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         TileStoneAxle te = getTe(worldIn, pos);
         te.facing = placer.getHorizontalFacing();
+    }
+
+    @Override
+    public boolean isFullBlock(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public boolean isNormalCube(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public boolean isFullCube(IBlockState state) {
+        return false;
+    }
+
+    @Nullable
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+        TileEntity te = worldIn.getTileEntity(pos);
+        if (te != null && te instanceof TileStoneAxle) {
+            switch (((TileStoneAxle) te).facing){
+
+                case DOWN:
+                case UP:
+                case NORTH:
+                case SOUTH:
+                    return hitboxSN;
+                case WEST:
+                case EAST:
+                    return hitboxEW;
+            }
+        }
+        return FULL_BLOCK_AABB;
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        TileEntity te = source.getTileEntity(pos);
+        if (te != null && te instanceof TileStoneAxle) {
+            switch (((TileStoneAxle) te).facing){
+
+                case DOWN:
+                case UP:
+                case NORTH:
+                case SOUTH:
+                    return hitboxSN;
+                case WEST:
+                case EAST:
+                    return hitboxEW;
+            }
+        }
+        return FULL_BLOCK_AABB;
     }
 }
