@@ -28,7 +28,7 @@ public class ModBlocks {
     public static BlockWaterwheel watermill;
     public static BlockStoneAxle axle_stone;
 
-    public static BlockAutoSiever  autoSiever;
+    public static BlockAutoSiever autoSiever;
 
 
     public static void preInit() {

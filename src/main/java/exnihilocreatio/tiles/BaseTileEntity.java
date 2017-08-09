@@ -10,9 +10,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public class BaseTileEntity extends TileEntity{
+public class BaseTileEntity extends TileEntity {
 
-    public void markDirtyClient(){
+    public void markDirtyClient() {
         markDirty();
         IBlockState state = getWorld().getBlockState(getPos());
         getWorld().notifyBlockUpdate(getPos(), state, state, 3);

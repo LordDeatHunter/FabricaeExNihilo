@@ -1,6 +1,9 @@
 package exnihilocreatio.proxy;
 
-import exnihilocreatio.*;
+import exnihilocreatio.ExNihiloCreatio;
+import exnihilocreatio.ModBlocks;
+import exnihilocreatio.ModFluids;
+import exnihilocreatio.ModItems;
 import exnihilocreatio.registries.OreRegistry;
 import exnihilocreatio.util.Data;
 import net.minecraft.block.Block;
@@ -57,7 +60,7 @@ public abstract class CommonProxy {
 
     }
 
-    public void registerModels(ModelRegistryEvent event){
+    public void registerModels(ModelRegistryEvent event) {
     }
 
     public boolean runningOnServer() {

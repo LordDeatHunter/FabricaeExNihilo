@@ -22,7 +22,7 @@ public class CrucibleItemHandler extends ItemStackHandler {
     public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
         if (CrucibleRegistry.canBeMelted(stack)) {
             Meltable meltable = CrucibleRegistry.getMeltable(stack);
-            if ((meltable.getAmount() + meltable.getAmount() * getStackInSlot(0).getCount() + te.getSolidAmount()) <= (meltable.getAmount() * TileCrucible.MAX_ITEMS)){
+            if ((meltable.getAmount() + meltable.getAmount() * getStackInSlot(0).getCount() + te.getSolidAmount()) <= (meltable.getAmount() * TileCrucible.MAX_ITEMS)) {
                 return super.insertItem(slot, stack, simulate);
             }
         }

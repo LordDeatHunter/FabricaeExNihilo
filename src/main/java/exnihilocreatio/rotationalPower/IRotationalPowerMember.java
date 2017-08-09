@@ -9,6 +9,7 @@ public interface IRotationalPowerMember {
     /**
      * Gets the speed the PowerMember is spinning at
      * used to calcualte the speed of the member infront of him
+     *
      * @param side is the side where he outputs power to
      * @return
      */
@@ -16,7 +17,7 @@ public interface IRotationalPowerMember {
 
     void setEffectivePerTickRotation(float rotation);
 
-    default void addEffectiveRotation(float rotation){
+    default void addEffectiveRotation(float rotation) {
         setEffectivePerTickRotation(getOwnRotation() + rotation);
     }
 }

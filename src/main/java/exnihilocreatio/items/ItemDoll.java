@@ -97,7 +97,7 @@ public class ItemDoll extends Item implements IHasModel {
 
         List<ModelResourceLocation> locations = new ArrayList<>();
         for (int i = 0; i < names.size(); i++) {
-            locations.add(new ModelResourceLocation(getRegistryName() , "type="+names.get(i)));
+            locations.add(new ModelResourceLocation(getRegistryName(), "type=" + names.get(i)));
         }
 
         ModelBakery.registerItemVariants(this, locations.toArray(new ModelResourceLocation[0]));

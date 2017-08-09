@@ -1,41 +1,41 @@
 {
-    "forge_marker": 1,
-    "defaults": {
-        "model": "builtin/generated",
-        "transform": "forge:default-item"
-    },
-    "variants": {
-        "type": {
-        	"removed": {
-        		"textures": {
-        			"layer0": "exnihilocreatio:items/item_pebble"
-        		}
-        	},
-            "porcelain_clay": {
-                "textures": {
-                    "layer0": "exnihilocreatio:items/porcelainclay"
-                }
-            },
-            "silkworm": {
-                "textures": {
-                    "layer0": "exnihilocreatio:items/silkworm"
-                }
-            },
-            "ancient_spores": {
-                "textures": {
-                    "layer0": "exnihilocreatio:items/ancientspores"
-                }
-            },
-            "grass_seeds": {
-                "textures": {
-                    "layer0": "exnihilocreatio:items/grassseeds"
-                }
-            },
-            "doll": {
-            	"textures": {
-                    "layer0": "exnihilocreatio:items/doll"
-                }
-            }
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "type": {
+      "removed": {
+        "textures": {
+          "layer0": "exnihilocreatio:items/item_pebble"
         }
+      },
+      "porcelain_clay": {
+        "textures": {
+          "layer0": "exnihilocreatio:items/porcelainclay"
+        }
+      },
+      "silkworm": {
+        "textures": {
+          "layer0": "exnihilocreatio:items/silkworm"
+        }
+      },
+      "ancient_spores": {
+        "textures": {
+          "layer0": "exnihilocreatio:items/ancientspores"
+        }
+      },
+      "grass_seeds": {
+        "textures": {
+          "layer0": "exnihilocreatio:items/grassseeds"
+        }
+      },
+      "doll": {
+        "textures": {
+          "layer0": "exnihilocreatio:items/doll"
+        }
+      }
     }
+  }
 }

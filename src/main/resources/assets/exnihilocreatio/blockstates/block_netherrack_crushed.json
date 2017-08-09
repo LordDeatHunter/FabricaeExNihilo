@@ -1,14 +1,14 @@
 {
-    "forge_marker": 1,
-    "defaults": {
-        "model": "exnihilocreatio:block_netherrack_crushed"
-    },
-    "variants": {
-        "normal": [
-            {}
-        ],
-        "inventory": [
-            {}
-        ]
-    }
+  "forge_marker": 1,
+  "defaults": {
+    "model": "exnihilocreatio:block_netherrack_crushed"
+  },
+  "variants": {
+    "normal": [
+      {}
+    ],
+    "inventory": [
+      {}
+    ]
+  }
 }

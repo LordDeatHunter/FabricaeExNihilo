@@ -1,7 +1,6 @@
 package exnihilocreatio.blocks;
 
 import exnihilocreatio.ExNihiloCreatio;
-import exnihilocreatio.tiles.TileSieve;
 import exnihilocreatio.tiles.TileStoneAxle;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
@@ -13,9 +12,6 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -30,12 +26,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-import java.util.Map;
 
 public class BlockStoneAxle extends BlockBase implements ITileEntityProvider, IProbeInfoProvider {
     public static final IProperty<Boolean> IS_AXLE = PropertyBool.create("is_axle");
-    private static final AxisAlignedBB hitboxEW = new AxisAlignedBB(0,0,0, 1, .5, .5).offset(0, 0.25, 0.25);
-    private static final AxisAlignedBB hitboxSN = new AxisAlignedBB(0,0,0, .5, .5, 1).offset(0.25, 0.25, 0);
+    private static final AxisAlignedBB hitboxEW = new AxisAlignedBB(0, 0, 0, 1, .5, .5).offset(0, 0.25, 0.25);
+    private static final AxisAlignedBB hitboxSN = new AxisAlignedBB(0, 0, 0, .5, .5, 1).offset(0.25, 0.25, 0);
 
 
     public BlockStoneAxle() {
@@ -86,7 +81,7 @@ public class BlockStoneAxle extends BlockBase implements ITileEntityProvider, IP
         return false;
     }
 
-    private TileStoneAxle getTe(IBlockAccess world, BlockPos pos){
+    private TileStoneAxle getTe(IBlockAccess world, BlockPos pos) {
         return (TileStoneAxle) world.getTileEntity(pos);
     }
 
@@ -116,7 +111,7 @@ public class BlockStoneAxle extends BlockBase implements ITileEntityProvider, IP
     public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
         TileEntity te = worldIn.getTileEntity(pos);
         if (te != null && te instanceof TileStoneAxle) {
-            switch (((TileStoneAxle) te).facing){
+            switch (((TileStoneAxle) te).facing) {
 
                 case DOWN:
                 case UP:
@@ -135,7 +130,7 @@ public class BlockStoneAxle extends BlockBase implements ITileEntityProvider, IP
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         TileEntity te = source.getTileEntity(pos);
         if (te != null && te instanceof TileStoneAxle) {
-            switch (((TileStoneAxle) te).facing){
+            switch (((TileStoneAxle) te).facing) {
 
                 case DOWN:
                 case UP:

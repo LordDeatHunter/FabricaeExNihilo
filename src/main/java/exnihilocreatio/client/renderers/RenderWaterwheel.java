@@ -7,12 +7,10 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
@@ -23,8 +21,7 @@ public class RenderWaterwheel extends TileEntitySpecialRenderer<TileWaterwheel> 
 
     @Override
     public void render(TileWaterwheel tile, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-        if (quads==null)
-        {
+        if (quads == null) {
             final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
             IBlockState state = ModBlocks.watermill.getDefaultState().withProperty(BlockWaterwheel.IS_WHEEL, true);
 
@@ -46,7 +43,7 @@ public class RenderWaterwheel extends TileEntitySpecialRenderer<TileWaterwheel> 
 
         GlStateManager.rotate(rotFacing, 0, 1, 0);
 
-        if (tile.canTurn){
+        if (tile.canTurn) {
             tile.rotationValue = (tile.rotationValue + tile.perTickEffective) % 360;
         }
 

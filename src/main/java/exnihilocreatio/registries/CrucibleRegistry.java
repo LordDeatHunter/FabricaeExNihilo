@@ -26,7 +26,7 @@ public class CrucibleRegistry {
     private static Map<ItemInfo, Meltable> externalRegistry = new HashMap<>();
 
     private static Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
-            .registerTypeAdapter(BlockInfo.class,  new CustomBlockInfoJson()).create();
+            .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson()).create();
 
 
     public static void register(ItemInfo item, Fluid fluid, int amount) {
@@ -81,7 +81,8 @@ public class CrucibleRegistry {
         if (file.exists()) {
             try {
                 FileReader fr = new FileReader(file);
-                Map<String, Meltable> gsonInput = gson.fromJson(fr, new TypeToken<Map<String, Meltable>>() {}.getType());
+                Map<String, Meltable> gsonInput = gson.fromJson(fr, new TypeToken<Map<String, Meltable>>() {
+                }.getType());
 
                 for (Map.Entry<String, Meltable> entry : gsonInput.entrySet()) {
                     registry.put(new ItemInfo(entry.getKey()), entry.getValue());
@@ -105,7 +106,7 @@ public class CrucibleRegistry {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             IOUtils.closeQuietly(fw);
         }
     }

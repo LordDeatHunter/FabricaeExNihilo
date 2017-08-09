@@ -158,16 +158,12 @@ public class TileCrucible extends TileEntity implements ITickable {
 
         double solidProportion = ((double) noItems) / MAX_ITEMS;
 
-        if (currentItem != null)
-        {
+        if (currentItem != null) {
             Meltable meltable = CrucibleRegistry.getMeltable(currentItem);
 
-            if(meltable != null)
-            {
+            if (meltable != null) {
                 solidProportion += ((double) solidAmount) / (MAX_ITEMS * meltable.getAmount());
-            }
-            else
-            {
+            } else {
                 LogUtil.throwing(new NullPointerException("Meltable is null! Item is " + currentItem.getItem().getUnlocalizedName()));
             }
         }
@@ -179,8 +175,7 @@ public class TileCrucible extends TileEntity implements ITickable {
                 return null;
 
             return new SpriteColor(Util.getTextureFromFluidStack(fluid), new Color(fluid.getFluid().getColor(), false));
-        }
-        else {
+        } else {
             IBlockState block = null;
             Color color = Util.whiteColor;
 
@@ -193,12 +188,11 @@ public class TileCrucible extends TileEntity implements ITickable {
                         block = Block.getBlockFromItem(currentItem.getItem())
                                 .getStateFromMeta(currentItem.getMeta());
                     }
-                }
-                else {
+                } else {
                     block = override.getBlockState();
                 }
 
-                if(block != null) {
+                if (block != null) {
                     color = new Color(Minecraft.getMinecraft().getBlockColors().colorMultiplier(block, world, pos, 0), true);
                 }
             }
@@ -266,7 +260,7 @@ public class TileCrucible extends TileEntity implements ITickable {
     @SuppressWarnings("unchecked")
     @Override
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing facing) {
-    	if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             itemHandler.setTe(this);
             return (T) itemHandler;
         }

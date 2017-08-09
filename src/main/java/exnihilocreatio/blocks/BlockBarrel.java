@@ -33,7 +33,7 @@ import java.util.List;
 
 public class BlockBarrel extends BlockBase implements ITileEntityProvider, IProbeInfoAccessor {
 
-    private AxisAlignedBB boundingBox = new AxisAlignedBB(0.0625f, 0, 0.0625f, 0.9375f, 1f, 0.9375f);
+    private final AxisAlignedBB boundingBox = new AxisAlignedBB(0.0625f, 0, 0.0625f, 0.9375f, 1f, 0.9375f);
     @Getter
     private int tier;
 
@@ -69,7 +69,7 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider, IProb
                     if (mode.getCompostState() != null) {
                         int value = mode.getCompostState().getLightValue() / 2;
 
-                        return Math.round(Util.weightedAverage(value / 2, value, mode.getProgress()));
+                        return Math.round(Util.weightedAverage((float) value / 2, value, mode.getProgress()));
                     }
                 } else if (tile.getMode() instanceof BarrelModeFluidTransform) {
                     BarrelModeFluidTransform mode = (BarrelModeFluidTransform) tile.getMode();

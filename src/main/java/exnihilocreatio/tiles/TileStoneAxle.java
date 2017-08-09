@@ -1,8 +1,6 @@
 package exnihilocreatio.tiles;
 
 import exnihilocreatio.rotationalPower.IRotationalPowerMember;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -24,15 +22,16 @@ public class TileStoneAxle extends BaseTileEntity implements ITickable, IRotatio
     private int counter = -1;
 
     private float lastPerTick = perTick;
+
     @Override
     public void update() {
         counter++;
 
-        if (counter % 10 == 0){
+        if (counter % 10 == 0) {
             float lastPerTickEffective = perTickEffective;
             perTickEffective = calcEffectivePerTickRotation(facing);
 
-            if (lastPerTickEffective != perTickEffective){
+            if (lastPerTickEffective != perTickEffective) {
                 markDirty();
             }
         }
@@ -65,22 +64,21 @@ public class TileStoneAxle extends BaseTileEntity implements ITickable, IRotatio
 
     @Override
     public float getEffectivePerTickRotation(EnumFacing direction) {
-        if (facing == direction){
+        if (facing == direction) {
             return perTickEffective;
-        }else {
+        } else {
             return 0;
         }
     }
 
     private float calcEffectivePerTickRotation(EnumFacing direction) {
-        if (facing == direction){
+        if (facing == direction) {
             BlockPos posProvider = pos.offset(facing.getOpposite());
             TileEntity te = world.getTileEntity(posProvider);
-            if (te != null && te instanceof IRotationalPowerMember){
+            if (te != null && te instanceof IRotationalPowerMember) {
                 return ((IRotationalPowerMember) te).getEffectivePerTickRotation(facing) + getOwnRotation();
-            }
-            else return getOwnRotation();
-        }else return 0;
+            } else return getOwnRotation();
+        } else return 0;
     }
 
     @Override

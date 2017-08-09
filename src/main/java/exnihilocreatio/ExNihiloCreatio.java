@@ -74,9 +74,7 @@ public class ExNihiloCreatio {
         ModBlocks.preInit();
 
 
-
         proxy.registerConfigs(configDirectory);
-
 
 
         ENCapabilities.init();
@@ -120,7 +118,7 @@ public class ExNihiloCreatio {
     }
 
     @SubscribeEvent
-    public static void registerModels(ModelRegistryEvent event){
+    public static void registerModels(ModelRegistryEvent event) {
         proxy.registerModels(event);
     }
 

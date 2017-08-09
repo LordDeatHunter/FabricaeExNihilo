@@ -28,11 +28,11 @@ public class TileWaterwheel extends BaseTileEntity implements ITickable, IRotati
     @Override
     public void update() {
         counter++;
-        if (counter % 10 == 0){
+        if (counter % 10 == 0) {
             IBlockState left;
             IBlockState right;
 
-            switch (facing){
+            switch (facing) {
                 case WEST:
                 case EAST:
                     left = world.getBlockState(pos.add(0, 0, -1));
@@ -50,18 +50,18 @@ public class TileWaterwheel extends BaseTileEntity implements ITickable, IRotati
             boolean rIsWater = right.getBlock() == Blocks.WATER;
 
             perTickRotationOwn = 0F;
-            if (lIsWater){
+            if (lIsWater) {
                 perTickRotationOwn += ROTATION_PER_WHEEL;
             }
 
-            if (rIsWater){
+            if (rIsWater) {
                 perTickRotationOwn -= ROTATION_PER_WHEEL;
             }
 
             float lastPerTickEffective = perTickEffective;
             perTickEffective = calcEffectivePerTickRotation(facing);
 
-            if (lastPerTickEffective != perTickEffective){
+            if (lastPerTickEffective != perTickEffective) {
                 markDirty();
             }
         }
@@ -95,26 +95,25 @@ public class TileWaterwheel extends BaseTileEntity implements ITickable, IRotati
 
     @Override
     public float getEffectivePerTickRotation(EnumFacing direction) {
-        if (facing == direction){
+        if (facing == direction) {
             return perTickEffective;
-        }else {
+        } else {
             return 0;
         }
     }
 
     private float calcEffectivePerTickRotation(EnumFacing direction) {
-        if (facing == direction){
+        if (facing == direction) {
             BlockPos posProvider = pos.offset(facing.getOpposite());
             TileEntity te = world.getTileEntity(posProvider);
-            if (te != null && te instanceof IRotationalPowerMember){
+            if (te != null && te instanceof IRotationalPowerMember) {
                 return ((IRotationalPowerMember) te).getEffectivePerTickRotation(facing) + getOwnRotation();
-            }
-            else return getOwnRotation();
-        }else return 0;
+            } else return getOwnRotation();
+        } else return 0;
     }
 
 
-        @Override
+    @Override
     public void setEffectivePerTickRotation(float rotation) {
         perTickEffective = rotation;
     }

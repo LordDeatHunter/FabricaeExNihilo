@@ -48,7 +48,6 @@ public class BlockCrucible extends Block implements IProbeInfoAccessor, IHasMode
         setRegistryName(name);
 
 
-
         Data.BLOCKS.add(this);
         this.setHardness(2.0f);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FIRED, false));
@@ -92,7 +91,7 @@ public class BlockCrucible extends Block implements IProbeInfoAccessor, IHasMode
 
     @Override
     public void getSubBlocks(@Nonnull CreativeTabs itemIn, NonNullList<ItemStack> items) {
-        if (itemIn == ExNihiloCreatio.tabExNihilo){
+        if (itemIn == ExNihiloCreatio.tabExNihilo) {
             items.add(new ItemStack(this, 1, 0));
             items.add(new ItemStack(this, 1, 1));
         }
@@ -121,7 +120,6 @@ public class BlockCrucible extends Block implements IProbeInfoAccessor, IHasMode
     }
 
 
-
     @Override
     @Deprecated
     public boolean isFullBlock(IBlockState state) {
@@ -143,7 +141,7 @@ public class BlockCrucible extends Block implements IProbeInfoAccessor, IHasMode
     @Override
     @SideOnly(Side.CLIENT)
     public void initModel(ModelRegistryEvent e) {
-        ModelResourceLocation unfired = new ModelResourceLocation(getRegistryName(),"fired=false");
+        ModelResourceLocation unfired = new ModelResourceLocation(getRegistryName(), "fired=false");
         ModelResourceLocation fired = new ModelResourceLocation(getRegistryName(), "fired=true");
 
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, unfired);

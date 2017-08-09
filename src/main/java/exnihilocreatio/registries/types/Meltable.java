@@ -5,7 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
-@AllArgsConstructor @EqualsAndHashCode(exclude={"textureOverride"})
+@AllArgsConstructor
+@EqualsAndHashCode(exclude = {"textureOverride"})
 public class Meltable {
 
     @Getter

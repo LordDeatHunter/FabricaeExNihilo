@@ -44,7 +44,7 @@ public class ItemOre extends Item implements IHasModel, IHasSpecialRegistry {
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(@Nonnull CreativeTabs tab, NonNullList<ItemStack> list) {
-        if (this.isInCreativeTab(tab)){
+        if (this.isInCreativeTab(tab)) {
             list.add(new ItemStack(this, 1, 0)); //Piece
             list.add(new ItemStack(this, 1, 1)); //Chunk
             list.add(new ItemStack(this, 1, 2)); //Dust

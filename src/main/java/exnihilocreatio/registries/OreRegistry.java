@@ -189,7 +189,7 @@ public class OreRegistry {
         }
     }
 
-    public static void registerToGameRegistry(IForgeRegistry<Item> itemRegistry){
+    public static void registerToGameRegistry(IForgeRegistry<Item> itemRegistry) {
         for (ItemOre itemOre : itemOreRegistry) {
             itemRegistry.register(itemOre);
         }

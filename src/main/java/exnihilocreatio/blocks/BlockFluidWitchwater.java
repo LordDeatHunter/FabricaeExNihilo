@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 
-public class BlockFluidWitchwater extends BlockFluidClassic{
+public class BlockFluidWitchwater extends BlockFluidClassic {
 
     public BlockFluidWitchwater() {
         super(ModFluids.fluidWitchwater, Material.WATER);

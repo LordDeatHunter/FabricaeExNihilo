@@ -236,7 +236,7 @@ public class ExNihiloDefaultRecipes implements ISieveDefaultRegistryProvider, IH
 
     @Override
     public void registerFluidTransformRecipeDefaults() {
-        FluidTransformRegistry.register("water", "witchwater", 12000, new BlockInfo[] { new BlockInfo(Blocks.MYCELIUM.getDefaultState()) }, new BlockInfo[] { new BlockInfo(Blocks.BROWN_MUSHROOM.getDefaultState()), new BlockInfo(Blocks.RED_MUSHROOM.getDefaultState()) });
+        FluidTransformRegistry.register("water", "witchwater", 12000, new BlockInfo[]{new BlockInfo(Blocks.MYCELIUM.getDefaultState())}, new BlockInfo[]{new BlockInfo(Blocks.BROWN_MUSHROOM.getDefaultState()), new BlockInfo(Blocks.RED_MUSHROOM.getDefaultState())});
     }
 
     @Override

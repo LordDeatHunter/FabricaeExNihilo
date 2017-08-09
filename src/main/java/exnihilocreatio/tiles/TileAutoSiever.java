@@ -10,10 +10,10 @@ import java.util.ArrayList;
 public class TileAutoSiever extends BaseTileEntity implements ITickable {
     @Override
     public void update() {
-        BlockPos posOther = pos.add(1, 0,0);
+        BlockPos posOther = pos.add(1, 0, 0);
         TileEntity te = world.getTileEntity(posOther);
 
-        if (te != null && te instanceof TileSieve){
+        if (te != null && te instanceof TileSieve) {
             TileSieve sieve = (TileSieve) te;
 
             doAutoSieving(sieve);
@@ -23,7 +23,7 @@ public class TileAutoSiever extends BaseTileEntity implements ITickable {
     }
 
 
-    void doAutoSieving(TileSieve thisSieve){
+    void doAutoSieving(TileSieve thisSieve) {
         ArrayList<BlockPos> toSift = new ArrayList<>();
 
         for (int xOffset = -1 * Config.sieveSimilarRadius; xOffset <= Config.sieveSimilarRadius; xOffset++) {

@@ -17,7 +17,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public class BlockAutoSiever extends BlockBase implements ITileEntityProvider{
+public class BlockAutoSiever extends BlockBase implements ITileEntityProvider {
     public static final PropertyEnum<AutoSieverPart> PART_TYPE = PropertyEnum.create("part_type", AutoSieverPart.class);
 
     public BlockAutoSiever() {
@@ -65,8 +65,7 @@ public class BlockAutoSiever extends BlockBase implements ITileEntityProvider{
     }
 
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer()
-    {
+    public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT;
     }
 

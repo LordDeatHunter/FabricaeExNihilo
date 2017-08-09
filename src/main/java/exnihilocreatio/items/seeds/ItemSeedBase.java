@@ -88,6 +88,6 @@ public class ItemSeedBase extends Item implements IPlantable, IHasModel {
     @Override
     @SideOnly(Side.CLIENT)
     public void initModel(ModelRegistryEvent e) {
-        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation("exnihilocreatio:item_seed", "type="+name));
+        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation("exnihilocreatio:item_seed", "type=" + name));
     }
 }

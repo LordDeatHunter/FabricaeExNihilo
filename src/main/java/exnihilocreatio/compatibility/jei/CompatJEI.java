@@ -71,7 +71,6 @@ public class CompatJEI implements IModPlugin {
     }
 
 
-
     @Override
     @SideOnly(Side.CLIENT)
     public void register(@Nonnull IModRegistry registry) {

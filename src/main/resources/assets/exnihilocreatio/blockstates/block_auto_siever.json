@@ -1,60 +1,162 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "custom": { "flip-v": true }
+    "custom": {
+      "flip-v": true
+    }
   },
   "variants": {
-    "part_type=empty":{
+    "part_type=empty": {
       "model": "minecraft:stone"
     },
-    "part_type=box":{
+    "part_type=box": {
       "model": "exnihilocreatio:obj/auto_siever_box.obj"
     },
-    "part_type=gear":{
+    "part_type=gear": {
       "model": "exnihilocreatio:obj/auto_siever_gear.obj"
     },
-    "part_type=rod":{
+    "part_type=rod": {
       "model": "exnihilocreatio:obj/auto_siever_shaft.obj"
     },
-    "inventory": [{
-      "model": "exnihilocreatio:obj/auto_siever_box.obj",
-      "transform": {
-        "firstperson_righthand": {
-          "translation": [0.3, 0.25, 0],
-          "rotation": [ { "y": 0}, {"x": 0}, {"z": 0} ],
-          "scale": 0.4
-        },
-        "firstperson_lefthand": {
-          "translation": [0.3, 0.25, 0],
-          "rotation": [ { "y": 0}, {"x": 0}, {"z": 0} ],
-          "scale": 0.4
-        },
-        "thirdperson_lefthand": {
-          "translation": [-0.3, 0.25, 0],
-          "rotation": [{"x": 0}, { "y": 0},  {"z": 0} ],
-          "scale": 0.4
-        },
-        "thirdperson_righthand": {
-          "translation": [0.3, 0.25, 0],
-          "rotation": [{"x": 0}, { "y": 0},  {"z": 0} ],
-          "scale": 0.4
-        },
-        "gui": {
-          "translation": [0.3, 0.25, 0],
-          "scale": 0.4,
-          "rotation": [ {"x": 10}, { "y": 30}, {"z": 0} ]
-        },
-        "ground": {
-          "translation": [0.3, 0.25, 0],
-          "scale": 0.45,
-          "rotation": [ {"x": 0}, { "y": 30}, {"z": 0} ]
-        },
-        "fixed": {
-          "translation": [0.2, 0.25, 0],
-          "scale": 0.45,
-          "rotation": [ {"x": 0}, { "y": 0}, {"z": 0} ]
+    "inventory": [
+      {
+        "model": "exnihilocreatio:obj/auto_siever_box.obj",
+        "transform": {
+          "firstperson_righthand": {
+            "translation": [
+              0.3,
+              0.25,
+              0
+            ],
+            "rotation": [
+              {
+                "y": 0
+              },
+              {
+                "x": 0
+              },
+              {
+                "z": 0
+              }
+            ],
+            "scale": 0.4
+          },
+          "firstperson_lefthand": {
+            "translation": [
+              0.3,
+              0.25,
+              0
+            ],
+            "rotation": [
+              {
+                "y": 0
+              },
+              {
+                "x": 0
+              },
+              {
+                "z": 0
+              }
+            ],
+            "scale": 0.4
+          },
+          "thirdperson_lefthand": {
+            "translation": [
+              -0.3,
+              0.25,
+              0
+            ],
+            "rotation": [
+              {
+                "x": 0
+              },
+              {
+                "y": 0
+              },
+              {
+                "z": 0
+              }
+            ],
+            "scale": 0.4
+          },
+          "thirdperson_righthand": {
+            "translation": [
+              0.3,
+              0.25,
+              0
+            ],
+            "rotation": [
+              {
+                "x": 0
+              },
+              {
+                "y": 0
+              },
+              {
+                "z": 0
+              }
+            ],
+            "scale": 0.4
+          },
+          "gui": {
+            "translation": [
+              0.3,
+              0.25,
+              0
+            ],
+            "scale": 0.4,
+            "rotation": [
+              {
+                "x": 10
+              },
+              {
+                "y": 30
+              },
+              {
+                "z": 0
+              }
+            ]
+          },
+          "ground": {
+            "translation": [
+              0.3,
+              0.25,
+              0
+            ],
+            "scale": 0.45,
+            "rotation": [
+              {
+                "x": 0
+              },
+              {
+                "y": 30
+              },
+              {
+                "z": 0
+              }
+            ]
+          },
+          "fixed": {
+            "translation": [
+              0.2,
+              0.25,
+              0
+            ],
+            "scale": 0.45,
+            "rotation": [
+              {
+                "x": 0
+              },
+              {
+                "y": 0
+              },
+              {
+                "z": 0
+              }
+            ]
+          }
         }
       }
-    }]
+    ]
   }
 }

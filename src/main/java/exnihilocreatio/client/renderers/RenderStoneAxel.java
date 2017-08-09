@@ -2,19 +2,15 @@ package exnihilocreatio.client.renderers;
 
 import exnihilocreatio.ModBlocks;
 import exnihilocreatio.blocks.BlockStoneAxle;
-import exnihilocreatio.blocks.BlockWaterwheel;
 import exnihilocreatio.tiles.TileStoneAxle;
-import exnihilocreatio.tiles.TileWaterwheel;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
@@ -25,8 +21,7 @@ public class RenderStoneAxel extends TileEntitySpecialRenderer<TileStoneAxle> {
 
     @Override
     public void render(TileStoneAxle tile, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-        if (quads==null)
-        {
+        if (quads == null) {
             final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
             IBlockState state = ModBlocks.axle_stone.getDefaultState().withProperty(BlockStoneAxle.IS_AXLE, true);
 
@@ -48,7 +43,7 @@ public class RenderStoneAxel extends TileEntitySpecialRenderer<TileStoneAxle> {
 
         GlStateManager.rotate(rotFacing, 0, 1, 0);
 
-        if (tile.canTurn){
+        if (tile.canTurn) {
             tile.rotationValue = (tile.rotationValue + tile.perTickEffective) % 360;
         }
 

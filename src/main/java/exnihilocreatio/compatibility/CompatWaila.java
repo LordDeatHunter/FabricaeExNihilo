@@ -5,16 +5,13 @@ import exnihilocreatio.blocks.*;
 import exnihilocreatio.registries.CrucibleRegistry;
 import exnihilocreatio.rotationalPower.IRotationalPowerMember;
 import exnihilocreatio.tiles.*;
-import mcjty.theoneprobe.api.ProbeMode;
 import mcp.mobius.waila.api.*;
-import net.minecraft.block.BlockStone;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
@@ -99,14 +96,14 @@ public class CompatWaila implements IWailaPlugin, IWailaDataProvider {
         }
 
 
-        if (accessor.getTileEntity() instanceof IRotationalPowerMember){
+        if (accessor.getTileEntity() instanceof IRotationalPowerMember) {
             IRotationalPowerMember powerMember = (IRotationalPowerMember) accessor.getTileEntity();
 
-            if (powerMember != null){
-                if (powerMember instanceof TileStoneAxle){
+            if (powerMember != null) {
+                if (powerMember instanceof TileStoneAxle) {
                     currenttip.add("Facing: " + ((TileStoneAxle) powerMember).facing.getName());
                     currenttip.add("Effective Rotation: " + powerMember.getEffectivePerTickRotation(((TileStoneAxle) powerMember).facing));
-                }else if (powerMember instanceof TileWaterwheel){
+                } else if (powerMember instanceof TileWaterwheel) {
                     currenttip.add("Facing: " + (((TileWaterwheel) powerMember).facing.getName()));
                     currenttip.add("Effective Rotation: " + powerMember.getEffectivePerTickRotation(((TileWaterwheel) powerMember).facing));
                 }

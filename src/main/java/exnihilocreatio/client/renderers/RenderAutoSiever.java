@@ -1,20 +1,15 @@
 package exnihilocreatio.client.renderers;
 
-import exnihilocreatio.ModBlocks;
 import exnihilocreatio.blocks.AutoSieverPart;
 import exnihilocreatio.blocks.BlockAutoSiever;
-import exnihilocreatio.blocks.BlockStoneAxle;
 import exnihilocreatio.tiles.TileAutoSiever;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
@@ -41,9 +36,8 @@ public class RenderAutoSiever extends TileEntitySpecialRenderer<TileAutoSiever> 
 
     }
 
-    void renderGear(TileAutoSiever tile, double x, double y, double z){
-        if (quadsGear==null)
-        {
+    void renderGear(TileAutoSiever tile, double x, double y, double z) {
+        if (quadsGear == null) {
             final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
             IBlockState state = tile.getBlockType().getDefaultState().withProperty(BlockAutoSiever.PART_TYPE, AutoSieverPart.GEAR);
 
@@ -93,9 +87,8 @@ public class RenderAutoSiever extends TileEntitySpecialRenderer<TileAutoSiever> 
         GlStateManager.enableCull();
     }
 
-    void renderRod(TileAutoSiever tile, double x, double y, double z){
-        if (quadsShaft==null)
-        {
+    void renderRod(TileAutoSiever tile, double x, double y, double z) {
+        if (quadsShaft == null) {
             final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
             IBlockState state = tile.getBlockType().getDefaultState().withProperty(BlockAutoSiever.PART_TYPE, AutoSieverPart.ROD);
 
@@ -146,9 +139,8 @@ public class RenderAutoSiever extends TileEntitySpecialRenderer<TileAutoSiever> 
         GlStateManager.enableCull();
     }
 
-    void renderBox(TileAutoSiever tile, double x, double y, double z){
-        if (quadsBox==null)
-        {
+    void renderBox(TileAutoSiever tile, double x, double y, double z) {
+        if (quadsBox == null) {
             final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
             IBlockState state = tile.getBlockType().getDefaultState().withProperty(BlockAutoSiever.PART_TYPE, AutoSieverPart.BOX);
 

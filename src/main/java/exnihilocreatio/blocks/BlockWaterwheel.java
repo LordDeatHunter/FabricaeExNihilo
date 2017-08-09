@@ -58,7 +58,7 @@ public class BlockWaterwheel extends BlockBase implements ITileEntityProvider {
         return 0;
     }
 
-    private TileWaterwheel getTe(World world, BlockPos pos){
+    private TileWaterwheel getTe(World world, BlockPos pos) {
         return (TileWaterwheel) world.getTileEntity(pos);
     }
 
@@ -85,8 +85,7 @@ public class BlockWaterwheel extends BlockBase implements ITileEntityProvider {
     }
 
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer()
-    {
+    public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT;
     }
 

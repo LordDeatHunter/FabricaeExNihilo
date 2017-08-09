@@ -77,10 +77,10 @@ public class ItemPebble extends Item implements IHasModel {
         return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }
 
-    public String getPebbleType(ItemStack stack){
-        if (stack.getMetadata() >= names.size() || stack.getMetadata() < 0){
+    public String getPebbleType(ItemStack stack) {
+        if (stack.getMetadata() >= names.size() || stack.getMetadata() < 0) {
             return names.get(0);
-        }else {
+        } else {
             return names.get(stack.getMetadata());
         }
     }
@@ -91,7 +91,7 @@ public class ItemPebble extends Item implements IHasModel {
     public void initModel(ModelRegistryEvent e) {
         List<ModelResourceLocation> locations = new ArrayList<>();
         for (int i = 0; i < names.size(); i++) {
-            locations.add(new ModelResourceLocation(getRegistryName(),  "type="+names.get(i)));
+            locations.add(new ModelResourceLocation(getRegistryName(), "type=" + names.get(i)));
         }
 
         ModelBakery.registerItemVariants(this, locations.toArray(new ModelResourceLocation[0]));

@@ -91,13 +91,13 @@ public class ModItems {
 
     public static void registerItems(IForgeRegistry<Item> registry) {
         for (Item item : Data.ITEMS) {
-            if (!(item instanceof IHasSpecialRegistry)){
+            if (!(item instanceof IHasSpecialRegistry)) {
                 registry.register(item);
             }
         }
 
         for (Block block : Data.BLOCKS)
-            if (!(block instanceof IHasSpecialRegistry)){
+            if (!(block instanceof IHasSpecialRegistry)) {
                 registry.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
             }
 
