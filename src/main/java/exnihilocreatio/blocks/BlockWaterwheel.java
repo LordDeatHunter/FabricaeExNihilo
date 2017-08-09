@@ -11,10 +11,13 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
@@ -22,8 +25,9 @@ public class BlockWaterwheel extends BlockBase implements ITileEntityProvider {
     public static final IProperty<Boolean> IS_WHEEL = PropertyBool.create("is_wheel");
 
     public BlockWaterwheel() {
-        super(Material.WOOD, "block_waterwheel");
+        super(Material.GLASS, "block_waterwheel");
         setCreativeTab(ExNihiloCreatio.tabExNihilo);
+
 
         setDefaultState(blockState.getBaseState().withProperty(IS_WHEEL, false));
     }
@@ -94,5 +98,13 @@ public class BlockWaterwheel extends BlockBase implements ITileEntityProvider {
         return false;
     }
 
-    
+
+
+    @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer()
+    {
+        return BlockRenderLayer.CUTOUT;
+    }
+
+
 }

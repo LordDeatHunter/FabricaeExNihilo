@@ -64,13 +64,8 @@ public class BlockInfo {
         if (block1 == null && block2 == null)
             return true;
 
-        if (block1 == null && block2 != null)
-            return false;
+        return block1 != null && block2 != null && block1.equals(block2);
 
-        if (block1 != null && block2 == null)
-            return false;
-
-        return block1.equals(block2);
     }
 
     public String toString() {

@@ -71,8 +71,8 @@ public class TileWaterwheel extends BaseTileEntity implements ITickable, IRotati
     @Override
     @Nonnull
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
-
-        tag.setString("facing", facing.getName());
+        if (facing != null)
+            tag.setString("facing", facing.getName());
         tag.setFloat("rot", rotationValue);
 
         return super.writeToNBT(tag);
@@ -82,8 +82,10 @@ public class TileWaterwheel extends BaseTileEntity implements ITickable, IRotati
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
 
-        facing = EnumFacing.byName(tag.getString("facing"));
-        rotationValue = tag.getFloat("rot");
+        if (tag.hasKey("facing"))
+            facing = EnumFacing.byName(tag.getString("facing"));
+        if (tag.hasKey("rot"))
+            rotationValue = tag.getFloat("rot");
     }
 
     @Override

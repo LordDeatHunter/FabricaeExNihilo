@@ -113,7 +113,7 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
         return null;
     }
 
-    private class CompostTooltipCallback implements ITooltipCallback<ItemStack> {
+    private static class CompostTooltipCallback implements ITooltipCallback<ItemStack> {
         @Override
         public void onTooltip(int slotIndex, boolean input, @Nonnull ItemStack ingredient, @Nonnull List<String> tooltip) {
             if (input) {

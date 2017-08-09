@@ -1,25 +1,38 @@
 package exnihilocreatio.blocks;
 
 import exnihilocreatio.ExNihiloCreatio;
+import exnihilocreatio.tiles.TileSieve;
 import exnihilocreatio.tiles.TileStoneAxle;
+import mcjty.theoneprobe.api.IProbeHitData;
+import mcjty.theoneprobe.api.IProbeInfo;
+import mcjty.theoneprobe.api.IProbeInfoProvider;
+import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.Map;
 
-public class BlockStoneAxle extends BlockBase implements ITileEntityProvider {
+public class BlockStoneAxle extends BlockBase implements ITileEntityProvider, IProbeInfoProvider {
     public static final IProperty<Boolean> IS_AXLE = PropertyBool.create("is_axle");
     private static final AxisAlignedBB hitboxEW = new AxisAlignedBB(0,0,0, 1, .5, .5).offset(0, 0.25, 0.25);
     private static final AxisAlignedBB hitboxSN = new AxisAlignedBB(0,0,0, .5, .5, 1).offset(0.25, 0.25, 0);
@@ -135,5 +148,27 @@ public class BlockStoneAxle extends BlockBase implements ITileEntityProvider {
             }
         }
         return FULL_BLOCK_AABB;
+    }
+
+    @Override
+    public String getID() {
+        return "block_stone_axle";
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
+
+        TileStoneAxle axle = (TileStoneAxle) world.getTileEntity(data.getPos());
+        if (axle == null)
+            return;
+
+        probeInfo.text("Effective Rotation: " + axle.getEffectivePerTickRotation(axle.facing));
+
+        if (mode == ProbeMode.EXTENDED) {
+            probeInfo.text(TextFormatting.BLUE + "Own Rotation: " + axle.getOwnRotation());
+            probeInfo.text(TextFormatting.BLUE + "Facing: " + axle.facing.getName());
+        }
+
     }
 }

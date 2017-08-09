@@ -81,6 +81,8 @@ public class ItemOre extends Item implements IHasModel, IHasSpecialRegistry {
             case 3:
                 pre = "oreingot";
                 break;
+            default:
+                break;
         }
         return (StringUtils.capitalize(name) + " " + I18n.translateToLocal(pre + ".name")).trim();
     }

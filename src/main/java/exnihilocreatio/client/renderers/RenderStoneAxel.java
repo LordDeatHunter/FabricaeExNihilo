@@ -53,6 +53,8 @@ public class RenderStoneAxel extends TileEntitySpecialRenderer<TileStoneAxle> {
             case EAST:
                 GlStateManager.rotate(-90, 0, 1, 0);
                 break;
+            default:
+                break;
         }
 
         GlStateManager.blendFunc(770, 771);

@@ -33,7 +33,7 @@ public class ProjectileStone extends EntityThrowable {
     @Override
     protected void onImpact(RayTraceResult result) {
         if (result.entityHit != null) {
-            result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, getThrower()), (int) (Math.random() * (4.0F / 3.0F)));
+            result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, getThrower()), world.rand.nextInt (1));
         } else if (!getEntityWorld().isRemote) {
             setDead();
 

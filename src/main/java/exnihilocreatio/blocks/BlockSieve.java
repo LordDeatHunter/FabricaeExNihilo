@@ -122,7 +122,7 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbe
                     TileSieve sieve = (TileSieve) world.getTileEntity(posIter);
 
                     if (sieve != null) {
-                        sieve.doSieving(player);
+                        sieve.doSieving(player, false);
                     }
                 }
             }
@@ -224,8 +224,8 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbe
 
         if (mode == ProbeMode.EXTENDED) {
             Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(sieve.getMeshStack());
-            for (Enchantment enchantment : enchantments.keySet()) {
-                probeInfo.text(TextFormatting.BLUE + enchantment.getTranslatedName(enchantments.get(enchantment)));
+            for (Map.Entry<Enchantment, Integer> enchantment : enchantments.entrySet()) {
+                probeInfo.text(TextFormatting.BLUE + enchantment.getKey().getTranslatedName(enchantment.getValue()));
             }
         }
 

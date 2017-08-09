@@ -12,6 +12,7 @@ import exnihilocreatio.util.BlockInfo;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
+import org.apache.commons.io.IOUtils;
 
 import java.io.File;
 import java.io.FileReader;
@@ -75,12 +76,9 @@ public class CrookRegistry {
                 HashMap<String, ArrayList<CrookReward>> gsonInput = gson.fromJson(fr, new TypeToken<HashMap<String, ArrayList<CrookReward>>>() {
                 }.getType());
 
-                Iterator<String> it = gsonInput.keySet().iterator();
-
-                while (it.hasNext()) {
-                    String s = (String) it.next();
-                    BlockInfo stack = new BlockInfo(s);
-                    registry.put(stack, gsonInput.get(s));
+                for (Map.Entry<String, ArrayList<CrookReward>> s : gsonInput.entrySet()) {
+                    BlockInfo stack = new BlockInfo(s.getKey());
+                    registry.put(stack, s.getValue());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -92,14 +90,16 @@ public class CrookRegistry {
     }
 
     public static void saveJson(File file) {
+        FileWriter fw = null;
         try {
-            FileWriter fw = new FileWriter(file);
+            fw = new FileWriter(file);
 
             gson.toJson(registry, fw);
 
-            fw.close();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            IOUtils.closeQuietly(fw);
         }
     }
 

@@ -9,6 +9,7 @@ import exnihilocreatio.registries.manager.IFluidTransformDefaultRegistryProvider
 import exnihilocreatio.registries.types.FluidTransformer;
 import exnihilocreatio.util.BlockInfo;
 import lombok.Getter;
+import org.apache.commons.io.IOUtils;
 
 import java.io.File;
 import java.io.FileReader;
@@ -101,13 +102,15 @@ public class FluidTransformRegistry {
     }
 
     public static void saveJson(File file) {
+        FileWriter fw = null;
         try {
-            FileWriter fw = new FileWriter(file);
+            fw = new FileWriter(file);
             gson.toJson(registry, fw);
 
-            fw.close();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            IOUtils.closeQuietly(fw);
         }
     }
 }

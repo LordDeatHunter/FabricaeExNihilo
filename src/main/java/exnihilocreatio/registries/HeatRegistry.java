@@ -8,6 +8,7 @@ import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.manager.IHeatDefaultRegistryProvider;
 import exnihilocreatio.util.BlockInfo;
 import net.minecraft.item.ItemStack;
+import org.apache.commons.io.IOUtils;
 
 import java.io.File;
 import java.io.FileReader;
@@ -81,13 +82,14 @@ public class HeatRegistry {
     }
 
     public static void saveJson(File file) {
+        FileWriter fw = null;
         try {
-            FileWriter fw = new FileWriter(file);
+            fw = new FileWriter(file);
             gson.toJson(registry, fw);
-
-            fw.close();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            IOUtils.closeQuietly(fw);
         }
     }
 

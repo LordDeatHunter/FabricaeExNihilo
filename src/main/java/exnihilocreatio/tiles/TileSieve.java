@@ -100,60 +100,66 @@ public class TileSieve extends TileEntity {
         return false;
     }
 
-    public boolean doSieving(EntityPlayer player) {
-        if (currentStack == null) {
-            return false;
-        }
+    public boolean doSieving(EntityPlayer player, boolean automatedSieving) {
+        if (!world.isRemote) {
 
-        // 4 ticks is the same period of holding down right click
-        if (getWorld().getTotalWorldTime() - lastSieveAction < 4) {
-            return false;
-        }
-
-        // Really good chance that they're using a macro
-        if (getWorld().getTotalWorldTime() - lastSieveAction == 0 && lastPlayer.equals(player.getUniqueID())) {
-            if (Config.setFireToMacroUsers) {
-                player.setFire(1);
+            if (currentStack == null) {
+                return false;
             }
 
-            player.sendMessage(new TextComponentString("Bad").setStyle(new Style().setColor(TextFormatting.RED).setBold(true)));
-        }
-
-        lastSieveAction = getWorld().getTotalWorldTime();
-        lastPlayer = player.getUniqueID();
-
-        int efficiency = EnchantmentHelper.getEnchantmentLevel(ENEnchantments.efficiency, meshStack);
-        efficiency += EnchantmentHelper.getEnchantmentLevel(Enchantments.EFFICIENCY, meshStack);
-
-        int fortune = EnchantmentHelper.getEnchantmentLevel(ENEnchantments.fortune, meshStack);
-        fortune += EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, meshStack);
-        fortune += player.getLuck();
-
-        int luckOfTheSea = EnchantmentHelper.getEnchantmentLevel(ENEnchantments.luckOfTheSea, meshStack);
-        luckOfTheSea += EnchantmentHelper.getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, meshStack);
-
-        if (luckOfTheSea > 0) {
-            luckOfTheSea += player.getLuck();
-        }
-
-        progress += 10 + 5 * efficiency;
-        PacketHandler.sendNBTUpdate(this);
-
-        if (progress >= 100) {
-            List<ItemStack> drops = SieveRegistry.getRewardDrops(rand, currentStack.getBlockState(), meshStack.getMetadata(), fortune);
-
-            if (drops == null) {
-                drops = new ArrayList<>();
+            // 4 ticks is the same period of holding down right click
+            if (getWorld().getTotalWorldTime() - lastSieveAction < 4 && !automatedSieving) {
+                return false;
             }
 
-            // Fancy math to make the average fish dropped ~ luckOfTheSea / 2 fish, which is what it was before
+            // Really good chance that they're using a macro
+            if (!automatedSieving && player != null && getWorld().getTotalWorldTime() - lastSieveAction == 0 && lastPlayer.equals(player.getUniqueID())) {
+                if (Config.setFireToMacroUsers) {
+                    player.setFire(1);
+                }
 
-            int fishToDrop = (int) Math.round(rand.nextGaussian() + (luckOfTheSea / 2.0));
+                player.sendMessage(new TextComponentString("Bad").setStyle(new Style().setColor(TextFormatting.RED).setBold(true)));
+            }
 
-            fishToDrop = Math.min(fishToDrop, 0);
-            fishToDrop = Math.max(fishToDrop, luckOfTheSea);
+            lastSieveAction = getWorld().getTotalWorldTime();
+            if (player != null) {
+                lastPlayer = player.getUniqueID();
+            }
 
-            for (int i = 0; i < fishToDrop; i++) {
+            int efficiency = EnchantmentHelper.getEnchantmentLevel(ENEnchantments.efficiency, meshStack);
+            efficiency += EnchantmentHelper.getEnchantmentLevel(Enchantments.EFFICIENCY, meshStack);
+
+            int fortune = EnchantmentHelper.getEnchantmentLevel(ENEnchantments.fortune, meshStack);
+            fortune += EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, meshStack);
+            if (player != null) {
+                fortune += player.getLuck();
+            }
+
+            int luckOfTheSea = EnchantmentHelper.getEnchantmentLevel(ENEnchantments.luckOfTheSea, meshStack);
+            luckOfTheSea += EnchantmentHelper.getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, meshStack);
+
+            if (luckOfTheSea > 0 && player != null) {
+                luckOfTheSea += player.getLuck();
+            }
+
+            progress += 10 + 5 * efficiency;
+            PacketHandler.sendNBTUpdate(this);
+
+            if (progress >= 100) {
+                List<ItemStack> drops = SieveRegistry.getRewardDrops(rand, currentStack.getBlockState(), meshStack.getMetadata(), fortune);
+
+                if (drops == null) {
+                    drops = new ArrayList<>();
+                }
+
+                // Fancy math to make the average fish dropped ~ luckOfTheSea / 2 fish, which is what it was before
+
+                int fishToDrop = (int) Math.round(rand.nextGaussian() + (luckOfTheSea / 2.0));
+
+                fishToDrop = Math.min(fishToDrop, 0);
+                fishToDrop = Math.max(fishToDrop, luckOfTheSea);
+
+                for (int i = 0; i < fishToDrop; i++) {
                 /*
                  * Gives fish following chances:
                  *  Normal: 43% (3/7)
@@ -162,29 +168,31 @@ public class TileSieve extends TileEntity {
                  *  Puffer: 14% (1/7)
                  */
 
-                int fishMeta = 0;
+                    int fishMeta = 0;
 
-                switch (rand.nextInt(7)) {
-                    case 3:
-                    case 4:
-                        fishMeta = 1;
-                        break;
-                    case 5:
-                        fishMeta = 2;
-                        break;
-                    case 6:
-                        fishMeta = 3;
-                        break;
+                    switch (rand.nextInt(7)) {
+                        case 3:
+                        case 4:
+                            fishMeta = 1;
+                            break;
+                        case 5:
+                            fishMeta = 2;
+                            break;
+                        case 6:
+                            fishMeta = 3;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    drops.add(new ItemStack(Items.FISH, 1, fishMeta));
                 }
 
-                drops.add(new ItemStack(Items.FISH, 1, fishMeta));
+                drops.forEach(stack -> Util.dropItemInWorld(this, player, stack, 1));
+
+                resetSieve();
             }
-
-            drops.forEach(stack -> Util.dropItemInWorld(this, player, stack, 1));
-
-            resetSieve();
         }
-
         return true;
     }
 

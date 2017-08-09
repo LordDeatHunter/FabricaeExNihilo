@@ -54,6 +54,8 @@ public class Util {
                 stackCoordY = source.getPos().getY() + 0.5D + 1;
                 stackCoordZ = source.getPos().getZ() + 0.5D;
                 break;
+            default:
+                break;
         }
 
         EntityItem droppedEntity = new EntityItem(source.getWorld(), stackCoordX, stackCoordY, stackCoordZ, stack);
