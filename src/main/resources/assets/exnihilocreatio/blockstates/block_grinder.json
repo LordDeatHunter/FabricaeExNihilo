@@ -10,17 +10,17 @@
       "model": "minecraft:stone"
     },
     "part_type=box": {
-      "model": "exnihilocreatio:obj/auto_siever_box.obj"
+      "model": "exnihilocreatio:obj/block_grinder_box.obj"
     },
     "part_type=gear": {
-      "model": "exnihilocreatio:obj/auto_siever_gear.obj"
+      "model": "exnihilocreatio:obj/block_grinder_gear.obj"
     },
     "part_type=rod": {
-      "model": "exnihilocreatio:obj/auto_siever_shaft.obj"
+      "model": "exnihilocreatio:obj/block_grinder_shaft.obj"
     },
     "inventory": [
       {
-        "model": "exnihilocreatio:obj/auto_siever_box.obj",
+        "model": "exnihilocreatio:obj/block_grinder_box.obj",
         "transform": {
           "firstperson_righthand": {
             "translation": [

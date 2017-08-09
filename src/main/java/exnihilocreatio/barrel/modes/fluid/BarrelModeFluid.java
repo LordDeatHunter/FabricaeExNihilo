@@ -123,7 +123,7 @@ public class BarrelModeFluid implements IBarrelMode {
     @Override
     public float getFilledLevelForRender(TileBarrel barrel) {
         double amount = barrel.getTank().getFluidAmount();
-        return (float) (amount / Fluid.BUCKET_VOLUME);
+        return (float) ((amount / Fluid.BUCKET_VOLUME) * 0.9375F);
     }
 
     @SuppressWarnings("deprecation")

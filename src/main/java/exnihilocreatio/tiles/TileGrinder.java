@@ -7,7 +7,7 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 
-public class TileAutoSiever extends BaseTileEntity implements ITickable {
+public class TileGrinder extends BaseTileEntity implements ITickable {
     @Override
     public void update() {
         BlockPos posOther = pos.add(1, 0, 0);

@@ -240,7 +240,7 @@ public class BarrelModeCompost implements IBarrelMode {
 
     @Override
     public float getFilledLevelForRender(TileBarrel barrel) {
-        return fillAmount;
+        return fillAmount * 0.9375F;
     }
 
     @Override

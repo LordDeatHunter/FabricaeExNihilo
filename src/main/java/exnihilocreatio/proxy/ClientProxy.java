@@ -34,7 +34,7 @@ public class ClientProxy extends CommonProxy {
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileWaterwheel.class, new RenderWaterwheel());
         ClientRegistry.bindTileEntitySpecialRenderer(TileStoneAxle.class, new RenderStoneAxel());
-        ClientRegistry.bindTileEntitySpecialRenderer(TileAutoSiever.class, new RenderAutoSiever());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileGrinder.class, new RenderGrinder());
 
         RenderingRegistry.registerEntityRenderingHandler(ProjectileStone.class, new RenderProjectileStone.Factory());
     }

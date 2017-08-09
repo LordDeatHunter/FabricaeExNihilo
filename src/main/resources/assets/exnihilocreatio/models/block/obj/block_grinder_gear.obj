@@ -1,6 +1,6 @@
 # Blender v2.78 (sub 0) OBJ File: 'Gear.blend'
 # www.blender.org
-mtllib auto_siever_gear.mtl
+mtllib block_grinder_gear.mtl
 o Gear.002
 v 0.126929 0.191353 0.000000
 v 0.124490 0.191353 -0.024763

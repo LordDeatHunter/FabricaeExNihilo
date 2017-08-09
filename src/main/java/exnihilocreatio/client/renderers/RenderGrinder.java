@@ -1,8 +1,8 @@
 package exnihilocreatio.client.renderers;
 
-import exnihilocreatio.blocks.AutoSieverPart;
-import exnihilocreatio.blocks.BlockAutoSiever;
-import exnihilocreatio.tiles.TileAutoSiever;
+import exnihilocreatio.blocks.EnumGrinderParts;
+import exnihilocreatio.blocks.BlockGrinder;
+import exnihilocreatio.tiles.TileGrinder;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
@@ -14,13 +14,13 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 
-public class RenderAutoSiever extends TileEntitySpecialRenderer<TileAutoSiever> {
+public class RenderGrinder extends TileEntitySpecialRenderer<TileGrinder> {
     private static List<BakedQuad> quadsBox;
     private static List<BakedQuad> quadsGear;
     private static List<BakedQuad> quadsShaft;
 
     @Override
-    public void render(TileAutoSiever te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+    public void render(TileGrinder te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         // GlStateManager.pushAttrib();
         // GlStateManager.pushMatrix();
 
@@ -36,10 +36,10 @@ public class RenderAutoSiever extends TileEntitySpecialRenderer<TileAutoSiever> 
 
     }
 
-    void renderGear(TileAutoSiever tile, double x, double y, double z) {
+    void renderGear(TileGrinder tile, double x, double y, double z) {
         if (quadsGear == null) {
             final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
-            IBlockState state = tile.getBlockType().getDefaultState().withProperty(BlockAutoSiever.PART_TYPE, AutoSieverPart.GEAR);
+            IBlockState state = tile.getBlockType().getDefaultState().withProperty(BlockGrinder.PART_TYPE, EnumGrinderParts.GEAR);
 
             quadsGear = blockRenderer.getModelForState(state).getQuads(state, null, 0);
         }
@@ -87,10 +87,10 @@ public class RenderAutoSiever extends TileEntitySpecialRenderer<TileAutoSiever> 
         GlStateManager.enableCull();
     }
 
-    void renderRod(TileAutoSiever tile, double x, double y, double z) {
+    void renderRod(TileGrinder tile, double x, double y, double z) {
         if (quadsShaft == null) {
             final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
-            IBlockState state = tile.getBlockType().getDefaultState().withProperty(BlockAutoSiever.PART_TYPE, AutoSieverPart.ROD);
+            IBlockState state = tile.getBlockType().getDefaultState().withProperty(BlockGrinder.PART_TYPE, EnumGrinderParts.ROD);
 
             quadsShaft = blockRenderer.getModelForState(state).getQuads(state, null, 0);
         }
@@ -139,10 +139,10 @@ public class RenderAutoSiever extends TileEntitySpecialRenderer<TileAutoSiever> 
         GlStateManager.enableCull();
     }
 
-    void renderBox(TileAutoSiever tile, double x, double y, double z) {
+    void renderBox(TileGrinder tile, double x, double y, double z) {
         if (quadsBox == null) {
             final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
-            IBlockState state = tile.getBlockType().getDefaultState().withProperty(BlockAutoSiever.PART_TYPE, AutoSieverPart.BOX);
+            IBlockState state = tile.getBlockType().getDefaultState().withProperty(BlockGrinder.PART_TYPE, EnumGrinderParts.BOX);
 
             quadsBox = blockRenderer.getModelForState(state).getQuads(state, null, 0);
         }

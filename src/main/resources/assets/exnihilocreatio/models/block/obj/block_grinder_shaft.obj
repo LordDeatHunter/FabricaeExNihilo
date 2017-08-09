@@ -1,6 +1,6 @@
 # Blender v2.78 (sub 0) OBJ File: 'Gear.blend'
 # www.blender.org
-mtllib auto_siever_shaft.mtl
+mtllib block_grinder_shaft.mtl
 o Rod.001_Cube.004
 v 0.231687 -0.009766 0.561213
 v 0.227235 0.035434 0.561213

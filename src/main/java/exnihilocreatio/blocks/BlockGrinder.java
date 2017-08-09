@@ -1,6 +1,6 @@
 package exnihilocreatio.blocks;
 
-import exnihilocreatio.tiles.TileAutoSiever;
+import exnihilocreatio.tiles.TileGrinder;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -17,24 +17,23 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public class BlockAutoSiever extends BlockBase implements ITileEntityProvider {
-    public static final PropertyEnum<AutoSieverPart> PART_TYPE = PropertyEnum.create("part_type", AutoSieverPart.class);
+public class BlockGrinder extends BlockBase implements ITileEntityProvider {
+    public static final PropertyEnum<EnumGrinderParts> PART_TYPE = PropertyEnum.create("part_type", EnumGrinderParts.class);
 
-    public BlockAutoSiever() {
-        super(Material.GLASS, "block_auto_siever");
-        setDefaultState(this.blockState.getBaseState().withProperty(PART_TYPE, AutoSieverPart.EMPTY));
+    public BlockGrinder() {
+        super(Material.GLASS, "block_grinder");
+        setDefaultState(this.blockState.getBaseState().withProperty(PART_TYPE, EnumGrinderParts.EMPTY));
     }
 
 
     @Nullable
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new TileAutoSiever();
+        return new TileGrinder();
     }
 
     @Override
     protected BlockStateContainer createBlockState() {
-        System.out.println("PART_TYPE = " + PART_TYPE);
         return new BlockStateContainer(this, PART_TYPE);
     }
 

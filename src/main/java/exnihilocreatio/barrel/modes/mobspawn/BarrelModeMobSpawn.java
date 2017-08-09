@@ -85,7 +85,7 @@ public class BarrelModeMobSpawn implements IBarrelMode {
 
     @Override
     public float getFilledLevelForRender(TileBarrel barrel) {
-        return 1;
+        return 0.9375F;
     }
 
     @Override

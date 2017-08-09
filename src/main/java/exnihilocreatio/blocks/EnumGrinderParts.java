@@ -2,7 +2,7 @@ package exnihilocreatio.blocks;
 
 import net.minecraft.util.IStringSerializable;
 
-public enum AutoSieverPart implements IStringSerializable {
+public enum EnumGrinderParts implements IStringSerializable {
     EMPTY(0, "empty"),
     BOX(1, "box"),
     GEAR(2, "gear"),
@@ -11,7 +11,7 @@ public enum AutoSieverPart implements IStringSerializable {
     private int ID;
     private String name;
 
-    AutoSieverPart(int ID, String name) {
+    EnumGrinderParts(int ID, String name) {
         this.ID = ID;
         this.name = name;
     }

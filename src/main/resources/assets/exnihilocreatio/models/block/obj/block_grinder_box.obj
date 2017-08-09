@@ -1,6 +1,6 @@
 # Blender v2.78 (sub 0) OBJ File: 'Gear.blend'
 # www.blender.org
-mtllib auto_siever_box.mtl
+mtllib block_grinder_box.mtl
 o Cube.001_Cube.003
 v -1.000000 0.342223 1.000000
 v -1.000000 0.342223 -1.000000
