@@ -58,21 +58,6 @@ public class BlockWaterwheel extends BlockBase implements ITileEntityProvider {
         return 0;
     }
 
-    @Override
-    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-        return false;
-    }
-
-    @Override
-    public boolean isBlockNormalCube(IBlockState state) {
-        return false;
-    }
-
-    @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
-    }
-
     private TileWaterwheel getTe(World world, BlockPos pos){
         return (TileWaterwheel) world.getTileEntity(pos);
     }
@@ -83,6 +68,7 @@ public class BlockWaterwheel extends BlockBase implements ITileEntityProvider {
         te.facing = placer.getHorizontalFacing();
     }
 
+    //region >>>> RENDERING OPTIONS
     @Override
     public boolean isFullBlock(IBlockState state) {
         return false;
@@ -98,13 +84,26 @@ public class BlockWaterwheel extends BlockBase implements ITileEntityProvider {
         return false;
     }
 
-
-
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()
     {
         return BlockRenderLayer.CUTOUT;
     }
 
+    @Override
+    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+        return false;
+    }
+
+    @Override
+    public boolean isBlockNormalCube(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
+    //endregion
 
 }

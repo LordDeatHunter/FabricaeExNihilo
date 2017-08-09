@@ -1,33 +1,20 @@
 package exnihilocreatio.client.renderers;
 
-import exnihilocreatio.ModBlocks;
-import exnihilocreatio.blocks.BlockStoneAxle;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexFormat;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 
 public class RenderUtils {
 
     /**
-     * @author Blue Sinrize, taken from here: https://github.com/BluSunrize/ImmersiveEngineering/blob/master/src/main/java/blusunrize/immersiveengineering/client/ClientUtils.java#L1871
-     * @param quads
-     * @param renderer
-     * @param world
-     * @param pos
+     * @author Blue Sinrize
+     * taken from here: https://github.com/BluSunrize/ImmersiveEngineering/blob/master/src/main/java/blusunrize/immersiveengineering/client/ClientUtils.java#L1871
      */
     @SideOnly(Side.CLIENT)
     public static void renderModelTESRFast(List<BakedQuad> quads, BufferBuilder renderer, World world, BlockPos pos)
@@ -52,7 +39,6 @@ public class RenderUtils {
                         .lightmap(l1, l2)
                         .endVertex();
             }
-
         }
     }
 }

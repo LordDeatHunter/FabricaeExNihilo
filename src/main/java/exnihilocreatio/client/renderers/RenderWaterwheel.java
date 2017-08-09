@@ -42,25 +42,9 @@ public class RenderWaterwheel extends TileEntitySpecialRenderer<TileWaterwheel> 
         GlStateManager.disableCull();
 
 
-        switch (tile.facing) {
-            case DOWN:
-                break;
-            case UP:
-                break;
-            case NORTH:
-                break;
-            case SOUTH:
-                GlStateManager.rotate(180, 0, 1, 0);
-                break;
-            case WEST:
-                GlStateManager.rotate(90, 0, 1, 0);
-                break;
-            case EAST:
-                GlStateManager.rotate(-90, 0, 1, 0);
-                break;
-            default:
-                break;
-        }
+        float rotFacing = tile.facing == EnumFacing.SOUTH ? 180 : tile.facing == EnumFacing.WEST ? 90 : tile.facing == EnumFacing.EAST ? -90 : 0;
+
+        GlStateManager.rotate(rotFacing, 0, 1, 0);
 
         if (tile.canTurn){
             tile.rotationValue = (tile.rotationValue + tile.perTickEffective) % 360;
@@ -72,14 +56,14 @@ public class RenderWaterwheel extends TileEntitySpecialRenderer<TileWaterwheel> 
 
         Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 
-        BufferBuilder worldRenderer = tessellator.getBuffer();
+        BufferBuilder worldRendererBuffer = tessellator.getBuffer();
 
-        worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-        // worldRenderer.setTranslation(-.5, -.5, -.5);
+        worldRendererBuffer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
+        // worldRendererBuffer.setTranslation(-.5, -.5, -.5);
 
-        RenderUtils.renderModelTESRFast(quads, worldRenderer, tile.getWorld(), tile.getPos());
+        RenderUtils.renderModelTESRFast(quads, worldRendererBuffer, tile.getWorld(), tile.getPos());
 
-        // worldRenderer.setTranslation(0, 0, 0);
+        // worldRendererBuffer.setTranslation(0, 0, 0);
         tessellator.draw();
 
         GlStateManager.popMatrix();
@@ -88,56 +72,5 @@ public class RenderWaterwheel extends TileEntitySpecialRenderer<TileWaterwheel> 
         GlStateManager.disableBlend();
         GlStateManager.enableCull();
 
-    }
-
-    private void renderWheel(TileWaterwheel te) {
-        GlStateManager.pushMatrix();
-
-        GlStateManager.translate(.5, 0.5, .5);
-
-        switch (te.facing) {
-
-            case DOWN:
-                break;
-            case UP:
-                break;
-            case NORTH:
-                break;
-            case SOUTH:
-                GlStateManager.rotate(180, 0, 1, 0);
-                break;
-            case WEST:
-                GlStateManager.rotate(90, 0, 1, 0);
-                break;
-            case EAST:
-                GlStateManager.rotate(-90, 0, 1, 0);
-                break;
-            default:
-                break;
-        }
-
-        if (te.canTurn){
-            te.rotationValue = (te.rotationValue + te.perTickEffective) % 360;
-        }
-
-        GlStateManager.rotate(te.rotationValue, 0, 0, 1);
-
-        World world = te.getWorld();
-        // Translate back to local view coordinates so that we can do the acual rendering here
-        GlStateManager.translate(-te.getPos().getX(), -te.getPos().getY(), -te.getPos().getZ());
-
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferBuilder = tessellator.getBuffer();
-        bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-
-        IBlockState state = ModBlocks.watermill.getDefaultState().withProperty(BlockWaterwheel.IS_WHEEL, true);
-
-        BlockRendererDispatcher dispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
-        IBakedModel model = dispatcher.getModelForState(state);
-        dispatcher.getBlockModelRenderer().renderModel(world, model, state, te.getPos(), bufferBuilder, true);
-        tessellator.draw();
-
-        // RenderHelper.enableStandardItemLighting();
-        GlStateManager.popMatrix();
     }
 }
