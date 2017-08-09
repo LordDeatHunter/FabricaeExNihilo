@@ -44,11 +44,16 @@ public class BarrelModeFluidTransform implements IBarrelMode {
 
     @Override
     public void writeToNBT(NBTTagCompound tag) {
-        NBTTagCompound inputTag = inputStack.writeToNBT(new NBTTagCompound());
-        NBTTagCompound outputTag = outputStack.writeToNBT(new NBTTagCompound());
+        if (inputStack != null) {
+            NBTTagCompound inputTag = inputStack.writeToNBT(new NBTTagCompound());
+            tag.setTag("inputTag", inputTag);
+        }
 
-        tag.setTag("inputTag", inputTag);
-        tag.setTag("outputTag", outputTag);
+        if (outputStack != null){
+            NBTTagCompound outputTag = outputStack.writeToNBT(new NBTTagCompound());
+            tag.setTag("outputTag", outputTag);
+        }
+        
         tag.setFloat("progress", progress);
     }
 
