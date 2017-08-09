@@ -78,4 +78,21 @@ public class BlockWaterwheel extends BlockBase implements ITileEntityProvider {
         TileWaterwheel te = getTe(worldIn, pos);
         te.facing = placer.getHorizontalFacing();
     }
+
+    @Override
+    public boolean isFullBlock(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public boolean isNormalCube(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public boolean isFullCube(IBlockState state) {
+        return false;
+    }
+
+    
 }
