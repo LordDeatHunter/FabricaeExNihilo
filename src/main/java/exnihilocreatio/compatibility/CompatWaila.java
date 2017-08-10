@@ -53,10 +53,10 @@ public class CompatWaila implements IWailaPlugin, IWailaDataProvider {
             }
         }
 
-        if (accessor.getBlock() instanceof BlockSieve) {
+        if (accessor.getTileEntity() instanceof TileSieve) {
             TileSieve sieve = (TileSieve) accessor.getTileEntity();
 
-            if (sieve.getMeshStack() != null) {
+            if (!sieve.getMeshStack().isEmpty()) {
                 currenttip.add("Mesh: " + I18n.format(sieve.getMeshStack().getUnlocalizedName() + ".name"));
             } else {
                 currenttip.add("Mesh: None");

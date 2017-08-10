@@ -18,6 +18,7 @@ public class BaseTileEntity extends TileEntity {
         markDirty();
         IBlockState state = getWorld().getBlockState(getPos());
         getWorld().notifyBlockUpdate(getPos(), state, state, 3);
+        PacketHandler.sendNBTUpdate(this);
     }
 
     @Nullable

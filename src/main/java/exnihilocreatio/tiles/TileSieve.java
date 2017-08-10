@@ -1,5 +1,6 @@
 package exnihilocreatio.tiles;
 
+import exnihilocreatio.blocks.BlockSieve;
 import exnihilocreatio.config.Config;
 import exnihilocreatio.enchantments.ENEnchantments;
 import exnihilocreatio.networking.PacketHandler;
@@ -8,6 +9,7 @@ import exnihilocreatio.registries.types.Siftable;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.Util;
 import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -33,7 +35,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-public class TileSieve extends TileEntity {
+public class TileSieve extends BaseTileEntity {
 
     private static Random rand = new Random();
     @Getter
@@ -41,12 +43,12 @@ public class TileSieve extends TileEntity {
     @Getter
     private byte progress = 0;
     @Getter
-    private ItemStack meshStack;
+    private ItemStack meshStack = ItemStack.EMPTY;
+    @Getter
+    private BlockSieve.MeshType meshType = BlockSieve.MeshType.NONE;
+
     private long lastSieveAction = 0;
     private UUID lastPlayer;
-
-    public TileSieve() {
-    }
 
     /**
      * Sets the mesh type in the sieve.
@@ -62,19 +64,23 @@ public class TileSieve extends TileEntity {
         if (progress != 0 || currentStack != null)
             return false;
 
-        if (meshStack == null) {
+        if (meshStack.isEmpty()) {
             if (!simulate) {
                 meshStack = newMesh.copy();
-                this.markDirty();
+                meshType = BlockSieve.MeshType.getMeshTypeByID(newMesh.getMetadata());
+
+                this.markDirtyClient();
             }
             return true;
         }
 
-        if (!meshStack.isEmpty() && newMesh == null) {
+        if (!meshStack.isEmpty() && newMesh.isEmpty()) {
             //Removing
             if (!simulate) {
-                meshStack = null;
-                this.markDirty();
+                meshStack = ItemStack.EMPTY;
+                meshType = BlockSieve.MeshType.NONE;
+
+                this.markDirtyClient();
             }
             return true;
         }
@@ -85,7 +91,7 @@ public class TileSieve extends TileEntity {
 
     public boolean addBlock(ItemStack stack) {
         if (currentStack == null && SieveRegistry.canBeSifted(stack)) {
-            if (meshStack == null)
+            if (meshStack.isEmpty())
                 return false;
             int meshLevel = meshStack.getItemDamage();
             for (Siftable siftable : SieveRegistry.getDrops(stack)) {
@@ -143,7 +149,8 @@ public class TileSieve extends TileEntity {
             }
 
             progress += 10 + 5 * efficiency;
-            PacketHandler.sendNBTUpdate(this);
+            markDirtyClient();
+            // PacketHandler.sendNBTUpdate(this);
 
             if (progress >= 100) {
                 List<ItemStack> drops = SieveRegistry.getRewardDrops(rand, currentStack.getBlockState(), meshStack.getMetadata(), fortune);
@@ -199,7 +206,7 @@ public class TileSieve extends TileEntity {
     public boolean isSieveSimilar(TileSieve sieve) {
         if (sieve == null)
             return false;
-        if (meshStack == null || sieve.getMeshStack() == null)
+        if (meshStack.isEmpty() || sieve.getMeshStack().isEmpty())
             return false;
         return meshStack.getItemDamage() == sieve.getMeshStack().getItemDamage() &&
                 progress == sieve.getProgress() &&
@@ -207,7 +214,7 @@ public class TileSieve extends TileEntity {
     }
 
     public boolean isSieveSimilarToInput(TileSieve sieve) {
-        if (meshStack == null || sieve.getMeshStack() == null)
+        if (meshStack.isEmpty() || sieve.getMeshStack().isEmpty())
             return false;
         return meshStack.getItemDamage() == sieve.getMeshStack().getItemDamage() &&
                 progress == sieve.getProgress() &&
@@ -217,7 +224,7 @@ public class TileSieve extends TileEntity {
     private void resetSieve() {
         progress = 0;
         currentStack = null;
-        PacketHandler.sendNBTUpdate(this);
+        markDirtyClient();
     }
 
     @SideOnly(Side.CLIENT)
@@ -241,7 +248,7 @@ public class TileSieve extends TileEntity {
             tag.setTag("stack", stackTag);
         }
 
-        if (meshStack != null) {
+        if (!meshStack.isEmpty()) {
             NBTTagCompound meshTag = meshStack.writeToNBT(new NBTTagCompound());
             tag.setTag("mesh", meshTag);
         }
@@ -253,41 +260,21 @@ public class TileSieve extends TileEntity {
 
     @Override
     public void readFromNBT(NBTTagCompound tag) {
-
         if (tag.hasKey("stack"))
             currentStack = BlockInfo.readFromNBT(tag.getCompoundTag("stack"));
         else
             currentStack = null;
 
-        if (tag.hasKey("mesh"))
+        if (tag.hasKey("mesh")){
             meshStack = new ItemStack(tag.getCompoundTag("mesh"));
-        else
-            meshStack = null;
+            meshType = BlockSieve.MeshType.getMeshTypeByID(meshStack.getMetadata());
+        }
+        else {
+            meshStack = ItemStack.EMPTY;
+            meshType = BlockSieve.MeshType.NONE;
+        }
 
         progress = tag.getByte("progress");
-
         super.readFromNBT(tag);
     }
-
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket() {
-        NBTTagCompound tag = new NBTTagCompound();
-        this.writeToNBT(tag);
-
-        return new SPacketUpdateTileEntity(this.pos, this.getBlockMetadata(), tag);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-        NBTTagCompound tag = pkt.getNbtCompound();
-        readFromNBT(tag);
-    }
-
-    @Override
-    @Nonnull
-    public NBTTagCompound getUpdateTag() {
-        return writeToNBT(new NBTTagCompound());
-    }
-
 }

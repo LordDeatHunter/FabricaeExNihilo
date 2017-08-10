@@ -25,6 +25,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -40,8 +41,8 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbe
 
     public BlockSieve() {
         super(Material.WOOD, "block_sieve");
-        this.setDefaultState(this.blockState.getBaseState().withProperty(MESH, MeshType.NONE));
         this.setHardness(2.0f);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(MESH, MeshType.NO_RENDER));
     }
 
     @Override
@@ -62,24 +63,26 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbe
                 //Adding a mesh.
                 ItemStack meshStack = heldItem.copy();
                 meshStack.setCount(1);
-                MeshType type = MeshType.getMeshTypeByID(heldItem.getItemDamage());
                 boolean done = te.setMesh(meshStack, false);
 
                 if (done) {
                     if (!player.isCreative())
                         heldItem.shrink(1);
 
-                    world.setBlockState(pos, state.withProperty(MESH, type));
-                    PacketHandler.sendNBTUpdate(te);
+                    // world.setBlockState(pos, state.withProperty(MESH, type));
+                    // PacketHandler.sendNBTUpdate(te);
+                    // te.markDirty();
                     return true;
                 }
             }
-            if (heldItem.isEmpty() && te.getMeshStack() != null && player.isSneaking() && te.setMesh(null, true)) {
+            if (heldItem.isEmpty() && !te.getMeshStack().isEmpty() && player.isSneaking() && te.setMesh(ItemStack.EMPTY, true)) {
                 //Removing a mesh.
                 Util.dropItemInWorld(te, player, te.getMeshStack(), 0.02f);
-                te.setMesh(null);
-                PacketHandler.sendNBTUpdate(te);
-                world.setBlockState(pos, state.withProperty(MESH, MeshType.NONE));
+                te.setMesh(ItemStack.EMPTY, false);
+                // te.markDirty();
+
+                // PacketHandler.sendNBTUpdate(te);
+                // world.setBlockState(pos, state.withProperty(MESH, MeshType.NONE));
 
                 return true;
             }
@@ -142,7 +145,7 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbe
     @Nonnull
     @Deprecated
     public IBlockState getStateFromMeta(int meta) {
-        MeshType type;
+        /*MeshType type;
         switch (meta) {
             case 0:
                 type = MeshType.NONE;
@@ -163,13 +166,15 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbe
                 type = MeshType.STRING;
                 break;
         }
-        return getDefaultState().withProperty(MESH, type);
+        return getDefaultState().withProperty(MESH, type); */
+        return getDefaultState();
     }
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        MeshType type = state.getValue(MESH);
-        return type.getID();
+        // MeshType type = state.getValue(MESH);
+        // return type.getID();
+        return 0;
     }
 
     @Override
@@ -177,18 +182,20 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbe
         TileEntity te = world.getTileEntity(pos);
         if (te != null) {
             TileSieve sieve = (TileSieve) te;
-            if (sieve.getMeshStack() != null)
+            if (!sieve.getMeshStack().isEmpty())
                 Util.dropItemInWorld(sieve, null, sieve.getMeshStack(), 0.02f);
         }
 
         super.breakBlock(world, pos, state);
     }
 
+
     @Override
     public TileEntity createNewTileEntity(@Nonnull World worldIn, int meta) {
         return new TileSieve();
     }
 
+    //region >>>> RENDERING OPTIONS
     @Override
     @Deprecated
     public boolean isFullBlock(IBlockState state) {
@@ -208,6 +215,12 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbe
     }
 
     @Override
+    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+        return false;
+    }
+    //endregion
+
+    @Override
     @SideOnly(Side.CLIENT)
     public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world,
                              IBlockState blockState, IProbeHitData data) {
@@ -216,7 +229,7 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbe
         if (sieve == null)
             return;
 
-        if (sieve.getMeshStack() == null) {
+        if (sieve.getMeshStack().isEmpty()) {
             probeInfo.text("Mesh: None");
             return;
         }
@@ -232,7 +245,7 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbe
     }
 
     public enum MeshType implements IStringSerializable {
-        NO_RENDER(-1, "no_render"), NONE(0, "none"), STRING(1, "string"), FLINT(2, "flint"), IRON(3, "iron"), DIAMOND(4, "diamond");
+        NO_RENDER(0, "no_render"), NONE(1, "none"), STRING(2, "string"), FLINT(3, "flint"), IRON(4, "iron"), DIAMOND(5, "diamond");
 
         private int id;
         private String name;
