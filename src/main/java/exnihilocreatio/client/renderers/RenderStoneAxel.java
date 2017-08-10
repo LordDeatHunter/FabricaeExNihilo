@@ -40,14 +40,11 @@ public class RenderStoneAxel extends TileEntitySpecialRenderer<TileStoneAxle> {
 
 
         float rotFacing = tile.facing == EnumFacing.SOUTH ? 180 : tile.facing == EnumFacing.WEST ? 90 : tile.facing == EnumFacing.EAST ? -90 : 0;
-
         GlStateManager.rotate(rotFacing, 0, 1, 0);
 
-        if (tile.canTurn) {
-            tile.rotationValue = (tile.rotationValue + tile.perTickEffective) % 360;
-        }
+        float rot = (tile.rotationValue + tile.perTickEffective * partialTicks) % 360;
+        GlStateManager.rotate(rot, 0, 0, 1);
 
-        GlStateManager.rotate(tile.rotationValue, 0, 0, 1);
 
         RenderHelper.disableStandardItemLighting();
 

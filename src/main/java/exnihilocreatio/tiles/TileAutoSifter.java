@@ -1,18 +1,32 @@
 package exnihilocreatio.tiles;
 
 import exnihilocreatio.config.Config;
+import exnihilocreatio.rotationalPower.IRotationalPowerConsumer;
+import exnihilocreatio.rotationalPower.IRotationalPowerMember;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 
-public class TileAutoSifter extends BaseTileEntity implements ITickable{
+public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotationalPowerConsumer{
     public ArrayList<BlockPos> toSift = new ArrayList<>();
+
+    public EnumFacing facing = EnumFacing.NORTH;
+    public int tickCounter = 0;
+    public float rotationValue = 0;
+    public float perTickRotation = 0;
 
 
     @Override
     public void update() {
+        tickCounter++;
+
+        if (tickCounter % 10 == 0){
+            perTickRotation = calcEffectivePerTickRotation(facing);
+        }
+
         BlockPos posOther = pos.up();
 
         TileEntity te = world.getTileEntity(posOther);
@@ -51,5 +65,25 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable{
                 }
             }
         }
+    }
+
+    @Override
+    public float getMachineRotationPerTick() {
+        return perTickRotation;
+    }
+
+    @Override
+    public void setEffectivePerTickRotation(float rotation) {
+        perTickRotation = rotation;
+    }
+
+    private float calcEffectivePerTickRotation(EnumFacing direction) {
+        if (facing == direction) {
+            BlockPos posProvider = pos.offset(facing.getOpposite());
+            TileEntity te = world.getTileEntity(posProvider);
+            if (te != null && te instanceof IRotationalPowerMember) {
+                return ((IRotationalPowerMember) te).getEffectivePerTickRotation(facing) + getOwnRotation();
+            } else return getOwnRotation();
+        } else return 0;
     }
 }

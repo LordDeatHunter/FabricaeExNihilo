@@ -35,6 +35,10 @@ public class TileStoneAxle extends BaseTileEntity implements ITickable, IRotatio
                 markDirty();
             }
         }
+
+        if (world.isRemote){
+            rotationValue += perTickEffective;
+        }
     }
 
 

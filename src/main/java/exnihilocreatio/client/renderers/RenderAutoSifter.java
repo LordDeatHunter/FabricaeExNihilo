@@ -10,10 +10,13 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
+
+import static java.lang.Math.cos;
 
 public class RenderAutoSifter extends TileEntitySpecialRenderer<TileAutoSifter> {
     private static List<BakedQuad> quadsBox;
@@ -59,8 +62,22 @@ public class RenderAutoSifter extends TileEntitySpecialRenderer<TileAutoSifter> 
         // }
 
         // GlStateManager.rotate(System.currentTimeMillis() % 360, 0, 1, 0);
-        GlStateManager.translate(0, (float)(System.currentTimeMillis() % 200) / 200F, 0);
+        float a = (float) ((System.currentTimeMillis() % 360 * 2) / 2 * Math.PI / 180F);
 
+        double timeSlower = System.currentTimeMillis() / 40D;
+
+        float r = 0.4F;
+        float cx = 0F;
+        float cz = 0F;
+
+        float circleX = cx + r * (float)Math.cos(a);
+        float circleZ = cz + r * (float)Math.sin(a);
+
+        float upDown = (float) Math.sin(timeSlower) * 0.2F + 0.6F;
+        // GlStateManager.translate(0, (float)(System.currentTimeMillis() % 200) / 200F, 0);
+        GlStateManager.translate(circleX, 0.8F, circleZ);
+        //GlStateManager.translate(circleX, upDown, circleZ);
+        //GlStateManager.translate(0, upDown, 0);
 
         RenderHelper.disableStandardItemLighting();
 
@@ -162,15 +179,14 @@ public class RenderAutoSifter extends TileEntitySpecialRenderer<TileAutoSifter> 
         GlStateManager.disableCull();
 
 
-        // float rotFacing = tile.facing == EnumFacing.SOUTH ? 180 : tile.facing == EnumFacing.WEST ? 90 : tile.facing == EnumFacing.EAST ? -90 : 0;
+        float rotFacing = tile.facing == EnumFacing.SOUTH ? 180 : tile.facing == EnumFacing.WEST ? 90 : tile.facing == EnumFacing.EAST ? -90 : 0;
+        GlStateManager.rotate(rotFacing, 0, 1, 0);
 
-        // GlStateManager.rotate(rotFacing, 0, 1, 0);
+        if (tile.perTickRotation > 0){
+             tile.rotationValue = (tile.rotationValue + tile.perTickRotation) % 360;
+        }
+        GlStateManager.rotate(tile.rotationValue, 0, 0, 1);
 
-        // if (tile.canTurn){
-        //     tile.rotationValue = (tile.rotationValue + tile.perTickEffective) % 360;
-        // }
-
-        GlStateManager.rotate(System.currentTimeMillis() % 360, 0, 0, 1);
 
         RenderHelper.disableStandardItemLighting();
 

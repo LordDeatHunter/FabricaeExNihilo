@@ -65,6 +65,10 @@ public class TileWaterwheel extends BaseTileEntity implements ITickable, IRotati
                 markDirty();
             }
         }
+
+        if (world.isRemote){
+            rotationValue += perTickEffective;
+        }
     }
 
 
