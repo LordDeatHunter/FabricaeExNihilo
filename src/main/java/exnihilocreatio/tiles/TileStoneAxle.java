@@ -6,23 +6,18 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 
 public class TileStoneAxle extends BaseTileEntity implements ITickable, IRotationalPowerMember {
     public float rotationValue = 0;
-    public float perTick = 0F;
-
     public float perTickEffective = 0F;
 
     public EnumFacing facing = EnumFacing.NORTH;
 
-    public boolean canTurn = true;
-
     private int counter = -1;
-
-    private float lastPerTick = perTick;
-
     @Override
     public void update() {
         counter++;

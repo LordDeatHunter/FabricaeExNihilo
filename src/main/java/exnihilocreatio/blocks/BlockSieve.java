@@ -232,7 +232,7 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbe
     }
 
     public enum MeshType implements IStringSerializable {
-        NONE(0, "none"), STRING(1, "string"), FLINT(2, "flint"), IRON(3, "iron"), DIAMOND(4, "diamond");
+        NO_RENDER(-1, "no_render"), NONE(0, "none"), STRING(1, "string"), FLINT(2, "flint"), IRON(3, "iron"), DIAMOND(4, "diamond");
 
         private int id;
         private String name;

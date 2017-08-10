@@ -1,5 +1,6 @@
 package exnihilocreatio.tiles;
 
+import exnihilocreatio.networking.PacketHandler;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -8,6 +9,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class BaseTileEntity extends TileEntity {
@@ -25,6 +27,7 @@ public class BaseTileEntity extends TileEntity {
     }
 
     @Override
+    @Nonnull
     public NBTTagCompound getUpdateTag() {
         return writeToNBT(new NBTTagCompound());
     }

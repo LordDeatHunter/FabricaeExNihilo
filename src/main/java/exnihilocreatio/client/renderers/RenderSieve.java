@@ -19,6 +19,8 @@ public class RenderSieve extends TileEntitySpecialRenderer<TileSieve> {
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(x, y, z);
+        // GlStateManager.translate(0, 1, 0);
+
         if (te.getTexture() != null) {
             TextureAtlasSprite icon = te.getTexture();
             double minU = (double) icon.getMinU();

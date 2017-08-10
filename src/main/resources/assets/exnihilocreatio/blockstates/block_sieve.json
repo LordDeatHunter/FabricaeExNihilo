@@ -6,6 +6,7 @@
   "variants": {
     "mesh": {
       "none": {},
+      "no_render": {"model": "minecraft:stone"},
       "string": {
         "submodel": {
           "mesh": {
