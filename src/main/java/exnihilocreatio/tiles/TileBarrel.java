@@ -74,6 +74,7 @@ public class TileBarrel extends TileEntity implements ITickable {
                 }
 
                 PacketHandler.sendNBTUpdate(this);
+                markDirty();
                 if (getBlockType().getLightValue(state, world, pos) != world.getLight(pos)) {
                     world.checkLight(pos);
                     PacketHandler.sendToAllAround(new MessageCheckLight(pos), this);
@@ -130,6 +131,7 @@ public class TileBarrel extends TileEntity implements ITickable {
             }
         } else {
             mode.onBlockActivated(world, this, pos, state, player, hand, side, hitX, hitY, hitZ);
+            markDirty();
 
             if (getBlockType().getLightValue(state, world, pos) != world.getLight(pos)) {
                 world.checkLight(pos);

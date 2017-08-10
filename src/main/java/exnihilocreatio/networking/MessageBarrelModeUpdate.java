@@ -1,5 +1,6 @@
 package exnihilocreatio.networking;
 
+import exnihilocreatio.ModBlocks;
 import exnihilocreatio.tiles.TileBarrel;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -56,7 +57,7 @@ public class MessageBarrelModeUpdate implements IMessage {
                         TileBarrel te = (TileBarrel) entity;
                         te.setMode(msg.modeName);
 
-                        //Minecraft.getMinecraft().thePlayer.worldObj.notifyBlockUpdate(new BlockPos(msg.x, msg.y, msg.z));
+                        // Minecraft.getMinecraft().world.notifyBlockUpdate(new BlockPos(msg.x, msg.y, msg.z), entity.getBlockType().getDefaultState(), entity.getBlockType().getDefaultState(), 3);
                     }
                 }
             });

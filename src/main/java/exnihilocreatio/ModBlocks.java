@@ -28,7 +28,8 @@ public class ModBlocks {
     public static BlockWaterwheel watermill;
     public static BlockStoneAxle axle_stone;
 
-    public static BlockGrinder autoSiever;
+    public static BlockGrinder grinder;
+    public static BlockAutoSifter autoSifter;
 
 
     public static void preInit() {
@@ -70,9 +71,11 @@ public class ModBlocks {
         axle_stone = new BlockStoneAxle();
         GameRegistry.registerTileEntity(TileStoneAxle.class, "block_axle_stone");
 
-        autoSiever = new BlockGrinder();
+        grinder = new BlockGrinder();
         GameRegistry.registerTileEntity(TileGrinder.class, "block_grinder");
 
+        autoSifter = new BlockAutoSifter();
+        GameRegistry.registerTileEntity(TileAutoSifter.class, "block_auto_sifter");
     }
 
     public static void registerBlocks(IForgeRegistry<Block> registry) {
