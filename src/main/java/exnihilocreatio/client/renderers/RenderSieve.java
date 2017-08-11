@@ -18,15 +18,17 @@ public class RenderSieve extends TileEntitySpecialRenderer<TileSieve> {
 
 
     @Override
-    public void render(TileSieve te, double x, double y, double z,
-                       float partialTicks, int destroyStage, float alpha) {
+    public void render(TileSieve te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         Tessellator tes = Tessellator.getInstance();
 
         BufferBuilder wr = tes.getBuffer();
 
+        float offsetX = te.autoSifter != null ? te.autoSifter.offsetX : 0;
+        float offsetY = te.autoSifter != null ? te.autoSifter.offsetY : 0;
+        float offsetZ = te.autoSifter != null ? te.autoSifter.offsetZ : 0;
 
-        renderSieve(te, x, y, z, tes, wr);
-        renderBlockInSieve(te, x, y, z, tes, wr);
+        renderSieve(te, x+ offsetX, y + offsetY, z + offsetZ, tes, wr);
+        renderBlockInSieve(te, x+ offsetX, y + offsetY, z + offsetZ, tes, wr);
 
     }
 

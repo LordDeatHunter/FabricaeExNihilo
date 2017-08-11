@@ -68,10 +68,6 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbe
                 if (done) {
                     if (!player.isCreative())
                         heldItem.shrink(1);
-
-                    // world.setBlockState(pos, state.withProperty(MESH, type));
-                    // PacketHandler.sendNBTUpdate(te);
-                    // te.markDirty();
                     return true;
                 }
             }
@@ -79,11 +75,6 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbe
                 //Removing a mesh.
                 Util.dropItemInWorld(te, player, te.getMeshStack(), 0.02f);
                 te.setMesh(ItemStack.EMPTY, false);
-                // te.markDirty();
-
-                // PacketHandler.sendNBTUpdate(te);
-                // world.setBlockState(pos, state.withProperty(MESH, MeshType.NONE));
-
                 return true;
             }
 

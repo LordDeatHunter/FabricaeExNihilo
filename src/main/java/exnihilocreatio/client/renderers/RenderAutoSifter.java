@@ -75,7 +75,7 @@ public class RenderAutoSifter extends TileEntitySpecialRenderer<TileAutoSifter> 
 
         float upDown = (float) Math.sin(timeSlower) * 0.2F + 0.6F;
         // GlStateManager.translate(0, (float)(System.currentTimeMillis() % 200) / 200F, 0);
-        GlStateManager.translate(circleX, 0.8F, circleZ);
+        GlStateManager.translate(tile.offsetX, 0.8F, tile.offsetZ);
         //GlStateManager.translate(circleX, upDown, circleZ);
         //GlStateManager.translate(0, upDown, 0);
 

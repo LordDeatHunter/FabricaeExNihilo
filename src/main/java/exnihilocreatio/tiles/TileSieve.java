@@ -50,6 +50,8 @@ public class TileSieve extends BaseTileEntity {
     private long lastSieveAction = 0;
     private UUID lastPlayer;
 
+    public TileAutoSifter autoSifter = null;
+
     /**
      * Sets the mesh type in the sieve.
      *

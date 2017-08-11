@@ -18,10 +18,22 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
     public float rotationValue = 0;
     public float perTickRotation = 0;
 
+    public float offsetX = 0;
+    public float offsetY = 0;
+    public float offsetZ = 0;
 
     @Override
     public void update() {
         tickCounter++;
+
+        if (world.isRemote && perTickRotation != 0){
+            float r = 0.2F;
+            float cx = 0F;
+            float cz = 0F;
+
+            offsetX = cx + r * (float)Math.cos(tickCounter / 4F);
+            // offsetZ = cz + r * (float)Math.sin(tickCounter / 4F);
+        }
 
         if (tickCounter % 10 == 0){
             perTickRotation = calcEffectivePerTickRotation(facing);
@@ -62,6 +74,7 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
 
                 if (sieve != null) {
                     sieve.doSieving(null, true);
+                    sieve.autoSifter = this;
                 }
             }
         }
