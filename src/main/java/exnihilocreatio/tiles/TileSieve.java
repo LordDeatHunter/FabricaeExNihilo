@@ -1,5 +1,6 @@
 package exnihilocreatio.tiles;
 
+import com.google.common.base.Objects;
 import exnihilocreatio.blocks.BlockSieve;
 import exnihilocreatio.config.Config;
 import exnihilocreatio.enchantments.ENEnchantments;
@@ -200,6 +201,7 @@ public class TileSieve extends BaseTileEntity {
                 drops.forEach(stack -> Util.dropItemInWorld(this, player, stack, 1));
 
                 resetSieve();
+                markDirtyClient();
             }
         }
         return true;
@@ -227,6 +229,12 @@ public class TileSieve extends BaseTileEntity {
         progress = 0;
         currentStack = null;
         markDirtyClient();
+    }
+
+    public void validateAutoSieve(){
+        if (autoSifter == null || autoSifter.isInvalid() || !(world.getTileEntity(autoSifter.getPos()) instanceof TileAutoSifter)) {
+            autoSifter = null;
+        }
     }
 
     @SideOnly(Side.CLIENT)
@@ -278,5 +286,10 @@ public class TileSieve extends BaseTileEntity {
 
         progress = tag.getByte("progress");
         super.readFromNBT(tag);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(pos.getX(), pos.getY(), pos.getZ());
     }
 }

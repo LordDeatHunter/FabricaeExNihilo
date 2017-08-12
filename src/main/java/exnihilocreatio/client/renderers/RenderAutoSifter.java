@@ -3,10 +3,12 @@ package exnihilocreatio.client.renderers;
 import exnihilocreatio.blocks.BlockAutoSifter;
 import exnihilocreatio.blocks.EnumAutoSifterParts;
 import exnihilocreatio.tiles.TileAutoSifter;
+import exnihilocreatio.tiles.TileSieve;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -26,14 +28,24 @@ public class RenderAutoSifter extends TileEntitySpecialRenderer<TileAutoSifter> 
 
     @Override
     public void render(TileAutoSifter te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-        for (BlockPos blockPos : te.toSift) {
-            renderPiston(te, blockPos.getX() - te.getPos().getX() + x, blockPos.getY() - te.getPos().getY() + y - 1, blockPos.getZ() - te.getPos().getZ() + z);
+        if (te.toSift!=null) {
+            for (TileSieve[] tileSieves : te.toSift) {
+                for (TileSieve tileSieve : tileSieves) {
+                    if (tileSieve != null){
+                        BlockPos blockPos = tileSieve.getPos();
+                        renderPiston(te, blockPos.getX() - te.getPos().getX() + x, blockPos.getY() - te.getPos().getY() + y - 1, blockPos.getZ() - te.getPos().getZ() + z);
+                    }
+                }
+            }
         }
-        renderRod(te, x, y, z);
+
+        renderRod(te, x, y, z, partialTicks);
         renderBox(te, x, y, z);
+
+        renderIngredients(te, x, y, z, partialTicks);
     }
 
-    void renderPiston(TileAutoSifter tile, double x, double y, double z) {
+    private void renderPiston(TileAutoSifter tile, double x, double y, double z) {
         if (quadsGear == null) {
             final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
             IBlockState state = tile.getBlockType().getDefaultState().withProperty(BlockAutoSifter.PART_TYPE, EnumAutoSifterParts.PISTON);
@@ -100,7 +112,7 @@ public class RenderAutoSifter extends TileEntitySpecialRenderer<TileAutoSifter> 
         GlStateManager.enableCull();
     }
 
-    void renderConnection(TileAutoSifter tile, double x, double y, double z) {
+    private void renderConnection(TileAutoSifter tile, double x, double y, double z) {
         if (quadsConnection == null) {
             final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
             IBlockState state = tile.getBlockType().getDefaultState().withProperty(BlockAutoSifter.PART_TYPE, EnumAutoSifterParts.CONNECTION);
@@ -158,7 +170,7 @@ public class RenderAutoSifter extends TileEntitySpecialRenderer<TileAutoSifter> 
         GlStateManager.enableCull();
     }
 
-    void renderRod(TileAutoSifter tile, double x, double y, double z) {
+    private void renderRod(TileAutoSifter tile, double x, double y, double z, float partialTicks) {
         if (quadsShaft == null) {
             final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
             IBlockState state = tile.getBlockType().getDefaultState().withProperty(BlockAutoSifter.PART_TYPE, EnumAutoSifterParts.ROD);
@@ -182,10 +194,8 @@ public class RenderAutoSifter extends TileEntitySpecialRenderer<TileAutoSifter> 
         float rotFacing = tile.facing == EnumFacing.SOUTH ? 180 : tile.facing == EnumFacing.WEST ? 90 : tile.facing == EnumFacing.EAST ? -90 : 0;
         GlStateManager.rotate(rotFacing, 0, 1, 0);
 
-        if (tile.perTickRotation > 0){
-             tile.rotationValue = (tile.rotationValue + tile.perTickRotation) % 360;
-        }
-        GlStateManager.rotate(tile.rotationValue, 0, 0, 1);
+        float rot = (tile.rotationValue + tile.perTickRotation * partialTicks) % 360;
+        GlStateManager.rotate(rot, 0, 0, 1);
 
 
         RenderHelper.disableStandardItemLighting();
@@ -209,7 +219,7 @@ public class RenderAutoSifter extends TileEntitySpecialRenderer<TileAutoSifter> 
         GlStateManager.enableCull();
     }
 
-    void renderBox(TileAutoSifter tile, double x, double y, double z) {
+    private void renderBox(TileAutoSifter tile, double x, double y, double z) {
         if (quadsBox == null) {
             final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
             IBlockState state = tile.getBlockType().getDefaultState().withProperty(BlockAutoSifter.PART_TYPE, EnumAutoSifterParts.BOX);
@@ -249,5 +259,45 @@ public class RenderAutoSifter extends TileEntitySpecialRenderer<TileAutoSifter> 
 
         GlStateManager.disableBlend();
         GlStateManager.enableCull();
+    }
+
+
+
+    private void renderIngredients(TileAutoSifter tile, double x, double y, double z, float partialTicks){
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(x, y, z);
+
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder worldRendererBuffer = tessellator.getBuffer();
+
+        // GlStateManager.translate(0, 1, 0);
+
+        if (tile.getTexture() != null) {
+            TextureAtlasSprite icon = tile.getTexture();
+            double minU = (double) icon.getMinU();
+            double maxU = (double) icon.getMaxU();
+            double minV = (double) icon.getMinV();
+            double maxV = (double) icon.getMaxV();
+
+            this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+
+            worldRendererBuffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_NORMAL);
+
+            double height = (float)tile.itemHandlerAutoSifter.getStackInSlot(0).getCount() / (float)tile.itemHandlerAutoSifter.getSlotLimit(0);
+
+            // float fillAmount = (float) (height);
+            float fillAmount = (float) (0.5 * height + 0.0625);
+
+            worldRendererBuffer.pos(0.0625f, fillAmount, 0.0625f).tex(minU, minV).normal(0, 1, 0).endVertex();
+            worldRendererBuffer.pos(0.0625f, fillAmount, 0.9375f).tex(minU, maxV).normal(0, 1, 0).endVertex();
+            worldRendererBuffer.pos(0.9375f, fillAmount, 0.9375f).tex(maxU, maxV).normal(0, 1, 0).endVertex();
+            worldRendererBuffer.pos(0.9375f, fillAmount, 0.0625f).tex(maxU, minV).normal(0, 1, 0).endVertex();
+
+            tessellator.draw();
+        }
+
+        GlStateManager.disableBlend();
+        GlStateManager.enableLighting();
+        GlStateManager.popMatrix();
     }
 }

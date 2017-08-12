@@ -30,6 +30,8 @@ public class CompatWaila implements IWailaPlugin, IWailaDataProvider {
         registrar.registerBodyProvider(this, BlockCrucible.class);
         registrar.registerBodyProvider(this, BlockStoneAxle.class);
         registrar.registerBodyProvider(this, BlockWaterwheel.class);
+        registrar.registerBodyProvider(this, BlockAutoSifter.class);
+        registrar.registerBodyProvider(this, BlockSieve.class);
     }
 
     @Override
@@ -109,6 +111,21 @@ public class CompatWaila implements IWailaPlugin, IWailaDataProvider {
                 }
                 currenttip.add("Own Rotation: " + powerMember.getOwnRotation());
             }
+        }
+
+        if (accessor.getTileEntity() instanceof TileAutoSifter){
+            TileAutoSifter tileAutoSifter = (TileAutoSifter) accessor.getTileEntity();
+            currenttip.add("Stored rotational power: " + tileAutoSifter.storedRotationalPower);
+            currenttip.add("Per tick Rotation: " + tileAutoSifter.perTickRotation);
+            if (!tileAutoSifter.itemHandlerAutoSifter.getStackInSlot(0).isEmpty())
+                currenttip.add("Current Stack: " + tileAutoSifter.itemHandlerAutoSifter.getStackInSlot(0).getCount() + "x " + tileAutoSifter.itemHandlerAutoSifter.getStackInSlot(0).getDisplayName());
+
+        }
+
+        if (accessor.getTileEntity() instanceof TileSieve){
+            TileSieve sieve = (TileSieve) accessor.getTileEntity();
+            currenttip.add("Current Progress: " + sieve.getProgress());
+            currenttip.add("Current Stack: " + sieve.getMeshStack().getDisplayName());
         }
 
         return currenttip;
