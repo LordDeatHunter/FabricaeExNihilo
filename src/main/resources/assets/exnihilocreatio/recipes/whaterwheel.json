@@ -1,0 +1,24 @@
+{
+  "result": {
+    "item": "exnihilocreatio:block_waterwheel"
+  },
+  "pattern": [
+    "sps",
+    "pxp",
+    "sps"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "x": {
+      "item": "exnihilocreatio:block_axle_stone"
+    },
+    "s": {
+      "type": "forge:ore_dict",
+      "ore": "stickWood"
+    },
+    "p": {
+      "type": "forge:ore_dict",
+      "ore": "plankWood"
+    }
+  }
+}

@@ -10,13 +10,14 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.EnumFacing;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 
 public class RenderGrinder extends TileEntitySpecialRenderer<TileGrinder> {
     private static List<BakedQuad> quadsBox;
-    private static List<BakedQuad> quadsPiston;
+    private static List<BakedQuad> quadsGear;
     private static List<BakedQuad> quadsShaft;
 
     @Override
@@ -27,8 +28,8 @@ public class RenderGrinder extends TileEntitySpecialRenderer<TileGrinder> {
         // Translate to the location of our tile entity
         // GlStateManager.translate(x, y, z);
 
-        renderGear(te, x, y, z);
-        renderRod(te, x, y, z);
+        renderGear(te, x, y, z, partialTicks);
+        renderRod(te, x, y, z, partialTicks);
         renderBox(te, x, y, z);
 
         // GlStateManager.popMatrix();
@@ -36,12 +37,12 @@ public class RenderGrinder extends TileEntitySpecialRenderer<TileGrinder> {
 
     }
 
-    void renderGear(TileGrinder tile, double x, double y, double z) {
-        if (quadsPiston == null) {
+    void renderGear(TileGrinder tile, double x, double y, double z, float partialTicks) {
+        if (quadsGear == null) {
             final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
             IBlockState state = tile.getBlockType().getDefaultState().withProperty(BlockGrinder.PART_TYPE, EnumGrinderParts.GEAR);
 
-            quadsPiston = blockRenderer.getModelForState(state).getQuads(state, null, 0);
+            quadsGear = blockRenderer.getModelForState(state).getQuads(state, null, 0);
         }
 
         Tessellator tessellator = Tessellator.getInstance();
@@ -57,14 +58,10 @@ public class RenderGrinder extends TileEntitySpecialRenderer<TileGrinder> {
 
 
         // float rotFacing = tile.facing == EnumFacing.SOUTH ? 180 : tile.facing == EnumFacing.WEST ? 90 : tile.facing == EnumFacing.EAST ? -90 : 0;
-
         // GlStateManager.rotate(rotFacing, 0, 1, 0);
 
-        // if (tile.canTurn){
-        //     tile.rotationValue = (tile.rotationValue + tile.perTickEffective) % 360;
-        // }
-
-        GlStateManager.rotate(System.currentTimeMillis() % 360, 0, 1, 0);
+        float rot = 360F - ((tile.rotationValue + tile.perTickRotation * partialTicks) % 360F);
+        GlStateManager.rotate(rot, 0, 1, 0);
 
         RenderHelper.disableStandardItemLighting();
 
@@ -75,7 +72,7 @@ public class RenderGrinder extends TileEntitySpecialRenderer<TileGrinder> {
         worldRendererBuffer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
         // worldRendererBuffer.setTranslation(-.5, -.5, -.5);
 
-        RenderUtils.renderModelTESRFast(quadsPiston, worldRendererBuffer, tile.getWorld(), tile.getPos());
+        RenderUtils.renderModelTESRFast(quadsGear, worldRendererBuffer, tile.getWorld(), tile.getPos());
 
         // worldRendererBuffer.setTranslation(0, 0, 0);
         tessellator.draw();
@@ -87,7 +84,7 @@ public class RenderGrinder extends TileEntitySpecialRenderer<TileGrinder> {
         GlStateManager.enableCull();
     }
 
-    void renderRod(TileGrinder tile, double x, double y, double z) {
+    void renderRod(TileGrinder tile, double x, double y, double z, float partialTicks) {
         if (quadsShaft == null) {
             final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
             IBlockState state = tile.getBlockType().getDefaultState().withProperty(BlockGrinder.PART_TYPE, EnumGrinderParts.ROD);
@@ -108,15 +105,11 @@ public class RenderGrinder extends TileEntitySpecialRenderer<TileGrinder> {
         GlStateManager.disableCull();
 
 
-        // float rotFacing = tile.facing == EnumFacing.SOUTH ? 180 : tile.facing == EnumFacing.WEST ? 90 : tile.facing == EnumFacing.EAST ? -90 : 0;
+        float rotFacing = tile.facing == EnumFacing.SOUTH ? 180 : tile.facing == EnumFacing.WEST ? 90 : tile.facing == EnumFacing.EAST ? -90 : 0;
+        GlStateManager.rotate(rotFacing, 0, 1, 0);
 
-        // GlStateManager.rotate(rotFacing, 0, 1, 0);
-
-        // if (tile.canTurn){
-        //     tile.rotationValue = (tile.rotationValue + tile.perTickEffective) % 360;
-        // }
-
-        GlStateManager.rotate(System.currentTimeMillis() % 360, 0, 0, 1);
+        float rot = (tile.rotationValue + tile.perTickRotation * partialTicks) % 360;
+        GlStateManager.rotate(rot, 0, 0, 1);
 
         RenderHelper.disableStandardItemLighting();
 

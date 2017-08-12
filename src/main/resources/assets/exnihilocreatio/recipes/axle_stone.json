@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "exnihilocreatio:block_axle_stone"
+  },
+  "pattern": [
+    "sss",
+    "xxx",
+    "sss"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "x": {
+      "type": "forge:ore_dict",
+      "ore": "gearStone"
+    },
+    "s": {
+      "type": "forge:ore_dict",
+      "ore": "stickStone"
+    }
+  }
+}

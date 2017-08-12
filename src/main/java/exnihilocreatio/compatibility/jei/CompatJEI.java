@@ -72,7 +72,7 @@ public class CompatJEI implements IModPlugin {
 
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @SideOnly(Side.CLIENT) //TODO: clean up JEI plugin to non deprecated functions
     public void register(@Nonnull IModRegistry registry) {
         LogUtil.info("Config Loaded: " + ExNihiloCreatio.configsLoaded);
 

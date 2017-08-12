@@ -198,7 +198,6 @@ public class BarrelModeFluid implements IBarrelMode {
 
     @Override
     public boolean addItem(ItemStack stack, TileBarrel barrel) {
-        // TODO Auto-generated method stub
         return false;
     }
 

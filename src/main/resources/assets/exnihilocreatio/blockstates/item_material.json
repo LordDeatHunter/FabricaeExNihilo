@@ -35,6 +35,16 @@
         "textures": {
           "layer0": "exnihilocreatio:items/doll"
         }
+      },
+      "rod_stone": {
+        "textures": {
+          "layer0": "exnihilocreatio:items/item_stick_stone"
+        }
+      },
+      "gear_stone": {
+        "textures": {
+          "layer0": "exnihilocreatio:items/item_gear_stone"
+        }
       }
     }
   }

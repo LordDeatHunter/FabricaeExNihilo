@@ -20,7 +20,7 @@
     },
     "inventory": [
       {
-        "model": "exnihilocreatio:obj/block_grinder_box.obj",
+        "model": "exnihilocreatio:obj/grinder_total.obj",
         "transform": {
           "firstperson_righthand": {
             "translation": [
@@ -33,7 +33,7 @@
                 "y": 0
               },
               {
-                "x": 0
+                "x": 10
               },
               {
                 "z": 0
@@ -101,13 +101,13 @@
           "gui": {
             "translation": [
               0.3,
-              0.25,
+              0.1,
               0
             ],
             "scale": 0.4,
             "rotation": [
               {
-                "x": 10
+                "x": 20
               },
               {
                 "y": 30

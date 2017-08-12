@@ -18,6 +18,8 @@ item.item_material.silkworm.name=Silkworm
 item.item_material.grass_seeds.name=Grass Seeds
 item.item_material.ancient_spores.name=Ancient Spores
 item.item_material.doll.name=Porcelain Doll
+item.item_material.rod_stone.name=Stone Rod
+item.item_material.gear_stone.name=Stone Gear
 
 item.item_doll.blaze.name=Blazing Doll
 item.item_doll.enderman.name=Creeping Doll
@@ -46,6 +48,11 @@ tile.block_crucible.0.name=Unfired Crucible
 tile.block_crucible.1.name=Crucible
 
 tile.block_infested_leaves.name=Infested Leaves
+
+tile.block_auto_sifter.name=Auto Sifter
+tile.block_axle_stone.name=Stone Axle
+tile.block_grinder.name=Grinder [WIP! Does nothing yet!]
+tile.block_waterwheel.name=Waterwheel
 
 tile.block_sieve.name=Sieve
 item.item_mesh.1.name=String Mesh

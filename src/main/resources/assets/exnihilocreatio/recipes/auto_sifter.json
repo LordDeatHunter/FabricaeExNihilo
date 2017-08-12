@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "exnihilocreatio:block_auto_sifter"
+  },
+  "pattern": [
+    "shs",
+    "pxp",
+    "shs"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "x": {
+      "item": "exnihilocreatio:block_axle_stone"
+    },
+    "s": {
+      "type": "forge:ore_dict",
+      "ore": "gearStone"
+    },
+    "p": {
+      "item": "minecraft:piston"
+    },
+    "h": {
+      "item": "minecraft:hopper"
+    }
+  }
+}

@@ -94,11 +94,11 @@
           },
           "gui": {
             "translation": [
-              0.3,
-              0.25,
+              0.55,
+              0.5,
               0
             ],
-            "scale": 0.4,
+            "scale": 1,
             "rotation": [
               {
                 "x": 10

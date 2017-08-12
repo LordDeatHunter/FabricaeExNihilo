@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "exnihilocreatio:item_material",
+    "count": 2,
+    "data": 6
+  },
+  "pattern": [
+    "  x",
+    " x ",
+    "x  "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "x": {
+      "type": "forge:ore_dict",
+      "ore": "cobblestone"
+    }
+  }
+}

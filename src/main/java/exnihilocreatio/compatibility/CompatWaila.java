@@ -125,7 +125,6 @@ public class CompatWaila implements IWailaPlugin, IWailaDataProvider {
         if (accessor.getTileEntity() instanceof TileSieve){
             TileSieve sieve = (TileSieve) accessor.getTileEntity();
             currenttip.add("Current Progress: " + sieve.getProgress());
-            currenttip.add("Current Stack: " + sieve.getMeshStack().getDisplayName());
         }
 
         return currenttip;

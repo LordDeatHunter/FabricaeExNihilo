@@ -23,25 +23,11 @@
     },
     "inventory": [
       {
-        "model": "exnihilocreatio:obj/auto_sifter_piston.obj",
+        "model": "exnihilocreatio:obj/auto_sifter_total.obj",
         "transform": {
           "firstperson_righthand": {
-            "translation": [
-              0.3,
-              0.25,
-              0
-            ],
-            "rotation": [
-              {
-                "y": 0
-              },
-              {
-                "x": 0
-              },
-              {
-                "z": 0
-              }
-            ],
+            "translation": [0.3,0.25,0],
+            "rotation": [{"y": 0},{"x": 0},{"z": 0}],
             "scale": 0.4
           },
           "firstperson_lefthand": {
@@ -104,7 +90,7 @@
           "gui": {
             "translation": [
               0.3,
-              0.25,
+              0,
               0
             ],
             "scale": 0.4,

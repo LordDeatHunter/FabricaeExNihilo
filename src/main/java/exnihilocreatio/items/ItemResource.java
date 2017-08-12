@@ -33,6 +33,8 @@ public class ItemResource extends Item implements IHasModel {
     public static final String ANCIENT_SPORES = "ancient_spores";
     public static final String GRASS_SEEDS = "grass_seeds";
     public static final String DOLL_BASE = "doll";
+    public static final String ROD_STONE = "rod_stone";
+    public static final String GEAR_STONE = "gear_stone";
 
     private static ArrayList<String> names = new ArrayList<String>();
 
@@ -51,6 +53,8 @@ public class ItemResource extends Item implements IHasModel {
         names.add(3, ANCIENT_SPORES);
         names.add(4, GRASS_SEEDS);
         names.add(5, DOLL_BASE);
+        names.add(6, ROD_STONE);
+        names.add(7, GEAR_STONE);
     }
 
     public static ItemStack getResourceStack(String name) {

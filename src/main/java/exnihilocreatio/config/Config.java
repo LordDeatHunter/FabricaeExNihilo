@@ -26,6 +26,7 @@ public class Config {
     public static boolean enableBarrelTransformLighting;
 
     public static int sieveSimilarRadius;
+    public static int autoSieveRadius;
 
     public static boolean doEnderIOCompat;
     public static boolean doTICCompat;
@@ -55,6 +56,7 @@ public class Config {
         stringFortuneChance = config.get("Crooking", "stringFortuneChance", 1).getDouble();
 
         sieveSimilarRadius = config.get("Sieving", "sieveSimilarRadius", 2).getInt();
+        autoSieveRadius = config.get("Sieving", "autoSieveRadius", 2).getInt();
 
         doEnderIOCompat = config.get("Compatibilitiy", "EnderIO", true).getBoolean();
         doTICCompat = config.get("Compatibilitiy", "TinkersConstruct", true).getBoolean();

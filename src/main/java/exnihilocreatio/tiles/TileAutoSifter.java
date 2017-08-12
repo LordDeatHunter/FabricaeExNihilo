@@ -21,6 +21,7 @@ import java.util.HashSet;
 
 public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotationalPowerConsumer{
     public TileSieve[][] toSift = null;
+    public boolean[][] connectionPieceMap = null;
 
     public EnumFacing facing = EnumFacing.NORTH;
     public int tickCounter = 0;
@@ -59,6 +60,8 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
 
             if (te != null && te instanceof TileSieve) {
                 toSift = collectPossibleSieves((TileSieve) te);
+            } else {
+                toSift = null;
             }
         }
 
@@ -72,6 +75,22 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
 
         if (world.isRemote){
             rotationValue += perTickRotation;
+
+        }
+    }
+
+    private void calculateConnectionPieces(){ //TODO
+        if (toSift != null){
+            connectionPieceMap = new boolean[toSift.length][toSift.length];
+
+            for (int x = 0; x < toSift.length - 1; x++) {
+                for (int z = 0; z < toSift.length - 1; z++) {
+                    if (toSift[x][z] == null){
+                        connectionPieceMap[x][z] = false;
+                        connectionPieceMap[x][z] = false;
+                    }
+                }
+            }
         }
     }
 
@@ -107,7 +126,7 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
     }
 
     private boolean checkNeighboursConnectedToMain(TileSieve mainSieve, TileSieve[][] sieveMap, int xCoord, int zCoord){
-        int bounds = Config.sieveSimilarRadius  * 2 + 1;
+        int bounds = Config.autoSieveRadius  * 2 + 1;
 
         int notConnected = 0;
 
@@ -136,15 +155,15 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
     private TileSieve[][] collectPossibleSieves(TileSieve thisSieve){
         BlockPos sievePos = thisSieve.getPos();
 
-        TileSieve[][] sieveMap = new TileSieve[Config.sieveSimilarRadius  * 2 + 1][Config.sieveSimilarRadius  * 2 + 1];
+        TileSieve[][] sieveMap = new TileSieve[Config.autoSieveRadius  * 2 + 1][Config.autoSieveRadius  * 2 + 1];
 
-        for (int xOffset = -1 * Config.sieveSimilarRadius; xOffset <= Config.sieveSimilarRadius; xOffset++) {
-            for (int zOffset = -1 * Config.sieveSimilarRadius; zOffset <= Config.sieveSimilarRadius; zOffset++) {
-                sieveMap[xOffset + Config.sieveSimilarRadius][zOffset + Config.sieveSimilarRadius] = null;
+        for (int xOffset = -1 * Config.autoSieveRadius; xOffset <= Config.autoSieveRadius; xOffset++) {
+            for (int zOffset = -1 * Config.autoSieveRadius; zOffset <= Config.autoSieveRadius; zOffset++) {
+                sieveMap[xOffset + Config.autoSieveRadius][zOffset + Config.autoSieveRadius] = null;
 
                 TileEntity entity = world.getTileEntity(sievePos.add(xOffset, 0, zOffset));
                 if (isValidPartnerSieve(thisSieve, entity)){
-                    sieveMap[xOffset + Config.sieveSimilarRadius][zOffset + Config.sieveSimilarRadius] = (TileSieve) entity;
+                    sieveMap[xOffset + Config.autoSieveRadius][zOffset + Config.autoSieveRadius] = (TileSieve) entity;
                 }
 
             }
@@ -230,6 +249,12 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
         NBTTagCompound itemHandlerTag = itemHandlerAutoSifter.serializeNBT();
         tag.setTag("itemHandler", itemHandlerTag);
 
+        if (facing != null)
+            tag.setString("facing", facing.getName());
+
+        tag.setFloat("rot", rotationValue);
+        tag.setFloat("sRot", storedRotationalPower);
+
         return super.writeToNBT(tag);
     }
 
@@ -244,6 +269,16 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
         if (tag.hasKey("itemHandler")) {
             itemHandlerAutoSifter.deserializeNBT((NBTTagCompound) tag.getTag("itemHandler"));
         }
+
+        if (tag.hasKey("facing"))
+            facing = EnumFacing.byName(tag.getString("facing"));
+
+        if (tag.hasKey("rot"))
+            rotationValue = tag.getFloat("rot");
+
+        if (tag.hasKey("sRot"))
+            storedRotationalPower = tag.getFloat("sRot");
+
 
         super.readFromNBT(tag);
     }

@@ -1,11 +1,14 @@
 package exnihilocreatio.blocks;
 
+import exnihilocreatio.tiles.TileAutoSifter;
 import exnihilocreatio.tiles.TileGrinder;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -84,4 +87,13 @@ public class BlockGrinder extends BlockBase implements ITileEntityProvider {
     }
     //endregion
 
+    private TileGrinder getTe(World world, BlockPos pos) {
+        return (TileGrinder) world.getTileEntity(pos);
+    }
+
+    @Override
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+        TileGrinder te = getTe(worldIn, pos);
+        te.facing = placer.getHorizontalFacing();
+    }
 }
