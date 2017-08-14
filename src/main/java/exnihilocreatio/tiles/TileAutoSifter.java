@@ -10,6 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
@@ -17,11 +18,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nonnull;
+import javax.vecmath.Point3f;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotationalPowerConsumer{
     public TileSieve[][] toSift = null;
-    public boolean[][] connectionPieceMap = null;
+    public List<Tuple<Point3f, EnumFacing.Axis>> connectionPieces = new ArrayList<>();
 
     public EnumFacing facing = EnumFacing.NORTH;
     public int tickCounter = 0;
@@ -76,18 +80,30 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
         if (world.isRemote){
             rotationValue += perTickRotation;
 
+            if (tickCounter % 10 == 0){
+                calculateConnectionPieces();
+            }
         }
     }
 
     private void calculateConnectionPieces(){ //TODO
-        if (toSift != null){
-            connectionPieceMap = new boolean[toSift.length][toSift.length];
+        connectionPieces.clear();
 
-            for (int x = 0; x < toSift.length - 1; x++) {
-                for (int z = 0; z < toSift.length - 1; z++) {
-                    if (toSift[x][z] == null){
-                        connectionPieceMap[x][z] = false;
-                        connectionPieceMap[x][z] = false;
+        if (toSift != null){
+            for (int x = 0; x < toSift.length; x++) {
+                for (int z = 0; z < toSift.length; z++) {
+                    if (toSift[x][z] != null){
+                        if (x + 1 < toSift.length){
+                            if (toSift[x + 1][z] != null){
+                                connectionPieces.add(new Tuple<>(new Point3f(x + 0.5F - Config.autoSieveRadius,0.3F,z - Config.autoSieveRadius), EnumFacing.Axis.X));
+                            }
+                        }
+                        if (z + 1 < toSift.length){
+                            if (toSift[x][z + 1] != null){
+                                connectionPieces.add(new Tuple<>(new Point3f(x - Config.autoSieveRadius,0.3F,z + 0.5F - Config.autoSieveRadius), EnumFacing.Axis.Z));
+                            }
+                        }
+
                     }
                 }
             }

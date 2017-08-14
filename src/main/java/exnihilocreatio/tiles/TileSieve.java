@@ -232,7 +232,7 @@ public class TileSieve extends BaseTileEntity {
     }
 
     public void validateAutoSieve(){
-        if (autoSifter == null || autoSifter.isInvalid() || !(world.getTileEntity(autoSifter.getPos()) instanceof TileAutoSifter)) {
+        if (autoSifter == null || autoSifter.isInvalid() || !(world.getTileEntity(autoSifter.getPos()) instanceof TileAutoSifter || autoSifter.toSift == null)) {
             autoSifter = null;
         }
     }

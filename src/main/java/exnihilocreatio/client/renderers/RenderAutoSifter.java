@@ -13,9 +13,11 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
 import org.lwjgl.opengl.GL11;
 
+import javax.vecmath.Point3f;
 import java.util.List;
 
 import static java.lang.Math.cos;
@@ -36,6 +38,14 @@ public class RenderAutoSifter extends TileEntitySpecialRenderer<TileAutoSifter> 
                         renderPiston(te, blockPos.getX() - te.getPos().getX() + x, blockPos.getY() - te.getPos().getY() + y - 1, blockPos.getZ() - te.getPos().getZ() + z);
                     }
                 }
+            }
+        }
+
+        if (te.connectionPieces != null){
+            for (Tuple<Point3f, EnumFacing.Axis> connectionPiece : te.connectionPieces) {
+                renderConnection(te, x + connectionPiece.getFirst().x, y + connectionPiece.getFirst().y, z + connectionPiece.getFirst().z, connectionPiece.getSecond());
+
+                // renderConnection(te, connectionPiece.getX() - te.getPos().getX() + x, connectionPiece.getY() - te.getPos().getY() + y - 1, connectionPiece.getZ() - te.getPos().getZ() + z);
             }
         }
 
@@ -65,31 +75,8 @@ public class RenderAutoSifter extends TileEntitySpecialRenderer<TileAutoSifter> 
         GlStateManager.disableCull();
 
 
-        // float rotFacing = tile.facing == EnumFacing.SOUTH ? 180 : tile.facing == EnumFacing.WEST ? 90 : tile.facing == EnumFacing.EAST ? -90 : 0;
-
-        // GlStateManager.rotate(rotFacing, 0, 1, 0);
-
-        // if (tile.canTurn){
-        //     tile.rotationValue = (tile.rotationValue + tile.perTickEffective) % 360;
-        // }
-
-        // GlStateManager.rotate(System.currentTimeMillis() % 360, 0, 1, 0);
-        float a = (float) ((System.currentTimeMillis() % 360 * 2) / 2 * Math.PI / 180F);
-
-        double timeSlower = System.currentTimeMillis() / 40D;
-
-        float r = 0.4F;
-        float cx = 0F;
-        float cz = 0F;
-
-        float circleX = cx + r * (float)Math.cos(a);
-        float circleZ = cz + r * (float)Math.sin(a);
-
-        float upDown = (float) Math.sin(timeSlower) * 0.2F + 0.6F;
-        // GlStateManager.translate(0, (float)(System.currentTimeMillis() % 200) / 200F, 0);
         GlStateManager.translate(tile.offsetX, 0.8F, tile.offsetZ);
-        //GlStateManager.translate(circleX, upDown, circleZ);
-        //GlStateManager.translate(0, upDown, 0);
+
 
         RenderHelper.disableStandardItemLighting();
 
@@ -112,7 +99,7 @@ public class RenderAutoSifter extends TileEntitySpecialRenderer<TileAutoSifter> 
         GlStateManager.enableCull();
     }
 
-    private void renderConnection(TileAutoSifter tile, double x, double y, double z) {
+    private void renderConnection(TileAutoSifter tile, double x, double y, double z, EnumFacing.Axis axis) {
         if (quadsConnection == null) {
             final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
             IBlockState state = tile.getBlockType().getDefaultState().withProperty(BlockAutoSifter.PART_TYPE, EnumAutoSifterParts.CONNECTION);
@@ -136,17 +123,19 @@ public class RenderAutoSifter extends TileEntitySpecialRenderer<TileAutoSifter> 
         GlStateManager.enableBlend();
         GlStateManager.disableCull();
 
+        GlStateManager.translate(tile.offsetX, 0.0F, tile.offsetZ);
 
         // float rotFacing = tile.facing == EnumFacing.SOUTH ? 180 : tile.facing == EnumFacing.WEST ? 90 : tile.facing == EnumFacing.EAST ? -90 : 0;
 
-        // GlStateManager.rotate(rotFacing, 0, 1, 0);
+        if (axis == EnumFacing.Axis.Z)
+            GlStateManager.rotate(90, 0, 1, 0);
 
         // if (tile.canTurn){
         //     tile.rotationValue = (tile.rotationValue + tile.perTickEffective) % 360;
         // }
 
         // GlStateManager.rotate(System.currentTimeMillis() % 360, 0, 1, 0);
-        GlStateManager.translate(0, (float)(System.currentTimeMillis() % 200) / 200F, 0);
+        // GlStateManager.translate(0, (float)(System.currentTimeMillis() % 200) / 200F, 0);
 
 
         RenderHelper.disableStandardItemLighting();
