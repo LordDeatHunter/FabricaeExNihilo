@@ -30,7 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.File;
 
-@Mod(modid = ExNihiloCreatio.MODID, name = "Ex Nihilo Creatio", version = "0.1.0")
+@Mod(modid = ExNihiloCreatio.MODID, name = "Ex Nihilo Creatio", version = "0.1.0", acceptedMinecraftVersions = "[1.12, 1.13)")
 @Mod.EventBusSubscriber
 public class ExNihiloCreatio {
 
@@ -136,6 +136,7 @@ public class ExNihiloCreatio {
         FluidTransformRegistry.loadJson(new File(configDirectory, "FluidTransformRegistry.json"));
         BarrelLiquidBlacklistRegistry.loadJson(new File(configDirectory, "BarrelLiquidBlacklistRegistry.json"));
 
+        MinecraftForge.EVENT_BUS.post(new RegistryReloadedEvent());
     }
 
     @EventHandler
