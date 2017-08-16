@@ -36,6 +36,8 @@ public class BlockStoneAxle extends BlockBase implements ITileEntityProvider, IP
     public BlockStoneAxle() {
         super(Material.WOOD, "block_axle_stone");
         setCreativeTab(ExNihiloCreatio.tabExNihilo);
+        setHardness(2);
+        setHarvestLevel("pickaxe", 0);
 
         setDefaultState(blockState.getBaseState().withProperty(IS_AXLE, false));
     }

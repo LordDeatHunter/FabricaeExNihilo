@@ -27,6 +27,10 @@ public class BlockGrinder extends BlockBase implements ITileEntityProvider {
     public BlockGrinder() {
         super(Material.GLASS, "block_grinder");
         setDefaultState(this.blockState.getBaseState().withProperty(PART_TYPE, EnumGrinderParts.EMPTY));
+
+        setHardness(2);
+        setHarvestLevel("axe", 0);
+
         setCreativeTab(ExNihiloCreatio.tabExNihilo);
     }
 

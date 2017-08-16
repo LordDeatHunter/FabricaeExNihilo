@@ -28,6 +28,10 @@ public class BlockAutoSifter extends BlockBase implements ITileEntityProvider {
     public BlockAutoSifter() {
         super(Material.WOOD, "block_auto_sifter");
         setDefaultState(this.blockState.getBaseState().withProperty(PART_TYPE, EnumAutoSifterParts.EMPTY));
+
+        setHardness(2);
+        setHarvestLevel("axe", 0);
+
         setCreativeTab(ExNihiloCreatio.tabExNihilo);
     }
 
