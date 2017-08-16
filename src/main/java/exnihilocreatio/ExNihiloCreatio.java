@@ -30,11 +30,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.File;
 
-@Mod(modid = ExNihiloCreatio.MODID, name = "Ex Nihilo Creatio", version = "0.1.0", acceptedMinecraftVersions = "[1.12, 1.13)")
+@Mod(modid = ExNihiloCreatio.MODID, name = "Ex Nihilo Creatio", version = ExNihiloCreatio.VERSION, acceptedMinecraftVersions = "[1.12, 1.13)")
 @Mod.EventBusSubscriber
 public class ExNihiloCreatio {
 
     public static final String MODID = "exnihilocreatio";
+    public static final String VERSION = "0.1.1";
 
     @SidedProxy(serverSide = "exnihilocreatio.proxy.ServerProxy", clientSide = "exnihilocreatio.proxy.ClientProxy")
     public static CommonProxy proxy;
