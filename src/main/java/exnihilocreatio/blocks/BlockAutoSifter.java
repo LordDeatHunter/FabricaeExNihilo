@@ -1,5 +1,6 @@
 package exnihilocreatio.blocks;
 
+import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.tiles.TileAutoSifter;
 import exnihilocreatio.tiles.TileWaterwheel;
 import net.minecraft.block.ITileEntityProvider;
@@ -27,6 +28,7 @@ public class BlockAutoSifter extends BlockBase implements ITileEntityProvider {
     public BlockAutoSifter() {
         super(Material.WOOD, "block_auto_sifter");
         setDefaultState(this.blockState.getBaseState().withProperty(PART_TYPE, EnumAutoSifterParts.EMPTY));
+        setCreativeTab(ExNihiloCreatio.tabExNihilo);
     }
 
     @Nullable

@@ -36,9 +36,10 @@ sourceCompatibility=1.8
 targetCompatibility=1.8
 
 minecraft {
-    version = "1.12-14.21.1.2443"
+    version = "1.12.1-14.22.0.2455"
     runDir = "run"
-	mappings = "snapshot_20170710"
+	mappings = "snapshot_20170810"
+    useDepAts = true
 }
 
 repositories
@@ -81,8 +82,8 @@ dependencies
     // deobfCompile "com.enderio.core:EnderCore:1.10.2-0.4.1.65-beta"
     // deobfCompile "com.enderio:EnderIO:1.10.2-3.1.+"
     
-    // deobfCompile "mcp.mobius.waila:Hwyla:1.8.19-B33_1.12:api"
-    // runtime "mcp.mobius.waila:Hwyla:1.8.19-B33_1.12"
+    deobfCompile "mcp.mobius.waila:Hwyla:1.8.20-B35_1.12:api"
+    runtime "mcp.mobius.waila:Hwyla:1.8.20-B35_1.12"
 
 	// deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.+"
     // runtime "mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.+"
@@ -108,8 +109,15 @@ processResources
     from(sourceSets.main.resources.srcDirs) {
         exclude "mcmod.info"
     }
+
+    rename '(.+_at.cfg)', 'META-INF/$1'
 }
 
 jar {
     from(sourceSets.api.output)
+
+    manifest {
+        attributes 'FMLAT': 'exnihilocreatio_at.cfg'
+    }
+
 }

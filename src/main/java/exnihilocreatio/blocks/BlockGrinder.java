@@ -1,5 +1,6 @@
 package exnihilocreatio.blocks;
 
+import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.tiles.TileAutoSifter;
 import exnihilocreatio.tiles.TileGrinder;
 import net.minecraft.block.ITileEntityProvider;
@@ -26,6 +27,7 @@ public class BlockGrinder extends BlockBase implements ITileEntityProvider {
     public BlockGrinder() {
         super(Material.GLASS, "block_grinder");
         setDefaultState(this.blockState.getBaseState().withProperty(PART_TYPE, EnumGrinderParts.EMPTY));
+        setCreativeTab(ExNihiloCreatio.tabExNihilo);
     }
 
 

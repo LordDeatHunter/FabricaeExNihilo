@@ -20,7 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 
-public class TileInfestedLeaves extends TileEntity implements ITickable {
+public class TileInfestedLeaves extends BaseTileEntity implements ITickable {
     private static int tileId = 0;
 
     @Getter
@@ -38,7 +38,10 @@ public class TileInfestedLeaves extends TileEntity implements ITickable {
     public void update() {
         if (progress < 1.0F) {
             progress += 1.0 / Config.infestedLeavesTicks;
-            markDirty();
+
+            System.out.println("progress = " + progress);
+
+            markDirtyClient();
 
             if (progress > 1.0F) {
                 progress = 1.0F;
@@ -121,22 +124,5 @@ public class TileInfestedLeaves extends TileEntity implements ITickable {
         }
 
         super.readFromNBT(tag);
-    }
-
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket() {
-        return new SPacketUpdateTileEntity(this.pos, this.getBlockMetadata(), getUpdateTag());
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void onDataPacket(NetworkManager networkManager, SPacketUpdateTileEntity packet) {
-        readFromNBT(packet.getNbtCompound());
-    }
-
-    @Override
-    @Nonnull
-    public NBTTagCompound getUpdateTag() {
-        return writeToNBT(new NBTTagCompound());
     }
 }
