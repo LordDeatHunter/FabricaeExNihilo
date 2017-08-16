@@ -33,6 +33,8 @@ public class Config {
 
     public static boolean setFireToMacroUsers;
 
+    public static boolean clientFancyAutoSieveAnimations;
+
     public static void doNormalConfig(File file) {
         Configuration config = new Configuration(file);
 
@@ -64,6 +66,8 @@ public class Config {
         setFireToMacroUsers = config.get("Sieving", "setFireToMacroUsers", false).getBoolean();
 
         numberOfTimesToTestVanillaDrops = config.get("Crooking", "numberOfVanillaDropRuns", 3).getInt();
+
+        clientFancyAutoSieveAnimations = config.get("Client", "clientFancyAutoSieveAnimations", true).getBoolean();
 
         if (config.hasChanged())
             config.save();

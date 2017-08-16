@@ -2,6 +2,7 @@ package exnihilocreatio.client.renderers;
 
 import exnihilocreatio.blocks.BlockAutoSifter;
 import exnihilocreatio.blocks.EnumAutoSifterParts;
+import exnihilocreatio.config.Config;
 import exnihilocreatio.tiles.TileAutoSifter;
 import exnihilocreatio.tiles.TileSieve;
 import net.minecraft.block.state.IBlockState;
@@ -30,7 +31,7 @@ public class RenderAutoSifter extends TileEntitySpecialRenderer<TileAutoSifter> 
 
     @Override
     public void render(TileAutoSifter te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-        if (te.toSift!=null) {
+        if (te.toSift!=null && Config.clientFancyAutoSieveAnimations) {
             for (TileSieve[] tileSieves : te.toSift) {
                 for (TileSieve tileSieve : tileSieves) {
                     if (tileSieve != null){
@@ -41,11 +42,9 @@ public class RenderAutoSifter extends TileEntitySpecialRenderer<TileAutoSifter> 
             }
         }
 
-        if (te.connectionPieces != null){
+        if (te.connectionPieces != null && Config.clientFancyAutoSieveAnimations){
             for (Tuple<Point3f, EnumFacing.Axis> connectionPiece : te.connectionPieces) {
                 renderConnection(te, x + connectionPiece.getFirst().x, y + connectionPiece.getFirst().y, z + connectionPiece.getFirst().z, connectionPiece.getSecond());
-
-                // renderConnection(te, connectionPiece.getX() - te.getPos().getX() + x, connectionPiece.getY() - te.getPos().getY() + y - 1, connectionPiece.getZ() - te.getPos().getZ() + z);
             }
         }
 
