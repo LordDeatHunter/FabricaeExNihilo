@@ -205,7 +205,6 @@ public class BlockInfestedLeaves extends BlockLeaves implements ITileEntityProvi
             TileEntity te = worldIn.getTileEntity(pos);
             if (te != null && te instanceof TileInfestedLeaves){
                 TileInfestedLeaves infestedLeaves = (TileInfestedLeaves) te;
-                System.out.println("infestedLeaves.getProgress() = " + infestedLeaves.getProgress());
                 if (worldIn.rand.nextFloat() < infestedLeaves.getProgress() * Config.stringChance / 4.0d){
                     spawnAsEntity(worldIn, pos, new ItemStack(Items.STRING));
                 }

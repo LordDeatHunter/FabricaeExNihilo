@@ -39,8 +39,6 @@ public class TileInfestedLeaves extends BaseTileEntity implements ITickable {
         if (progress < 1.0F) {
             progress += 1.0 / Config.infestedLeavesTicks;
 
-            System.out.println("progress = " + progress);
-
             markDirtyClient();
 
             if (progress > 1.0F) {
