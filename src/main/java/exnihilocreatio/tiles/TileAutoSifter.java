@@ -71,7 +71,7 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
 
         storedRotationalPower += perTickRotation;
 
-        if (Math.abs(storedRotationalPower) > 100 &&  toSift != null){
+        if (Math.abs(storedRotationalPower) > 100 &&  toSift != null && !world.isRemote){
             storedRotationalPower += storedRotationalPower > 0 ? -100 : 100;
             doAutoSieving(toSift);
         }
@@ -86,7 +86,7 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
         }
     }
 
-    private void calculateConnectionPieces(){ //TODO
+    private void calculateConnectionPieces(){
         connectionPieces.clear();
 
         if (toSift != null){
@@ -110,63 +110,6 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
         }
     }
 
-    private void checkValidSieves(){
-        // toSift.clear();
-
-        HashSet<TileSieve> visited = new HashSet<>();
-
-
-        // Has to be placed below a sieve
-        BlockPos posOther = pos.up();
-        TileEntity te = world.getTileEntity(posOther);
-
-        if (te != null && te instanceof TileSieve) {
-            TileSieve sieve = (TileSieve) te;
-
-            TileSieve[][] sieveMap = collectPossibleSieves(sieve);
-
-            doAutoSieving(sieveMap);
-        }
-    }
-
-    private void cleanUnconnected(TileSieve thisSieve, TileSieve[][] sieveMap){
-        for (int xCoord = 0; xCoord < sieveMap.length; xCoord++) {
-            for (int zCoord = 0; zCoord < sieveMap.length; zCoord++) {
-                if (!(sieveMap[xCoord][zCoord] == null)){
-
-                }
-            }
-        }
-
-
-    }
-
-    private boolean checkNeighboursConnectedToMain(TileSieve mainSieve, TileSieve[][] sieveMap, int xCoord, int zCoord){
-        int bounds = Config.autoSieveRadius  * 2 + 1;
-
-        int notConnected = 0;
-
-        // check left
-        if (xCoord -1 >= 0 && xCoord -1 <= bounds){
-            if (sieveMap[xCoord -1][zCoord] == null){
-                notConnected++;
-            }else {
-                if (sieveMap[xCoord -1][zCoord] == mainSieve){
-                    return true;
-                }else {
-                    return checkNeighboursConnectedToMain(mainSieve, sieveMap, xCoord -1, zCoord);
-                }
-            }
-        }else {
-            notConnected++;
-        }
-
-        if (notConnected == 4){
-            sieveMap[xCoord][zCoord] = null;
-        }
-
-        return false;
-    }
 
     private TileSieve[][] collectPossibleSieves(TileSieve thisSieve){
         BlockPos sievePos = thisSieve.getPos();

@@ -100,7 +100,7 @@ public class TileSieve extends BaseTileEntity {
             for (Siftable siftable : SieveRegistry.getDrops(stack)) {
                 if (siftable.getMeshLevel() == meshLevel) {
                     currentStack = new BlockInfo(stack);
-                    PacketHandler.sendNBTUpdate(this);
+                    markDirtyClient();
                     return true;
                 }
             }
@@ -153,7 +153,6 @@ public class TileSieve extends BaseTileEntity {
 
             progress += 10 + 5 * efficiency;
             markDirtyClient();
-            // PacketHandler.sendNBTUpdate(this);
 
             if (progress >= 100) {
                 List<ItemStack> drops = SieveRegistry.getRewardDrops(rand, currentStack.getBlockState(), meshStack.getMetadata(), fortune);

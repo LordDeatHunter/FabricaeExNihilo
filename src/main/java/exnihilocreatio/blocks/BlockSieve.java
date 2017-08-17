@@ -136,35 +136,11 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbe
     @Nonnull
     @Deprecated
     public IBlockState getStateFromMeta(int meta) {
-        /*MeshType type;
-        switch (meta) {
-            case 0:
-                type = MeshType.NONE;
-                break;
-            case 1:
-                type = MeshType.STRING;
-                break;
-            case 2:
-                type = MeshType.FLINT;
-                break;
-            case 3:
-                type = MeshType.IRON;
-                break;
-            case 4:
-                type = MeshType.DIAMOND;
-                break;
-            default:
-                type = MeshType.STRING;
-                break;
-        }
-        return getDefaultState().withProperty(MESH, type); */
         return getDefaultState();
     }
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        // MeshType type = state.getValue(MESH);
-        // return type.getID();
         return 0;
     }
 
@@ -236,7 +212,7 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbe
     }
 
     public enum MeshType implements IStringSerializable {
-        NO_RENDER(0, "no_render"), NONE(1, "none"), STRING(2, "string"), FLINT(3, "flint"), IRON(4, "iron"), DIAMOND(5, "diamond");
+        NONE(0, "none"), STRING(1, "string"), FLINT(2, "flint"), IRON(3, "iron"), DIAMOND(4, "diamond"), NO_RENDER(5, "no_render");
 
         private int id;
         private String name;
@@ -256,6 +232,8 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbe
                     return IRON;
                 case 4:
                     return DIAMOND;
+                case 5:
+                    return NO_RENDER;
             }
 
             return NONE;
