@@ -1,16 +1,14 @@
 package exnihilocreatio.tiles;
 
 import com.google.common.base.Objects;
+import exnihilocreatio.ModEnchantments;
 import exnihilocreatio.blocks.BlockSieve;
 import exnihilocreatio.config.Config;
-import exnihilocreatio.enchantments.ENEnchantments;
-import exnihilocreatio.networking.PacketHandler;
 import exnihilocreatio.registries.SieveRegistry;
 import exnihilocreatio.registries.types.Siftable;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.Util;
 import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -19,9 +17,6 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
@@ -135,16 +130,16 @@ public class TileSieve extends BaseTileEntity {
                 lastPlayer = player.getUniqueID();
             }
 
-            int efficiency = EnchantmentHelper.getEnchantmentLevel(ENEnchantments.efficiency, meshStack);
+            int efficiency = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.EFFICIENCY, meshStack);
             efficiency += EnchantmentHelper.getEnchantmentLevel(Enchantments.EFFICIENCY, meshStack);
 
-            int fortune = EnchantmentHelper.getEnchantmentLevel(ENEnchantments.fortune, meshStack);
+            int fortune = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.FORTUNE, meshStack);
             fortune += EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, meshStack);
             if (player != null) {
                 fortune += player.getLuck();
             }
 
-            int luckOfTheSea = EnchantmentHelper.getEnchantmentLevel(ENEnchantments.luckOfTheSea, meshStack);
+            int luckOfTheSea = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.LUCK_OF_THE_SEA, meshStack);
             luckOfTheSea += EnchantmentHelper.getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, meshStack);
 
             if (luckOfTheSea > 0 && player != null) {

@@ -1,6 +1,7 @@
 package exnihilocreatio.enchantments;
 
 import exnihilocreatio.items.ItemMesh;
+import exnihilocreatio.util.Data;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -8,10 +9,12 @@ import net.minecraft.item.ItemStack;
 
 public class EnchantmentEfficiency extends Enchantment {
 
-    protected EnchantmentEfficiency() {
+    public EnchantmentEfficiency() {
         super(Rarity.COMMON, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND});
-        this.setName("sieveEfficiency");
-        this.setRegistryName("sieveEfficiency");
+        this.setName("sieve_efficiency");
+        this.setRegistryName("sieve_efficiency");
+
+        Data.ENCHANTMENTS.add(this);
     }
 
     @Override

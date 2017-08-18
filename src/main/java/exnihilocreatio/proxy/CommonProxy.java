@@ -1,12 +1,11 @@
 package exnihilocreatio.proxy;
 
-import exnihilocreatio.ExNihiloCreatio;
-import exnihilocreatio.ModBlocks;
-import exnihilocreatio.ModFluids;
-import exnihilocreatio.ModItems;
+import exnihilocreatio.*;
+import exnihilocreatio.ModEnchantments;
 import exnihilocreatio.registries.OreRegistry;
 import exnihilocreatio.util.Data;
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -46,6 +45,11 @@ public abstract class CommonProxy {
         // Recipes.init();
         e.getRegistry().registerAll(Data.RECIPES.toArray(new IRecipe[RECIPES.size()]));
         OreRegistry.doRecipes();
+    }
+
+    @SubscribeEvent
+    public static void registerEnchantments(RegistryEvent.Register<Enchantment> event) {
+        ModEnchantments.registerEnchantments(event.getRegistry());
     }
 
     public void preInit(FMLPreInitializationEvent event) {

@@ -1,6 +1,7 @@
 package exnihilocreatio.util;
 
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipe;
 
@@ -12,5 +13,6 @@ public class Data {
     public static final List<Item> ITEMS = new ArrayList<>();
     public static final List<Block> BLOCKS = new ArrayList<>();
     public static final List<IRecipe> RECIPES = new ArrayList<>();
+    public static final List<Enchantment> ENCHANTMENTS = new ArrayList<>();
 
 }

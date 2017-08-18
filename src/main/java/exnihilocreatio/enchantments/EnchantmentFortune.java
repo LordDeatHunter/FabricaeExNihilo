@@ -1,16 +1,20 @@
 package exnihilocreatio.enchantments;
 
 import exnihilocreatio.items.ItemMesh;
+import exnihilocreatio.util.Data;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 
 public class EnchantmentFortune extends Enchantment {
-    protected EnchantmentFortune() {
+    public EnchantmentFortune() {
         super(Rarity.RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND});
-        this.setName("sieveFortune");
-        this.setRegistryName("sieveFortune");
+        this.setName("sieve_fortune");
+        this.setRegistryName("sieve_fortune");
+
+        Data.ENCHANTMENTS.add(this);
+
     }
 
     @Override

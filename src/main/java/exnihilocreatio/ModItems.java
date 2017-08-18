@@ -23,28 +23,27 @@ import java.util.ArrayList;
 
 public class ModItems {
 
-    public static HammerBase hammerWood;
-    public static HammerBase hammerStone;
-    public static HammerBase hammerIron;
-    public static HammerBase hammerDiamond;
-    public static HammerBase hammerGold;
+    public static final HammerBase hammerWood;
+    public static final HammerBase hammerStone;
+    public static final HammerBase hammerIron;
+    public static final HammerBase hammerDiamond;
+    public static final HammerBase hammerGold;
 
-    public static CrookBase crookWood;
-    public static CrookBase crookBone;
+    public static final CrookBase crookWood;
+    public static final CrookBase crookBone;
 
-    public static ItemMesh mesh;
+    public static final ItemMesh mesh;
 
-    public static ItemResource resources;
-    public static ItemCookedSilkworm cookedSilkworm;
+    public static final ItemResource resources;
+    public static final ItemCookedSilkworm cookedSilkworm;
 
-    public static ItemPebble pebbles;
+    public static final ItemPebble pebbles;
 
-    public static ItemDoll dolls;
+    public static final ItemDoll dolls;
 
-    public static ArrayList<ItemSeedBase> itemSeeds = new ArrayList<>();
+    public static final ArrayList<ItemSeedBase> itemSeeds = new ArrayList<>();
 
-    @SuppressWarnings("deprecation")
-    public static void preInit() {
+    static{
         hammerWood = new HammerBase("hammer_wood", 64, Item.ToolMaterial.WOOD);
         hammerWood.setCreativeTab(ExNihiloCreatio.tabExNihilo);
 
@@ -96,10 +95,11 @@ public class ModItems {
             }
         }
 
-        for (Block block : Data.BLOCKS)
+        for (Block block : Data.BLOCKS) {
             if (!(block instanceof IHasSpecialRegistry)) {
                 registry.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
             }
+        }
 
         registry.register(new ItemBlockCrucible(ModBlocks.crucible));
 
@@ -118,5 +118,4 @@ public class ModItems {
             }
         }
     }
-
 }

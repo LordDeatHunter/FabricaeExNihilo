@@ -3,7 +3,6 @@ package exnihilocreatio;
 import exnihilocreatio.capabilities.ENCapabilities;
 import exnihilocreatio.command.CommandReloadConfig;
 import exnihilocreatio.config.Config;
-import exnihilocreatio.enchantments.ENEnchantments;
 import exnihilocreatio.entities.ENEntities;
 import exnihilocreatio.handlers.HandlerCrook;
 import exnihilocreatio.handlers.HandlerHammer;
@@ -71,16 +70,11 @@ public class ExNihiloCreatio {
 
         Config.doNormalConfig(new File(configDirectory, "ExNihiloCreatio.cfg"));
 
-        ModItems.preInit();
-        ModBlocks.preInit();
-
-
         proxy.registerConfigs(configDirectory);
 
 
         ENCapabilities.init();
         ENEntities.init();
-        ENEnchantments.init();
 
         PacketHandler.initPackets();
 

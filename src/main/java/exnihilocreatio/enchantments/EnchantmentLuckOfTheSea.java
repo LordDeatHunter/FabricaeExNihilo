@@ -1,6 +1,7 @@
 package exnihilocreatio.enchantments;
 
 import exnihilocreatio.items.ItemMesh;
+import exnihilocreatio.util.Data;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -8,10 +9,12 @@ import net.minecraft.item.ItemStack;
 
 public class EnchantmentLuckOfTheSea extends Enchantment {
 
-    protected EnchantmentLuckOfTheSea() {
+    public EnchantmentLuckOfTheSea() {
         super(Rarity.RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND});
-        this.setName("sieveLuckOfTheSea");
-        this.setRegistryName("sieveLuckOfTheSea");
+        this.setName("sieve_luck_of_the_sea");
+        this.setRegistryName("sieve_luck_of_the_sea");
+
+        Data.ENCHANTMENTS.add(this);
     }
 
     @Override

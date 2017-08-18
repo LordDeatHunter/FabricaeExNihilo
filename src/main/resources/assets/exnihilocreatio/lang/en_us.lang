@@ -83,6 +83,6 @@ itemGroup.exNihilo=Ex Nihilo Creatio
 modifier.exnihilo_smashing.name=Smashing
 modifier.exnihilo_smashing.desc=§rSmashing baby, yeaaah!\n§rBreaks things into smaller things
 
-enchantment.sieveEfficiency=Sieve Efficiency
-enchantment.sieveFortune=Sieve Fortune
-enchantment.sieveLuckOfTheSea=Sieve Luck of the Sea
+enchantment.sieve_efficiency=Sieve Efficiency
+enchantment.sieve_fortune=Sieve Fortune
+enchantment.sieve_luck_of_the_sea=Sieve Luck of the Sea

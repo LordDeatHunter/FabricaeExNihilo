@@ -16,23 +16,22 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class ModBlocks {
 
 
-    public static BlockBaseFalling dust;
-    public static BlockBaseFalling netherrackCrushed;
-    public static BlockBaseFalling endstoneCrushed;
-    public static BlockBarrel barrelWood;
-    public static BlockBarrel barrelStone;
-    public static BlockInfestedLeaves infestedLeaves;
-    public static BlockCrucible crucible;
-    public static BlockSieve sieve;
+    public static final BlockBaseFalling dust;
+    public static final BlockBaseFalling netherrackCrushed;
+    public static final BlockBaseFalling endstoneCrushed;
+    public static final BlockBarrel barrelWood;
+    public static final BlockBarrel barrelStone;
+    public static final BlockInfestedLeaves infestedLeaves;
+    public static final BlockCrucible crucible;
+    public static final BlockSieve sieve;
 
-    public static BlockWaterwheel watermill;
-    public static BlockStoneAxle axle_stone;
+    public static final BlockWaterwheel watermill;
+    public static final BlockStoneAxle axle_stone;
 
-    public static BlockGrinder grinder;
-    public static BlockAutoSifter autoSifter;
+    public static final BlockGrinder grinder;
+    public static final BlockAutoSifter autoSifter;
 
-
-    public static void preInit() {
+    static {
         dust = new BlockBaseFalling(SoundType.CLOTH, "block_dust");
         dust.setCreativeTab(ExNihiloCreatio.tabExNihilo);
         dust.setHardness(0.7F);
@@ -76,6 +75,7 @@ public class ModBlocks {
 
         autoSifter = new BlockAutoSifter();
         GameRegistry.registerTileEntity(TileAutoSifter.class, "block_auto_sifter");
+
     }
 
     public static void registerBlocks(IForgeRegistry<Block> registry) {
