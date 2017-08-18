@@ -2,7 +2,6 @@ package exnihilocreatio.blocks;
 
 import exnihilocreatio.config.Config;
 import exnihilocreatio.items.ItemMesh;
-import exnihilocreatio.networking.PacketHandler;
 import exnihilocreatio.tiles.TileSieve;
 import exnihilocreatio.util.Util;
 import mcjty.theoneprobe.api.IProbeHitData;

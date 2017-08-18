@@ -81,11 +81,11 @@ dependencies
     // TODO: Add back EnderIO support once it has updated [To fix AE2 Dependency Error]
     // deobfCompile "com.enderio.core:EnderCore:1.10.2-0.4.1.65-beta"
     // deobfCompile "com.enderio:EnderIO:1.10.2-3.1.+"
-    
-    deobfCompile "mcp.mobius.waila:Hwyla:1.8.20-B35_1.12:api"
+
+    compileOnly "mcp.mobius.waila:Hwyla:1.8.20-B35_1.12:api"
     runtime "mcp.mobius.waila:Hwyla:1.8.20-B35_1.12"
 
-	// deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.+"
+	deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.+"
     // runtime "mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.+"
 
     compileOnly "org.projectlombok:lombok:1.16.10"

@@ -1,6 +1,4 @@
-# Blender v2.78 (sub 0) OBJ File: 'Sifter.blend'
-# www.blender.org
-mtllib auto_sifter_box.mtl
+mtllib basic_materials.mtl
 o Cube.007_Cube.001
 v -1.000000 0.342223 1.000000
 v -1.000000 0.342223 -1.000000
@@ -71,8 +69,7 @@ vn 1.0000 0.0000 0.0000
 vn 0.0000 0.0000 1.0000
 vn 0.0000 1.0000 0.0000
 vn 0.0000 -1.0000 0.0000
-usemtl Cobblestone.001
-s off
+usemtl Planks
 f 5/1/1 1/2/1 2/3/1 6/4/1
 f 6/5/2 2/6/2 4/7/2 7/8/2
 f 7/9/3 4/10/3 3/11/3 8/12/3
