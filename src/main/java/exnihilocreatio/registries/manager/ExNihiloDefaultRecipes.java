@@ -91,6 +91,9 @@ public class ExNihiloDefaultRecipes implements ISieveDefaultRegistryProvider, IH
         SieveRegistry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.GLOWSTONE_DUST, 0), 0.0625f, MeshType.IRON.getID());
         SieveRegistry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.BLAZE_POWDER, 0), 0.05f, MeshType.IRON.getID());
 
+        // SieveRegistry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemInfo(Items.BLAZE_POWDER, 0), 0.05f, MeshType.IRON.getID());
+        // TODO: add tinkers ardite to sieve and add ores for it
+
         // Ores
         for (ItemOre ore : OreRegistry.getItemOreRegistry()) {
             SieveRegistry.register(Blocks.GRAVEL.getDefaultState(), new ItemStack(ore, 1, 0), 0.2f, MeshType.FLINT.getID());
