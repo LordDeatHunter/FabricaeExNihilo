@@ -86,6 +86,10 @@ public class ItemInfo {
         return tag;
     }
 
+    public boolean isValid(){
+        return meta <= Short.MAX_VALUE && item != null;
+    }
+
     public int hashCode() {
         return item == null ? 41 : item.hashCode();
     }
