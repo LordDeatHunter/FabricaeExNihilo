@@ -2,6 +2,7 @@ package exnihilocreatio;
 
 import exnihilocreatio.capabilities.ENCapabilities;
 import exnihilocreatio.command.CommandReloadConfig;
+import exnihilocreatio.compatibility.tconstruct.CompatTConstruct;
 import exnihilocreatio.config.Config;
 import exnihilocreatio.entities.ENEntities;
 import exnihilocreatio.handlers.HandlerCrook;
@@ -105,7 +106,7 @@ public class ExNihiloCreatio {
         proxy.postInit(event);
 
         if (Loader.isModLoaded("tconstruct") && Config.doTICCompat) {
-            // CompatTConstruct.postInit();
+            CompatTConstruct.postInit();
         }
         if (Loader.isModLoaded("EnderIO") && Config.doEnderIOCompat) {
             // CompatEIO.postInit();
