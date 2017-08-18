@@ -1,6 +1,4 @@
-# Blender v2.78 (sub 0) OBJ File: 'StoneStick.blend'
-# www.blender.org
-mtllib stone_axle.mtl
+mtllib basic_materials.mtl
 o Cube.006_Cube.007
 v -0.062188 -0.125000 0.550000
 v 0.062500 -0.125000 0.550000
