@@ -1,6 +1,5 @@
 package exnihilocreatio.networking;
 
-import exnihilocreatio.ModBlocks;
 import exnihilocreatio.tiles.TileBarrel;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;

@@ -8,12 +8,12 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 
 public class ItemHandlerAutoSifter extends ItemStackHandler {
+    @Setter
+    TileAutoSifter te;
+
     public ItemHandlerAutoSifter() {
         super(1);
     }
-
-    @Setter
-    TileAutoSifter te;
 
     @Override
     @Nonnull
@@ -21,7 +21,7 @@ public class ItemHandlerAutoSifter extends ItemStackHandler {
         if (SieveRegistry.canBeSifted(stack)) {
             te.markDirtyClient();
             return super.insertItem(slot, stack, simulate);
-        }else {
+        } else {
             return stack;
         }
     }

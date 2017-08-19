@@ -20,10 +20,9 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import javax.annotation.Nonnull;
 import javax.vecmath.Point3f;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
-public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotationalPowerConsumer{
+public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotationalPowerConsumer {
     public TileSieve[][] toSift = null;
     public List<Tuple<Point3f, EnumFacing.Axis>> connectionPieces = new ArrayList<>();
 
@@ -49,14 +48,14 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
     public void update() {
         tickCounter++;
 
-        if (world.isRemote && perTickRotation != 0){
+        if (world.isRemote && perTickRotation != 0) {
             float r = 0.1F;
             float cx = 0F;
 
-            offsetX = cx + r * (float)Math.cos(tickCounter);
+            offsetX = cx + r * (float) Math.cos(tickCounter);
         }
 
-        if (tickCounter % 10 == 0){
+        if (tickCounter % 10 == 0) {
             perTickRotation = calcEffectivePerTickRotation(facing);
 
             BlockPos posOther = pos.up();
@@ -71,36 +70,36 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
 
         storedRotationalPower += perTickRotation;
 
-        if (Math.abs(storedRotationalPower) > 100 &&  toSift != null && !world.isRemote){
+        if (Math.abs(storedRotationalPower) > 100 && toSift != null && !world.isRemote) {
             storedRotationalPower += storedRotationalPower > 0 ? -100 : 100;
             doAutoSieving(toSift);
         }
 
 
-        if (world.isRemote){
+        if (world.isRemote) {
             rotationValue += perTickRotation;
 
-            if (tickCounter % 10 == 0){
+            if (tickCounter % 10 == 0) {
                 calculateConnectionPieces();
             }
         }
     }
 
-    private void calculateConnectionPieces(){
+    private void calculateConnectionPieces() {
         connectionPieces.clear();
 
-        if (toSift != null){
+        if (toSift != null) {
             for (int x = 0; x < toSift.length; x++) {
                 for (int z = 0; z < toSift.length; z++) {
-                    if (toSift[x][z] != null){
-                        if (x + 1 < toSift.length){
-                            if (toSift[x + 1][z] != null){
-                                connectionPieces.add(new Tuple<>(new Point3f(x + 0.5F - Config.autoSieveRadius,0.3F,z - Config.autoSieveRadius), EnumFacing.Axis.X));
+                    if (toSift[x][z] != null) {
+                        if (x + 1 < toSift.length) {
+                            if (toSift[x + 1][z] != null) {
+                                connectionPieces.add(new Tuple<>(new Point3f(x + 0.5F - Config.autoSieveRadius, 0.3F, z - Config.autoSieveRadius), EnumFacing.Axis.X));
                             }
                         }
-                        if (z + 1 < toSift.length){
-                            if (toSift[x][z + 1] != null){
-                                connectionPieces.add(new Tuple<>(new Point3f(x - Config.autoSieveRadius,0.3F,z + 0.5F - Config.autoSieveRadius), EnumFacing.Axis.Z));
+                        if (z + 1 < toSift.length) {
+                            if (toSift[x][z + 1] != null) {
+                                connectionPieces.add(new Tuple<>(new Point3f(x - Config.autoSieveRadius, 0.3F, z + 0.5F - Config.autoSieveRadius), EnumFacing.Axis.Z));
                             }
                         }
 
@@ -111,17 +110,17 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
     }
 
 
-    private TileSieve[][] collectPossibleSieves(TileSieve thisSieve){
+    private TileSieve[][] collectPossibleSieves(TileSieve thisSieve) {
         BlockPos sievePos = thisSieve.getPos();
 
-        TileSieve[][] sieveMap = new TileSieve[Config.autoSieveRadius  * 2 + 1][Config.autoSieveRadius  * 2 + 1];
+        TileSieve[][] sieveMap = new TileSieve[Config.autoSieveRadius * 2 + 1][Config.autoSieveRadius * 2 + 1];
 
         for (int xOffset = -1 * Config.autoSieveRadius; xOffset <= Config.autoSieveRadius; xOffset++) {
             for (int zOffset = -1 * Config.autoSieveRadius; zOffset <= Config.autoSieveRadius; zOffset++) {
                 sieveMap[xOffset + Config.autoSieveRadius][zOffset + Config.autoSieveRadius] = null;
 
                 TileEntity entity = world.getTileEntity(sievePos.add(xOffset, 0, zOffset));
-                if (isValidPartnerSieve(thisSieve, entity)){
+                if (isValidPartnerSieve(thisSieve, entity)) {
                     sieveMap[xOffset + Config.autoSieveRadius][zOffset + Config.autoSieveRadius] = (TileSieve) entity;
                 }
 
@@ -131,8 +130,8 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
         return sieveMap;
     }
 
-    private boolean isValidPartnerSieve(TileSieve thisSieve, TileEntity tileOther){
-        if (tileOther != null && tileOther instanceof TileSieve){
+    private boolean isValidPartnerSieve(TileSieve thisSieve, TileEntity tileOther) {
+        if (tileOther != null && tileOther instanceof TileSieve) {
 
             TileSieve sieve = (TileSieve) tileOther;
             sieve.validateAutoSieve();
@@ -151,7 +150,7 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
         for (TileSieve[] tileSieves : sieveMap) {
             for (TileSieve tileSieve : tileSieves) {
                 if (tileSieve != null) {
-                    if (!itemHandlerAutoSifter.getStackInSlot(0).isEmpty() && tileSieve.addBlock(itemHandlerAutoSifter.getStackInSlot(0))){
+                    if (!itemHandlerAutoSifter.getStackInSlot(0).isEmpty() && tileSieve.addBlock(itemHandlerAutoSifter.getStackInSlot(0))) {
                         itemHandlerAutoSifter.getStackInSlot(0).shrink(1);
                     }
                     tileSieve.doSieving(null, true);

@@ -132,9 +132,9 @@ public class SieveRegistry {
                 for (Map.Entry<String, ArrayList<Siftable>> input : gsonInput.entrySet()) {
                     BlockInfo block = new BlockInfo(input.getKey());
 
-                    if (block.getBlock() != null){
+                    if (block.getBlock() != null) {
                         for (Siftable siftable : input.getValue()) {
-                            if (siftable.getDrop().isValid()){
+                            if (siftable.getDrop().isValid()) {
                                 register(block, siftable);
                             }
                         }

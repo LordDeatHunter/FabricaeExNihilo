@@ -9,7 +9,6 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 
@@ -33,11 +32,11 @@ public class TileGrinder extends BaseTileEntity implements ITickable, IRotationa
     public void update() {
         tickCounter++;
 
-        if (tickCounter % 10 == 0){
+        if (tickCounter % 10 == 0) {
             perTickRotation = calcEffectivePerTickRotation(facing);
         }
 
-        if (world.isRemote){
+        if (world.isRemote) {
             rotationValue += perTickRotation;
         }
     }

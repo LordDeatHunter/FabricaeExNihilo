@@ -1,7 +1,6 @@
 package exnihilocreatio.proxy;
 
 import exnihilocreatio.*;
-import exnihilocreatio.ModEnchantments;
 import exnihilocreatio.registries.OreRegistry;
 import exnihilocreatio.util.Data;
 import net.minecraft.block.Block;

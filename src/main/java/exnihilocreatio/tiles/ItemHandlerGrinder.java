@@ -1,6 +1,5 @@
 package exnihilocreatio.tiles;
 
-import exnihilocreatio.registries.SieveRegistry;
 import lombok.Setter;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
@@ -9,12 +8,12 @@ import javax.annotation.Nonnull;
 
 public class ItemHandlerGrinder extends ItemStackHandler {
 
+    @Setter
+    TileGrinder te;
+
     public ItemHandlerGrinder() {
         super(1);
     }
-
-    @Setter
-    TileGrinder te;
 
     @Override
     @Nonnull

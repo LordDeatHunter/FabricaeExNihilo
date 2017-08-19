@@ -1,7 +1,7 @@
 package exnihilocreatio.client.renderers;
 
-import exnihilocreatio.blocks.EnumGrinderParts;
 import exnihilocreatio.blocks.BlockGrinder;
+import exnihilocreatio.blocks.EnumGrinderParts;
 import exnihilocreatio.tiles.TileGrinder;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;

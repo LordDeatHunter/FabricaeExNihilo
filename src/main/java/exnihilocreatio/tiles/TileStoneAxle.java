@@ -6,8 +6,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 
@@ -18,6 +16,7 @@ public class TileStoneAxle extends BaseTileEntity implements ITickable, IRotatio
     public EnumFacing facing = EnumFacing.NORTH;
 
     private int counter = -1;
+
     @Override
     public void update() {
         counter++;
@@ -31,7 +30,7 @@ public class TileStoneAxle extends BaseTileEntity implements ITickable, IRotatio
             }
         }
 
-        if (world.isRemote){
+        if (world.isRemote) {
             rotationValue += perTickEffective;
         }
     }

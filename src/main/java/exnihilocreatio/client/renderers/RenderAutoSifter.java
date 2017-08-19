@@ -21,8 +21,6 @@ import org.lwjgl.opengl.GL11;
 import javax.vecmath.Point3f;
 import java.util.List;
 
-import static java.lang.Math.cos;
-
 public class RenderAutoSifter extends TileEntitySpecialRenderer<TileAutoSifter> {
     private static List<BakedQuad> quadsBox;
     private static List<BakedQuad> quadsGear;
@@ -31,10 +29,10 @@ public class RenderAutoSifter extends TileEntitySpecialRenderer<TileAutoSifter> 
 
     @Override
     public void render(TileAutoSifter te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-        if (te.toSift!=null && Config.clientFancyAutoSieveAnimations) {
+        if (te.toSift != null && Config.clientFancyAutoSieveAnimations) {
             for (TileSieve[] tileSieves : te.toSift) {
                 for (TileSieve tileSieve : tileSieves) {
-                    if (tileSieve != null){
+                    if (tileSieve != null) {
                         BlockPos blockPos = tileSieve.getPos();
                         renderPiston(te, blockPos.getX() - te.getPos().getX() + x, blockPos.getY() - te.getPos().getY() + y - 1, blockPos.getZ() - te.getPos().getZ() + z);
                     }
@@ -42,7 +40,7 @@ public class RenderAutoSifter extends TileEntitySpecialRenderer<TileAutoSifter> 
             }
         }
 
-        if (te.connectionPieces != null && Config.clientFancyAutoSieveAnimations){
+        if (te.connectionPieces != null && Config.clientFancyAutoSieveAnimations) {
             for (Tuple<Point3f, EnumFacing.Axis> connectionPiece : te.connectionPieces) {
                 renderConnection(te, x + connectionPiece.getFirst().x, y + connectionPiece.getFirst().y, z + connectionPiece.getFirst().z, connectionPiece.getSecond());
             }
@@ -250,8 +248,7 @@ public class RenderAutoSifter extends TileEntitySpecialRenderer<TileAutoSifter> 
     }
 
 
-
-    private void renderIngredients(TileAutoSifter tile, double x, double y, double z, float partialTicks){
+    private void renderIngredients(TileAutoSifter tile, double x, double y, double z, float partialTicks) {
         GlStateManager.pushMatrix();
         GlStateManager.translate(x, y, z);
 
@@ -271,7 +268,7 @@ public class RenderAutoSifter extends TileEntitySpecialRenderer<TileAutoSifter> 
 
             worldRendererBuffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_NORMAL);
 
-            double height = (float)tile.itemHandlerAutoSifter.getStackInSlot(0).getCount() / (float)tile.itemHandlerAutoSifter.getSlotLimit(0);
+            double height = (float) tile.itemHandlerAutoSifter.getStackInSlot(0).getCount() / (float) tile.itemHandlerAutoSifter.getSlotLimit(0);
 
             // float fillAmount = (float) (height);
             float fillAmount = (float) (0.5 * height + 0.0625);

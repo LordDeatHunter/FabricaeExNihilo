@@ -113,7 +113,7 @@ public class CompatWaila implements IWailaPlugin, IWailaDataProvider {
             }
         }
 
-        if (accessor.getTileEntity() instanceof TileAutoSifter){
+        if (accessor.getTileEntity() instanceof TileAutoSifter) {
             TileAutoSifter tileAutoSifter = (TileAutoSifter) accessor.getTileEntity();
             currenttip.add("Stored rotational power: " + tileAutoSifter.storedRotationalPower);
             currenttip.add("Per tick Rotation: " + tileAutoSifter.perTickRotation);
@@ -122,7 +122,7 @@ public class CompatWaila implements IWailaPlugin, IWailaDataProvider {
 
         }
 
-        if (accessor.getTileEntity() instanceof TileSieve){
+        if (accessor.getTileEntity() instanceof TileSieve) {
             TileSieve sieve = (TileSieve) accessor.getTileEntity();
             currenttip.add("Current Progress: " + sieve.getProgress());
         }

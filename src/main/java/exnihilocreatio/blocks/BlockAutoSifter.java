@@ -2,7 +2,6 @@ package exnihilocreatio.blocks;
 
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.tiles.TileAutoSifter;
-import exnihilocreatio.tiles.TileWaterwheel;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;

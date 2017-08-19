@@ -34,6 +34,7 @@ import java.util.UUID;
 public class TileSieve extends BaseTileEntity {
 
     private static Random rand = new Random();
+    public TileAutoSifter autoSifter = null;
     @Getter
     private BlockInfo currentStack;
     @Getter
@@ -42,11 +43,8 @@ public class TileSieve extends BaseTileEntity {
     private ItemStack meshStack = ItemStack.EMPTY;
     @Getter
     private BlockSieve.MeshType meshType = BlockSieve.MeshType.NONE;
-
     private long lastSieveAction = 0;
     private UUID lastPlayer;
-
-    public TileAutoSifter autoSifter = null;
 
     /**
      * Sets the mesh type in the sieve.
@@ -225,7 +223,7 @@ public class TileSieve extends BaseTileEntity {
         markDirtyClient();
     }
 
-    public void validateAutoSieve(){
+    public void validateAutoSieve() {
         if (autoSifter == null || autoSifter.isInvalid() || !(world.getTileEntity(autoSifter.getPos()) instanceof TileAutoSifter || autoSifter.toSift == null)) {
             autoSifter = null;
         }
@@ -269,11 +267,10 @@ public class TileSieve extends BaseTileEntity {
         else
             currentStack = null;
 
-        if (tag.hasKey("mesh")){
+        if (tag.hasKey("mesh")) {
             meshStack = new ItemStack(tag.getCompoundTag("mesh"));
             meshType = BlockSieve.MeshType.getMeshTypeByID(meshStack.getMetadata());
-        }
-        else {
+        } else {
             meshStack = ItemStack.EMPTY;
             meshType = BlockSieve.MeshType.NONE;
         }

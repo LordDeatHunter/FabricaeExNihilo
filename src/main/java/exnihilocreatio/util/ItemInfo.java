@@ -86,7 +86,7 @@ public class ItemInfo {
         return tag;
     }
 
-    public boolean isValid(){
+    public boolean isValid() {
         return meta <= Short.MAX_VALUE && item != null;
     }
 

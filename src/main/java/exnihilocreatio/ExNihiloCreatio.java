@@ -13,8 +13,6 @@ import exnihilocreatio.registries.*;
 import exnihilocreatio.registries.manager.ExNihiloDefaultRecipes;
 import exnihilocreatio.util.LogUtil;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -25,8 +23,6 @@ import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.File;
 
@@ -47,14 +43,8 @@ public class ExNihiloCreatio {
 
     public static boolean configsLoaded = false;
 
-    public static ExNihiloDefaultRecipes defaultRecipes;
-    public static CreativeTabs tabExNihilo = new CreativeTabs("exNihilo") {
-        @Override
-        @SideOnly(Side.CLIENT)
-        public ItemStack getTabIconItem() {
-            return new ItemStack(Item.getItemFromBlock(ModBlocks.sieve), 1);
-        }
-    };
+    public static ExNihiloDefaultRecipes defaultRecipes = new ExNihiloDefaultRecipes();
+    public static CreativeTabs tabExNihilo = new CreativeTabExNihiloCreatio();
 
     static {
         FluidRegistry.enableUniversalBucket();
@@ -78,8 +68,6 @@ public class ExNihiloCreatio {
         ENEntities.init();
 
         PacketHandler.initPackets();
-
-        defaultRecipes = new ExNihiloDefaultRecipes();
 
         MinecraftForge.EVENT_BUS.register(new HandlerHammer());
 

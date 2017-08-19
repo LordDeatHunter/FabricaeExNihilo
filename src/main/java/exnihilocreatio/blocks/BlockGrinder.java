@@ -1,7 +1,6 @@
 package exnihilocreatio.blocks;
 
 import exnihilocreatio.ExNihiloCreatio;
-import exnihilocreatio.tiles.TileAutoSifter;
 import exnihilocreatio.tiles.TileGrinder;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;

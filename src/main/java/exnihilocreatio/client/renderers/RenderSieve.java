@@ -26,14 +26,14 @@ public class RenderSieve extends TileEntitySpecialRenderer<TileSieve> {
         float offsetX = 0;
         float offsetY = 0;
         float offsetZ = 0;
-        if (te.autoSifter != null && te.autoSifter.toSift != null){
+        if (te.autoSifter != null && te.autoSifter.toSift != null) {
             offsetX = te.autoSifter.offsetX;
             offsetY = te.autoSifter.offsetY;
             offsetZ = te.autoSifter.offsetZ;
         }
 
-        renderSieve(te, x+ offsetX, y + offsetY, z + offsetZ, tes, wr);
-        renderBlockInSieve(te, x+ offsetX, y + offsetY, z + offsetZ, tes, wr);
+        renderSieve(te, x + offsetX, y + offsetY, z + offsetZ, tes, wr);
+        renderBlockInSieve(te, x + offsetX, y + offsetY, z + offsetZ, tes, wr);
 
     }
 

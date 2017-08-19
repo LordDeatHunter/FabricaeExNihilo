@@ -7,10 +7,7 @@ import exnihilocreatio.tiles.TileInfestedLeaves;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
 import exnihilocreatio.util.Util;
-import mcjty.theoneprobe.api.IProbeHitData;
-import mcjty.theoneprobe.api.IProbeInfo;
-import mcjty.theoneprobe.api.IProbeInfoAccessor;
-import mcjty.theoneprobe.api.ProbeMode;
+import mcjty.theoneprobe.api.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks.EnumType;
@@ -99,88 +96,64 @@ public class BlockInfestedLeaves extends BlockLeaves implements ITileEntityProvi
 
     @Override
     public void updateTick(World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state, Random rand) {
-        if (!worldIn.isRemote)
-        {
-            if (state.getValue(CHECK_DECAY) && state.getValue(DECAYABLE))
-            {
+        if (!worldIn.isRemote) {
+            if (state.getValue(CHECK_DECAY) && state.getValue(DECAYABLE)) {
                 int posX = pos.getX();
                 int posY = pos.getY();
                 int posZ = pos.getZ();
 
-                if (this.surroundings == null)
-                {
+                if (this.surroundings == null) {
                     this.surroundings = new int[32768];
                 }
 
-                if (worldIn.isAreaLoaded(new BlockPos(posX - 5, posY - 5, posZ - 5), new BlockPos(posX + 5, posY + 5, posZ + 5)))
-                {
+                if (worldIn.isAreaLoaded(new BlockPos(posX - 5, posY - 5, posZ - 5), new BlockPos(posX + 5, posY + 5, posZ + 5))) {
                     BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
-                    for (int i2 = -4; i2 <= 4; ++i2)
-                    {
-                        for (int j2 = -4; j2 <= 4; ++j2)
-                        {
-                            for (int k2 = -4; k2 <= 4; ++k2)
-                            {
+                    for (int i2 = -4; i2 <= 4; ++i2) {
+                        for (int j2 = -4; j2 <= 4; ++j2) {
+                            for (int k2 = -4; k2 <= 4; ++k2) {
                                 IBlockState iblockstate = worldIn.getBlockState(blockpos$mutableblockpos.setPos(posX + i2, posY + j2, posZ + k2));
                                 Block block = iblockstate.getBlock();
 
-                                if (!block.canSustainLeaves(iblockstate, worldIn, blockpos$mutableblockpos.setPos(posX + i2, posY + j2, posZ + k2)))
-                                {
-                                    if (block.isLeaves(iblockstate, worldIn, blockpos$mutableblockpos.setPos(posX + i2, posY + j2, posZ + k2)))
-                                    {
+                                if (!block.canSustainLeaves(iblockstate, worldIn, blockpos$mutableblockpos.setPos(posX + i2, posY + j2, posZ + k2))) {
+                                    if (block.isLeaves(iblockstate, worldIn, blockpos$mutableblockpos.setPos(posX + i2, posY + j2, posZ + k2))) {
                                         this.surroundings[(i2 + 16) * 1024 + (j2 + 16) * 32 + k2 + 16] = -2;
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         this.surroundings[(i2 + 16) * 1024 + (j2 + 16) * 32 + k2 + 16] = -1;
                                     }
-                                }
-                                else
-                                {
+                                } else {
                                     this.surroundings[(i2 + 16) * 1024 + (j2 + 16) * 32 + k2 + 16] = 0;
                                 }
                             }
                         }
                     }
 
-                    for (int i3 = 1; i3 <= 4; ++i3)
-                    {
-                        for (int j3 = -4; j3 <= 4; ++j3)
-                        {
-                            for (int k3 = -4; k3 <= 4; ++k3)
-                            {
-                                for (int l3 = -4; l3 <= 4; ++l3)
-                                {
-                                    if (this.surroundings[(j3 + 16) * 1024 + (k3 + 16) * 32 + l3 + 16] == i3 - 1)
-                                    {
-                                        if (this.surroundings[(j3 + 16 - 1) * 1024 + (k3 + 16) * 32 + l3 + 16] == -2)
-                                        {
+                    for (int i3 = 1; i3 <= 4; ++i3) {
+                        for (int j3 = -4; j3 <= 4; ++j3) {
+                            for (int k3 = -4; k3 <= 4; ++k3) {
+                                for (int l3 = -4; l3 <= 4; ++l3) {
+                                    if (this.surroundings[(j3 + 16) * 1024 + (k3 + 16) * 32 + l3 + 16] == i3 - 1) {
+                                        if (this.surroundings[(j3 + 16 - 1) * 1024 + (k3 + 16) * 32 + l3 + 16] == -2) {
                                             this.surroundings[(j3 + 16 - 1) * 1024 + (k3 + 16) * 32 + l3 + 16] = i3;
                                         }
 
-                                        if (this.surroundings[(j3 + 16 + 1) * 1024 + (k3 + 16) * 32 + l3 + 16] == -2)
-                                        {
+                                        if (this.surroundings[(j3 + 16 + 1) * 1024 + (k3 + 16) * 32 + l3 + 16] == -2) {
                                             this.surroundings[(j3 + 16 + 1) * 1024 + (k3 + 16) * 32 + l3 + 16] = i3;
                                         }
 
-                                        if (this.surroundings[(j3 + 16) * 1024 + (k3 + 16 - 1) * 32 + l3 + 16] == -2)
-                                        {
+                                        if (this.surroundings[(j3 + 16) * 1024 + (k3 + 16 - 1) * 32 + l3 + 16] == -2) {
                                             this.surroundings[(j3 + 16) * 1024 + (k3 + 16 - 1) * 32 + l3 + 16] = i3;
                                         }
 
-                                        if (this.surroundings[(j3 + 16) * 1024 + (k3 + 16 + 1) * 32 + l3 + 16] == -2)
-                                        {
+                                        if (this.surroundings[(j3 + 16) * 1024 + (k3 + 16 + 1) * 32 + l3 + 16] == -2) {
                                             this.surroundings[(j3 + 16) * 1024 + (k3 + 16 + 1) * 32 + l3 + 16] = i3;
                                         }
 
-                                        if (this.surroundings[(j3 + 16) * 1024 + (k3 + 16) * 32 + (l3 + 16 - 1)] == -2)
-                                        {
+                                        if (this.surroundings[(j3 + 16) * 1024 + (k3 + 16) * 32 + (l3 + 16 - 1)] == -2) {
                                             this.surroundings[(j3 + 16) * 1024 + (k3 + 16) * 32 + (l3 + 16 - 1)] = i3;
                                         }
 
-                                        if (this.surroundings[(j3 + 16) * 1024 + (k3 + 16) * 32 + l3 + 16 + 1] == -2)
-                                        {
+                                        if (this.surroundings[(j3 + 16) * 1024 + (k3 + 16) * 32 + l3 + 16 + 1] == -2) {
                                             this.surroundings[(j3 + 16) * 1024 + (k3 + 16) * 32 + l3 + 16 + 1] = i3;
                                         }
                                     }
@@ -201,11 +174,11 @@ public class BlockInfestedLeaves extends BlockLeaves implements ITileEntityProvi
 
     @Override
     public void destroy(World worldIn, @Nonnull BlockPos pos) {
-        if (worldIn.rand.nextInt(3) == 0){
+        if (worldIn.rand.nextInt(3) == 0) {
             TileEntity te = worldIn.getTileEntity(pos);
-            if (te != null && te instanceof TileInfestedLeaves){
+            if (te != null && te instanceof TileInfestedLeaves) {
                 TileInfestedLeaves infestedLeaves = (TileInfestedLeaves) te;
-                if (worldIn.rand.nextFloat() < infestedLeaves.getProgress() * Config.stringChance / 4.0d){
+                if (worldIn.rand.nextFloat() < infestedLeaves.getProgress() * Config.stringChance / 4.0d) {
                     spawnAsEntity(worldIn, pos, new ItemStack(Items.STRING));
                 }
             }

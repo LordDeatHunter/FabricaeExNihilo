@@ -43,7 +43,7 @@ public class ModItems {
 
     public static final ArrayList<ItemSeedBase> itemSeeds = new ArrayList<>();
 
-    static{
+    static {
         hammerWood = new HammerBase("hammer_wood", 64, Item.ToolMaterial.WOOD);
         hammerWood.setCreativeTab(ExNihiloCreatio.tabExNihilo);
 
