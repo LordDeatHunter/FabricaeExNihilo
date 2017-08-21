@@ -112,7 +112,7 @@ public class CompostRegistry {
 
     public static void registerDefaults() {
         for (ICompostDefaultRegistryProvider provider : ExNihiloRegistryManager.getDefaultCompostRecipeHandlers()) {
-            provider.registerCompostRecipeDefaults();
+            // provider.registerCompostRecipeDefaults(this);
         }
     }
 

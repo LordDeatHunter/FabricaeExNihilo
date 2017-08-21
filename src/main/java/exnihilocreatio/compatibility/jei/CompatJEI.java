@@ -18,6 +18,7 @@ import exnihilocreatio.compatibility.jei.hammer.HammerRecipe;
 import exnihilocreatio.compatibility.jei.hammer.HammerRecipeCategory;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipe;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipeCategory;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.*;
 import exnihilocreatio.registries.types.Compostable;
 import exnihilocreatio.registries.types.FluidBlockTransformer;
@@ -176,7 +177,7 @@ public class CompatJEI implements IModPlugin {
         //region >>>> COMPOST RECIPES
         List<CompostRecipe> compostRecipes = Lists.newArrayList();
 
-        Map<ItemInfo, Compostable> compostRegistry = CompostRegistry.getRegistry();
+        Map<ItemInfo, Compostable> compostRegistry = ExNihiloRegistryManager.COMPOST_REGISTRY.getRegistry();
         Map<ItemInfo, List<ItemStack>> compostEntries = new HashMap<>();
 
         for (Map.Entry<ItemInfo, Compostable> compostEntry : compostRegistry.entrySet()) {

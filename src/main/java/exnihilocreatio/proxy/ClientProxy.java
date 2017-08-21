@@ -7,7 +7,7 @@ import exnihilocreatio.ModItems;
 import exnihilocreatio.client.renderers.*;
 import exnihilocreatio.entities.ProjectileStone;
 import exnihilocreatio.items.ore.ItemOre;
-import exnihilocreatio.registries.registries.CompostRegistry;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.OreRegistry;
 import exnihilocreatio.tiles.*;
 import net.minecraft.client.Minecraft;
@@ -80,6 +80,6 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void registerConfigs(File configDirectory) {
-        CompostRegistry.recommendAllFood(new File(configDirectory, "RecommendedFoodRegistry.json"));
+        ExNihiloRegistryManager.COMPOST_REGISTRY.recommendAllFood(new File(configDirectory, "RecommendedFoodRegistry.json"));
     }
 }

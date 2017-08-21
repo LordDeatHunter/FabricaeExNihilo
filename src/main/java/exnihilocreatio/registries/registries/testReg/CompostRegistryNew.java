@@ -35,17 +35,10 @@ import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CompostRegistry extends BaseRegistryMap<Map<ItemInfo, Compostable>> {
+public class CompostRegistryNew extends BaseRegistryMap<ItemInfo, Compostable> {
 
-    public CompostRegistry() {
-        super(
-                new GsonBuilder().setPrettyPrinting().registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson()).create(),
-                new HashMap<>()
-        );
-    }
-
-    public void register(ItemInfo item, Compostable compostable) {
-        registry.put(item, compostable);
+    public CompostRegistryNew() {
+        super(new GsonBuilder().setPrettyPrinting().registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson()).create());
     }
 
     public void register(Item item, int meta, float value, IBlockState state, Color color) {
@@ -78,12 +71,6 @@ public class CompostRegistry extends BaseRegistryMap<Map<ItemInfo, Compostable>>
 
     public boolean containsItem(ItemInfo info) {
         return registry.containsKey(info);
-    }
-
-    public void registerDefaults() {
-        for (ICompostDefaultRegistryProvider provider : ExNihiloRegistryManager.getDefaultCompostRecipeHandlers()) {
-            provider.registerCompostRecipeDefaults();
-        }
     }
 
     @SideOnly(Side.CLIENT)
@@ -123,6 +110,25 @@ public class CompostRegistry extends BaseRegistryMap<Map<ItemInfo, Compostable>>
             Files.write(file.toPath(), json.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void registerDefaults() {
+        for (ICompostDefaultRegistryProvider provider : ExNihiloRegistryManager.getDefaultCompostRecipeHandlers()) {
+            provider.registerCompostRecipeDefaults(this);
+        }
+    }
+
+    @Override
+    public void registerEntries(FileReader fr) {
+        Map<String, Compostable> gsonInput = gson.fromJson(fr, new TypeToken<Map<String, Compostable>>() {}.getType());
+
+        for (Map.Entry<String, Compostable> entry : gsonInput.entrySet()) {
+            System.out.println("entry.getKey() = " + entry.getKey());
+            System.out.println("entry.getValue() = " + entry.getValue());
+
+            registry.put(new ItemInfo(entry.getKey()), entry.getValue());
         }
     }
 }

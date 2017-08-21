@@ -5,13 +5,13 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.io.FileReader;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
-public abstract class BaseRegistryMap<RegType extends Map>  extends BaseRegistry<RegType>{
+public abstract class BaseRegistryMap<K, V>  extends BaseRegistry<Map<K, V>>{
 
-    public BaseRegistryMap(Gson gson, RegType registry) {
-        super(gson, registry);
+    public BaseRegistryMap(Gson gson) {
+        super(gson, new HashMap<>());
     }
 
     public void loadJson(File file) {
@@ -20,9 +20,8 @@ public abstract class BaseRegistryMap<RegType extends Map>  extends BaseRegistry
         if (file.exists()) {
             try {
                 FileReader fr = new FileReader(file);
-                RegType gsonInput = gson.fromJson(fr, new TypeToken<RegType>() {}.getType());
+                registerEntries(fr);
 
-                registry.putAll(gsonInput);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -34,4 +33,9 @@ public abstract class BaseRegistryMap<RegType extends Map>  extends BaseRegistry
         // registry.addAll(externalRegistry);
     }
 
+    public abstract void registerEntries(FileReader fr);
+
+    public void register(K key, V value){
+        registry.put(key, value);
+    }
 }

@@ -1,6 +1,6 @@
 package exnihilocreatio.barrel.modes.compost;
 
-import exnihilocreatio.registries.registries.CompostRegistry;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.tiles.TileBarrel;
 import lombok.Setter;
 import net.minecraft.item.ItemStack;
@@ -21,7 +21,7 @@ public class BarrelItemHandlerCompost extends ItemStackHandler {
     @Override
     @Nonnull
     public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-        if (CompostRegistry.containsItem(stack)) {
+        if (ExNihiloRegistryManager.COMPOST_REGISTRY.containsItem(stack)) {
             BarrelModeCompost mode = (BarrelModeCompost) this.barrel.getMode();
 
             if (mode != null && mode.getFillAmount() < 1) {

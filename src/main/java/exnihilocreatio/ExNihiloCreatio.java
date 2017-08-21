@@ -11,6 +11,7 @@ import exnihilocreatio.networking.PacketHandler;
 import exnihilocreatio.proxy.CommonProxy;
 import exnihilocreatio.registries.*;
 import exnihilocreatio.registries.manager.ExNihiloDefaultRecipes;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.*;
 import exnihilocreatio.util.LogUtil;
 import net.minecraft.creativetab.CreativeTabs;
@@ -24,6 +25,7 @@ import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.registries.RegistryManager;
 
 import java.io.File;
 
@@ -106,7 +108,9 @@ public class ExNihiloCreatio {
     public static void loadConfigs() {
         configsLoaded = true;
 
-        CompostRegistry.loadJson(new File(configDirectory, "CompostRegistry.json"));
+        ExNihiloRegistryManager.COMPOST_REGISTRY.loadJson(new File(configDirectory, "CompostRegistry.json"));
+
+        // CompostRegistryNew.loadJson(new File(configDirectory, "CompostRegistryNew.json"));
         HammerRegistry.loadJson(new File(configDirectory, "HammerRegistry.json"));
         FluidBlockTransformerRegistry.loadJson(new File(configDirectory, "FluidBlockTransformerRegistry.json"));
         FluidOnTopRegistry.loadJson(new File(configDirectory, "FluidOnTopRegistry.json"));

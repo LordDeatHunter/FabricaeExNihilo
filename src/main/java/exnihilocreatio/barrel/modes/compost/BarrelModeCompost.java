@@ -5,7 +5,7 @@ import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.networking.MessageBarrelModeUpdate;
 import exnihilocreatio.networking.MessageCompostUpdate;
 import exnihilocreatio.networking.PacketHandler;
-import exnihilocreatio.registries.registries.CompostRegistry;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.Compostable;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.tiles.TileBarrel;
@@ -61,8 +61,8 @@ public class BarrelModeCompost implements IBarrelMode {
         if (fillAmount == 0) {
             if (!player.getHeldItem(hand).isEmpty()) {
                 ItemInfo info = ItemInfo.getItemInfoFromStack(player.getHeldItem(hand));
-                if (CompostRegistry.containsItem(info)) {
-                    Compostable comp = CompostRegistry.getItem(info);
+                if (ExNihiloRegistryManager.COMPOST_REGISTRY.containsItem(info)) {
+                    Compostable comp = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(info);
                     compostState = Block.getBlockFromItem(comp.getCompostBlock().getItem())
                             .getStateFromMeta(comp.getCompostBlock().getMeta());
                     PacketHandler.sendNBTUpdate(barrel);
@@ -72,12 +72,12 @@ public class BarrelModeCompost implements IBarrelMode {
         if (fillAmount < 1 && compostState != null) {
             if (!player.getHeldItem(hand).isEmpty()) {
                 ItemInfo info = ItemInfo.getItemInfoFromStack(player.getHeldItem(hand));
-                Compostable comp = CompostRegistry.getItem(info);
+                Compostable comp = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(info);
                 IBlockState testState = Block.getBlockFromItem(comp.getCompostBlock().getItem())
                         .getStateFromMeta(comp.getCompostBlock().getMeta());
 
-                if (CompostRegistry.containsItem(info) && compostState.equals(testState)) {
-                    Compostable compost = CompostRegistry.getItem(info);
+                if (ExNihiloRegistryManager.COMPOST_REGISTRY.containsItem(info) && compostState.equals(testState)) {
+                    Compostable compost = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(info);
 
                     if (fillAmount == 0)
                         color = compost.getColor();
@@ -121,16 +121,16 @@ public class BarrelModeCompost implements IBarrelMode {
         if (fillAmount < 1) {
             if (stack != null) {
                 ItemInfo info = ItemInfo.getItemInfoFromStack(stack);
-                Compostable comp = CompostRegistry.getItem(info);
+                Compostable comp = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(info);
                 IBlockState testState = Block.getBlockFromItem(comp.getCompostBlock().getItem())
                         .getStateFromMeta(comp.getCompostBlock().getMeta());
 
-                if (CompostRegistry.containsItem(info) && compostState == null) {
+                if (ExNihiloRegistryManager.COMPOST_REGISTRY.containsItem(info) && compostState == null) {
                     compostState = testState;
                 }
 
-                if (CompostRegistry.containsItem(info) && compostState.equals(testState)) {
-                    Compostable compost = CompostRegistry.getItem(info);
+                if (ExNihiloRegistryManager.COMPOST_REGISTRY.containsItem(info) && compostState.equals(testState)) {
+                    Compostable compost = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(info);
 
                     if (fillAmount == 0)
                         color = compost.getColor();
@@ -192,7 +192,7 @@ public class BarrelModeCompost implements IBarrelMode {
 
     @Override
     public boolean isTriggerItemStack(ItemStack stack) {
-        return CompostRegistry.containsItem(stack);
+        return ExNihiloRegistryManager.COMPOST_REGISTRY.containsItem(stack);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package exnihilocreatio.compatibility.jei.barrel.compost;
 
 import exnihilocreatio.ExNihiloCreatio;
-import exnihilocreatio.registries.registries.CompostRegistry;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.Compostable;
 import exnihilocreatio.util.ItemInfo;
 import mezz.jei.api.IGuiHelper;
@@ -117,7 +117,7 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
         @Override
         public void onTooltip(int slotIndex, boolean input, @Nonnull ItemStack ingredient, @Nonnull List<String> tooltip) {
             if (input) {
-                Compostable entry = CompostRegistry.getItem(new ItemInfo(ingredient));
+                Compostable entry = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(new ItemInfo(ingredient));
 
                 tooltip.add(String.format("Value: %.1f%%", 100.0F * entry.getValue()));
             }
