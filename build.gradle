@@ -136,7 +136,7 @@ artifacts {
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url: "file://" + System.getEnv("local_maven"))
+            repository(url: "file://" + System.getenv("local_maven"))
         }
     }
 }
