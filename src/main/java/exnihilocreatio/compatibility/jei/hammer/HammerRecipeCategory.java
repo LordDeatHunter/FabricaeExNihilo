@@ -73,9 +73,8 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
     }
 
     private void setRecipe(IRecipeLayout recipeLayout, HammerRecipe recipeWrapper) {
-        // BlockStoneAxle
         recipeLayout.getItemStacks().init(0, true, 74, 9);
-        recipeLayout.getItemStacks().set(0, (ItemStack) recipeWrapper.getInputs().get(0));
+        recipeLayout.getItemStacks().set(0, recipeWrapper.getInputs().get(0));
 
         IFocus<?> focus = recipeLayout.getFocus();
 
@@ -88,7 +87,7 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
                 final int slotX = 2 + (i % 9 * 18);
                 final int slotY = 36 + (i / 9 * 18);
 
-                ItemStack outputStack = (ItemStack) recipeWrapper.getOutputs().get(i);
+                ItemStack outputStack = recipeWrapper.getOutputs().get(i);
 
                 recipeLayout.getItemStacks().init(slotIndex + i, false, slotX, slotY);
                 recipeLayout.getItemStacks().set(slotIndex + i, outputStack);
@@ -127,7 +126,7 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
         @SideOnly(Side.CLIENT)
         public void onTooltip(int slotIndex, boolean input, @Nonnull ItemStack ingredient, @Nonnull List<String> tooltip) {
             if (!input) {
-                ItemStack blockStack = (ItemStack) recipe.getInputs().get(0);
+                ItemStack blockStack = recipe.getInputs().get(0);
                 Block blockBase = Block.getBlockFromItem(blockStack.getItem());
 
                 @SuppressWarnings("deprecation")
