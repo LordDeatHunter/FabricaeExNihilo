@@ -46,6 +46,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,12 +54,10 @@ import java.util.Map;
 public class CompatJEI implements IModPlugin {
 
     @Override
-    public void registerItemSubtypes(@Nonnull ISubtypeRegistry subtypeRegistry) {
-    }
+    public void registerItemSubtypes(@Nonnull ISubtypeRegistry subtypeRegistry) {}
 
     @Override
-    public void registerIngredients(@Nonnull IModIngredientRegistration registry) {
-    }
+    public void registerIngredients(@Nonnull IModIngredientRegistration registry) {}
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
@@ -71,7 +70,7 @@ public class CompatJEI implements IModPlugin {
     }
 
     @Override
-    @SideOnly(Side.CLIENT) //TODO: clean up JEI plugin to non deprecated functions
+    @SideOnly(Side.CLIENT)
     public void register(@Nonnull IModRegistry registry) {
         LogUtil.info("Config Loaded: " + ExNihiloCreatio.configsLoaded);
 
@@ -79,8 +78,7 @@ public class CompatJEI implements IModPlugin {
             ExNihiloCreatio.loadConfigs();
         }
 
-        registry.addRecipeHandlers(new SieveRecipeHandler());
-
+        //region >>>> SIEVE RECIPES
         List<SieveRecipe> sieveRecipes = Lists.newArrayList();
 
         for (BlockInfo info : SieveRegistry.getRegistry().keySet()) {
@@ -96,12 +94,12 @@ public class CompatJEI implements IModPlugin {
                 }
             }
         }
+        registry.addRecipes(sieveRecipes, SieveRecipeCategory.UID);
 
-        registry.addRecipes(sieveRecipes);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.sieve), SieveRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.sieve), SieveRecipeCategory.UID);
+        //endregion
 
-        registry.addRecipeHandlers(new HammerRecipeHandler());
-
+        //region >>>> HAMMER RECIPES
         List<HammerRecipe> hammerRecipes = Lists.newArrayList();
 
         for (ItemInfo info : HammerRegistry.getRegistry().keySet()) {
@@ -118,15 +116,15 @@ public class CompatJEI implements IModPlugin {
             }
         }
 
-        registry.addRecipes(hammerRecipes);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.hammerWood), HammerRecipeCategory.UID);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.hammerGold), HammerRecipeCategory.UID);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.hammerStone), HammerRecipeCategory.UID);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.hammerIron), HammerRecipeCategory.UID);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.hammerDiamond), HammerRecipeCategory.UID);
+        registry.addRecipes(hammerRecipes, HammerRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModItems.hammerWood), HammerRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModItems.hammerGold), HammerRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModItems.hammerStone), HammerRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModItems.hammerIron), HammerRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModItems.hammerDiamond), HammerRecipeCategory.UID);
+        //endregion
 
-        registry.addRecipeHandlers(new FluidTransformRecipeHandler());
-
+        //region >>>> FLUID TRANSFORM RECIPES
         List<FluidTransformRecipe> fluidTransformRecipes = Lists.newArrayList();
 
         for (FluidTransformer transformer : FluidTransformRegistry.getRegistry()) {
@@ -141,14 +139,13 @@ public class CompatJEI implements IModPlugin {
             }
         }
 
-        registry.addRecipes(fluidTransformRecipes);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.barrelWood), FluidTransformRecipeCategory.UID);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.barrelStone), FluidTransformRecipeCategory.UID);
+        registry.addRecipes(fluidTransformRecipes, FluidTransformRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelWood), FluidTransformRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelStone), FluidTransformRecipeCategory.UID);
+        //endregion
 
-        registry.addRecipeHandlers(new FluidOnTopRecipeHandler());
-
+        //region >>>> FLUID ON TOP RECIPE
         List<FluidOnTopRecipe> fluidOnTopRecipes = Lists.newArrayList();
-
         for (FluidFluidBlock transformer : FluidOnTopRegistry.getRegistry()) {
             // Make sure both fluids are registered
             if (FluidRegistry.isFluidRegistered(transformer.getFluidInBarrel()) && FluidRegistry.isFluidRegistered(transformer.getFluidOnTop()) && transformer.getResult().getItem() != null) {
@@ -160,14 +157,13 @@ public class CompatJEI implements IModPlugin {
             }
         }
 
-        registry.addRecipes(fluidOnTopRecipes);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.barrelWood), FluidOnTopRecipeCategory.UID);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.barrelStone), FluidOnTopRecipeCategory.UID);
+        registry.addRecipes(fluidOnTopRecipes, FluidOnTopRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelWood), FluidOnTopRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelStone), FluidOnTopRecipeCategory.UID);
+        //endregionS
 
-        registry.addRecipeHandlers(new FluidBlockTransformRecipeHandler());
-
+        //region >>>> FLUID BLOCK TRANSFORM RECIPE
         List<FluidBlockTransformRecipe> fluidBlockTransformRecipes = Lists.newArrayList();
-
         for (FluidBlockTransformer transformer : FluidBlockTransformerRegistry.getRegistry()) {
             // Make sure everything's registered
             if (FluidRegistry.isFluidRegistered(transformer.getFluidName()) && transformer.getInput().getItem() != null && transformer.getOutput().getItem() != null) {
@@ -179,25 +175,21 @@ public class CompatJEI implements IModPlugin {
             }
         }
 
-        registry.addRecipes(fluidBlockTransformRecipes);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.barrelWood), FluidBlockTransformRecipeCategory.UID);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.barrelStone), FluidBlockTransformRecipeCategory.UID);
+        registry.addRecipes(fluidBlockTransformRecipes, FluidBlockTransformRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelWood), FluidBlockTransformRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelStone), FluidBlockTransformRecipeCategory.UID);
+        //endregionS
 
-        registry.addRecipeHandlers(new CompostRecipeHandler());
-
+        //region >>>> COMPOST RECIPES
         List<CompostRecipe> compostRecipes = Lists.newArrayList();
 
         Map<ItemInfo, Compostable> compostRegistry = CompostRegistry.getRegistry();
-        Map<ItemInfo, List<ItemStack>> compostEntries = Maps.newHashMap();
+        Map<ItemInfo, List<ItemStack>> compostEntries = new HashMap<>();
 
         for (Map.Entry<ItemInfo, Compostable> compostEntry : compostRegistry.entrySet()) {
             ItemInfo compostBlock = compostEntry.getValue().getCompostBlock();
 
-            List<ItemStack> compostables = compostEntries.get(compostBlock);
-
-            if (compostables == null) {
-                compostEntries.put(compostBlock, compostables = Lists.newArrayList());
-            }
+            List<ItemStack> compostables = compostEntries.computeIfAbsent(compostBlock, k -> Lists.newArrayList());
 
             Item compostItem = compostEntry.getKey().getItem();
             int compostCount = (int) Math.ceil(1.0F / compostEntry.getValue().getValue());
@@ -233,18 +225,18 @@ public class CompatJEI implements IModPlugin {
             }
         }
 
-        registry.addRecipes(compostRecipes);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.barrelWood), CompostRecipeCategory.UID);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.barrelStone), CompostRecipeCategory.UID);
+        registry.addRecipes(compostRecipes, CompostRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelWood), CompostRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelStone), CompostRecipeCategory.UID);
+        //endregion
 
-        LogUtil.info("Hammer Recipes Loaded:             " + hammerRecipes.size());
-        LogUtil.info("Sieve Recipes Loaded:              " + sieveRecipes.size());
-        LogUtil.info("Fluid Transform Recipes Loaded:    " + fluidTransformRecipes.size());
-        LogUtil.info("Fluid On Top Recipes Loaded:       " + fluidOnTopRecipes.size());
-        LogUtil.info("Compost Recipes Loaded:            " + compostRecipes.size());
+        LogUtil.info("JEI: Hammer Recipes Loaded:             " + hammerRecipes.size());
+        LogUtil.info("JEI: Sieve Recipes Loaded:              " + sieveRecipes.size());
+        LogUtil.info("JEI: Fluid Transform Recipes Loaded:    " + fluidTransformRecipes.size());
+        LogUtil.info("JEI: Fluid On Top Recipes Loaded:       " + fluidOnTopRecipes.size());
+        LogUtil.info("JEI: Compost Recipes Loaded:            " + compostRecipes.size());
     }
 
     @Override
-    public void onRuntimeAvailable(@Nonnull IJeiRuntime jeiRuntime) {
-    }
+    public void onRuntimeAvailable(@Nonnull IJeiRuntime jeiRuntime) {}
 }
