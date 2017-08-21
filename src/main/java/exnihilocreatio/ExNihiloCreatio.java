@@ -93,7 +93,7 @@ public class ExNihiloCreatio {
     public static void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
 
-        if (Loader.isModLoaded("tconstruct") && ModConfig.compatibility.doTinkersConstructCompat) {
+        if (Loader.isModLoaded("tconstruct") && ModConfig.compatibility.tinkers_construct_compat.doTinkersConstructCompat) {
             CompatTConstruct.postInit();
         }
     }

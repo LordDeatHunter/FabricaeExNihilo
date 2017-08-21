@@ -29,12 +29,12 @@ public class TileInfestedLeaves extends BaseTileEntity implements ITickable {
 
     // Stop ALL infested leaves from updating on the same tick always - this way they're evenly spread out and not causing a spike in tick time every time they update
     // Let's hope no one gets 2 billion in their server
-    private int updateIndex = tileId++ % ModConfig.infestedLeaves.leavesUpdateFrequency;
+    private int updateIndex = tileId++ % ModConfig.infested_leaves.leavesUpdateFrequency;
 
     @Override
     public void update() {
         if (progress < 1.0F) {
-            progress += 1.0 / ModConfig.infestedLeaves.ticksToTransform;
+            progress += 1.0 / ModConfig.infested_leaves.ticksToTransform;
 
             markDirtyClient();
 
@@ -46,7 +46,7 @@ public class TileInfestedLeaves extends BaseTileEntity implements ITickable {
         }
 
         // Don't update unless there's leaves nearby, or we haven't checked for leavesUpdateFrequency ticks. And only update on the server
-        if (!getWorld().isRemote && hasNearbyLeaves || getWorld().getTotalWorldTime() % ModConfig.infestedLeaves.leavesUpdateFrequency == updateIndex) {
+        if (!getWorld().isRemote && hasNearbyLeaves || getWorld().getTotalWorldTime() % ModConfig.infested_leaves.leavesUpdateFrequency == updateIndex) {
             hasNearbyLeaves = false;
 
             for (int x = -1; x <= 1; x++) {
@@ -58,7 +58,7 @@ public class TileInfestedLeaves extends BaseTileEntity implements ITickable {
                         if (state != Blocks.AIR.getDefaultState() && state.getBlock() != Blocks.AIR && (state.getBlock() == Blocks.LEAVES || state.getBlock() == Blocks.LEAVES2)) {
                             hasNearbyLeaves = true;
 
-                            if (getWorld().rand.nextFloat() < ModConfig.infestedLeaves.leavesSpreadChance) {
+                            if (getWorld().rand.nextFloat() < ModConfig.infested_leaves.leavesSpreadChance) {
                                 BlockInfestedLeaves.infestLeafBlock(getWorld(), newPos);
                             }
                         }

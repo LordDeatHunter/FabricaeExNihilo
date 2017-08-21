@@ -7,15 +7,16 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Config(modid = ExNihiloCreatio.MODID, name = "exnihilocreatio/ExNihiloCreatio_new")
+@Config(modid = ExNihiloCreatio.MODID, name = "exnihilocreatio/ExNihiloCreatio_new", category = "exnihilocreatio")
 public class ModConfig {
     /**
      * All Config Variables
      */
+    @Config.Comment("These configs can be changed ClientSided without making problems with connecting to a server")
     public static Client client = new Client();
     public static Mechanics mechanics = new Mechanics();
     public static Composting composting = new Composting();
-    public static InfestedLeaves infestedLeaves = new InfestedLeaves();
+    public static InfestedLeaves infested_leaves = new InfestedLeaves();
     public static Crooking crooking = new Crooking();
     public static Misc misc = new Misc();
     public static Sieve sieve = new Sieve();
@@ -63,8 +64,19 @@ public class ModConfig {
     }
 
     public static class Compatibility {
-        // public boolean doEnderIOCompat = false;
-        public boolean doTinkersConstructCompat = true;
+        @Config.RequiresMcRestart
+        public TinkersConstructCompat tinkers_construct_compat = new TinkersConstructCompat();
+
+        public static class TinkersConstructCompat{
+            public boolean doTinkersConstructCompat = true;
+            public boolean addModifer = true;
+            public boolean addMeltingOfChunks = true;
+            public double ingotsPerChunkWhenMelting = 2.0;
+
+            public boolean addMeltingOfDust = true;
+            public double ingotsPerDustWhenMelting = 1.0;
+
+        }
     }
 
     /**
