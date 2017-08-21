@@ -1,7 +1,7 @@
 package exnihilocreatio.barrel.modes.compost;
 
 import exnihilocreatio.barrel.IBarrelMode;
-import exnihilocreatio.config.Config;
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.networking.MessageBarrelModeUpdate;
 import exnihilocreatio.networking.MessageCompostUpdate;
 import exnihilocreatio.networking.PacketHandler;
@@ -156,7 +156,7 @@ public class BarrelModeCompost implements IBarrelMode {
                 originalColor = color;
             }
 
-            progress += 1.0 / Config.compostingTicks;
+            progress += 1.0 / ModConfig.composting.ticksToFormDirt;
 
             color = Color.average(originalColor, whiteColor, progress);
 

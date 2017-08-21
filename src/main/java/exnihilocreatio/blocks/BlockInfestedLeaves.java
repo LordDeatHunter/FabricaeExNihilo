@@ -1,7 +1,7 @@
 package exnihilocreatio.blocks;
 
 import exnihilocreatio.ModBlocks;
-import exnihilocreatio.config.Config;
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.tools.ICrook;
 import exnihilocreatio.tiles.TileInfestedLeaves;
 import exnihilocreatio.util.Data;
@@ -178,7 +178,7 @@ public class BlockInfestedLeaves extends BlockLeaves implements ITileEntityProvi
             TileEntity te = worldIn.getTileEntity(pos);
             if (te != null && te instanceof TileInfestedLeaves) {
                 TileInfestedLeaves infestedLeaves = (TileInfestedLeaves) te;
-                if (worldIn.rand.nextFloat() < infestedLeaves.getProgress() * Config.stringChance / 4.0d) {
+                if (worldIn.rand.nextFloat() < infestedLeaves.getProgress() * ModConfig.crooking.stringChance / 4.0d) {
                     spawnAsEntity(worldIn, pos, new ItemStack(Items.STRING));
                 }
             }
@@ -197,11 +197,11 @@ public class BlockInfestedLeaves extends BlockLeaves implements ITileEntityProvi
 
                     if (!player.getHeldItemMainhand().isEmpty()
                             && player.getHeldItemMainhand().getItem() instanceof ICrook) {
-                        if (world.rand.nextFloat() < leaves.getProgress() * Config.stringChance) {
+                        if (world.rand.nextFloat() < leaves.getProgress() * ModConfig.crooking.stringChance) {
                             Util.dropItemInWorld(leaves, player, new ItemStack(Items.STRING, 1, 0), 0.02f);
                         }
 
-                        if (world.rand.nextFloat() < leaves.getProgress() * Config.stringChance / 4.0d) {
+                        if (world.rand.nextFloat() < leaves.getProgress() * ModConfig.crooking.stringChance / 4.0d) {
                             Util.dropItemInWorld(leaves, player, new ItemStack(Items.STRING, 1, 0), 0.02f);
                         }
                     }

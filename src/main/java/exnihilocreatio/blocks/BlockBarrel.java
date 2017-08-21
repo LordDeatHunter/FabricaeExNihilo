@@ -4,7 +4,7 @@ import exnihilocreatio.barrel.modes.block.BarrelModeBlock;
 import exnihilocreatio.barrel.modes.compost.BarrelModeCompost;
 import exnihilocreatio.barrel.modes.fluid.BarrelModeFluid;
 import exnihilocreatio.barrel.modes.transform.BarrelModeFluidTransform;
-import exnihilocreatio.config.Config;
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.tiles.TileBarrel;
 import exnihilocreatio.util.Util;
 import lombok.Getter;
@@ -62,7 +62,7 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider, IProb
                 if (mode.getFluidHandler(tile).getFluidAmount() > 0) {
                     return Util.getLightValue(mode.getFluidHandler(tile).getFluid());
                 }
-            } else if (Config.enableBarrelTransformLighting) {
+            } else if (ModConfig.misc.enableBarrelTransformLighting) {
                 if (tile.getMode() instanceof BarrelModeCompost) {
                     BarrelModeCompost mode = (BarrelModeCompost) tile.getMode();
 

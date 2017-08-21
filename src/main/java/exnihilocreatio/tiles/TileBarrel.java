@@ -5,7 +5,7 @@ import exnihilocreatio.barrel.BarrelFluidHandler;
 import exnihilocreatio.barrel.BarrelItemHandler;
 import exnihilocreatio.barrel.IBarrelMode;
 import exnihilocreatio.blocks.BlockBarrel;
-import exnihilocreatio.config.Config;
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.networking.MessageBarrelModeUpdate;
 import exnihilocreatio.networking.MessageCheckLight;
 import exnihilocreatio.networking.PacketHandler;
@@ -149,7 +149,7 @@ public class TileBarrel extends TileEntity implements ITickable {
         if (getWorld().isRemote)
             return;
 
-        if (Config.shouldBarrelsFillWithRain && (mode == null || mode.getName().equalsIgnoreCase("fluid"))) {
+        if (ModConfig.mechanics.shouldBarrelsFillWithRain && (mode == null || mode.getName().equalsIgnoreCase("fluid"))) {
             BlockPos plusY = new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ());
             if (getWorld().isRainingAt(plusY)) {
                 FluidStack stack = new FluidStack(FluidRegistry.WATER, 2);

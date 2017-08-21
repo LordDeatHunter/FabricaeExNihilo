@@ -1,6 +1,6 @@
 package exnihilocreatio.blocks;
 
-import exnihilocreatio.config.Config;
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.ItemMesh;
 import exnihilocreatio.tiles.TileSieve;
 import exnihilocreatio.util.Util;
@@ -50,7 +50,7 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbe
             return true;
 
         // I think this should work. Let's just go with it.
-        if (player instanceof FakePlayer && !Config.fakePlayersCanSieve) {
+        if (player instanceof FakePlayer && !ModConfig.mechanics.fakePlayersCanSieve) {
             return false;
         }
 
@@ -81,8 +81,8 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbe
                 if (!player.isCreative())
                     heldItem.shrink(1);
 
-                for (int xOffset = -1 * Config.sieveSimilarRadius; xOffset <= Config.sieveSimilarRadius; xOffset++) {
-                    for (int zOffset = -1 * Config.sieveSimilarRadius; zOffset <= Config.sieveSimilarRadius; zOffset++) {
+                for (int xOffset = -1 * ModConfig.sieve.sieveSimilarRadius; xOffset <= ModConfig.sieve.sieveSimilarRadius; xOffset++) {
+                    for (int zOffset = -1 * ModConfig.sieve.sieveSimilarRadius; zOffset <= ModConfig.sieve.sieveSimilarRadius; zOffset++) {
                         TileEntity entity = world.getTileEntity(pos.add(xOffset, 0, zOffset));
                         if (entity != null && entity instanceof TileSieve) {
                             TileSieve sieve = (TileSieve) entity;
@@ -99,8 +99,8 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbe
             }
 
             ArrayList<BlockPos> toSift = new ArrayList<>();
-            for (int xOffset = -1 * Config.sieveSimilarRadius; xOffset <= Config.sieveSimilarRadius; xOffset++) {
-                for (int zOffset = -1 * Config.sieveSimilarRadius; zOffset <= Config.sieveSimilarRadius; zOffset++) {
+            for (int xOffset = -1 * ModConfig.sieve.sieveSimilarRadius; xOffset <= ModConfig.sieve.sieveSimilarRadius; xOffset++) {
+                for (int zOffset = -1 * ModConfig.sieve.sieveSimilarRadius; zOffset <= ModConfig.sieve.sieveSimilarRadius; zOffset++) {
                     TileEntity entity = world.getTileEntity(pos.add(xOffset, 0, zOffset));
                     if (entity != null && entity instanceof TileSieve) {
                         TileSieve sieve = (TileSieve) entity;

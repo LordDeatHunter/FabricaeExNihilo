@@ -3,7 +3,7 @@ package exnihilocreatio.tiles;
 import com.google.common.base.Objects;
 import exnihilocreatio.ModEnchantments;
 import exnihilocreatio.blocks.BlockSieve;
-import exnihilocreatio.config.Config;
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.registries.SieveRegistry;
 import exnihilocreatio.registries.types.Siftable;
 import exnihilocreatio.util.BlockInfo;
@@ -116,7 +116,7 @@ public class TileSieve extends BaseTileEntity {
 
             // Really good chance that they're using a macro
             if (!automatedSieving && player != null && getWorld().getTotalWorldTime() - lastSieveAction == 0 && lastPlayer.equals(player.getUniqueID())) {
-                if (Config.setFireToMacroUsers) {
+                if (ModConfig.sieve.setFireToMacroUsers) {
                     player.setFire(1);
                 }
 

@@ -1,6 +1,6 @@
 package exnihilocreatio.handlers;
 
-import exnihilocreatio.config.Config;
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.tools.ICrook;
 import exnihilocreatio.registries.CrookRegistry;
 import exnihilocreatio.registries.types.CrookReward;
@@ -51,7 +51,7 @@ public class HandlerCrook {
 
         if (event.getState().getBlock() instanceof BlockLeaves) //Simulate vanilla drops without firing event
         {
-            for (int i = 0; i < Config.numberOfTimesToTestVanillaDrops + 1; i++) {
+            for (int i = 0; i < ModConfig.crooking.numberOfTimesToTestVanillaDrops + 1; i++) {
                 Block block = event.getState().getBlock();
                 int fortune = event.getFortuneLevel();
                 java.util.List<ItemStack> items = block.getDrops(event.getWorld(), event.getPos(), event.getState(), fortune);

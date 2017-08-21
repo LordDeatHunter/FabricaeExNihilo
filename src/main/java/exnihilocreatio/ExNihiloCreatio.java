@@ -3,7 +3,7 @@ package exnihilocreatio;
 import exnihilocreatio.capabilities.ENCapabilities;
 import exnihilocreatio.command.CommandReloadConfig;
 import exnihilocreatio.compatibility.tconstruct.CompatTConstruct;
-import exnihilocreatio.config.Config;
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.entities.ENEntities;
 import exnihilocreatio.handlers.HandlerCrook;
 import exnihilocreatio.handlers.HandlerHammer;
@@ -31,7 +31,7 @@ import java.io.File;
 public class ExNihiloCreatio {
 
     public static final String MODID = "exnihilocreatio";
-    public static final String VERSION = "0.1.2";
+    public static final String VERSION = "@VERSION@";
 
     @SidedProxy(serverSide = "exnihilocreatio.proxy.ServerProxy", clientSide = "exnihilocreatio.proxy.ClientProxy")
     public static CommonProxy proxy;
@@ -59,7 +59,7 @@ public class ExNihiloCreatio {
         configDirectory = new File(event.getModConfigurationDirectory(), "exnihilocreatio");
         configDirectory.mkdirs();
 
-        Config.doNormalConfig(new File(configDirectory, "ExNihiloCreatio.cfg"));
+        // ModConfig.doNormalConfig(new File(configDirectory, "ExNihiloCreatio.cfg"));
 
         proxy.registerConfigs(configDirectory);
 
@@ -73,7 +73,7 @@ public class ExNihiloCreatio {
 
         MinecraftForge.EVENT_BUS.register(new HandlerCrook());
 
-        if (Config.enableBarrels) {
+        if (ModConfig.mechanics.enableBarrels) {
             BarrelModeRegistry.registerDefaults();
         }
     }
@@ -93,11 +93,8 @@ public class ExNihiloCreatio {
     public static void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
 
-        if (Loader.isModLoaded("tconstruct") && Config.doTICCompat) {
+        if (Loader.isModLoaded("tconstruct") && ModConfig.compatibility.doTinkersConstructCompat) {
             CompatTConstruct.postInit();
-        }
-        if (Loader.isModLoaded("EnderIO") && Config.doEnderIOCompat) {
-            // CompatEIO.postInit();
         }
     }
 

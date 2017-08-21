@@ -41,6 +41,9 @@ minecraft {
     runDir = "run"
 	mappings = "snapshot_20170810"
     useDepAts = true
+
+    replace "@VERSION@", "$version"
+    replaceIn "ExNihiloCreatio.java"
 }
 
 repositories

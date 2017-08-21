@@ -1,6 +1,6 @@
 package exnihilocreatio.tiles;
 
-import exnihilocreatio.config.Config;
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.rotationalPower.IRotationalPowerConsumer;
 import exnihilocreatio.rotationalPower.IRotationalPowerMember;
 import exnihilocreatio.util.BlockInfo;
@@ -94,12 +94,12 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
                     if (toSift[x][z] != null) {
                         if (x + 1 < toSift.length) {
                             if (toSift[x + 1][z] != null) {
-                                connectionPieces.add(new Tuple<>(new Point3f(x + 0.5F - Config.autoSieveRadius, 0.3F, z - Config.autoSieveRadius), EnumFacing.Axis.X));
+                                connectionPieces.add(new Tuple<>(new Point3f(x + 0.5F - ModConfig.sieve.autoSieveRadius, 0.3F, z - ModConfig.sieve.autoSieveRadius), EnumFacing.Axis.X));
                             }
                         }
                         if (z + 1 < toSift.length) {
                             if (toSift[x][z + 1] != null) {
-                                connectionPieces.add(new Tuple<>(new Point3f(x - Config.autoSieveRadius, 0.3F, z + 0.5F - Config.autoSieveRadius), EnumFacing.Axis.Z));
+                                connectionPieces.add(new Tuple<>(new Point3f(x - ModConfig.sieve.autoSieveRadius, 0.3F, z + 0.5F - ModConfig.sieve.autoSieveRadius), EnumFacing.Axis.Z));
                             }
                         }
 
@@ -113,15 +113,15 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
     private TileSieve[][] collectPossibleSieves(TileSieve thisSieve) {
         BlockPos sievePos = thisSieve.getPos();
 
-        TileSieve[][] sieveMap = new TileSieve[Config.autoSieveRadius * 2 + 1][Config.autoSieveRadius * 2 + 1];
+        TileSieve[][] sieveMap = new TileSieve[ModConfig.sieve.autoSieveRadius * 2 + 1][ModConfig.sieve.autoSieveRadius * 2 + 1];
 
-        for (int xOffset = -1 * Config.autoSieveRadius; xOffset <= Config.autoSieveRadius; xOffset++) {
-            for (int zOffset = -1 * Config.autoSieveRadius; zOffset <= Config.autoSieveRadius; zOffset++) {
-                sieveMap[xOffset + Config.autoSieveRadius][zOffset + Config.autoSieveRadius] = null;
+        for (int xOffset = -1 * ModConfig.sieve.autoSieveRadius; xOffset <= ModConfig.sieve.autoSieveRadius; xOffset++) {
+            for (int zOffset = -1 * ModConfig.sieve.autoSieveRadius; zOffset <= ModConfig.sieve.autoSieveRadius; zOffset++) {
+                sieveMap[xOffset + ModConfig.sieve.autoSieveRadius][zOffset + ModConfig.sieve.autoSieveRadius] = null;
 
                 TileEntity entity = world.getTileEntity(sievePos.add(xOffset, 0, zOffset));
                 if (isValidPartnerSieve(thisSieve, entity)) {
-                    sieveMap[xOffset + Config.autoSieveRadius][zOffset + Config.autoSieveRadius] = (TileSieve) entity;
+                    sieveMap[xOffset + ModConfig.sieve.autoSieveRadius][zOffset + ModConfig.sieve.autoSieveRadius] = (TileSieve) entity;
                 }
 
             }

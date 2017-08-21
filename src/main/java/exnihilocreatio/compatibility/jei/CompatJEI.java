@@ -65,7 +65,7 @@ public class CompatJEI implements IModPlugin {
     @Override
     @SideOnly(Side.CLIENT)
     public void register(@Nonnull IModRegistry registry) {
-        LogUtil.info("Config Loaded: " + ExNihiloCreatio.configsLoaded);
+        LogUtil.info("ModConfig Loaded: " + ExNihiloCreatio.configsLoaded);
 
         if (ExNihiloCreatio.configsLoaded) {
             ExNihiloCreatio.loadConfigs();
