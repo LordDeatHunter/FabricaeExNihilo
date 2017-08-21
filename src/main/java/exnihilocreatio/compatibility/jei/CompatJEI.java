@@ -70,7 +70,6 @@ public class CompatJEI implements IModPlugin {
         registry.addRecipeCategories(new CompostRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
     }
 
-
     @Override
     @SideOnly(Side.CLIENT) //TODO: clean up JEI plugin to non deprecated functions
     public void register(@Nonnull IModRegistry registry) {

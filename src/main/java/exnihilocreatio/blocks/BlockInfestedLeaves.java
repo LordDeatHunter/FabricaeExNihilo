@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Random;
 
 public class BlockInfestedLeaves extends BlockLeaves implements ITileEntityProvider, IProbeInfoAccessor, IHasModel {
-    int[] surroundings;
+    private int[] surroundings;
 
     public BlockInfestedLeaves() {
         super();
