@@ -1,6 +1,6 @@
 package exnihilocreatio.barrel.modes.compost;
 
-import exnihilocreatio.registries.CompostRegistry;
+import exnihilocreatio.registries.registries.CompostRegistry;
 import exnihilocreatio.tiles.TileBarrel;
 import lombok.Setter;
 import net.minecraft.item.ItemStack;

@@ -1,4 +1,4 @@
-package exnihilocreatio.registries;
+package exnihilocreatio.registries.registries;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

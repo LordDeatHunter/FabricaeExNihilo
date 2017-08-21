@@ -4,7 +4,7 @@ import com.google.common.base.Objects;
 import exnihilocreatio.ModEnchantments;
 import exnihilocreatio.blocks.BlockSieve;
 import exnihilocreatio.config.ModConfig;
-import exnihilocreatio.registries.SieveRegistry;
+import exnihilocreatio.registries.registries.SieveRegistry;
 import exnihilocreatio.registries.types.Siftable;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.Util;

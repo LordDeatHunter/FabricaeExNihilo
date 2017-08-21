@@ -5,7 +5,7 @@ import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.networking.MessageBarrelModeUpdate;
 import exnihilocreatio.networking.MessageCompostUpdate;
 import exnihilocreatio.networking.PacketHandler;
-import exnihilocreatio.registries.CompostRegistry;
+import exnihilocreatio.registries.registries.CompostRegistry;
 import exnihilocreatio.registries.types.Compostable;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.tiles.TileBarrel;

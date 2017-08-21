@@ -1,8 +1,8 @@
 package exnihilocreatio.blocks;
 
 import exnihilocreatio.ExNihiloCreatio;
-import exnihilocreatio.registries.CrucibleRegistry;
-import exnihilocreatio.tiles.TileCrucible;
+import exnihilocreatio.registries.registries.CrucibleRegistryStone;
+import exnihilocreatio.tiles.TileCrucibleStone;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
 import exnihilocreatio.util.IHasSpecialRegistry;
@@ -37,16 +37,17 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 
-public class BlockCrucible extends Block implements IProbeInfoAccessor, IHasModel, IHasSpecialRegistry {
+public class BlockCrucibleStone extends Block implements IProbeInfoAccessor, IHasModel, IHasSpecialRegistry {
 
     public static final PropertyBool FIRED = PropertyBool.create("fired");
 
-    public BlockCrucible() {
+    public BlockCrucibleStone() {
         super(Material.ROCK);
         String name = "block_crucible";
         setUnlocalizedName(name);
         setRegistryName(name);
 
+        setCreativeTab(ExNihiloCreatio.tabExNihilo);
 
         Data.BLOCKS.add(this);
         this.setHardness(2.0f);
@@ -56,7 +57,7 @@ public class BlockCrucible extends Block implements IProbeInfoAccessor, IHasMode
     @Override
     public TileEntity createTileEntity(@Nonnull World worldIn, @Nonnull IBlockState state) {
         if (state.getValue(FIRED))
-            return new TileCrucible();
+            return new TileCrucibleStone();
 
         return null;
     }
@@ -109,7 +110,7 @@ public class BlockCrucible extends Block implements IProbeInfoAccessor, IHasMode
         if (world.isRemote)
             return true;
 
-        TileCrucible te = (TileCrucible) world.getTileEntity(pos);
+        TileCrucibleStone te = (TileCrucibleStone) world.getTileEntity(pos);
 
         if (te != null) {
             IFluidHandler fluidHandler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
@@ -151,7 +152,7 @@ public class BlockCrucible extends Block implements IProbeInfoAccessor, IHasMode
     @Override
     public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world,
                              IBlockState blockState, IProbeHitData data) {
-        TileCrucible crucible = (TileCrucible) world.getTileEntity(data.getPos());
+        TileCrucibleStone crucible = (TileCrucibleStone) world.getTileEntity(data.getPos());
 
         if (crucible == null)
             return;
@@ -167,7 +168,7 @@ public class BlockCrucible extends Block implements IProbeInfoAccessor, IHasMode
         ItemStack toMelt = crucible.getItemHandler().getStackInSlot(0);
 
         if (!toMelt.isEmpty()) {
-            solidAmount += CrucibleRegistry.getMeltable(toMelt).getAmount() * toMelt.getCount();
+            solidAmount += CrucibleRegistryStone.getMeltable(toMelt).getAmount() * toMelt.getCount();
         }
 
         probeInfo.text(String.format("Solid (%s): %d", solidName, solidAmount));

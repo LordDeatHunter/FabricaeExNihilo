@@ -3,7 +3,7 @@ package exnihilocreatio.compatibility.jei.sieve;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 import exnihilocreatio.ExNihiloCreatio;
-import exnihilocreatio.registries.SieveRegistry;
+import exnihilocreatio.registries.registries.SieveRegistry;
 import exnihilocreatio.registries.types.Siftable;
 import exnihilocreatio.util.ItemInfo;
 import mezz.jei.api.IGuiHelper;

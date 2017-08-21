@@ -2,8 +2,8 @@ package exnihilocreatio.barrel;
 
 import exnihilocreatio.networking.MessageBarrelModeUpdate;
 import exnihilocreatio.networking.PacketHandler;
-import exnihilocreatio.registries.BarrelModeRegistry;
-import exnihilocreatio.registries.BarrelModeRegistry.TriggerType;
+import exnihilocreatio.registries.registries.BarrelModeRegistry;
+import exnihilocreatio.registries.registries.BarrelModeRegistry.TriggerType;
 import exnihilocreatio.tiles.TileBarrel;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;

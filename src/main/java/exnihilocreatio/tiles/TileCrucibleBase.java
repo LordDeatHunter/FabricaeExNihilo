@@ -1,9 +1,6 @@
 package exnihilocreatio.tiles;
 
-import exnihilocreatio.capabilities.CapabilityHeatManager;
-import exnihilocreatio.networking.PacketHandler;
-import exnihilocreatio.registries.CrucibleRegistry;
-import exnihilocreatio.registries.HeatRegistry;
+import exnihilocreatio.registries.registries.CrucibleRegistryBase;
 import exnihilocreatio.registries.types.Meltable;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.texturing.SpriteColor;
@@ -19,16 +16,16 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.*;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -37,113 +34,34 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nonnull;
 
-public class TileCrucible extends TileEntity implements ITickable {
-
+// R is the crucibleStone Registry this is taking the data from
+public abstract class TileCrucibleBase<R extends CrucibleRegistryBase> extends BaseTileEntity implements ITickable {
     public static final int MAX_ITEMS = 4;
-    @Getter
-    private FluidTank tank;
-    @Getter
-    private int solidAmount;
-    @Getter
-    private ItemInfo currentItem;
-    private int ticksSinceLast = 0;
-    @Getter
-    private CrucibleItemHandler itemHandler;
 
-    public TileCrucible() {
+    @Getter
+    protected FluidTank tank;
+
+    @Getter
+    protected int solidAmount;
+
+    @Getter
+    protected ItemInfo currentItem;
+    protected int ticksSinceLast = 0;
+
+    @Getter
+    protected CrucibleItemHandler<R> itemHandler;
+
+    public TileCrucibleBase() {
         tank = new FluidTank(4 * Fluid.BUCKET_VOLUME);
         tank.setCanFill(false);
-        itemHandler = new CrucibleItemHandler();
+
+        itemHandler = new CrucibleItemHandler<>();
         itemHandler.setTe(this);
+
     }
 
     @Override
-    public void update() {
-        if (getWorld().isRemote)
-            return;
-
-        ticksSinceLast++;
-
-        if (ticksSinceLast >= 10) {
-            ticksSinceLast = 0;
-
-            int heatRate = getHeatRate();
-
-            if (heatRate <= 0)
-                return;
-
-            if (solidAmount <= 0) {
-                if (!itemHandler.getStackInSlot(0).isEmpty()) {
-                    currentItem = new ItemInfo(itemHandler.getStackInSlot(0));
-                    itemHandler.getStackInSlot(0).shrink(1);
-
-                    if (itemHandler.getStackInSlot(0).isEmpty()) {
-                        itemHandler.setStackInSlot(0, ItemStack.EMPTY);
-                    }
-
-                    solidAmount = CrucibleRegistry.getMeltable(currentItem).getAmount();
-                } else {
-                    if (currentItem != null) {
-                        currentItem = null;
-
-                        PacketHandler.sendNBTUpdate(this);
-                    }
-
-                    return;
-                }
-            }
-
-            if (!itemHandler.getStackInSlot(0).isEmpty() && itemHandler.getStackInSlot(0).isItemEqual(currentItem.getItemStack())) {
-                // For meltables with a really small "amount"
-                while (heatRate > solidAmount && !itemHandler.getStackInSlot(0).isEmpty()) {
-                    solidAmount += CrucibleRegistry.getMeltable(currentItem).getAmount();
-                    itemHandler.getStackInSlot(0).shrink(1);
-
-                    if (itemHandler.getStackInSlot(0).isEmpty()) {
-                        itemHandler.setStackInSlot(0, ItemStack.EMPTY);
-                    }
-                }
-            }
-
-            // Never take more than we have left
-            if (heatRate > solidAmount) {
-                heatRate = solidAmount;
-            }
-
-            if (heatRate > 0 && currentItem != null && CrucibleRegistry.canBeMelted(currentItem)) {
-                FluidStack toFill = new FluidStack(FluidRegistry.getFluid(CrucibleRegistry.getMeltable(currentItem).getFluid()), heatRate);
-                int filled = tank.fillInternal(toFill, true);
-                solidAmount -= filled;
-
-                if (filled > 0) {
-                    PacketHandler.sendNBTUpdate(this);
-                }
-            }
-        }
-    }
-
-    public int getHeatRate() {
-        BlockPos posBelow = pos.add(0, -1, 0);
-        IBlockState stateBelow = getWorld().getBlockState(posBelow);
-
-        if (stateBelow == Blocks.AIR.getDefaultState()) {
-            return 0;
-        }
-
-        int heat = HeatRegistry.getHeatAmount(new BlockInfo(stateBelow));
-
-        if (heat != 0) {
-            return heat;
-        }
-
-        TileEntity tile = getWorld().getTileEntity(posBelow);
-
-        if (tile != null && tile.hasCapability(CapabilityHeatManager.HEAT_CAPABILITY, EnumFacing.UP)) {
-            return tile.getCapability(CapabilityHeatManager.HEAT_CAPABILITY, EnumFacing.UP).getHeatRate();
-        }
-
-        return 0;
-    }
+    public abstract void update();
 
     @SuppressWarnings("deprecation")
     @SideOnly(Side.CLIENT)
@@ -159,7 +77,7 @@ public class TileCrucible extends TileEntity implements ITickable {
         double solidProportion = ((double) noItems) / MAX_ITEMS;
 
         if (currentItem != null) {
-            Meltable meltable = CrucibleRegistry.getMeltable(currentItem);
+            Meltable meltable = R.getMeltable(currentItem);
 
             if (meltable != null) {
                 solidProportion += ((double) solidAmount) / (MAX_ITEMS * meltable.getAmount());
@@ -180,7 +98,7 @@ public class TileCrucible extends TileEntity implements ITickable {
             Color color = Util.whiteColor;
 
             if (currentItem != null) {
-                Meltable meltable = CrucibleRegistry.getMeltable(currentItem);
+                Meltable meltable = R.getMeltable(currentItem);
                 BlockInfo override = meltable.getTextureOverride();
 
                 if (override == null) {
@@ -203,17 +121,17 @@ public class TileCrucible extends TileEntity implements ITickable {
 
     @SideOnly(Side.CLIENT)
     public float getFilledAmount() {
-        int noItems = itemHandler.getStackInSlot(0).isEmpty() ? 0 : itemHandler.getStackInSlot(0).getCount();
-        if (noItems == 0 && currentItem == null && tank.getFluidAmount() == 0) //Empty!
+        int itemCount = itemHandler.getStackInSlot(0).isEmpty() ? 0 : itemHandler.getStackInSlot(0).getCount();
+        if (itemCount == 0 && currentItem == null && tank.getFluidAmount() == 0) //Empty!
             return 0;
 
         float fluidProportion = ((float) tank.getFluidAmount()) / tank.getCapacity();
-        if (noItems == 0 && currentItem == null) //Nothing being melted.
+        if (itemCount == 0 && currentItem == null) //Nothing being melted.
             return fluidProportion;
 
-        float solidProportion = ((float) noItems) / MAX_ITEMS;
+        float solidProportion = ((float) itemCount) / MAX_ITEMS;
         if (currentItem != null) {
-            Meltable meltable = CrucibleRegistry.getMeltable(currentItem);
+            Meltable meltable = R.getMeltable(currentItem);
             if (meltable != null)
                 solidProportion += ((double) solidAmount) / (MAX_ITEMS * meltable.getAmount());
         }
@@ -223,7 +141,6 @@ public class TileCrucible extends TileEntity implements ITickable {
 
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ, IFluidHandler handler) {
         ItemStack stack = player.getHeldItem(hand);
-
         if (stack.isEmpty()) {
             return false;
         }
@@ -235,8 +152,7 @@ public class TileCrucible extends TileEntity implements ITickable {
                 stack.shrink(1);
             }
 
-            PacketHandler.sendNBTUpdate(this);
-
+            markDirtyClient();
             return true;
         }
 
@@ -251,7 +167,7 @@ public class TileCrucible extends TileEntity implements ITickable {
 
             if (!player.isCreative()) stack.shrink(1);
 
-            PacketHandler.sendNBTUpdate(this);
+            markDirtyClient();
             return true;
         }
         return true;
@@ -316,26 +232,4 @@ public class TileCrucible extends TileEntity implements ITickable {
 
         super.readFromNBT(tag);
     }
-
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket() {
-        NBTTagCompound tag = new NBTTagCompound();
-        this.writeToNBT(tag);
-
-        return new SPacketUpdateTileEntity(this.pos, this.getBlockMetadata(), tag);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-        NBTTagCompound tag = pkt.getNbtCompound();
-        readFromNBT(tag);
-    }
-
-    @Override
-    @Nonnull
-    public NBTTagCompound getUpdateTag() {
-        return writeToNBT(new NBTTagCompound());
-    }
-
 }

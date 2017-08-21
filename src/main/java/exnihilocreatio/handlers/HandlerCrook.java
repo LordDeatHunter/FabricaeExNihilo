@@ -2,7 +2,7 @@ package exnihilocreatio.handlers;
 
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.tools.ICrook;
-import exnihilocreatio.registries.CrookRegistry;
+import exnihilocreatio.registries.registries.CrookRegistry;
 import exnihilocreatio.registries.types.CrookReward;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;

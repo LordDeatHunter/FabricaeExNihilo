@@ -2,7 +2,7 @@ package exnihilocreatio.compatibility;
 
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.blocks.*;
-import exnihilocreatio.registries.CrucibleRegistry;
+import exnihilocreatio.registries.registries.CrucibleRegistryStone;
 import exnihilocreatio.rotationalPower.IRotationalPowerMember;
 import exnihilocreatio.tiles.*;
 import mcp.mobius.waila.api.*;
@@ -27,7 +27,7 @@ public class CompatWaila implements IWailaPlugin, IWailaDataProvider {
         registrar.registerBodyProvider(this, BlockBarrel.class);
         registrar.registerBodyProvider(this, BlockSieve.class);
         registrar.registerBodyProvider(this, BlockInfestedLeaves.class);
-        registrar.registerBodyProvider(this, BlockCrucible.class);
+        registrar.registerBodyProvider(this, BlockCrucibleStone.class);
         registrar.registerBodyProvider(this, BlockStoneAxle.class);
         registrar.registerBodyProvider(this, BlockWaterwheel.class);
         registrar.registerBodyProvider(this, BlockAutoSifter.class);
@@ -75,8 +75,8 @@ public class CompatWaila implements IWailaPlugin, IWailaDataProvider {
             }
         }
 
-        if (accessor.getBlock() instanceof BlockCrucible) {
-            TileCrucible tile = (TileCrucible) accessor.getTileEntity();
+        if (accessor.getBlock() instanceof BlockCrucibleStone) {
+            TileCrucibleStone tile = (TileCrucibleStone) accessor.getTileEntity();
 
             ItemStack solid = tile.getCurrentItem() == null ? null : tile.getCurrentItem().getItemStack();
             FluidStack liquid = tile.getTank().getFluid();
@@ -89,7 +89,7 @@ public class CompatWaila implements IWailaPlugin, IWailaDataProvider {
             ItemStack toMelt = tile.getItemHandler().getStackInSlot(0);
 
             if (!toMelt.isEmpty()) {
-                solidAmount += CrucibleRegistry.getMeltable(toMelt).getAmount() * toMelt.getCount();
+                solidAmount += CrucibleRegistryStone.getMeltable(toMelt).getAmount() * toMelt.getCount();
             }
 
             currenttip.add(String.format("Solid (%s): %d", solidName, solidAmount));

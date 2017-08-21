@@ -1,9 +1,10 @@
-package exnihilocreatio.registries;
+package exnihilocreatio.registries.registries;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.json.CustomItemStackJson;
+import exnihilocreatio.registries.types.HammerReward;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.manager.IHammerDefaultRegistryProvider;
 import exnihilocreatio.util.ItemInfo;
@@ -20,7 +21,7 @@ import java.util.*;
 
 public class HammerRegistry {
     @Getter
-    private static HashMap<ItemInfo, List<HammerReward>> registry = new HashMap<ItemInfo, List<HammerReward>>();
+    private static HashMap<ItemInfo, List<HammerReward>> registry = new HashMap<>();
     private static Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(ItemStack.class, new CustomItemStackJson()).create();
 
     public static void loadJson(File file) {

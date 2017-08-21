@@ -11,6 +11,7 @@ import exnihilocreatio.networking.PacketHandler;
 import exnihilocreatio.proxy.CommonProxy;
 import exnihilocreatio.registries.*;
 import exnihilocreatio.registries.manager.ExNihiloDefaultRecipes;
+import exnihilocreatio.registries.registries.*;
 import exnihilocreatio.util.LogUtil;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -43,11 +44,12 @@ public class ExNihiloCreatio {
 
     public static boolean configsLoaded = false;
 
-    public static ExNihiloDefaultRecipes defaultRecipes = new ExNihiloDefaultRecipes();
     public static CreativeTabs tabExNihilo = new CreativeTabExNihiloCreatio();
 
     static {
         FluidRegistry.enableUniversalBucket();
+        // registers itself to the needed registries
+        new ExNihiloDefaultRecipes();
     }
 
     @EventHandler
@@ -58,8 +60,6 @@ public class ExNihiloCreatio {
 
         configDirectory = new File(event.getModConfigurationDirectory(), "exnihilocreatio");
         configDirectory.mkdirs();
-
-        // ModConfig.doNormalConfig(new File(configDirectory, "ExNihiloCreatio.cfg"));
 
         proxy.registerConfigs(configDirectory);
 
@@ -111,7 +111,7 @@ public class ExNihiloCreatio {
         FluidBlockTransformerRegistry.loadJson(new File(configDirectory, "FluidBlockTransformerRegistry.json"));
         FluidOnTopRegistry.loadJson(new File(configDirectory, "FluidOnTopRegistry.json"));
         HeatRegistry.loadJson(new File(configDirectory, "HeatRegistry.json"));
-        CrucibleRegistry.loadJson(new File(configDirectory, "CrucibleRegistry.json"));
+        CrucibleRegistryStone.loadJson(new File(configDirectory, "CrucibleRegistryStone.json"));
         SieveRegistry.loadJson(new File(configDirectory, "SieveRegistry.json"));
         CrookRegistry.loadJson(new File(configDirectory, "CrookRegistry.json"));
         FluidTransformRegistry.loadJson(new File(configDirectory, "FluidTransformRegistry.json"));

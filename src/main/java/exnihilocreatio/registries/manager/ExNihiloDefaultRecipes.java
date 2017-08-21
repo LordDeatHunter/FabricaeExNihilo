@@ -9,7 +9,7 @@ import exnihilocreatio.items.ItemPebble;
 import exnihilocreatio.items.ItemResource;
 import exnihilocreatio.items.ore.ItemOre;
 import exnihilocreatio.items.seeds.ItemSeedBase;
-import exnihilocreatio.registries.*;
+import exnihilocreatio.registries.registries.*;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
@@ -226,7 +226,7 @@ public class ExNihiloDefaultRecipes implements ISieveDefaultRegistryProvider, IH
 
     @Override
     public void registerCrucibleRecipeDefaults() {
-        CrucibleRegistry.register(new ItemStack(Blocks.COBBLESTONE), FluidRegistry.LAVA, 250);
+        CrucibleRegistryStone.register(new ItemStack(Blocks.COBBLESTONE), FluidRegistry.LAVA, 250);
     }
 
     @Override

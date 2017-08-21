@@ -4,7 +4,7 @@ import exnihilocreatio.ModItems;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.ore.EnumOreSubtype;
 import exnihilocreatio.items.ore.ItemOre;
-import exnihilocreatio.registries.OreRegistry;
+import exnihilocreatio.registries.registries.OreRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;

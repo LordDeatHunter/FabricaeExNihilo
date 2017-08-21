@@ -101,7 +101,7 @@ public class ModItems {
             }
         }
 
-        registry.register(new ItemBlockCrucible(ModBlocks.crucible));
+        registry.register(new ItemBlockCrucible(ModBlocks.crucibleStone));
 
         OreDictionary.registerOre("clayPorcelain", ItemResource.getResourceStack(ItemResource.PORCELAIN_CLAY));
         OreDictionary.registerOre("gearStone", ItemResource.getResourceStack(ItemResource.GEAR_STONE));

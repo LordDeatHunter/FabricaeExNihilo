@@ -1,11 +1,13 @@
 package exnihilocreatio.registries.manager;
 
+import exnihilocreatio.registries.registries.testReg.CompostRegistry;
 import lombok.Getter;
 
 import java.util.ArrayList;
 
 public class ExNihiloRegistryManager {
 
+    //region >>>> DEFAULT RECIPE PROVIDERS
     @Getter
     private static ArrayList<ISieveDefaultRegistryProvider> defaultSieveRecipeHandlers = new ArrayList<>();
     @Getter
@@ -26,7 +28,11 @@ public class ExNihiloRegistryManager {
     private static ArrayList<IHeatDefaultRegistryProvider> defaultHeatRecipeHandlers = new ArrayList<>();
     @Getter
     private static ArrayList<IOreDefaultRegistryProvider> defaultOreRecipeHandlers = new ArrayList<>();
+    //endregion
 
+    public static final CompostRegistry COMPOST_REGISTRY = new CompostRegistry();
+
+    //region >>>> DEFAULT RECIPE REGISTERS
     public static void registerSieveDefaultRecipeHandler(ISieveDefaultRegistryProvider provider) {
         defaultSieveRecipeHandlers.add(provider);
     }
@@ -66,4 +72,5 @@ public class ExNihiloRegistryManager {
     public static void registerOreDefaultRecipeHandler(IOreDefaultRegistryProvider provider) {
         defaultOreRecipeHandlers.add(provider);
     }
+    //endregion
 }

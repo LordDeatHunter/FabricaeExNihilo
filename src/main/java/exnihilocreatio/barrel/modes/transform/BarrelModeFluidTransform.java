@@ -2,7 +2,7 @@ package exnihilocreatio.barrel.modes.transform;
 
 import exnihilocreatio.barrel.IBarrelMode;
 import exnihilocreatio.networking.PacketHandler;
-import exnihilocreatio.registries.FluidTransformRegistry;
+import exnihilocreatio.registries.registries.FluidTransformRegistry;
 import exnihilocreatio.registries.types.FluidTransformer;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.tiles.TileBarrel;

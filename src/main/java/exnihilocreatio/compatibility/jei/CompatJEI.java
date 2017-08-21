@@ -18,7 +18,7 @@ import exnihilocreatio.compatibility.jei.hammer.HammerRecipe;
 import exnihilocreatio.compatibility.jei.hammer.HammerRecipeCategory;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipe;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipeCategory;
-import exnihilocreatio.registries.*;
+import exnihilocreatio.registries.registries.*;
 import exnihilocreatio.registries.types.Compostable;
 import exnihilocreatio.registries.types.FluidBlockTransformer;
 import exnihilocreatio.registries.types.FluidFluidBlock;

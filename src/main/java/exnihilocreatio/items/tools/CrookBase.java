@@ -1,7 +1,7 @@
 package exnihilocreatio.items.tools;
 
 import com.google.common.collect.Sets;
-import exnihilocreatio.registries.CrookRegistry;
+import exnihilocreatio.registries.registries.CrookRegistry;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
 import net.minecraft.block.Block;

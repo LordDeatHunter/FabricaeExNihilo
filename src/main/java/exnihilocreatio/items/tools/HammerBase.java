@@ -2,7 +2,7 @@ package exnihilocreatio.items.tools;
 
 
 import com.google.common.collect.Sets;
-import exnihilocreatio.registries.HammerRegistry;
+import exnihilocreatio.registries.registries.HammerRegistry;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
 import net.minecraft.block.Block;

@@ -1,4 +1,4 @@
-package exnihilocreatio.registries;
+package exnihilocreatio.registries.types;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

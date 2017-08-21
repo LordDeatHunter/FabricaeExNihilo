@@ -1,4 +1,4 @@
-package exnihilocreatio.registries;
+package exnihilocreatio.registries.registries;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,7 +21,7 @@ import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CrucibleRegistry {
+public class CrucibleRegistryWood extends CrucibleRegistryBase{
     private static Map<ItemInfo, Meltable> registry = new HashMap<>();
     private static Map<ItemInfo, Meltable> externalRegistry = new HashMap<>();
 

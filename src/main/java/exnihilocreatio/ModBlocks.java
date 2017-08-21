@@ -22,8 +22,10 @@ public class ModBlocks {
     public static final BlockBarrel barrelWood;
     public static final BlockBarrel barrelStone;
     public static final BlockInfestedLeaves infestedLeaves;
-    public static final BlockCrucible crucible;
     public static final BlockSieve sieve;
+
+    public static final BlockCrucibleStone crucibleStone;
+    public static final BlockCrucibleWood CRUCIBLE_WOOD;
 
     public static final BlockWaterwheel watermill;
     public static final BlockStoneAxle axle_stone;
@@ -55,9 +57,11 @@ public class ModBlocks {
         GameRegistry.registerTileEntity(TileInfestedLeaves.class, "block_infested_leaves");
         infestedLeaves.setCreativeTab(ExNihiloCreatio.tabExNihilo);
 
-        crucible = new BlockCrucible();
-        crucible.setCreativeTab(ExNihiloCreatio.tabExNihilo);
-        GameRegistry.registerTileEntity(TileCrucible.class, "block_crucible");
+        crucibleStone = new BlockCrucibleStone();
+        GameRegistry.registerTileEntity(TileCrucibleStone.class, "block_crucible");
+
+        CRUCIBLE_WOOD = new BlockCrucibleWood();
+        GameRegistry.registerTileEntity(TileCrucibleWood.class, "block_crucible_wood");
 
         sieve = new BlockSieve();
         sieve.setCreativeTab(ExNihiloCreatio.tabExNihilo);

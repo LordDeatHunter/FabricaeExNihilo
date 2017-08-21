@@ -1,7 +1,7 @@
 package exnihilocreatio.compatibility.jei.barrel.compost;
 
 import exnihilocreatio.ExNihiloCreatio;
-import exnihilocreatio.registries.CompostRegistry;
+import exnihilocreatio.registries.registries.CompostRegistry;
 import exnihilocreatio.registries.types.Compostable;
 import exnihilocreatio.util.ItemInfo;
 import mezz.jei.api.IGuiHelper;

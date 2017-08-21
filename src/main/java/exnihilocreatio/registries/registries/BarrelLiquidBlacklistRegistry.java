@@ -1,4 +1,4 @@
-package exnihilocreatio.registries;
+package exnihilocreatio.registries.registries;
 
 import com.google.common.collect.Maps;
 import com.google.common.reflect.TypeToken;

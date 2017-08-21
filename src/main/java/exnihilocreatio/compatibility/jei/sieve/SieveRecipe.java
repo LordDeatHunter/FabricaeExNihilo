@@ -3,7 +3,7 @@ package exnihilocreatio.compatibility.jei.sieve;
 import com.google.common.collect.Lists;
 import exnihilocreatio.ModItems;
 import exnihilocreatio.blocks.BlockSieve.MeshType;
-import exnihilocreatio.registries.SieveRegistry;
+import exnihilocreatio.registries.registries.SieveRegistry;
 import exnihilocreatio.registries.types.Siftable;
 import exnihilocreatio.util.BlockInfo;
 import mezz.jei.api.ingredients.IIngredients;
