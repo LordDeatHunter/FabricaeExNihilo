@@ -28,6 +28,7 @@ public final class ExNihiloRegistryManager {
     public static final HeatRegistryNew HEAT_REGISTRY = new HeatRegistryNew();
     public static final OreRegistryNew ORE_REGISTRY = new OreRegistryNew();
     public static final BarrelLiquidBlacklistRegistryNew BARREL_LIQUID_BLACKLIST_REGISTRY = new BarrelLiquidBlacklistRegistryNew();
+    public static final FluidOnTopRegistryNew FLUID_ON_TOP_REGISTRY = new FluidOnTopRegistryNew();
 
 
     //region >>>> DEFAULT RECIPE REGISTERS

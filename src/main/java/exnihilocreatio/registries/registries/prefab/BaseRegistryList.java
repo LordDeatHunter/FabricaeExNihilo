@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.registries.manager.IDefaultRecipeProvider;
 
-import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,29 +14,20 @@ public abstract class BaseRegistryList<V> extends BaseRegistry<List<V>> {
         super(gson, new ArrayList<>(), defaultRecipeProviders);
     }
 
-    public void loadJson(File file) {
-        if (hasAlreadyBeenLoaded) registry.clear();
-
-        if (file.exists()) {
-            try {
-                FileReader fr = new FileReader(file);
-                registerEntriesFromJSON(fr);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            registerDefaults();
-            saveJson(file);
-        }
-
-        hasAlreadyBeenLoaded = true;
-    }
-
+    /** This is not possible due to GSON not liking having generics
+     * Defaults to just adding everything to the registry
+     * @param fr FileReader required for the gson reader
+     */
+    @Override
     protected void registerEntriesFromJSON(FileReader fr) {
-        List<V> gsonInput = gson.fromJson(fr, new TypeToken<V>() {
+        List<V> gsonInput = gson.fromJson(fr, new TypeToken<List<V>>() {
         }.getType());
         registry.addAll(gsonInput);
+    }
+
+    @Override
+    protected void clearRegistry() {
+        registry.clear();
     }
 
     public void register(V value) {

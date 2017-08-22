@@ -144,7 +144,7 @@ public class CompatJEI implements IModPlugin {
 
         //region >>>> FLUID ON TOP RECIPE
         List<FluidOnTopRecipe> fluidOnTopRecipes = Lists.newArrayList();
-        for (FluidFluidBlock transformer : FluidOnTopRegistry.getRegistry()) {
+        for (FluidFluidBlock transformer : ExNihiloRegistryManager.FLUID_ON_TOP_REGISTRY.getRegistry()) {
             // Make sure both fluids are registered
             if (FluidRegistry.isFluidRegistered(transformer.getFluidInBarrel()) && FluidRegistry.isFluidRegistered(transformer.getFluidOnTop()) && transformer.getResult().getItem() != null) {
                 FluidOnTopRecipe recipe = new FluidOnTopRecipe(transformer);

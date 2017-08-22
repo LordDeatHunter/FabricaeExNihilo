@@ -151,8 +151,8 @@ public class BarrelModeFluid implements IBarrelMode {
                 fluidOnTop = ((IFluidBlock) onTop).getFluid();
             }
 
-            if (FluidOnTopRegistry.isValidRecipe(fluidInBarrel, fluidOnTop)) {
-                ItemInfo info = FluidOnTopRegistry.getTransformedBlock(fluidInBarrel, fluidOnTop);
+            if (ExNihiloRegistryManager.FLUID_ON_TOP_REGISTRY.isValidRecipe(fluidInBarrel, fluidOnTop)) {
+                ItemInfo info = ExNihiloRegistryManager.FLUID_ON_TOP_REGISTRY.getTransformedBlock(fluidInBarrel, fluidOnTop);
                 tank.drain(tank.getCapacity(), true);
                 barrel.setMode("block");
                 PacketHandler.sendToAllAround(new MessageBarrelModeUpdate("block", barrel.getPos()), barrel);

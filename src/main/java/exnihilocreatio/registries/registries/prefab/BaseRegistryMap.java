@@ -15,28 +15,12 @@ public abstract class BaseRegistryMap<K, V> extends BaseRegistry<Map<K, V>> {
         super(gson, new HashMap<>(), defaultRecipeProviders);
     }
 
-    public void loadJson(File file) {
-        if (hasAlreadyBeenLoaded) registry.clear();
-
-        if (file.exists()) {
-            try {
-                FileReader fr = new FileReader(file);
-                registerEntriesFromJSON(fr);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            registerDefaults();
-            saveJson(file);
-        }
-
-        hasAlreadyBeenLoaded = true;
-    }
-
-    protected abstract void registerEntriesFromJSON(FileReader fr);
-
     public void register(K key, V value) {
         registry.put(key, value);
+    }
+
+    @Override
+    protected void clearRegistry() {
+        registry.clear();
     }
 }

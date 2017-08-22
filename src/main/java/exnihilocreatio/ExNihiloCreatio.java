@@ -113,11 +113,13 @@ public class ExNihiloCreatio {
         ExNihiloRegistryManager.HAMMER_REGISTRY.loadJson(new File(configDirectory, "HammerRegistry_new.json"));
         ExNihiloRegistryManager.HEAT_REGISTRY.loadJson(new File(configDirectory, "HeatRegistry_new.json"));
         ExNihiloRegistryManager.BARREL_LIQUID_BLACKLIST_REGISTRY.loadJson(new File(configDirectory, "BarrelLiquidBlacklistRegistry_new.json"));
+        ExNihiloRegistryManager.FLUID_ON_TOP_REGISTRY.loadJson(new File(configDirectory, "FluidOnTopRegistry.json"));
+
 
         // CompostRegistryNew.loadJson(new File(configDirectory, "CompostRegistryNew.json"));
         // HammerRegistry.loadJson(new File(configDirectory, "HammerRegistry.json"));
         FluidBlockTransformerRegistry.loadJson(new File(configDirectory, "FluidBlockTransformerRegistry.json"));
-        FluidOnTopRegistry.loadJson(new File(configDirectory, "FluidOnTopRegistry.json"));
+        // FluidOnTopRegistry.loadJson(new File(configDirectory, "FluidOnTopRegistry.json"));
         // HeatRegistry.loadJson(new File(configDirectory, "HeatRegistry.json"));
         CrucibleRegistryStone.loadJson(new File(configDirectory, "CrucibleRegistryStone.json"));
         // SieveRegistry.loadJson(new File(configDirectory, "SieveRegistry.json"));

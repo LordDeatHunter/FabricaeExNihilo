@@ -6,6 +6,7 @@ import lombok.Getter;
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.List;
 
@@ -37,7 +38,26 @@ public abstract class BaseRegistry<RegType> {
         }
     }
 
-    public abstract void loadJson(File file);
+    public void loadJson(File file) {
+        if (hasAlreadyBeenLoaded) clearRegistry();
+
+        if (file.exists()) {
+            try {
+                FileReader fr = new FileReader(file);
+                registerEntriesFromJSON(fr);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            registerDefaults();
+            saveJson(file);
+        }
+
+        hasAlreadyBeenLoaded = true;
+    }
+
+    protected abstract void registerEntriesFromJSON(FileReader fr);
 
     public void registerDefaults() {
         if (defaultRecipeProviders != null) {
@@ -49,4 +69,5 @@ public abstract class BaseRegistry<RegType> {
         }
     }
 
+    protected abstract void clearRegistry();
 }

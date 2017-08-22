@@ -1,7 +1,6 @@
 package exnihilocreatio.registries.manager;
 
-public interface IFluidOnTopDefaultRegistryProvider {
+import exnihilocreatio.registries.registries.FluidOnTopRegistryNew;
 
-    void registerFluidOnTopRecipeDefaults();
-
+public interface IFluidOnTopDefaultRegistryProvider extends IDefaultRecipeProvider<FluidOnTopRegistryNew> {
 }
