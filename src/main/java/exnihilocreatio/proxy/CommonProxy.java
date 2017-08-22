@@ -1,7 +1,7 @@
 package exnihilocreatio.proxy;
 
 import exnihilocreatio.*;
-import exnihilocreatio.registries.OreRegistry;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.util.Data;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
@@ -35,15 +35,15 @@ public abstract class CommonProxy {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void registerItemsLower(RegistryEvent.Register<Item> event) {
-        OreRegistry.loadJson(new File(ExNihiloCreatio.configDirectory, "OreRegistry.json"));
-        OreRegistry.registerToGameRegistry(event.getRegistry());
+        ExNihiloRegistryManager.ORE_REGISTRY.loadJson(new File(ExNihiloCreatio.configDirectory, "OreRegistry_new.json"));
+        ExNihiloRegistryManager.ORE_REGISTRY.registerToGameRegistry(event.getRegistry());
     }
 
     @SubscribeEvent
     public static void onRecipeRegistry(RegistryEvent.Register<IRecipe> e) {
         // Recipes.init();
         e.getRegistry().registerAll(Data.RECIPES.toArray(new IRecipe[RECIPES.size()]));
-        OreRegistry.doRecipes();
+        ExNihiloRegistryManager.ORE_REGISTRY.doRecipes();
     }
 
     @SubscribeEvent

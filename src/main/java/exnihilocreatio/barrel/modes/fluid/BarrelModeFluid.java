@@ -5,9 +5,9 @@ import exnihilocreatio.barrel.IBarrelMode;
 import exnihilocreatio.barrel.modes.transform.BarrelModeFluidTransform;
 import exnihilocreatio.networking.MessageBarrelModeUpdate;
 import exnihilocreatio.networking.PacketHandler;
-import exnihilocreatio.registries.BarrelLiquidBlacklistRegistry;
 import exnihilocreatio.registries.FluidOnTopRegistry;
 import exnihilocreatio.registries.FluidTransformRegistry;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.FluidTransformer;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.tiles.TileBarrel;
@@ -170,7 +170,7 @@ public class BarrelModeFluid implements IBarrelMode {
                 boolean found = false;
                 for (int radius = 0; radius <= 2; radius++) {
                     for (FluidTransformer transformer : transformers) {
-                        if (!BarrelLiquidBlacklistRegistry.isBlacklisted(barrel.getTier(), transformer.getOutputFluid())
+                        if (!ExNihiloRegistryManager.BARREL_LIQUID_BLACKLIST_REGISTRY.isBlacklisted(barrel.getTier(), transformer.getOutputFluid())
                                 && (Util.isSurroundingBlocksAtLeastOneOf(transformer.getTransformingBlocks(),
                                 barrel.getPos().add(0, -1, 0), barrel.getWorld(), radius)
                                 || Util.isSurroundingBlocksAtLeastOneOf(transformer.getTransformingBlocks(),

@@ -4,7 +4,7 @@ import exnihilocreatio.ModItems;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.ore.EnumOreSubtype;
 import exnihilocreatio.items.ore.ItemOre;
-import exnihilocreatio.registries.OreRegistry;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -29,7 +29,7 @@ public class CompatTConstruct {
     }
 
     private static void registerMeltingChunks() {
-        for (ItemOre ore : OreRegistry.getItemOreRegistry()) {
+        for (ItemOre ore : ExNihiloRegistryManager.ORE_REGISTRY.getItemOreRegistry()) {
             if (FluidRegistry.isFluidRegistered(ore.getOre().getName())) {
                 Fluid fluid = FluidRegistry.getFluid(ore.getOre().getName());
                 TinkerRegistry.registerMelting(new ItemStack(ore, 1, EnumOreSubtype.CHUNK.getMeta()), fluid,
@@ -39,7 +39,7 @@ public class CompatTConstruct {
     }
 
     private static void registerMeltingDust() {
-        for (ItemOre ore : OreRegistry.getItemOreRegistry()) {
+        for (ItemOre ore : ExNihiloRegistryManager.ORE_REGISTRY.getItemOreRegistry()) {
             if (FluidRegistry.isFluidRegistered(ore.getOre().getName())) {
                 Fluid fluid = FluidRegistry.getFluid(ore.getOre().getName());
                 TinkerRegistry.registerMelting(new ItemStack(ore, 1, EnumOreSubtype.DUST.getMeta()), fluid,

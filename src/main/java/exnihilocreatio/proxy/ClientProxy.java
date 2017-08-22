@@ -7,7 +7,6 @@ import exnihilocreatio.ModItems;
 import exnihilocreatio.client.renderers.*;
 import exnihilocreatio.entities.ProjectileStone;
 import exnihilocreatio.items.ore.ItemOre;
-import exnihilocreatio.registries.OreRegistry;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.tiles.*;
 import net.minecraft.client.Minecraft;
@@ -63,8 +62,8 @@ public class ClientProxy extends CommonProxy {
     public void init(FMLInitializationEvent event) {
         super.init(event);
 
-        OreRegistry.initModels();
-        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new RenderOrePiece(), OreRegistry.getItemOreRegistry().toArray(new ItemOre[0]));
+        ExNihiloRegistryManager.ORE_REGISTRY.initModels();
+        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new RenderOrePiece(), ExNihiloRegistryManager.ORE_REGISTRY.getItemOreRegistry().toArray(new ItemOre[0]));
 
     }
 

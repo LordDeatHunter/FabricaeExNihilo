@@ -5,8 +5,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.json.CustomBlockInfoJson;
 import exnihilocreatio.json.CustomItemInfoJson;
-import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
-import exnihilocreatio.registries.manager.ICrucibleDefaultRegistryProvider;
 import exnihilocreatio.registries.types.Meltable;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
@@ -70,9 +68,9 @@ public class CrucibleRegistryWood extends CrucibleRegistryBase {
     }
 
     public static void registerDefaults() {
-        for (ICrucibleDefaultRegistryProvider provider : ExNihiloRegistryManager.getCrucibleDefaultRegistryProviders()) {
-            provider.registerCrucibleRecipeDefaults();
-        }
+        // for (ICrucibleDefaultRegistryProvider provider : ExNihiloRegistryManager.getCrucibleDefaultRegistryProviders()) {
+        //     provider.registerCrucibleRecipeDefaults();
+        // }
     }
 
     public static void loadJson(File file) {

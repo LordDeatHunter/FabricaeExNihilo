@@ -9,11 +9,11 @@ import exnihilocreatio.items.ItemPebble;
 import exnihilocreatio.items.ItemResource;
 import exnihilocreatio.items.ore.ItemOre;
 import exnihilocreatio.items.seeds.ItemSeedBase;
-import exnihilocreatio.registries.*;
-import exnihilocreatio.registries.registries.CompostRegistryNew;
-import exnihilocreatio.registries.registries.CrookRegistryNew;
-import exnihilocreatio.registries.registries.HammerRegistryNew;
-import exnihilocreatio.registries.registries.SieveRegistryNew;
+import exnihilocreatio.registries.CrucibleRegistryStone;
+import exnihilocreatio.registries.FluidBlockTransformerRegistry;
+import exnihilocreatio.registries.FluidOnTopRegistry;
+import exnihilocreatio.registries.FluidTransformRegistry;
+import exnihilocreatio.registries.registries.*;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
@@ -26,21 +26,23 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class ExNihiloDefaultRecipes implements  ICrucibleDefaultRegistryProvider, IFluidBlockDefaultRegistryProvider,
-        IFluidTransformDefaultRegistryProvider, IFluidOnTopDefaultRegistryProvider, IHeatDefaultRegistryProvider, IOreDefaultRegistryProvider {
+public class ExNihiloDefaultRecipes implements ICrucibleDefaultRegistryProvider, IFluidBlockDefaultRegistryProvider,
+        IFluidTransformDefaultRegistryProvider, IFluidOnTopDefaultRegistryProvider {
 
-    public static void registerDefaults(){
+    public static void registerDefaults() {
         ExNihiloRegistryManager.registerSieveDefaultRecipeHandler(new SieveDefaults());
         ExNihiloRegistryManager.registerHammerDefaultRecipeHandler(new HammerDefaults());
         ExNihiloRegistryManager.registerCompostDefaultRecipeHandler(new CompostDefaults());
         ExNihiloRegistryManager.registerCrookDefaultRecipeHandler(new CrookDefaults());
+        ExNihiloRegistryManager.registerHeatDefaultRecipeHandler(new HeatDefaults());
+        ExNihiloRegistryManager.registerOreDefaultRecipeHandler(new OreDefaults());
+        ExNihiloRegistryManager.registerBarrelLiquidBlacklistDefaultHandler(new BarrelLiquidBlacklistDefaults());
 
         // ExNihiloRegistryManager.registerCrucibleDefaultRecipeHandler(this);
         // ExNihiloRegistryManager.registerFluidBlockDefaultRecipeHandler(this);
         // ExNihiloRegistryManager.registerFluidTransformDefaultRecipeHandler(this);
         // ExNihiloRegistryManager.registerFluidOnTopDefaultRecipeHandler(this);
         // ExNihiloRegistryManager.registerHeatDefaultRecipeHandler(this);
-        // ExNihiloRegistryManager.registerOreDefaultRecipeHandler(this);
 
     }
 
@@ -66,59 +68,6 @@ public class ExNihiloDefaultRecipes implements  ICrucibleDefaultRegistryProvider
     public void registerFluidOnTopRecipeDefaults() {
         FluidOnTopRegistry.register(FluidRegistry.LAVA, FluidRegistry.WATER, new ItemInfo(Blocks.OBSIDIAN.getDefaultState()));
         FluidOnTopRegistry.register(FluidRegistry.WATER, FluidRegistry.LAVA, new ItemInfo(Blocks.COBBLESTONE.getDefaultState()));
-    }
-
-    @Override
-    public void registerHeatRecipeDefaults() {
-        // Vanilla fluids are weird, the "flowing" variant is simply a temporary state of checking if it can flow.
-        // So, once the lava has spread out all the way, it will all actually be "still" lava.
-        // Thanks Mojang <3
-        HeatRegistry.register(new BlockInfo(Blocks.FLOWING_LAVA, -1), 3);
-        HeatRegistry.register(new BlockInfo(Blocks.LAVA, -1), 3);
-        HeatRegistry.register(new BlockInfo(Blocks.FIRE, -1), 4);
-        HeatRegistry.register(new BlockInfo(Blocks.TORCH, -1), 1);
-
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public void registerOreRecipeDefaults() {
-        OreRegistry.register("gold", new Color("FFFF00"), new ItemInfo(Items.GOLD_INGOT, 0));
-        OreRegistry.register("iron", new Color("BF8040"), new ItemInfo(Items.IRON_INGOT, 0));
-
-        //TODO: Better way, will most likely never grab as it is just called before many mods init their oredict
-        if (OreDictionary.getOres("oreCopper").size() > 0) {
-            OreRegistry.register("copper", new Color("FF9933"), null);
-        }
-
-        if (OreDictionary.getOres("oreTin").size() > 0) {
-            OreRegistry.register("tin", new Color("E6FFF2"), null);
-        }
-
-        if (OreDictionary.getOres("oreAluminium").size() > 0 || OreDictionary.getOres("oreAluminum").size() > 0) {
-            OreRegistry.register("aluminium", new Color("BFBFBF"), null);
-        }
-
-        if (OreDictionary.getOres("oreLead").size() > 0) {
-            OreRegistry.register("lead", new Color("330066"), null);
-        }
-
-        if (OreDictionary.getOres("oreSilver").size() > 0) {
-            OreRegistry.register("silver", new Color("F2F2F2"), null);
-        }
-
-        if (OreDictionary.getOres("oreNickel").size() > 0) {
-            OreRegistry.register("nickel", new Color("FFFFCC"), null);
-        }
-
-        if (OreDictionary.getOres("oreArdite").size() > 0) {
-            OreRegistry.register("ardite", new Color("FF751A"), null);
-        }
-
-        if (OreDictionary.getOres("oreCobalt").size() > 0) {
-            OreRegistry.register("cobalt", new Color("3333FF"), null);
-        }
-
     }
 
     private static class CompostDefaults implements ICompostDefaultRegistryProvider {
@@ -224,73 +173,73 @@ public class ExNihiloDefaultRecipes implements  ICrucibleDefaultRegistryProvider
     private static class SieveDefaults implements ISieveDefaultRegistryProvider {
         @Override
         public void registerRecipeDefaults(SieveRegistryNew registry) {
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"), 1f, MeshType.STRING.getID());
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"), 1f, MeshType.STRING.getID());
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"), 0.5f, MeshType.STRING.getID());
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"), 0.5f, MeshType.STRING.getID());
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"), 0.1f, MeshType.STRING.getID());
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"), 0.1f, MeshType.STRING.getID());
+            registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"), 1f, MeshType.STRING.getID());
+            registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"), 1f, MeshType.STRING.getID());
+            registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"), 0.5f, MeshType.STRING.getID());
+            registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"), 0.5f, MeshType.STRING.getID());
+            registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"), 0.1f, MeshType.STRING.getID());
+            registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"), 0.1f, MeshType.STRING.getID());
 
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("granite"), 0.5f, MeshType.STRING.getID());
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("granite"), 0.1f, MeshType.STRING.getID());
+            registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("granite"), 0.5f, MeshType.STRING.getID());
+            registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("granite"), 0.1f, MeshType.STRING.getID());
 
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("diorite"), 0.5f, MeshType.STRING.getID());
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("diorite"), 0.1f, MeshType.STRING.getID());
+            registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("diorite"), 0.5f, MeshType.STRING.getID());
+            registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("diorite"), 0.1f, MeshType.STRING.getID());
 
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("andesite"), 0.5f, MeshType.STRING.getID());
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("andesite"), 0.1f, MeshType.STRING.getID());
+            registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("andesite"), 0.5f, MeshType.STRING.getID());
+            registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("andesite"), 0.1f, MeshType.STRING.getID());
 
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.DIRT.getDefaultState(), new ItemInfo(Items.WHEAT_SEEDS, 0), 0.7f, MeshType.STRING.getID());
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.DIRT.getDefaultState(), new ItemInfo(Items.MELON_SEEDS, 0), 0.35f, MeshType.STRING.getID());
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.DIRT.getDefaultState(), new ItemInfo(Items.PUMPKIN_SEEDS, 0), 0.35f, MeshType.STRING.getID());
+            registry.register(Blocks.DIRT.getDefaultState(), new ItemInfo(Items.WHEAT_SEEDS, 0), 0.7f, MeshType.STRING.getID());
+            registry.register(Blocks.DIRT.getDefaultState(), new ItemInfo(Items.MELON_SEEDS, 0), 0.35f, MeshType.STRING.getID());
+            registry.register(Blocks.DIRT.getDefaultState(), new ItemInfo(Items.PUMPKIN_SEEDS, 0), 0.35f, MeshType.STRING.getID());
 
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.SAND.getDefaultState(), new ItemInfo(Items.DYE, 3), 0.03f, MeshType.STRING.getID());
+            registry.register(Blocks.SAND.getDefaultState(), new ItemInfo(Items.DYE, 3), 0.03f, MeshType.STRING.getID());
 
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.FLINT, 0), 0.25f, MeshType.FLINT.getID());
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.COAL, 0), 0.125f, MeshType.FLINT.getID());
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.DYE, 4), 0.05f, MeshType.FLINT.getID());
+            registry.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.FLINT, 0), 0.25f, MeshType.FLINT.getID());
+            registry.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.COAL, 0), 0.125f, MeshType.FLINT.getID());
+            registry.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.DYE, 4), 0.05f, MeshType.FLINT.getID());
 
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.DIAMOND, 0), 0.008f, MeshType.IRON.getID());
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.EMERALD, 0), 0.008f, MeshType.IRON.getID());
+            registry.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.DIAMOND, 0), 0.008f, MeshType.IRON.getID());
+            registry.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.EMERALD, 0), 0.008f, MeshType.IRON.getID());
 
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.DIAMOND, 0), 0.016f, MeshType.DIAMOND.getID());
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.EMERALD, 0), 0.016f, MeshType.DIAMOND.getID());
+            registry.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.DIAMOND, 0), 0.016f, MeshType.DIAMOND.getID());
+            registry.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.EMERALD, 0), 0.016f, MeshType.DIAMOND.getID());
 
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.QUARTZ, 0), 1f, MeshType.FLINT.getID());
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.QUARTZ, 0), 0.33f, MeshType.FLINT.getID());
+            registry.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.QUARTZ, 0), 1f, MeshType.FLINT.getID());
+            registry.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.QUARTZ, 0), 0.33f, MeshType.FLINT.getID());
 
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.NETHER_WART, 0), 0.1f, MeshType.STRING.getID());
+            registry.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.NETHER_WART, 0), 0.1f, MeshType.STRING.getID());
 
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.GHAST_TEAR, 0), 0.02f, MeshType.DIAMOND.getID());
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.QUARTZ, 0), 1f, MeshType.DIAMOND.getID());
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.QUARTZ, 0), 0.8f, MeshType.DIAMOND.getID());
+            registry.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.GHAST_TEAR, 0), 0.02f, MeshType.DIAMOND.getID());
+            registry.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.QUARTZ, 0), 1f, MeshType.DIAMOND.getID());
+            registry.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.QUARTZ, 0), 0.8f, MeshType.DIAMOND.getID());
 
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.DYE, 15), 0.2f, MeshType.STRING.getID());
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.GUNPOWDER, 0), 0.07f, MeshType.STRING.getID());
+            registry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.DYE, 15), 0.2f, MeshType.STRING.getID());
+            registry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.GUNPOWDER, 0), 0.07f, MeshType.STRING.getID());
 
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.REDSTONE, 0), 0.125f, MeshType.IRON.getID());
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.REDSTONE, 0), 0.25f, MeshType.DIAMOND.getID());
+            registry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.REDSTONE, 0), 0.125f, MeshType.IRON.getID());
+            registry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.REDSTONE, 0), 0.25f, MeshType.DIAMOND.getID());
 
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.GLOWSTONE_DUST, 0), 0.0625f, MeshType.IRON.getID());
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.BLAZE_POWDER, 0), 0.05f, MeshType.IRON.getID());
+            registry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.GLOWSTONE_DUST, 0), 0.0625f, MeshType.IRON.getID());
+            registry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.BLAZE_POWDER, 0), 0.05f, MeshType.IRON.getID());
 
             // SieveRegistry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemInfo(Items.BLAZE_POWDER, 0), 0.05f, MeshType.IRON.getID());
             // TODO: add tinkers ardite to sieve and add ores for it
 
             // Ores
-            for (ItemOre ore : OreRegistry.getItemOreRegistry()) {
-                ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.GRAVEL.getDefaultState(), new ItemStack(ore, 1, 0), 0.2f, MeshType.FLINT.getID());
-                ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.GRAVEL.getDefaultState(), new ItemStack(ore, 1, 0), 0.2f, MeshType.IRON.getID());
-                ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.GRAVEL.getDefaultState(), new ItemStack(ore, 1, 0), 0.1f, MeshType.DIAMOND.getID());
+            for (ItemOre ore : ExNihiloRegistryManager.ORE_REGISTRY.getItemOreRegistry()) {
+                registry.register(Blocks.GRAVEL.getDefaultState(), new ItemStack(ore, 1, 0), 0.2f, MeshType.FLINT.getID());
+                registry.register(Blocks.GRAVEL.getDefaultState(), new ItemStack(ore, 1, 0), 0.2f, MeshType.IRON.getID());
+                registry.register(Blocks.GRAVEL.getDefaultState(), new ItemStack(ore, 1, 0), 0.1f, MeshType.DIAMOND.getID());
             }
 
             // Seeds
             for (ItemSeedBase seed : ModItems.itemSeeds) {
-                ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.DIRT.getDefaultState(), new ItemStack(seed), 0.05f, MeshType.STRING.getID());
+                registry.register(Blocks.DIRT.getDefaultState(), new ItemStack(seed), 0.05f, MeshType.STRING.getID());
             }
 
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.DIRT.getDefaultState(), ItemResource.getResourceStack(ItemResource.ANCIENT_SPORES), 0.05f, MeshType.STRING.getID());
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(Blocks.DIRT.getDefaultState(), ItemResource.getResourceStack(ItemResource.GRASS_SEEDS), 0.05f, MeshType.STRING.getID());
+            registry.register(Blocks.DIRT.getDefaultState(), ItemResource.getResourceStack(ItemResource.ANCIENT_SPORES), 0.05f, MeshType.STRING.getID());
+            registry.register(Blocks.DIRT.getDefaultState(), ItemResource.getResourceStack(ItemResource.GRASS_SEEDS), 0.05f, MeshType.STRING.getID());
         }
     }
 
@@ -313,4 +262,69 @@ public class ExNihiloDefaultRecipes implements  ICrucibleDefaultRegistryProvider
             registry.register(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.DIORITE), new ItemStack(ModItems.pebbles, 1, EnumPebbleSubtype.DIORITE.getMeta()), 1, 3F, 1.25F);
         }
     }
+
+    private static class HeatDefaults implements IHeatDefaultRegistryProvider {
+        @Override
+        public void registerRecipeDefaults(HeatRegistryNew registry) {
+            // Vanilla fluids are weird, the "flowing" variant is simply a temporary state of checking if it can flow.
+            // So, once the lava has spread out all the way, it will all actually be "still" lava.
+            // Thanks Mojang <3
+            registry.register(new BlockInfo(Blocks.FLOWING_LAVA, -1), 3);
+            registry.register(new BlockInfo(Blocks.LAVA, -1), 3);
+            registry.register(new BlockInfo(Blocks.FIRE, -1), 4);
+            registry.register(new BlockInfo(Blocks.TORCH, -1), 1);
+        }
+    }
+
+    private static class BarrelLiquidBlacklistDefaults implements IBarrelLiquidBlacklistDefaultRegistryProvider {
+        @Override
+        public void registerRecipeDefaults(BarrelLiquidBlacklistRegistryNew registry) {
+            registry.register(ModBlocks.barrelWood.getTier(), "lava");
+            registry.register(ModBlocks.barrelWood.getTier(), "fire_water");
+            registry.register(ModBlocks.barrelWood.getTier(), "rocket_fuel");
+
+        }
+    }
+
+    private static class OreDefaults implements IOreDefaultRegistryProvider {
+        @Override
+        public void registerRecipeDefaults(OreRegistryNew registry) {
+            registry.register("gold", new Color("FFFF00"), new ItemInfo(Items.GOLD_INGOT, 0));
+            registry.register("iron", new Color("BF8040"), new ItemInfo(Items.IRON_INGOT, 0));
+
+            //TODO: Better way, will most likely never grab as it is just called before many mods init their oredict
+            if (OreDictionary.getOres("oreCopper").size() > 0) {
+                registry.register("copper", new Color("FF9933"), null);
+            }
+
+            if (OreDictionary.getOres("oreTin").size() > 0) {
+                registry.register("tin", new Color("E6FFF2"), null);
+            }
+
+            if (OreDictionary.getOres("oreAluminium").size() > 0 || OreDictionary.getOres("oreAluminum").size() > 0) {
+                registry.register("aluminium", new Color("BFBFBF"), null);
+            }
+
+            if (OreDictionary.getOres("oreLead").size() > 0) {
+                registry.register("lead", new Color("330066"), null);
+            }
+
+            if (OreDictionary.getOres("oreSilver").size() > 0) {
+                registry.register("silver", new Color("F2F2F2"), null);
+            }
+
+            if (OreDictionary.getOres("oreNickel").size() > 0) {
+                registry.register("nickel", new Color("FFFFCC"), null);
+            }
+
+            if (OreDictionary.getOres("oreArdite").size() > 0) {
+                registry.register("ardite", new Color("FF751A"), null);
+            }
+
+            if (OreDictionary.getOres("oreCobalt").size() > 0) {
+                registry.register("cobalt", new Color("3333FF"), null);
+            }
+        }
+    }
+
 }

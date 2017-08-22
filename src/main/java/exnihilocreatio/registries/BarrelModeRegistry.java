@@ -13,13 +13,13 @@ import java.util.HashMap;
 
 public class BarrelModeRegistry {
 
-    private static EnumMap<TriggerType, ArrayList<IBarrelMode>> barrelModes = new EnumMap<TriggerType, ArrayList<IBarrelMode>>(TriggerType.class);
-    private static HashMap<String, IBarrelMode> barrelModeNames = new HashMap<String, IBarrelMode>();
+    private static EnumMap<TriggerType, ArrayList<IBarrelMode>> barrelModes = new EnumMap<>(TriggerType.class);
+    private static HashMap<String, IBarrelMode> barrelModeNames = new HashMap<>();
 
     public static void registerBarrelMode(IBarrelMode mode, TriggerType type) {
         ArrayList<IBarrelMode> list = barrelModes.get(type);
         if (list == null)
-            list = new ArrayList<IBarrelMode>();
+            list = new ArrayList<>();
 
         list.add(mode);
         barrelModes.put(type, list);

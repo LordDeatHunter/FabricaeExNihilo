@@ -3,7 +3,7 @@ package exnihilocreatio.tiles;
 import exnihilocreatio.capabilities.CapabilityHeatManager;
 import exnihilocreatio.networking.PacketHandler;
 import exnihilocreatio.registries.CrucibleRegistryStone;
-import exnihilocreatio.registries.HeatRegistry;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import net.minecraft.block.state.IBlockState;
@@ -90,7 +90,7 @@ public class TileCrucibleStone extends TileCrucibleBase<CrucibleRegistryStone> {
             return 0;
         }
 
-        int heat = HeatRegistry.getHeatAmount(new BlockInfo(stateBelow));
+        int heat = ExNihiloRegistryManager.HEAT_REGISTRY.getHeatAmount(new BlockInfo(stateBelow));
 
         if (heat != 0) {
             return heat;

@@ -1,0 +1,6 @@
+package exnihilocreatio.registries.manager;
+
+import exnihilocreatio.registries.registries.BarrelLiquidBlacklistRegistryNew;
+
+public interface IBarrelLiquidBlacklistDefaultRegistryProvider extends IDefaultRecipeProvider<BarrelLiquidBlacklistRegistryNew> {
+}

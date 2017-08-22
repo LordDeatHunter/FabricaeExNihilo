@@ -40,9 +40,9 @@ public abstract class BaseRegistry<RegType> {
     public abstract void loadJson(File file);
 
     public void registerDefaults() {
-        if (defaultRecipeProviders != null){
+        if (defaultRecipeProviders != null) {
             for (IDefaultRecipeProvider defaultRecipeProvider : defaultRecipeProviders) {
-                if (defaultRecipeProvider != null){
+                if (defaultRecipeProvider != null) {
                     defaultRecipeProvider.registerRecipeDefaults(this);
                 }
             }

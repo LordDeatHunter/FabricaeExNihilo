@@ -3,9 +3,9 @@ package exnihilocreatio.barrel;
 import exnihilocreatio.networking.MessageBarrelModeUpdate;
 import exnihilocreatio.networking.MessageFluidUpdate;
 import exnihilocreatio.networking.PacketHandler;
-import exnihilocreatio.registries.BarrelLiquidBlacklistRegistry;
 import exnihilocreatio.registries.BarrelModeRegistry;
 import exnihilocreatio.registries.BarrelModeRegistry.TriggerType;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.tiles.TileBarrel;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -36,7 +36,7 @@ public class BarrelFluidHandler extends FluidTank {
 
     @Override
     public boolean canFillFluidType(FluidStack fluid) {
-        if (fluid == null || fluid.getFluid() == null || BarrelLiquidBlacklistRegistry.isBlacklisted(barrel.getTier(), fluid.getFluid().getName()))
+        if (fluid == null || fluid.getFluid() == null || ExNihiloRegistryManager.BARREL_LIQUID_BLACKLIST_REGISTRY.isBlacklisted(barrel.getTier(), fluid.getFluid().getName()))
             return false;
 
         for (IBarrelMode mode : BarrelModeRegistry.getModes(TriggerType.FLUID)) {
