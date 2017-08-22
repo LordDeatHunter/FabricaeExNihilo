@@ -53,7 +53,7 @@ public class OreRegistry {
     // Inconsistency at its finest
 
     public static void registerDefaults() {
-        for (IOreDefaultRegistryProvider iOreDefaultRegistryProvider : ExNihiloRegistryManager.getDefaultOreRecipeHandlers()) {
+        for (IOreDefaultRegistryProvider iOreDefaultRegistryProvider : ExNihiloRegistryManager.ORE_DEFAULT_REGISTRY_PROVIDERS) {
             iOreDefaultRegistryProvider.registerOreRecipeDefaults();
         }
     }

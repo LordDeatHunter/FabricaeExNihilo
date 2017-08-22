@@ -87,7 +87,7 @@ public class FluidOnTopRegistry {
     }
 
     public static void registerDefaults() {
-        for (IFluidOnTopDefaultRegistryProvider provider : ExNihiloRegistryManager.getDefaultFluidOnTopRecipeHandlers()) {
+        for (IFluidOnTopDefaultRegistryProvider provider : ExNihiloRegistryManager.FLUID_ON_TOP_DEFAULT_REGISTRY_PROVIDERS) {
             provider.registerFluidOnTopRecipeDefaults();
         }
     }

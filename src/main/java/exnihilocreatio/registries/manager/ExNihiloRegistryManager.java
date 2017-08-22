@@ -4,32 +4,23 @@ import exnihilocreatio.registries.registries.CompostRegistryNew;
 import exnihilocreatio.registries.registries.CrookRegistryNew;
 import exnihilocreatio.registries.registries.HammerRegistryNew;
 import exnihilocreatio.registries.registries.SieveRegistryNew;
-import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final class ExNihiloRegistryManager {
 
-
     //region >>>> DEFAULT RECIPE PROVIDERS
     public static final List<ISieveDefaultRegistryProvider> SIEVE_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
     public static final List<IHammerDefaultRegistryProvider> HAMMER_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
-    public static final List<ICompostDefaultRegistryProvider> DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
-    @Getter
-    public static final List<ICrookDefaultRegistryProvider> defaultCrookRecipeHandlers = new ArrayList<>();
-    @Getter
-    public static final List<ICrucibleDefaultRegistryProvider> defaultCrucibleRecipeHandlers = new ArrayList<>();
-    @Getter
-    public static final List<IFluidBlockDefaultRegistryProvider> defaultFluidBlockRecipeHandlers = new ArrayList<>();
-    @Getter
-    public static final List<IFluidOnTopDefaultRegistryProvider> defaultFluidOnTopRecipeHandlers = new ArrayList<>();
-    @Getter
-    public static final List<IFluidTransformDefaultRegistryProvider> defaultFluidTransformRecipeHandlers = new ArrayList<>();
-    @Getter
-    public static final List<IHeatDefaultRegistryProvider> defaultHeatRecipeHandlers = new ArrayList<>();
-    @Getter
-    public static final List<IOreDefaultRegistryProvider> defaultOreRecipeHandlers = new ArrayList<>();
+    public static final List<ICompostDefaultRegistryProvider> COMPOST_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
+    public static final List<ICrookDefaultRegistryProvider> CROOK_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
+    public static final List<ICrucibleDefaultRegistryProvider> CRUCIBLE_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
+    public static final List<IFluidBlockDefaultRegistryProvider> FLUID_BLOCK_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
+    public static final List<IFluidOnTopDefaultRegistryProvider> FLUID_ON_TOP_DEFAULT_REGISTRY_PROVIDERS= new ArrayList<>();
+    public static final List<IFluidTransformDefaultRegistryProvider> FLUID_TRANSFORM_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
+    public static final List<IHeatDefaultRegistryProvider> HEAT_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
+    public static final List<IOreDefaultRegistryProvider> ORE_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
     //endregion
 
     public static final CompostRegistryNew COMPOST_REGISTRY = new CompostRegistryNew();
@@ -49,35 +40,35 @@ public final class ExNihiloRegistryManager {
     }
 
     public static void registerCompostDefaultRecipeHandler(ICompostDefaultRegistryProvider provider) {
-        DEFAULT_REGISTRY_PROVIDERS.add(provider);
+        COMPOST_DEFAULT_REGISTRY_PROVIDERS.add(provider);
     }
 
     public static void registerCrookDefaultRecipeHandler(ICrookDefaultRegistryProvider provider) {
-        defaultCrookRecipeHandlers.add(provider);
+        CROOK_DEFAULT_REGISTRY_PROVIDERS.add(provider);
     }
 
     public static void registerCrucibleDefaultRecipeHandler(ICrucibleDefaultRegistryProvider provider) {
-        defaultCrucibleRecipeHandlers.add(provider);
+        CRUCIBLE_DEFAULT_REGISTRY_PROVIDERS.add(provider);
     }
 
     public static void registerFluidBlockDefaultRecipeHandler(IFluidBlockDefaultRegistryProvider provider) {
-        defaultFluidBlockRecipeHandlers.add(provider);
+        FLUID_BLOCK_DEFAULT_REGISTRY_PROVIDERS.add(provider);
     }
 
     public static void registerFluidTransformDefaultRecipeHandler(IFluidTransformDefaultRegistryProvider provider) {
-        defaultFluidTransformRecipeHandlers.add(provider);
+        FLUID_TRANSFORM_DEFAULT_REGISTRY_PROVIDERS.add(provider);
     }
 
     public static void registerFluidOnTopDefaultRecipeHandler(IFluidOnTopDefaultRegistryProvider provider) {
-        defaultFluidOnTopRecipeHandlers.add(provider);
+        FLUID_ON_TOP_DEFAULT_REGISTRY_PROVIDERS.add(provider);
     }
 
     public static void registerHeatDefaultRecipeHandler(IHeatDefaultRegistryProvider provider) {
-        defaultHeatRecipeHandlers.add(provider);
+        HEAT_DEFAULT_REGISTRY_PROVIDERS.add(provider);
     }
 
     public static void registerOreDefaultRecipeHandler(IOreDefaultRegistryProvider provider) {
-        defaultOreRecipeHandlers.add(provider);
+        ORE_DEFAULT_REGISTRY_PROVIDERS.add(provider);
     }
     //endregion
 }

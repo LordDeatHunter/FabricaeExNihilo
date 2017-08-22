@@ -70,7 +70,7 @@ public class FluidTransformRegistry {
     }
 
     public static void registerDefaults() {
-        for (IFluidTransformDefaultRegistryProvider provider : ExNihiloRegistryManager.getDefaultFluidTransformRecipeHandlers()) {
+        for (IFluidTransformDefaultRegistryProvider provider : ExNihiloRegistryManager.FLUID_TRANSFORM_DEFAULT_REGISTRY_PROVIDERS) {
             provider.registerFluidTransformRecipeDefaults();
         }
     }

@@ -72,7 +72,7 @@ public class CrucibleRegistryBase {
     }
 
     public static void registerDefaults() {
-        for (ICrucibleDefaultRegistryProvider provider : ExNihiloRegistryManager.getDefaultCrucibleRecipeHandlers()) {
+        for (ICrucibleDefaultRegistryProvider provider : ExNihiloRegistryManager.CRUCIBLE_DEFAULT_REGISTRY_PROVIDERS) {
             provider.registerCrucibleRecipeDefaults();
         }
     }

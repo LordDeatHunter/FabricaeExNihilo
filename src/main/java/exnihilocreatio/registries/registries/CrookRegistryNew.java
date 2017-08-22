@@ -27,7 +27,7 @@ public class CrookRegistryNew extends BaseRegistryMap<BlockInfo, List<CrookRewar
                         .registerTypeAdapter(ItemStack.class, new CustomItemStackJson())
                         .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
                         .create(),
-                ExNihiloRegistryManager.getDefaultCrookRecipeHandlers()
+                ExNihiloRegistryManager.CROOK_DEFAULT_REGISTRY_PROVIDERS
         );
     }
 

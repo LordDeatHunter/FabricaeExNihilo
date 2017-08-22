@@ -97,7 +97,7 @@ public class FluidBlockTransformerRegistry {
     }
 
     public static void registerDefaults() {
-        for (IFluidBlockDefaultRegistryProvider provider : ExNihiloRegistryManager.getDefaultFluidBlockRecipeHandlers()) {
+        for (IFluidBlockDefaultRegistryProvider provider : ExNihiloRegistryManager.FLUID_BLOCK_DEFAULT_REGISTRY_PROVIDERS) {
             provider.registerFluidBlockRecipeDefaults();
         }
     }

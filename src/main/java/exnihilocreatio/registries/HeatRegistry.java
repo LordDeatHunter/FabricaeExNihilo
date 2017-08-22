@@ -41,7 +41,7 @@ public class HeatRegistry {
     }
 
     public static void registerDefaults() {
-        for (IHeatDefaultRegistryProvider provider : ExNihiloRegistryManager.getDefaultHeatRecipeHandlers()) {
+        for (IHeatDefaultRegistryProvider provider : ExNihiloRegistryManager.HEAT_DEFAULT_REGISTRY_PROVIDERS) {
             provider.registerHeatRecipeDefaults();
         }
     }
