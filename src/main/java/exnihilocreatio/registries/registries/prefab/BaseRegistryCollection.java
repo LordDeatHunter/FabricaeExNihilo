@@ -2,15 +2,18 @@ package exnihilocreatio.registries.registries.prefab;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import exnihilocreatio.registries.manager.IDefaultRecipeProvider;
 
 import java.io.File;
 import java.io.FileReader;
 import java.util.Collection;
+import java.util.List;
 
-public abstract class BaseRegistryCollection<RegType extends Collection>  extends BaseRegistry<RegType>{
+//TODO: Copy stuff from the map variant
+public abstract class BaseRegistryCollection<RegType extends Collection> extends BaseRegistry<RegType> {
 
-    public BaseRegistryCollection(Gson gson, RegType registry) {
-        super(gson, registry);
+    public BaseRegistryCollection(Gson gson, RegType registry, List<? extends IDefaultRecipeProvider> defaultRecipeProviders) {
+        super(gson, registry, defaultRecipeProviders);
     }
 
     public void loadJson(File file) {

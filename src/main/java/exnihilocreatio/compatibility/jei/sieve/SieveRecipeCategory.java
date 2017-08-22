@@ -3,7 +3,7 @@ package exnihilocreatio.compatibility.jei.sieve;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 import exnihilocreatio.ExNihiloCreatio;
-import exnihilocreatio.registries.registries.SieveRegistry;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.Siftable;
 import exnihilocreatio.util.ItemInfo;
 import mezz.jei.api.IGuiHelper;
@@ -108,7 +108,7 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
                 if (!input) {
                     ItemStack mesh = (ItemStack) recipeWrapper.getInputs().get(0);
                     Multiset<String> condensedTooltips = HashMultiset.create();
-                    for (Siftable siftable : SieveRegistry.getDrops((ItemStack) recipeWrapper.getInputs().get(1))) {
+                    for (Siftable siftable : ExNihiloRegistryManager.SIEVE_REGISTRY.getDrops((ItemStack) recipeWrapper.getInputs().get(1))) {
                         if (siftable.getMeshLevel() != mesh.getItemDamage())
                             continue;
                         ItemInfo info = siftable.getDrop();

@@ -1,7 +1,7 @@
 package exnihilocreatio.blocks;
 
 import exnihilocreatio.ExNihiloCreatio;
-import exnihilocreatio.registries.registries.CrucibleRegistryStone;
+import exnihilocreatio.registries.CrucibleRegistryStone;
 import exnihilocreatio.tiles.TileCrucibleStone;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;

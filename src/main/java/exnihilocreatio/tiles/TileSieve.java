@@ -4,7 +4,7 @@ import com.google.common.base.Objects;
 import exnihilocreatio.ModEnchantments;
 import exnihilocreatio.blocks.BlockSieve;
 import exnihilocreatio.config.ModConfig;
-import exnihilocreatio.registries.registries.SieveRegistry;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.Siftable;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.Util;
@@ -86,11 +86,11 @@ public class TileSieve extends BaseTileEntity {
     }
 
     public boolean addBlock(ItemStack stack) {
-        if (currentStack == null && SieveRegistry.canBeSifted(stack)) {
+        if (currentStack == null && ExNihiloRegistryManager.SIEVE_REGISTRY.canBeSifted(stack)) {
             if (meshStack.isEmpty())
                 return false;
             int meshLevel = meshStack.getItemDamage();
-            for (Siftable siftable : SieveRegistry.getDrops(stack)) {
+            for (Siftable siftable : ExNihiloRegistryManager.SIEVE_REGISTRY.getDrops(stack)) {
                 if (siftable.getMeshLevel() == meshLevel) {
                     currentStack = new BlockInfo(stack);
                     markDirtyClient();
@@ -148,7 +148,7 @@ public class TileSieve extends BaseTileEntity {
             markDirtyClient();
 
             if (progress >= 100) {
-                List<ItemStack> drops = SieveRegistry.getRewardDrops(rand, currentStack.getBlockState(), meshStack.getMetadata(), fortune);
+                List<ItemStack> drops = ExNihiloRegistryManager.SIEVE_REGISTRY.getRewardDrops(rand, currentStack.getBlockState(), meshStack.getMetadata(), fortune);
 
                 if (drops == null) {
                     drops = new ArrayList<>();

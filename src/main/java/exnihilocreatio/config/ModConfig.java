@@ -67,7 +67,7 @@ public class ModConfig {
         @Config.RequiresMcRestart
         public TinkersConstructCompat tinkers_construct_compat = new TinkersConstructCompat();
 
-        public static class TinkersConstructCompat{
+        public static class TinkersConstructCompat {
             public boolean doTinkersConstructCompat = true;
             public boolean addModifer = true;
             public boolean addMeltingOfChunks = true;

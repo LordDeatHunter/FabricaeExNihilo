@@ -18,8 +18,11 @@ import exnihilocreatio.compatibility.jei.hammer.HammerRecipe;
 import exnihilocreatio.compatibility.jei.hammer.HammerRecipeCategory;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipe;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipeCategory;
+import exnihilocreatio.registries.FluidBlockTransformerRegistry;
+import exnihilocreatio.registries.FluidOnTopRegistry;
+import exnihilocreatio.registries.FluidTransformRegistry;
+import exnihilocreatio.registries.HammerRegistry;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
-import exnihilocreatio.registries.registries.*;
 import exnihilocreatio.registries.types.Compostable;
 import exnihilocreatio.registries.types.FluidBlockTransformer;
 import exnihilocreatio.registries.types.FluidFluidBlock;
@@ -48,10 +51,12 @@ import java.util.Map;
 public class CompatJEI implements IModPlugin {
 
     @Override
-    public void registerItemSubtypes(@Nonnull ISubtypeRegistry subtypeRegistry) {}
+    public void registerItemSubtypes(@Nonnull ISubtypeRegistry subtypeRegistry) {
+    }
 
     @Override
-    public void registerIngredients(@Nonnull IModIngredientRegistration registry) {}
+    public void registerIngredients(@Nonnull IModIngredientRegistration registry) {
+    }
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
@@ -75,7 +80,7 @@ public class CompatJEI implements IModPlugin {
         //region >>>> SIEVE RECIPES
         List<SieveRecipe> sieveRecipes = Lists.newArrayList();
 
-        for (BlockInfo info : SieveRegistry.getRegistry().keySet()) {
+        for (BlockInfo info : ExNihiloRegistryManager.SIEVE_REGISTRY.getRegistry().keySet()) {
             for (MeshType type : MeshType.values()) {
                 if (type.getID() != 0 && info.getBlockState() != null) // Bad configs strike back!
                 {
@@ -96,7 +101,7 @@ public class CompatJEI implements IModPlugin {
         //region >>>> HAMMER RECIPES
         List<HammerRecipe> hammerRecipes = Lists.newArrayList();
 
-        for (ItemInfo info : HammerRegistry.getRegistry().keySet()) {
+        for (ItemInfo info : ExNihiloRegistryManager.HAMMER_REGISTRY.getRegistry().keySet()) {
             if (info.getItem() != null) {
                 @SuppressWarnings("deprecation")
                 IBlockState block = Block.getBlockFromItem(info.getItem()).getStateFromMeta(info.getMeta());
@@ -232,5 +237,6 @@ public class CompatJEI implements IModPlugin {
     }
 
     @Override
-    public void onRuntimeAvailable(@Nonnull IJeiRuntime jeiRuntime) {}
+    public void onRuntimeAvailable(@Nonnull IJeiRuntime jeiRuntime) {
+    }
 }

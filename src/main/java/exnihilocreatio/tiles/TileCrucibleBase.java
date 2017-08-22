@@ -1,12 +1,11 @@
 package exnihilocreatio.tiles;
 
-import exnihilocreatio.registries.registries.CrucibleRegistryBase;
+import exnihilocreatio.registries.CrucibleRegistryBase;
 import exnihilocreatio.registries.types.Meltable;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.texturing.SpriteColor;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
-import exnihilocreatio.util.LogUtil;
 import exnihilocreatio.util.Util;
 import lombok.Getter;
 import net.minecraft.block.Block;
@@ -82,7 +81,8 @@ public abstract class TileCrucibleBase<R extends CrucibleRegistryBase> extends B
             if (meltable != null) {
                 solidProportion += ((double) solidAmount) / (MAX_ITEMS * meltable.getAmount());
             } else {
-                LogUtil.throwing(new NullPointerException("Meltable is null! Item is " + currentItem.getItem().getUnlocalizedName()));
+                // LogUtil.throwing(new NullPointerException("Meltable is null! Item is " + currentItem.getItem().getUnlocalizedName()));
+                // TODO: REIMPLEMENT
             }
         }
 

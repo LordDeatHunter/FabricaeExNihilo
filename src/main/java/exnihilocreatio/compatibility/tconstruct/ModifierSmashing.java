@@ -1,6 +1,6 @@
 package exnihilocreatio.compatibility.tconstruct;
 
-import exnihilocreatio.registries.registries.HammerRegistry;
+import exnihilocreatio.registries.HammerRegistry;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;

@@ -1,7 +1,6 @@
 package exnihilocreatio.registries.manager;
 
-public interface ICrookDefaultRegistryProvider {
+import exnihilocreatio.registries.registries.CrookRegistryNew;
 
-    void registerCrookRecipeDefaults();
-
+public interface ICrookDefaultRegistryProvider extends IDefaultRecipeProvider<CrookRegistryNew> {
 }

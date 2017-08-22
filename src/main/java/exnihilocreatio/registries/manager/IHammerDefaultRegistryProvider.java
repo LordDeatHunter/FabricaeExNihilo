@@ -1,7 +1,6 @@
 package exnihilocreatio.registries.manager;
 
-public interface IHammerDefaultRegistryProvider {
+import exnihilocreatio.registries.registries.HammerRegistryNew;
 
-    public void registerHammerRecipeDefaults();
-
+public interface IHammerDefaultRegistryProvider extends IDefaultRecipeProvider<HammerRegistryNew> {
 }

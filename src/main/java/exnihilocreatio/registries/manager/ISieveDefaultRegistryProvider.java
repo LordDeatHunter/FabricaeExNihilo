@@ -1,7 +1,6 @@
 package exnihilocreatio.registries.manager;
 
-public interface ISieveDefaultRegistryProvider {
+import exnihilocreatio.registries.registries.SieveRegistryNew;
 
-    void registerSieveRecipeDefaults();
-
+public interface ISieveDefaultRegistryProvider extends IDefaultRecipeProvider<SieveRegistryNew> {
 }

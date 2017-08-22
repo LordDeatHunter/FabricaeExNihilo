@@ -1,7 +1,7 @@
 package exnihilocreatio.compatibility.jei.hammer;
 
 import com.google.common.collect.Lists;
-import exnihilocreatio.registries.registries.HammerRegistry;
+import exnihilocreatio.registries.HammerRegistry;
 import exnihilocreatio.registries.types.HammerReward;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;

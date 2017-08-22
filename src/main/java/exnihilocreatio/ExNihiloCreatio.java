@@ -12,7 +12,6 @@ import exnihilocreatio.proxy.CommonProxy;
 import exnihilocreatio.registries.*;
 import exnihilocreatio.registries.manager.ExNihiloDefaultRecipes;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
-import exnihilocreatio.registries.registries.*;
 import exnihilocreatio.util.LogUtil;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -25,7 +24,6 @@ import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.registries.RegistryManager;
 
 import java.io.File;
 
@@ -51,7 +49,7 @@ public class ExNihiloCreatio {
     static {
         FluidRegistry.enableUniversalBucket();
         // registers itself to the needed registries
-        new ExNihiloDefaultRecipes();
+        ExNihiloDefaultRecipes.registerDefaults();
     }
 
     @EventHandler
@@ -108,16 +106,20 @@ public class ExNihiloCreatio {
     public static void loadConfigs() {
         configsLoaded = true;
 
+
         ExNihiloRegistryManager.COMPOST_REGISTRY.loadJson(new File(configDirectory, "CompostRegistry.json"));
+        ExNihiloRegistryManager.CROOK_REGISTRY.loadJson(new File(configDirectory, "CrookRegistry_new.json"));
+        ExNihiloRegistryManager.SIEVE_REGISTRY.loadJson(new File(configDirectory, "SieveRegistry_new.json"));
+        ExNihiloRegistryManager.HAMMER_REGISTRY.loadJson(new File(configDirectory, "HammerRegistry_new.json"));
 
         // CompostRegistryNew.loadJson(new File(configDirectory, "CompostRegistryNew.json"));
-        HammerRegistry.loadJson(new File(configDirectory, "HammerRegistry.json"));
+        // HammerRegistry.loadJson(new File(configDirectory, "HammerRegistry.json"));
         FluidBlockTransformerRegistry.loadJson(new File(configDirectory, "FluidBlockTransformerRegistry.json"));
         FluidOnTopRegistry.loadJson(new File(configDirectory, "FluidOnTopRegistry.json"));
         HeatRegistry.loadJson(new File(configDirectory, "HeatRegistry.json"));
         CrucibleRegistryStone.loadJson(new File(configDirectory, "CrucibleRegistryStone.json"));
-        SieveRegistry.loadJson(new File(configDirectory, "SieveRegistry.json"));
-        CrookRegistry.loadJson(new File(configDirectory, "CrookRegistry.json"));
+        // SieveRegistry.loadJson(new File(configDirectory, "SieveRegistry.json"));
+        // CrookRegistry.loadJson(new File(configDirectory, "CrookRegistry.json"));
         FluidTransformRegistry.loadJson(new File(configDirectory, "FluidTransformRegistry.json"));
         BarrelLiquidBlacklistRegistry.loadJson(new File(configDirectory, "BarrelLiquidBlacklistRegistry.json"));
 

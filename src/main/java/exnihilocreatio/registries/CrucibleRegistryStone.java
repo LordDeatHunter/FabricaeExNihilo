@@ -1,4 +1,4 @@
-package exnihilocreatio.registries.registries;
+package exnihilocreatio.registries;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,7 +21,7 @@ import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CrucibleRegistryWood extends CrucibleRegistryBase{
+public class CrucibleRegistryStone extends CrucibleRegistryBase {
     private static Map<ItemInfo, Meltable> registry = new HashMap<>();
     private static Map<ItemInfo, Meltable> externalRegistry = new HashMap<>();
 
@@ -60,6 +60,8 @@ public class CrucibleRegistryWood extends CrucibleRegistryBase{
     }
 
     public static Meltable getMeltable(ItemStack stack) {
+        System.out.println("Called in STONE");
+
         ItemInfo info = new ItemInfo(stack);
 
         return registry.get(info);

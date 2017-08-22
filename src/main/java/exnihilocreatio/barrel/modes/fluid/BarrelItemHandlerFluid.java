@@ -4,7 +4,7 @@ import exnihilocreatio.barrel.modes.mobspawn.BarrelModeMobSpawn;
 import exnihilocreatio.items.ItemDoll;
 import exnihilocreatio.networking.MessageBarrelModeUpdate;
 import exnihilocreatio.networking.PacketHandler;
-import exnihilocreatio.registries.registries.FluidBlockTransformerRegistry;
+import exnihilocreatio.registries.FluidBlockTransformerRegistry;
 import exnihilocreatio.tiles.TileBarrel;
 import exnihilocreatio.util.ItemInfo;
 import lombok.Setter;

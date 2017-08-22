@@ -6,7 +6,7 @@ import crazypants.enderio.machine.recipe.RecipeInput;
 import crazypants.enderio.machine.recipe.RecipeOutput;
 import crazypants.enderio.machine.sagmill.SagMillRecipeManager;
 import exnihilocreatio.items.ore.ItemOre;
-import exnihilocreatio.registries.registries.OreRegistry;
+import exnihilocreatio.registries.OreRegistry;
 import net.minecraft.item.ItemStack;
 
 public class CompatEIO {

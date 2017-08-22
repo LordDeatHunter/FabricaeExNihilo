@@ -3,7 +3,6 @@ package exnihilocreatio.client.renderers;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.texturing.SpriteColor;
 import exnihilocreatio.tiles.TileCrucibleBase;
-import exnihilocreatio.tiles.TileCrucibleStone;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;

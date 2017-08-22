@@ -1,26 +1,27 @@
 package exnihilocreatio.registries.registries.prefab;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import exnihilocreatio.registries.manager.IDefaultRecipeProvider;
 
 import java.io.File;
 import java.io.FileReader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public abstract class BaseRegistryMap<K, V>  extends BaseRegistry<Map<K, V>>{
+public abstract class BaseRegistryMap<K, V> extends BaseRegistry<Map<K, V>> {
 
-    public BaseRegistryMap(Gson gson) {
-        super(gson, new HashMap<>());
+    public BaseRegistryMap(Gson gson, List<? extends IDefaultRecipeProvider> defaultRecipeProviders) {
+        super(gson, new HashMap<>(), defaultRecipeProviders);
     }
 
     public void loadJson(File file) {
-        registry.clear();
+        if (hasAlreadyBeenLoaded) registry.clear();
 
         if (file.exists()) {
             try {
                 FileReader fr = new FileReader(file);
-                registerEntries(fr);
+                registerEntriesFromJSON(fr);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -30,12 +31,12 @@ public abstract class BaseRegistryMap<K, V>  extends BaseRegistry<Map<K, V>>{
             saveJson(file);
         }
 
-        // registry.addAll(externalRegistry);
+        hasAlreadyBeenLoaded = true;
     }
 
-    public abstract void registerEntries(FileReader fr);
+    public abstract void registerEntriesFromJSON(FileReader fr);
 
-    public void register(K key, V value){
+    public void register(K key, V value) {
         registry.put(key, value);
     }
 }

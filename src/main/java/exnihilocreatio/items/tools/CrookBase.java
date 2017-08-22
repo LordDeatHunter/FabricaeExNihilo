@@ -1,7 +1,7 @@
 package exnihilocreatio.items.tools;
 
 import com.google.common.collect.Sets;
-import exnihilocreatio.registries.registries.CrookRegistry;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
 import net.minecraft.block.Block;
@@ -32,6 +32,6 @@ public class CrookBase extends ItemTool implements ICrook, IHasModel {
 
     @Override
     public float getStrVsBlock(@Nonnull ItemStack stack, IBlockState state) {
-        return CrookRegistry.registered(state.getBlock()) ? this.efficiencyOnProperMaterial : 1.0F;
+        return ExNihiloRegistryManager.CROOK_REGISTRY.isRegistered(state.getBlock()) ? this.efficiencyOnProperMaterial : 1.0F;
     }
 }

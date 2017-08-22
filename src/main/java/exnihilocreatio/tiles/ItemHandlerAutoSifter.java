@@ -1,6 +1,6 @@
 package exnihilocreatio.tiles;
 
-import exnihilocreatio.registries.registries.SieveRegistry;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import lombok.Setter;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
@@ -18,7 +18,7 @@ public class ItemHandlerAutoSifter extends ItemStackHandler {
     @Override
     @Nonnull
     public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-        if (SieveRegistry.canBeSifted(stack)) {
+        if (ExNihiloRegistryManager.SIEVE_REGISTRY.canBeSifted(stack)) {
             te.markDirtyClient();
             return super.insertItem(slot, stack, simulate);
         } else {

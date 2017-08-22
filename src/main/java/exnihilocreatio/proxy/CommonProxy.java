@@ -1,7 +1,7 @@
 package exnihilocreatio.proxy;
 
 import exnihilocreatio.*;
-import exnihilocreatio.registries.registries.OreRegistry;
+import exnihilocreatio.registries.OreRegistry;
 import exnihilocreatio.util.Data;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;

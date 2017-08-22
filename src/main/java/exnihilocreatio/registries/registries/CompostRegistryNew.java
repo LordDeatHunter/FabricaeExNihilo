@@ -1,18 +1,14 @@
-package exnihilocreatio.registries.registries.testReg;
+package exnihilocreatio.registries.registries;
 
 import com.google.common.collect.Maps;
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
-import exnihilocreatio.registries.manager.ICompostDefaultRegistryProvider;
-import exnihilocreatio.registries.registries.prefab.BaseRegistryCollection;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.Compostable;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.ItemInfo;
-import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -24,21 +20,24 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.io.IOUtils;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
-import java.util.HashMap;
 import java.util.Map;
 
 public class CompostRegistryNew extends BaseRegistryMap<ItemInfo, Compostable> {
 
     public CompostRegistryNew() {
-        super(new GsonBuilder().setPrettyPrinting().registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson()).create());
+        super(
+                new GsonBuilder()
+                        .setPrettyPrinting()
+                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
+                        .create(),
+                ExNihiloRegistryManager.getDefaultCompostRecipeHandlers()
+        );
     }
 
     public void register(Item item, int meta, float value, IBlockState state, Color color) {
@@ -114,20 +113,11 @@ public class CompostRegistryNew extends BaseRegistryMap<ItemInfo, Compostable> {
     }
 
     @Override
-    public void registerDefaults() {
-        for (ICompostDefaultRegistryProvider provider : ExNihiloRegistryManager.getDefaultCompostRecipeHandlers()) {
-            provider.registerCompostRecipeDefaults(this);
-        }
-    }
-
-    @Override
-    public void registerEntries(FileReader fr) {
-        Map<String, Compostable> gsonInput = gson.fromJson(fr, new TypeToken<Map<String, Compostable>>() {}.getType());
+    public void registerEntriesFromJSON(FileReader fr) {
+        Map<String, Compostable> gsonInput = gson.fromJson(fr, new TypeToken<Map<String, Compostable>>() {
+        }.getType());
 
         for (Map.Entry<String, Compostable> entry : gsonInput.entrySet()) {
-            System.out.println("entry.getKey() = " + entry.getKey());
-            System.out.println("entry.getValue() = " + entry.getValue());
-
             registry.put(new ItemInfo(entry.getKey()), entry.getValue());
         }
     }

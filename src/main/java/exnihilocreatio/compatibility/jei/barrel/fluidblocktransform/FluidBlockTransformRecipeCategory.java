@@ -33,7 +33,7 @@ public class FluidBlockTransformRecipeCategory implements IRecipeCategory<FluidB
     @Override
     @Nonnull
     public String getTitle() {
-        return "Fluid BlockStoneAxle Transform";
+        return "Fluid Block Transform";
     }
 
     @Override

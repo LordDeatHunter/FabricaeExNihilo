@@ -1,6 +1,6 @@
 package exnihilocreatio.tiles;
 
-import exnihilocreatio.registries.registries.CrucibleRegistryBase;
+import exnihilocreatio.registries.CrucibleRegistryBase;
 import exnihilocreatio.registries.types.Meltable;
 import lombok.Setter;
 import net.minecraft.item.ItemStack;

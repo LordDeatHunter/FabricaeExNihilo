@@ -3,7 +3,7 @@ package exnihilocreatio.compatibility.jei.sieve;
 import com.google.common.collect.Lists;
 import exnihilocreatio.ModItems;
 import exnihilocreatio.blocks.BlockSieve.MeshType;
-import exnihilocreatio.registries.registries.SieveRegistry;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.Siftable;
 import exnihilocreatio.util.BlockInfo;
 import mezz.jei.api.ingredients.IIngredients;
@@ -22,7 +22,7 @@ public class SieveRecipe implements IRecipeWrapper {
     private List<ItemStack> outputs = new ArrayList<ItemStack>();
 
     public SieveRecipe(IBlockState block, MeshType mesh) {
-        List<Siftable> rewards = SieveRegistry.getDrops(new BlockInfo(block));
+        List<Siftable> rewards = ExNihiloRegistryManager.SIEVE_REGISTRY.getDrops(new BlockInfo(block));
         // Filter reward list into item stack list, keeping only those of the correct mesh level
 
         if (rewards == null) {

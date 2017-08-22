@@ -2,8 +2,8 @@ package exnihilocreatio.tiles;
 
 import exnihilocreatio.capabilities.CapabilityHeatManager;
 import exnihilocreatio.networking.PacketHandler;
-import exnihilocreatio.registries.registries.CrucibleRegistryStone;
-import exnihilocreatio.registries.registries.HeatRegistry;
+import exnihilocreatio.registries.CrucibleRegistryStone;
+import exnihilocreatio.registries.HeatRegistry;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import net.minecraft.block.state.IBlockState;

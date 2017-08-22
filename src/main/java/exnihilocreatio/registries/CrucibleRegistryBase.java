@@ -1,4 +1,4 @@
-package exnihilocreatio.registries.registries;
+package exnihilocreatio.registries;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 // DR is the default ICrucibleDefaultRegistryProvider
-public class CrucibleRegistryBase{
+public class CrucibleRegistryBase {
     protected static Map<ItemInfo, Meltable> registry = new HashMap<>();
     protected static Map<ItemInfo, Meltable> externalRegistry = new HashMap<>();
 

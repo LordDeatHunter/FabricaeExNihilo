@@ -1,44 +1,53 @@
 package exnihilocreatio.registries.manager;
 
-import exnihilocreatio.registries.registries.testReg.CompostRegistryNew;
+import exnihilocreatio.registries.registries.CompostRegistryNew;
+import exnihilocreatio.registries.registries.CrookRegistryNew;
+import exnihilocreatio.registries.registries.HammerRegistryNew;
+import exnihilocreatio.registries.registries.SieveRegistryNew;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ExNihiloRegistryManager {
 
+    public static final CompostRegistryNew COMPOST_REGISTRY = new CompostRegistryNew();
+    public static final CrookRegistryNew CROOK_REGISTRY = new CrookRegistryNew();
+    public static final SieveRegistryNew SIEVE_REGISTRY = new SieveRegistryNew();
+    public static final HammerRegistryNew HAMMER_REGISTRY = new HammerRegistryNew();
+
+
     //region >>>> DEFAULT RECIPE PROVIDERS
+    public static final List<ISieveDefaultRegistryProvider> SIEVE_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
+    public static final List<IHammerDefaultRegistryProvider> HAMMER_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>(); //TODO: Change back to arraylist
     @Getter
-    private static ArrayList<ISieveDefaultRegistryProvider> defaultSieveRecipeHandlers = new ArrayList<>();
+    public static final List<ICompostDefaultRegistryProvider> defaultCompostRecipeHandlers = new ArrayList<>();
     @Getter
-    private static ArrayList<IHammerDefaultRegistryProvider> defaultHammerRecipeHandlers = new ArrayList<>();
+    public static final List<ICrookDefaultRegistryProvider> defaultCrookRecipeHandlers = new ArrayList<>();
     @Getter
-    private static ArrayList<ICompostDefaultRegistryProvider> defaultCompostRecipeHandlers = new ArrayList<>();
+    public static final List<ICrucibleDefaultRegistryProvider> defaultCrucibleRecipeHandlers = new ArrayList<>();
     @Getter
-    private static ArrayList<ICrookDefaultRegistryProvider> defaultCrookRecipeHandlers = new ArrayList<>();
+    public static final List<IFluidBlockDefaultRegistryProvider> defaultFluidBlockRecipeHandlers = new ArrayList<>();
     @Getter
-    private static ArrayList<ICrucibleDefaultRegistryProvider> defaultCrucibleRecipeHandlers = new ArrayList<>();
+    public static final List<IFluidOnTopDefaultRegistryProvider> defaultFluidOnTopRecipeHandlers = new ArrayList<>();
     @Getter
-    private static ArrayList<IFluidBlockDefaultRegistryProvider> defaultFluidBlockRecipeHandlers = new ArrayList<>();
+    public static final List<IFluidTransformDefaultRegistryProvider> defaultFluidTransformRecipeHandlers = new ArrayList<>();
     @Getter
-    private static ArrayList<IFluidTransformDefaultRegistryProvider> defaultFluidTransformRecipeHandlers = new ArrayList<>();
+    public static final List<IHeatDefaultRegistryProvider> defaultHeatRecipeHandlers = new ArrayList<>();
     @Getter
-    private static ArrayList<IFluidOnTopDefaultRegistryProvider> defaultFluidOnTopRecipeHandlers = new ArrayList<>();
-    @Getter
-    private static ArrayList<IHeatDefaultRegistryProvider> defaultHeatRecipeHandlers = new ArrayList<>();
-    @Getter
-    private static ArrayList<IOreDefaultRegistryProvider> defaultOreRecipeHandlers = new ArrayList<>();
+    public static final List<IOreDefaultRegistryProvider> defaultOreRecipeHandlers = new ArrayList<>();
     //endregion
 
-    public static final CompostRegistryNew COMPOST_REGISTRY = new CompostRegistryNew();
 
     //region >>>> DEFAULT RECIPE REGISTERS
+
     public static void registerSieveDefaultRecipeHandler(ISieveDefaultRegistryProvider provider) {
-        defaultSieveRecipeHandlers.add(provider);
+        SIEVE_DEFAULT_REGISTRY_PROVIDERS.add(provider);
     }
 
     public static void registerHammerDefaultRecipeHandler(IHammerDefaultRegistryProvider provider) {
-        defaultHammerRecipeHandlers.add(provider);
+        HAMMER_DEFAULT_REGISTRY_PROVIDERS.add(provider);
     }
 
     public static void registerCompostDefaultRecipeHandler(ICompostDefaultRegistryProvider provider) {

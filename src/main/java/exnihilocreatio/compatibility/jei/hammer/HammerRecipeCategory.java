@@ -3,7 +3,7 @@ package exnihilocreatio.compatibility.jei.hammer;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import exnihilocreatio.ExNihiloCreatio;
-import exnihilocreatio.registries.registries.HammerRegistry;
+import exnihilocreatio.registries.HammerRegistry;
 import exnihilocreatio.registries.types.HammerReward;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;

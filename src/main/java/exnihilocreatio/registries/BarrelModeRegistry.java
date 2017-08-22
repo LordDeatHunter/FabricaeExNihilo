@@ -1,4 +1,4 @@
-package exnihilocreatio.registries.registries;
+package exnihilocreatio.registries;
 
 import exnihilocreatio.barrel.IBarrelMode;
 import exnihilocreatio.barrel.modes.block.BarrelModeBlock;

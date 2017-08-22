@@ -1,7 +1,6 @@
 package exnihilocreatio.command;
 
 import exnihilocreatio.ExNihiloCreatio;
-import exnihilocreatio.config.ModConfig;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -11,7 +10,6 @@ import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 
 import javax.annotation.Nonnull;
-import java.io.File;
 
 public class CommandReloadConfig extends CommandBase {
     @Override

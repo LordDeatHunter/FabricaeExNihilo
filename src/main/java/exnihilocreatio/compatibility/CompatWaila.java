@@ -2,7 +2,7 @@ package exnihilocreatio.compatibility;
 
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.blocks.*;
-import exnihilocreatio.registries.registries.CrucibleRegistryStone;
+import exnihilocreatio.registries.CrucibleRegistryStone;
 import exnihilocreatio.rotationalPower.IRotationalPowerMember;
 import exnihilocreatio.tiles.*;
 import mcp.mobius.waila.api.*;

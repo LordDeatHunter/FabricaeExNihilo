@@ -1,7 +1,7 @@
 package exnihilocreatio.handlers;
 
 import exnihilocreatio.items.tools.IHammer;
-import exnihilocreatio.registries.registries.HammerRegistry;
+import exnihilocreatio.registries.HammerRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.world.BlockEvent;

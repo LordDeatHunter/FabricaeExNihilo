@@ -4,7 +4,7 @@ import exnihilocreatio.ModItems;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.ore.EnumOreSubtype;
 import exnihilocreatio.items.ore.ItemOre;
-import exnihilocreatio.registries.registries.OreRegistry;
+import exnihilocreatio.registries.OreRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -14,16 +14,16 @@ import slimeknights.tconstruct.library.modifiers.Modifier;
 
 public class CompatTConstruct {
     public static void postInit() {
-        if (ModConfig.compatibility.tinkers_construct_compat.addModifer){
+        if (ModConfig.compatibility.tinkers_construct_compat.addModifer) {
             Modifier smashingModifier = new ModifierSmashing();
             TinkerRegistry.registerModifier(smashingModifier);
             smashingModifier.addItem(ModItems.hammerDiamond);
         }
 
-        if (ModConfig.compatibility.tinkers_construct_compat.addMeltingOfChunks){
+        if (ModConfig.compatibility.tinkers_construct_compat.addMeltingOfChunks) {
             registerMeltingChunks();
         }
-        if (ModConfig.compatibility.tinkers_construct_compat.addMeltingOfDust){
+        if (ModConfig.compatibility.tinkers_construct_compat.addMeltingOfDust) {
             registerMeltingDust();
         }
     }

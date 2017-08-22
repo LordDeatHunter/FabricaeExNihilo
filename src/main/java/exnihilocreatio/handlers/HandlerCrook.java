@@ -2,7 +2,7 @@ package exnihilocreatio.handlers;
 
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.tools.ICrook;
-import exnihilocreatio.registries.registries.CrookRegistry;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.CrookReward;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
@@ -12,8 +12,8 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class HandlerCrook {
 
@@ -32,7 +32,7 @@ public class HandlerCrook {
         if (!isCrook(held))
             return;
 
-        ArrayList<CrookReward> rewards = CrookRegistry.getRewards(event.getState());
+        List<CrookReward> rewards = ExNihiloRegistryManager.CROOK_REGISTRY.getRewards(event.getState());
         if (rewards != null && rewards.size() > 0) {
             event.getDrops().clear();
             event.setDropChance(1f);
