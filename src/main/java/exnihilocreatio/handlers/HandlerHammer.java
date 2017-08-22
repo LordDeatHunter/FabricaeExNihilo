@@ -1,7 +1,7 @@
 package exnihilocreatio.handlers;
 
 import exnihilocreatio.items.tools.IHammer;
-import exnihilocreatio.registries.HammerRegistry;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.world.BlockEvent;
@@ -22,7 +22,7 @@ public class HandlerHammer {
         if (!isHammer(held))
             return;
 
-        List<ItemStack> rewards = HammerRegistry.getRewardDrops(event.getWorld().rand, event.getState(), ((IHammer) held.getItem()).getMiningLevel(held), event.getFortuneLevel());
+        List<ItemStack> rewards = ExNihiloRegistryManager.HAMMER_REGISTRY.getRewardDrops(event.getWorld().rand, event.getState(), ((IHammer) held.getItem()).getMiningLevel(held), event.getFortuneLevel());
 
         if (rewards != null && rewards.size() > 0) {
             event.getDrops().clear();

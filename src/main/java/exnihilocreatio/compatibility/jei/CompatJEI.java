@@ -21,7 +21,6 @@ import exnihilocreatio.compatibility.jei.sieve.SieveRecipeCategory;
 import exnihilocreatio.registries.FluidBlockTransformerRegistry;
 import exnihilocreatio.registries.FluidOnTopRegistry;
 import exnihilocreatio.registries.FluidTransformRegistry;
-import exnihilocreatio.registries.HammerRegistry;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.Compostable;
 import exnihilocreatio.registries.types.FluidBlockTransformer;

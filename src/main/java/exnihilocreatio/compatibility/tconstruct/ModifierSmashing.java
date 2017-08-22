@@ -1,6 +1,6 @@
 package exnihilocreatio.compatibility.tconstruct;
 
-import exnihilocreatio.registries.HammerRegistry;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
@@ -49,7 +49,7 @@ public class ModifierSmashing extends ModifierTrait {
 
     @Override
     public void blockHarvestDrops(ItemStack tool, BlockEvent.HarvestDropsEvent event) {
-        List<ItemStack> rewards = HammerRegistry.getRewardDrops(event.getWorld().rand, event.getState(), ToolHelper.getHarvestLevelStat(tool), event.getFortuneLevel());
+        List<ItemStack> rewards = ExNihiloRegistryManager.HAMMER_REGISTRY.getRewardDrops(event.getWorld().rand, event.getState(), ToolHelper.getHarvestLevelStat(tool), event.getFortuneLevel());
 
         if (rewards != null && rewards.size() > 0) {
             event.getDrops().clear();

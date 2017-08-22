@@ -24,9 +24,6 @@ public class HammerRegistryNew extends BaseRegistryMap<ItemInfo, List<HammerRewa
                         .create(),
                 ExNihiloRegistryManager.HAMMER_DEFAULT_REGISTRY_PROVIDERS
         );
-
-        System.out.println("defaultRecipeProviders = " + defaultRecipeProviders);
-        System.out.println("ExNihiloRegistryManager.HAMMER_DEFAULT_REGISTRY_PROVIDERS = " + ExNihiloRegistryManager.HAMMER_DEFAULT_REGISTRY_PROVIDERS);
     }
 
     @Override

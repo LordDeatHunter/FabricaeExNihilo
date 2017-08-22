@@ -2,7 +2,7 @@ package exnihilocreatio.items.tools;
 
 
 import com.google.common.collect.Sets;
-import exnihilocreatio.registries.HammerRegistry;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
 import net.minecraft.block.Block;
@@ -35,11 +35,11 @@ public class HammerBase extends ItemTool implements IHammer, IHasModel {
     }
 
     public float getStrVsBlock(ItemStack stack, IBlockState state) {
-        return HammerRegistry.registered(state.getBlock()) ? this.efficiencyOnProperMaterial : 1.0F;
+        return ExNihiloRegistryManager.HAMMER_REGISTRY.registered(state.getBlock()) ? this.efficiencyOnProperMaterial : 1.0F;
     }
 
     @Override
     public boolean canHarvestBlock(IBlockState state) {
-        return HammerRegistry.registered(state.getBlock());
+        return ExNihiloRegistryManager.HAMMER_REGISTRY.registered(state.getBlock());
     }
 }

@@ -7,22 +7,15 @@ import exnihilocreatio.registries.registries.SieveRegistryNew;
 import lombok.Getter;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
-public class ExNihiloRegistryManager {
-
-    public static final CompostRegistryNew COMPOST_REGISTRY = new CompostRegistryNew();
-    public static final CrookRegistryNew CROOK_REGISTRY = new CrookRegistryNew();
-    public static final SieveRegistryNew SIEVE_REGISTRY = new SieveRegistryNew();
-    public static final HammerRegistryNew HAMMER_REGISTRY = new HammerRegistryNew();
+public final class ExNihiloRegistryManager {
 
 
     //region >>>> DEFAULT RECIPE PROVIDERS
     public static final List<ISieveDefaultRegistryProvider> SIEVE_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
-    public static final List<IHammerDefaultRegistryProvider> HAMMER_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>(); //TODO: Change back to arraylist
-    @Getter
-    public static final List<ICompostDefaultRegistryProvider> defaultCompostRecipeHandlers = new ArrayList<>();
+    public static final List<IHammerDefaultRegistryProvider> HAMMER_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
+    public static final List<ICompostDefaultRegistryProvider> DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
     @Getter
     public static final List<ICrookDefaultRegistryProvider> defaultCrookRecipeHandlers = new ArrayList<>();
     @Getter
@@ -39,6 +32,11 @@ public class ExNihiloRegistryManager {
     public static final List<IOreDefaultRegistryProvider> defaultOreRecipeHandlers = new ArrayList<>();
     //endregion
 
+    public static final CompostRegistryNew COMPOST_REGISTRY = new CompostRegistryNew();
+    public static final CrookRegistryNew CROOK_REGISTRY = new CrookRegistryNew();
+    public static final SieveRegistryNew SIEVE_REGISTRY = new SieveRegistryNew();
+    public static final HammerRegistryNew HAMMER_REGISTRY = new HammerRegistryNew();
+
 
     //region >>>> DEFAULT RECIPE REGISTERS
 
@@ -51,7 +49,7 @@ public class ExNihiloRegistryManager {
     }
 
     public static void registerCompostDefaultRecipeHandler(ICompostDefaultRegistryProvider provider) {
-        defaultCompostRecipeHandlers.add(provider);
+        DEFAULT_REGISTRY_PROVIDERS.add(provider);
     }
 
     public static void registerCrookDefaultRecipeHandler(ICrookDefaultRegistryProvider provider) {

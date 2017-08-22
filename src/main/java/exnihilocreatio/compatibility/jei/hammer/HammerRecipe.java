@@ -1,7 +1,7 @@
 package exnihilocreatio.compatibility.jei.hammer;
 
 import com.google.common.collect.Lists;
-import exnihilocreatio.registries.HammerRegistry;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.HammerReward;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
@@ -20,7 +20,7 @@ public class HammerRecipe implements IRecipeWrapper {
 
     public HammerRecipe(IBlockState block) {
         if (block != null && block.getBlock() != Blocks.AIR) {
-            List<HammerReward> rewards = HammerRegistry.getRewards(block);
+            List<HammerReward> rewards = ExNihiloRegistryManager.HAMMER_REGISTRY.getRewards(block);
             // Make sure no null rewards, Item or ItemStack
             List<ItemStack> allOutputs = Lists.newArrayList(Lists.transform(rewards, reward -> reward == null || reward.getStack().isEmpty() ? ItemStack.EMPTY : reward.getStack().copy()));
             allOutputs.removeIf(stack -> stack == null || stack.getItem() == Items.AIR);

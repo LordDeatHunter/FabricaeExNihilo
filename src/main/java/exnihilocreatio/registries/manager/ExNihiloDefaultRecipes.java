@@ -35,8 +35,6 @@ public class ExNihiloDefaultRecipes implements  ICrucibleDefaultRegistryProvider
         ExNihiloRegistryManager.registerCompostDefaultRecipeHandler(new CompostDefaults());
         ExNihiloRegistryManager.registerCrookDefaultRecipeHandler(new CrookDefaults());
 
-        System.out.println("1:ExNihiloRegistryManager.HAMMER_REGISTRY = " + ExNihiloRegistryManager.HAMMER_REGISTRY);
-
         // ExNihiloRegistryManager.registerCrucibleDefaultRecipeHandler(this);
         // ExNihiloRegistryManager.registerFluidBlockDefaultRecipeHandler(this);
         // ExNihiloRegistryManager.registerFluidTransformDefaultRecipeHandler(this);

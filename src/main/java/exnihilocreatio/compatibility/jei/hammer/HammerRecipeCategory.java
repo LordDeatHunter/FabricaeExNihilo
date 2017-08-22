@@ -3,7 +3,7 @@ package exnihilocreatio.compatibility.jei.hammer;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import exnihilocreatio.ExNihiloCreatio;
-import exnihilocreatio.registries.HammerRegistry;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.HammerReward;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
@@ -132,7 +132,7 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
                 @SuppressWarnings("deprecation")
                 IBlockState block = blockBase.getStateFromMeta(blockStack.getMetadata());
 
-                List<HammerReward> allRewards = HammerRegistry.getRewards(block);
+                List<HammerReward> allRewards = ExNihiloRegistryManager.HAMMER_REGISTRY.getRewards(block);
 
                 allRewards.removeIf(reward -> !reward.getStack().getItem().equals(ingredient.getItem()) || reward.getStack().getMetadata() != ingredient.getMetadata());
 

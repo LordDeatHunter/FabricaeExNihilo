@@ -36,7 +36,7 @@ public class CompostRegistryNew extends BaseRegistryMap<ItemInfo, Compostable> {
                         .setPrettyPrinting()
                         .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
                         .create(),
-                ExNihiloRegistryManager.getDefaultCompostRecipeHandlers()
+                ExNihiloRegistryManager.DEFAULT_REGISTRY_PROVIDERS
         );
     }
 
