@@ -18,9 +18,6 @@ import exnihilocreatio.compatibility.jei.hammer.HammerRecipe;
 import exnihilocreatio.compatibility.jei.hammer.HammerRecipeCategory;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipe;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipeCategory;
-import exnihilocreatio.registries.FluidBlockTransformerRegistry;
-import exnihilocreatio.registries.FluidOnTopRegistry;
-import exnihilocreatio.registries.FluidTransformRegistry;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.Compostable;
 import exnihilocreatio.registries.types.FluidBlockTransformer;
@@ -162,7 +159,7 @@ public class CompatJEI implements IModPlugin {
 
         //region >>>> FLUID BLOCK TRANSFORM RECIPE
         List<FluidBlockTransformRecipe> fluidBlockTransformRecipes = Lists.newArrayList();
-        for (FluidBlockTransformer transformer : FluidBlockTransformerRegistry.getRegistry()) {
+        for (FluidBlockTransformer transformer : ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.getRegistry()) {
             // Make sure everything's registered
             if (FluidRegistry.isFluidRegistered(transformer.getFluidName()) && transformer.getInput().getItem() != null && transformer.getOutput().getItem() != null) {
                 FluidBlockTransformRecipe recipe = new FluidBlockTransformRecipe(transformer);

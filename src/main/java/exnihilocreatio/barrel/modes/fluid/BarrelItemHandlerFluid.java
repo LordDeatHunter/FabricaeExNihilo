@@ -4,7 +4,7 @@ import exnihilocreatio.barrel.modes.mobspawn.BarrelModeMobSpawn;
 import exnihilocreatio.items.ItemDoll;
 import exnihilocreatio.networking.MessageBarrelModeUpdate;
 import exnihilocreatio.networking.PacketHandler;
-import exnihilocreatio.registries.FluidBlockTransformerRegistry;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.tiles.TileBarrel;
 import exnihilocreatio.util.ItemInfo;
 import lombok.Setter;
@@ -33,8 +33,8 @@ public class BarrelItemHandlerFluid extends ItemStackHandler {
         if (tank.getFluid() == null)
             return stack;
 
-        if (FluidBlockTransformerRegistry.canBlockBeTransformedWithThisFluid(tank.getFluid().getFluid(), stack) && tank.getFluidAmount() == tank.getCapacity()) {
-            ItemInfo info = FluidBlockTransformerRegistry.getBlockForTransformation(tank.getFluid().getFluid(), stack);
+        if (ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.canBlockBeTransformedWithThisFluid(tank.getFluid().getFluid(), stack) && tank.getFluidAmount() == tank.getCapacity()) {
+            ItemInfo info = ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.getBlockForTransformation(tank.getFluid().getFluid(), stack);
 
             if (info != null) {
                 if (!simulate) {

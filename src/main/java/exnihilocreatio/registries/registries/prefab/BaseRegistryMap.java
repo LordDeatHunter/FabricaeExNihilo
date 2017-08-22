@@ -3,8 +3,6 @@ package exnihilocreatio.registries.registries.prefab;
 import com.google.gson.Gson;
 import exnihilocreatio.registries.manager.IDefaultRecipeProvider;
 
-import java.io.File;
-import java.io.FileReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

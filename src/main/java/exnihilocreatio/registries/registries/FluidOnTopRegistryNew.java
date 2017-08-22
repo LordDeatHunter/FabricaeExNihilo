@@ -12,7 +12,7 @@ import net.minecraftforge.fluids.Fluid;
 import java.io.FileReader;
 import java.util.List;
 
-public class FluidOnTopRegistryNew extends BaseRegistryList<FluidFluidBlock>{
+public class FluidOnTopRegistryNew extends BaseRegistryList<FluidFluidBlock> {
     public FluidOnTopRegistryNew() {
         super(
                 new GsonBuilder()
@@ -51,7 +51,8 @@ public class FluidOnTopRegistryNew extends BaseRegistryList<FluidFluidBlock>{
 
     @Override
     protected void registerEntriesFromJSON(FileReader fr) {
-        List<FluidFluidBlock> gsonInput = gson.fromJson(fr, new TypeToken<List<FluidFluidBlock>>() {}.getType());
+        List<FluidFluidBlock> gsonInput = gson.fromJson(fr, new TypeToken<List<FluidFluidBlock>>() {
+        }.getType());
         registry.addAll(gsonInput);
     }
 }

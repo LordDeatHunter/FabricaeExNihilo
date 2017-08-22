@@ -35,7 +35,7 @@ public abstract class CommonProxy {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void registerItemsLower(RegistryEvent.Register<Item> event) {
-        ExNihiloRegistryManager.ORE_REGISTRY.loadJson(new File(ExNihiloCreatio.configDirectory, "OreRegistry_new.json"));
+        ExNihiloRegistryManager.ORE_REGISTRY.loadJson(new File(ExNihiloCreatio.configDirectory, "OreRegistry.json"));
         ExNihiloRegistryManager.ORE_REGISTRY.registerToGameRegistry(event.getRegistry());
     }
 

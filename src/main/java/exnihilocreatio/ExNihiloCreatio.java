@@ -9,7 +9,9 @@ import exnihilocreatio.handlers.HandlerCrook;
 import exnihilocreatio.handlers.HandlerHammer;
 import exnihilocreatio.networking.PacketHandler;
 import exnihilocreatio.proxy.CommonProxy;
-import exnihilocreatio.registries.*;
+import exnihilocreatio.registries.BarrelModeRegistry;
+import exnihilocreatio.registries.CrucibleRegistryStone;
+import exnihilocreatio.registries.RegistryReloadedEvent;
 import exnihilocreatio.registries.manager.ExNihiloDefaultRecipes;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.util.LogUtil;
@@ -108,17 +110,18 @@ public class ExNihiloCreatio {
 
 
         ExNihiloRegistryManager.COMPOST_REGISTRY.loadJson(new File(configDirectory, "CompostRegistry.json"));
-        ExNihiloRegistryManager.CROOK_REGISTRY.loadJson(new File(configDirectory, "CrookRegistry_new.json"));
-        ExNihiloRegistryManager.SIEVE_REGISTRY.loadJson(new File(configDirectory, "SieveRegistry_new.json"));
-        ExNihiloRegistryManager.HAMMER_REGISTRY.loadJson(new File(configDirectory, "HammerRegistry_new.json"));
-        ExNihiloRegistryManager.HEAT_REGISTRY.loadJson(new File(configDirectory, "HeatRegistry_new.json"));
-        ExNihiloRegistryManager.BARREL_LIQUID_BLACKLIST_REGISTRY.loadJson(new File(configDirectory, "BarrelLiquidBlacklistRegistry_new.json"));
+        ExNihiloRegistryManager.CROOK_REGISTRY.loadJson(new File(configDirectory, "CrookRegistry.json"));
+        ExNihiloRegistryManager.SIEVE_REGISTRY.loadJson(new File(configDirectory, "SieveRegistry.json"));
+        ExNihiloRegistryManager.HAMMER_REGISTRY.loadJson(new File(configDirectory, "HammerRegistry.json"));
+        ExNihiloRegistryManager.HEAT_REGISTRY.loadJson(new File(configDirectory, "HeatRegistry.json"));
+        ExNihiloRegistryManager.BARREL_LIQUID_BLACKLIST_REGISTRY.loadJson(new File(configDirectory, "BarrelLiquidBlacklistRegistry.json"));
         ExNihiloRegistryManager.FLUID_ON_TOP_REGISTRY.loadJson(new File(configDirectory, "FluidOnTopRegistry.json"));
-        ExNihiloRegistryManager.FLUID_TRANSFORM_REGISTRY.loadJson(new File(configDirectory, "FluidTransformRegistry_new.json"));
+        ExNihiloRegistryManager.FLUID_TRANSFORM_REGISTRY.loadJson(new File(configDirectory, "FluidTransformRegistry.json"));
+        ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.loadJson(new File(configDirectory, "FluidBlockTransformerRegistry.json"));
 
         // CompostRegistryNew.loadJson(new File(configDirectory, "CompostRegistryNew.json"));
         // HammerRegistry.loadJson(new File(configDirectory, "HammerRegistry.json"));
-        FluidBlockTransformerRegistry.loadJson(new File(configDirectory, "FluidBlockTransformerRegistry.json"));
+        // FluidBlockTransformerRegistry.loadJson(new File(configDirectory, "FluidBlockTransformerRegistry.json"));
         // FluidOnTopRegistry.loadJson(new File(configDirectory, "FluidOnTopRegistry.json"));
         // HeatRegistry.loadJson(new File(configDirectory, "HeatRegistry.json"));
         CrucibleRegistryStone.loadJson(new File(configDirectory, "CrucibleRegistryStone.json"));

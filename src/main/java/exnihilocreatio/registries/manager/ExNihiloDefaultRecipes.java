@@ -10,9 +10,6 @@ import exnihilocreatio.items.ItemResource;
 import exnihilocreatio.items.ore.ItemOre;
 import exnihilocreatio.items.seeds.ItemSeedBase;
 import exnihilocreatio.registries.CrucibleRegistryStone;
-import exnihilocreatio.registries.FluidBlockTransformerRegistry;
-import exnihilocreatio.registries.FluidOnTopRegistry;
-import exnihilocreatio.registries.FluidTransformRegistry;
 import exnihilocreatio.registries.registries.*;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.BlockInfo;
@@ -26,7 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class ExNihiloDefaultRecipes implements ICrucibleDefaultRegistryProvider, IFluidBlockDefaultRegistryProvider{
+public class ExNihiloDefaultRecipes implements ICrucibleDefaultRegistryProvider {
 
     public static void registerDefaults() {
         ExNihiloRegistryManager.registerSieveDefaultRecipeHandler(new SieveDefaults());
@@ -38,23 +35,15 @@ public class ExNihiloDefaultRecipes implements ICrucibleDefaultRegistryProvider,
         ExNihiloRegistryManager.registerBarrelLiquidBlacklistDefaultHandler(new BarrelLiquidBlacklistDefaults());
         ExNihiloRegistryManager.registerFluidOnTopDefaultRecipeHandler(new FluidOnTopDefaults());
         ExNihiloRegistryManager.registerFluidTransformDefaultRecipeHandler(new FluidTransformDefaults());
+        ExNihiloRegistryManager.registerFluidBlockDefaultRecipeHandler(new FluidBlockTransformDefaults());
 
         // ExNihiloRegistryManager.registerCrucibleDefaultRecipeHandler(this);
-        // ExNihiloRegistryManager.registerFluidBlockDefaultRecipeHandler(this);
 
     }
 
     @Override
     public void registerCrucibleRecipeDefaults() {
         CrucibleRegistryStone.register(new ItemStack(Blocks.COBBLESTONE), FluidRegistry.LAVA, 250);
-    }
-
-    @Override
-    public void registerFluidBlockRecipeDefaults() {
-        FluidBlockTransformerRegistry.register(FluidRegistry.WATER, new ItemInfo(new ItemStack(ModBlocks.dust)), new ItemInfo(new ItemStack(Blocks.CLAY)));
-        FluidBlockTransformerRegistry.register(FluidRegistry.LAVA, new ItemInfo(new ItemStack(Items.REDSTONE)), new ItemInfo(new ItemStack(Blocks.NETHERRACK)));
-        FluidBlockTransformerRegistry.register(FluidRegistry.LAVA, new ItemInfo(new ItemStack(Items.GLOWSTONE_DUST)), new ItemInfo(new ItemStack(Blocks.END_STONE)));
-        FluidBlockTransformerRegistry.register(ModFluids.fluidWitchwater, new ItemInfo(new ItemStack(Blocks.SAND)), new ItemInfo(new ItemStack(Blocks.SOUL_SAND)));
     }
 
     private static class CompostDefaults implements ICompostDefaultRegistryProvider {
@@ -273,7 +262,7 @@ public class ExNihiloDefaultRecipes implements ICrucibleDefaultRegistryProvider,
         }
     }
 
-    private static class FluidOnTopDefaults  implements IFluidOnTopDefaultRegistryProvider {
+    private static class FluidOnTopDefaults implements IFluidOnTopDefaultRegistryProvider {
         @Override
         public void registerRecipeDefaults(FluidOnTopRegistryNew registry) {
             registry.register(FluidRegistry.LAVA, FluidRegistry.WATER, new ItemInfo(Blocks.OBSIDIAN.getDefaultState()));
@@ -327,6 +316,16 @@ public class ExNihiloDefaultRecipes implements ICrucibleDefaultRegistryProvider,
         @Override
         public void registerRecipeDefaults(FluidTransformRegistryNew registry) {
             registry.register("water", "witchwater", 12000, new BlockInfo[]{new BlockInfo(Blocks.MYCELIUM.getDefaultState())}, new BlockInfo[]{new BlockInfo(Blocks.BROWN_MUSHROOM.getDefaultState()), new BlockInfo(Blocks.RED_MUSHROOM.getDefaultState())});
+        }
+    }
+
+    private static class FluidBlockTransformDefaults implements IFluidBlockDefaultRegistryProvider {
+        @Override
+        public void registerRecipeDefaults(FluidBlockTransformerRegistryNew registry) {
+            registry.register(FluidRegistry.WATER, new ItemInfo(new ItemStack(ModBlocks.dust)), new ItemInfo(new ItemStack(Blocks.CLAY)));
+            registry.register(FluidRegistry.LAVA, new ItemInfo(new ItemStack(Items.REDSTONE)), new ItemInfo(new ItemStack(Blocks.NETHERRACK)));
+            registry.register(FluidRegistry.LAVA, new ItemInfo(new ItemStack(Items.GLOWSTONE_DUST)), new ItemInfo(new ItemStack(Blocks.END_STONE)));
+            registry.register(ModFluids.fluidWitchwater, new ItemInfo(new ItemStack(Blocks.SAND)), new ItemInfo(new ItemStack(Blocks.SOUL_SAND)));
         }
     }
 

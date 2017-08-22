@@ -41,7 +41,7 @@ public class FluidTransformRegistryNew extends BaseRegistryMap<String, List<Flui
     }
 
     public FluidTransformer getFluidTransformer(String inputFluid, String outputFluid) {
-        if (registry.containsKey(inputFluid)){
+        if (registry.containsKey(inputFluid)) {
             for (FluidTransformer transformer : registry.get(inputFluid)) {
                 if (transformer.getInputFluid().equals(inputFluid) && transformer.getOutputFluid().equals(outputFluid))
                     return transformer;
@@ -82,7 +82,7 @@ public class FluidTransformRegistryNew extends BaseRegistryMap<String, List<Flui
         }
     }
 
-    public List<FluidTransformer> getFluidTransformers(){
+    public List<FluidTransformer> getFluidTransformers() {
         List<FluidTransformer> fluidTransformers = new ArrayList<>();
         for (List<FluidTransformer> transformers : registry.values()) {
             fluidTransformers.addAll(transformers);

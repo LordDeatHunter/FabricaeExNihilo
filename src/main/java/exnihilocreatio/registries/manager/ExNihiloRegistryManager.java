@@ -30,6 +30,7 @@ public final class ExNihiloRegistryManager {
     public static final BarrelLiquidBlacklistRegistryNew BARREL_LIQUID_BLACKLIST_REGISTRY = new BarrelLiquidBlacklistRegistryNew();
     public static final FluidOnTopRegistryNew FLUID_ON_TOP_REGISTRY = new FluidOnTopRegistryNew();
     public static final FluidTransformRegistryNew FLUID_TRANSFORM_REGISTRY = new FluidTransformRegistryNew();
+    public static final FluidBlockTransformerRegistryNew FLUID_BLOCK_TRANSFORMER_REGISTRY = new FluidBlockTransformerRegistryNew();
 
 
     //region >>>> DEFAULT RECIPE REGISTERS
