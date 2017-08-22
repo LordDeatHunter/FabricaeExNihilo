@@ -17,7 +17,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+@Deprecated
 public class FluidTransformRegistry {
 
     @Getter
@@ -67,50 +67,5 @@ public class FluidTransformRegistry {
 
     public static ArrayList<FluidTransformer> getFluidTransformers(String inputFluid) {
         return (ArrayList<FluidTransformer>) registryInternal.get(inputFluid);
-    }
-
-    public static void registerDefaults() {
-        for (IFluidTransformDefaultRegistryProvider provider : ExNihiloRegistryManager.FLUID_TRANSFORM_DEFAULT_REGISTRY_PROVIDERS) {
-            provider.registerFluidTransformRecipeDefaults();
-        }
-    }
-
-    public static void loadJson(File file) {
-        registry.clear();
-        registryInternal.clear();
-
-        if (file.exists()) {
-            try {
-                FileReader fr = new FileReader(file);
-                List<FluidTransformer> gsonInput = gson.fromJson(fr, new TypeToken<List<FluidTransformer>>() {
-                }.getType());
-
-                for (FluidTransformer transformer : gsonInput) {
-                    registerInternal(transformer);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            registerDefaults();
-            saveJson(file);
-        }
-
-        for (FluidTransformer transformer : externalRegistry) {
-            registerInternal(transformer);
-        }
-    }
-
-    public static void saveJson(File file) {
-        FileWriter fw = null;
-        try {
-            fw = new FileWriter(file);
-            gson.toJson(registry, fw);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            IOUtils.closeQuietly(fw);
-        }
     }
 }

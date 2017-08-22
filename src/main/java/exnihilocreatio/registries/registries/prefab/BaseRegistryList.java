@@ -14,16 +14,16 @@ public abstract class BaseRegistryList<V> extends BaseRegistry<List<V>> {
         super(gson, new ArrayList<>(), defaultRecipeProviders);
     }
 
-    /** This is not possible due to GSON not liking having generics
-     * Defaults to just adding everything to the registry
-     * @param fr FileReader required for the gson reader
-     */
-    @Override
-    protected void registerEntriesFromJSON(FileReader fr) {
-        List<V> gsonInput = gson.fromJson(fr, new TypeToken<List<V>>() {
-        }.getType());
-        registry.addAll(gsonInput);
-    }
+    // /** This is not possible due to GSON not liking having generics
+    //  * Defaults to just adding everything to the registry
+    //  * @param fr FileReader required for the gson reader
+    //  */
+    // @Override
+    // protected void registerEntriesFromJSON(FileReader fr) {
+    //     List<V> gsonInput = gson.fromJson(fr, new TypeToken<List<V>>() {
+    //     }.getType());
+    //     registry.addAll(gsonInput);
+    // }
 
     @Override
     protected void clearRegistry() {

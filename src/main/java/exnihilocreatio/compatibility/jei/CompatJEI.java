@@ -125,7 +125,7 @@ public class CompatJEI implements IModPlugin {
         //region >>>> FLUID TRANSFORM RECIPES
         List<FluidTransformRecipe> fluidTransformRecipes = Lists.newArrayList();
 
-        for (FluidTransformer transformer : FluidTransformRegistry.getRegistry()) {
+        for (FluidTransformer transformer : ExNihiloRegistryManager.FLUID_TRANSFORM_REGISTRY.getFluidTransformers()) {
             // Make sure both fluids are registered
             if (FluidRegistry.isFluidRegistered(transformer.getInputFluid()) && FluidRegistry.isFluidRegistered(transformer.getOutputFluid())) {
                 FluidTransformRecipe recipe = new FluidTransformRecipe(transformer);

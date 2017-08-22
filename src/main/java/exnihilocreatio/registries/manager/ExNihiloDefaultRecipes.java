@@ -26,8 +26,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class ExNihiloDefaultRecipes implements ICrucibleDefaultRegistryProvider, IFluidBlockDefaultRegistryProvider,
-        IFluidTransformDefaultRegistryProvider {
+public class ExNihiloDefaultRecipes implements ICrucibleDefaultRegistryProvider, IFluidBlockDefaultRegistryProvider{
 
     public static void registerDefaults() {
         ExNihiloRegistryManager.registerSieveDefaultRecipeHandler(new SieveDefaults());
@@ -38,11 +37,10 @@ public class ExNihiloDefaultRecipes implements ICrucibleDefaultRegistryProvider,
         ExNihiloRegistryManager.registerOreDefaultRecipeHandler(new OreDefaults());
         ExNihiloRegistryManager.registerBarrelLiquidBlacklistDefaultHandler(new BarrelLiquidBlacklistDefaults());
         ExNihiloRegistryManager.registerFluidOnTopDefaultRecipeHandler(new FluidOnTopDefaults());
+        ExNihiloRegistryManager.registerFluidTransformDefaultRecipeHandler(new FluidTransformDefaults());
 
         // ExNihiloRegistryManager.registerCrucibleDefaultRecipeHandler(this);
         // ExNihiloRegistryManager.registerFluidBlockDefaultRecipeHandler(this);
-        // ExNihiloRegistryManager.registerFluidTransformDefaultRecipeHandler(this);
-        // ExNihiloRegistryManager.registerHeatDefaultRecipeHandler(this);
 
     }
 
@@ -57,11 +55,6 @@ public class ExNihiloDefaultRecipes implements ICrucibleDefaultRegistryProvider,
         FluidBlockTransformerRegistry.register(FluidRegistry.LAVA, new ItemInfo(new ItemStack(Items.REDSTONE)), new ItemInfo(new ItemStack(Blocks.NETHERRACK)));
         FluidBlockTransformerRegistry.register(FluidRegistry.LAVA, new ItemInfo(new ItemStack(Items.GLOWSTONE_DUST)), new ItemInfo(new ItemStack(Blocks.END_STONE)));
         FluidBlockTransformerRegistry.register(ModFluids.fluidWitchwater, new ItemInfo(new ItemStack(Blocks.SAND)), new ItemInfo(new ItemStack(Blocks.SOUL_SAND)));
-    }
-
-    @Override
-    public void registerFluidTransformRecipeDefaults() {
-        FluidTransformRegistry.register("water", "witchwater", 12000, new BlockInfo[]{new BlockInfo(Blocks.MYCELIUM.getDefaultState())}, new BlockInfo[]{new BlockInfo(Blocks.BROWN_MUSHROOM.getDefaultState()), new BlockInfo(Blocks.RED_MUSHROOM.getDefaultState())});
     }
 
     private static class CompostDefaults implements ICompostDefaultRegistryProvider {
@@ -289,7 +282,7 @@ public class ExNihiloDefaultRecipes implements ICrucibleDefaultRegistryProvider,
     }
 
 
-        private static class OreDefaults implements IOreDefaultRegistryProvider {
+    private static class OreDefaults implements IOreDefaultRegistryProvider {
         @Override
         public void registerRecipeDefaults(OreRegistryNew registry) {
             registry.register("gold", new Color("FFFF00"), new ItemInfo(Items.GOLD_INGOT, 0));
@@ -329,5 +322,13 @@ public class ExNihiloDefaultRecipes implements ICrucibleDefaultRegistryProvider,
             }
         }
     }
+
+    private static class FluidTransformDefaults implements IFluidTransformDefaultRegistryProvider {
+        @Override
+        public void registerRecipeDefaults(FluidTransformRegistryNew registry) {
+            registry.register("water", "witchwater", 12000, new BlockInfo[]{new BlockInfo(Blocks.MYCELIUM.getDefaultState())}, new BlockInfo[]{new BlockInfo(Blocks.BROWN_MUSHROOM.getDefaultState()), new BlockInfo(Blocks.RED_MUSHROOM.getDefaultState())});
+        }
+    }
+
 
 }

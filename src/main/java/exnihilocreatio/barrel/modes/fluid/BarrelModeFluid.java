@@ -5,7 +5,6 @@ import exnihilocreatio.barrel.IBarrelMode;
 import exnihilocreatio.barrel.modes.transform.BarrelModeFluidTransform;
 import exnihilocreatio.networking.MessageBarrelModeUpdate;
 import exnihilocreatio.networking.PacketHandler;
-import exnihilocreatio.registries.FluidOnTopRegistry;
 import exnihilocreatio.registries.FluidTransformRegistry;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.FluidTransformer;
@@ -163,8 +162,8 @@ public class BarrelModeFluid implements IBarrelMode {
             }
 
             // Fluid transforming time!
-            if (FluidTransformRegistry.containsKey(barrel.getTank().getFluid().getFluid().getName())) {
-                List<FluidTransformer> transformers = FluidTransformRegistry
+            if (ExNihiloRegistryManager.FLUID_TRANSFORM_REGISTRY.containsKey(barrel.getTank().getFluid().getFluid().getName())) {
+                List<FluidTransformer> transformers = ExNihiloRegistryManager.FLUID_TRANSFORM_REGISTRY
                         .getFluidTransformers(barrel.getTank().getFluid().getFluid().getName());
 
                 boolean found = false;

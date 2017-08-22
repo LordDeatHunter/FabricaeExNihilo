@@ -1,7 +1,5 @@
 package exnihilocreatio.registries.manager;
 
-public interface IFluidTransformDefaultRegistryProvider {
+import exnihilocreatio.registries.registries.FluidTransformRegistryNew;
 
-    void registerFluidTransformRecipeDefaults();
-
-}
+public interface IFluidTransformDefaultRegistryProvider extends IDefaultRecipeProvider<FluidTransformRegistryNew>{}

@@ -3,6 +3,7 @@ package exnihilocreatio.barrel.modes.transform;
 import exnihilocreatio.barrel.IBarrelMode;
 import exnihilocreatio.networking.PacketHandler;
 import exnihilocreatio.registries.FluidTransformRegistry;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.FluidTransformer;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.tiles.TileBarrel;
@@ -117,7 +118,7 @@ public class BarrelModeFluidTransform implements IBarrelMode {
     @Override
     public void update(TileBarrel barrel) {
         if (transformer == null) {
-            transformer = FluidTransformRegistry.getFluidTransformer(inputStack
+            transformer = ExNihiloRegistryManager.FLUID_TRANSFORM_REGISTRY.getFluidTransformer(inputStack
                     .getFluid().getName(), outputStack.getFluid().getName());
         }
         if (transformer == null)

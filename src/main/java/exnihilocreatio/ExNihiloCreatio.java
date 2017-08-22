@@ -114,7 +114,7 @@ public class ExNihiloCreatio {
         ExNihiloRegistryManager.HEAT_REGISTRY.loadJson(new File(configDirectory, "HeatRegistry_new.json"));
         ExNihiloRegistryManager.BARREL_LIQUID_BLACKLIST_REGISTRY.loadJson(new File(configDirectory, "BarrelLiquidBlacklistRegistry_new.json"));
         ExNihiloRegistryManager.FLUID_ON_TOP_REGISTRY.loadJson(new File(configDirectory, "FluidOnTopRegistry.json"));
-
+        ExNihiloRegistryManager.FLUID_TRANSFORM_REGISTRY.loadJson(new File(configDirectory, "FluidTransformRegistry_new.json"));
 
         // CompostRegistryNew.loadJson(new File(configDirectory, "CompostRegistryNew.json"));
         // HammerRegistry.loadJson(new File(configDirectory, "HammerRegistry.json"));
@@ -124,7 +124,7 @@ public class ExNihiloCreatio {
         CrucibleRegistryStone.loadJson(new File(configDirectory, "CrucibleRegistryStone.json"));
         // SieveRegistry.loadJson(new File(configDirectory, "SieveRegistry.json"));
         // CrookRegistry.loadJson(new File(configDirectory, "CrookRegistry.json"));
-        FluidTransformRegistry.loadJson(new File(configDirectory, "FluidTransformRegistry.json"));
+        // FluidTransformRegistry.loadJson(new File(configDirectory, "FluidTransformRegistry.json"));
         // BarrelLiquidBlacklistRegistry.loadJson(new File(configDirectory, "BarrelLiquidBlacklistRegistry.json"));
 
         MinecraftForge.EVENT_BUS.post(new RegistryReloadedEvent());
