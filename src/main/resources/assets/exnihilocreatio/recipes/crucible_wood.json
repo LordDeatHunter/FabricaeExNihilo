@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "exnihilocreatio:block_crucible_wood"
+  },
+  "pattern": [
+    "x x",
+    "xxx",
+    "s s"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "type": "forge:ore_dict",
+      "ore": "stickWood"
+    },
+    "x": {
+      "type": "forge:ore_dict",
+      "ore": "logWood"
+    }
+  }
+}
