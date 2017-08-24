@@ -1,27 +1,28 @@
 package exnihilocreatio.tiles;
 
-import exnihilocreatio.registries.CrucibleRegistryBase;
+import exnihilocreatio.registries.registries.CrucibleRegistryNew;
 import exnihilocreatio.registries.types.Meltable;
-import lombok.Setter;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 
-public class CrucibleItemHandler<R extends CrucibleRegistryBase> extends ItemStackHandler {
+public class CrucibleItemHandler extends ItemStackHandler {
 
-    @Setter
     protected TileCrucibleBase te;
+    protected CrucibleRegistryNew crucibleRegistry;
 
-    public CrucibleItemHandler() {
+    public CrucibleItemHandler(TileCrucibleBase te, CrucibleRegistryNew crucibleRegistry) {
         super(1);
+        this.te = te;
+        this.crucibleRegistry = crucibleRegistry;
     }
 
     @Override
     @Nonnull
     public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-        if (R.canBeMelted(stack)) {
-            Meltable meltable = R.getMeltable(stack);
+        if (crucibleRegistry.canBeMelted(stack)) {
+            Meltable meltable = crucibleRegistry.getMeltable(stack);
             if ((meltable.getAmount() + meltable.getAmount() * getStackInSlot(0).getCount() + te.getSolidAmount()) <= (meltable.getAmount() * TileCrucibleBase.MAX_ITEMS)) {
                 return super.insertItem(slot, stack, simulate);
             }

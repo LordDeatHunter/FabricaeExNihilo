@@ -1,21 +1,17 @@
 package exnihilocreatio.tiles;
 
-import exnihilocreatio.capabilities.CapabilityHeatManager;
-import exnihilocreatio.networking.PacketHandler;
-import exnihilocreatio.registries.CrucibleRegistryStone;
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
-import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-public class TileCrucibleWood extends TileCrucibleBase<CrucibleRegistryStone> {
+public class TileCrucibleWood extends TileCrucibleBase {
+
+    public TileCrucibleWood() {
+        super(ExNihiloRegistryManager.CRUCIBLE_WOOD_REGISTRY);
+    }
 
     @Override
     public void update() {
@@ -27,7 +23,7 @@ public class TileCrucibleWood extends TileCrucibleBase<CrucibleRegistryStone> {
         if (ticksSinceLast >= 10) {
             ticksSinceLast = 0;
 
-            int heatRate = getHeatRate();
+            int heatRate = ModConfig.crucible.woodenCrucibleSpeed;
 
             if (heatRate <= 0)
                 return;
@@ -41,12 +37,12 @@ public class TileCrucibleWood extends TileCrucibleBase<CrucibleRegistryStone> {
                         itemHandler.setStackInSlot(0, ItemStack.EMPTY);
                     }
 
-                    solidAmount = CrucibleRegistryStone.getMeltable(currentItem).getAmount();
+                    solidAmount = crucibleRegistry.getMeltable(currentItem).getAmount();
                 } else {
                     if (currentItem != null) {
                         currentItem = null;
 
-                        PacketHandler.sendNBTUpdate(this);
+                        markDirtyClient();
                     }
 
                     return;
@@ -56,7 +52,7 @@ public class TileCrucibleWood extends TileCrucibleBase<CrucibleRegistryStone> {
             if (!itemHandler.getStackInSlot(0).isEmpty() && itemHandler.getStackInSlot(0).isItemEqual(currentItem.getItemStack())) {
                 // For meltables with a really small "amount"
                 while (heatRate > solidAmount && !itemHandler.getStackInSlot(0).isEmpty()) {
-                    solidAmount += CrucibleRegistryStone.getMeltable(currentItem).getAmount();
+                    solidAmount += crucibleRegistry.getMeltable(currentItem).getAmount();
                     itemHandler.getStackInSlot(0).shrink(1);
 
                     if (itemHandler.getStackInSlot(0).isEmpty()) {
@@ -70,38 +66,15 @@ public class TileCrucibleWood extends TileCrucibleBase<CrucibleRegistryStone> {
                 heatRate = solidAmount;
             }
 
-            if (heatRate > 0 && currentItem != null && CrucibleRegistryStone.canBeMelted(currentItem)) {
-                FluidStack toFill = new FluidStack(FluidRegistry.getFluid(CrucibleRegistryStone.getMeltable(currentItem).getFluid()), heatRate);
+            if (heatRate > 0 && currentItem != null && crucibleRegistry.canBeMelted(currentItem)) {
+                FluidStack toFill = new FluidStack(FluidRegistry.getFluid(crucibleRegistry.getMeltable(currentItem).getFluid()), heatRate);
                 int filled = tank.fillInternal(toFill, true);
                 solidAmount -= filled;
 
                 if (filled > 0) {
-                    PacketHandler.sendNBTUpdate(this);
+                    markDirtyClient();
                 }
             }
         }
-    }
-
-    public int getHeatRate() {
-        BlockPos posBelow = pos.add(0, -1, 0);
-        IBlockState stateBelow = getWorld().getBlockState(posBelow);
-
-        if (stateBelow == Blocks.AIR.getDefaultState()) {
-            return 0;
-        }
-
-        int heat = ExNihiloRegistryManager.HEAT_REGISTRY.getHeatAmount(new BlockInfo(stateBelow));
-
-        if (heat != 0) {
-            return heat;
-        }
-
-        TileEntity tile = getWorld().getTileEntity(posBelow);
-
-        if (tile != null && tile.hasCapability(CapabilityHeatManager.HEAT_CAPABILITY, EnumFacing.UP)) {
-            return tile.getCapability(CapabilityHeatManager.HEAT_CAPABILITY, EnumFacing.UP).getHeatRate();
-        }
-
-        return 0;
     }
 }

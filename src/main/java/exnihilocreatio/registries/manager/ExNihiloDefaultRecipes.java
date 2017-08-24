@@ -9,7 +9,6 @@ import exnihilocreatio.items.ItemPebble;
 import exnihilocreatio.items.ItemResource;
 import exnihilocreatio.items.ore.ItemOre;
 import exnihilocreatio.items.seeds.ItemSeedBase;
-import exnihilocreatio.registries.CrucibleRegistryStone;
 import exnihilocreatio.registries.registries.*;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.BlockInfo;
@@ -23,7 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class ExNihiloDefaultRecipes implements ICrucibleDefaultRegistryProvider {
+public class ExNihiloDefaultRecipes {
 
     public static void registerDefaults() {
         ExNihiloRegistryManager.registerSieveDefaultRecipeHandler(new SieveDefaults());
@@ -36,14 +35,8 @@ public class ExNihiloDefaultRecipes implements ICrucibleDefaultRegistryProvider 
         ExNihiloRegistryManager.registerFluidOnTopDefaultRecipeHandler(new FluidOnTopDefaults());
         ExNihiloRegistryManager.registerFluidTransformDefaultRecipeHandler(new FluidTransformDefaults());
         ExNihiloRegistryManager.registerFluidBlockDefaultRecipeHandler(new FluidBlockTransformDefaults());
-
-        // ExNihiloRegistryManager.registerCrucibleDefaultRecipeHandler(this);
-
-    }
-
-    @Override
-    public void registerCrucibleRecipeDefaults() {
-        CrucibleRegistryStone.register(new ItemStack(Blocks.COBBLESTONE), FluidRegistry.LAVA, 250);
+        ExNihiloRegistryManager.registerCrucibleStoneDefaultRecipeHandler(new CrucibleStoneDefaults());
+        ExNihiloRegistryManager.registerCrucibleWoodDefaultRecipeHandler(new CrucibleWoodDefaults());
     }
 
     private static class CompostDefaults implements ICompostDefaultRegistryProvider {
@@ -270,7 +263,6 @@ public class ExNihiloDefaultRecipes implements ICrucibleDefaultRegistryProvider 
         }
     }
 
-
     private static class OreDefaults implements IOreDefaultRegistryProvider {
         @Override
         public void registerRecipeDefaults(OreRegistryNew registry) {
@@ -329,5 +321,20 @@ public class ExNihiloDefaultRecipes implements ICrucibleDefaultRegistryProvider 
         }
     }
 
+    private static class CrucibleStoneDefaults implements ICrucibleStoneDefaultRegistryProvider {
 
+        @Override
+        public void registerRecipeDefaults(CrucibleRegistryNew registry) {
+            registry.register(new ItemStack(Blocks.COBBLESTONE), FluidRegistry.LAVA, 250);
+        }
+    }
+
+    private static class CrucibleWoodDefaults implements ICrucibleWoodDefaultRegistryProvider {
+        @Override
+        public void registerRecipeDefaults(CrucibleRegistryNew registry) {
+            registry.register(new ItemStack(Blocks.LEAVES), FluidRegistry.WATER, 250);
+            registry.register(new ItemStack(Blocks.LEAVES2), FluidRegistry.WATER, 250);
+            registry.register(new ItemStack(Blocks.SAPLING), FluidRegistry.WATER, 250);
+        }
+    }
 }

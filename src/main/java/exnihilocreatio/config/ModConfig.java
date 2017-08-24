@@ -21,6 +21,7 @@ public class ModConfig {
     public static Misc misc = new Misc();
     public static Sieve sieve = new Sieve();
     public static Compatibility compatibility = new Compatibility();
+    public static Crucible crucible = new Crucible();
 
     /**
      * All Config Classes
@@ -77,6 +78,10 @@ public class ModConfig {
             public double ingotsPerDustWhenMelting = 1.0;
 
         }
+    }
+
+    public static class Crucible {
+        public int woodenCrucibleSpeed = 4;
     }
 
     /**

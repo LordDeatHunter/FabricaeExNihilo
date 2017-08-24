@@ -2,7 +2,7 @@ package exnihilocreatio.compatibility;
 
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.blocks.*;
-import exnihilocreatio.registries.CrucibleRegistryStone;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.rotationalPower.IRotationalPowerMember;
 import exnihilocreatio.tiles.*;
 import mcp.mobius.waila.api.*;
@@ -89,7 +89,7 @@ public class CompatWaila implements IWailaPlugin, IWailaDataProvider {
             ItemStack toMelt = tile.getItemHandler().getStackInSlot(0);
 
             if (!toMelt.isEmpty()) {
-                solidAmount += CrucibleRegistryStone.getMeltable(toMelt).getAmount() * toMelt.getCount();
+                solidAmount += ExNihiloRegistryManager.CRUCIBLE_STONE_REGISTRY.getMeltable(toMelt).getAmount() * toMelt.getCount();
             }
 
             currenttip.add(String.format("Solid (%s): %d", solidName, solidAmount));

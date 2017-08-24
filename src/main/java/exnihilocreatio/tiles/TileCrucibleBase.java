@@ -1,11 +1,12 @@
 package exnihilocreatio.tiles;
 
-import exnihilocreatio.registries.CrucibleRegistryBase;
+import exnihilocreatio.registries.registries.CrucibleRegistryNew;
 import exnihilocreatio.registries.types.Meltable;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.texturing.SpriteColor;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
+import exnihilocreatio.util.LogUtil;
 import exnihilocreatio.util.Util;
 import lombok.Getter;
 import net.minecraft.block.Block;
@@ -33,8 +34,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nonnull;
 
-// R is the crucibleStone Registry this is taking the data from
-public abstract class TileCrucibleBase<R extends CrucibleRegistryBase> extends BaseTileEntity implements ITickable {
+public abstract class TileCrucibleBase extends BaseTileEntity implements ITickable {
     public static final int MAX_ITEMS = 4;
 
     @Getter
@@ -48,41 +48,49 @@ public abstract class TileCrucibleBase<R extends CrucibleRegistryBase> extends B
     protected int ticksSinceLast = 0;
 
     @Getter
-    protected CrucibleItemHandler<R> itemHandler;
+    protected CrucibleItemHandler itemHandler;
+    @Getter
+    protected CrucibleRegistryNew crucibleRegistry;
 
-    public TileCrucibleBase() {
+    public TileCrucibleBase(CrucibleRegistryNew crucibleRegistry) {
         tank = new FluidTank(4 * Fluid.BUCKET_VOLUME);
         tank.setCanFill(false);
 
-        itemHandler = new CrucibleItemHandler<>();
-        itemHandler.setTe(this);
-
+        itemHandler = new CrucibleItemHandler(this, crucibleRegistry);
+        this.crucibleRegistry = crucibleRegistry;
     }
 
     @Override
     public abstract void update();
 
+    /**
+     * Returns array of FLUID color and Item Color
+     * ITEMCOLOR is index 0
+     * FLUIDCOLOR is index 1
+     * @return
+     */
     @SuppressWarnings("deprecation")
     @SideOnly(Side.CLIENT)
-    public SpriteColor getSpriteAndColor() {
+    public SpriteColor[] getSpriteAndColor() {
+        SpriteColor[] spriteColors = new SpriteColor[2];
+
         int noItems = itemHandler.getStackInSlot(0).isEmpty() ? 0 : itemHandler.getStackInSlot(0).getCount();
         if (noItems == 0 && currentItem == null && tank.getFluidAmount() == 0) //Empty!
-            return null;
+            return spriteColors;
 
         FluidStack fluid = tank.getFluid();
-        if (noItems == 0 && currentItem == null) //Nothing being melted.
-            return new SpriteColor(Util.getTextureFromFluidStack(fluid), new Color(fluid.getFluid().getColor(), false));
+        if (noItems == 0 && currentItem == null && fluid != null) //Nothing being melted.
+            spriteColors[1] = new SpriteColor(Util.getTextureFromFluidStack(fluid), new Color(fluid.getFluid().getColor(), false));
 
         double solidProportion = ((double) noItems) / MAX_ITEMS;
 
         if (currentItem != null) {
-            Meltable meltable = R.getMeltable(currentItem);
+            Meltable meltable = crucibleRegistry.getMeltable(currentItem);
 
             if (meltable != null) {
                 solidProportion += ((double) solidAmount) / (MAX_ITEMS * meltable.getAmount());
             } else {
-                // LogUtil.throwing(new NullPointerException("Meltable is null! Item is " + currentItem.getItem().getUnlocalizedName()));
-                // TODO: REIMPLEMENT
+                LogUtil.throwing(new NullPointerException("Meltable is null! Item is " + currentItem.getItem().getUnlocalizedName()));
             }
         }
 
@@ -98,7 +106,7 @@ public abstract class TileCrucibleBase<R extends CrucibleRegistryBase> extends B
             Color color = Util.whiteColor;
 
             if (currentItem != null) {
-                Meltable meltable = R.getMeltable(currentItem);
+                Meltable meltable = crucibleRegistry.getMeltable(currentItem);
                 BlockInfo override = meltable.getTextureOverride();
 
                 if (override == null) {
@@ -120,6 +128,11 @@ public abstract class TileCrucibleBase<R extends CrucibleRegistryBase> extends B
     }
 
     @SideOnly(Side.CLIENT)
+    public boolean isFluidOnTop(){
+        return false;
+    }
+
+    @SideOnly(Side.CLIENT)
     public float getFilledAmount() {
         int itemCount = itemHandler.getStackInSlot(0).isEmpty() ? 0 : itemHandler.getStackInSlot(0).getCount();
         if (itemCount == 0 && currentItem == null && tank.getFluidAmount() == 0) //Empty!
@@ -131,7 +144,7 @@ public abstract class TileCrucibleBase<R extends CrucibleRegistryBase> extends B
 
         float solidProportion = ((float) itemCount) / MAX_ITEMS;
         if (currentItem != null) {
-            Meltable meltable = R.getMeltable(currentItem);
+            Meltable meltable = crucibleRegistry.getMeltable(currentItem);
             if (meltable != null)
                 solidProportion += ((double) solidAmount) / (MAX_ITEMS * meltable.getAmount());
         }
@@ -177,7 +190,7 @@ public abstract class TileCrucibleBase<R extends CrucibleRegistryBase> extends B
     @Override
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing facing) {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            itemHandler.setTe(this);
+            // itemHandler.setTe(this);
             return (T) itemHandler;
         }
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)

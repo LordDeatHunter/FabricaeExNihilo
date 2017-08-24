@@ -12,7 +12,8 @@ public final class ExNihiloRegistryManager {
     public static final List<IHammerDefaultRegistryProvider> HAMMER_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
     public static final List<ICompostDefaultRegistryProvider> COMPOST_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
     public static final List<ICrookDefaultRegistryProvider> CROOK_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
-    public static final List<ICrucibleDefaultRegistryProvider> CRUCIBLE_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
+    public static final List<ICrucibleStoneDefaultRegistryProvider> CRUCIBLE_STONE_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
+    public static final List<ICrucibleWoodDefaultRegistryProvider> CRUCIBLE_WOOD_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
     public static final List<IFluidBlockDefaultRegistryProvider> FLUID_BLOCK_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
     public static final List<IFluidOnTopDefaultRegistryProvider> FLUID_ON_TOP_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
     public static final List<IFluidTransformDefaultRegistryProvider> FLUID_TRANSFORM_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
@@ -31,6 +32,8 @@ public final class ExNihiloRegistryManager {
     public static final FluidOnTopRegistryNew FLUID_ON_TOP_REGISTRY = new FluidOnTopRegistryNew();
     public static final FluidTransformRegistryNew FLUID_TRANSFORM_REGISTRY = new FluidTransformRegistryNew();
     public static final FluidBlockTransformerRegistryNew FLUID_BLOCK_TRANSFORMER_REGISTRY = new FluidBlockTransformerRegistryNew();
+    public static final CrucibleRegistryNew CRUCIBLE_STONE_REGISTRY = new CrucibleRegistryNew(CRUCIBLE_STONE_DEFAULT_REGISTRY_PROVIDERS);
+    public static final CrucibleRegistryNew CRUCIBLE_WOOD_REGISTRY = new CrucibleRegistryNew(CRUCIBLE_WOOD_DEFAULT_REGISTRY_PROVIDERS);
 
 
     //region >>>> DEFAULT RECIPE REGISTERS
@@ -51,8 +54,12 @@ public final class ExNihiloRegistryManager {
         CROOK_DEFAULT_REGISTRY_PROVIDERS.add(provider);
     }
 
-    public static void registerCrucibleDefaultRecipeHandler(ICrucibleDefaultRegistryProvider provider) {
-        CRUCIBLE_DEFAULT_REGISTRY_PROVIDERS.add(provider);
+    public static void registerCrucibleStoneDefaultRecipeHandler(ICrucibleStoneDefaultRegistryProvider provider) {
+        CRUCIBLE_STONE_DEFAULT_REGISTRY_PROVIDERS.add(provider);
+    }
+
+    public static void registerCrucibleWoodDefaultRecipeHandler(ICrucibleWoodDefaultRegistryProvider provider) {
+        CRUCIBLE_WOOD_DEFAULT_REGISTRY_PROVIDERS.add(provider);
     }
 
     public static void registerFluidBlockDefaultRecipeHandler(IFluidBlockDefaultRegistryProvider provider) {

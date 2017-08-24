@@ -19,6 +19,7 @@ import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+@Deprecated
 public class CrucibleRegistryStone extends CrucibleRegistryBase {
     private static Map<ItemInfo, Meltable> registry = new HashMap<>();
     private static Map<ItemInfo, Meltable> externalRegistry = new HashMap<>();

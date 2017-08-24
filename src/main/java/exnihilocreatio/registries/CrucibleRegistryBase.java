@@ -2,22 +2,15 @@ package exnihilocreatio.registries;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.json.CustomBlockInfoJson;
 import exnihilocreatio.json.CustomItemInfoJson;
-import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
-import exnihilocreatio.registries.manager.ICrucibleDefaultRegistryProvider;
 import exnihilocreatio.registries.types.Meltable;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
-import org.apache.commons.io.IOUtils;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,47 +63,4 @@ public class CrucibleRegistryBase {
     public static Meltable getMeltable(ItemInfo info) {
         return registry.get(info);
     }
-
-    public static void registerDefaults() {
-        for (ICrucibleDefaultRegistryProvider provider : ExNihiloRegistryManager.CRUCIBLE_DEFAULT_REGISTRY_PROVIDERS) {
-            provider.registerCrucibleRecipeDefaults();
-        }
-    }
-
-    public static void loadJson(File file) {
-        registry.clear();
-
-        if (file.exists()) {
-            try {
-                FileReader fr = new FileReader(file);
-                Map<String, Meltable> gsonInput = gson.fromJson(fr, new TypeToken<Map<String, Meltable>>() {
-                }.getType());
-
-                for (Map.Entry<String, Meltable> entry : gsonInput.entrySet()) {
-                    registry.put(new ItemInfo(entry.getKey()), entry.getValue());
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            registerDefaults();
-            saveJson(file);
-        }
-
-        registry.putAll(externalRegistry);
-    }
-
-    public static void saveJson(File file) {
-        FileWriter fw = null;
-        try {
-            fw = new FileWriter(file);
-            gson.toJson(registry, fw);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            IOUtils.closeQuietly(fw);
-        }
-    }
-
 }

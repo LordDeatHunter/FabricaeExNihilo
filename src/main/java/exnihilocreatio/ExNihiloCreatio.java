@@ -10,7 +10,6 @@ import exnihilocreatio.handlers.HandlerHammer;
 import exnihilocreatio.networking.PacketHandler;
 import exnihilocreatio.proxy.CommonProxy;
 import exnihilocreatio.registries.BarrelModeRegistry;
-import exnihilocreatio.registries.CrucibleRegistryStone;
 import exnihilocreatio.registries.RegistryReloadedEvent;
 import exnihilocreatio.registries.manager.ExNihiloDefaultRecipes;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
@@ -118,17 +117,9 @@ public class ExNihiloCreatio {
         ExNihiloRegistryManager.FLUID_ON_TOP_REGISTRY.loadJson(new File(configDirectory, "FluidOnTopRegistry.json"));
         ExNihiloRegistryManager.FLUID_TRANSFORM_REGISTRY.loadJson(new File(configDirectory, "FluidTransformRegistry.json"));
         ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.loadJson(new File(configDirectory, "FluidBlockTransformerRegistry.json"));
+        ExNihiloRegistryManager.CRUCIBLE_STONE_REGISTRY.loadJson(new File(configDirectory, "CrucibleRegistryStone.json"));
+        ExNihiloRegistryManager.CRUCIBLE_WOOD_REGISTRY.loadJson(new File(configDirectory, "CrucibleRegistryWood.json"));
 
-        // CompostRegistryNew.loadJson(new File(configDirectory, "CompostRegistryNew.json"));
-        // HammerRegistry.loadJson(new File(configDirectory, "HammerRegistry.json"));
-        // FluidBlockTransformerRegistry.loadJson(new File(configDirectory, "FluidBlockTransformerRegistry.json"));
-        // FluidOnTopRegistry.loadJson(new File(configDirectory, "FluidOnTopRegistry.json"));
-        // HeatRegistry.loadJson(new File(configDirectory, "HeatRegistry.json"));
-        CrucibleRegistryStone.loadJson(new File(configDirectory, "CrucibleRegistryStone.json"));
-        // SieveRegistry.loadJson(new File(configDirectory, "SieveRegistry.json"));
-        // CrookRegistry.loadJson(new File(configDirectory, "CrookRegistry.json"));
-        // FluidTransformRegistry.loadJson(new File(configDirectory, "FluidTransformRegistry.json"));
-        // BarrelLiquidBlacklistRegistry.loadJson(new File(configDirectory, "BarrelLiquidBlacklistRegistry.json"));
 
         MinecraftForge.EVENT_BUS.post(new RegistryReloadedEvent());
     }
