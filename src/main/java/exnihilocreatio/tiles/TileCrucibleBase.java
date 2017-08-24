@@ -6,7 +6,6 @@ import exnihilocreatio.texturing.Color;
 import exnihilocreatio.texturing.SpriteColor;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
-import exnihilocreatio.util.LogUtil;
 import exnihilocreatio.util.Util;
 import lombok.Getter;
 import net.minecraft.block.Block;
@@ -67,7 +66,6 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
      * Returns array of FLUID color and Item Color
      * ITEMCOLOR is index 0
      * FLUIDCOLOR is index 1
-     * @return
      */
     @SuppressWarnings("deprecation")
     @SideOnly(Side.CLIENT)
@@ -79,57 +77,36 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
             return spriteColors;
 
         FluidStack fluid = tank.getFluid();
-        if (noItems == 0 && currentItem == null && fluid != null) //Nothing being melted.
-            spriteColors[1] = new SpriteColor(Util.getTextureFromFluidStack(fluid), new Color(fluid.getFluid().getColor(), false));
+        if (fluid != null && fluid.amount > 0) //Nothing being melted.
+        {
+            Color color = new Color(fluid.getFluid().getColor(), false);
+            spriteColors[1] = new SpriteColor(Util.getTextureFromFluidStack(fluid), color);
+        }
 
-        double solidProportion = ((double) noItems) / MAX_ITEMS;
+        IBlockState block = null;
+        Color color = Util.whiteColor;
 
         if (currentItem != null) {
             Meltable meltable = crucibleRegistry.getMeltable(currentItem);
+            BlockInfo override = meltable.getTextureOverride();
 
-            if (meltable != null) {
-                solidProportion += ((double) solidAmount) / (MAX_ITEMS * meltable.getAmount());
+            if (override == null) {
+                if (Block.getBlockFromItem(currentItem.getItem()) != Blocks.AIR) {
+                    block = Block.getBlockFromItem(currentItem.getItem())
+                            .getStateFromMeta(currentItem.getMeta());
+                }
             } else {
-                LogUtil.throwing(new NullPointerException("Meltable is null! Item is " + currentItem.getItem().getUnlocalizedName()));
+                block = override.getBlockState();
+            }
+
+            if (block != null) {
+                color = new Color(Minecraft.getMinecraft().getBlockColors().colorMultiplier(block, world, pos, 0), true);
             }
         }
 
-        double fluidProportion = ((double) tank.getFluidAmount()) / tank.getCapacity();
+        spriteColors[0] = new SpriteColor(Util.getTextureFromBlockState(block), color);
 
-        if (fluidProportion > solidProportion) {
-            if (fluid == null || fluid.getFluid() == null)
-                return null;
-
-            return new SpriteColor(Util.getTextureFromFluidStack(fluid), new Color(fluid.getFluid().getColor(), false));
-        } else {
-            IBlockState block = null;
-            Color color = Util.whiteColor;
-
-            if (currentItem != null) {
-                Meltable meltable = crucibleRegistry.getMeltable(currentItem);
-                BlockInfo override = meltable.getTextureOverride();
-
-                if (override == null) {
-                    if (Block.getBlockFromItem(currentItem.getItem()) != Blocks.AIR) {
-                        block = Block.getBlockFromItem(currentItem.getItem())
-                                .getStateFromMeta(currentItem.getMeta());
-                    }
-                } else {
-                    block = override.getBlockState();
-                }
-
-                if (block != null) {
-                    color = new Color(Minecraft.getMinecraft().getBlockColors().colorMultiplier(block, world, pos, 0), true);
-                }
-            }
-
-            return new SpriteColor(Util.getTextureFromBlockState(block), color);
-        }
-    }
-
-    @SideOnly(Side.CLIENT)
-    public boolean isFluidOnTop(){
-        return false;
+        return spriteColors;
     }
 
     @SideOnly(Side.CLIENT)
@@ -151,6 +128,24 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
 
         return solidProportion > fluidProportion ? solidProportion : fluidProportion;
     }
+
+    @SideOnly(Side.CLIENT)
+    public float getFluidProportion() {
+        return ((float) tank.getFluidAmount()) / tank.getCapacity();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public float getSolidProportion() {
+        int itemCount = itemHandler.getStackInSlot(0).isEmpty() ? 0 : itemHandler.getStackInSlot(0).getCount();
+        float solidProportion = ((float) itemCount) / MAX_ITEMS;
+        if (currentItem != null) {
+            Meltable meltable = crucibleRegistry.getMeltable(currentItem);
+            if (meltable != null)
+                solidProportion += ((double) solidAmount) / (MAX_ITEMS * meltable.getAmount());
+        }
+        return solidProportion;
+    }
+
 
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ, IFluidHandler handler) {
         ItemStack stack = player.getHeldItem(hand);
