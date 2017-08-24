@@ -7,7 +7,7 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Config(modid = ExNihiloCreatio.MODID, name = "exnihilocreatio/ExNihiloCreatio_new", category = "exnihilocreatio")
+@Config(modid = ExNihiloCreatio.MODID, name = "exnihilocreatio/ExNihiloCreatio", category = "exnihilocreatio")
 public class ModConfig {
     /**
      * All Config Variables
@@ -56,6 +56,13 @@ public class ModConfig {
 
     public static class Misc {
         public boolean enableBarrelTransformLighting = true; // maybe move to client?
+
+        @Config.RequiresMcRestart
+        @Config.Comment({"Enable this to to load the JSON files.",
+                "Keeping this on false will only load recipes registered in code",
+                "This is recommended to enable for Packmakers",
+                "For players just playing with this without wanting to configure something this is recommended to keep disabled"})
+        public boolean enableJSONLoading = false;
     }
 
     public static class Sieve {

@@ -46,6 +46,7 @@ tile.block_barrel1.name=Stone Barrel
 
 tile.block_crucible.0.name=Unfired Crucible
 tile.block_crucible.1.name=Crucible
+tile.block_crucible_wood.name=Wooden Crucible
 
 tile.block_infested_leaves.name=Infested Leaves
 

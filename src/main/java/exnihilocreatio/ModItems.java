@@ -89,6 +89,7 @@ public class ModItems {
     }
 
     public static void registerItems(IForgeRegistry<Item> registry) {
+
         for (Item item : Data.ITEMS) {
             if (!(item instanceof IHasSpecialRegistry)) {
                 registry.register(item);

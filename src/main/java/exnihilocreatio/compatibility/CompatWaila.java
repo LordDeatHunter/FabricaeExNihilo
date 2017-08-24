@@ -28,6 +28,7 @@ public class CompatWaila implements IWailaPlugin, IWailaDataProvider {
         registrar.registerBodyProvider(this, BlockSieve.class);
         registrar.registerBodyProvider(this, BlockInfestedLeaves.class);
         registrar.registerBodyProvider(this, BlockCrucibleStone.class);
+        registrar.registerBodyProvider(this, BlockCrucibleWood.class);
         registrar.registerBodyProvider(this, BlockStoneAxle.class);
         registrar.registerBodyProvider(this, BlockWaterwheel.class);
         registrar.registerBodyProvider(this, BlockAutoSifter.class);
@@ -75,8 +76,8 @@ public class CompatWaila implements IWailaPlugin, IWailaDataProvider {
             }
         }
 
-        if (accessor.getBlock() instanceof BlockCrucibleStone) {
-            TileCrucibleStone tile = (TileCrucibleStone) accessor.getTileEntity();
+        if (accessor.getTileEntity() instanceof TileCrucibleBase) {
+            TileCrucibleBase tile = (TileCrucibleBase) accessor.getTileEntity();
 
             ItemStack solid = tile.getCurrentItem() == null ? null : tile.getCurrentItem().getItemStack();
             FluidStack liquid = tile.getTank().getFluid();
@@ -89,7 +90,7 @@ public class CompatWaila implements IWailaPlugin, IWailaDataProvider {
             ItemStack toMelt = tile.getItemHandler().getStackInSlot(0);
 
             if (!toMelt.isEmpty()) {
-                solidAmount += ExNihiloRegistryManager.CRUCIBLE_STONE_REGISTRY.getMeltable(toMelt).getAmount() * toMelt.getCount();
+                solidAmount += tile.getCrucibleRegistry().getMeltable(toMelt).getAmount() * toMelt.getCount();
             }
 
             currenttip.add(String.format("Solid (%s): %d", solidName, solidAmount));

@@ -4,6 +4,7 @@ import exnihilocreatio.util.BlockInfo;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 
 @AllArgsConstructor
 @EqualsAndHashCode(exclude = {"textureOverride"})
@@ -11,8 +12,11 @@ public class Meltable {
 
     @Getter
     private String fluid;
+
     @Getter
+    @Setter
     private int amount;
+
     @Getter
     private BlockInfo textureOverride;
 
@@ -22,4 +26,12 @@ public class Meltable {
         this.textureOverride = null;
     }
 
+    public Meltable copy(){
+        return new Meltable(fluid, amount, textureOverride);
+    }
+
+    public Meltable setTextureOverride(BlockInfo textureOverride) {
+        this.textureOverride = textureOverride;
+        return this;
+    }
 }

@@ -62,6 +62,8 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
     @Override
     public abstract void update();
 
+    public abstract int getHeatRate();
+
     /**
      * Returns array of FLUID color and Item Color
      * ITEMCOLOR is index 0

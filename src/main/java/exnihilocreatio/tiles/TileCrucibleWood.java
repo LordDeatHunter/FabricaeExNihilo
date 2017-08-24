@@ -23,7 +23,7 @@ public class TileCrucibleWood extends TileCrucibleBase {
         if (ticksSinceLast >= 10) {
             ticksSinceLast = 0;
 
-            int heatRate = ModConfig.crucible.woodenCrucibleSpeed;
+            int heatRate = getHeatRate();
 
             if (heatRate <= 0)
                 return;
@@ -76,5 +76,10 @@ public class TileCrucibleWood extends TileCrucibleBase {
                 }
             }
         }
+    }
+
+    @Override
+    public int getHeatRate() {
+        return ModConfig.crucible.woodenCrucibleSpeed;
     }
 }

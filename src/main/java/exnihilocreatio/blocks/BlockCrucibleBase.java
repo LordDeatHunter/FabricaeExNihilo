@@ -1,5 +1,6 @@
 package exnihilocreatio.blocks;
 
+import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.tiles.TileCrucibleBase;
 import exnihilocreatio.tiles.TileCrucibleStone;
 import exnihilocreatio.util.Data;
@@ -32,6 +33,8 @@ public abstract class BlockCrucibleBase extends Block implements IProbeInfoAcces
         super(material);
         setUnlocalizedName(name);
         setRegistryName(name);
+
+        setCreativeTab(ExNihiloCreatio.tabExNihilo);
 
         Data.BLOCKS.add(this);
     }
@@ -107,8 +110,7 @@ public abstract class BlockCrucibleBase extends Block implements IProbeInfoAcces
 
         probeInfo.text(String.format("Solid (%s): %d", solidName, solidAmount));
         probeInfo.text(String.format("Liquid (%s): %d", liquidName, crucible.getTank().getFluidAmount()));
-        if (crucible instanceof TileCrucibleStone) {
-            probeInfo.text("Rate: " + ((TileCrucibleStone) crucible).getHeatRate() + "x");
-        }
+        probeInfo.text("Rate: " + crucible.getHeatRate() + "x");
+
     }
 }

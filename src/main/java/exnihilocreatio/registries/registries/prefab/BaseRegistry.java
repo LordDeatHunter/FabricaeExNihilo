@@ -1,6 +1,7 @@
 package exnihilocreatio.registries.registries.prefab;
 
 import com.google.gson.Gson;
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.registries.manager.IDefaultRecipeProvider;
 import lombok.Getter;
 import org.apache.commons.io.IOUtils;
@@ -41,7 +42,7 @@ public abstract class BaseRegistry<RegType> {
     public void loadJson(File file) {
         if (hasAlreadyBeenLoaded) clearRegistry();
 
-        if (file.exists()) {
+        if (file.exists() && ModConfig.misc.enableJSONLoading) {
             try {
                 FileReader fr = new FileReader(file);
                 registerEntriesFromJSON(fr);
@@ -51,7 +52,9 @@ public abstract class BaseRegistry<RegType> {
             }
         } else {
             registerDefaults();
-            saveJson(file);
+            if (ModConfig.misc.enableJSONLoading){
+                saveJson(file);
+            }
         }
 
         hasAlreadyBeenLoaded = true;

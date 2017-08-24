@@ -69,8 +69,8 @@ public class BlockCrucibleStone extends BlockCrucibleBase implements IHasSpecial
     }
 
     @Override
-    public void getSubBlocks(@Nonnull CreativeTabs itemIn, NonNullList<ItemStack> items) {
-        if (itemIn == ExNihiloCreatio.tabExNihilo) {
+    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
+        if (itemIn == getCreativeTabToDisplayOn()) {
             items.add(new ItemStack(this, 1, 0));
             items.add(new ItemStack(this, 1, 1));
         }

@@ -10,6 +10,7 @@ import exnihilocreatio.items.ItemResource;
 import exnihilocreatio.items.ore.ItemOre;
 import exnihilocreatio.items.seeds.ItemSeedBase;
 import exnihilocreatio.registries.registries.*;
+import exnihilocreatio.registries.types.Meltable;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
@@ -332,9 +333,22 @@ public class ExNihiloDefaultRecipes {
     private static class CrucibleWoodDefaults implements ICrucibleWoodDefaultRegistryProvider {
         @Override
         public void registerRecipeDefaults(CrucibleRegistryNew registry) {
+            Meltable water = new Meltable(FluidRegistry.WATER.getName(), 250, new BlockInfo(Blocks.LEAVES, 0));
             registry.register(new ItemStack(Blocks.LEAVES), FluidRegistry.WATER, 250);
-            registry.register(new ItemStack(Blocks.LEAVES2), FluidRegistry.WATER, 250);
-            registry.register(new ItemStack(Blocks.SAPLING), FluidRegistry.WATER, 250);
+            registry.register(new ItemStack(Blocks.LEAVES, 1, 1), FluidRegistry.WATER, 250);
+            registry.register(new ItemStack(Blocks.LEAVES, 1, 2), FluidRegistry.WATER, 250);
+            registry.register(new ItemStack(Blocks.LEAVES, 1, 3), FluidRegistry.WATER, 250);
+            registry.register(new ItemStack(Blocks.LEAVES2, 1, 0), FluidRegistry.WATER, 250);
+            registry.register(new ItemStack(Blocks.LEAVES2, 1, 1), FluidRegistry.WATER, 250);
+
+            registry.register(new ItemInfo(Blocks.SAPLING, 0), water);
+            registry.register(new ItemInfo(Blocks.SAPLING, 1), water.copy().setTextureOverride(new BlockInfo(Blocks.LEAVES, 1)));
+            registry.register(new ItemInfo(Blocks.SAPLING, 2), water.copy().setTextureOverride(new BlockInfo(Blocks.LEAVES, 2)));
+            registry.register(new ItemInfo(Blocks.SAPLING, 3), water.copy().setTextureOverride(new BlockInfo(Blocks.LEAVES, 3)));
+            registry.register(new ItemInfo(Blocks.SAPLING, 4), water.copy().setTextureOverride(new BlockInfo(Blocks.LEAVES2, 0)));
+            registry.register(new ItemInfo(Blocks.SAPLING, 5), water.copy().setTextureOverride(new BlockInfo(Blocks.LEAVES2, 1)));
+
+            registry.register(new ItemInfo(Items.APPLE, 0), water);
         }
     }
 }
