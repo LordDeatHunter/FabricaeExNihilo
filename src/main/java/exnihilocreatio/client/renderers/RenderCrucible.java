@@ -29,6 +29,9 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucibleBase> 
             this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 
             wr.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
+            // Makes the fluid have the correct transparency
+            GlStateManager.enableBlend();
+            GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
             addSpriteColor(te, sprite[0], wr, false);
             addSpriteColor(te, sprite[1], wr, true);

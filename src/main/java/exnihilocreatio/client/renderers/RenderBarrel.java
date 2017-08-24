@@ -39,6 +39,9 @@ public class RenderBarrel extends TileEntitySpecialRenderer<TileBarrel> {
                 double maxV = (double) icon.getMaxV();
 
                 this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+                // Makes the fluid have the correct transparency
+                GlStateManager.enableBlend();
+                GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
                 buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
 
