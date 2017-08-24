@@ -26,7 +26,7 @@ public class Meltable {
         this.textureOverride = null;
     }
 
-    public Meltable copy(){
+    public Meltable copy() {
         return new Meltable(fluid, amount, textureOverride);
     }
 

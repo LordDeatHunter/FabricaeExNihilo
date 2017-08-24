@@ -20,7 +20,6 @@ import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -30,7 +29,7 @@ public class Util {
     public static Color blackColor = new Color(0f, 0f, 0f, 1f);
     public static Color greenColor = new Color(0f, 1f, 0f, 1f);
 
-    public static void dropItemInWorld(TileEntity source, EntityPlayer player, @Nonnull ItemStack stack, double speedFactor) {
+    public static void dropItemInWorld(TileEntity source, EntityPlayer player, ItemStack stack, double speedFactor) {
         if (stack == null || stack.isEmpty())
             return;
 

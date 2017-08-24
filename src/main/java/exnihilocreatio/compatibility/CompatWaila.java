@@ -2,7 +2,6 @@ package exnihilocreatio.compatibility;
 
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.blocks.*;
-import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.rotationalPower.IRotationalPowerMember;
 import exnihilocreatio.tiles.*;
 import mcp.mobius.waila.api.*;

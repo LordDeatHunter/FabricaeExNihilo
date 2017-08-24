@@ -2,7 +2,6 @@ package exnihilocreatio.blocks;
 
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.tiles.TileCrucibleBase;
-import exnihilocreatio.tiles.TileCrucibleStone;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
 import mcjty.theoneprobe.api.IProbeHitData;

@@ -1,6 +1,5 @@
 package exnihilocreatio.blocks;
 
-import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.tiles.TileCrucibleStone;
 import exnihilocreatio.util.IHasSpecialRegistry;
 import net.minecraft.block.material.Material;

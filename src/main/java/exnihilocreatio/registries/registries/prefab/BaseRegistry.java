@@ -52,7 +52,7 @@ public abstract class BaseRegistry<RegType> {
             }
         } else {
             registerDefaults();
-            if (ModConfig.misc.enableJSONLoading){
+            if (ModConfig.misc.enableJSONLoading) {
                 saveJson(file);
             }
         }

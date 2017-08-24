@@ -43,7 +43,7 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucibleBase> 
 
     }
 
-    public void addSpriteColor(TileCrucibleBase te, SpriteColor sprite, BufferBuilder wr, boolean isFluid){
+    public void addSpriteColor(TileCrucibleBase te, SpriteColor sprite, BufferBuilder wr, boolean isFluid) {
         if (sprite != null) {
             TextureAtlasSprite icon = sprite.getSprite();
             double minU = (double) icon.getMinU();
@@ -58,9 +58,9 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucibleBase> 
             //wr.begin(GL11.GL_QUADS, new VertexFormat().addElement(DefaultVertexFormats.POSITION_3F).addElement(DefaultVertexFormats.COLOR_4UB).addElement(DefaultVertexFormats.NORMAL_3B));
             // Offset by bottome of crucibleStone, which is 4 pixels above the base of the block (and make it stop on pixel below the top)
             float fillAmount;
-            if (isFluid){
+            if (isFluid) {
                 fillAmount = ((12F / 16F) * te.getFluidProportion() + (4F / 16F)) * 0.9375F;
-            }else {
+            } else {
                 fillAmount = ((12F / 16F) * te.getSolidProportion() + (4F / 16F)) * 0.9375F;
             }
 
