@@ -15,6 +15,7 @@ import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.Util;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -23,12 +24,18 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.oredict.OreDictionary;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class ExNihiloDefaultRecipes {
 
-    // @ObjectHolder("tconstruct:ingots")
-    // public static final Item tconstructIngots = null;
+    @Nullable
+    @ObjectHolder("appliedenergistics2:material")
+    public static final Item AE_MATERIAL = null;
 
     public static void registerDefaults() {
         ExNihiloRegistryManager.registerSieveDefaultRecipeHandler(new SieveDefaults());
@@ -209,9 +216,9 @@ public class ExNihiloDefaultRecipes {
             // Gold from nether rack
             ItemOre gold = oreRegistry.getOreItem("gold");
             if (gold != null) {
-                registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(gold, 1, 0), 0.4f, MeshType.FLINT.getID());
-                registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(gold, 1, 0), 0.4f, MeshType.IRON.getID());
-                registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(gold, 1, 0), 0.2f, MeshType.DIAMOND.getID());
+                registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(gold, 1, 0), 0.25f, MeshType.FLINT.getID());
+                registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(gold, 1, 0), 0.25f, MeshType.IRON.getID());
+                registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(gold, 1, 0), 0.4f, MeshType.DIAMOND.getID());
             }
 
             // TCon support
@@ -245,6 +252,15 @@ public class ExNihiloDefaultRecipes {
 
             registry.register(Blocks.DIRT.getDefaultState(), ItemResource.getResourceStack(ItemResource.ANCIENT_SPORES), 0.05f, MeshType.STRING.getID());
             registry.register(Blocks.DIRT.getDefaultState(), ItemResource.getResourceStack(ItemResource.GRASS_SEEDS), 0.05f, MeshType.STRING.getID());
+
+            // Skystone dust
+            //noinspection ConstantConditions
+            if (AE_MATERIAL != null) {
+                registry.register(ModBlocks.dust.getDefaultState(), new ItemStack(AE_MATERIAL, 1, 45), 0.1f, MeshType.FLINT.getID());
+                registry.register(ModBlocks.dust.getDefaultState(), new ItemStack(AE_MATERIAL, 1, 45), 0.2f, MeshType.IRON.getID());
+                registry.register(ModBlocks.dust.getDefaultState(), new ItemStack(AE_MATERIAL, 1, 45), 0.3f, MeshType.DIAMOND.getID());
+            }
+
         }
     }
 
@@ -351,6 +367,17 @@ public class ExNihiloDefaultRecipes {
             registry.register(FluidRegistry.LAVA, new ItemInfo(new ItemStack(Items.REDSTONE)), new ItemInfo(new ItemStack(Blocks.NETHERRACK)));
             registry.register(FluidRegistry.LAVA, new ItemInfo(new ItemStack(Items.GLOWSTONE_DUST)), new ItemInfo(new ItemStack(Blocks.END_STONE)));
             registry.register(ModFluids.fluidWitchwater, new ItemInfo(new ItemStack(Blocks.SAND)), new ItemInfo(new ItemStack(Blocks.SOUL_SAND)));
+
+            if (Loader.isModLoaded("appliedenergistics2")){
+                // Item skystoneDust = Item.getByNameOrId("appliedenergistics2:material"); // skystone is 45
+                Block skystoneBlock = Block.getBlockFromName("appliedenergistics2:sky_stone_block");
+
+                //noinspection ConstantConditions
+                if (skystoneBlock != null && AE_MATERIAL != null){
+                    registry.register(FluidRegistry.LAVA, new ItemInfo(AE_MATERIAL,  45), new ItemInfo(skystoneBlock, 0));
+                }
+            }
+
         }
     }
 

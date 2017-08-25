@@ -6,7 +6,7 @@ import exnihilocreatio.json.CustomItemStackJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.HammerReward;
-import exnihilocreatio.util.ItemInfo;
+import exnihilocreatio.util.BlockInfo;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 import java.io.FileReader;
 import java.util.*;
 
-public class HammerRegistry extends BaseRegistryMap<ItemInfo, List<HammerReward>> {
+public class HammerRegistry extends BaseRegistryMap<BlockInfo, List<HammerReward>> {
 
     public HammerRegistry() {
         super(
@@ -32,7 +32,7 @@ public class HammerRegistry extends BaseRegistryMap<ItemInfo, List<HammerReward>
         }.getType());
 
         for (Map.Entry<String, ArrayList<HammerReward>> s : gsonInput.entrySet()) {
-            ItemInfo stack = new ItemInfo(s.getKey());
+            BlockInfo stack = new BlockInfo(s.getKey());
             registry.put(stack, s.getValue());
         }
     }
@@ -51,7 +51,7 @@ public class HammerRegistry extends BaseRegistryMap<ItemInfo, List<HammerReward>
     }
 
     public void register(IBlockState state, ItemStack reward, int miningLevel, float chance, float fortuneChance, boolean wildcard) {
-        ItemInfo key = new ItemInfo(state);
+        BlockInfo key = new BlockInfo(state);
         if (wildcard)
             key.setMeta(-1);
 
@@ -81,18 +81,18 @@ public class HammerRegistry extends BaseRegistryMap<ItemInfo, List<HammerReward>
 
     @SuppressWarnings("unchecked")
     public List<HammerReward> getRewards(IBlockState block) {
-        return registry.getOrDefault(new ItemInfo(block), Collections.EMPTY_LIST);
+        return registry.getOrDefault(new BlockInfo(block), Collections.EMPTY_LIST);
     }
 
     public boolean registered(Block block) {
-        return registry.containsKey(new ItemInfo(block.getDefaultState()));
+        return registry.containsKey(new BlockInfo(block.getDefaultState()));
     }
 
     // Legacy TODO: REMOVE if it works with ex compressum
     @Deprecated
     @SuppressWarnings("unchecked")
     public List<HammerReward> getRewards(IBlockState state, int miningLevel) {
-        List<HammerReward> mapList = registry.getOrDefault(new ItemInfo(state), Collections.EMPTY_LIST);
+        List<HammerReward> mapList = registry.getOrDefault(new BlockInfo(state), Collections.EMPTY_LIST);
         List<HammerReward> ret = new ArrayList<>();
 
         for (HammerReward reward : mapList) {

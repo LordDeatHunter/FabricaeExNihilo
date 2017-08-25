@@ -2,6 +2,7 @@ package exnihilocreatio.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
@@ -16,6 +17,7 @@ public class BlockInfo {
     private Block block;
 
     @Getter
+    @Setter
     private int meta;
 
     public BlockInfo(IBlockState state) {

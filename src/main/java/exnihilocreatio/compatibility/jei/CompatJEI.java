@@ -97,9 +97,9 @@ public class CompatJEI implements IModPlugin {
         //region >>>> HAMMER RECIPES
         List<HammerRecipe> hammerRecipes = Lists.newArrayList();
 
-        for (ItemInfo info : ExNihiloRegistryManager.HAMMER_REGISTRY.getRegistry().keySet()) {
-            if (info.getItem() != null) {
-                IBlockState block = Block.getBlockFromItem(info.getItem()).getStateFromMeta(info.getMeta());
+        for (BlockInfo info : ExNihiloRegistryManager.HAMMER_REGISTRY.getRegistry().keySet()) {
+            if (info.getBlock() != null) {
+                IBlockState block = info.getBlockState();
 
                 HammerRecipe recipe = new HammerRecipe(block);
 
