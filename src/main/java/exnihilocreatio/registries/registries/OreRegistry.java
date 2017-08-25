@@ -30,7 +30,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 import org.apache.commons.lang3.StringUtils;
-import slimeknights.tconstruct.shared.block.BlockOre;
 
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -153,9 +152,9 @@ public class OreRegistry extends BaseRegistryList<Ore> {
         }
     }
 
-    public ItemOre getOreItem(String name){
+    public ItemOre getOreItem(String name) {
         for (ItemOre itemOre : itemOreRegistry) {
-            if (itemOre.getOre().getName().equals(name)){
+            if (itemOre.getOre().getName().equals(name)) {
                 return itemOre;
             }
         }
@@ -163,9 +162,9 @@ public class OreRegistry extends BaseRegistryList<Ore> {
         return null;
     }
 
-    public boolean isRegistered(String name){
+    public boolean isRegistered(String name) {
         for (Ore ore : registry) {
-            if (ore.getName().equals(name)){
+            if (ore.getName().equals(name)) {
                 return true;
             }
         }

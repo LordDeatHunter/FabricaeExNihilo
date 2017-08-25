@@ -99,7 +99,6 @@ public class CompatJEI implements IModPlugin {
 
         for (ItemInfo info : ExNihiloRegistryManager.HAMMER_REGISTRY.getRegistry().keySet()) {
             if (info.getItem() != null) {
-                @SuppressWarnings("deprecation")
                 IBlockState block = Block.getBlockFromItem(info.getItem()).getStateFromMeta(info.getMeta());
 
                 HammerRecipe recipe = new HammerRecipe(block);

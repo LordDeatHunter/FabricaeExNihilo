@@ -1,12 +1,12 @@
 package exnihilocreatio.blocks;
 
+import exnihilocreatio.compatibility.ITOPInfoProvider;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.ItemMesh;
 import exnihilocreatio.tiles.TileSieve;
 import exnihilocreatio.util.Util;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
-import mcjty.theoneprobe.api.IProbeInfoAccessor;
 import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -34,7 +34,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class BlockSieve extends BlockBase implements ITileEntityProvider, IProbeInfoAccessor {
+public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPInfoProvider {
 
     public static final PropertyEnum<MeshType> MESH = PropertyEnum.create("mesh", MeshType.class);
 

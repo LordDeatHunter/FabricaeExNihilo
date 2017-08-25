@@ -1,22 +1,24 @@
 package exnihilocreatio.blocks;
 
+import exnihilocreatio.barrel.IBarrelMode;
 import exnihilocreatio.barrel.modes.block.BarrelModeBlock;
 import exnihilocreatio.barrel.modes.compost.BarrelModeCompost;
 import exnihilocreatio.barrel.modes.fluid.BarrelModeFluid;
 import exnihilocreatio.barrel.modes.transform.BarrelModeFluidTransform;
+import exnihilocreatio.compatibility.ITOPInfoProvider;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.tiles.TileBarrel;
 import exnihilocreatio.util.Util;
 import lombok.Getter;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
-import mcjty.theoneprobe.api.IProbeInfoAccessor;
 import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -25,13 +27,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockBarrel extends BlockBase implements ITileEntityProvider, IProbeInfoAccessor {
+public class BlockBarrel extends BlockBase implements ITileEntityProvider, ITOPInfoProvider {
 
     private final AxisAlignedBB boundingBox = new AxisAlignedBB(0.0625f, 0, 0.0625f, 0.9375f, 1f, 0.9375f);
     @Getter
@@ -41,6 +45,25 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider, IProb
         super(material, "block_barrel" + tier);
         this.tier = tier;
         this.setHardness(2.0f);
+    }
+
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        TileEntity te = worldIn.getTileEntity(pos);
+        if (te != null && te instanceof TileBarrel) {
+            TileBarrel barrel = (TileBarrel) te;
+
+            if (barrel.getMode() != null && barrel.getMode().getName().equals("block")) {
+                IItemHandler barrelCap = barrel.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+                if (barrelCap != null) {
+                    ItemStack stack = barrelCap.getStackInSlot(0);
+                    if (!stack.isEmpty())
+                        Util.dropItemInWorld(te, null, stack, 0);
+                }
+            }
+        }
+
+        super.breakBlock(worldIn, pos, state);
     }
 
     @SuppressWarnings("deprecation")
@@ -138,9 +161,12 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider, IProb
         if (mode == ProbeMode.EXTENDED)
             probeInfo.text(TextFormatting.GREEN + "Mode: " + StringUtils.capitalize(barrel.getMode().getName()));
 
-        List<String> tooltips = barrel.getMode().getWailaTooltip(barrel, new ArrayList<String>());
-        for (String tooltip : tooltips) {
-            probeInfo.text(tooltip);
+        IBarrelMode barrelMode = barrel.getMode();
+        if (barrelMode != null) {
+            List<String> tooltips = barrelMode.getWailaTooltip(barrel, new ArrayList<>());
+            for (String tooltip : tooltips) {
+                probeInfo.text(tooltip);
+            }
         }
     }
 

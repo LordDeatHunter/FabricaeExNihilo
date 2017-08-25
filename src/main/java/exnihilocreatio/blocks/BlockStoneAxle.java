@@ -1,10 +1,10 @@
 package exnihilocreatio.blocks;
 
 import exnihilocreatio.ExNihiloCreatio;
+import exnihilocreatio.compatibility.ITOPInfoProvider;
 import exnihilocreatio.tiles.TileStoneAxle;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
-import mcjty.theoneprobe.api.IProbeInfoProvider;
 import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -27,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public class BlockStoneAxle extends BlockBase implements ITileEntityProvider, IProbeInfoProvider {
+public class BlockStoneAxle extends BlockBase implements ITileEntityProvider, ITOPInfoProvider {
     public static final IProperty<Boolean> IS_AXLE = PropertyBool.create("is_axle");
     private static final AxisAlignedBB hitboxEW = new AxisAlignedBB(0, 0, 0, 1, .5, .5).offset(0, 0.25, 0.25);
     private static final AxisAlignedBB hitboxSN = new AxisAlignedBB(0, 0, 0, .5, .5, 1).offset(0.25, 0.25, 0);
@@ -145,11 +145,6 @@ public class BlockStoneAxle extends BlockBase implements ITileEntityProvider, IP
             }
         }
         return FULL_BLOCK_AABB;
-    }
-
-    @Override
-    public String getID() {
-        return "block_stone_axle";
     }
 
     @Override

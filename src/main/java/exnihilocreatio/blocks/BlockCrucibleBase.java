@@ -1,12 +1,12 @@
 package exnihilocreatio.blocks;
 
 import exnihilocreatio.ExNihiloCreatio;
+import exnihilocreatio.compatibility.ITOPInfoProvider;
 import exnihilocreatio.tiles.TileCrucibleBase;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
-import mcjty.theoneprobe.api.IProbeInfoAccessor;
 import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -26,7 +26,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nonnull;
 
-public abstract class BlockCrucibleBase extends Block implements IProbeInfoAccessor, IHasModel {
+public abstract class BlockCrucibleBase extends Block implements ITOPInfoProvider, IHasModel {
 
     public BlockCrucibleBase(String name, Material material) {
         super(material);

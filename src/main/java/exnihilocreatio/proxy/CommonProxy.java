@@ -1,6 +1,7 @@
 package exnihilocreatio.proxy;
 
 import exnihilocreatio.*;
+import exnihilocreatio.compatibility.CompatTOP;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.util.Data;
 import net.minecraft.block.Block;
@@ -9,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -53,6 +55,9 @@ public abstract class CommonProxy {
 
     public void preInit(FMLPreInitializationEvent event) {
         ModFluids.init();
+        if (Loader.isModLoaded("theoneprobe")) {
+            CompatTOP.register();
+        }
     }
 
     public void init(FMLInitializationEvent event) {

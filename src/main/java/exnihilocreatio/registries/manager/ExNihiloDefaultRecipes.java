@@ -23,15 +23,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-
-import static net.minecraftforge.fml.common.registry.GameRegistry.*;
 
 public class ExNihiloDefaultRecipes {
 
-    @ObjectHolder("tconstrcut:ingots")
-    public static Item tconstructIngots;
+    // @ObjectHolder("tconstruct:ingots")
+    // public static final Item tconstructIngots = null;
 
     public static void registerDefaults() {
         ExNihiloRegistryManager.registerSieveDefaultRecipeHandler(new SieveDefaults());
@@ -201,7 +198,7 @@ public class ExNihiloDefaultRecipes {
             registry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.GLOWSTONE_DUST, 0), 0.0625f, MeshType.IRON.getID());
             registry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.BLAZE_POWDER, 0), 0.05f, MeshType.IRON.getID());
 
-            if (Loader.isModLoaded("tconstruct")){
+            if (Loader.isModLoaded("tconstruct")) {
                 Item.getByNameOrId("");
                 registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemInfo(Items.BLAZE_POWDER, 0), 0.05f, MeshType.IRON.getID());
             }
@@ -211,7 +208,7 @@ public class ExNihiloDefaultRecipes {
 
             // Gold from nether rack
             ItemOre gold = oreRegistry.getOreItem("gold");
-            if (gold != null){
+            if (gold != null) {
                 registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(gold, 1, 0), 0.4f, MeshType.FLINT.getID());
                 registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(gold, 1, 0), 0.4f, MeshType.IRON.getID());
                 registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(gold, 1, 0), 0.2f, MeshType.DIAMOND.getID());
@@ -219,14 +216,14 @@ public class ExNihiloDefaultRecipes {
 
             // TCon support
             ItemOre ardite = oreRegistry.getOreItem("ardite");
-            if (ardite != null){
+            if (ardite != null) {
                 registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(ardite, 1, 0), 0.1f, MeshType.FLINT.getID());
                 registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(ardite, 1, 0), 0.2f, MeshType.IRON.getID());
                 registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(ardite, 1, 0), 0.3f, MeshType.DIAMOND.getID());
             }
 
             ItemOre cobalt = oreRegistry.getOreItem("cobalt");
-            if (cobalt != null){
+            if (cobalt != null) {
                 registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(cobalt, 1, 0), 0.1f, MeshType.FLINT.getID());
                 registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(cobalt, 1, 0), 0.2f, MeshType.IRON.getID());
                 registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(cobalt, 1, 0), 0.3f, MeshType.DIAMOND.getID());
@@ -259,9 +256,6 @@ public class ExNihiloDefaultRecipes {
             registry.register(Blocks.SAND.getDefaultState(), new ItemStack(ModBlocks.dust, 1), 0, 1.0F, 0.0F);
             registry.register(Blocks.NETHERRACK.getDefaultState(), new ItemStack(ModBlocks.netherrackCrushed, 1), 0, 1.0F, 0.0F);
             registry.register(Blocks.END_STONE.getDefaultState(), new ItemStack(ModBlocks.endstoneCrushed, 1), 0, 1.0F, 0.0F);
-
-            // Hammering Logs gives planks
-            registry.register(Blocks.LOG.getDefaultState(), new ItemStack(Blocks.PLANKS), 0, 1.0F, 0.0F, true);
 
             // Hammering stone into pebbles (no idea why anyone should do that, but hey :P)
             registry.register(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.STONE), new ItemStack(ModItems.pebbles, 1, EnumPebbleSubtype.STONE.getMeta()), 1, 3F, 1.25F);
@@ -333,7 +327,10 @@ public class ExNihiloDefaultRecipes {
                 registry.register("nickel", new Color("FFFFCC"), null);
             }
 
-            if (tconstructIngots != null){
+            Item tconstructIngots = Item.getByNameOrId("tconstruct:ingots");
+
+            System.out.println("tconstructIngots = " + tconstructIngots);
+            if (tconstructIngots != null) {
                 registry.register("ardite", new Color("FF751A"), new ItemInfo(tconstructIngots, 1));
                 registry.register("cobalt", new Color("3333FF"), new ItemInfo(tconstructIngots, 0));
             }

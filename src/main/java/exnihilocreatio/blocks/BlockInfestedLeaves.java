@@ -1,6 +1,7 @@
 package exnihilocreatio.blocks;
 
 import exnihilocreatio.ModBlocks;
+import exnihilocreatio.compatibility.ITOPInfoProvider;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.tools.ICrook;
 import exnihilocreatio.tiles.TileInfestedLeaves;
@@ -9,7 +10,6 @@ import exnihilocreatio.util.IHasModel;
 import exnihilocreatio.util.Util;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
-import mcjty.theoneprobe.api.IProbeInfoAccessor;
 import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class BlockInfestedLeaves extends BlockLeaves implements ITileEntityProvider, IProbeInfoAccessor, IHasModel {
+public class BlockInfestedLeaves extends BlockLeaves implements ITileEntityProvider, ITOPInfoProvider, IHasModel {
     private int[] surroundings;
 
     public BlockInfestedLeaves() {
