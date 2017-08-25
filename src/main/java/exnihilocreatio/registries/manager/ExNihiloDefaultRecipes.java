@@ -35,7 +35,7 @@ public class ExNihiloDefaultRecipes {
 
     @Nullable
     @ObjectHolder("appliedenergistics2:material")
-    public static final Item AE_MATERIAL = null;
+    public static final Item AE_MATERIAL = null; //SkyStone dust == 45
 
     public static void registerDefaults() {
         ExNihiloRegistryManager.registerSieveDefaultRecipeHandler(new SieveDefaults());
@@ -253,7 +253,7 @@ public class ExNihiloDefaultRecipes {
             registry.register(Blocks.DIRT.getDefaultState(), ItemResource.getResourceStack(ItemResource.ANCIENT_SPORES), 0.05f, MeshType.STRING.getID());
             registry.register(Blocks.DIRT.getDefaultState(), ItemResource.getResourceStack(ItemResource.GRASS_SEEDS), 0.05f, MeshType.STRING.getID());
 
-            // Skystone dust
+            // SkyStone dust
             //noinspection ConstantConditions
             if (AE_MATERIAL != null) {
                 registry.register(ModBlocks.dust.getDefaultState(), new ItemStack(AE_MATERIAL, 1, 45), 0.1f, MeshType.FLINT.getID());
@@ -369,9 +369,7 @@ public class ExNihiloDefaultRecipes {
             registry.register(ModFluids.fluidWitchwater, new ItemInfo(new ItemStack(Blocks.SAND)), new ItemInfo(new ItemStack(Blocks.SOUL_SAND)));
 
             if (Loader.isModLoaded("appliedenergistics2")){
-                // Item skystoneDust = Item.getByNameOrId("appliedenergistics2:material"); // skystone is 45
                 Block skystoneBlock = Block.getBlockFromName("appliedenergistics2:sky_stone_block");
-
                 //noinspection ConstantConditions
                 if (skystoneBlock != null && AE_MATERIAL != null){
                     registry.register(FluidRegistry.LAVA, new ItemInfo(AE_MATERIAL,  45), new ItemInfo(skystoneBlock, 0));
