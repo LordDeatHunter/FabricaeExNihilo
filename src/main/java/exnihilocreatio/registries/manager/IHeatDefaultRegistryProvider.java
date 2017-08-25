@@ -1,6 +1,6 @@
 package exnihilocreatio.registries.manager;
 
-import exnihilocreatio.registries.registries.HeatRegistryNew;
+import exnihilocreatio.registries.registries.HeatRegistry;
 
-public interface IHeatDefaultRegistryProvider extends IDefaultRecipeProvider<HeatRegistryNew> {
+public interface IHeatDefaultRegistryProvider extends IDefaultRecipeProvider<HeatRegistry> {
 }

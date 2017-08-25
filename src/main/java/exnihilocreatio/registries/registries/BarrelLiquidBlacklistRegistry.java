@@ -11,8 +11,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class BarrelLiquidBlacklistRegistryNew extends BaseRegistryMap<Integer, List<String>> {
-    public BarrelLiquidBlacklistRegistryNew() {
+public class BarrelLiquidBlacklistRegistry extends BaseRegistryMap<Integer, List<String>> {
+    public BarrelLiquidBlacklistRegistry() {
         super(new GsonBuilder().setPrettyPrinting().create(), ExNihiloRegistryManager.BARREL_LIQUID_BLACKLIST_DEFAULT_REGISTRY_PROVIDERS);
     }
 

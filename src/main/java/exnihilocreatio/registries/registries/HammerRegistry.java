@@ -14,9 +14,9 @@ import net.minecraft.item.ItemStack;
 import java.io.FileReader;
 import java.util.*;
 
-public class HammerRegistryNew extends BaseRegistryMap<ItemInfo, List<HammerReward>> {
+public class HammerRegistry extends BaseRegistryMap<ItemInfo, List<HammerReward>> {
 
-    public HammerRegistryNew() {
+    public HammerRegistry() {
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()

@@ -1,6 +1,6 @@
 package exnihilocreatio.registries.manager;
 
-import exnihilocreatio.registries.registries.FluidBlockTransformerRegistryNew;
+import exnihilocreatio.registries.registries.FluidBlockTransformerRegistry;
 
-public interface IFluidBlockDefaultRegistryProvider extends IDefaultRecipeProvider<FluidBlockTransformerRegistryNew> {
+public interface IFluidBlockDefaultRegistryProvider extends IDefaultRecipeProvider<FluidBlockTransformerRegistry> {
 }

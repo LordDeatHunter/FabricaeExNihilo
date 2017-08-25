@@ -30,17 +30,18 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 import org.apache.commons.lang3.StringUtils;
+import slimeknights.tconstruct.shared.block.BlockOre;
 
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OreRegistryNew extends BaseRegistryList<Ore> {
+public class OreRegistry extends BaseRegistryList<Ore> {
 
     @Getter
     private List<ItemOre> itemOreRegistry = new ArrayList<>();
 
-    public OreRegistryNew() {
+    public OreRegistry() {
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
@@ -143,6 +144,31 @@ public class OreRegistryNew extends BaseRegistryList<Ore> {
     public void registerToGameRegistry(IForgeRegistry<Item> itemRegistry) {
         for (ItemOre itemOre : itemOreRegistry) {
             itemRegistry.register(itemOre);
+            OreDictionary.registerOre("ore" + StringUtils.capitalize(itemOre.getOre().getName()), new ItemStack(itemOre, 1, EnumOreSubtype.CHUNK.getMeta()));
+            OreDictionary.registerOre("dust" + StringUtils.capitalize(itemOre.getOre().getName()), new ItemStack(itemOre, 1, EnumOreSubtype.DUST.getMeta()));
+            OreDictionary.registerOre("piece" + StringUtils.capitalize(itemOre.getOre().getName()), new ItemStack(itemOre, 1, EnumOreSubtype.PIECE.getMeta()));
+
+            if (itemOre.isRegisterIngot())
+                OreDictionary.registerOre("ingot" + StringUtils.capitalize(itemOre.getOre().getName()), new ItemStack(itemOre, 1, EnumOreSubtype.INGOT.getMeta()));
         }
+    }
+
+    public ItemOre getOreItem(String name){
+        for (ItemOre itemOre : itemOreRegistry) {
+            if (itemOre.getOre().getName().equals(name)){
+                return itemOre;
+            }
+        }
+
+        return null;
+    }
+
+    public boolean isRegistered(String name){
+        for (Ore ore : registry) {
+            if (ore.getName().equals(name)){
+                return true;
+            }
+        }
+        return false;
     }
 }

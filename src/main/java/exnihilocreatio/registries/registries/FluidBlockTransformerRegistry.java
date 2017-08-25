@@ -13,9 +13,9 @@ import net.minecraftforge.fluids.Fluid;
 import java.io.FileReader;
 import java.util.List;
 
-public class FluidBlockTransformerRegistryNew extends BaseRegistryList<FluidBlockTransformer> {
+public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTransformer> {
 
-    public FluidBlockTransformerRegistryNew() {
+    public FluidBlockTransformerRegistry() {
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()

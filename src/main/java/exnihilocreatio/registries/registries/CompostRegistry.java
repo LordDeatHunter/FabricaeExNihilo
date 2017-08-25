@@ -28,9 +28,9 @@ import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.util.Map;
 
-public class CompostRegistryNew extends BaseRegistryMap<ItemInfo, Compostable> {
+public class CompostRegistry extends BaseRegistryMap<ItemInfo, Compostable> {
 
-    public CompostRegistryNew() {
+    public CompostRegistry() {
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()

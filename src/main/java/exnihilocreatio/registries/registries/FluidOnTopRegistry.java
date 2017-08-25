@@ -12,8 +12,8 @@ import net.minecraftforge.fluids.Fluid;
 import java.io.FileReader;
 import java.util.List;
 
-public class FluidOnTopRegistryNew extends BaseRegistryList<FluidFluidBlock> {
-    public FluidOnTopRegistryNew() {
+public class FluidOnTopRegistry extends BaseRegistryList<FluidFluidBlock> {
+    public FluidOnTopRegistry() {
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()

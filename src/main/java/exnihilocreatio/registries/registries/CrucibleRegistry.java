@@ -17,8 +17,8 @@ import java.io.FileReader;
 import java.util.List;
 import java.util.Map;
 
-public class CrucibleRegistryNew extends BaseRegistryMap<ItemInfo, Meltable> {
-    public CrucibleRegistryNew(List<? extends IDefaultRecipeProvider> defaultRecipeProviders) {
+public class CrucibleRegistry extends BaseRegistryMap<ItemInfo, Meltable> {
+    public CrucibleRegistry(List<? extends IDefaultRecipeProvider> defaultRecipeProviders) {
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()

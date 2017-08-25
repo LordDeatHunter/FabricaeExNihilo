@@ -1,6 +1,6 @@
 package exnihilocreatio.tiles;
 
-import exnihilocreatio.registries.registries.CrucibleRegistryNew;
+import exnihilocreatio.registries.registries.CrucibleRegistry;
 import exnihilocreatio.registries.types.Meltable;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.texturing.SpriteColor;
@@ -49,9 +49,9 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
     @Getter
     protected CrucibleItemHandler itemHandler;
     @Getter
-    protected CrucibleRegistryNew crucibleRegistry;
+    protected CrucibleRegistry crucibleRegistry;
 
-    public TileCrucibleBase(CrucibleRegistryNew crucibleRegistry) {
+    public TileCrucibleBase(CrucibleRegistry crucibleRegistry) {
         tank = new FluidTank(4 * Fluid.BUCKET_VOLUME);
         tank.setCanFill(false);
 

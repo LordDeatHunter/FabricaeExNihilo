@@ -1,6 +1,6 @@
 package exnihilocreatio.registries.manager;
 
-import exnihilocreatio.registries.registries.OreRegistryNew;
+import exnihilocreatio.registries.registries.OreRegistry;
 
-public interface IOreDefaultRegistryProvider extends IDefaultRecipeProvider<OreRegistryNew> {
+public interface IOreDefaultRegistryProvider extends IDefaultRecipeProvider<OreRegistry> {
 }

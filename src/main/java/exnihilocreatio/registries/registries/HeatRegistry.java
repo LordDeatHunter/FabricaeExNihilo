@@ -12,9 +12,9 @@ import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HeatRegistryNew extends BaseRegistryMap<BlockInfo, Integer> {
+public class HeatRegistry extends BaseRegistryMap<BlockInfo, Integer> {
 
-    public HeatRegistryNew() {
+    public HeatRegistry() {
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()

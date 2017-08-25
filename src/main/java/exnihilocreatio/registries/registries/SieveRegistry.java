@@ -16,9 +16,9 @@ import net.minecraft.item.ItemStack;
 import java.io.FileReader;
 import java.util.*;
 
-public class SieveRegistryNew extends BaseRegistryMap<BlockInfo, ArrayList<Siftable>> {
+public class SieveRegistry extends BaseRegistryMap<BlockInfo, ArrayList<Siftable>> {
 
-    public SieveRegistryNew() {
+    public SieveRegistry() {
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()

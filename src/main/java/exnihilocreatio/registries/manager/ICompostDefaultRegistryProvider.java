@@ -1,6 +1,6 @@
 package exnihilocreatio.registries.manager;
 
-import exnihilocreatio.registries.registries.CompostRegistryNew;
+import exnihilocreatio.registries.registries.CompostRegistry;
 
-public interface ICompostDefaultRegistryProvider extends IDefaultRecipeProvider<CompostRegistryNew> {
+public interface ICompostDefaultRegistryProvider extends IDefaultRecipeProvider<CompostRegistry> {
 }

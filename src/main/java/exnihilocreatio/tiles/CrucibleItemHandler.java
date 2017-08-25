@@ -1,6 +1,6 @@
 package exnihilocreatio.tiles;
 
-import exnihilocreatio.registries.registries.CrucibleRegistryNew;
+import exnihilocreatio.registries.registries.CrucibleRegistry;
 import exnihilocreatio.registries.types.Meltable;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
@@ -10,9 +10,9 @@ import javax.annotation.Nonnull;
 public class CrucibleItemHandler extends ItemStackHandler {
 
     protected TileCrucibleBase te;
-    protected CrucibleRegistryNew crucibleRegistry;
+    protected CrucibleRegistry crucibleRegistry;
 
-    public CrucibleItemHandler(TileCrucibleBase te, CrucibleRegistryNew crucibleRegistry) {
+    public CrucibleItemHandler(TileCrucibleBase te, CrucibleRegistry crucibleRegistry) {
         super(1);
         this.te = te;
         this.crucibleRegistry = crucibleRegistry;

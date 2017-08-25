@@ -22,18 +22,18 @@ public final class ExNihiloRegistryManager {
     public static final List<IBarrelLiquidBlacklistDefaultRegistryProvider> BARREL_LIQUID_BLACKLIST_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
     //endregion
 
-    public static final CompostRegistryNew COMPOST_REGISTRY = new CompostRegistryNew();
-    public static final CrookRegistryNew CROOK_REGISTRY = new CrookRegistryNew();
-    public static final SieveRegistryNew SIEVE_REGISTRY = new SieveRegistryNew();
-    public static final HammerRegistryNew HAMMER_REGISTRY = new HammerRegistryNew();
-    public static final HeatRegistryNew HEAT_REGISTRY = new HeatRegistryNew();
-    public static final OreRegistryNew ORE_REGISTRY = new OreRegistryNew();
-    public static final BarrelLiquidBlacklistRegistryNew BARREL_LIQUID_BLACKLIST_REGISTRY = new BarrelLiquidBlacklistRegistryNew();
-    public static final FluidOnTopRegistryNew FLUID_ON_TOP_REGISTRY = new FluidOnTopRegistryNew();
-    public static final FluidTransformRegistryNew FLUID_TRANSFORM_REGISTRY = new FluidTransformRegistryNew();
-    public static final FluidBlockTransformerRegistryNew FLUID_BLOCK_TRANSFORMER_REGISTRY = new FluidBlockTransformerRegistryNew();
-    public static final CrucibleRegistryNew CRUCIBLE_STONE_REGISTRY = new CrucibleRegistryNew(CRUCIBLE_STONE_DEFAULT_REGISTRY_PROVIDERS);
-    public static final CrucibleRegistryNew CRUCIBLE_WOOD_REGISTRY = new CrucibleRegistryNew(CRUCIBLE_WOOD_DEFAULT_REGISTRY_PROVIDERS);
+    public static final CompostRegistry COMPOST_REGISTRY = new CompostRegistry();
+    public static final CrookRegistry CROOK_REGISTRY = new CrookRegistry();
+    public static final SieveRegistry SIEVE_REGISTRY = new SieveRegistry();
+    public static final HammerRegistry HAMMER_REGISTRY = new HammerRegistry();
+    public static final HeatRegistry HEAT_REGISTRY = new HeatRegistry();
+    public static final OreRegistry ORE_REGISTRY = new OreRegistry();
+    public static final BarrelLiquidBlacklistRegistry BARREL_LIQUID_BLACKLIST_REGISTRY = new BarrelLiquidBlacklistRegistry();
+    public static final FluidOnTopRegistry FLUID_ON_TOP_REGISTRY = new FluidOnTopRegistry();
+    public static final FluidTransformRegistry FLUID_TRANSFORM_REGISTRY = new FluidTransformRegistry();
+    public static final FluidBlockTransformerRegistry FLUID_BLOCK_TRANSFORMER_REGISTRY = new FluidBlockTransformerRegistry();
+    public static final CrucibleRegistry CRUCIBLE_STONE_REGISTRY = new CrucibleRegistry(CRUCIBLE_STONE_DEFAULT_REGISTRY_PROVIDERS);
+    public static final CrucibleRegistry CRUCIBLE_WOOD_REGISTRY = new CrucibleRegistry(CRUCIBLE_WOOD_DEFAULT_REGISTRY_PROVIDERS);
 
 
     //region >>>> DEFAULT RECIPE REGISTERS

@@ -19,11 +19,19 @@ import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
+import static net.minecraftforge.fml.common.registry.GameRegistry.*;
+
 public class ExNihiloDefaultRecipes {
+
+    @ObjectHolder("tconstrcut:ingots")
+    public static Item tconstructIngots;
 
     public static void registerDefaults() {
         ExNihiloRegistryManager.registerSieveDefaultRecipeHandler(new SieveDefaults());
@@ -42,7 +50,7 @@ public class ExNihiloDefaultRecipes {
 
     private static class CompostDefaults implements ICompostDefaultRegistryProvider {
         @Override
-        public void registerRecipeDefaults(CompostRegistryNew registry) {
+        public void registerRecipeDefaults(CompostRegistry registry) {
             IBlockState dirtState = Blocks.DIRT.getDefaultState();
 
             registry.register(Items.ROTTEN_FLESH, 0, 0.1f, dirtState, new Color("C45631"));
@@ -134,7 +142,7 @@ public class ExNihiloDefaultRecipes {
 
     private static class CrookDefaults implements ICrookDefaultRegistryProvider {
         @Override
-        public void registerRecipeDefaults(CrookRegistryNew registry) {
+        public void registerRecipeDefaults(CrookRegistry registry) {
             registry.register(new BlockInfo(Blocks.LEAVES, -1), ItemResource.getResourceStack(ItemResource.SILKWORM), 0.1f, 0f);
             registry.register(new BlockInfo(Blocks.LEAVES2, -1), ItemResource.getResourceStack(ItemResource.SILKWORM), 0.1f, 0f);
         }
@@ -142,7 +150,7 @@ public class ExNihiloDefaultRecipes {
 
     private static class SieveDefaults implements ISieveDefaultRegistryProvider {
         @Override
-        public void registerRecipeDefaults(SieveRegistryNew registry) {
+        public void registerRecipeDefaults(SieveRegistry registry) {
             registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"), 1f, MeshType.STRING.getID());
             registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"), 1f, MeshType.STRING.getID());
             registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"), 0.5f, MeshType.STRING.getID());
@@ -193,11 +201,41 @@ public class ExNihiloDefaultRecipes {
             registry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.GLOWSTONE_DUST, 0), 0.0625f, MeshType.IRON.getID());
             registry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.BLAZE_POWDER, 0), 0.05f, MeshType.IRON.getID());
 
-            // SieveRegistry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemInfo(Items.BLAZE_POWDER, 0), 0.05f, MeshType.IRON.getID());
-            // TODO: add tinkers ardite to sieve and add ores for it
+            if (Loader.isModLoaded("tconstruct")){
+                Item.getByNameOrId("");
+                registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemInfo(Items.BLAZE_POWDER, 0), 0.05f, MeshType.IRON.getID());
+            }
 
-            // Ores
-            for (ItemOre ore : ExNihiloRegistryManager.ORE_REGISTRY.getItemOreRegistry()) {
+            // Custom Ores for other mods
+            OreRegistry oreRegistry = ExNihiloRegistryManager.ORE_REGISTRY;
+
+            // Gold from nether rack
+            ItemOre gold = oreRegistry.getOreItem("gold");
+            if (gold != null){
+                registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(gold, 1, 0), 0.4f, MeshType.FLINT.getID());
+                registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(gold, 1, 0), 0.4f, MeshType.IRON.getID());
+                registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(gold, 1, 0), 0.2f, MeshType.DIAMOND.getID());
+            }
+
+            // TCon support
+            ItemOre ardite = oreRegistry.getOreItem("ardite");
+            if (ardite != null){
+                registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(ardite, 1, 0), 0.1f, MeshType.FLINT.getID());
+                registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(ardite, 1, 0), 0.2f, MeshType.IRON.getID());
+                registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(ardite, 1, 0), 0.3f, MeshType.DIAMOND.getID());
+            }
+
+            ItemOre cobalt = oreRegistry.getOreItem("cobalt");
+            if (cobalt != null){
+                registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(cobalt, 1, 0), 0.1f, MeshType.FLINT.getID());
+                registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(cobalt, 1, 0), 0.2f, MeshType.IRON.getID());
+                registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(cobalt, 1, 0), 0.3f, MeshType.DIAMOND.getID());
+            }
+
+            // All default Ores
+            for (ItemOre ore : oreRegistry.getItemOreRegistry()) {
+                if (ore == ardite || ore == cobalt) continue;
+
                 registry.register(Blocks.GRAVEL.getDefaultState(), new ItemStack(ore, 1, 0), 0.2f, MeshType.FLINT.getID());
                 registry.register(Blocks.GRAVEL.getDefaultState(), new ItemStack(ore, 1, 0), 0.2f, MeshType.IRON.getID());
                 registry.register(Blocks.GRAVEL.getDefaultState(), new ItemStack(ore, 1, 0), 0.1f, MeshType.DIAMOND.getID());
@@ -215,7 +253,7 @@ public class ExNihiloDefaultRecipes {
 
     private static class HammerDefaults implements IHammerDefaultRegistryProvider {
         @Override
-        public void registerRecipeDefaults(HammerRegistryNew registry) {
+        public void registerRecipeDefaults(HammerRegistry registry) {
             registry.register(Blocks.COBBLESTONE.getDefaultState(), new ItemStack(Blocks.GRAVEL, 1), 0, 1.0F, 0.0F);
             registry.register(Blocks.GRAVEL.getDefaultState(), new ItemStack(Blocks.SAND, 1), 0, 1.0F, 0.0F);
             registry.register(Blocks.SAND.getDefaultState(), new ItemStack(ModBlocks.dust, 1), 0, 1.0F, 0.0F);
@@ -235,7 +273,7 @@ public class ExNihiloDefaultRecipes {
 
     private static class HeatDefaults implements IHeatDefaultRegistryProvider {
         @Override
-        public void registerRecipeDefaults(HeatRegistryNew registry) {
+        public void registerRecipeDefaults(HeatRegistry registry) {
             // Vanilla fluids are weird, the "flowing" variant is simply a temporary state of checking if it can flow.
             // So, once the lava has spread out all the way, it will all actually be "still" lava.
             // Thanks Mojang <3
@@ -248,7 +286,7 @@ public class ExNihiloDefaultRecipes {
 
     private static class BarrelLiquidBlacklistDefaults implements IBarrelLiquidBlacklistDefaultRegistryProvider {
         @Override
-        public void registerRecipeDefaults(BarrelLiquidBlacklistRegistryNew registry) {
+        public void registerRecipeDefaults(BarrelLiquidBlacklistRegistry registry) {
             registry.register(ModBlocks.barrelWood.getTier(), "lava");
             registry.register(ModBlocks.barrelWood.getTier(), "fire_water");
             registry.register(ModBlocks.barrelWood.getTier(), "rocket_fuel");
@@ -258,7 +296,7 @@ public class ExNihiloDefaultRecipes {
 
     private static class FluidOnTopDefaults implements IFluidOnTopDefaultRegistryProvider {
         @Override
-        public void registerRecipeDefaults(FluidOnTopRegistryNew registry) {
+        public void registerRecipeDefaults(FluidOnTopRegistry registry) {
             registry.register(FluidRegistry.LAVA, FluidRegistry.WATER, new ItemInfo(Blocks.OBSIDIAN.getDefaultState()));
             registry.register(FluidRegistry.WATER, FluidRegistry.LAVA, new ItemInfo(Blocks.COBBLESTONE.getDefaultState()));
         }
@@ -266,7 +304,7 @@ public class ExNihiloDefaultRecipes {
 
     private static class OreDefaults implements IOreDefaultRegistryProvider {
         @Override
-        public void registerRecipeDefaults(OreRegistryNew registry) {
+        public void registerRecipeDefaults(OreRegistry registry) {
             registry.register("gold", new Color("FFFF00"), new ItemInfo(Items.GOLD_INGOT, 0));
             registry.register("iron", new Color("BF8040"), new ItemInfo(Items.IRON_INGOT, 0));
 
@@ -295,26 +333,23 @@ public class ExNihiloDefaultRecipes {
                 registry.register("nickel", new Color("FFFFCC"), null);
             }
 
-            if (OreDictionary.getOres("oreArdite").size() > 0) {
-                registry.register("ardite", new Color("FF751A"), null);
-            }
-
-            if (OreDictionary.getOres("oreCobalt").size() > 0) {
-                registry.register("cobalt", new Color("3333FF"), null);
+            if (tconstructIngots != null){
+                registry.register("ardite", new Color("FF751A"), new ItemInfo(tconstructIngots, 1));
+                registry.register("cobalt", new Color("3333FF"), new ItemInfo(tconstructIngots, 0));
             }
         }
     }
 
     private static class FluidTransformDefaults implements IFluidTransformDefaultRegistryProvider {
         @Override
-        public void registerRecipeDefaults(FluidTransformRegistryNew registry) {
+        public void registerRecipeDefaults(FluidTransformRegistry registry) {
             registry.register("water", "witchwater", 12000, new BlockInfo[]{new BlockInfo(Blocks.MYCELIUM.getDefaultState())}, new BlockInfo[]{new BlockInfo(Blocks.BROWN_MUSHROOM.getDefaultState()), new BlockInfo(Blocks.RED_MUSHROOM.getDefaultState())});
         }
     }
 
     private static class FluidBlockTransformDefaults implements IFluidBlockDefaultRegistryProvider {
         @Override
-        public void registerRecipeDefaults(FluidBlockTransformerRegistryNew registry) {
+        public void registerRecipeDefaults(FluidBlockTransformerRegistry registry) {
             registry.register(FluidRegistry.WATER, new ItemInfo(new ItemStack(ModBlocks.dust)), new ItemInfo(new ItemStack(Blocks.CLAY)));
             registry.register(FluidRegistry.LAVA, new ItemInfo(new ItemStack(Items.REDSTONE)), new ItemInfo(new ItemStack(Blocks.NETHERRACK)));
             registry.register(FluidRegistry.LAVA, new ItemInfo(new ItemStack(Items.GLOWSTONE_DUST)), new ItemInfo(new ItemStack(Blocks.END_STONE)));
@@ -325,14 +360,14 @@ public class ExNihiloDefaultRecipes {
     private static class CrucibleStoneDefaults implements ICrucibleStoneDefaultRegistryProvider {
 
         @Override
-        public void registerRecipeDefaults(CrucibleRegistryNew registry) {
+        public void registerRecipeDefaults(CrucibleRegistry registry) {
             registry.register(new ItemStack(Blocks.COBBLESTONE), FluidRegistry.LAVA, 250);
         }
     }
 
     private static class CrucibleWoodDefaults implements ICrucibleWoodDefaultRegistryProvider {
         @Override
-        public void registerRecipeDefaults(CrucibleRegistryNew registry) {
+        public void registerRecipeDefaults(CrucibleRegistry registry) {
             Meltable water = new Meltable(FluidRegistry.WATER.getName(), 250, new BlockInfo(Blocks.LEAVES, 0));
             registry.register(new ItemStack(Blocks.LEAVES), FluidRegistry.WATER, 250);
             registry.register(new ItemStack(Blocks.LEAVES, 1, 1), FluidRegistry.WATER, 250);

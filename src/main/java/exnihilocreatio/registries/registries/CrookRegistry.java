@@ -18,9 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CrookRegistryNew extends BaseRegistryMap<BlockInfo, List<CrookReward>> {
+public class CrookRegistry extends BaseRegistryMap<BlockInfo, List<CrookReward>> {
 
-    public CrookRegistryNew() {
+    public CrookRegistry() {
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()

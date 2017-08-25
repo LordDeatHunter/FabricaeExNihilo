@@ -15,8 +15,8 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FluidTransformRegistryNew extends BaseRegistryMap<String, List<FluidTransformer>> {
-    public FluidTransformRegistryNew() {
+public class FluidTransformRegistry extends BaseRegistryMap<String, List<FluidTransformer>> {
+    public FluidTransformRegistry() {
         super(new GsonBuilder().setPrettyPrinting().registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson()).create(),
                 ExNihiloRegistryManager.FLUID_TRANSFORM_DEFAULT_REGISTRY_PROVIDERS);
     }
