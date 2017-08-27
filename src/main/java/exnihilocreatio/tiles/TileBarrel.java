@@ -11,6 +11,7 @@ import exnihilocreatio.networking.MessageCheckLight;
 import exnihilocreatio.networking.PacketHandler;
 import exnihilocreatio.registries.registries.BarrelModeRegistry;
 import exnihilocreatio.registries.registries.BarrelModeRegistry.TriggerType;
+import exnihilocreatio.util.TankUtil;
 import lombok.Getter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,7 +39,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 
-public class TileBarrel extends TileEntity implements ITickable {
+public class TileBarrel extends BaseTileEntity implements ITickable {
 
     @Getter
     private IBarrelMode mode;
@@ -62,6 +63,13 @@ public class TileBarrel extends TileEntity implements ITickable {
 
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (mode == null || mode.getName().equals("fluid")) {
+            if (TankUtil.drainWaterFromBottle(this, player, tank))
+                return true;
+
+            if (tank != null && TankUtil.drainWaterIntoBottle(this, player, tank))
+                return true;
+
+
             ItemStack stack = player.getHeldItem(hand);
 
             IFluidHandler fluidHandler = getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
@@ -203,27 +211,6 @@ public class TileBarrel extends TileEntity implements ITickable {
             tier = tag.getInteger("barrelTier");
         }
         super.readFromNBT(tag);
-    }
-
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket() {
-        NBTTagCompound tag = new NBTTagCompound();
-        this.writeToNBT(tag);
-
-        return new SPacketUpdateTileEntity(this.pos, this.getBlockMetadata(), tag);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-        NBTTagCompound tag = pkt.getNbtCompound();
-        readFromNBT(tag);
-    }
-
-    @Override
-    @Nonnull
-    public NBTTagCompound getUpdateTag() {
-        return writeToNBT(new NBTTagCompound());
     }
 
     public void setMode(String modeName) {

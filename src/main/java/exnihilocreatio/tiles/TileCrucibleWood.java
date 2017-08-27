@@ -3,9 +3,21 @@ package exnihilocreatio.tiles;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.util.ItemInfo;
+import exnihilocreatio.util.TankUtil;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionUtils;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class TileCrucibleWood extends TileCrucibleBase {
 
@@ -81,5 +93,13 @@ public class TileCrucibleWood extends TileCrucibleBase {
     @Override
     public int getHeatRate() {
         return ModConfig.crucible.woodenCrucibleSpeed;
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ, IFluidHandler handler) {
+        if (TankUtil.drainWaterIntoBottle(this, player, tank))
+            return true;
+
+        return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ, handler);
     }
 }
