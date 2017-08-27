@@ -34,6 +34,10 @@ public class CompatTConstruct {
                 Fluid fluid = FluidRegistry.getFluid(ore.getOre().getName());
                 TinkerRegistry.registerMelting(new ItemStack(ore, 1, EnumOreSubtype.CHUNK.getMeta()), fluid,
                         (int) (ModConfig.compatibility.tinkers_construct_compat.ingotsPerChunkWhenMelting * Material.VALUE_Ingot));
+            } else if (ore.getOre().getName().equals("aluminium") && FluidRegistry.isFluidRegistered("aluminum")) {
+                Fluid fluid = FluidRegistry.getFluid("aluminum");
+                TinkerRegistry.registerMelting(new ItemStack(ore, 1, EnumOreSubtype.CHUNK.getMeta()), fluid,
+                        (int) (ModConfig.compatibility.tinkers_construct_compat.ingotsPerChunkWhenMelting * Material.VALUE_Ingot));
             }
         }
     }
@@ -42,6 +46,10 @@ public class CompatTConstruct {
         for (ItemOre ore : ExNihiloRegistryManager.ORE_REGISTRY.getItemOreRegistry()) {
             if (FluidRegistry.isFluidRegistered(ore.getOre().getName())) {
                 Fluid fluid = FluidRegistry.getFluid(ore.getOre().getName());
+                TinkerRegistry.registerMelting(new ItemStack(ore, 1, EnumOreSubtype.DUST.getMeta()), fluid,
+                        (int) (ModConfig.compatibility.tinkers_construct_compat.ingotsPerDustWhenMelting * Material.VALUE_Ingot));
+            } else if (ore.getOre().getName().equals("aluminium") && FluidRegistry.isFluidRegistered("aluminum")) {
+                Fluid fluid = FluidRegistry.getFluid("aluminum");
                 TinkerRegistry.registerMelting(new ItemStack(ore, 1, EnumOreSubtype.DUST.getMeta()), fluid,
                         (int) (ModConfig.compatibility.tinkers_construct_compat.ingotsPerDustWhenMelting * Material.VALUE_Ingot));
             }
