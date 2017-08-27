@@ -343,7 +343,6 @@ public class ExNihiloDefaultRecipes {
 
             Item tconstructIngots = Item.getByNameOrId("tconstruct:ingots");
 
-            System.out.println("tconstructIngots = " + tconstructIngots);
             if (tconstructIngots != null) {
                 registry.register("ardite", new Color("FF751A"), new ItemInfo(tconstructIngots, 1));
                 registry.register("cobalt", new Color("3333FF"), new ItemInfo(tconstructIngots, 0));
