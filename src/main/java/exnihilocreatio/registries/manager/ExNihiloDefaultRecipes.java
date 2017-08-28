@@ -174,6 +174,7 @@ public class ExNihiloDefaultRecipes {
             registry.register(Blocks.DIRT.getDefaultState(), new ItemInfo(Items.PUMPKIN_SEEDS, 0), 0.35f, MeshType.STRING.getID());
 
             registry.register(Blocks.SAND.getDefaultState(), new ItemInfo(Items.DYE, 3), 0.03f, MeshType.STRING.getID());
+            registry.register(Blocks.SAND.getDefaultState(), new ItemInfo(Items.PRISMARINE_SHARD, 0), 0.02f, MeshType.DIAMOND.getID());
 
             registry.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.FLINT, 0), 0.25f, MeshType.FLINT.getID());
             registry.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.COAL, 0), 0.125f, MeshType.FLINT.getID());

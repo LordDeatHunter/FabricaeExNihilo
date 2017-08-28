@@ -23,6 +23,8 @@ item.item_material.gear_stone.name=Stone Gear
 
 item.item_doll.blaze.name=Blazing Doll
 item.item_doll.enderman.name=Creeping Doll
+item.item_doll.shulker.name=Floating Doll
+item.item_doll.guardian.name=Protecting Doll
 
 item.item_cooked_silkworm.name=Cooked Silkworm
 

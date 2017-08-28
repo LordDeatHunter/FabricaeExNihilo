@@ -85,7 +85,7 @@ public class ItemDoll extends Item implements IHasModel {
                 return world.spawnEntity(enderman);
             case 2:
                 EntityShulker shulker = new EntityShulker(world);
-                shulker.setPosition(pos.getX(), pos.getY() + 1, pos.getZ());
+                shulker.setPosition(pos.getX(), pos.getY() + 1.5, pos.getZ());
 
                 return world.spawnEntity(shulker);
             case 3:
