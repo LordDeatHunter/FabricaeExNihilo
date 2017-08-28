@@ -2,6 +2,7 @@ package exnihilocreatio.tiles;
 
 import exnihilocreatio.registries.registries.CrucibleRegistry;
 import exnihilocreatio.registries.types.Meltable;
+import exnihilocreatio.util.ItemInfo;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -24,6 +25,8 @@ public class CrucibleItemHandler extends ItemStackHandler {
         if (crucibleRegistry.canBeMelted(stack)) {
             Meltable meltable = crucibleRegistry.getMeltable(stack);
             if ((meltable.getAmount() + meltable.getAmount() * getStackInSlot(0).getCount() + te.getSolidAmount()) <= (meltable.getAmount() * TileCrucibleBase.MAX_ITEMS)) {
+                te.currentItem = new ItemInfo(stack);
+                te.markDirtyClient();
                 return super.insertItem(slot, stack, simulate);
             }
         }
