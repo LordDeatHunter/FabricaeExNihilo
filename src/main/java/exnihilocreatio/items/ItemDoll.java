@@ -9,6 +9,8 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.monster.EntityGuardian;
+import net.minecraft.entity.monster.EntityShulker;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -28,8 +30,10 @@ import java.util.List;
 
 public class ItemDoll extends Item implements IHasModel {
 
-    public static final String BLAZE = "blaze";
-    public static final String ENDERMAN = "enderman";
+    public static final String BLAZE = "blaze"; // 0
+    public static final String ENDERMAN = "enderman"; // 1
+    public static final String SHULKER = "shulker"; // 2
+    public static final String GUARDIAN = "guardian"; // 3
 
     private static ArrayList<String> names = new ArrayList<String>();
 
@@ -43,12 +47,21 @@ public class ItemDoll extends Item implements IHasModel {
 
         names.add(BLAZE);
         names.add(ENDERMAN);
+        names.add(SHULKER);
+        names.add(GUARDIAN);
 
         Data.ITEMS.add(this);
     }
 
     public Fluid getSpawnFluid(ItemStack stack) {
-        return stack.getItemDamage() == 0 ? FluidRegistry.LAVA : ModFluids.fluidWitchwater;
+        switch (stack.getMetadata()) {
+            case 0:
+                return FluidRegistry.LAVA;
+            case 3:
+                return FluidRegistry.WATER;
+            default:
+                return ModFluids.fluidWitchwater;
+        }
     }
 
     /**
@@ -59,16 +72,29 @@ public class ItemDoll extends Item implements IHasModel {
      * @return true if spawn is successful
      */
     public boolean spawnMob(ItemStack stack, World world, BlockPos pos) {
-        if (stack.getItemDamage() == 0) {
-            EntityBlaze blaze = new EntityBlaze(world);
-            blaze.setPosition(pos.getX(), pos.getY() + 1, pos.getZ());
+        switch (stack.getMetadata()){
+            case 0:
+                EntityBlaze blaze = new EntityBlaze(world);
+                blaze.setPosition(pos.getX(), pos.getY() + 1, pos.getZ());
 
-            return world.spawnEntity(blaze);
-        } else {
-            EntityEnderman enderman = new EntityEnderman(world);
-            enderman.setPosition(pos.getX(), pos.getY() + 2, pos.getZ());
+                return world.spawnEntity(blaze);
+            case 1:
+                EntityEnderman enderman = new EntityEnderman(world);
+                enderman.setPosition(pos.getX(), pos.getY() + 2, pos.getZ());
 
-            return world.spawnEntity(enderman);
+                return world.spawnEntity(enderman);
+            case 2:
+                EntityShulker shulker = new EntityShulker(world);
+                shulker.setPosition(pos.getX(), pos.getY() + 1, pos.getZ());
+
+                return world.spawnEntity(shulker);
+            case 3:
+                EntityGuardian guardian = new EntityGuardian(world);
+                guardian.setPosition(pos.getX(), pos.getY() + 1, pos.getZ());
+
+                return world.spawnEntity(guardian);
+            default:
+                return false;
         }
     }
 
@@ -90,18 +116,18 @@ public class ItemDoll extends Item implements IHasModel {
     @Override
     public void initModel(ModelRegistryEvent event) {
 
-        /*for (int i = 0; i < names.size(); i++) {
-            String variant = "type=" + names.get(i);
-            ModelLoader.setCustomModelResourceLocation(this, i, new ModelResourceLocation("exnihilocreatio:itemDoll", variant));
-        }*/
+//        for (int i = 0; i < names.size(); i++) {
+//            String variant = "type=" + names.get(i);
+//            ModelLoader.setCustomModelResourceLocation(this, i, new ModelResourceLocation("exnihilocreatio:itemDoll", variant));
+//        }
 
-        List<ModelResourceLocation> locations = new ArrayList<>();
-        for (int i = 0; i < names.size(); i++) {
-            locations.add(new ModelResourceLocation(getRegistryName(), "type=" + names.get(i)));
+         List<ModelResourceLocation> locations = new ArrayList<>();
+        for (String name : names) {
+            locations.add(new ModelResourceLocation(getRegistryName(), "type=" + name));
         }
 
-        ModelBakery.registerItemVariants(this, locations.toArray(new ModelResourceLocation[0]));
-        ModelLoader.setCustomMeshDefinition(this, stack -> locations.get(stack.getMetadata()));
+         ModelBakery.registerItemVariants(this, locations.toArray(new ModelResourceLocation[0]));
+         ModelLoader.setCustomMeshDefinition(this, stack -> locations.get(stack.getMetadata()));
 
     }
 

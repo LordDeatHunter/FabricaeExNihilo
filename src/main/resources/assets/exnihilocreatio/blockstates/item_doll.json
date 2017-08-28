@@ -23,6 +23,16 @@
         "textures": {
           "layer0": "exnihilocreatio:items/dollender"
         }
+      },
+      "shulker": {
+        "textures": {
+          "layer0": "exnihilocreatio:items/dollshulker"
+        }
+      },
+      "guardian": {
+        "textures": {
+          "layer0": "exnihilocreatio:items/dollguardian"
+        }
       }
     }
   }
