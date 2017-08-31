@@ -1,5 +1,6 @@
 package exnihilocreatio.blocks;
 
+import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.barrel.IBarrelMode;
 import exnihilocreatio.barrel.modes.block.BarrelModeBlock;
 import exnihilocreatio.barrel.modes.compost.BarrelModeCompost;
@@ -13,11 +14,11 @@ import lombok.Getter;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
-import net.minecraft.block.Block;
-import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -34,6 +35,7 @@ import org.apache.commons.lang3.StringUtils;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class BlockBarrel extends BlockBase implements ITileEntityProvider, ITOPInfoProvider {
 
@@ -169,5 +171,15 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider, ITOPI
             }
         }
     }
+
+    // Wooden Barrels will milk cows
+    @Override
+    public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn){
+        TileEntity te = worldIn.getTileEntity(pos);
+        if (te != null && te instanceof TileBarrel) {
+            ((TileBarrel) te).milkEntity(entityIn);
+        }
+    }
+
 
 }

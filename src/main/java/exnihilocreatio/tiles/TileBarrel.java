@@ -14,6 +14,7 @@ import exnihilocreatio.registries.registries.BarrelModeRegistry.TriggerType;
 import exnihilocreatio.util.TankUtil;
 import lombok.Getter;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -25,6 +26,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.entity.Entity;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -247,6 +249,17 @@ public class TileBarrel extends BaseTileEntity implements ITickable {
         return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ||
                 capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY ||
                 super.hasCapability(capability, facing);
+    }
+
+    //TODO: Add Moo Fluids support if it ever updates
+    //TODO: Make this a configurable recipe type? I.e. registries.EntityOnTop?
+    public void milkEntity(Entity entityIn){
+        // Try filling the barrel if the entity is a cow, the tank can be filled, and milk is registered as a fluid
+        if(entityIn instanceof EntityCow && this.tank.canFill() && FluidRegistry.isFluidRegistered("milk")){
+            // Try to add the milk, tank.fill will simply fail if it can't add the milk
+            int toAdd = 1; //TODO make this amount configurable, or add a cool down and do it in larger steps
+            this.tank.fill(new FluidStack(FluidRegistry.getFluid("milk"), 1),true);
+        }
     }
 
 }
