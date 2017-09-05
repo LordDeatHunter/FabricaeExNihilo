@@ -36,7 +36,6 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class BlockBarrel extends BlockBase implements ITileEntityProvider, ITOPInfoProvider {
 
     private final AxisAlignedBB boundingBox = new AxisAlignedBB(0.0625f, 0, 0.0625f, 0.9375f, 1f, 0.9375f);
@@ -172,12 +171,12 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider, ITOPI
         }
     }
 
-    // Wooden Barrels will milk cows
+    // Barrels will attempt to milk entities
     @Override
     public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn){
         TileEntity te = worldIn.getTileEntity(pos);
         if (te != null && te instanceof TileBarrel) {
-            ((TileBarrel) te).milkEntity(entityIn);
+            ((TileBarrel) te).entityOnTop(worldIn, entityIn);
         }
     }
 

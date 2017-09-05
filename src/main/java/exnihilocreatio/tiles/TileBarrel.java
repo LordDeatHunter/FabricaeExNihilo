@@ -11,6 +11,8 @@ import exnihilocreatio.networking.MessageCheckLight;
 import exnihilocreatio.networking.PacketHandler;
 import exnihilocreatio.registries.registries.BarrelModeRegistry;
 import exnihilocreatio.registries.registries.BarrelModeRegistry.TriggerType;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
+import exnihilocreatio.registries.types.Milkable;
 import exnihilocreatio.util.TankUtil;
 import lombok.Getter;
 import net.minecraft.block.state.IBlockState;
@@ -52,6 +54,9 @@ public class TileBarrel extends BaseTileEntity implements ITickable {
     @Getter
     private int tier;
 
+    @Getter
+    private long entityWalkCooldown; //The time after which the barrel will attempt to milk an Entity. Based on the world clock
+
     public TileBarrel() {
         this(ModBlocks.barrelWood);
     }
@@ -61,6 +66,7 @@ public class TileBarrel extends BaseTileEntity implements ITickable {
         this.blockType = block;
         itemHandler = new BarrelItemHandler(this);
         tank = new BarrelFluidHandler(this);
+        this.entityWalkCooldown = 0;
     }
 
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
@@ -252,14 +258,17 @@ public class TileBarrel extends BaseTileEntity implements ITickable {
     }
 
     //TODO: Add Moo Fluids support if it ever updates
-    //TODO: Make this a configurable recipe type? I.e. registries.EntityOnTop?
-    public void milkEntity(Entity entityIn){
-        // Try filling the barrel if the entity is a cow, the tank can be filled, and milk is registered as a fluid
-        if(entityIn instanceof EntityCow && this.tank.canFill() && FluidRegistry.isFluidRegistered("milk")){
-            // Try to add the milk, tank.fill will simply fail if it can't add the milk
-            int toAdd = 1; //TODO make this amount configurable, or add a cool down and do it in larger steps
-            this.tank.fill(new FluidStack(FluidRegistry.getFluid("milk"), 1),true);
-        }
-    }
+    public void entityOnTop(World world, Entity entityIn){
+        long currentTime = world.getTotalWorldTime(); //Get the current time, shouldn't be affected by in-game /time command
+        if(currentTime < this.entityWalkCooldown) return; // Cooldown hasn't elapsed, do nothing
 
+        Milkable milk = ExNihiloRegistryManager.MILK_ENTITY_REGISTRY.getMilkable(entityIn);
+        if(milk == null) return; // Not a valid recipe
+
+        // Attempt to add the fluid.
+        this.tank.fill(new FluidStack(FluidRegistry.getFluid(milk.getResult()), milk.getAmount()), true);
+
+        //Set the new cooldown time
+        this.entityWalkCooldown = currentTime + milk.getCoolDown();
+    }
 }
