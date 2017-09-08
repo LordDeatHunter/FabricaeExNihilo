@@ -16,7 +16,6 @@ public class CompatTConstruct {
     public static void postInit() {
         if (ModConfig.compatibility.tinkers_construct_compat.addModifer) {
             Modifier smashingModifier = new ModifierSmashing();
-            TinkerRegistry.registerModifier(smashingModifier);
             smashingModifier.addItem(ModItems.hammerDiamond);
         }
 
