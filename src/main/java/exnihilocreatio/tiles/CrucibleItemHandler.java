@@ -24,9 +24,13 @@ public class CrucibleItemHandler extends ItemStackHandler {
     public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
         if (crucibleRegistry.canBeMelted(stack)) {
             Meltable meltable = crucibleRegistry.getMeltable(stack);
-            if ((meltable.getAmount() + meltable.getAmount() * getStackInSlot(0).getCount() + te.getSolidAmount()) <= (meltable.getAmount() * TileCrucibleBase.MAX_ITEMS)) {
+            int totalSolidAmount = meltable.getAmount() + meltable.getAmount() * getStackInSlot(0).getCount() + te.getSolidAmount();
+            int allowedSolidAmount = meltable.getAmount() * TileCrucibleBase.MAX_ITEMS;
+
+            if (totalSolidAmount <= allowedSolidAmount) {
                 te.currentItem = new ItemInfo(stack);
                 te.markDirtyClient();
+
                 return super.insertItem(slot, stack, simulate);
             }
         }
@@ -38,5 +42,10 @@ public class CrucibleItemHandler extends ItemStackHandler {
     @Nonnull
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
         return ItemStack.EMPTY;
+    }
+
+    @Override
+    protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
+        return te.solidAmount > 0 ? TileCrucibleBase.MAX_ITEMS -1 : TileCrucibleBase.MAX_ITEMS;
     }
 }
