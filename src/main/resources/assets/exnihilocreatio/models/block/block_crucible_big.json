@@ -1,13 +1,6 @@
 {
   "ambientocclusion": false,
   "parent": "minecraft:block/block",
-  "textures": {
-    "particle": "exnihilocreatio:blocks/blockcrucible",
-    "top": "exnihilocreatio:blocks/blockcrucible",
-    "bottom": "exnihilocreatio:blocks/blockcrucible",
-    "side": "exnihilocreatio:blocks/blockcrucible",
-    "inside": "exnihilocreatio:blocks/blockcrucible"
-  },
   "elements": [
     {
       "from": [

@@ -1,13 +1,26 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "exnihilocreatio:block_crucible_fired"
+    "model": "exnihilocreatio:block_crucible_big",
+    "textures": {
+      "particle": "exnihilocreatio:blocks/blockcrucible",
+      "top": "exnihilocreatio:blocks/blockcrucible",
+      "bottom": "exnihilocreatio:blocks/blockcrucible",
+      "side": "exnihilocreatio:blocks/blockcrucible",
+      "inside": "exnihilocreatio:blocks/blockcrucible"
+    }
   },
   "variants": {
     "fired": {
       "true": {},
       "false": {
-        "model": "exnihilocreatio:block_crucible_unfired"
+        "textures": {
+          "particle": "exnihilocreatio:blocks/blockcrucibleunfired",
+          "top": "exnihilocreatio:blocks/blockcrucibleunfired",
+          "bottom": "exnihilocreatio:blocks/blockcrucibleunfired",
+          "side": "exnihilocreatio:blocks/blockcrucibleunfired",
+          "inside": "exnihilocreatio:blocks/blockcrucibleunfired"
+        }
       }
     },
     "normal": [

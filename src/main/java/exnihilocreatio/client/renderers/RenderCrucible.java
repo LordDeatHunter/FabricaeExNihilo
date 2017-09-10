@@ -67,10 +67,10 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucibleBase> 
                 fillAmount = ((12F / 16F) * te.getSolidProportion() + (4F / 16F)) * 0.9375F;
             }
 
-            wr.pos(0.125F, fillAmount, 0.125F).tex(minU, minV).color(color.r, color.g, color.b, color.a).normal(0, 1, 0).endVertex();
-            wr.pos(0.125F, fillAmount, 0.875F).tex(minU, maxV).color(color.r, color.g, color.b, color.a).normal(0, 1, 0).endVertex();
-            wr.pos(0.875F, fillAmount, 0.875F).tex(maxU, maxV).color(color.r, color.g, color.b, color.a).normal(0, 1, 0).endVertex();
-            wr.pos(0.875F, fillAmount, 0.125F).tex(maxU, minV).color(color.r, color.g, color.b, color.a).normal(0, 1, 0).endVertex();
+            wr.pos(0.0625F, fillAmount, 0.0625F).tex(minU, minV).color(color.r, color.g, color.b, color.a).normal(0, 1, 0).endVertex();
+            wr.pos(0.0625F, fillAmount, 0.9375F).tex(minU, maxV).color(color.r, color.g, color.b, color.a).normal(0, 1, 0).endVertex();
+            wr.pos(0.9375F, fillAmount, 0.9375F).tex(maxU, maxV).color(color.r, color.g, color.b, color.a).normal(0, 1, 0).endVertex();
+            wr.pos(0.9375F, fillAmount, 0.0625F).tex(maxU, minV).color(color.r, color.g, color.b, color.a).normal(0, 1, 0).endVertex();
         }
     }
 
