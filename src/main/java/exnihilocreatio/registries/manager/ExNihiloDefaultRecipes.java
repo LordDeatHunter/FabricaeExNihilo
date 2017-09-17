@@ -47,6 +47,7 @@ public class ExNihiloDefaultRecipes {
         ExNihiloRegistryManager.registerFluidOnTopDefaultRecipeHandler(new FluidOnTopDefaults());
         ExNihiloRegistryManager.registerFluidTransformDefaultRecipeHandler(new FluidTransformDefaults());
         ExNihiloRegistryManager.registerFluidBlockDefaultRecipeHandler(new FluidBlockTransformDefaults());
+        ExNihiloRegistryManager.registerFluidItemFluidDefaultHandler(new FluidItemFluidDefaults());
         ExNihiloRegistryManager.registerCrucibleStoneDefaultRecipeHandler(new CrucibleStoneDefaults());
         ExNihiloRegistryManager.registerCrucibleWoodDefaultRecipeHandler(new CrucibleWoodDefaults());
         ExNihiloRegistryManager.registerMilkEntityDefaultRecipeHandler(new MilkEntityDefaults());
@@ -376,6 +377,12 @@ public class ExNihiloDefaultRecipes {
                 }
             }
 
+        }
+    }
+
+    private static class FluidItemFluidDefaults implements IFluidItemFluidDefaultRegistryProvider {
+        @Override
+        public void registerRecipeDefaults(FluidItemFluidRegistry registry) {
         }
     }
 

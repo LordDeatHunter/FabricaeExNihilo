@@ -17,6 +17,7 @@ public final class ExNihiloRegistryManager {
     public static final List<IFluidBlockDefaultRegistryProvider> FLUID_BLOCK_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
     public static final List<IFluidOnTopDefaultRegistryProvider> FLUID_ON_TOP_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
     public static final List<IFluidTransformDefaultRegistryProvider> FLUID_TRANSFORM_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
+    public static final List<IFluidItemFluidDefaultRegistryProvider> FLUID_ITEM_FLUID_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
     public static final List<IHeatDefaultRegistryProvider> HEAT_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
     public static final List<IOreDefaultRegistryProvider> ORE_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
     public static final List<IMilkEntityDefaultRegistryProvider> MILK_ENTITY_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
@@ -33,6 +34,7 @@ public final class ExNihiloRegistryManager {
     public static final FluidOnTopRegistry FLUID_ON_TOP_REGISTRY = new FluidOnTopRegistry();
     public static final FluidTransformRegistry FLUID_TRANSFORM_REGISTRY = new FluidTransformRegistry();
     public static final FluidBlockTransformerRegistry FLUID_BLOCK_TRANSFORMER_REGISTRY = new FluidBlockTransformerRegistry();
+    public static final FluidItemFluidRegistry FLUID_ITEM_FLUID_REGISTRY = new FluidItemFluidRegistry();
     public static final CrucibleRegistry CRUCIBLE_STONE_REGISTRY = new CrucibleRegistry(CRUCIBLE_STONE_DEFAULT_REGISTRY_PROVIDERS);
     public static final CrucibleRegistry CRUCIBLE_WOOD_REGISTRY = new CrucibleRegistry(CRUCIBLE_WOOD_DEFAULT_REGISTRY_PROVIDERS);
     public static final MilkEntityRegistry MILK_ENTITY_REGISTRY = new MilkEntityRegistry();
@@ -70,6 +72,10 @@ public final class ExNihiloRegistryManager {
 
     public static void registerFluidTransformDefaultRecipeHandler(IFluidTransformDefaultRegistryProvider provider) {
         FLUID_TRANSFORM_DEFAULT_REGISTRY_PROVIDERS.add(provider);
+    }
+
+    public static void registerFluidItemFluidDefaultHandler(IFluidItemFluidDefaultRegistryProvider provider) {
+        FLUID_ITEM_FLUID_DEFAULT_REGISTRY_PROVIDERS.add(provider);
     }
 
     public static void registerFluidOnTopDefaultRecipeHandler(IFluidOnTopDefaultRegistryProvider provider) {

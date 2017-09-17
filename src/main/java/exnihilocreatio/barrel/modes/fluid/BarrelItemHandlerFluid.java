@@ -10,6 +10,7 @@ import exnihilocreatio.util.ItemInfo;
 import lombok.Setter;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -55,6 +56,21 @@ public class BarrelItemHandlerFluid extends ItemStackHandler {
                 return ret.isEmpty() ? ItemStack.EMPTY : ret;
             }
 
+        }
+
+        String fluidItemFluidOutput = ExNihiloRegistryManager.FLUID_ITEM_FLUID_REGISTRY.getFLuidForTransformation(tank.getFluid().getFluid(), stack);
+        if (fluidItemFluidOutput != null && tank.getFluidAmount() == tank.getCapacity()) {
+            if (!simulate) {
+                tank.drain(tank.getCapacity(), true);
+                barrel.setMode("fluid");
+                PacketHandler.sendToAllAround(new MessageBarrelModeUpdate("block", barrel.getPos()), barrel);
+                tank.fill(FluidRegistry.getFluidStack(fluidItemFluidOutput, tank.getCapacity()),true);
+                PacketHandler.sendNBTUpdate(barrel);
+            }
+            ItemStack ret = stack.copy();
+            ret.shrink(1);
+
+            return ret.isEmpty() ? ItemStack.EMPTY : ret;
         }
 
         if (!stack.isEmpty() && tank.getFluidAmount() == tank.getCapacity() && stack.getItem() instanceof ItemDoll
