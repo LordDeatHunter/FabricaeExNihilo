@@ -244,7 +244,7 @@ public class CompatJEI implements IModPlugin {
         }
 
         registry.addRecipes(heatSources, CrucibleHeatSourceRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModBlocks.crucibleStone), CrucibleHeatSourceRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.crucibleStone, 1, 1), CrucibleHeatSourceRecipeCategory.UID);
         //endregion
 
         LogUtil.info("JEI: Hammer Recipes Loaded:             " + hammerRecipes.size());

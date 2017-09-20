@@ -16,12 +16,9 @@ public class CrucibleHeatSourceRecipeCategory implements IRecipeCategory<HeatSou
     private static final ResourceLocation texture = new ResourceLocation(ExNihiloCreatio.MODID, "textures/gui/jei_fluid_block_transform.png");
 
     private final IDrawableStatic background;
-    private final IDrawableStatic flameTransparentBackground;
 
     public CrucibleHeatSourceRecipeCategory(IGuiHelper guiHelper) {
         background = guiHelper.createDrawable(Constants.RECIPE_GUI_VANILLA, 0, 134, 18, 34, 0, 0, 0, 80);
-
-        flameTransparentBackground = guiHelper.createDrawable(Constants.RECIPE_BACKGROUND, 215, 0, 14, 14);
     }
 
 
