@@ -1,5 +1,6 @@
 package exnihilocreatio.compatibility.jei;
 
+import appeng.api.implementations.guiobjects.IGuiItem;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import exnihilocreatio.ExNihiloCreatio;
@@ -14,6 +15,8 @@ import exnihilocreatio.compatibility.jei.barrel.fluidontop.FluidOnTopRecipe;
 import exnihilocreatio.compatibility.jei.barrel.fluidontop.FluidOnTopRecipeCategory;
 import exnihilocreatio.compatibility.jei.barrel.fluidtransform.FluidTransformRecipe;
 import exnihilocreatio.compatibility.jei.barrel.fluidtransform.FluidTransformRecipeCategory;
+import exnihilocreatio.compatibility.jei.crucible.CrucibleHeatSourceRecipeCategory;
+import exnihilocreatio.compatibility.jei.crucible.HeatSourcesRecipe;
 import exnihilocreatio.compatibility.jei.hammer.HammerRecipe;
 import exnihilocreatio.compatibility.jei.hammer.HammerRecipeCategory;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipe;
@@ -62,12 +65,17 @@ public class CompatJEI implements IModPlugin {
         registry.addRecipeCategories(new FluidTransformRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
         registry.addRecipeCategories(new FluidBlockTransformRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
         registry.addRecipeCategories(new CompostRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+
+
+        registry.addRecipeCategories(new CrucibleHeatSourceRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void register(@Nonnull IModRegistry registry) {
         LogUtil.info("ModConfig Loaded: " + ExNihiloCreatio.configsLoaded);
+        IGuiHelper guiHelper = registry.getJeiHelpers().getGuiHelper();
+
 
         if (ExNihiloCreatio.configsLoaded) {
             ExNihiloCreatio.loadConfigs();
@@ -222,6 +230,21 @@ public class CompatJEI implements IModPlugin {
         registry.addRecipes(compostRecipes, CompostRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelWood), CompostRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelStone), CompostRecipeCategory.UID);
+        //endregion
+
+        //region >>>> HEAT RECIPES
+        List<HeatSourcesRecipe> heatSources = Lists.newArrayList();
+
+        Map<BlockInfo, Integer> heatRegistryRegistry = ExNihiloRegistryManager.HEAT_REGISTRY.getRegistry();
+
+        for (Map.Entry<BlockInfo, Integer> blockInfoIntegerEntry : heatRegistryRegistry.entrySet()) {
+            BlockInfo block = blockInfoIntegerEntry.getKey();
+
+            heatSources.add(new HeatSourcesRecipe(guiHelper, block, blockInfoIntegerEntry.getValue()));
+        }
+
+        registry.addRecipes(heatSources, CrucibleHeatSourceRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.crucibleStone), CrucibleHeatSourceRecipeCategory.UID);
         //endregion
 
         LogUtil.info("JEI: Hammer Recipes Loaded:             " + hammerRecipes.size());

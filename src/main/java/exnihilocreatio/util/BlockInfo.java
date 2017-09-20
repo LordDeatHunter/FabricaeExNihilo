@@ -6,6 +6,7 @@ import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -106,5 +107,10 @@ public class BlockInfo {
         }
 
         return false;
+    }
+
+    public ItemStack getItemStack(){
+        Item item = Item.getItemFromBlock(block);
+        return new ItemStack(item, 1, meta);
     }
 }

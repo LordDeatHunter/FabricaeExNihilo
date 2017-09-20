@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SieveRecipe implements IRecipeWrapper {
-    private List<ItemStack> inputs = new ArrayList<ItemStack>();
-    private List<ItemStack> outputs = new ArrayList<ItemStack>();
+    private List<ItemStack> inputs = new ArrayList<>();
+    private List<ItemStack> outputs = new ArrayList<>();
 
     public SieveRecipe(IBlockState block, MeshType mesh) {
         List<Siftable> rewards = ExNihiloRegistryManager.SIEVE_REGISTRY.getDrops(new BlockInfo(block));
@@ -75,7 +75,7 @@ public class SieveRecipe implements IRecipeWrapper {
     @Override
     @Nonnull
     public List<String> getTooltipStrings(int mouseX, int mouseY) {
-        return new ArrayList<String>();
+        return new ArrayList<>();
     }
 
     @Override
