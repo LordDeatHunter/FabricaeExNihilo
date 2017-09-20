@@ -28,6 +28,8 @@ public class ModConfig {
      */
     public static class Client {
         public boolean clientFancyAutoSieveAnimations = true;
+        @Config.Comment("This enables the thin Sieve model which is similar to the one in the 1.7 ex nihilo")
+        public boolean thinCrucibleModel = false;
     }
 
     public static class Mechanics {

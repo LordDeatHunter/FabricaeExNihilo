@@ -1,5 +1,6 @@
 package exnihilocreatio.blocks;
 
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.tiles.TileCrucibleStone;
 import exnihilocreatio.util.IHasSpecialRegistry;
 import net.minecraft.block.material.Material;
@@ -15,6 +16,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -28,7 +30,7 @@ public class BlockCrucibleStone extends BlockCrucibleBase implements IHasSpecial
         super("block_crucible", Material.ROCK);
 
         this.setHardness(2.0f);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(FIRED, false));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FIRED, false).withProperty(THIN, ModConfig.client.thinCrucibleModel));
     }
 
     @Override
@@ -47,7 +49,7 @@ public class BlockCrucibleStone extends BlockCrucibleBase implements IHasSpecial
     @Override
     @Nonnull
     public BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, FIRED);
+        return new BlockStateContainer(this, FIRED, THIN);
     }
 
     @Override
@@ -78,8 +80,8 @@ public class BlockCrucibleStone extends BlockCrucibleBase implements IHasSpecial
     @Override
     @SideOnly(Side.CLIENT)
     public void initModel(ModelRegistryEvent e) {
-        ModelResourceLocation unfired = new ModelResourceLocation(getRegistryName(), "fired=false");
-        ModelResourceLocation fired = new ModelResourceLocation(getRegistryName(), "fired=true");
+        ModelResourceLocation unfired = new ModelResourceLocation(getRegistryName(), "fired=false,thin=" + ModConfig.client.thinCrucibleModel);
+        ModelResourceLocation fired = new ModelResourceLocation(getRegistryName(), "fired=true,thin=" + ModConfig.client.thinCrucibleModel);
 
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, unfired);
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 1, fired);

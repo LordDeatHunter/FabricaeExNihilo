@@ -11,6 +11,14 @@
     }
   },
   "variants": {
+    "thin": {
+      "true": {
+        "model": "exnihilocreatio:block_crucible_thin"
+      },
+      "false": {
+        "model": "exnihilocreatio:block_crucible_big"
+      }
+    },
     "normal": [
       {}
     ],

@@ -10,6 +10,7 @@ import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -27,6 +28,9 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import javax.annotation.Nonnull;
 
 public abstract class BlockCrucibleBase extends Block implements ITOPInfoProvider, IHasModel {
+
+    public static final PropertyBool THIN = PropertyBool.create("thin");
+
 
     public BlockCrucibleBase(String name, Material material) {
         super(material);

@@ -11,16 +11,30 @@
     }
   },
   "variants": {
-    "fired": {
-      "true": {},
-      "false": {
-        "textures": {
-          "particle": "exnihilocreatio:blocks/blockcrucibleunfired",
-          "top": "exnihilocreatio:blocks/blockcrucibleunfired",
-          "bottom": "exnihilocreatio:blocks/blockcrucibleunfired",
-          "side": "exnihilocreatio:blocks/blockcrucibleunfired",
-          "inside": "exnihilocreatio:blocks/blockcrucibleunfired"
-        }
+    "fired=true,thin=true": {
+      "model": "exnihilocreatio:block_crucible_thin"
+    },
+    "fired=true,thin=false": {
+      "model": "exnihilocreatio:block_crucible_big"
+    },
+    "fired=false,thin=true": {
+      "model": "exnihilocreatio:block_crucible_thin",
+      "textures": {
+        "particle": "exnihilocreatio:blocks/blockcrucibleunfired",
+        "top": "exnihilocreatio:blocks/blockcrucibleunfired",
+        "bottom": "exnihilocreatio:blocks/blockcrucibleunfired",
+        "side": "exnihilocreatio:blocks/blockcrucibleunfired",
+        "inside": "exnihilocreatio:blocks/blockcrucibleunfired"
+      }
+    },
+    "fired=false,thin=false": {
+      "model": "exnihilocreatio:block_crucible_big",
+      "textures": {
+        "particle": "exnihilocreatio:blocks/blockcrucibleunfired",
+        "top": "exnihilocreatio:blocks/blockcrucibleunfired",
+        "bottom": "exnihilocreatio:blocks/blockcrucibleunfired",
+        "side": "exnihilocreatio:blocks/blockcrucibleunfired",
+        "inside": "exnihilocreatio:blocks/blockcrucibleunfired"
       }
     },
     "normal": [
