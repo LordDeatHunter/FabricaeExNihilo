@@ -65,7 +65,7 @@ public class FluidTransformRegistry extends BaseRegistryMap<String, List<FluidTr
     }
 
     /**
-     * Overridden as I don't want the regestry to get saved directly,
+     * Overridden as I don't want the registry to get saved directly,
      * rather a List that equals the contents of the registry
      */
     @Override

@@ -29,6 +29,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nullable;
 
+
 public class ExNihiloDefaultRecipes {
 
     @Nullable
@@ -46,8 +47,10 @@ public class ExNihiloDefaultRecipes {
         ExNihiloRegistryManager.registerFluidOnTopDefaultRecipeHandler(new FluidOnTopDefaults());
         ExNihiloRegistryManager.registerFluidTransformDefaultRecipeHandler(new FluidTransformDefaults());
         ExNihiloRegistryManager.registerFluidBlockDefaultRecipeHandler(new FluidBlockTransformDefaults());
+        ExNihiloRegistryManager.registerFluidItemFluidDefaultHandler(new FluidItemFluidDefaults());
         ExNihiloRegistryManager.registerCrucibleStoneDefaultRecipeHandler(new CrucibleStoneDefaults());
         ExNihiloRegistryManager.registerCrucibleWoodDefaultRecipeHandler(new CrucibleWoodDefaults());
+        ExNihiloRegistryManager.registerMilkEntityDefaultRecipeHandler(new MilkEntityDefaults());
     }
 
     private static class CompostDefaults implements ICompostDefaultRegistryProvider {
@@ -377,6 +380,12 @@ public class ExNihiloDefaultRecipes {
         }
     }
 
+    private static class FluidItemFluidDefaults implements IFluidItemFluidDefaultRegistryProvider {
+        @Override
+        public void registerRecipeDefaults(FluidItemFluidRegistry registry) {
+        }
+    }
+
     private static class CrucibleStoneDefaults implements ICrucibleStoneDefaultRegistryProvider {
 
         @Override
@@ -404,6 +413,12 @@ public class ExNihiloDefaultRecipes {
             registry.register(new ItemInfo(Blocks.SAPLING, 5), water.copy().setTextureOverride(new BlockInfo(Blocks.LEAVES2, 1)));
 
             registry.register(new ItemInfo(Items.APPLE, 0), water);
+        }
+    }
+    public static class MilkEntityDefaults implements IMilkEntityDefaultRegistryProvider {
+        @Override
+        public void registerRecipeDefaults(MilkEntityRegistry registry) {
+            registry.register("Cow", "milk", 10, 20);
         }
     }
 }

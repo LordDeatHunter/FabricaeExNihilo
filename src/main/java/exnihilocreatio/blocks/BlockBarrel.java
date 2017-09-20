@@ -1,5 +1,6 @@
 package exnihilocreatio.blocks;
 
+import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.barrel.IBarrelMode;
 import exnihilocreatio.barrel.modes.block.BarrelModeBlock;
 import exnihilocreatio.barrel.modes.compost.BarrelModeCompost;
@@ -13,11 +14,11 @@ import lombok.Getter;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
-import net.minecraft.block.Block;
-import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -169,5 +170,15 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider, ITOPI
             }
         }
     }
+
+    // Barrels will attempt to milk entities
+    @Override
+    public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn){
+        TileEntity te = worldIn.getTileEntity(pos);
+        if (te != null && te instanceof TileBarrel) {
+            ((TileBarrel) te).entityOnTop(worldIn, entityIn);
+        }
+    }
+
 
 }

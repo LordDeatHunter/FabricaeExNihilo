@@ -1,14 +1,12 @@
-#Ex Nihilo Adscensio
+# Ex Nihilo Creatio
+
+Releases are available on [Curseforge](https://minecraft.curseforge.com/projects/ex-nihilo-creatio). Issues should be reported to the Github [issue tracker](https://github.com/BloodWorkXGaming/ExNihiloCreatio/issues).
 
 Do you love Skyblocks? Do you hate having one block that takes you from minute 5 to year 5? Then this is the mod for you!
 
- 
-
-Ex Nihilo Adscensio is the continuation of the Ex Nihilo mod from 1.7.10, rewritten from the ground up.
+Ex Nihilo Creatio is a fork of Ex Nihilo Adscensio for 1.12. Ex Nihilo Adscensio was a continuation of the Ex Nihilo mod from 1.7.10, rewritten from the ground up.
 
 The core concepts remain the same, but with a few key additions to give a little extra progression.
-
- 
 
 * Sieve blocks in the sieve for resources, just as before, but the sieve now takes different meshes.
 * Each mesh gives potentially different results, so check carefully.
