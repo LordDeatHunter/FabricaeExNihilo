@@ -383,6 +383,7 @@ public class ExNihiloDefaultRecipes {
     private static class FluidItemFluidDefaults implements IFluidItemFluidDefaultRegistryProvider {
         @Override
         public void registerRecipeDefaults(FluidItemFluidRegistry registry) {
+            registry.register(FluidRegistry.WATER, new ItemInfo(ItemResource.getResourceStack(ItemResource.ANCIENT_SPORES)), ModFluids.fluidWitchwater);
         }
     }
 
@@ -415,6 +416,7 @@ public class ExNihiloDefaultRecipes {
             registry.register(new ItemInfo(Items.APPLE, 0), water);
         }
     }
+
     public static class MilkEntityDefaults implements IMilkEntityDefaultRegistryProvider {
         @Override
         public void registerRecipeDefaults(MilkEntityRegistry registry) {
