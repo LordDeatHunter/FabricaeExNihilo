@@ -7,18 +7,22 @@ import exnihilocreatio.util.RenderTickCounter;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.fluids.IFluidBlock;
+import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
@@ -40,13 +44,24 @@ public class HeatSourcesRecipe implements IRecipeWrapper {
 
         ItemStack item = blockInfo.getItemStack();
         if (item.isEmpty()){
-            if (blockInfo.getBlock() instanceof IFluidBlock){
-
+            Fluid fluid = null;
+            Block block = blockInfo.getBlock();
+            if (block instanceof IFluidBlock){
+                fluid = ((IFluidBlock) block).getFluid();
             }
-
-
+            if (block == Blocks.LAVA || block == Blocks.FLOWING_LAVA){
+                fluid = FluidRegistry.LAVA;
+            }
+            if (block == Blocks.WATER || block == Blocks.FLOWING_WATER){
+                fluid = FluidRegistry.WATER;
+            }
+            if (fluid != null){
+                item = FluidUtil.getFilledBucket(new FluidStack(fluid, 1000));
+            }
+            if (block == Blocks.FIRE){
+                item = new ItemStack(Items.FLINT_AND_STEEL, 1);
+            }
         }
-
 
 
 
@@ -79,9 +94,6 @@ public class HeatSourcesRecipe implements IRecipeWrapper {
         float angle = RenderTickCounter.renderTicks * 45.0f / 128.0f;
 
         // When we want to render translucent blocks we might need this
-        //double c = MathHelper.cos((float)(Math.PI * (double)angle / 180.0));
-        //double s = MathHelper.sin((float)(Math.PI * (double)angle / 180.0));
-        //Collections.sort(toRender, (a,b) -> - Double.compare((double)a.getZ() * c - (double)a.getX() * s, (double)b.getX() * c - (double)b.getX() * s));
         BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
 
         // Init GlStateManager
@@ -110,7 +122,7 @@ public class HeatSourcesRecipe implements IRecipeWrapper {
         GlStateManager.pushMatrix();
 
         // Center on recipe area
-        GlStateManager.translate(50, 30, 20);
+        GlStateManager.translate(70, 30, 20);
 
         // Shift it a bit down so one can properly see 3d
         GlStateManager.rotate(-25.0f, 1.0f, 0.0f, 0.0f);
