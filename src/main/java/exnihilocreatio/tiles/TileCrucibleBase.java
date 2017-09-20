@@ -37,7 +37,7 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
     public static final int MAX_ITEMS = 4;
 
     @Getter
-    protected FluidTank tank;
+    protected TankCrucible tank;
 
     @Getter
     protected int solidAmount;
@@ -52,7 +52,7 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
     protected CrucibleRegistry crucibleRegistry;
 
     public TileCrucibleBase(CrucibleRegistry crucibleRegistry) {
-        tank = new FluidTank(4 * Fluid.BUCKET_VOLUME);
+        tank = new TankCrucible(4 * Fluid.BUCKET_VOLUME, this);
         tank.setCanFill(false);
 
         itemHandler = new CrucibleItemHandler(this, crucibleRegistry);
