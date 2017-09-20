@@ -4,7 +4,6 @@ import exnihilocreatio.ModBlocks;
 import exnihilocreatio.blocks.BlockCrucibleStone;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.RenderTickCounter;
-import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.block.Block;
@@ -16,7 +15,6 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
@@ -38,7 +36,7 @@ public class HeatSourcesRecipe implements IRecipeWrapper {
     private final BlockInfo blockInfo;
     private final String heatAmountString;
 
-    public HeatSourcesRecipe(IGuiHelper guiHelper, BlockInfo blockInfo, int heatAmount) {
+    public HeatSourcesRecipe(BlockInfo blockInfo, int heatAmount) {
         this.blockInfo = blockInfo;
 
 

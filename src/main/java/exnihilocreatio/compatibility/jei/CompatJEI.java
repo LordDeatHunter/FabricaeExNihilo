@@ -1,6 +1,5 @@
 package exnihilocreatio.compatibility.jei;
 
-import appeng.api.implementations.guiobjects.IGuiItem;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import exnihilocreatio.ExNihiloCreatio;
@@ -32,7 +31,6 @@ import exnihilocreatio.util.LogUtil;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -240,7 +238,7 @@ public class CompatJEI implements IModPlugin {
         for (Map.Entry<BlockInfo, Integer> blockInfoIntegerEntry : heatRegistryRegistry.entrySet()) {
             BlockInfo block = blockInfoIntegerEntry.getKey();
 
-            heatSources.add(new HeatSourcesRecipe(guiHelper, block, blockInfoIntegerEntry.getValue()));
+            heatSources.add(new HeatSourcesRecipe(block, blockInfoIntegerEntry.getValue()));
         }
 
         registry.addRecipes(heatSources, CrucibleHeatSourceRecipeCategory.UID);

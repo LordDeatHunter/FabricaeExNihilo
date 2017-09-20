@@ -9,12 +9,9 @@ import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.config.Constants;
-import net.minecraft.util.ResourceLocation;
 
 public class CrucibleHeatSourceRecipeCategory implements IRecipeCategory<HeatSourcesRecipe> {
     public static final String UID = "exnihilocreatio:heat_sources";
-    private static final ResourceLocation texture = new ResourceLocation(ExNihiloCreatio.MODID, "textures/gui/jei_fluid_block_transform.png");
-
     private final IDrawableStatic background;
 
     public CrucibleHeatSourceRecipeCategory(IGuiHelper guiHelper) {
