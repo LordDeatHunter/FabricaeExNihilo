@@ -23,7 +23,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -37,7 +36,7 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
     public static final int MAX_ITEMS = 4;
 
     @Getter
-    protected TankCrucible tank;
+    protected FluidTankBase tank;
 
     @Getter
     protected int solidAmount;
@@ -52,7 +51,7 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
     protected CrucibleRegistry crucibleRegistry;
 
     public TileCrucibleBase(CrucibleRegistry crucibleRegistry) {
-        tank = new TankCrucible(4 * Fluid.BUCKET_VOLUME, this);
+        tank = new FluidTankBase(4 * Fluid.BUCKET_VOLUME, this);
         tank.setCanFill(false);
 
         itemHandler = new CrucibleItemHandler(this, crucibleRegistry);
