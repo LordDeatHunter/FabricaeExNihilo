@@ -38,7 +38,7 @@ sourceCompatibility=1.8
 targetCompatibility=1.8
 
 minecraft {
-    version = "1.12.1-14.22.0.2474"
+    version = "1.12.2-14.23.0.2509"
     runDir = "run"
 	mappings = "snapshot_20170810"
     useDepAts = true
@@ -49,42 +49,43 @@ minecraft {
 
 repositories
 {
-    maven { 
-    	// Required for JEI and Mantle
+    // Required for JEI and Mantle
+    maven {
     	name "DVS1 Maven FS" 
     	url "http://dvs1.progwml6.com/files/maven" 
     }
 
+    // Required for HWYLA
     maven {
-        // Required for HWYLA
         name "tehnut"
         url "http://tehnut.info/maven"
     }
 
+    // Required for TheOneProbe
     maven {
-        // Required for TheOneProbe
         name "tterrag"
         url "http://maven.tterrag.com"
     }
-	
-	maven {
-	    // Required for RedstoneFlux which is required for TheOneProbe
+
+    // Required for RedstoneFlux which is required for TheOneProbe
+    maven {
         name = "CoFH Maven"
         url = "http://maven.covers1624.net"
     }
+
+    // crt
+    maven {
+        url "http://maven.blamejared.com"
+    }
+
 }
 
 dependencies
 {
     compileOnly "mezz.jei:jei_1.12:4.7.+:api"
-    // runtime "mezz.jei:jei_1.12:4.7.+"
-    
+
     deobfCompile "slimeknights.mantle:Mantle:1.12-1.3.+"
     deobfCompile "slimeknights:TConstruct:1.12-2.7.+"
-    
-    // TODO: Add back EnderIO support once it has updated [To fix AE2 Dependency Error]
-    // deobfCompile "com.enderio.core:EnderCore:1.10.2-0.4.1.65-beta"
-    // deobfCompile "com.enderio:EnderIO:1.10.2-3.1.+"
 
     compileOnly "mcp.mobius.waila:Hwyla:1.8.20-B35_1.12:api"
     runtime "mcp.mobius.waila:Hwyla:1.8.20-B35_1.12"
@@ -93,6 +94,9 @@ dependencies
     runtime "mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.+"
 
     compileOnly "org.projectlombok:lombok:1.16.10"
+
+    deobfCompile ('CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.0.+')
+    deobfCompile "com.blamejared:MTLib:3.0.+"
 }
 
 processResources
