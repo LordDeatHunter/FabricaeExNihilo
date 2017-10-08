@@ -13,7 +13,7 @@ public abstract class BaseRegistryList<V> extends BaseRegistry<List<V>> {
     }
 
     @Override
-    protected void clearRegistry() {
+    public void clearRegistry() {
         registry.clear();
     }
 

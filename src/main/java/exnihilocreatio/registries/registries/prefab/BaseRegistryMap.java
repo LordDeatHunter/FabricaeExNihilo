@@ -18,7 +18,7 @@ public abstract class BaseRegistryMap<K, V> extends BaseRegistry<Map<K, V>> {
     }
 
     @Override
-    protected void clearRegistry() {
+    public void clearRegistry() {
         registry.clear();
     }
 }

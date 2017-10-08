@@ -72,5 +72,5 @@ public abstract class BaseRegistry<RegType> {
         }
     }
 
-    protected abstract void clearRegistry();
+    public abstract void clearRegistry();
 }

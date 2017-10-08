@@ -2,6 +2,7 @@ package exnihilocreatio;
 
 import exnihilocreatio.capabilities.ENCapabilities;
 import exnihilocreatio.command.CommandReloadConfig;
+import exnihilocreatio.compatibility.crafttweaker.CrTIntegration;
 import exnihilocreatio.compatibility.tconstruct.CompatTConstruct;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.entities.ENEntities;
@@ -44,6 +45,7 @@ public class ExNihiloCreatio {
     public static File configDirectory;
 
     public static boolean configsLoaded = false;
+    public static boolean crtActionsLoaded = false;
 
     public static CreativeTabs tabExNihilo = new CreativeTabExNihiloCreatio();
 
@@ -121,6 +123,11 @@ public class ExNihiloCreatio {
         ExNihiloRegistryManager.CRUCIBLE_STONE_REGISTRY.loadJson(new File(configDirectory, "CrucibleRegistryStone.json"));
         ExNihiloRegistryManager.CRUCIBLE_WOOD_REGISTRY.loadJson(new File(configDirectory, "CrucibleRegistryWood.json"));
         ExNihiloRegistryManager.MILK_ENTITY_REGISTRY.loadJson(new File(configDirectory, "MilkEntityRegistry.json"));
+
+        if (!crtActionsLoaded && Loader.isModLoaded("crafttweaker")) {
+            CrTIntegration.loadIActions();
+            crtActionsLoaded = true;
+        }
 
 
         MinecraftForge.EVENT_BUS.post(new RegistryReloadedEvent());
