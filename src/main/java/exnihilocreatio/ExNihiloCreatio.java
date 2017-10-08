@@ -96,7 +96,6 @@ public class ExNihiloCreatio {
     @EventHandler
     public static void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
-        System.out.println("pi-size = " + ExNihiloRegistryManager.SIEVE_REGISTRY.getRegistry().size());
 
         if (Loader.isModLoaded("tconstruct") && ModConfig.compatibility.tinkers_construct_compat.doTinkersConstructCompat) {
             CompatTConstruct.postInit();
@@ -110,9 +109,6 @@ public class ExNihiloCreatio {
 
     public static void loadConfigs() {
         configsLoaded = true;
-
-        System.out.println("Loading configs ENC");
-        Thread.dumpStack();
 
         ExNihiloRegistryManager.COMPOST_REGISTRY.loadJson(new File(configDirectory, "CompostRegistry.json"));
         ExNihiloRegistryManager.CROOK_REGISTRY.loadJson(new File(configDirectory, "CrookRegistry.json"));

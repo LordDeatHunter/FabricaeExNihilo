@@ -96,7 +96,6 @@ dependencies
     compileOnly "org.projectlombok:lombok:1.16.10"
 
     deobfCompile ('CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.0.+')
-    deobfCompile "com.blamejared:MTLib:3.0.+"
 }
 
 processResources

@@ -149,7 +149,6 @@ public class TileSieve extends BaseTileEntity {
 
             if (progress >= 100) {
                 List<ItemStack> drops = ExNihiloRegistryManager.SIEVE_REGISTRY.getRewardDrops(rand, currentStack.getBlockState(), meshStack.getMetadata(), fortune);
-                System.out.println("ExNihiloRegistryManager.SIEVE_REGISTRY.getRegistry().size() = " + ExNihiloRegistryManager.SIEVE_REGISTRY.getRegistry().size());
 
                 if (drops == null) {
                     drops = new ArrayList<>();

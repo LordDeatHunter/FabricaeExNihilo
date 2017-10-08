@@ -1,9 +1,7 @@
 package exnihilocreatio.compatibility.crafttweaker.prefab;
 
-import com.blamejared.mtlib.utils.BaseUndoable;
+import crafttweaker.IAction;
 
-public abstract class ENCBaseAdd extends BaseUndoable {
-    protected ENCBaseAdd(String name) {
-        super(name);
-    }
+public abstract class ENCBaseAdd implements IAction {
+
 }
