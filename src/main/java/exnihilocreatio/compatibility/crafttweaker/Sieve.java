@@ -23,7 +23,14 @@ public class Sieve {
 
         @Override
         public void apply() {
+            System.out.println("pre-size = " + ExNihiloRegistryManager.SIEVE_REGISTRY.getRegistry().size());
             ExNihiloRegistryManager.SIEVE_REGISTRY.clearRegistry();
+            System.out.println("post-size = " + ExNihiloRegistryManager.SIEVE_REGISTRY.getRegistry().size());
+        }
+
+        @Override
+        public String describe() {
+            return "Removing all recipes for the Ex Nihilo Sieve.";
         }
     }
 }

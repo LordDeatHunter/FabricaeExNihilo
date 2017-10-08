@@ -88,6 +88,7 @@ public class ExNihiloCreatio {
         loadConfigs();
 
         Recipes.init();
+
         // OreRegistry.doRecipes();
 
     }
@@ -95,6 +96,7 @@ public class ExNihiloCreatio {
     @EventHandler
     public static void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
+        System.out.println("pi-size = " + ExNihiloRegistryManager.SIEVE_REGISTRY.getRegistry().size());
 
         if (Loader.isModLoaded("tconstruct") && ModConfig.compatibility.tinkers_construct_compat.doTinkersConstructCompat) {
             CompatTConstruct.postInit();
@@ -109,6 +111,8 @@ public class ExNihiloCreatio {
     public static void loadConfigs() {
         configsLoaded = true;
 
+        System.out.println("Loading configs ENC");
+        Thread.dumpStack();
 
         ExNihiloRegistryManager.COMPOST_REGISTRY.loadJson(new File(configDirectory, "CompostRegistry.json"));
         ExNihiloRegistryManager.CROOK_REGISTRY.loadJson(new File(configDirectory, "CrookRegistry.json"));
@@ -124,13 +128,12 @@ public class ExNihiloCreatio {
         ExNihiloRegistryManager.CRUCIBLE_WOOD_REGISTRY.loadJson(new File(configDirectory, "CrucibleRegistryWood.json"));
         ExNihiloRegistryManager.MILK_ENTITY_REGISTRY.loadJson(new File(configDirectory, "MilkEntityRegistry.json"));
 
-        if (!crtActionsLoaded && Loader.isModLoaded("crafttweaker")) {
+        MinecraftForge.EVENT_BUS.post(new RegistryReloadedEvent());
+
+        if (Loader.isModLoaded("crafttweaker")) {
             CrTIntegration.loadIActions();
             crtActionsLoaded = true;
         }
-
-
-        MinecraftForge.EVENT_BUS.post(new RegistryReloadedEvent());
     }
 
     @EventHandler

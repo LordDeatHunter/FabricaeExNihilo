@@ -1,5 +1,6 @@
 package exnihilocreatio.compatibility.crafttweaker;
 
+import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
 
 import java.util.ArrayList;
@@ -10,7 +11,14 @@ public class CrTIntegration {
     public static List<IAction> addActions = new ArrayList<>();
 
     public static void loadIActions(){
-        removeActions.forEach(IAction::apply);
-        addActions.forEach(IAction::apply);
+        removeActions.forEach(iAction -> {
+            CraftTweakerAPI.logInfo(iAction.describe());
+            iAction.apply();
+        });
+
+        addActions.forEach(iAction -> {
+            CraftTweakerAPI.logInfo(iAction.describe());
+            iAction.apply();
+        });
     }
 }

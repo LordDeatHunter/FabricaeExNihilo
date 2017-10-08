@@ -75,7 +75,7 @@ public class CompatJEI implements IModPlugin {
         IGuiHelper guiHelper = registry.getJeiHelpers().getGuiHelper();
 
 
-        if (ExNihiloCreatio.configsLoaded) {
+        if (!ExNihiloCreatio.configsLoaded) {
             ExNihiloCreatio.loadConfigs();
         }
 
