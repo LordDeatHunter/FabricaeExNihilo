@@ -23,6 +23,8 @@ item.item_material.gear_stone.name=石齿轮
 
 item.item_doll.blaze.name=炽热人偶
 item.item_doll.enderman.name=惊悚人偶
+item.item_doll.shulker.name=漂浮人偶
+item.item_doll.guardian.name=守卫人偶
 
 item.item_cooked_silkworm.name=煮熟的蚕
 
@@ -46,6 +48,7 @@ tile.block_barrel1.name=石桶
 
 tile.block_crucible.0.name=坩埚(未烧制)
 tile.block_crucible.1.name=坩埚
+tile.block_crucible_wood.name=木坩埚
 
 tile.block_infested_leaves.name=被感染的树叶
 
@@ -83,6 +86,6 @@ itemGroup.exNihilo=Ex Nihilo Creatio
 modifier.exnihilo_smashing.name=粉碎
 modifier.exnihilo_smashing.desc=§rSmashing baby, yeaaah!\n§r把东西砸碎
 
-enchantment.sieve_efficiency=筛子效率
-enchantment.sieve_fortune=筛子时运
-enchantment.sieve_luck_of_the_sea=筛子海之眷顾
+enchantment.sieve_efficiency=筛网效率
+enchantment.sieve_fortune=筛网时运
+enchantment.sieve_luck_of_the_sea=筛网海之眷顾
