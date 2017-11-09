@@ -15,9 +15,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -25,6 +27,9 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.property.ExtendedBlockState;
+import net.minecraftforge.common.property.IExtendedBlockState;
+import net.minecraftforge.common.property.IUnlistedProperty;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -33,6 +38,27 @@ import java.util.Random;
 
 public class BlockInfestedLeaves extends BlockLeaves implements ITileEntityProvider, ITOPInfoProvider, IHasModel {
     private int[] surroundings;
+    public static IUnlistedProperty<IBlockState> LEAFBLOCK = new IUnlistedProperty<IBlockState>() {
+        @Override
+        public String getName() {
+            return "LeafBlock";
+        }
+
+        @Override
+        public boolean isValid(IBlockState value) {
+            return true;
+        }
+
+        @Override
+        public Class<IBlockState> getType() {
+            return IBlockState.class;
+        }
+
+        @Override
+        public String valueToString(IBlockState value) {
+            return value.toString();
+        }
+    };
 
     public BlockInfestedLeaves() {
         super();
@@ -62,13 +88,15 @@ public class BlockInfestedLeaves extends BlockLeaves implements ITileEntityProvi
     @Nonnull
     @Deprecated
     public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
+        return EnumBlockRenderType.MODEL;
     }
 
     @Override
     @Nonnull
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, CHECK_DECAY, DECAYABLE);
+        IProperty<?>[] listedProperties = {CHECK_DECAY, DECAYABLE};
+        IUnlistedProperty<?>[] unlistedProperties = {LEAFBLOCK};
+        return new ExtendedBlockState(this, listedProperties, unlistedProperties);
     }
 
     @Override
@@ -89,6 +117,19 @@ public class BlockInfestedLeaves extends BlockLeaves implements ITileEntityProvi
         if (decayable)
             return 2;
         return 3;
+    }
+
+    @Override
+    public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos){
+        if (state instanceof IExtendedBlockState){
+            IExtendedBlockState retval = (IExtendedBlockState) state;
+            IBlockState leafState;
+            if (world.getTileEntity(pos) != null)
+                leafState = ((TileInfestedLeaves)world.getTileEntity(pos)).getLeafBlock();
+            else leafState = Blocks.LEAVES.getDefaultState();
+            return retval.withProperty(LEAFBLOCK, leafState);
+        }
+        return state;
     }
 
     @Override
@@ -175,7 +216,7 @@ public class BlockInfestedLeaves extends BlockLeaves implements ITileEntityProvi
         }
     }
 
-    @Override
+
     public void destroy(World worldIn, @Nonnull BlockPos pos) {
         if (worldIn.rand.nextInt(3) == 0) {
             TileEntity te = worldIn.getTileEntity(pos);

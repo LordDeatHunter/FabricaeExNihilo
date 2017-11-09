@@ -1,6 +1,7 @@
 package exnihilocreatio;
 
 import exnihilocreatio.capabilities.ENCapabilities;
+import exnihilocreatio.client.models.event.RenderEvent;
 import exnihilocreatio.command.CommandReloadConfig;
 import exnihilocreatio.compatibility.crafttweaker.CrTIntegration;
 import exnihilocreatio.compatibility.tconstruct.CompatTConstruct;
@@ -75,6 +76,8 @@ public class ExNihiloCreatio {
         MinecraftForge.EVENT_BUS.register(new HandlerHammer());
 
         MinecraftForge.EVENT_BUS.register(new HandlerCrook());
+
+        MinecraftForge.EVENT_BUS.register(new RenderEvent());
 
         if (ModConfig.mechanics.enableBarrels) {
             BarrelModeRegistry.registerDefaults();
