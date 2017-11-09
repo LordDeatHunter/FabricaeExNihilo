@@ -77,9 +77,11 @@ public class BlockInfestedLeaves extends BlockLeaves implements ITileEntityProvi
             world.setBlockState(pos, ModBlocks.infestedLeaves.getDefaultState());
 
             TileInfestedLeaves tile = (TileInfestedLeaves) world.getTileEntity(pos);
-
             if (tile != null) {
-                tile.setLeafBlock(block);
+                //Prevents a crash with forestry using the new model system
+                if (Block.REGISTRY.getNameForObject(block.getBlock()).getResourceDomain().equalsIgnoreCase("forestry"))
+                    tile.setLeafBlock(Blocks.LEAVES.getDefaultState());
+                else tile.setLeafBlock(block);
             }
         }
     }

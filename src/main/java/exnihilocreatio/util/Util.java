@@ -19,6 +19,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -146,5 +147,12 @@ public class Util {
 
     public static ItemStack getBucketStack(Fluid fluid) {
         return UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, fluid);
+    }
+
+    public static boolean compareItemStack(ItemStack stack1, ItemStack stack2){
+        if (stack1.getMetadata() == OreDictionary.WILDCARD_VALUE || stack2.getMetadata() == OreDictionary.WILDCARD_VALUE){
+            return stack1.getItem() == stack2.getItem();
+        }
+        else return stack1.getItem() == stack2.getItem() && stack1.getMetadata() == stack2.getMetadata();
     }
 }

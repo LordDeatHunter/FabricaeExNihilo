@@ -1,5 +1,6 @@
 package exnihilocreatio.tiles;
 
+import exnihilocreatio.ModBlocks;
 import exnihilocreatio.blocks.BlockInfestedLeaves;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.texturing.Color;
@@ -8,12 +9,14 @@ import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
 
@@ -55,11 +58,14 @@ public class TileInfestedLeaves extends BaseTileEntity implements ITickable {
                         BlockPos newPos = new BlockPos(pos.add(x, y, z));
                         IBlockState state = getWorld().getBlockState(newPos);
 
-                        if (state != Blocks.AIR.getDefaultState() && state.getBlock() != Blocks.AIR && (state.getBlock() == Blocks.LEAVES || state.getBlock() == Blocks.LEAVES2)) {
-                            hasNearbyLeaves = true;
+                        if (state != Blocks.AIR.getDefaultState() && state.getBlock() != Blocks.AIR && state.getBlock() != ModBlocks.infestedLeaves) {
+                            ItemStack itemStack = new ItemStack(state.getBlock());
+                            if (OreDictionary.getOres("treeLeaves").stream().anyMatch(stack1 -> Util.compareItemStack(stack1, itemStack))) {
+                                hasNearbyLeaves = true;
 
-                            if (getWorld().rand.nextFloat() < ModConfig.infested_leaves.leavesSpreadChance) {
-                                BlockInfestedLeaves.infestLeafBlock(getWorld(), newPos);
+                                if (getWorld().rand.nextFloat() < ModConfig.infested_leaves.leavesSpreadChance) {
+                                    BlockInfestedLeaves.infestLeafBlock(getWorld(), newPos);
+                                }
                             }
                         }
                     }
