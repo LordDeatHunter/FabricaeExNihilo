@@ -1,9 +1,8 @@
 package exnihilocreatio.tiles;
 
 import exnihilocreatio.ModBlocks;
-import exnihilocreatio.blocks.BlockInfestedLeaves;
+import exnihilocreatio.blocks.BlockInfestingLeaves;
 import exnihilocreatio.config.ModConfig;
-import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.Util;
 import lombok.Getter;
 import net.minecraft.block.Block;
@@ -13,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.biome.BiomeColorHelper;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
@@ -21,10 +20,9 @@ import net.minecraftforge.oredict.OreDictionary;
 import javax.annotation.Nonnull;
 
 public class TileInfestedLeaves extends BaseTileEntity implements ITickable {
+
     private static int tileId = 0;
 
-    @Getter
-    private float progress = 0;
     @Getter
     private boolean hasNearbyLeaves = true;
     @Getter
@@ -36,19 +34,6 @@ public class TileInfestedLeaves extends BaseTileEntity implements ITickable {
 
     @Override
     public void update() {
-        if (progress < 1.0F) {
-            progress += 1.0 / ModConfig.infested_leaves.ticksToTransform;
-
-            markDirtyClient();
-
-            if (progress > 1.0F) {
-                progress = 1.0F;
-
-                getWorld().notifyBlockUpdate(pos, getWorld().getBlockState(pos), getWorld().getBlockState(pos), 3);
-            }
-        }
-
-        // Don't update unless there's leaves nearby, or we haven't checked for leavesUpdateFrequency ticks. And only update on the server
         if (!getWorld().isRemote && (hasNearbyLeaves || getWorld().getTotalWorldTime() % ModConfig.infested_leaves.leavesUpdateFrequency == updateIndex)) {
             hasNearbyLeaves = false;
 
@@ -64,7 +49,7 @@ public class TileInfestedLeaves extends BaseTileEntity implements ITickable {
                                 hasNearbyLeaves = true;
 
                                 if (getWorld().rand.nextFloat() < ModConfig.infested_leaves.leavesSpreadChance) {
-                                    BlockInfestedLeaves.infestLeafBlock(getWorld(), newPos);
+                                    BlockInfestingLeaves.infestLeafBlock(getWorld(), newPos);
                                 }
                             }
                         }
@@ -75,24 +60,14 @@ public class TileInfestedLeaves extends BaseTileEntity implements ITickable {
     }
 
     @Override
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+        return oldState.getBlock() != newSate.getBlock();
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public double getMaxRenderDistanceSquared() {
         return 128 * 128;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getColor() {
-        if (pos == null) {
-            return Util.whiteColor.toInt();
-        } else {
-            Color green = new Color(BiomeColorHelper.getFoliageColorAtPos(getWorld(), pos));
-            return Color.average(green, Util.whiteColor, (float) Math.pow(progress, 2)).toInt();
-        }
-    }
-
-    public void setProgress(float newProgress) {
-        progress = newProgress;
-        markDirty();
     }
 
     public void setLeafBlock(IBlockState block) {
@@ -103,16 +78,16 @@ public class TileInfestedLeaves extends BaseTileEntity implements ITickable {
     @Override
     @Nonnull
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
-        tag.setFloat("progress", progress);
+        tag = super.writeToNBT(tag);
         tag.setString("leafBlock", leafBlock.getBlock().getRegistryName() == null ? "" : leafBlock.getBlock().getRegistryName().toString());
         tag.setInteger("leafBlockMeta", leafBlock.getBlock().getMetaFromState(leafBlock));
-        return super.writeToNBT(tag);
+        return tag;
     }
 
     @SuppressWarnings("deprecation")
     @Override
     public void readFromNBT(NBTTagCompound tag) {
-        progress = tag.getFloat("progress");
+        super.readFromNBT(tag);
 
         if (tag.hasKey("leafBlock") && tag.hasKey("leafBlockMeta")) {
             try {
@@ -123,7 +98,10 @@ public class TileInfestedLeaves extends BaseTileEntity implements ITickable {
         } else {
             leafBlock = Blocks.LEAVES.getDefaultState();
         }
+    }
 
-        super.readFromNBT(tag);
+    @Override
+    public boolean hasFastRenderer() {
+        return false;
     }
 }

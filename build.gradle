@@ -82,7 +82,7 @@ repositories
 
 dependencies
 {
-    compileOnly "mezz.jei:jei_1.12:4.7.+:api"
+    compileOnly "mezz.jei:jei_1.12:4.7.+"
 
     deobfCompile "slimeknights.mantle:Mantle:1.12-1.3.+"
     deobfCompile "slimeknights:TConstruct:1.12-2.7.+"

@@ -33,13 +33,8 @@ public class HandlerHammer {
 
 
     public boolean isHammer(ItemStack stack) {
-        if (stack == null || stack.getItem() == Items.AIR)
-            return false;
+        return stack != null && stack.getItem() != Items.AIR && stack.getItem() instanceof IHammer && ((IHammer) stack.getItem()).isHammer(stack);
 
-        if (stack.getItem() instanceof IHammer)
-            return ((IHammer) stack.getItem()).isHammer(stack);
-
-        return false;
     }
 
 }

@@ -68,7 +68,7 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
     private void setRecipe(IRecipeLayout layout, CompostRecipe recipe) {
         // BlockStoneAxle
         layout.getItemStacks().init(0, false, 74, 9);
-        layout.getItemStacks().set(0, (ItemStack) recipe.getOutputs().get(0));
+        layout.getItemStacks().set(0, recipe.getOutputs().get(0));
 
         IFocus<?> focus = layout.getFocus();
 
@@ -84,7 +84,7 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
                 final int slotX = 2 + (i % 9 * 18);
                 final int slotY = 36 + (i / 9 * 18);
 
-                ItemStack inputStack = (ItemStack) recipe.getInputs().get(i);
+                ItemStack inputStack = recipe.getInputs().get(i);
 
                 layout.getItemStacks().init(slotIndex + i, true, slotX, slotY);
                 layout.getItemStacks().set(slotIndex + i, inputStack);

@@ -64,10 +64,7 @@ public class BlockInfo {
     }
 
     public static boolean areEqual(BlockInfo block1, BlockInfo block2) {
-        if (block1 == null && block2 == null)
-            return true;
-
-        return block1 != null && block2 != null && block1.equals(block2);
+        return block1 == null && block2 == null || block1 != null && block2 != null && block1.equals(block2);
 
     }
 

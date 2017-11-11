@@ -1,6 +1,7 @@
 package exnihilocreatio.compatibility;
 
 import exnihilocreatio.ExNihiloCreatio;
+import exnihilocreatio.ModBlocks;
 import exnihilocreatio.blocks.*;
 import exnihilocreatio.rotationalPower.IRotationalPowerMember;
 import exnihilocreatio.tiles.*;
@@ -25,7 +26,7 @@ public class CompatWaila implements IWailaPlugin, IWailaDataProvider {
     public void register(IWailaRegistrar registrar) {
         registrar.registerBodyProvider(this, BlockBarrel.class);
         registrar.registerBodyProvider(this, BlockSieve.class);
-        registrar.registerBodyProvider(this, BlockInfestedLeaves.class);
+        registrar.registerBodyProvider(this, BlockInfestingLeaves.class);
         registrar.registerBodyProvider(this, BlockCrucibleStone.class);
         registrar.registerBodyProvider(this, BlockCrucibleWood.class);
         registrar.registerBodyProvider(this, BlockStoneAxle.class);
@@ -65,13 +66,18 @@ public class CompatWaila implements IWailaPlugin, IWailaDataProvider {
             }
         }
 
-        if (accessor.getBlock() instanceof BlockInfestedLeaves) {
-            TileInfestedLeaves tile = (TileInfestedLeaves) accessor.getTileEntity();
+        if (accessor.getBlock() instanceof BlockInfestingLeaves) {
+            if (accessor.getBlock() == ModBlocks.infestingLeaves) {
+                TileInfestingLeaves tile = (TileInfestingLeaves) accessor.getTileEntity();
 
-            if (tile.getProgress() >= 1.0F) {
+                if (tile.getProgress() >= 1.0F) {
+                    currenttip.add("Progress: Done");
+                } else {
+                    currenttip.add("Progress: " + Math.round(100 * tile.getProgress()) + "%");
+                }
+            }
+            else {
                 currenttip.add("Progress: Done");
-            } else {
-                currenttip.add("Progress: " + Math.round(100 * tile.getProgress()) + "%");
             }
         }
 

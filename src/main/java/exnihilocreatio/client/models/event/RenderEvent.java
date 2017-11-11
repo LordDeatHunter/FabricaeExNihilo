@@ -13,7 +13,6 @@ public class RenderEvent {
         if (model != null){
             IBakedModel customModel = new InfestedLeavesBakedModel(model);
             evt.getModelRegistry().putObject(InfestedLeavesBakedModel.variantTag, customModel);
-
         }
     }
 }

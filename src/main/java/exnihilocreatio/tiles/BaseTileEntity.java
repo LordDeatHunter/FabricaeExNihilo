@@ -16,6 +16,11 @@ public class BaseTileEntity extends TileEntity {
 
     public void markDirtyClient() {
         markDirty();
+        PacketHandler.sendNBTUpdate(this);
+    }
+
+    public void markDirtyChunk() {
+        markDirty();
         IBlockState state = getWorld().getBlockState(getPos());
         getWorld().notifyBlockUpdate(getPos(), state, state, 3);
         PacketHandler.sendNBTUpdate(this);

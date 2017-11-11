@@ -218,6 +218,11 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE), new ItemStack(ModItems.pebbles, 1, EnumPebbleSubtype.ANDESITE.getMeta()), 1, 3F, 1.25F);
         registry.register(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE), new ItemStack(ModItems.pebbles, 1, EnumPebbleSubtype.GRANITE.getMeta()), 1, 3F, 1.25F);
         registry.register(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.DIORITE), new ItemStack(ModItems.pebbles, 1, EnumPebbleSubtype.DIORITE.getMeta()), 1, 3F, 1.25F);
+
+        // Hammer concrete into concrete powder
+        for(int meta = 0; meta < 16; meta++)
+            registry.register(Blocks.CONCRETE.getStateFromMeta(meta), new ItemStack(Blocks.CONCRETE_POWDER, 1, meta), 1, 1.0f, 0.0f);
+
     }
 
     public void registerHeat(HeatRegistry registry){
@@ -280,6 +285,10 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register(FluidRegistry.LAVA, new ItemInfo(new ItemStack(Items.REDSTONE)), new ItemInfo(new ItemStack(Blocks.NETHERRACK)));
         registry.register(FluidRegistry.LAVA, new ItemInfo(new ItemStack(Items.GLOWSTONE_DUST)), new ItemInfo(new ItemStack(Blocks.END_STONE)));
         registry.register(ModFluids.fluidWitchwater, new ItemInfo(new ItemStack(Blocks.SAND)), new ItemInfo(new ItemStack(Blocks.SOUL_SAND)));
+
+        // Vanilla Concrete
+        for(int meta = 0; meta < 16; meta++)
+            registry.register(FluidRegistry.WATER, new ItemInfo(new ItemStack(Blocks.CONCRETE_POWDER, 1, meta)), new ItemInfo(new ItemStack(Blocks.CONCRETE, 1, meta)));
     }
 
     public void registerFluidItemFluid(FluidItemFluidRegistry registry){

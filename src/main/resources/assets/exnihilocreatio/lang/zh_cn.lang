@@ -50,7 +50,7 @@ tile.block_crucible.0.name=坩埚(未烧制)
 tile.block_crucible.1.name=坩埚
 tile.block_crucible_wood.name=木坩埚
 
-tile.block_infested_leaves.name=被感染的树叶
+tile.block_infesting_leaves.name=被感染的树叶
 
 tile.block_auto_sifter.name=自动筛制机
 tile.block_axle_stone.name=石传动轴

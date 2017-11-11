@@ -6,6 +6,7 @@ import exnihilocreatio.ModFluids;
 import exnihilocreatio.ModItems;
 import exnihilocreatio.client.models.InfestedLeavesBakedModel;
 import exnihilocreatio.client.models.ModColorManager;
+import exnihilocreatio.client.models.event.RenderEvent;
 import exnihilocreatio.client.renderers.*;
 import exnihilocreatio.entities.ProjectileStone;
 import exnihilocreatio.items.ore.ItemOre;
@@ -18,6 +19,7 @@ import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -46,6 +48,8 @@ public class ClientProxy extends CommonProxy {
 
         RenderingRegistry.registerEntityRenderingHandler(ProjectileStone.class, new RenderProjectileStone.Factory());
 
+        ClientRegistry.bindTileEntitySpecialRenderer(TileInfestingLeaves.class, new RenderInfestingLeaves());
+
         StateMapperBase ignoreState = new StateMapperBase() {
             @Override
             protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
@@ -68,6 +72,7 @@ public class ClientProxy extends CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
 
+        MinecraftForge.EVENT_BUS.register(new RenderEvent());
         OBJLoader.INSTANCE.addDomain(ExNihiloCreatio.MODID);
     }
 

@@ -46,6 +46,7 @@ tile.blockCrucible.0.name=Crisol(Cru)
 tile.blockCrucible.1.name=Crisol
 
 tile.blockInfestedLeaves.name=Folhas Infestadas
+tile.blockInfestingLeaves.name=Folhas Infestadas
 
 tile.blockSieve.name=Peneira
 item.itemMesh.1.name=Malha de Linha
