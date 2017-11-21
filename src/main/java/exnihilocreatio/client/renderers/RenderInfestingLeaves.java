@@ -56,10 +56,10 @@ public class RenderInfestingLeaves extends FastTESR<TileInfestingLeaves> {
         final Block block = getWorld().getBlockState(pos).getBlock();
 
         // Check because sometimes the renderer gets called while the block is breaking/decaying
-        if(!(block instanceof BlockInfestingLeaves) || block instanceof BlockInfestedLeaves) return;
+        if(!(block instanceof BlockInfestingLeaves)) return;
 
         // Light levels
-        final int mixedBrightness = te.getWorld().getBlockState(pos).getPackedLightmapCoords(te.getWorld(), te.getPos());
+        final int mixedBrightness = getWorld().getBlockState(pos).getPackedLightmapCoords(getWorld(), pos);
         final int skyLight = mixedBrightness >> 16 & 0xFFFF;
         final int blockLight = mixedBrightness & 0xFFFF;
         //

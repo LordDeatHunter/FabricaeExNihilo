@@ -13,7 +13,7 @@ public class ModColorManager {
         registerBlockColorHandlers(MINECRAFT.getBlockColors());
     }
 
-    public static void registerBlockColorHandlers(BlockColors blockColors){
+    private static void registerBlockColorHandlers(BlockColors blockColors){
         IBlockColor leafColorHandler = (state, worldIn, pos, tintIndex) -> Util.whiteColor.toInt();
 
         blockColors.registerBlockColorHandler(leafColorHandler, ModBlocks.infestedLeaves);

@@ -20,6 +20,7 @@ import static exnihilocreatio.ModBlocks.infestedLeaves;
 public class InfestedLeavesBakedModel implements IBakedModel {
 
     private final IBakedModel defaultModel;
+    private TextureAtlasSprite particleTexture;
     public final static ModelResourceLocation variantTag = new ModelResourceLocation(ForgeRegistries.BLOCKS.getKey(infestedLeaves), "normal");
 
     public InfestedLeavesBakedModel(IBakedModel defaultModel){
@@ -29,6 +30,7 @@ public class InfestedLeavesBakedModel implements IBakedModel {
     private IBakedModel handleBlockState(IBlockState state){
         if (state instanceof IExtendedBlockState){
             IBlockState copiedState = getCopyState(state);
+            this.particleTexture = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelForState(copiedState).getParticleTexture();
             return Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelForState(copiedState);
         }
         return defaultModel;
@@ -36,7 +38,7 @@ public class InfestedLeavesBakedModel implements IBakedModel {
 
     @Override
     public TextureAtlasSprite getParticleTexture() {
-        return defaultModel.getParticleTexture();
+        return this.particleTexture;
     }
 
     private IBlockState getCopyState(IBlockState state){

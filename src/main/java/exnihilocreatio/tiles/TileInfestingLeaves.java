@@ -39,43 +39,41 @@ public class TileInfestingLeaves extends BaseTileEntity implements ITickable {
 
     @Override
     public void update() {
-
-        if (doProgress <= 0) {
-            // Only update everytime 1% of progress is done
-            progress += 0.01;
-            if (!world.isRemote){
+        if (!world.isRemote) {
+            if (doProgress <= 0) {
+                // Only update everytime 1% of progress is done
+                progress += 0.01;
                 if (progress >= 1.0F) {
                     BlockInfestingLeaves.setInfested(world, pos, leafBlock);
-                }
-                else
+                } else
                     PacketHandler.sendNBTUpdate(this);
+
+                doProgress = (int) (ModConfig.infested_leaves.ticksToTransform / 100.0);
+            } else {
+                doProgress--;
             }
 
-            doProgress = (int) (ModConfig.infested_leaves.ticksToTransform / 100.0);
-        } else {
-            doProgress--;
-        }
 
+            // Don't update unless there's leaves nearby, or we haven't checked for leavesUpdateFrequency ticks. And only update on the server
+            // Delay spreading until 25%
+            if (progress >= 0.25f) {
+                if (hasNearbyLeaves || getWorld().getTotalWorldTime() % ModConfig.infested_leaves.leavesUpdateFrequency == updateIndex) {
+                    hasNearbyLeaves = false;
 
-        // Don't update unless there's leaves nearby, or we haven't checked for leavesUpdateFrequency ticks. And only update on the server
-        // Delay spreading until 25%
-        if (progress >= 0.25f) {
-            if (!getWorld().isRemote && (hasNearbyLeaves || getWorld().getTotalWorldTime() % ModConfig.infested_leaves.leavesUpdateFrequency == updateIndex)) {
-                hasNearbyLeaves = false;
+                    for (int x = -1; x <= 1; x++) {
+                        for (int y = -1; y <= 1; y++) {
+                            for (int z = -1; z <= 1; z++) {
+                                BlockPos newPos = new BlockPos(pos.add(x, y, z));
+                                IBlockState state = getWorld().getBlockState(newPos);
 
-                for (int x = -1; x <= 1; x++) {
-                    for (int y = -1; y <= 1; y++) {
-                        for (int z = -1; z <= 1; z++) {
-                            BlockPos newPos = new BlockPos(pos.add(x, y, z));
-                            IBlockState state = getWorld().getBlockState(newPos);
+                                if (state != Blocks.AIR.getDefaultState() && state.getBlock() != Blocks.AIR && state.getBlock() != ModBlocks.infestingLeaves) {
+                                    ItemStack itemStack = new ItemStack(state.getBlock());
+                                    if (OreDictionary.getOres("treeLeaves").stream().anyMatch(stack1 -> Util.compareItemStack(stack1, itemStack))) {
+                                        hasNearbyLeaves = true;
 
-                            if (state != Blocks.AIR.getDefaultState() && state.getBlock() != Blocks.AIR && state.getBlock() != ModBlocks.infestingLeaves) {
-                                ItemStack itemStack = new ItemStack(state.getBlock());
-                                if (OreDictionary.getOres("treeLeaves").stream().anyMatch(stack1 -> Util.compareItemStack(stack1, itemStack))) {
-                                    hasNearbyLeaves = true;
-
-                                    if (getWorld().rand.nextFloat() < ModConfig.infested_leaves.leavesSpreadChance) {
-                                        BlockInfestingLeaves.infestLeafBlock(getWorld(), newPos);
+                                        if (getWorld().rand.nextFloat() < ModConfig.infested_leaves.leavesSpreadChance) {
+                                            BlockInfestingLeaves.infestLeafBlock(getWorld(), newPos);
+                                        }
                                     }
                                 }
                             }
@@ -104,12 +102,12 @@ public class TileInfestingLeaves extends BaseTileEntity implements ITickable {
 
     public void setProgress(float newProgress) {
         progress = newProgress;
-        markDirty();
+        PacketHandler.sendNBTUpdate(this);
     }
 
     public void setLeafBlock(IBlockState block) {
         leafBlock = block;
-        markDirty();
+        PacketHandler.sendNBTUpdate(this);
     }
 
     @Override

@@ -3,6 +3,7 @@ package exnihilocreatio.tiles;
 import exnihilocreatio.ModBlocks;
 import exnihilocreatio.blocks.BlockInfestingLeaves;
 import exnihilocreatio.config.ModConfig;
+import exnihilocreatio.networking.PacketHandler;
 import exnihilocreatio.util.Util;
 import lombok.Getter;
 import net.minecraft.block.Block;
@@ -72,7 +73,7 @@ public class TileInfestedLeaves extends BaseTileEntity implements ITickable {
 
     public void setLeafBlock(IBlockState block) {
         leafBlock = block;
-        markDirty();
+        PacketHandler.sendNBTUpdate(this);
     }
 
     @Override
