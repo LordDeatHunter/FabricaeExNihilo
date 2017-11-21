@@ -70,10 +70,10 @@ public class CompatWaila implements IWailaPlugin, IWailaDataProvider {
             if (accessor.getBlock() == ModBlocks.infestingLeaves) {
                 TileInfestingLeaves tile = (TileInfestingLeaves) accessor.getTileEntity();
 
-                if (tile.getProgress() >= 1.0F) {
+                if (tile.getProgress() >= 100) {
                     currenttip.add("Progress: Done");
                 } else {
-                    currenttip.add("Progress: " + Math.round(100 * tile.getProgress()) + "%");
+                    currenttip.add("Progress: " + tile.getProgress() + "%");
                 }
             }
             else {

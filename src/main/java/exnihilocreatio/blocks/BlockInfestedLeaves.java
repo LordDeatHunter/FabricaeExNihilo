@@ -32,6 +32,7 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
         this.setUnlocalizedName("block_infested_leaves");
         this.setRegistryName("block_infested_leaves");
         Data.BLOCKS.add(this);
+        this.setTickRandomly(true);
         this.setDefaultState(
                 this.blockState.getBaseState().withProperty(CHECK_DECAY, false).withProperty(DECAYABLE, false));
     }
@@ -58,8 +59,8 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
     }
 
     @Override
-    public void updateTick(World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state, Random rand) {
-        if (!worldIn.isRemote) {
+    public void updateTick(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, Random rand) {
+        if (!world.isRemote) {
             if (state.getValue(CHECK_DECAY) && state.getValue(DECAYABLE)) {
                 int posX = pos.getX();
                 int posY = pos.getY();
@@ -69,17 +70,17 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
                     this.surroundings = new int[32768];
                 }
 
-                if (worldIn.isAreaLoaded(new BlockPos(posX - 5, posY - 5, posZ - 5), new BlockPos(posX + 5, posY + 5, posZ + 5))) {
+                if (world.isAreaLoaded(new BlockPos(posX - 5, posY - 5, posZ - 5), new BlockPos(posX + 5, posY + 5, posZ + 5))) {
                     BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
                     for (int i2 = -4; i2 <= 4; ++i2) {
                         for (int j2 = -4; j2 <= 4; ++j2) {
                             for (int k2 = -4; k2 <= 4; ++k2) {
-                                IBlockState iblockstate = worldIn.getBlockState(blockpos$mutableblockpos.setPos(posX + i2, posY + j2, posZ + k2));
+                                IBlockState iblockstate = world.getBlockState(blockpos$mutableblockpos.setPos(posX + i2, posY + j2, posZ + k2));
                                 Block block = iblockstate.getBlock();
 
-                                if (!block.canSustainLeaves(iblockstate, worldIn, blockpos$mutableblockpos.setPos(posX + i2, posY + j2, posZ + k2))) {
-                                    if (block.isLeaves(iblockstate, worldIn, blockpos$mutableblockpos.setPos(posX + i2, posY + j2, posZ + k2))) {
+                                if (!block.canSustainLeaves(iblockstate, world, blockpos$mutableblockpos.setPos(posX + i2, posY + j2, posZ + k2))) {
+                                    if (block.isLeaves(iblockstate, world, blockpos$mutableblockpos.setPos(posX + i2, posY + j2, posZ + k2))) {
                                         this.surroundings[(i2 + 16) * 1024 + (j2 + 16) * 32 + k2 + 16] = -2;
                                     } else {
                                         this.surroundings[(i2 + 16) * 1024 + (j2 + 16) * 32 + k2 + 16] = -1;
@@ -129,7 +130,7 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
                 int l2 = this.surroundings[16912];
 
                 if (l2 < 0) {
-                    this.destroy(worldIn, pos);
+                    this.destroy(world, pos);
                 }
             }
         }
@@ -181,5 +182,6 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
                              IBlockState blockState, IProbeHitData data) {
         probeInfo.text("Progress: Done");
     }
+
 
 }

@@ -103,7 +103,7 @@ public class Util {
     }
 
     public static boolean isSurroundingBlocksAtLeastOneOf(BlockInfo[] blocks, BlockPos pos, World world, int radius) {
-        ArrayList<BlockInfo> blockList = new ArrayList<BlockInfo>(Arrays.asList(blocks));
+        ArrayList<BlockInfo> blockList = new ArrayList<>(Arrays.asList(blocks));
         for (int xShift = -1 * radius; xShift <= radius; xShift++) {
             for (int zShift = -1 * radius; zShift <= radius; zShift++) {
                 BlockPos checkPos = pos.add(xShift, 0, zShift);
@@ -119,7 +119,7 @@ public class Util {
     public static int getNumSurroundingBlocksAtLeastOneOf(BlockInfo[] blocks, BlockPos pos, World world) {
 
         int ret = 0;
-        ArrayList<BlockInfo> blockList = new ArrayList<BlockInfo>(Arrays.asList(blocks));
+        ArrayList<BlockInfo> blockList = new ArrayList<>(Arrays.asList(blocks));
         for (int xShift = -2; xShift <= 2; xShift++) {
             for (int zShift = -2; zShift <= 2; zShift++) {
                 BlockPos checkPos = pos.add(xShift, 0, zShift);

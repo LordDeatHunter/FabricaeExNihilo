@@ -26,7 +26,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -37,7 +36,6 @@ import net.minecraftforge.common.property.IUnlistedProperty;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProvider, ITOPInfoProvider, IHasModel {
 
@@ -68,6 +66,7 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
         this.setUnlocalizedName("block_infesting_leaves");
         this.setRegistryName("block_infesting_leaves");
         Data.BLOCKS.add(this);
+        this.setTickRandomly(false);
         this.setDefaultState(
                 this.blockState.getBaseState().withProperty(CHECK_DECAY, false).withProperty(DECAYABLE, false));
     }
@@ -81,15 +80,13 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
         IBlockState block = world.getBlockState(pos);
 
         if (block.getBlock().isLeaves(block, world, pos) && !(block.getBlock() instanceof BlockInfestingLeaves)) {
-            world.setBlockState(pos, ModBlocks.infestingLeaves.getDefaultState());
-
-            TileInfestingLeaves tile = (TileInfestingLeaves) world.getTileEntity(pos);
-            if (tile != null) {
-                //Prevents a crash with forestry using the new model system
-                if (Block.REGISTRY.getNameForObject(block.getBlock()).getResourceDomain().equalsIgnoreCase("forestry"))
-                    tile.setLeafBlock(Blocks.LEAVES.getDefaultState());
-                else tile.setLeafBlock(block);
-            }
+            IBlockState leafState;
+            //Prevents a crash with forestry using the new model system
+            if (Block.REGISTRY.getNameForObject(block.getBlock()).getResourceDomain().equalsIgnoreCase("forestry"))
+                leafState = Blocks.LEAVES.getDefaultState();
+            else leafState = block;
+            world.setBlockState(pos, ModBlocks.infestingLeaves.getDefaultState(), 3);
+            ((TileInfestingLeaves)world.getTileEntity(pos)).setLeafBlock(leafState);
         }
     }
 
@@ -101,14 +98,10 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
      */
     public static void setInfested(World world, BlockPos pos, IBlockState leafState) {
         IBlockState block = world.getBlockState(pos);
-
         if (block.getBlock() instanceof BlockInfestingLeaves) {
-            world.setBlockState(pos, ModBlocks.infestedLeaves.getDefaultState());
-
-            TileInfestedLeaves tile = (TileInfestedLeaves) world.getTileEntity(pos);
-            if (tile != null) {
-                tile.setLeafBlock(leafState);
-            }
+            IExtendedBlockState retval = (IExtendedBlockState) ModBlocks.infestedLeaves.getDefaultState();
+            world.setBlockState(pos, retval.withProperty(BlockInfestedLeaves.LEAFBLOCK, leafState), 3);
+            ((TileInfestedLeaves)world.getTileEntity(pos)).setLeafBlock(leafState);
         }
         else if (block.getBlock().isLeaves(block, world, pos) && !(block.getBlock() instanceof BlockInfestedLeaves)){
             LogUtil.error("Sent leaf change to wrong method, redirecting");
@@ -136,7 +129,6 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
         }
         return state;
     }
-
     @Override
     @Nonnull
     protected BlockStateContainer createBlockState() {
@@ -166,16 +158,10 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
         return 3;
     }
 
-
     @Override
     @Nonnull
     public List<ItemStack> getDrops(@Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull IBlockState state, int fortune) {
         return new ArrayList<>();
-    }
-
-    @Override
-    public void updateTick(World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state, Random rand) {
-
     }
 
     @Override
@@ -228,19 +214,20 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
         TileInfestingLeaves tile = (TileInfestingLeaves) world.getTileEntity(data.getPos());
 
         if (tile != null) {
-            if (tile.getProgress() >= 1.0F) {
+            if (tile.getProgress() >= 100) {
                 probeInfo.text("Progress: Done");
             } else {
-                probeInfo.progress((int) (tile.getProgress() * 100), 100);
+                probeInfo.progress(tile.getProgress(), 100);
             }
         }
 
     }
 
-
-    @Override
-    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess world, BlockPos pos, EnumFacing facing) {
-        return Blocks.LEAVES.shouldSideBeRendered(blockState, world, pos, facing);
+    public static IBlockState getLeafState(IBlockState state){
+        if (state instanceof IExtendedBlockState){
+            return ((IExtendedBlockState)state).getValue(BlockInfestedLeaves.LEAFBLOCK);
+        }
+        return state;
     }
 
     enum InfestedType{

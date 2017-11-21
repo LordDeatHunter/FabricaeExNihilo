@@ -35,7 +35,7 @@ public class ItemDoll extends Item implements IHasModel {
     public static final String SHULKER = "shulker"; // 2
     public static final String GUARDIAN = "guardian"; // 3
 
-    private static ArrayList<String> names = new ArrayList<String>();
+    private static ArrayList<String> names = new ArrayList<>();
 
     public ItemDoll() {
         super();

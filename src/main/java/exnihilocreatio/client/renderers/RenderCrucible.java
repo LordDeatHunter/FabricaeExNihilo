@@ -17,10 +17,10 @@ public class RenderCrucible extends FastTESR<TileCrucibleBase> {
     private static ModelVertex[] model = new ModelVertex[4];
 
     static {
-        model[0] = new ModelVertex(EnumFacing.UP, 0.125, 0.6875, 0.125, 0, 0, 0, 0);
-        model[1] = new ModelVertex(EnumFacing.UP, 0.875, 0.6875, 0.125, 1, 0, 0, 0);
-        model[2] = new ModelVertex(EnumFacing.UP, 0.875, 0.6875, 0.875, 1, 1, 0, 0);
-        model[3] = new ModelVertex(EnumFacing.UP, 0.125, 0.6875, 0.875, 0, 1, 0, 0);
+        model[0] = new ModelVertex(EnumFacing.UP, 0.125, 0.6875, 0.125, 0, 0);
+        model[1] = new ModelVertex(EnumFacing.UP, 0.875, 0.6875, 0.125, 1, 0);
+        model[2] = new ModelVertex(EnumFacing.UP, 0.875, 0.6875, 0.875, 1, 1);
+        model[3] = new ModelVertex(EnumFacing.UP, 0.125, 0.6875, 0.875, 0, 1);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class RenderCrucible extends FastTESR<TileCrucibleBase> {
 
                     case POSITION:
                         final double vertX = vert.x;
-                        final double vertY = vert.yMultiplier * fill + 0.25;
+                        final double vertY = vert.y * fill + 0.25;
                         final double vertZ = vert.z;
 
                         buffer.pos(vertX, vertY, vertZ);
@@ -76,7 +76,7 @@ public class RenderCrucible extends FastTESR<TileCrucibleBase> {
                         if (e.getIndex() == 1) {
                             buffer.lightmap(skyLight, blockLight);
                         } else {
-                            buffer.tex(icon.getInterpolatedU(vert.u + vert.uMultiplier), icon.getInterpolatedV(16.0 - (vert.v + vert.vMultiplier)));
+                            buffer.tex(icon.getInterpolatedU(vert.u), icon.getInterpolatedV(16.0 - vert.v));
                         }
                         break;
 

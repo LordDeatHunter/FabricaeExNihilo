@@ -8,15 +8,13 @@ import exnihilocreatio.util.Util;
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
@@ -25,7 +23,7 @@ public class TileInfestingLeaves extends BaseTileEntity implements ITickable {
     private static int tileId = 0;
 
     @Getter
-    private float progress = 0;
+    private int progress = 0;
     @Getter
     private boolean hasNearbyLeaves = true;
     @Getter
@@ -42,8 +40,8 @@ public class TileInfestingLeaves extends BaseTileEntity implements ITickable {
         if (!world.isRemote) {
             if (doProgress <= 0) {
                 // Only update everytime 1% of progress is done
-                progress += 0.01;
-                if (progress >= 1.0F) {
+                progress++;
+                if (progress >= 100) {
                     BlockInfestingLeaves.setInfested(world, pos, leafBlock);
                 } else
                     PacketHandler.sendNBTUpdate(this);
@@ -56,7 +54,7 @@ public class TileInfestingLeaves extends BaseTileEntity implements ITickable {
 
             // Don't update unless there's leaves nearby, or we haven't checked for leavesUpdateFrequency ticks. And only update on the server
             // Delay spreading until 25%
-            if (progress >= 0.25f) {
+            if (progress >= 25) {
                 if (hasNearbyLeaves || getWorld().getTotalWorldTime() % ModConfig.infested_leaves.leavesUpdateFrequency == updateIndex) {
                     hasNearbyLeaves = false;
 
@@ -90,17 +88,11 @@ public class TileInfestingLeaves extends BaseTileEntity implements ITickable {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public double getMaxRenderDistanceSquared() {
-        return 128 * 128;
+    public AxisAlignedBB getRenderBoundingBox() {
+        return INFINITE_EXTENT_AABB;
     }
 
-    @SideOnly(Side.CLIENT)
-    public int getColor() {
-        return Minecraft.getMinecraft().getBlockColors().getColor(getLeafBlock(), getWorld(), pos);
-    }
-
-    public void setProgress(float newProgress) {
+    public void setProgress(int newProgress) {
         progress = newProgress;
         PacketHandler.sendNBTUpdate(this);
     }
@@ -114,7 +106,7 @@ public class TileInfestingLeaves extends BaseTileEntity implements ITickable {
     @Nonnull
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
         tag = super.writeToNBT(tag);
-        tag.setFloat("progress", progress);
+        tag.setInteger("progress", progress);
         tag.setString("leafBlock", leafBlock.getBlock().getRegistryName() == null ? "" : leafBlock.getBlock().getRegistryName().toString());
         tag.setInteger("leafBlockMeta", leafBlock.getBlock().getMetaFromState(leafBlock));
         return tag;
@@ -124,7 +116,7 @@ public class TileInfestingLeaves extends BaseTileEntity implements ITickable {
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
-        progress = tag.getFloat("progress");
+        progress = tag.getInteger("progress");
 
         if (tag.hasKey("leafBlock") && tag.hasKey("leafBlockMeta")) {
             try {

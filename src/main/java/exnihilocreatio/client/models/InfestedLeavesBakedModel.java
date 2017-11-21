@@ -1,6 +1,6 @@
 package exnihilocreatio.client.models;
 
-import exnihilocreatio.blocks.BlockInfestedLeaves;
+import exnihilocreatio.blocks.BlockInfestingLeaves;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.*;
@@ -29,7 +29,7 @@ public class InfestedLeavesBakedModel implements IBakedModel {
 
     private IBakedModel handleBlockState(IBlockState state){
         if (state instanceof IExtendedBlockState){
-            IBlockState copiedState = getCopyState(state);
+            IBlockState copiedState = BlockInfestingLeaves.getLeafState(state);
             this.particleTexture = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelForState(copiedState).getParticleTexture();
             return Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelForState(copiedState);
         }
@@ -41,12 +41,6 @@ public class InfestedLeavesBakedModel implements IBakedModel {
         return this.particleTexture;
     }
 
-    private IBlockState getCopyState(IBlockState state){
-        if (state instanceof IExtendedBlockState){
-            return ((IExtendedBlockState)state).getValue(BlockInfestedLeaves.LEAFBLOCK);
-        }
-        return state;
-    }
 
     @Override
     public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {

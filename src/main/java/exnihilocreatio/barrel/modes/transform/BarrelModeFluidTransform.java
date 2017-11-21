@@ -134,7 +134,7 @@ public class BarrelModeFluidTransform implements IBarrelMode {
 
                 if (barrel.getWorld().rand.nextDouble() < 0.005) {
                     boolean spawned = false;
-                    ArrayList<BlockInfo> blockList = new ArrayList<BlockInfo>(
+                    ArrayList<BlockInfo> blockList = new ArrayList<>(
                             Arrays.asList(transformer.getTransformingBlocks()));
                     for (int xShift = -1; xShift <= 1; xShift++) {
                         for (int zShift = -1; zShift <= 1; zShift++) {
