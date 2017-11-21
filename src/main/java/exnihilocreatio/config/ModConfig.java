@@ -46,6 +46,7 @@ public class ModConfig {
     public static class InfestedLeaves {
         public int ticksToTransform = 600;
         public int leavesUpdateFrequency = 40;
+        public int leavesSpreadPercent = 25;
         public double leavesSpreadChance = 0.0015;
         public boolean doLeavesUpdateClient = true;
     }

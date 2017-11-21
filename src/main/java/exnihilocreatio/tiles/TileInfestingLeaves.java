@@ -54,7 +54,7 @@ public class TileInfestingLeaves extends BaseTileEntity implements ITickable {
 
             // Don't update unless there's leaves nearby, or we haven't checked for leavesUpdateFrequency ticks. And only update on the server
             // Delay spreading until 25%
-            if (progress >= 25) {
+            if (progress >= ModConfig.infested_leaves.leavesSpreadPercent) {
                 if (hasNearbyLeaves || getWorld().getTotalWorldTime() % ModConfig.infested_leaves.leavesUpdateFrequency == updateIndex) {
                     hasNearbyLeaves = false;
 
