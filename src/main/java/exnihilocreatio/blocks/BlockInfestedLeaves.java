@@ -49,7 +49,7 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
         if (state instanceof IExtendedBlockState){
             IExtendedBlockState retval = (IExtendedBlockState) state;
             IBlockState leafState;
-            if (world.getTileEntity(pos) != null) {
+            if (world.getTileEntity(pos) != null && world.getTileEntity(pos) instanceof TileInfestedLeaves) {
                 leafState = ((TileInfestedLeaves) world.getTileEntity(pos)).getLeafBlock();
             }
             else leafState = Blocks.LEAVES.getDefaultState();

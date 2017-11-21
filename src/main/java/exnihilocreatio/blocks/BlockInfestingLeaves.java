@@ -100,7 +100,7 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
         IBlockState block = world.getBlockState(pos);
         if (block.getBlock() instanceof BlockInfestingLeaves) {
             IExtendedBlockState retval = (IExtendedBlockState) ModBlocks.infestedLeaves.getDefaultState();
-            world.setBlockState(pos, retval.withProperty(BlockInfestedLeaves.LEAFBLOCK, leafState), 3);
+            world.setBlockState(pos, retval.withProperty(BlockInfestedLeaves.LEAFBLOCK, leafState), 7);
             ((TileInfestedLeaves)world.getTileEntity(pos)).setLeafBlock(leafState);
         }
         else if (block.getBlock().isLeaves(block, world, pos) && !(block.getBlock() instanceof BlockInfestedLeaves)){

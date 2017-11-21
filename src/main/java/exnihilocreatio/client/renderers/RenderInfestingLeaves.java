@@ -1,7 +1,6 @@
 package exnihilocreatio.client.renderers;
 
-import exnihilocreatio.blocks.BlockInfestedLeaves;
-import exnihilocreatio.blocks.BlockInfestingLeaves;
+import exnihilocreatio.ModBlocks;
 import exnihilocreatio.client.models.ModelVertex;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.tiles.TileInfestingLeaves;
@@ -62,9 +61,6 @@ public class RenderInfestingLeaves extends FastTESR<TileInfestingLeaves> {
         final BlockPos pos = te.getPos();
         final Block block = getWorld().getBlockState(pos).getBlock();
 
-        if (!(block instanceof BlockInfestingLeaves) || block instanceof BlockInfestedLeaves)
-            return;
-
         // Light levels
         final int mixedBrightness = getWorld().getBlockState(pos).getPackedLightmapCoords(te.getWorld(), pos);
         final int skyLight = mixedBrightness >> 16 & 0xFFFF;
@@ -72,13 +68,9 @@ public class RenderInfestingLeaves extends FastTESR<TileInfestingLeaves> {
         //
         final IBlockState state = te.getLeafBlock();
 
-        //Fixes a bug where progress after 99 gets set to 0
-        if (te.getProgress() == 99)
-            complete = true;
-
         // Color
         final Color color;
-        if (!complete)
+        if (block != ModBlocks.infestedLeaves)
             color = Color.average(new Color(BiomeColorHelper.getFoliageColorAtPos(getWorld(), pos)), Util.whiteColor, (float)Math.pow((te.getProgress() / 100f), 2.0));
         else
             color = Util.whiteColor;

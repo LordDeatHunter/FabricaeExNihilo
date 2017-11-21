@@ -43,6 +43,7 @@ public class TileInfestingLeaves extends BaseTileEntity implements ITickable {
                 progress++;
                 if (progress >= 100) {
                     BlockInfestingLeaves.setInfested(world, pos, leafBlock);
+                    markDirtyClient();
                 } else
                     PacketHandler.sendNBTUpdate(this);
 

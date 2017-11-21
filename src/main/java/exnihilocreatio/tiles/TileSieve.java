@@ -49,7 +49,7 @@ public class TileSieve extends BaseTileEntity {
     /**
      * Sets the mesh type in the sieve.
      *
-     * @param newMesh
+     * @param newMesh The mesh to set
      * @return true if setting is successful.
      */
     public boolean setMesh(ItemStack newMesh) {

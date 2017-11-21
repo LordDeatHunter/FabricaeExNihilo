@@ -35,7 +35,7 @@ public class SieveRegistry {
      * Gets *all* possible drops from the sieve. It is up to the dropper to
      * check whether or not the drops should be dropped!
      *
-     * @param block
+     * @param block The block to get the sieve drops for
      * @return ArrayList of {@linkplain exnihilocreatio.registries.types.Siftable}
      * that could *potentially* be dropped.
      */
@@ -47,7 +47,7 @@ public class SieveRegistry {
      * Gets *all* possible drops from the sieve. It is up to the dropper to
      * check whether or not the drops should be dropped!
      *
-     * @param block
+     * @param block The block to get the sieve drops for
      * @return ArrayList of {@linkplain exnihilocreatio.registries.types.Siftable}
      * that could *potentially* be dropped.
      */
