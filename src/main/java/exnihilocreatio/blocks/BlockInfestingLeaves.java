@@ -84,7 +84,6 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
 
     public static void infestLeafBlock(World world, IBlockState state, BlockPos pos) {
         IBlockState leafState;
-        LogUtil.info("Infecting leaf block at " + pos);
         //Prevents a crash with forestry using the new model system
         if (Block.REGISTRY.getNameForObject(state.getBlock()).getResourceDomain().equalsIgnoreCase("forestry"))
             leafState = Blocks.LEAVES.getDefaultState();
@@ -118,18 +117,20 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
             if (state.getValue(NEARBYLEAVES)) {
                 NonNullList<Pair<IBlockState, BlockPos>> nearbyLeaves = Util.getNearbyLeaves(world, pos);
                 if (nearbyLeaves.isEmpty())
-                    world.setBlockState(pos, state.withProperty(NEARBYLEAVES, false), 1);
+                    world.setBlockState(pos, state.withProperty(NEARBYLEAVES, false), 7);
                 else {
                     int progress = ((TileInfestingLeaves) world.getTileEntity(pos)).getProgress();
                     // Delay spreading until 25%
-                    if (progress >= ModConfig.infested_leaves.leavesSpreadPercent)
-                        nearbyLeaves.forEach(leaves -> {
-                            if (rand.nextFloat() <= ModConfig.infested_leaves.leavesSpreadChance)
-                                BlockInfestingLeaves.infestLeafBlock(world, leaves.getKey(), leaves.getValue());
-                        });
+                    if (progress >= ModConfig.infested_leaves.leavesSpreadPercent) {
+                        nearbyLeaves.stream().filter(leaves -> rand.nextFloat() <= ModConfig.infested_leaves.leavesSpreadChance).findAny().ifPresent(leaves -> BlockInfestingLeaves.infestLeafBlock(world, leaves.getKey(), leaves.getValue()));
+                    }
                 }
             }
         }
+    }
+
+    @Override
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
     }
 
     @Override
@@ -140,7 +141,7 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
     @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
         if (!worldIn.isRemote && Util.isLeaves(worldIn.getBlockState(fromPos)))
-            worldIn.setBlockState(pos, state.withProperty(NEARBYLEAVES, true), 1);
+            worldIn.setBlockState(pos, state.withProperty(NEARBYLEAVES, true), 7);
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
     }
 

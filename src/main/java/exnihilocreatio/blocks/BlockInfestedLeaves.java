@@ -64,13 +64,10 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
         if (!world.isRemote) {
             if (state.getValue(NEARBYLEAVES)) {
                 NonNullList<Pair<IBlockState, BlockPos>> nearbyLeaves = Util.getNearbyLeaves(world, pos);
-                if (nearbyLeaves.isEmpty())
-                    world.setBlockState(pos, state.withProperty(NEARBYLEAVES, false), 1);
-                else {
-                    nearbyLeaves.forEach(leaves -> {
-                        if (rand.nextFloat() <= ModConfig.infested_leaves.leavesSpreadChance)
-                            BlockInfestingLeaves.infestLeafBlock(world, leaves.getKey(), leaves.getValue());
-                    });
+                if (nearbyLeaves.isEmpty()) {
+                    world.setBlockState(pos, state.withProperty(NEARBYLEAVES, false), 7);
+                } else {
+                    nearbyLeaves.stream().filter(leaves -> rand.nextInt(100) <= ModConfig.infested_leaves.leavesSpreadChance).findAny().ifPresent(leaves -> BlockInfestingLeaves.infestLeafBlock(world, leaves.getKey(), leaves.getValue()));
                 }
             }
         }
@@ -157,7 +154,7 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
     @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
         if (!worldIn.isRemote && Util.isLeaves(worldIn.getBlockState(fromPos)))
-            worldIn.setBlockState(pos, state.withProperty(NEARBYLEAVES, true), 1);
+            worldIn.setBlockState(pos, state.withProperty(NEARBYLEAVES, true), 7);
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
     }
 
