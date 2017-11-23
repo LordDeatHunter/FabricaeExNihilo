@@ -1,14 +1,18 @@
 package exnihilocreatio.util;
 
+import exnihilocreatio.blocks.BlockInfestingLeaves;
 import exnihilocreatio.texturing.Color;
+import javafx.util.Pair;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -23,6 +27,8 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static java.lang.Math.round;
 
 public class Util {
 
@@ -155,4 +161,29 @@ public class Util {
         }
         else return stack1.getItem() == stack2.getItem() && stack1.getMetadata() == stack2.getMetadata();
     }
+
+    public static int interpolate(int low, int high, float amount){
+        if(amount > 1.0f) return high;
+        if(amount < 0.0f) return low;
+        return low + round((high-low)*amount);
+    }
+
+    public static NonNullList<Pair<IBlockState, BlockPos>> getNearbyLeaves(World world, BlockPos pos){
+        NonNullList<Pair<IBlockState, BlockPos>> blockStates = NonNullList.create();
+        for (BlockPos checkPos : BlockPos.getAllInBox(new BlockPos(pos.getX() - 1, pos.getY() - 1, pos.getZ() - 1), new BlockPos(pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1))) {
+            IBlockState newState = world.getBlockState(checkPos);
+            if (newState.getBlock() != Blocks.AIR && !(newState.getBlock() instanceof BlockInfestingLeaves)) {
+                if (Util.isLeaves(newState))
+                    blockStates.add(new Pair<>(newState, checkPos));
+            }
+        }
+        //if (!blockStates.isEmpty()) LogUtil.info("Obtained getNearbyLeaves");
+        return blockStates;
+    }
+
+    public static boolean isLeaves(IBlockState state){
+        ItemStack itemStack = new ItemStack(state.getBlock());
+        return OreDictionary.getOres("treeLeaves").stream().anyMatch(stack1 -> Util.compareItemStack(stack1, itemStack));
+    }
+
 }

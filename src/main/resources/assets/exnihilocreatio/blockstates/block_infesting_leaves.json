@@ -11,6 +11,10 @@
     "check_decay": {
       "true": {},
       "false": {}
+    },
+    "nearby_leaves": {
+      "true": {},
+      "false": {}
     }
   }
 }

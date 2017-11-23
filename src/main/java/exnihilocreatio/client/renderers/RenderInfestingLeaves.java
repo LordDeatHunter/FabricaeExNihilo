@@ -1,6 +1,6 @@
 package exnihilocreatio.client.renderers;
 
-import exnihilocreatio.ModBlocks;
+import exnihilocreatio.blocks.BlockInfestingLeaves;
 import exnihilocreatio.client.models.ModelVertex;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.tiles.TileInfestingLeaves;
@@ -9,6 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.util.EnumFacing;
@@ -70,13 +71,14 @@ public class RenderInfestingLeaves extends FastTESR<TileInfestingLeaves> {
 
         // Color
         final Color color;
-        if (block != ModBlocks.infestedLeaves)
+        if (block instanceof BlockInfestingLeaves)
             color = Color.average(new Color(BiomeColorHelper.getFoliageColorAtPos(getWorld(), pos)), Util.whiteColor, (float)Math.pow((te.getProgress() / 100f), 2.0));
         else
             color = Util.whiteColor;
 
         final TextureAtlasSprite sprite = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(state);
         buffer.setTranslation(x-pos.getX(), y-pos.getY(), z-pos.getZ());
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, skyLight * 16.0F, blockLight * 16.0F);
 
         Vec3d view = Minecraft.getMinecraft().getRenderViewEntity().getPositionEyes(partialTicks);
         for ( final ModelVertex vert : model ) {

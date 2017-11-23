@@ -5,6 +5,7 @@ import exnihilocreatio.items.tools.ICrook;
 import exnihilocreatio.tiles.TileInfestedLeaves;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.Util;
+import javafx.util.Pair;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
@@ -16,6 +17,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -32,7 +34,6 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
         this.setUnlocalizedName("block_infested_leaves");
         this.setRegistryName("block_infested_leaves");
         Data.BLOCKS.add(this);
-        this.setTickRandomly(true);
         this.setDefaultState(
                 this.blockState.getBaseState().withProperty(CHECK_DECAY, false).withProperty(DECAYABLE, false));
     }
@@ -56,6 +57,23 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
             return retval.withProperty(LEAFBLOCK, leafState);
         }
         return state;
+    }
+
+    @Override
+    public void randomTick(World world, BlockPos pos, IBlockState state, Random rand) {
+        if (!world.isRemote) {
+            if (state.getValue(NEARBYLEAVES)) {
+                NonNullList<Pair<IBlockState, BlockPos>> nearbyLeaves = Util.getNearbyLeaves(world, pos);
+                if (nearbyLeaves.isEmpty())
+                    world.setBlockState(pos, state.withProperty(NEARBYLEAVES, false), 1);
+                else {
+                    nearbyLeaves.forEach(leaves -> {
+                        if (rand.nextFloat() <= ModConfig.infested_leaves.leavesSpreadChance)
+                            BlockInfestingLeaves.infestLeafBlock(world, leaves.getKey(), leaves.getValue());
+                    });
+                }
+            }
+        }
     }
 
     @Override
@@ -136,6 +154,12 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
         }
     }
 
+    @Override
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+        if (!worldIn.isRemote && Util.isLeaves(worldIn.getBlockState(fromPos)))
+            worldIn.setBlockState(pos, state.withProperty(NEARBYLEAVES, true), 1);
+        super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
+    }
 
     public void destroy(World worldIn, @Nonnull BlockPos pos) {
         if (worldIn.rand.nextInt(3) == 0) {

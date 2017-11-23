@@ -1,7 +1,6 @@
 package exnihilocreatio.items;
 
 import exnihilocreatio.ExNihiloCreatio;
-import exnihilocreatio.ModBlocks;
 import exnihilocreatio.ModItems;
 import exnihilocreatio.blocks.BlockInfestingLeaves;
 import exnihilocreatio.util.Data;
@@ -24,7 +23,6 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -91,18 +89,14 @@ public class ItemResource extends Item implements IHasModel {
     @Nonnull
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
-
         if (stack.getItemDamage() == names.indexOf(SILKWORM)) {
             IBlockState state = world.getBlockState(pos);
-            if (state != Blocks.AIR.getDefaultState() && state.getBlock() != Blocks.AIR || state.getBlock() != ModBlocks.infestedLeaves) {
-                ItemStack itemStack = new ItemStack(state.getBlock());
-                if (OreDictionary.getOres("treeLeaves").stream().anyMatch(stack1 -> Util.compareItemStack(stack1, itemStack))) {
-                    BlockInfestingLeaves.infestLeafBlock(world, pos);
+            if (state.getBlock() != Blocks.AIR && !(state.getBlock() instanceof BlockInfestingLeaves))
+                if (Util.isLeaves(state)){
+                    BlockInfestingLeaves.infestLeafBlock(world, state, pos);
                     stack.shrink(1);
-
                     return EnumActionResult.SUCCESS;
                 }
-            }
         }
         if (stack.getItemDamage() == names.indexOf(ANCIENT_SPORES) || stack.getItemDamage() == names.indexOf(GRASS_SEEDS)) {
             IBlockState state = world.getBlockState(pos);
