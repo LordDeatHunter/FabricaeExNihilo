@@ -31,7 +31,7 @@ public class TileInfestingLeaves extends BaseTileEntity implements ITickable {
                 if (progress >= 100) {
                     BlockInfestingLeaves.setInfested(world, pos, leafBlock);
                     markDirtyClient();
-                } else
+                }
 
                 doProgress = (int) (ModConfig.infested_leaves.ticksToTransform / 100.0);
                 //Send packet at the end incase the block gets changed first.
