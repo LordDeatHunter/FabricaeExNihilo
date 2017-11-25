@@ -5,7 +5,6 @@ import exnihilocreatio.items.tools.ICrook;
 import exnihilocreatio.tiles.TileInfestedLeaves;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.Util;
-import javafx.util.Pair;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
@@ -63,11 +62,11 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
     public void randomTick(World world, BlockPos pos, IBlockState state, Random rand) {
         if (!world.isRemote) {
             if (state.getValue(NEARBYLEAVES)) {
-                NonNullList<Pair<IBlockState, BlockPos>> nearbyLeaves = Util.getNearbyLeaves(world, pos);
+                NonNullList<BlockPos> nearbyLeaves = Util.getNearbyLeaves(world, pos);
                 if (nearbyLeaves.isEmpty()) {
                     world.setBlockState(pos, state.withProperty(NEARBYLEAVES, false), 7);
                 } else {
-                    nearbyLeaves.stream().filter(leaves -> rand.nextInt(100) <= ModConfig.infested_leaves.leavesSpreadChance).findAny().ifPresent(leaves -> BlockInfestingLeaves.infestLeafBlock(world, leaves.getKey(), leaves.getValue()));
+                    nearbyLeaves.stream().filter(leaves -> rand.nextInt(100) <= ModConfig.infested_leaves.leavesSpreadChance).findAny().ifPresent(blockPos -> BlockInfestingLeaves.infestLeafBlock(world, world.getBlockState(blockPos), blockPos));
                 }
             }
         }

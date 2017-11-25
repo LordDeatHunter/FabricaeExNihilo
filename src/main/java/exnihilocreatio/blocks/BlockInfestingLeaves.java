@@ -10,7 +10,6 @@ import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
 import exnihilocreatio.util.LogUtil;
 import exnihilocreatio.util.Util;
-import javafx.util.Pair;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
@@ -115,14 +114,14 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
     public void randomTick(World world, BlockPos pos, IBlockState state, Random rand) {
         if (!world.isRemote) {
             if (state.getValue(NEARBYLEAVES)) {
-                NonNullList<Pair<IBlockState, BlockPos>> nearbyLeaves = Util.getNearbyLeaves(world, pos);
+                NonNullList<BlockPos> nearbyLeaves = Util.getNearbyLeaves(world, pos);
                 if (nearbyLeaves.isEmpty())
                     world.setBlockState(pos, state.withProperty(NEARBYLEAVES, false), 7);
                 else {
                     int progress = ((TileInfestingLeaves) world.getTileEntity(pos)).getProgress();
                     // Delay spreading until 25%
                     if (progress >= ModConfig.infested_leaves.leavesSpreadPercent) {
-                        nearbyLeaves.stream().filter(leaves -> rand.nextFloat() <= ModConfig.infested_leaves.leavesSpreadChance).findAny().ifPresent(leaves -> BlockInfestingLeaves.infestLeafBlock(world, leaves.getKey(), leaves.getValue()));
+                        nearbyLeaves.stream().filter(leaves -> rand.nextFloat() <= ModConfig.infested_leaves.leavesSpreadChance).findAny().ifPresent(blockPos -> BlockInfestingLeaves.infestLeafBlock(world, world.getBlockState(blockPos), blockPos));
                     }
                 }
             }

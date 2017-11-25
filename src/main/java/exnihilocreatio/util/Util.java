@@ -2,7 +2,6 @@ package exnihilocreatio.util;
 
 import exnihilocreatio.blocks.BlockInfestingLeaves;
 import exnihilocreatio.texturing.Color;
-import javafx.util.Pair;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -168,17 +167,17 @@ public class Util {
         return low + round((high-low)*amount);
     }
 
-    public static NonNullList<Pair<IBlockState, BlockPos>> getNearbyLeaves(World world, BlockPos pos){
-        NonNullList<Pair<IBlockState, BlockPos>> blockStates = NonNullList.create();
+    public static NonNullList<BlockPos> getNearbyLeaves(World world, BlockPos pos){
+        NonNullList<BlockPos> blockPos = NonNullList.create();
         for (BlockPos checkPos : BlockPos.getAllInBox(new BlockPos(pos.getX() - 1, pos.getY() - 1, pos.getZ() - 1), new BlockPos(pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1))) {
             IBlockState newState = world.getBlockState(checkPos);
             if (newState.getBlock() != Blocks.AIR && !(newState.getBlock() instanceof BlockInfestingLeaves)) {
                 if (Util.isLeaves(newState))
-                    blockStates.add(new Pair<>(newState, checkPos));
+                    blockPos.add(checkPos);
             }
         }
         //if (!blockStates.isEmpty()) LogUtil.info("Obtained getNearbyLeaves");
-        return blockStates;
+        return blockPos;
     }
 
     public static boolean isLeaves(IBlockState state){
