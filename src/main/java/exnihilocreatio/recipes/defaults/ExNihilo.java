@@ -5,6 +5,7 @@ import exnihilocreatio.ModBlocks;
 import exnihilocreatio.ModFluids;
 import exnihilocreatio.ModItems;
 import exnihilocreatio.blocks.BlockSieve.MeshType;
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.EnumPebbleSubtype;
 import exnihilocreatio.items.ItemPebble;
 import exnihilocreatio.items.ItemResource;
@@ -126,56 +127,56 @@ public class ExNihilo implements IRecipeDefaults {
     }
 
     public void registerSieve(SieveRegistry registry){
-        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"), 1f, MeshType.STRING.getID());
-        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"), 1f, MeshType.STRING.getID());
-        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"), 0.5f, MeshType.STRING.getID());
-        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"), 0.5f, MeshType.STRING.getID());
-        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"), 0.1f, MeshType.STRING.getID());
-        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"), 0.1f, MeshType.STRING.getID());
+        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"), getDropChance(1f), MeshType.STRING.getID());
+        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"),  getDropChance(1f), MeshType.STRING.getID());
+        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"),  getDropChance(0.5f), MeshType.STRING.getID());
+        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"),  getDropChance(0.5f), MeshType.STRING.getID());
+        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"),  getDropChance(0.1f), MeshType.STRING.getID());
+        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("stone"),  getDropChance(0.1f), MeshType.STRING.getID());
 
-        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("granite"), 0.5f, MeshType.STRING.getID());
-        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("granite"), 0.1f, MeshType.STRING.getID());
+        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("granite"),  getDropChance(0.5f), MeshType.STRING.getID());
+        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("granite"),  getDropChance(0.1f), MeshType.STRING.getID());
 
-        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("diorite"), 0.5f, MeshType.STRING.getID());
-        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("diorite"), 0.1f, MeshType.STRING.getID());
+        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("diorite"),  getDropChance(0.5f), MeshType.STRING.getID());
+        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("diorite"),  getDropChance(0.1f), MeshType.STRING.getID());
 
-        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("andesite"), 0.5f, MeshType.STRING.getID());
-        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("andesite"), 0.1f, MeshType.STRING.getID());
+        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("andesite"),  getDropChance(0.5f), MeshType.STRING.getID());
+        registry.register(Blocks.DIRT.getDefaultState(), ItemPebble.getPebbleStack("andesite"),  getDropChance(0.1f), MeshType.STRING.getID());
 
-        registry.register(Blocks.DIRT.getDefaultState(), new ItemInfo(Items.WHEAT_SEEDS, 0), 0.7f, MeshType.STRING.getID());
-        registry.register(Blocks.DIRT.getDefaultState(), new ItemInfo(Items.MELON_SEEDS, 0), 0.35f, MeshType.STRING.getID());
-        registry.register(Blocks.DIRT.getDefaultState(), new ItemInfo(Items.PUMPKIN_SEEDS, 0), 0.35f, MeshType.STRING.getID());
+        registry.register(Blocks.DIRT.getDefaultState(), new ItemInfo(Items.WHEAT_SEEDS, 0),  getDropChance(0.7f), MeshType.STRING.getID());
+        registry.register(Blocks.DIRT.getDefaultState(), new ItemInfo(Items.MELON_SEEDS, 0),  getDropChance(0.35f), MeshType.STRING.getID());
+        registry.register(Blocks.DIRT.getDefaultState(), new ItemInfo(Items.PUMPKIN_SEEDS, 0),  getDropChance(0.35f), MeshType.STRING.getID());
 
-        registry.register(Blocks.SAND.getDefaultState(), new ItemInfo(Items.DYE, 3), 0.03f, MeshType.STRING.getID());
-        registry.register(Blocks.SAND.getDefaultState(), new ItemInfo(Items.PRISMARINE_SHARD, 0), 0.02f, MeshType.DIAMOND.getID());
+        registry.register(Blocks.SAND.getDefaultState(), new ItemInfo(Items.DYE, 3),  getDropChance(0.03f), MeshType.STRING.getID());
+        registry.register(Blocks.SAND.getDefaultState(), new ItemInfo(Items.PRISMARINE_SHARD, 0),  getDropChance(0.02f), MeshType.DIAMOND.getID());
 
-        registry.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.FLINT, 0), 0.25f, MeshType.FLINT.getID());
-        registry.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.COAL, 0), 0.125f, MeshType.FLINT.getID());
-        registry.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.DYE, 4), 0.05f, MeshType.FLINT.getID());
+        registry.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.FLINT, 0),  getDropChance(0.25f), MeshType.FLINT.getID());
+        registry.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.COAL, 0),  getDropChance(0.125f), MeshType.FLINT.getID());
+        registry.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.DYE, 4),  getDropChance(0.05f), MeshType.FLINT.getID());
 
-        registry.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.DIAMOND, 0), 0.008f, MeshType.IRON.getID());
-        registry.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.EMERALD, 0), 0.008f, MeshType.IRON.getID());
+        registry.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.DIAMOND, 0),  getDropChance(0.008f), MeshType.IRON.getID());
+        registry.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.EMERALD, 0),  getDropChance(0.008f), MeshType.IRON.getID());
 
-        registry.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.DIAMOND, 0), 0.016f, MeshType.DIAMOND.getID());
-        registry.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.EMERALD, 0), 0.016f, MeshType.DIAMOND.getID());
+        registry.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.DIAMOND, 0),  getDropChance(0.016f), MeshType.DIAMOND.getID());
+        registry.register(Blocks.GRAVEL.getDefaultState(), new ItemInfo(Items.EMERALD, 0),  getDropChance(0.016f), MeshType.DIAMOND.getID());
 
-        registry.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.QUARTZ, 0), 1f, MeshType.FLINT.getID());
-        registry.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.QUARTZ, 0), 0.33f, MeshType.FLINT.getID());
+        registry.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.QUARTZ, 0),  getDropChance(1f), MeshType.FLINT.getID());
+        registry.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.QUARTZ, 0),  getDropChance(0.33f), MeshType.FLINT.getID());
 
-        registry.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.NETHER_WART, 0), 0.1f, MeshType.STRING.getID());
+        registry.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.NETHER_WART, 0),  getDropChance(0.1f), MeshType.STRING.getID());
 
-        registry.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.GHAST_TEAR, 0), 0.02f, MeshType.DIAMOND.getID());
-        registry.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.QUARTZ, 0), 1f, MeshType.DIAMOND.getID());
-        registry.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.QUARTZ, 0), 0.8f, MeshType.DIAMOND.getID());
+        registry.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.GHAST_TEAR, 0),  getDropChance(0.02f), MeshType.DIAMOND.getID());
+        registry.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.QUARTZ, 0),  getDropChance(1f), MeshType.DIAMOND.getID());
+        registry.register(Blocks.SOUL_SAND.getDefaultState(), new ItemInfo(Items.QUARTZ, 0),  getDropChance(0.8f), MeshType.DIAMOND.getID());
 
-        registry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.DYE, 15), 0.2f, MeshType.STRING.getID());
-        registry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.GUNPOWDER, 0), 0.07f, MeshType.STRING.getID());
+        registry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.DYE, 15),  getDropChance(0.2f), MeshType.STRING.getID());
+        registry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.GUNPOWDER, 0),  getDropChance(0.07f), MeshType.STRING.getID());
 
-        registry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.REDSTONE, 0), 0.125f, MeshType.IRON.getID());
-        registry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.REDSTONE, 0), 0.25f, MeshType.DIAMOND.getID());
+        registry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.REDSTONE, 0),  getDropChance(0.125f), MeshType.IRON.getID());
+        registry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.REDSTONE, 0),  getDropChance(0.25f), MeshType.DIAMOND.getID());
 
-        registry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.GLOWSTONE_DUST, 0), 0.0625f, MeshType.IRON.getID());
-        registry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.BLAZE_POWDER, 0), 0.05f, MeshType.IRON.getID());
+        registry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.GLOWSTONE_DUST, 0),  getDropChance(0.0625f), MeshType.IRON.getID());
+        registry.register(ModBlocks.dust.getDefaultState(), new ItemInfo(Items.BLAZE_POWDER, 0),  getDropChance(0.05f), MeshType.IRON.getID());
 
         // Custom Ores for other mods
         OreRegistry oreRegistry = ExNihiloRegistryManager.ORE_REGISTRY;
@@ -183,26 +184,26 @@ public class ExNihilo implements IRecipeDefaults {
         // Gold from nether rack
         ItemOre gold = oreRegistry.getOreItem("gold");
         if (gold != null) {
-            registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(gold, 1, 0), 0.25f, MeshType.FLINT.getID());
-            registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(gold, 1, 0), 0.25f, MeshType.IRON.getID());
-            registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(gold, 1, 0), 0.4f, MeshType.DIAMOND.getID());
+            registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(gold, 1, 0),  getDropChance(0.25f), MeshType.FLINT.getID());
+            registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(gold, 1, 0),  getDropChance(0.25f), MeshType.IRON.getID());
+            registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemStack(gold, 1, 0),  getDropChance(0.4f), MeshType.DIAMOND.getID());
         }
 
 
         // All default Ores
         for (ItemOre ore : oreRegistry.getItemOreRegistry()) {
             if(oreRegistry.getSieveBlackList().contains(ore)) continue;
-            registry.register(Blocks.GRAVEL.getDefaultState(), new ItemStack(ore, 1, 0), 0.2f, MeshType.FLINT.getID());
-            registry.register(Blocks.GRAVEL.getDefaultState(), new ItemStack(ore, 1, 0), 0.2f, MeshType.IRON.getID());
-            registry.register(Blocks.GRAVEL.getDefaultState(), new ItemStack(ore, 1, 0), 0.1f, MeshType.DIAMOND.getID());
+            registry.register(Blocks.GRAVEL.getDefaultState(), new ItemStack(ore, 1, 0),  getDropChance(0.2f), MeshType.FLINT.getID());
+            registry.register(Blocks.GRAVEL.getDefaultState(), new ItemStack(ore, 1, 0),  getDropChance(0.2f), MeshType.IRON.getID());
+            registry.register(Blocks.GRAVEL.getDefaultState(), new ItemStack(ore, 1, 0),  getDropChance(0.1f), MeshType.DIAMOND.getID());
         }
         // Seeds
         for (ItemSeedBase seed : ModItems.itemSeeds) {
-            registry.register(Blocks.DIRT.getDefaultState(), new ItemStack(seed), 0.05f, MeshType.STRING.getID());
+            registry.register(Blocks.DIRT.getDefaultState(), new ItemStack(seed),  getDropChance(0.05f), MeshType.STRING.getID());
         }
 
-        registry.register(Blocks.DIRT.getDefaultState(), ItemResource.getResourceStack(ItemResource.ANCIENT_SPORES), 0.05f, MeshType.STRING.getID());
-        registry.register(Blocks.DIRT.getDefaultState(), ItemResource.getResourceStack(ItemResource.GRASS_SEEDS), 0.05f, MeshType.STRING.getID());
+        registry.register(Blocks.DIRT.getDefaultState(), ItemResource.getResourceStack(ItemResource.ANCIENT_SPORES),  getDropChance(0.05f), MeshType.STRING.getID());
+        registry.register(Blocks.DIRT.getDefaultState(), ItemResource.getResourceStack(ItemResource.GRASS_SEEDS),  getDropChance(0.05f), MeshType.STRING.getID());
 
     }
 
@@ -320,5 +321,11 @@ public class ExNihilo implements IRecipeDefaults {
 
     public void registerMilk(MilkEntityRegistry registry){
         registry.register("Cow", "milk", 10, 20);
+    }
+
+    private float getDropChance(float chance){
+        if (ModConfig.world.isSkyWorld)
+            return chance;
+        else return chance / 100f * (float)ModConfig.world.normalDropPercent;
     }
 }
