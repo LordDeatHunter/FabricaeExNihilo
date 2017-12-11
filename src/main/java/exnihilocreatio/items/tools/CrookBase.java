@@ -9,8 +9,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 
-import javax.annotation.Nonnull;
-
 public class CrookBase extends ItemTool implements ICrook, IHasModel {
 
     int miningLevel;
@@ -31,7 +29,8 @@ public class CrookBase extends ItemTool implements ICrook, IHasModel {
     }
 
     @Override
-    public float getStrVsBlock(@Nonnull ItemStack stack, IBlockState state) {
-        return ExNihiloRegistryManager.CROOK_REGISTRY.isRegistered(state.getBlock()) ? this.efficiencyOnProperMaterial : 1.0F;
+    public float getDestroySpeed(ItemStack stack, IBlockState state) {
+        return ExNihiloRegistryManager.CROOK_REGISTRY.isRegistered(state.getBlock()) ? this.efficiency : 1.0F;
     }
+
 }

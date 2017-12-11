@@ -33,25 +33,30 @@ public class ItemInfo {
     public ItemInfo(String string) {
         String[] split = string.split(":");
 
-        if (split.length == 1) {
-            item = Item.getByNameOrId("minecraft:" + split[0]);
-        } else if (split.length == 2) {
-            try {
-                meta = split[1].equals("*") ? -1 : Integer.parseInt(split[1]);
+        switch (split.length) {
+            case 1:
                 item = Item.getByNameOrId("minecraft:" + split[0]);
-            } catch (NumberFormatException e) {
+                break;
+            case 2:
+                try {
+                    meta = split[1].equals("*") ? -1 : Integer.parseInt(split[1]);
+                    item = Item.getByNameOrId("minecraft:" + split[0]);
+                } catch (NumberFormatException e) {
+                    meta = -1;
+                    item = Item.getByNameOrId(split[0] + ":" + split[1]);
+                }
+                break;
+            case 3:
+                try {
+                    meta = split[2].equals("*") ? -1 : Integer.parseInt(split[2]);
+                    item = Item.getByNameOrId(split[0] + ":" + split[1]);
+                } catch (NumberFormatException e) {
+                    meta = -1;
+                }
+                break;
+            default:
                 meta = -1;
-                item = Item.getByNameOrId(split[0] + ":" + split[1]);
-            }
-        } else if (split.length == 3) {
-            try {
-                meta = split[2].equals("*") ? -1 : Integer.parseInt(split[2]);
-                item = Item.getByNameOrId(split[0] + ":" + split[1]);
-            } catch (NumberFormatException e) {
-                meta = -1;
-            }
-        } else {
-            meta = -1;
+                break;
         }
     }
 

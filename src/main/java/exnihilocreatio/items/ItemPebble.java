@@ -70,7 +70,7 @@ public class ItemPebble extends Item implements IHasModel {
 
             ProjectileStone projectile = new ProjectileStone(world, player);
             projectile.setStack(thrown);
-            projectile.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 0.5F);
+            projectile.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 0.5F);
             world.spawnEntity(projectile);
         }
 

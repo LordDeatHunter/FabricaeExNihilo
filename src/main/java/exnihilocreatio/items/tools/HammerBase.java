@@ -34,8 +34,9 @@ public class HammerBase extends ItemTool implements IHammer, IHasModel {
         return miningLevel;
     }
 
-    public float getStrVsBlock(ItemStack stack, IBlockState state) {
-        return ExNihiloRegistryManager.HAMMER_REGISTRY.registered(state.getBlock()) ? this.efficiencyOnProperMaterial : 1.0F;
+    @Override
+    public float getDestroySpeed(ItemStack stack, IBlockState state) {
+        return ExNihiloRegistryManager.HAMMER_REGISTRY.registered(state.getBlock()) ? this.efficiency : 1.0F;
     }
 
     @Override
