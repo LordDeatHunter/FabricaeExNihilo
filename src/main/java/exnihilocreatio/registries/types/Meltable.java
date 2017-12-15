@@ -10,6 +10,8 @@ import lombok.Setter;
 @EqualsAndHashCode(exclude = {"textureOverride"})
 public class Meltable {
 
+    public static final Meltable EMPTY = new Meltable("", 0);
+
     @Getter
     private String fluid;
 

@@ -1,8 +1,8 @@
-package exnihilocreatio.compatibility.jei.barrel.compost;
+package exnihilocreatio.compatibility.jei.crucible;
 
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
-import exnihilocreatio.registries.types.Compostable;
+import exnihilocreatio.registries.types.Meltable;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IDrawableStatic;
@@ -14,13 +14,15 @@ import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
-    public static final String UID = "exnihilocreatio:compost";
-    private static final ResourceLocation texture = new ResourceLocation(ExNihiloCreatio.MODID, "textures/gui/jei_compost.png");
+public class CrucibleRecipeCategory implements IRecipeCategory<CrucibleRecipe> {
+    public static final String UID = "exnihilocreatio:crucible";
+    private static final ResourceLocation texture = new ResourceLocation(ExNihiloCreatio.MODID, "textures/gui/jei_crucible.png");
 
     private final IDrawableStatic background;
     private final IDrawableStatic slotHighlight;
@@ -29,7 +31,7 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
     private int highlightX;
     private int highlightY;
 
-    public CompostRecipeCategory(IGuiHelper helper) {
+    public CrucibleRecipeCategory(IGuiHelper helper) {
         this.background = helper.createDrawable(texture, 0, 0, 166, 128);
         this.slotHighlight = helper.createDrawable(texture, 166, 0, 18, 18);
     }
@@ -43,7 +45,7 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
     @Override
     @Nonnull
     public String getTitle() {
-        return "Compost";
+        return "Crucible";
     }
 
     @Override
@@ -63,13 +65,12 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
             slotHighlight.draw(minecraft, highlightX, highlightY);
         }
     }
+    @Override
+    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull CrucibleRecipe recipeWrapper, @Nonnull IIngredients ingredients) {
+        recipeLayout.getItemStacks().init(0, true, 74, 9);
+        recipeLayout.getItemStacks().set(0, recipeWrapper.getFluid());
 
-    private void setRecipe(IRecipeLayout layout, CompostRecipe recipe) {
-        // BlockStoneAxle
-        layout.getItemStacks().init(0, false, 74, 9);
-        layout.getItemStacks().set(0, recipe.getOutputs().get(0));
-
-        IFocus<?> focus = layout.getFocus();
+        IFocus<?> focus = recipeLayout.getFocus();
 
         if (focus != null) {
             boolean mightHaveHighlight = focus.getMode() == IFocus.Mode.INPUT;
@@ -79,14 +80,14 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
 
             int slotIndex = 1;
 
-            for (int i = 0; i < recipe.getInputs().size(); i++) {
+            for (int i = 0; i < recipeWrapper.getInputs().size(); i++) {
                 final int slotX = 2 + (i % 9 * 18);
                 final int slotY = 36 + (i / 9 * 18);
 
-                ItemStack inputStack = recipe.getInputs().get(i);
+                ItemStack inputStack = recipeWrapper.getInputs().get(i);
 
-                layout.getItemStacks().init(slotIndex + i, true, slotX, slotY);
-                layout.getItemStacks().set(slotIndex + i, inputStack);
+                recipeLayout.getItemStacks().init(slotIndex + i, true, slotX, slotY);
+                recipeLayout.getItemStacks().set(slotIndex + i, inputStack);
 
                 if (mightHaveHighlight && ItemStack.areItemsEqual(focusStack, inputStack)) {
                     highlightX = slotX;
@@ -98,13 +99,7 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
             }
         }
 
-        layout.getItemStacks().addTooltipCallback(new CompostTooltipCallback());
-    }
-
-    @Override
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull CompostRecipe recipeWrapper, @Nonnull IIngredients ingredients) {
-        // I learn from the best
-        setRecipe(recipeLayout, recipeWrapper);
+        recipeLayout.getItemStacks().addTooltipCallback(new CrucibleTooltipCallback());
     }
 
     @Override
@@ -112,14 +107,15 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
         return null;
     }
 
-    private static class CompostTooltipCallback implements ITooltipCallback<ItemStack> {
+    private static class CrucibleTooltipCallback implements ITooltipCallback<ItemStack> {
         @Override
+        @SideOnly(Side.CLIENT)
         public void onTooltip(int slotIndex, boolean input, @Nonnull ItemStack ingredient, @Nonnull List<String> tooltip) {
-            if (input) {
-                Compostable entry = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(ingredient);
-
-                tooltip.add(String.format("Value: %.1f%%", 100.0F * entry.getValue()));
+            if (!input) {
+                Meltable entry = ExNihiloRegistryManager.CRUCIBLE_STONE_REGISTRY.getMeltable(ingredient);
+                tooltip.add(String.format("Value: %.1f%%", 1000.0F / entry.getAmount()));
             }
         }
     }
+
 }

@@ -11,14 +11,16 @@ import exnihilocreatio.util.BlockInfo;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.NonNullList;
+import net.minecraftforge.common.crafting.CraftingHelper;
 
 import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CrookRegistry extends BaseRegistryMap<BlockInfo, List<CrookReward>> {
+public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<CrookReward>> {
 
     public CrookRegistry() {
         super(
@@ -31,48 +33,66 @@ public class CrookRegistry extends BaseRegistryMap<BlockInfo, List<CrookReward>>
         );
     }
 
-    @Override
-    public void register(BlockInfo key, List<CrookReward> value) {
-        List<CrookReward> list = registry.get(key);
-
-        if (list == null) {
-            list = new ArrayList<>();
-        }
-
-        list.addAll(value);
+    public void register(Block block, int meta, ItemStack reward, float chance, float fortuneChance) {
+        register(new BlockInfo(block, meta), reward, chance, fortuneChance);
     }
 
     public void register(BlockInfo info, ItemStack reward, float chance, float fortuneChance) {
-        List<CrookReward> list = registry.get(info);
+        Ingredient ingredient = registry.keySet().stream().filter(entry -> entry.test(info.getItemStack())).findFirst().orElse(null);
 
-        if (list == null) {
-            list = new ArrayList<>();
+        if (ingredient != null){
+            registry.get(ingredient).add(new CrookReward(reward, chance, fortuneChance));
         }
+        else {
+            NonNullList<CrookReward> list = NonNullList.create();
+            list.add(new CrookReward(reward, chance, fortuneChance));
+            registry.put(CraftingHelper.getIngredient(info), list);
+        }
+    }
 
-        list.add(new CrookReward(reward, chance, fortuneChance));
-        registry.put(info, list);
+    public void register(String name, ItemStack reward, float chance, float fortuneChance) {
+        Ingredient ingredient = CraftingHelper.getIngredient(name);
+        if (ingredient == null || ingredient.getMatchingStacks().length == 0)
+            return;
+        CrookReward crookReward = new CrookReward(reward, chance, fortuneChance);
+        Ingredient search = registry.keySet().stream().filter(entry -> entry.getValidItemStacksPacked().equals(ingredient.getValidItemStacksPacked())).findAny().orElse(null);
+        if (search != null){
+            registry.get(search).add(crookReward);
+        }
+        else {
+            NonNullList<CrookReward> drops = NonNullList.create();
+            drops.add(crookReward);
+            registry.put(ingredient, drops);
+        }
     }
 
     public boolean isRegistered(Block block) {
-        return registry.containsKey(new BlockInfo(block.getDefaultState()));
+        return registry.keySet().stream().anyMatch(ingredient -> ingredient.test(new ItemStack(block)));
     }
 
     public List<CrookReward> getRewards(IBlockState state) {
         BlockInfo info = new BlockInfo(state);
-        if (!registry.containsKey(info))
-            return null;
-
-        return registry.get(info);
+        NonNullList<CrookReward> list = NonNullList.create();
+        registry.entrySet().stream().filter(ingredient -> ingredient.getKey().test(info.getItemStack())).forEach(ingredient -> list.addAll(ingredient.getValue()));
+        return list;
     }
 
     @Override
     public void registerEntriesFromJSON(FileReader fr) {
-        HashMap<String, ArrayList<CrookReward>> gsonInput = gson.fromJson(fr, new TypeToken<HashMap<String, ArrayList<CrookReward>>>() {
+        HashMap<String, NonNullList<CrookReward>> gsonInput = gson.fromJson(fr, new TypeToken<HashMap<String, NonNullList<CrookReward>>>() {
         }.getType());
 
-        for (Map.Entry<String, ArrayList<CrookReward>> s : gsonInput.entrySet()) {
+        for (Map.Entry<String, NonNullList<CrookReward>> s : gsonInput.entrySet()) {
             BlockInfo blockInfo = new BlockInfo(s.getKey());
-            registry.put(blockInfo, s.getValue());
+            Ingredient ingredient = registry.keySet().stream().filter(entry -> entry.test(blockInfo.getItemStack())).findFirst().orElse(null);
+
+            if (ingredient != null){
+                registry.get(ingredient).addAll(s.getValue());
+            }
+            else {
+                registry.put(CraftingHelper.getIngredient(blockInfo.getItemStack()),s.getValue());
+            }
+
         }
     }
 }

@@ -15,26 +15,24 @@ import exnihilocreatio.compatibility.jei.barrel.fluidontop.FluidOnTopRecipeCateg
 import exnihilocreatio.compatibility.jei.barrel.fluidtransform.FluidTransformRecipe;
 import exnihilocreatio.compatibility.jei.barrel.fluidtransform.FluidTransformRecipeCategory;
 import exnihilocreatio.compatibility.jei.crucible.CrucibleHeatSourceRecipeCategory;
+import exnihilocreatio.compatibility.jei.crucible.CrucibleRecipe;
+import exnihilocreatio.compatibility.jei.crucible.CrucibleRecipeCategory;
 import exnihilocreatio.compatibility.jei.crucible.HeatSourcesRecipe;
 import exnihilocreatio.compatibility.jei.hammer.HammerRecipe;
 import exnihilocreatio.compatibility.jei.hammer.HammerRecipeCategory;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipe;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipeCategory;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
-import exnihilocreatio.registries.types.Compostable;
-import exnihilocreatio.registries.types.FluidBlockTransformer;
-import exnihilocreatio.registries.types.FluidFluidBlock;
-import exnihilocreatio.registries.types.FluidTransformer;
+import exnihilocreatio.registries.types.*;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.LogUtil;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -63,6 +61,7 @@ public class CompatJEI implements IModPlugin {
         registry.addRecipeCategories(new FluidTransformRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
         registry.addRecipeCategories(new FluidBlockTransformRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
         registry.addRecipeCategories(new CompostRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        registry.addRecipeCategories(new CrucibleRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
 
 
         registry.addRecipeCategories(new CrucibleHeatSourceRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
@@ -82,14 +81,15 @@ public class CompatJEI implements IModPlugin {
         //region >>>> SIEVE RECIPES
         List<SieveRecipe> sieveRecipes = Lists.newArrayList();
 
-        for (BlockInfo info : ExNihiloRegistryManager.SIEVE_REGISTRY.getRegistry().keySet()) {
+        for (Ingredient ingredient : ExNihiloRegistryManager.SIEVE_REGISTRY.getRegistry().keySet()) {
             for (MeshType type : MeshType.values()) {
-                if (type.getID() != 0 && info.getBlockState() != null) // Bad configs strike back!
+                if (type.getID() != 0 && ingredient != null) // Bad configs strike back!
                 {
-                    SieveRecipe recipe = new SieveRecipe(info.getBlockState(), type);
+                    SieveRecipe recipe = new SieveRecipe(ingredient, type);
 
                     // If there's an input block, mesh, and at least one output
-                    if (recipe.getInputs().size() == 2 && recipe.getOutputs().size() > 0) {
+                    if (!recipe.getInputs().isEmpty() && !recipe.getOutputs().isEmpty() && !sieveRecipes.contains(recipe)) {
+
                         sieveRecipes.add(recipe);
                     }
                 }
@@ -103,16 +103,12 @@ public class CompatJEI implements IModPlugin {
         //region >>>> HAMMER RECIPES
         List<HammerRecipe> hammerRecipes = Lists.newArrayList();
 
-        for (BlockInfo info : ExNihiloRegistryManager.HAMMER_REGISTRY.getRegistry().keySet()) {
-            if (info.getBlock() != null) {
-                IBlockState block = info.getBlockState();
+        for (Ingredient ingredient : ExNihiloRegistryManager.HAMMER_REGISTRY.getRegistry().keySet()) {
+            HammerRecipe recipe = new HammerRecipe(ingredient);
 
-                HammerRecipe recipe = new HammerRecipe(block);
-
-                // If there's an input block, and at least one output
-                if (recipe.getInputs().size() == 1 && recipe.getOutputs().size() > 0) {
-                    hammerRecipes.add(recipe);
-                }
+            // If there's an input block, and at least one output
+            if (!recipe.getInputs().isEmpty() && !recipe.getOutputs().isEmpty()) {
+                hammerRecipes.add(recipe);
             }
         }
 
@@ -181,30 +177,26 @@ public class CompatJEI implements IModPlugin {
         //endregionS
 
         //region >>>> COMPOST RECIPES
+
         List<CompostRecipe> compostRecipes = Lists.newArrayList();
 
-        Map<ItemInfo, Compostable> compostRegistry = ExNihiloRegistryManager.COMPOST_REGISTRY.getRegistry();
+        Map<Ingredient, Compostable> compostRegistry = ExNihiloRegistryManager.COMPOST_REGISTRY.getRegistry();
         Map<ItemInfo, List<ItemStack>> compostEntries = new HashMap<>();
 
-        for (Map.Entry<ItemInfo, Compostable> compostEntry : compostRegistry.entrySet()) {
+        for (Map.Entry<Ingredient, Compostable> compostEntry : compostRegistry.entrySet()) {
             ItemInfo compostBlock = compostEntry.getValue().getCompostBlock();
 
             List<ItemStack> compostables = compostEntries.computeIfAbsent(compostBlock, k -> Lists.newArrayList());
 
-            Item compostItem = compostEntry.getKey().getItem();
+            Ingredient compostItem = compostEntry.getKey();
             int compostCount = (int) Math.ceil(1.0F / compostEntry.getValue().getValue());
-            int compostMeta = compostEntry.getKey().getMeta();
 
-            if (compostMeta == -1) {
-                NonNullList<ItemStack> subItems = NonNullList.create();
-                //compostItem.getSubItems(compostItem, null, subItems);
-
-                for (ItemStack subItem : subItems) {
-                    subItem.setCount(compostCount);
-                    compostables.add(subItem);
+            for (ItemStack stack : compostItem.getMatchingStacks()){
+                if (compostables.stream().noneMatch(entry -> entry.isItemEqual(stack))) {
+                    ItemStack itemStack = stack.copy();
+                    itemStack.setCount(compostCount);
+                    compostables.add(itemStack);
                 }
-            } else {
-                compostables.add(new ItemStack(compostItem, compostCount, compostMeta));
             }
         }
 
@@ -221,13 +213,58 @@ public class CompatJEI implements IModPlugin {
             }
 
             for (List<ItemStack> compostInputs : Lists.reverse(splitList)) {
-                compostRecipes.add(new CompostRecipe(compostEntry.getKey().getItemStack(), compostInputs));
+                compostRecipes.add(new CompostRecipe(compostEntry.getKey(), compostInputs));
             }
         }
 
         registry.addRecipes(compostRecipes, CompostRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelWood), CompostRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelStone), CompostRecipeCategory.UID);
+        //endregion
+
+        //region >>>> STONE CRUCIBLE RECIPES
+
+        List<CrucibleRecipe> crucibleRecipes = Lists.newArrayList();
+
+        Map<Ingredient, Meltable> crucibleRegistry = ExNihiloRegistryManager.CRUCIBLE_STONE_REGISTRY.getRegistry();
+        Map<Fluid, List<ItemStack>> crucibleEntries = new HashMap<>();
+
+        for (Map.Entry<Ingredient, Meltable> crucibleEntry : crucibleRegistry.entrySet()) {
+            Fluid fluid = FluidRegistry.getFluid(crucibleEntry.getValue().getFluid());
+
+            List<ItemStack> meltables = crucibleEntries.computeIfAbsent(fluid, k -> Lists.newArrayList());
+
+            Ingredient crucibleItem = crucibleEntry.getKey();
+            int crucibleCount = (int) Math.ceil(1000.0F / crucibleEntry.getValue().getAmount());
+
+            for (ItemStack stack : crucibleItem.getMatchingStacks()){
+                if (meltables.stream().noneMatch(entry -> entry.isItemEqual(stack))) {
+                    ItemStack itemStack = stack.copy();
+                    itemStack.setCount(crucibleCount);
+                    meltables.add(itemStack);
+                }
+            }
+        }
+
+        for (Map.Entry<Fluid, List<ItemStack>> crucibleEntry : crucibleEntries.entrySet()) {
+            // I heard you like lists, you I put some lists in your lists, so you can list while you list
+            List<List<ItemStack>> splitList = Lists.newArrayList(ImmutableList.of(Lists.newArrayList()));
+
+            for (ItemStack stack : crucibleEntry.getValue()) {
+                if (splitList.get(0).size() >= 45) {
+                    splitList.add(0, Lists.newArrayList());
+                }
+
+                splitList.get(0).add(stack);
+            }
+
+            for (List<ItemStack> crucibleInputs : Lists.reverse(splitList)) {
+                crucibleRecipes.add(new CrucibleRecipe(crucibleEntry.getKey(), crucibleInputs));
+            }
+        }
+
+        registry.addRecipes(crucibleRecipes, CrucibleRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.crucibleStone, 1, 1), CrucibleRecipeCategory.UID);
         //endregion
 
         //region >>>> HEAT RECIPES

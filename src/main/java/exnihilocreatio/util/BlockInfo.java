@@ -5,15 +5,20 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Items;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nonnull;
+
 @AllArgsConstructor
 public class BlockInfo {
+
+    public static final BlockInfo EMPTY = new BlockInfo(ItemStack.EMPTY);
+
     @Getter
     private Block block;
 
@@ -21,17 +26,27 @@ public class BlockInfo {
     @Setter
     private int meta;
 
-    public BlockInfo(IBlockState state) {
-        block = state == null ? null : state.getBlock();
-        meta = state == null ? -1 : state.getBlock().getMetaFromState(state);
+    public BlockInfo(@Nonnull Block block1) {
+        block = block1;
+        meta = -1;
     }
 
-    public BlockInfo(ItemStack stack) {
-        block = (stack == null || stack.getItem() == Items.AIR || !(stack.getItem() instanceof ItemBlock)) ? null : Block.getBlockFromItem(stack.getItem());
-        meta = (stack == null || stack.getItem() == Items.AIR) ? 0 : stack.getItemDamage();
+    public BlockInfo(@Nonnull IBlockState state) {
+        block = state.getBlock();
+        meta = state.getBlock().getMetaFromState(state);
     }
 
-    public BlockInfo(String string) {
+    public BlockInfo(@Nonnull ItemStack stack) {
+        block = !(stack.getItem() instanceof ItemBlock) ? Blocks.AIR : Block.getBlockFromItem(stack.getItem());
+        meta = stack.getItemDamage();
+    }
+
+    public BlockInfo(@Nonnull String string) {
+        if (string.isEmpty() || string.length() < 2){
+            block = Blocks.AIR;
+            meta = 0;
+            return;
+        }
         String[] split = string.split(":");
 
         switch (split.length) {
@@ -56,6 +71,7 @@ public class BlockInfo {
                 }
                 break;
             default:
+                block = Blocks.AIR;
                 meta = -1;
                 break;
         }
@@ -66,11 +82,6 @@ public class BlockInfo {
         int meta_ = tag.getInteger("meta");
 
         return new BlockInfo(item_, meta_);
-    }
-
-    public static boolean areEqual(BlockInfo block1, BlockInfo block2) {
-        return block1 == null && block2 == null || block1 != null && block2 != null && block1.equals(block2);
-
     }
 
     public String toString() {
@@ -94,18 +105,16 @@ public class BlockInfo {
     }
 
     public boolean equals(Object other) {
-        if (other instanceof BlockInfo) {
-            BlockInfo info = (BlockInfo) other;
-
-            if (block == null || info.block == null) {
-                return false;
-            }
-
-            if (meta == -1 || info.meta == -1) {
-                return block.equals(info.block);
-            } else {
-                return meta == info.meta && block.equals(info.block);
-            }
+        if (other instanceof BlockInfo)
+            return ItemStack.areItemStacksEqual(((BlockInfo) other).getItemStack(), getItemStack());
+        else if (other instanceof ItemInfo)
+            return ItemStack.areItemStacksEqual(((ItemInfo) other).getItemStack(), getItemStack());
+        else if (other instanceof ItemStack)
+            return ItemStack.areItemStacksEqual(((ItemStack) other), getItemStack());
+        else if (other instanceof Block)
+            return Block.isEqualTo((Block)other, block);
+        else if (other instanceof ItemBlock){
+            return Block.isEqualTo(((ItemBlock)other).getBlock(), block);
         }
 
         return false;

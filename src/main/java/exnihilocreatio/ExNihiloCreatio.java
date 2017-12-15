@@ -52,7 +52,6 @@ public class ExNihiloCreatio {
     static {
         FluidRegistry.enableUniversalBucket();
         // registers itself to the needed registries
-        ExNihiloDefaultRecipes.registerDefaults();
     }
 
     @EventHandler
@@ -84,14 +83,12 @@ public class ExNihiloCreatio {
 
     @EventHandler
     public static void init(FMLInitializationEvent event) {
+        ExNihiloDefaultRecipes.registerDefaults();
         proxy.init(event);
 
         loadConfigs();
 
         Recipes.init();
-
-        // OreRegistry.doRecipes();
-
     }
 
     @EventHandler

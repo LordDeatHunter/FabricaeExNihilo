@@ -200,7 +200,7 @@ public class TileSieve extends BaseTileEntity {
     }
 
     public boolean isSieveSimilar(TileSieve sieve) {
-        return sieve != null && !meshStack.isEmpty() && !sieve.getMeshStack().isEmpty() && meshStack.getItemDamage() == sieve.getMeshStack().getItemDamage() && progress == sieve.getProgress() && BlockInfo.areEqual(currentStack, sieve.getCurrentStack());
+        return sieve != null && !meshStack.isEmpty() && !sieve.getMeshStack().isEmpty() && meshStack.getItemDamage() == sieve.getMeshStack().getItemDamage() && progress == sieve.getProgress() && currentStack.equals(sieve.getCurrentStack());
     }
 
     public boolean isSieveSimilarToInput(TileSieve sieve) {

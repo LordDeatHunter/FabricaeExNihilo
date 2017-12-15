@@ -1,23 +1,24 @@
-package exnihilocreatio.compatibility.jei.barrel.compost;
+package exnihilocreatio.compatibility.jei.crucible;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import exnihilocreatio.util.ItemInfo;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class CompostRecipe implements IRecipeWrapper {
+public class CrucibleRecipe implements IRecipeWrapper {
     private List<ItemStack> inputs;
     private ItemStack output;
 
-    public CompostRecipe(ItemInfo output, List<ItemStack> inputs) {
+    public CrucibleRecipe(Fluid fluid, List<ItemStack> inputs){
+        this.output = FluidUtil.getFilledBucket(new FluidStack(fluid, 1000));
         this.inputs = inputs;
-        this.output = output.getItemStack();
     }
 
     @Override
@@ -30,8 +31,8 @@ public class CompostRecipe implements IRecipeWrapper {
         return inputs;
     }
 
-    public List<ItemStack> getOutputs() {
-        return ImmutableList.of(output);
+    public ItemStack getFluid() {
+        return output;
     }
 
     @Override

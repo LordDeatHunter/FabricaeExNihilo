@@ -6,7 +6,6 @@ import exnihilocreatio.blocks.BlockSieve;
 import exnihilocreatio.compatibility.crafttweaker.prefab.ENCBaseAdd;
 import exnihilocreatio.compatibility.crafttweaker.prefab.ENCBaseRemove;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
-import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -79,7 +78,7 @@ public class Sieve {
 
         @Override
         public void apply() {
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(new BlockInfo(block, itemStackIn.getDamage()), new ItemInfo((ItemStack) drop.getInternal()), chance, meshType.getID());
+            ExNihiloRegistryManager.SIEVE_REGISTRY.register(new ItemStack(block, itemStackIn.getDamage()), new ItemInfo((ItemStack) drop.getInternal()), chance, meshType.getID());
         }
 
         @Override
