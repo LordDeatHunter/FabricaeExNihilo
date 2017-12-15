@@ -78,7 +78,7 @@ public class Sieve {
 
         @Override
         public void apply() {
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(new ItemStack(block, itemStackIn.getDamage()), new ItemInfo((ItemStack) drop.getInternal()), chance, meshType.getID());
+            ExNihiloRegistryManager.SIEVE_REGISTRY.register(new ItemInfo(block, itemStackIn.getDamage()), new ItemInfo((ItemStack) drop.getInternal()), chance, meshType.getID());
         }
 
         @Override

@@ -7,6 +7,7 @@ import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.OreRegistry;
 import exnihilocreatio.registries.registries.SieveRegistry;
 import exnihilocreatio.texturing.Color;
+import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import lombok.Getter;
 import net.minecraft.init.Items;
@@ -20,18 +21,18 @@ public class TinkersConstruct implements IRecipeDefaults {
         OreRegistry oreRegistry = ExNihiloRegistryManager.ORE_REGISTRY;
         ItemOre ardite = oreRegistry.getOreItem("ardite");
         if (ardite != null) {
-            registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemInfo(ardite, 0), 0.1f, BlockSieve.MeshType.FLINT.getID());
-            registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemInfo(ardite, 0), 0.2f, BlockSieve.MeshType.IRON.getID());
-            registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemInfo(ardite, 0), 0.3f, BlockSieve.MeshType.DIAMOND.getID());
+            registry.register(new BlockInfo(ModBlocks.netherrackCrushed.getDefaultState()), new ItemInfo(ardite, 0), 0.1f, BlockSieve.MeshType.FLINT.getID());
+            registry.register(new BlockInfo(ModBlocks.netherrackCrushed.getDefaultState()), new ItemInfo(ardite, 0), 0.2f, BlockSieve.MeshType.IRON.getID());
+            registry.register(new BlockInfo(ModBlocks.netherrackCrushed.getDefaultState()), new ItemInfo(ardite, 0), 0.3f, BlockSieve.MeshType.DIAMOND.getID());
         }
 
         ItemOre cobalt = oreRegistry.getOreItem("cobalt");
         if (cobalt != null) {
-            registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemInfo(cobalt, 0), 0.1f, BlockSieve.MeshType.FLINT.getID());
-            registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemInfo(cobalt, 0), 0.2f, BlockSieve.MeshType.IRON.getID());
-            registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemInfo(cobalt, 0), 0.3f, BlockSieve.MeshType.DIAMOND.getID());
+            registry.register(new BlockInfo(ModBlocks.netherrackCrushed.getDefaultState()), new ItemInfo(cobalt, 0), 0.1f, BlockSieve.MeshType.FLINT.getID());
+            registry.register(new BlockInfo(ModBlocks.netherrackCrushed.getDefaultState()), new ItemInfo(cobalt, 0), 0.2f, BlockSieve.MeshType.IRON.getID());
+            registry.register(new BlockInfo(ModBlocks.netherrackCrushed.getDefaultState()), new ItemInfo(cobalt, 0), 0.3f, BlockSieve.MeshType.DIAMOND.getID());
         }
-        registry.register(ModBlocks.netherrackCrushed.getDefaultState(), new ItemInfo(Items.BLAZE_POWDER, 0), 0.05f, BlockSieve.MeshType.IRON.getID());
+        registry.register(new BlockInfo(ModBlocks.netherrackCrushed.getDefaultState()), new ItemInfo(Items.BLAZE_POWDER, 0), 0.05f, BlockSieve.MeshType.IRON.getID());
     }
 
     public void registerOreChunks(OreRegistry registry){

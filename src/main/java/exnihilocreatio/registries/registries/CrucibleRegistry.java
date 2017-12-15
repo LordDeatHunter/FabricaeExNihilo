@@ -44,6 +44,14 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
         register(item.getItemStack(), meltable);
     }
 
+    public void register(BlockInfo block, Fluid fluid, int amount) {
+        register(block.getItemStack(), fluid, amount);
+    }
+
+    public void register(BlockInfo block, Meltable meltable) {
+        register(block.getItemStack(), meltable);
+    }
+
     public void register(ItemStack stack, Fluid fluid, int amount) {
         register(stack, new Meltable(fluid.getName(), amount));
     }

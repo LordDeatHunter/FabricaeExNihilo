@@ -27,7 +27,7 @@ public class BigReactors implements IRecipeDefaults {
     public void registerSieve(SieveRegistry registry) {
         ItemOre ore = ExNihiloRegistryManager.ORE_REGISTRY.getOreItem("yellorium");
         if(ore !=null){
-            registry.register(ModBlocks.dust, 0, new ItemInfo(ore, 0), 0.01f, MeshType.DIAMOND.getID());
+            registry.register(new BlockInfo(ModBlocks.dust, 0), new ItemInfo(ore, 0), 0.01f, MeshType.DIAMOND.getID());
         }
     }
 

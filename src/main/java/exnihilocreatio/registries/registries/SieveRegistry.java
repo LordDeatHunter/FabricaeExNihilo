@@ -47,8 +47,16 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Sifta
         register(new ItemStack(item, 1, meta), drop, chance, meshLevel);
     }
 
+    public void register(ItemInfo item, ItemInfo drop, float chance, int meshLevel) {
+        register(item.getItemStack(), drop, chance, meshLevel);
+    }
+
     public void register(Block block, int meta, ItemInfo drop, float chance, int meshLevel) {
         register(new ItemStack(block, 1, meta), drop, chance, meshLevel);
+    }
+
+    public void register(BlockInfo info, ItemInfo drop, float chance, int meshLevel) {
+        register(info.getItemStack(), drop, chance, meshLevel);
     }
 
     public void register(IBlockState state, ItemInfo drop, float chance, int meshLevel) {

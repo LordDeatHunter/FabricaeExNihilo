@@ -8,6 +8,7 @@ import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.Compostable;
 import exnihilocreatio.texturing.Color;
+import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.LogUtil;
 import net.minecraft.block.Block;
@@ -53,8 +54,6 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
             return;
 
         Ingredient ingredient = CraftingHelper.getIngredient(itemStack);
-        if (ingredient == null)
-            return;
 
         if (registry.keySet().stream().anyMatch(entry -> entry.test(itemStack))){
             LogUtil.error("Compost Entry for " + itemStack.getItem().getRegistryName() + " with meta " + itemStack.getMetadata() + " already exists, skipping.");
@@ -70,6 +69,14 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
 
     public void register(Block block, int meta, float value, IBlockState state, Color color) {
         register(new ItemStack(block, 1, meta), value, state, color);
+    }
+
+    public void register(ItemInfo item, float value, IBlockState state, Color color) {
+        register(item.getItemStack(), value, state, color);
+    }
+
+    public void register(BlockInfo block, float value, IBlockState state, Color color) {
+        register(block.getItemStack(), value, state, color);
     }
 
     public void register(ResourceLocation location, int meta, float value, IBlockState state, Color color) {
