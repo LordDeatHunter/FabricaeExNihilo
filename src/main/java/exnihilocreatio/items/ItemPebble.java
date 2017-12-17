@@ -70,7 +70,7 @@ public class ItemPebble extends Item implements IHasModel {
 
             ProjectileStone projectile = new ProjectileStone(world, player);
             projectile.setStack(thrown);
-            projectile.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 0.5F);
+            projectile.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 0.5F);
             world.spawnEntity(projectile);
         }
 
@@ -90,8 +90,8 @@ public class ItemPebble extends Item implements IHasModel {
     @SideOnly(Side.CLIENT)
     public void initModel(ModelRegistryEvent e) {
         List<ModelResourceLocation> locations = new ArrayList<>();
-        for (int i = 0; i < names.size(); i++) {
-            locations.add(new ModelResourceLocation(getRegistryName(), "type=" + names.get(i)));
+        for (String name : names) {
+            locations.add(new ModelResourceLocation(getRegistryName(), "type=" + name));
         }
 
         ModelBakery.registerItemVariants(this, locations.toArray(new ModelResourceLocation[0]));

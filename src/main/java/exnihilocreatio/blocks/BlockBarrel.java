@@ -111,10 +111,8 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider, ITOPI
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (worldIn.isRemote || worldIn.getTileEntity(pos) == null)
-            return true;
+        return worldIn.isRemote || worldIn.getTileEntity(pos) == null || ((TileBarrel) worldIn.getTileEntity(pos)).onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 
-        return ((TileBarrel) worldIn.getTileEntity(pos)).onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
     }
 
     @Override

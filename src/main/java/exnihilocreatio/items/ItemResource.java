@@ -2,9 +2,10 @@ package exnihilocreatio.items;
 
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.ModItems;
-import exnihilocreatio.blocks.BlockInfestedLeaves;
+import exnihilocreatio.blocks.BlockInfestingLeaves;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
+import exnihilocreatio.util.Util;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -36,7 +37,7 @@ public class ItemResource extends Item implements IHasModel {
     public static final String ROD_STONE = "rod_stone";
     public static final String GEAR_STONE = "gear_stone";
 
-    private static ArrayList<String> names = new ArrayList<String>();
+    private static ArrayList<String> names = new ArrayList<>();
 
     public ItemResource() {
         super();
@@ -88,15 +89,14 @@ public class ItemResource extends Item implements IHasModel {
     @Nonnull
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
-
         if (stack.getItemDamage() == names.indexOf(SILKWORM)) {
             IBlockState state = world.getBlockState(pos);
-            if (state != Blocks.AIR.getDefaultState() && state.getBlock() != Blocks.AIR && (state.getBlock() == Blocks.LEAVES || state.getBlock() == Blocks.LEAVES2)) {
-                BlockInfestedLeaves.infestLeafBlock(world, pos);
-                stack.shrink(1);
-
-                return EnumActionResult.SUCCESS;
-            }
+            if (state.getBlock() != Blocks.AIR && !(state.getBlock() instanceof BlockInfestingLeaves))
+                if (Util.isLeaves(state)){
+                    BlockInfestingLeaves.infestLeafBlock(world, state, pos);
+                    stack.shrink(1);
+                    return EnumActionResult.SUCCESS;
+                }
         }
         if (stack.getItemDamage() == names.indexOf(ANCIENT_SPORES) || stack.getItemDamage() == names.indexOf(GRASS_SEEDS)) {
             IBlockState state = world.getBlockState(pos);

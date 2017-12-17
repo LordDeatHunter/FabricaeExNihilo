@@ -93,9 +93,7 @@ public class TileCrucibleWood extends TileCrucibleBase {
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ, IFluidHandler handler) {
-        if (TankUtil.drainWaterIntoBottle(this, player, tank))
-            return true;
+        return TankUtil.drainWaterIntoBottle(this, player, tank) || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ, handler);
 
-        return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ, handler);
     }
 }

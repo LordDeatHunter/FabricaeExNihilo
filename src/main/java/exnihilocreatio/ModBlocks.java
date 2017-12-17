@@ -23,6 +23,7 @@ public class ModBlocks {
     public static BlockBaseFalling skystoneCrushed = null;
     public static final BlockBarrel barrelWood;
     public static final BlockBarrel barrelStone;
+    public static final BlockInfestingLeaves infestingLeaves;
     public static final BlockInfestedLeaves infestedLeaves;
     public static final BlockSieve sieve;
 
@@ -60,6 +61,10 @@ public class ModBlocks {
         barrelStone = new BlockBarrel(1, Material.ROCK);
         barrelStone.setCreativeTab(ExNihiloCreatio.tabExNihilo);
         GameRegistry.registerTileEntity(TileBarrel.class, "block_barrel");
+
+        infestingLeaves = new BlockInfestingLeaves();
+        GameRegistry.registerTileEntity(TileInfestingLeaves.class, "block_infesting_leaves");
+        //infestingLeaves.setCreativeTab(ExNihiloCreatio.tabExNihilo);
 
         infestedLeaves = new BlockInfestedLeaves();
         GameRegistry.registerTileEntity(TileInfestedLeaves.class, "block_infested_leaves");

@@ -242,4 +242,9 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
 
         super.readFromNBT(tag);
     }
+
+    @Override
+    public boolean hasFastRenderer() {
+        return true;
+    }
 }

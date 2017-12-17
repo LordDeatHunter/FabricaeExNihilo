@@ -1,61 +1,84 @@
 package exnihilocreatio.client.renderers;
 
+import exnihilocreatio.client.models.ModelVertex;
 import exnihilocreatio.texturing.Color;
+import exnihilocreatio.texturing.SpriteColor;
 import exnihilocreatio.tiles.TileBarrel;
-import exnihilocreatio.util.Util;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import org.lwjgl.opengl.GL11;
+import net.minecraft.client.renderer.vertex.VertexFormatElement;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.client.model.animation.FastTESR;
 
-public class RenderBarrel extends TileEntitySpecialRenderer<TileBarrel> {
+public class RenderBarrel extends FastTESR<TileBarrel> {
+    private static ModelVertex[] model = new ModelVertex[4];
+    static {
+        model[0] = new ModelVertex( EnumFacing.UP, 0.125, 0.875, 0.125, 0, 0);
+        model[1] = new ModelVertex( EnumFacing.UP, 0.875, 0.875, 0.125, 1, 0);
+        model[2] = new ModelVertex( EnumFacing.UP, 0.875, 0.875, 0.875, 1, 1);
+        model[3] = new ModelVertex( EnumFacing.UP, 0.125, 0.875, 0.875, 0, 1);
+    }
+
     @Override
-    public void render(TileBarrel tile, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder buffer = tessellator.getBuffer();
+    public void renderTileEntityFast(TileBarrel te, double x, double y, double z, float partialTicks, int destroyStage, float partial, BufferBuilder buffer){
+        if(te.getMode() == null) return;
 
-        GlStateManager.pushMatrix();
-        GlStateManager.translate(x, y, z);
+        // Fill Level
+        float fill = te.getMode().getFilledLevelForRender(te);
 
-        if (tile.getMode() != null) {
-            float fillAmount = tile.getMode().getFilledLevelForRender(tile);
+        if(fill==0) return;
 
-            if (fillAmount > 0) {
-                Color color = tile.getMode().getColorForRender();
+        final SpriteColor sprite = te.getMode().getSpriteColor(te);
+        buffer.setTranslation(x, y, z);
+        addSpriteColor(te, sprite, buffer, te.getMode().getFilledLevelForRender(te));
+        buffer.setTranslation(0, 0, 0);
 
-                if (color == null) {
-                    color = Util.whiteColor;
+    }
+    private void addSpriteColor(TileBarrel te, SpriteColor sprite, BufferBuilder buffer, float fill) {
+        if (sprite == null) return;
+
+        final BlockPos pos = te.getPos();
+        // Light levels
+        final int mixedBrightness = te.getWorld().getBlockState(pos).getPackedLightmapCoords(te.getWorld(), te.getPos());
+        final int skyLight = mixedBrightness >> 16 & 0xFFFF;
+        final int blockLight = mixedBrightness & 0xFFFF;
+        // Texturing
+        TextureAtlasSprite icon = sprite.getSprite();
+        Color color = sprite.getColor();
+
+        // Draw
+        for (final ModelVertex vert : model) {
+            for (final VertexFormatElement e : buffer.getVertexFormat().getElements()) {
+                switch (e.getUsage()) {
+                    case COLOR:
+                        buffer.color(color.r, color.g, color.b, color.a);
+                        break;
+
+                    case NORMAL:
+                        buffer.normal(vert.face.getFrontOffsetX(), vert.face.getFrontOffsetY(), vert.face.getFrontOffsetZ());
+                        break;
+
+                    case POSITION:
+                        final double vertX = vert.x;
+                        final double vertZ = vert.z;
+
+                        buffer.pos(vertX, (double) fill, vertZ);
+                        break;
+
+                    case UV:
+                        if (e.getIndex() == 1) {
+                            buffer.lightmap(skyLight, blockLight);
+                        } else {
+                            buffer.tex(icon.getInterpolatedU(vert.u), icon.getInterpolatedV(16.0 - vert.v));
+                        }
+                        break;
+
+                    default:
+                        break;
                 }
-
-                TextureAtlasSprite icon = tile.getMode().getTextureForRender(tile);
-
-                double minU = (double) icon.getMinU();
-                double maxU = (double) icon.getMaxU();
-                double minV = (double) icon.getMinV();
-                double maxV = (double) icon.getMaxV();
-
-                this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-                // Makes the fluid have the correct transparency
-                GlStateManager.enableBlend();
-                GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-
-                buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
-
-                buffer.pos(0.125f, fillAmount, 0.125f).tex(minU, minV).color(color.r, color.g, color.b, color.a).normal(0, 1, 0).endVertex();
-                buffer.pos(0.125f, fillAmount, 0.875f).tex(minU, maxV).color(color.r, color.g, color.b, color.a).normal(0, 1, 0).endVertex();
-                buffer.pos(0.875f, fillAmount, 0.875f).tex(maxU, maxV).color(color.r, color.g, color.b, color.a).normal(0, 1, 0).endVertex();
-                buffer.pos(0.875f, fillAmount, 0.125f).tex(maxU, minV).color(color.r, color.g, color.b, color.a).normal(0, 1, 0).endVertex();
-
-                tessellator.draw();
             }
+            buffer.endVertex();
         }
-
-        GlStateManager.disableBlend();
-        GlStateManager.enableLighting();
-        GlStateManager.popMatrix();
     }
 }

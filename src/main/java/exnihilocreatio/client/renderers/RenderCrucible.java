@@ -1,76 +1,90 @@
 package exnihilocreatio.client.renderers;
 
+import exnihilocreatio.blocks.BlockCrucibleBase;
+import exnihilocreatio.client.models.ModelVertex;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.texturing.SpriteColor;
 import exnihilocreatio.tiles.TileCrucibleBase;
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import org.lwjgl.opengl.GL11;
+import net.minecraft.client.renderer.vertex.VertexFormatElement;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.client.model.animation.FastTESR;
 
-public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucibleBase> {
-    @Override
-    public void render(TileCrucibleBase te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-        Tessellator tes = Tessellator.getInstance();
-        BufferBuilder wr = tes.getBuffer();
+public class RenderCrucible extends FastTESR<TileCrucibleBase> {
+    private static ModelVertex[] model = new ModelVertex[4];
 
-
-        RenderHelper.disableStandardItemLighting();
-        GlStateManager.pushMatrix();
-        GlStateManager.translate(x, y, z);
-        SpriteColor[] sprite = te.getSpriteAndColor();
-
-        if (sprite != null && (sprite[0] != null || sprite[1] != null)) {
-            this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-
-            wr.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
-            // Makes the fluid have the correct transparency
-            GlStateManager.enableBlend();
-            GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-
-            addSpriteColor(te, sprite[0], wr, false);
-            addSpriteColor(te, sprite[1], wr, true);
-
-            tes.draw();
-        }
-
-        GlStateManager.disableBlend();
-        GlStateManager.enableLighting();
-        GlStateManager.popMatrix();
-        RenderHelper.enableStandardItemLighting();
-
+    static {
+        model[0] = new ModelVertex(EnumFacing.UP, 0.125, 0.6875, 0.125, 0, 0);
+        model[1] = new ModelVertex(EnumFacing.UP, 0.875, 0.6875, 0.125, 1, 0);
+        model[2] = new ModelVertex(EnumFacing.UP, 0.875, 0.6875, 0.875, 1, 1);
+        model[3] = new ModelVertex(EnumFacing.UP, 0.125, 0.6875, 0.875, 0, 1);
     }
 
-    public void addSpriteColor(TileCrucibleBase te, SpriteColor sprite, BufferBuilder wr, boolean isFluid) {
-        if (sprite != null) {
-            TextureAtlasSprite icon = sprite.getSprite();
-            double minU = (double) icon.getMinU();
-            double maxU = (double) icon.getMaxU();
-            double minV = (double) icon.getMinV();
-            double maxV = (double) icon.getMaxV();
+    @Override
+    public void renderTileEntityFast(TileCrucibleBase te, double x, double y, double z, float partialTicks, int destroyStage, float partial, BufferBuilder buffer) {
+        if (te == null) return;
+        final BlockPos pos = te.getPos();
+        final Block block = getWorld().getBlockState(pos).getBlock();
 
-            // determine the tint for the fluid/block
-            Color color = sprite.getColor();
+        // Check because sometimes the renderer gets called while the block is breaking/decaying
+        if (!(block instanceof BlockCrucibleBase)) return;
 
+        // Draw
+        SpriteColor[] sprites = te.getSpriteAndColor();
 
-            //wr.begin(GL11.GL_QUADS, new VertexFormat().addElement(DefaultVertexFormats.POSITION_3F).addElement(DefaultVertexFormats.COLOR_4UB).addElement(DefaultVertexFormats.NORMAL_3B));
-            // Offset by bottome of crucibleStone, which is 4 pixels above the base of the block (and make it stop on pixel below the top)
-            float fillAmount;
-            if (isFluid) {
-                fillAmount = ((12F / 16F) * te.getFluidProportion() + (4F / 16F)) * 0.9375F;
-            } else {
-                fillAmount = ((12F / 16F) * te.getSolidProportion() + (4F / 16F)) * 0.9375F;
+        buffer.setTranslation(x, y, z);
+        addSpriteColor(te, sprites[0], buffer, te.getSolidProportion());
+        addSpriteColor(te, sprites[1], buffer, te.getFluidProportion());
+        buffer.setTranslation(0, 0, 0);
+    }
+    private void addSpriteColor(TileCrucibleBase te, SpriteColor sprite, BufferBuilder buffer, float fill) {
+        if (sprite == null) return;
+
+        final BlockPos pos = te.getPos();
+        // Light levels
+        final int mixedBrightness = te.getWorld().getBlockState(pos).getPackedLightmapCoords(te.getWorld(), te.getPos());
+        final int skyLight = mixedBrightness >> 16 & 0xFFFF;
+        final int blockLight = mixedBrightness & 0xFFFF;
+        // Texturing
+        TextureAtlasSprite icon = sprite.getSprite();
+        Color color = sprite.getColor();
+
+        // Draw
+        for (final ModelVertex vert : model) {
+            for (final VertexFormatElement e : buffer.getVertexFormat().getElements()) {
+                switch (e.getUsage()) {
+                    case COLOR:
+                        buffer.color(color.r, color.g, color.b, color.a);
+                        break;
+
+                    case NORMAL:
+                        buffer.normal(vert.face.getFrontOffsetX(), vert.face.getFrontOffsetY(), vert.face.getFrontOffsetZ());
+                        break;
+
+                    case POSITION:
+                        final double vertX = vert.x;
+                        final double vertY = vert.y * fill + 0.25;
+                        final double vertZ = vert.z;
+
+                        buffer.pos(vertX, vertY, vertZ);
+                        break;
+
+                    case UV:
+                        if (e.getIndex() == 1) {
+                            buffer.lightmap(skyLight, blockLight);
+                        } else {
+                            buffer.tex(icon.getInterpolatedU(vert.u), icon.getInterpolatedV(16.0 - vert.v));
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
             }
-
-            wr.pos(0.0625F, fillAmount, 0.0625F).tex(minU, minV).color(color.r, color.g, color.b, color.a).normal(0, 1, 0).endVertex();
-            wr.pos(0.0625F, fillAmount, 0.9375F).tex(minU, maxV).color(color.r, color.g, color.b, color.a).normal(0, 1, 0).endVertex();
-            wr.pos(0.9375F, fillAmount, 0.9375F).tex(maxU, maxV).color(color.r, color.g, color.b, color.a).normal(0, 1, 0).endVertex();
-            wr.pos(0.9375F, fillAmount, 0.0625F).tex(maxU, minV).color(color.r, color.g, color.b, color.a).normal(0, 1, 0).endVertex();
+            buffer.endVertex();
         }
     }
 

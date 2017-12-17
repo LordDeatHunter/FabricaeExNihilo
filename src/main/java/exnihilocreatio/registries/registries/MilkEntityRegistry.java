@@ -32,11 +32,8 @@ public class MilkEntityRegistry extends BaseRegistryList<Milkable> {
         registry.add(new Milkable(entityOnTop, result, amount, coolDown));
     }
 
-    public boolean isValidRecipe(Entity entityOnTop){
-        if(entityOnTop == null){
-            return false;
-        }
-        return this.isValidRecipe(entityOnTop.getName());
+    public boolean isValidRecipe(Entity entityOnTop) {
+        return entityOnTop != null && this.isValidRecipe(entityOnTop.getName());
     }
 
     public boolean isValidRecipe(String entityOnTop){

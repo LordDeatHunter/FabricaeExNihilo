@@ -22,6 +22,7 @@ public class ModConfig {
     public static Sieve sieve = new Sieve();
     public static Compatibility compatibility = new Compatibility();
     public static Crucible crucible = new Crucible();
+    public static World world = new World();
 
     /**
      * All Config Classes
@@ -45,9 +46,9 @@ public class ModConfig {
 
     public static class InfestedLeaves {
         public int ticksToTransform = 600;
-        public int leavesUpdateFrequency = 40;
-        public double leavesSpreadChance = 0.0015;
-        public boolean doLeavesUpdateClient = true;
+        public int leavesUpdateFrequency = 10;
+        public int leavesSpreadPercent = 25;
+        public int leavesSpreadChance = 30;
     }
 
     public static class Crooking {
@@ -91,6 +92,11 @@ public class ModConfig {
 
     public static class Crucible {
         public int woodenCrucibleSpeed = 4;
+    }
+
+    public static class World {
+        public boolean isSkyWorld = true;
+        public int normalDropPercent = 100;
     }
 
     /**

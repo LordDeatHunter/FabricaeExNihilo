@@ -76,6 +76,7 @@ public class ExNihiloCreatio {
 
         MinecraftForge.EVENT_BUS.register(new HandlerCrook());
 
+
         if (ModConfig.mechanics.enableBarrels) {
             BarrelModeRegistry.registerDefaults();
         }

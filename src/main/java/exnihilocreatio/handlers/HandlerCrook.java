@@ -12,7 +12,6 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.Iterator;
 import java.util.List;
 
 public class HandlerCrook {
@@ -38,10 +37,7 @@ public class HandlerCrook {
             event.setDropChance(1f);
 
             int fortune = event.getFortuneLevel();
-            Iterator<CrookReward> it = rewards.iterator();
-            while (it.hasNext()) {
-                CrookReward reward = it.next();
-
+            for (CrookReward reward : rewards) {
                 if (event.getWorld().rand.nextFloat() <= reward.getChance() + (reward.getFortuneChance() * fortune)) {
                     event.getDrops().add(reward.getStack().copy());
                 }

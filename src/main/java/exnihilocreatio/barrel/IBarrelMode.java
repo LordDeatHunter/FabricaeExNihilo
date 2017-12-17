@@ -1,6 +1,7 @@
 package exnihilocreatio.barrel;
 
 import exnihilocreatio.texturing.Color;
+import exnihilocreatio.texturing.SpriteColor;
 import exnihilocreatio.tiles.TileBarrel;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -37,6 +38,10 @@ public interface IBarrelMode {
     TextureAtlasSprite getTextureForRender(TileBarrel barrel);
 
     Color getColorForRender();
+
+    default SpriteColor getSpriteColor(TileBarrel barrel){
+        return new SpriteColor(getTextureForRender(barrel), getColorForRender());
+    }
 
     float getFilledLevelForRender(TileBarrel barrel);
 

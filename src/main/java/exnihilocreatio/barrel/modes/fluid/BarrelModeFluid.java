@@ -59,9 +59,7 @@ public class BarrelModeFluid implements IBarrelMode {
 
     @Override
     public boolean isTriggerFluidStack(FluidStack stack) {
-        if (stack == null)
-            return false;
-        return true;
+        return stack != null;
     }
 
     @Override

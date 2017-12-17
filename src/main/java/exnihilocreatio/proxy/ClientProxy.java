@@ -4,14 +4,22 @@ import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.ModBlocks;
 import exnihilocreatio.ModFluids;
 import exnihilocreatio.ModItems;
+import exnihilocreatio.client.models.InfestedLeavesBakedModel;
+import exnihilocreatio.client.models.ModColorManager;
+import exnihilocreatio.client.models.event.RenderEvent;
 import exnihilocreatio.client.renderers.*;
 import exnihilocreatio.entities.ProjectileStone;
 import exnihilocreatio.items.ore.ItemOre;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.tiles.*;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -32,7 +40,6 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileCrucibleWood.class, new RenderCrucible());
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileSieve.class, new RenderSieve());
-        ClientRegistry.bindTileEntitySpecialRenderer(TileInfestedLeaves.class, new RenderInfestedLeaves());
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileWaterwheel.class, new RenderWaterwheel());
         ClientRegistry.bindTileEntitySpecialRenderer(TileStoneAxle.class, new RenderStoneAxel());
@@ -40,6 +47,16 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileAutoSifter.class, new RenderAutoSifter());
 
         RenderingRegistry.registerEntityRenderingHandler(ProjectileStone.class, new RenderProjectileStone.Factory());
+
+        ClientRegistry.bindTileEntitySpecialRenderer(TileInfestingLeaves.class, new RenderInfestingLeaves());
+
+        StateMapperBase ignoreState = new StateMapperBase() {
+            @Override
+            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                return InfestedLeavesBakedModel.variantTag;
+            }
+        };
+        ModelLoader.setCustomStateMapper(ModBlocks.infestedLeaves, ignoreState);
     }
 
     @Override
@@ -55,6 +72,7 @@ public class ClientProxy extends CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
 
+        MinecraftForge.EVENT_BUS.register(new RenderEvent());
         OBJLoader.INSTANCE.addDomain(ExNihiloCreatio.MODID);
     }
 
@@ -64,7 +82,7 @@ public class ClientProxy extends CommonProxy {
 
         ExNihiloRegistryManager.ORE_REGISTRY.initModels();
         Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new RenderOrePiece(), ExNihiloRegistryManager.ORE_REGISTRY.getItemOreRegistry().toArray(new ItemOre[0]));
-
+        ModColorManager.registerColorHandlers();
     }
 
     @Override

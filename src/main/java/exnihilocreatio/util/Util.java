@@ -1,5 +1,6 @@
 package exnihilocreatio.util;
 
+import exnihilocreatio.blocks.BlockInfestingLeaves;
 import exnihilocreatio.texturing.Color;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -7,8 +8,10 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -19,9 +22,12 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static java.lang.Math.round;
 
 public class Util {
 
@@ -102,7 +108,7 @@ public class Util {
     }
 
     public static boolean isSurroundingBlocksAtLeastOneOf(BlockInfo[] blocks, BlockPos pos, World world, int radius) {
-        ArrayList<BlockInfo> blockList = new ArrayList<BlockInfo>(Arrays.asList(blocks));
+        ArrayList<BlockInfo> blockList = new ArrayList<>(Arrays.asList(blocks));
         for (int xShift = -1 * radius; xShift <= radius; xShift++) {
             for (int zShift = -1 * radius; zShift <= radius; zShift++) {
                 BlockPos checkPos = pos.add(xShift, 0, zShift);
@@ -118,7 +124,7 @@ public class Util {
     public static int getNumSurroundingBlocksAtLeastOneOf(BlockInfo[] blocks, BlockPos pos, World world) {
 
         int ret = 0;
-        ArrayList<BlockInfo> blockList = new ArrayList<BlockInfo>(Arrays.asList(blocks));
+        ArrayList<BlockInfo> blockList = new ArrayList<>(Arrays.asList(blocks));
         for (int xShift = -2; xShift <= 2; xShift++) {
             for (int zShift = -2; zShift <= 2; zShift++) {
                 BlockPos checkPos = pos.add(xShift, 0, zShift);
@@ -147,4 +153,36 @@ public class Util {
     public static ItemStack getBucketStack(Fluid fluid) {
         return UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, fluid);
     }
+
+    public static boolean compareItemStack(ItemStack stack1, ItemStack stack2){
+        if (stack1.getMetadata() == OreDictionary.WILDCARD_VALUE || stack2.getMetadata() == OreDictionary.WILDCARD_VALUE){
+            return stack1.getItem() == stack2.getItem();
+        }
+        else return stack1.getItem() == stack2.getItem() && stack1.getMetadata() == stack2.getMetadata();
+    }
+
+    public static int interpolate(int low, int high, float amount){
+        if(amount > 1.0f) return high;
+        if(amount < 0.0f) return low;
+        return low + round((high-low)*amount);
+    }
+
+    public static NonNullList<BlockPos> getNearbyLeaves(World world, BlockPos pos){
+        NonNullList<BlockPos> blockPos = NonNullList.create();
+        for (BlockPos checkPos : BlockPos.getAllInBox(new BlockPos(pos.getX() - 1, pos.getY() - 1, pos.getZ() - 1), new BlockPos(pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1))) {
+            IBlockState newState = world.getBlockState(checkPos);
+            if (newState.getBlock() != Blocks.AIR && !(newState.getBlock() instanceof BlockInfestingLeaves)) {
+                if (Util.isLeaves(newState))
+                    blockPos.add(checkPos);
+            }
+        }
+        //if (!blockStates.isEmpty()) LogUtil.info("Obtained getNearbyLeaves");
+        return blockPos;
+    }
+
+    public static boolean isLeaves(IBlockState state){
+        ItemStack itemStack = new ItemStack(state.getBlock());
+        return OreDictionary.getOres("treeLeaves").stream().anyMatch(stack1 -> Util.compareItemStack(stack1, itemStack));
+    }
+
 }

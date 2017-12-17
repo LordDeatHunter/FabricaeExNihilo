@@ -10,12 +10,12 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SieveRecipe implements IRecipeWrapper {
     private List<ItemStack> inputs = new ArrayList<>();
@@ -29,9 +29,9 @@ public class SieveRecipe implements IRecipeWrapper {
             return;
         }
 
-        List<ItemStack> allOutputs = Lists.newArrayList(Lists.transform(rewards, reward -> reward.getMeshLevel() == mesh.getID() ? reward.getDrop().getItemStack() : null));
+        List<ItemStack> allOutputs = Lists.newArrayList(rewards.stream().filter(reward -> reward.getMeshLevel() == mesh.getID()).map(reward -> reward.getDrop().getItemStack()).collect(Collectors.toList()));
         // Make sure no null rewards, Item or ItemStack
-        allOutputs.removeIf(stack -> stack == null || stack.getItem() == Items.AIR);
+        //allOutputs.removeIf(stack -> stack == ItemStack.EMPTY);
 
         inputs = Lists.newArrayList(new ItemStack(ModItems.mesh, 1, mesh.getID()), new ItemStack(block.getBlock(), 1, block.getBlock().getMetaFromState(block)));
         outputs = Lists.newArrayList();

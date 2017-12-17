@@ -11,7 +11,7 @@ public interface IRotationalPowerMember {
      * used to calcualte the speed of the member infront of him
      *
      * @param side is the side where he outputs power to
-     * @return
+     * @return Returns the rotation per tick based on side
      */
     float getEffectivePerTickRotation(EnumFacing side);
 

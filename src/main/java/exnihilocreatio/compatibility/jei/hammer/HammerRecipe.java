@@ -8,11 +8,11 @@ import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HammerRecipe implements IRecipeWrapper {
     private List<ItemStack> inputs;
@@ -22,8 +22,8 @@ public class HammerRecipe implements IRecipeWrapper {
         if (block != null && block.getBlock() != Blocks.AIR) {
             List<HammerReward> rewards = ExNihiloRegistryManager.HAMMER_REGISTRY.getRewards(block);
             // Make sure no null rewards, Item or ItemStack
-            List<ItemStack> allOutputs = Lists.newArrayList(Lists.transform(rewards, reward -> reward == null || reward.getStack().isEmpty() ? ItemStack.EMPTY : reward.getStack().copy()));
-            allOutputs.removeIf(stack -> stack == null || stack.getItem() == Items.AIR);
+            List<ItemStack> allOutputs = Lists.newArrayList(rewards.stream().filter(reward -> reward != null && !reward.getStack().isEmpty()).map(reward -> reward.getStack().copy()).collect(Collectors.toList()));
+            //allOutputs.removeIf(stack -> stack == null || stack.getItem() == Items.AIR);
 
             inputs = Lists.newArrayList(new ItemStack(block.getBlock(), 1, block.getBlock().getMetaFromState(block)));
             outputs = Lists.newArrayList();

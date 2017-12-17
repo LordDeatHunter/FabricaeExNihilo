@@ -52,6 +52,7 @@ tile.block_crucible.1.name=Crucible
 tile.block_crucible_wood.name=Wooden Crucible
 
 tile.block_infested_leaves.name=Infested Leaves
+tile.block_infesting_leaves.name=Infested Leaves
 
 tile.block_auto_sifter.name=Auto Sifter
 tile.block_axle_stone.name=Stone Axle
