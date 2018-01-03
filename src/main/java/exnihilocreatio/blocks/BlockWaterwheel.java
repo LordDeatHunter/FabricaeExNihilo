@@ -27,10 +27,8 @@ public class BlockWaterwheel extends BlockBase implements ITileEntityProvider {
     public BlockWaterwheel() {
         super(Material.GLASS, "block_waterwheel");
         setCreativeTab(ExNihiloCreatio.tabExNihilo);
-
         setHardness(2);
         setHarvestLevel("axe", 0);
-
         setDefaultState(blockState.getBaseState().withProperty(IS_WHEEL, false));
     }
 

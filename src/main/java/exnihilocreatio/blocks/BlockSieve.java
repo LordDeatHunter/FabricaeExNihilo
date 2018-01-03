@@ -1,5 +1,6 @@
 package exnihilocreatio.blocks;
 
+import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.compatibility.ITOPInfoProvider;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.ItemMesh;
@@ -41,6 +42,7 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPIn
     public BlockSieve() {
         super(Material.WOOD, "block_sieve");
         this.setHardness(2.0f);
+        this.setCreativeTab(ExNihiloCreatio.tabExNihilo);
         this.setDefaultState(this.blockState.getBaseState().withProperty(MESH, MeshType.NO_RENDER));
     }
 

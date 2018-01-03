@@ -1,5 +1,6 @@
 package exnihilocreatio.items;
 
+import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.blocks.BlockSieve.MeshType;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
@@ -23,6 +24,7 @@ public class ItemMesh extends Item implements IHasModel {
         this.setUnlocalizedName("item_mesh");
         this.setRegistryName("item_mesh");
         this.setMaxStackSize(1);
+        this.setCreativeTab(ExNihiloCreatio.tabExNihilo);
         Data.ITEMS.add(this);
     }
 

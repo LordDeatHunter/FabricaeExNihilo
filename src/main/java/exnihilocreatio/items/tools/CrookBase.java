@@ -1,6 +1,7 @@
 package exnihilocreatio.items.tools;
 
 import com.google.common.collect.Sets;
+import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
@@ -19,6 +20,7 @@ public class CrookBase extends ItemTool implements ICrook, IHasModel {
         this.setUnlocalizedName(name);
         this.setRegistryName(name);
         this.setMaxDamage(maxUses);
+        this.setCreativeTab(ExNihiloCreatio.tabExNihilo);
 
         Data.ITEMS.add(this);
     }

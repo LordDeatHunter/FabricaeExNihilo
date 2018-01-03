@@ -16,89 +16,40 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 public class ModBlocks {
 
+    public static final BlockBaseFalling dust = (BlockBaseFalling) new BlockBaseFalling(SoundType.CLOTH, "block_dust").setHardness(0.7F);
+    public static final BlockBaseFalling netherrackCrushed = (BlockBaseFalling) new BlockBaseFalling(SoundType.GROUND, "block_netherrack_crushed").setHardness(0.7F);
+    public static final BlockBaseFalling endstoneCrushed = (BlockBaseFalling) new BlockBaseFalling(SoundType.GROUND, "block_endstone_crushed").setHardness(0.7F);
+    public static final BlockBaseFalling skystoneCrushed = Loader.isModLoaded("appliedenergistics2")? (BlockBaseFalling) new BlockBaseFalling(SoundType.GROUND, "block_skystone_crushed").setHardness(0.7F) : null;
+    public static final BlockBarrel barrelWood = new BlockBarrel(0, Material.WOOD);
+    public static final BlockBarrel barrelStone = new BlockBarrel(1, Material.ROCK);
+    public static final BlockInfestingLeaves infestingLeaves = new BlockInfestingLeaves();
+    public static final BlockInfestedLeaves infestedLeaves = new BlockInfestedLeaves();
+    public static final BlockSieve sieve = new BlockSieve();
 
-    public static final BlockBaseFalling dust;
-    public static final BlockBaseFalling netherrackCrushed;
-    public static final BlockBaseFalling endstoneCrushed;
-    public static BlockBaseFalling skystoneCrushed = null;
-    public static final BlockBarrel barrelWood;
-    public static final BlockBarrel barrelStone;
-    public static final BlockInfestingLeaves infestingLeaves;
-    public static final BlockInfestedLeaves infestedLeaves;
-    public static final BlockSieve sieve;
+    public static final BlockCrucibleStone crucibleStone = new BlockCrucibleStone();
+    public static final BlockCrucibleWood crucibleWood = new BlockCrucibleWood();
 
-    public static final BlockCrucibleStone crucibleStone;
-    public static final BlockCrucibleWood CRUCIBLE_WOOD;
+    public static final BlockWaterwheel watermill = new BlockWaterwheel();
+    public static final BlockStoneAxle axle_stone = new BlockStoneAxle();
 
-    public static final BlockWaterwheel watermill;
-    public static final BlockStoneAxle axle_stone;
-
-    public static final BlockGrinder grinder;
-    public static final BlockAutoSifter autoSifter;
-
-    static {
-        dust = new BlockBaseFalling(SoundType.CLOTH, "block_dust");
-        dust.setCreativeTab(ExNihiloCreatio.tabExNihilo);
-        dust.setHardness(0.7F);
-
-        netherrackCrushed = new BlockBaseFalling(SoundType.GROUND, "block_netherrack_crushed");
-        netherrackCrushed.setCreativeTab(ExNihiloCreatio.tabExNihilo);
-        netherrackCrushed.setHardness(0.7F);
-
-        endstoneCrushed = new BlockBaseFalling(SoundType.GROUND, "block_endstone_crushed");
-        endstoneCrushed.setCreativeTab(ExNihiloCreatio.tabExNihilo);
-        endstoneCrushed.setHardness(0.7F);
-
-        if(Loader.isModLoaded("appliedenergistics2")){
-            skystoneCrushed = new BlockBaseFalling(SoundType.GROUND, "block_skystone_crushed");
-            skystoneCrushed.setCreativeTab(ExNihiloCreatio.tabExNihilo);
-            skystoneCrushed.setHardness(0.7F);
-        }
-
-        barrelWood = new BlockBarrel(0, Material.WOOD);
-        barrelWood.setCreativeTab(ExNihiloCreatio.tabExNihilo);
-
-        barrelStone = new BlockBarrel(1, Material.ROCK);
-        barrelStone.setCreativeTab(ExNihiloCreatio.tabExNihilo);
-        GameRegistry.registerTileEntity(TileBarrel.class, "block_barrel");
-
-        infestingLeaves = new BlockInfestingLeaves();
-        GameRegistry.registerTileEntity(TileInfestingLeaves.class, "block_infesting_leaves");
-        //infestingLeaves.setCreativeTab(ExNihiloCreatio.tabExNihilo);
-
-        infestedLeaves = new BlockInfestedLeaves();
-        GameRegistry.registerTileEntity(TileInfestedLeaves.class, "block_infested_leaves");
-        infestedLeaves.setCreativeTab(ExNihiloCreatio.tabExNihilo);
-
-        crucibleStone = new BlockCrucibleStone();
-        GameRegistry.registerTileEntity(TileCrucibleStone.class, "block_crucible");
-
-        CRUCIBLE_WOOD = new BlockCrucibleWood();
-        GameRegistry.registerTileEntity(TileCrucibleWood.class, "block_crucible_wood");
-
-        sieve = new BlockSieve();
-        sieve.setCreativeTab(ExNihiloCreatio.tabExNihilo);
-        GameRegistry.registerTileEntity(TileSieve.class, "block_sieve");
-
-
-        watermill = new BlockWaterwheel();
-        GameRegistry.registerTileEntity(TileWaterwheel.class, "block_waterwheel");
-
-        axle_stone = new BlockStoneAxle();
-        GameRegistry.registerTileEntity(TileStoneAxle.class, "block_axle_stone");
-
-        grinder = new BlockGrinder();
-        GameRegistry.registerTileEntity(TileGrinder.class, "block_grinder");
-
-        autoSifter = new BlockAutoSifter();
-        GameRegistry.registerTileEntity(TileAutoSifter.class, "block_auto_sifter");
-
-    }
+    public static final BlockGrinder grinder = new BlockGrinder();
+    public static final BlockAutoSifter autoSifter = new BlockAutoSifter();
 
     public static void registerBlocks(IForgeRegistry<Block> registry) {
         for (Block block : Data.BLOCKS) {
             registry.register(block);
         }
+
+        GameRegistry.registerTileEntity(TileBarrel.class, "block_barrel");
+        GameRegistry.registerTileEntity(TileInfestingLeaves.class, "block_infesting_leaves");
+        GameRegistry.registerTileEntity(TileInfestedLeaves.class, "block_infested_leaves");
+        GameRegistry.registerTileEntity(TileCrucibleStone.class, "block_crucible");
+        GameRegistry.registerTileEntity(TileCrucibleWood.class, "block_crucible_wood");
+        GameRegistry.registerTileEntity(TileSieve.class, "block_sieve");
+        GameRegistry.registerTileEntity(TileWaterwheel.class, "block_waterwheel");
+        GameRegistry.registerTileEntity(TileStoneAxle.class, "block_axle_stone");
+        GameRegistry.registerTileEntity(TileGrinder.class, "block_grinder");
+        GameRegistry.registerTileEntity(TileAutoSifter.class, "block_auto_sifter");
     }
 
     @SideOnly(Side.CLIENT)

@@ -11,7 +11,6 @@ import exnihilocreatio.handlers.HandlerHammer;
 import exnihilocreatio.networking.PacketHandler;
 import exnihilocreatio.proxy.CommonProxy;
 import exnihilocreatio.registries.RegistryReloadedEvent;
-import exnihilocreatio.registries.manager.ExNihiloDefaultRecipes;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.BarrelModeRegistry;
 import exnihilocreatio.util.LogUtil;
@@ -83,12 +82,7 @@ public class ExNihiloCreatio {
 
     @EventHandler
     public static void init(FMLInitializationEvent event) {
-        ExNihiloDefaultRecipes.registerDefaults();
         proxy.init(event);
-
-        loadConfigs();
-
-        Recipes.init();
     }
 
     @EventHandler

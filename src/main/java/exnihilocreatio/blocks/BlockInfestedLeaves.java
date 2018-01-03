@@ -1,5 +1,6 @@
 package exnihilocreatio.blocks;
 
+import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.tools.ICrook;
 import exnihilocreatio.tiles.TileInfestedLeaves;
@@ -32,6 +33,7 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
         super(InfestedType.INFESTED);
         this.setUnlocalizedName("block_infested_leaves");
         this.setRegistryName("block_infested_leaves");
+        this.setCreativeTab(ExNihiloCreatio.tabExNihilo);
         Data.BLOCKS.add(this);
         this.setDefaultState(
                 this.blockState.getBaseState().withProperty(CHECK_DECAY, false).withProperty(DECAYABLE, false));
