@@ -23,7 +23,7 @@ public class RenderInfestingLeaves extends FastTESR<TileInfestingLeaves> {
 
     private boolean complete = false;
 
-    private static ModelVertex[] model = new ModelVertex[24];
+    private static final ModelVertex[] model = new ModelVertex[24];
     static {
         model[0] = new ModelVertex( EnumFacing.UP, 0, 1, 0, 0, 1 );
         model[1] = new ModelVertex( EnumFacing.UP, 1, 1, 0, 1, 1 );

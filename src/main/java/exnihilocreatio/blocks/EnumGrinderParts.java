@@ -8,8 +8,8 @@ public enum EnumGrinderParts implements IStringSerializable {
     GEAR(2, "gear"),
     ROD(3, "rod");
 
-    private int ID;
-    private String name;
+    private final int ID;
+    private final String name;
 
     EnumGrinderParts(int ID, String name) {
         this.ID = ID;

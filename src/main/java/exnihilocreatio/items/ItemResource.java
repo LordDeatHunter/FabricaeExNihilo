@@ -37,7 +37,7 @@ public class ItemResource extends Item implements IHasModel {
     public static final String ROD_STONE = "rod_stone";
     public static final String GEAR_STONE = "gear_stone";
 
-    private static ArrayList<String> names = new ArrayList<>();
+    private static final ArrayList<String> names = new ArrayList<>();
 
     public ItemResource() {
         super();

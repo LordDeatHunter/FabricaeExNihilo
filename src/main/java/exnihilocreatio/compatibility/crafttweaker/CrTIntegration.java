@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CrTIntegration {
-    public static List<IAction> removeActions = new ArrayList<>();
-    public static List<IAction> addActions = new ArrayList<>();
+    public static final List<IAction> removeActions = new ArrayList<>();
+    public static final List<IAction> addActions = new ArrayList<>();
 
     public static void loadIActions(){
         removeActions.forEach(iAction -> {

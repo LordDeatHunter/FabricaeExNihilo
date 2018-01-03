@@ -34,7 +34,7 @@ import java.util.List;
 
 public class BarrelModeFluid implements IBarrelMode {
 
-    private BarrelItemHandlerFluid handler;
+    private final BarrelItemHandlerFluid handler;
 
     public BarrelModeFluid() {
         handler = new BarrelItemHandlerFluid(null);

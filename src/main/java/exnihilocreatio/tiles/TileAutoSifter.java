@@ -24,7 +24,7 @@ import java.util.List;
 
 public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotationalPowerConsumer {
     public TileSieve[][] toSift = null;
-    public List<Tuple<Point3f, EnumFacing.Axis>> connectionPieces = new ArrayList<>();
+    public final List<Tuple<Point3f, EnumFacing.Axis>> connectionPieces = new ArrayList<>();
 
     public EnumFacing facing = EnumFacing.NORTH;
     public int tickCounter = 0;
@@ -37,7 +37,7 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
     public float offsetY = 0;
     public float offsetZ = 0;
 
-    public ItemHandlerAutoSifter itemHandlerAutoSifter;
+    public final ItemHandlerAutoSifter itemHandlerAutoSifter;
 
     public TileAutoSifter() {
         itemHandlerAutoSifter = new ItemHandlerAutoSifter();

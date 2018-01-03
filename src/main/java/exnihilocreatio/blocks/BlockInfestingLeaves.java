@@ -42,9 +42,9 @@ import java.util.Random;
 
 public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProvider, ITOPInfoProvider, IHasModel {
 
-    public static PropertyBool NEARBYLEAVES = PropertyBool.create("nearby_leaves");
+    public static final PropertyBool NEARBYLEAVES = PropertyBool.create("nearby_leaves");
 
-    public static IUnlistedProperty<IBlockState> LEAFBLOCK = new IUnlistedProperty<IBlockState>() {
+    public static final IUnlistedProperty<IBlockState> LEAFBLOCK = new IUnlistedProperty<IBlockState>() {
         @Override
         public String getName() {
             return "LeafBlock";

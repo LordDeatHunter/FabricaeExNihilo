@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.model.animation.FastTESR;
 
 public class RenderBarrel extends FastTESR<TileBarrel> {
-    private static ModelVertex[] model = new ModelVertex[4];
+    private static final ModelVertex[] model = new ModelVertex[4];
     static {
         model[0] = new ModelVertex( EnumFacing.UP, 0.125, 0.875, 0.125, 0, 0);
         model[1] = new ModelVertex( EnumFacing.UP, 0.875, 0.875, 0.125, 1, 0);

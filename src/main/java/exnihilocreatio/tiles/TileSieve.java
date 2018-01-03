@@ -33,7 +33,7 @@ import java.util.UUID;
 
 public class TileSieve extends BaseTileEntity {
 
-    private static Random rand = new Random();
+    private static final Random rand = new Random();
     public TileAutoSifter autoSifter = null;
     @Getter
     private BlockInfo currentStack;

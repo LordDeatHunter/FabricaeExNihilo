@@ -47,7 +47,7 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
         );
     }
 
-    protected Map<Ingredient, Compostable> oreRegistry = new HashMap<>();
+    protected final Map<Ingredient, Compostable> oreRegistry = new HashMap<>();
 
     public void register(ItemStack itemStack, float value, IBlockState state, Color color) {
         if (itemStack.isEmpty())

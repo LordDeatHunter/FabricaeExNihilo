@@ -34,7 +34,7 @@ public class BarrelModeBlock implements IBarrelMode {
     @Setter
     private ItemInfo block;
 
-    private BarrelItemHandlerBlock handler = new BarrelItemHandlerBlock(null);
+    private final BarrelItemHandlerBlock handler = new BarrelItemHandlerBlock(null);
 
     @Override
     public void writeToNBT(NBTTagCompound tag) {

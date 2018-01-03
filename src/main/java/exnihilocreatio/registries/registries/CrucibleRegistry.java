@@ -34,7 +34,7 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
         );
     }
 
-    protected Map<Ingredient, Meltable> oreRegistry = new HashMap<>();
+    protected final Map<Ingredient, Meltable> oreRegistry = new HashMap<>();
 
     public void register(ItemInfo item, Fluid fluid, int amount) {
         register(item.getItemStack(), fluid, amount);

@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 
 public class JsonHelper {
 
-    JsonElement json;
+    final JsonElement json;
 
     public JsonHelper(JsonElement json) {
         this.json = json;

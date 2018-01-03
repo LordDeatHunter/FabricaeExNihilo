@@ -15,13 +15,13 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class FluidOnTopRecipe implements IRecipeWrapper {
-    private FluidStack inputFluidInBarrel;
-    private FluidStack inputFluidOnTop;
+    private final FluidStack inputFluidInBarrel;
+    private final FluidStack inputFluidOnTop;
 
-    private ItemStack inputBucketInBarrel;
-    private ItemStack inputBucketOnTop;
+    private final ItemStack inputBucketInBarrel;
+    private final ItemStack inputBucketOnTop;
 
-    private ItemStack outputStack;
+    private final ItemStack outputStack;
 
     public FluidOnTopRecipe(FluidFluidBlock recipe) {
         inputFluidInBarrel = new FluidStack(FluidRegistry.getFluid(recipe.getFluidInBarrel()), 1000);

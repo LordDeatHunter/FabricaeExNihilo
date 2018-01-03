@@ -215,8 +215,8 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPIn
     public enum MeshType implements IStringSerializable {
         NONE(0, "none"), STRING(1, "string"), FLINT(2, "flint"), IRON(3, "iron"), DIAMOND(4, "diamond"), NO_RENDER(5, "no_render");
 
-        private int id;
-        private String name;
+        private final int id;
+        private final String name;
 
         MeshType(int id, String name) {
             this.id = id;

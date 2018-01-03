@@ -110,7 +110,7 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
     }
 
     private static class HammerTooltipCallback implements ITooltipCallback<ItemStack> {
-        private HammerRecipe recipe;
+        private final HammerRecipe recipe;
 
         private HammerTooltipCallback(HammerRecipe recipeWrapper) {
             this.recipe = recipeWrapper;

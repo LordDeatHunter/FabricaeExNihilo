@@ -6,7 +6,7 @@ public enum EnumPebbleSubtype {
     DIORITE(2),
     ANDESITE(3);
 
-    int meta;
+    final int meta;
 
     EnumPebbleSubtype(int meta) {
         this.meta = meta;

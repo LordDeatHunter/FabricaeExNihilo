@@ -10,8 +10,8 @@ import javax.annotation.Nonnull;
 
 public class CrucibleItemHandler extends ItemStackHandler {
 
-    protected TileCrucibleBase te;
-    protected CrucibleRegistry crucibleRegistry;
+    protected final TileCrucibleBase te;
+    protected final CrucibleRegistry crucibleRegistry;
 
     public CrucibleItemHandler(TileCrucibleBase te, CrucibleRegistry crucibleRegistry) {
         super(1);

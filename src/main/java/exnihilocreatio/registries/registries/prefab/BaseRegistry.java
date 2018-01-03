@@ -16,9 +16,9 @@ public abstract class BaseRegistry<RegType> {
 
     @Getter
     protected RegType registry;
-    protected List<? extends IDefaultRecipeProvider> defaultRecipeProviders;
+    protected final List<? extends IDefaultRecipeProvider> defaultRecipeProviders;
 
-    protected Gson gson;
+    protected final Gson gson;
 
     public BaseRegistry(Gson gson, RegType registry, List<? extends IDefaultRecipeProvider> defaultRecipeProviders) {
         this.gson = gson;

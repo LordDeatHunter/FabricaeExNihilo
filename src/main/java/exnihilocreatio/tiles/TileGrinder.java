@@ -21,7 +21,7 @@ public class TileGrinder extends BaseTileEntity implements ITickable, IRotationa
 
     public float storedRotationalPower = 0;
 
-    public ItemHandlerGrinder itemHandlerGrinder;
+    public final ItemHandlerGrinder itemHandlerGrinder;
 
     public TileGrinder() {
         itemHandlerGrinder = new ItemHandlerGrinder();

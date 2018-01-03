@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemPebble extends Item implements IHasModel {
-    private static List<String> names = Lists.newArrayList("stone", "granite", "diorite", "andesite");
+    private static final List<String> names = Lists.newArrayList("stone", "granite", "diorite", "andesite");
 
     public ItemPebble() {
         setUnlocalizedName("item_pebble");

@@ -68,7 +68,7 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
                 if (nearbyLeaves.isEmpty()) {
                     world.setBlockState(pos, state.withProperty(NEARBYLEAVES, false), 7);
                 } else {
-                    nearbyLeaves.stream().filter(leaves -> rand.nextInt(100) <= ModConfig.infested_leaves.leavesSpreadChance).findAny().ifPresent(blockPos -> BlockInfestingLeaves.infestLeafBlock(world, world.getBlockState(blockPos), blockPos));
+                    nearbyLeaves.stream().filter(leaves -> rand.nextFloat() <= ModConfig.infested_leaves.leavesSpreadChance).findAny().ifPresent(blockPos -> BlockInfestingLeaves.infestLeafBlock(world, world.getBlockState(blockPos), blockPos));
                 }
             }
         }

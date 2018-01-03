@@ -8,7 +8,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ModFluids {
 
-    public static FluidWitchWater fluidWitchwater = new FluidWitchWater();
+    public static final FluidWitchWater fluidWitchwater = new FluidWitchWater();
     public static BlockFluidWitchwater blockWitchwater = new BlockFluidWitchwater();
 
     public static void init() {

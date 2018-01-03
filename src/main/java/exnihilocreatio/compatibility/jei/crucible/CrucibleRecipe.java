@@ -13,8 +13,8 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class CrucibleRecipe implements IRecipeWrapper {
-    private List<ItemStack> inputs;
-    private ItemStack output;
+    private final List<ItemStack> inputs;
+    private final ItemStack output;
 
     public CrucibleRecipe(Fluid fluid, List<ItemStack> inputs){
         this.output = FluidUtil.getFilledBucket(new FluidStack(fluid, 1000));

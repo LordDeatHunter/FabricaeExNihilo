@@ -15,12 +15,12 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class FluidBlockTransformRecipe implements IRecipeWrapper {
-    private FluidStack inputFluid;
+    private final FluidStack inputFluid;
 
-    private ItemStack inputBucket;
-    private ItemStack inputStack;
+    private final ItemStack inputBucket;
+    private final ItemStack inputStack;
 
-    private ItemStack outputStack;
+    private final ItemStack outputStack;
 
     public FluidBlockTransformRecipe(FluidBlockTransformer recipe) {
         inputFluid = new FluidStack(FluidRegistry.getFluid(recipe.getFluidName()), 1000);

@@ -46,7 +46,7 @@ public class ExNihiloCreatio {
     public static boolean configsLoaded = false;
     public static boolean crtActionsLoaded = false;
 
-    public static CreativeTabs tabExNihilo = new CreativeTabExNihiloCreatio();
+    public static final CreativeTabs tabExNihilo = new CreativeTabExNihiloCreatio();
 
     static {
         FluidRegistry.enableUniversalBucket();

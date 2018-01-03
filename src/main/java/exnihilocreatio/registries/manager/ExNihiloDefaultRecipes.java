@@ -4,8 +4,7 @@ import exnihilocreatio.registries.registries.*;
 
 
 public class ExNihiloDefaultRecipes {
-    private static CompatDefaultRecipes compat = new CompatDefaultRecipes();
-
+    private static final CompatDefaultRecipes compat = new CompatDefaultRecipes();
 
     public static void registerDefaults() {
         ExNihiloRegistryManager.registerSieveDefaultRecipeHandler(new SieveDefaults());

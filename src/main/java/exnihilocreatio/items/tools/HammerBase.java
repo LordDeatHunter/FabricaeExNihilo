@@ -13,7 +13,7 @@ import net.minecraft.item.ItemTool;
 
 public class HammerBase extends ItemTool implements IHammer, IHasModel {
 
-    int miningLevel;
+    final int miningLevel;
 
     public HammerBase(String name, int maxUses, ToolMaterial material) {
         super(material, Sets.newHashSet(new Block[]{}));

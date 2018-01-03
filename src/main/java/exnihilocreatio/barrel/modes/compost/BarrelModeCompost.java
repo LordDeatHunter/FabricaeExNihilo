@@ -41,7 +41,7 @@ public class BarrelModeCompost implements IBarrelMode {
     private float fillAmount = 0;
     @Setter
     private Color color = new Color("EEA96D");
-    private Color whiteColor = new Color(1f, 1f, 1f, 1f);
+    private final Color whiteColor = new Color(1f, 1f, 1f, 1f);
     private Color originalColor;
     @Setter
     @Getter
@@ -49,7 +49,7 @@ public class BarrelModeCompost implements IBarrelMode {
     @Getter
     private IBlockState compostState;
 
-    private BarrelItemHandlerCompost handler;
+    private final BarrelItemHandlerCompost handler;
 
     public BarrelModeCompost() {
         handler = new BarrelItemHandlerCompost(null);

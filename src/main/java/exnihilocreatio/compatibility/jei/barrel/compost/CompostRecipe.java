@@ -12,8 +12,8 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class CompostRecipe implements IRecipeWrapper {
-    private List<ItemStack> inputs;
-    private ItemStack output;
+    private final List<ItemStack> inputs;
+    private final ItemStack output;
 
     public CompostRecipe(ItemInfo output, List<ItemStack> inputs) {
         this.inputs = inputs;
