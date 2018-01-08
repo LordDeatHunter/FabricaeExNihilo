@@ -48,7 +48,7 @@ public class ModConfig {
         public int ticksToTransform = 600;
         public int leavesUpdateFrequency = 10;
         public int leavesSpreadPercent = 25;
-        public int leavesSpreadChance = 30;
+        public float leavesSpreadChance = 0.5f;
     }
 
     public static class Crooking {
