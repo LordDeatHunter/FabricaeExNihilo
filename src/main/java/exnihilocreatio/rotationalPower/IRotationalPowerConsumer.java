@@ -19,6 +19,6 @@ public interface IRotationalPowerConsumer extends IRotationalPowerMember {
 
     @Override
     default float calcEffectivePerTickRotation(World world, BlockPos pos, EnumFacing facing) {
-        return -IRotationalPowerMember.super.calcEffectivePerTickRotation(world, pos, facing.getOpposite());
+        return IRotationalPowerMember.super.calcEffectivePerTickRotation(world, pos, facing);
     }
 }

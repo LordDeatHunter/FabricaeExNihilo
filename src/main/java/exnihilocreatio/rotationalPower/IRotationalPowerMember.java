@@ -24,7 +24,7 @@ public interface IRotationalPowerMember {
     }
 
     default float calcEffectivePerTickRotation(World world, BlockPos pos, EnumFacing facing) {
-        BlockPos offset = pos.offset(facing);
+        BlockPos offset = pos.offset(facing.getOpposite());
         IRotationalPowerMember m = RotationalUtils.getPowerMember(world, offset, facing);
         if (m != null)
             return m.getEffectivePerTickRotation(facing) + getOwnRotation();
