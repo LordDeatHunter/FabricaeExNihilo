@@ -1,6 +1,8 @@
 package exnihilocreatio.rotationalPower;
 
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public interface IRotationalPowerConsumer extends IRotationalPowerMember {
     @Override
@@ -14,4 +16,9 @@ public interface IRotationalPowerConsumer extends IRotationalPowerMember {
     }
 
     float getMachineRotationPerTick();
+
+    @Override
+    default float calcEffectivePerTickRotation(World world, BlockPos pos, EnumFacing facing) {
+        return -IRotationalPowerMember.super.calcEffectivePerTickRotation(world, pos, facing.getOpposite());
+    }
 }

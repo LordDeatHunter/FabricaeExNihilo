@@ -1,6 +1,8 @@
 package exnihilocreatio.rotationalPower;
 
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public interface IRotationalPowerMember {
 
@@ -19,5 +21,13 @@ public interface IRotationalPowerMember {
 
     default void addEffectiveRotation(float rotation) {
         setEffectivePerTickRotation(getOwnRotation() + rotation);
+    }
+
+    default float calcEffectivePerTickRotation(World world, BlockPos pos, EnumFacing facing) {
+        BlockPos offset = pos.offset(facing);
+        IRotationalPowerMember m = RotationalUtils.getPowerMember(world, offset, facing);
+        if (m != null)
+            return m.getEffectivePerTickRotation(facing) + getOwnRotation();
+        return getOwnRotation();
     }
 }
