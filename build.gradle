@@ -38,7 +38,7 @@ sourceCompatibility=1.8
 targetCompatibility=1.8
 
 minecraft {
-    version = "1.12.2-14.23.1.2555"
+    version = "1.12.2-14.23.1.2586"
     runDir = "run"
 	mappings = "snapshot_20171201"
     useDepAts = true
@@ -82,8 +82,7 @@ repositories
 
 dependencies
 {
-    compileOnly "mezz.jei:jei_1.12:4.7.+"
-
+    deobfCompile "mezz.jei:jei_1.12:4.7.+"
     deobfCompile "slimeknights.mantle:Mantle:1.12-1.3.+"
     deobfCompile "slimeknights:TConstruct:1.12-2.7.+"
 
