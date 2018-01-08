@@ -71,9 +71,11 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
 
         storedRotationalPower += perTickRotation;
 
-        if (Math.abs(storedRotationalPower) > 100 && toSift != null && !world.isRemote) {
+        if (Math.abs(storedRotationalPower) > 100 && toSift != null) {
             storedRotationalPower += storedRotationalPower > 0 ? -100 : 100;
-            doAutoSieving(toSift);
+            if (!world.isRemote) {
+                doAutoSieving(toSift);
+            }
         }
 
 

@@ -28,7 +28,7 @@ public class CapabilityRotationalMember implements Capability.IStorage<IRotation
     }
 
     @Override
-    public IRotationalPowerMember call() throws Exception {
+    public IRotationalPowerMember call() {
         return new IRotationalPowerMember() {
 
             @Override
