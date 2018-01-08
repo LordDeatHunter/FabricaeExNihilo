@@ -80,6 +80,7 @@ public class ExNihiloCreatio {
         if (ModConfig.mechanics.enableBarrels) {
             BarrelModeRegistry.registerDefaults();
         }
+
     }
 
     @EventHandler

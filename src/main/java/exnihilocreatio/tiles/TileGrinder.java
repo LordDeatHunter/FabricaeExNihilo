@@ -1,12 +1,10 @@
 package exnihilocreatio.tiles;
 
+import exnihilocreatio.rotationalPower.CapabilityRotationalMember;
 import exnihilocreatio.rotationalPower.IRotationalPowerConsumer;
-import exnihilocreatio.rotationalPower.IRotationalPowerMember;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 
@@ -32,28 +30,29 @@ public class TileGrinder extends BaseTileEntity implements ITickable, IRotationa
     public void update() {
         tickCounter++;
 
-        if (tickCounter % 10 == 0) {
-            perTickRotation = calcEffectivePerTickRotation(facing);
+        if (tickCounter > 0 && tickCounter % 10 == 0) {
+            perTickRotation = calcEffectivePerTickRotation(world,pos,facing);
+            tickCounter = 0;
         }
 
         if (world.isRemote) {
             rotationValue += perTickRotation;
         }
     }
-
     @SuppressWarnings("unchecked")
     @Override
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing facing) {
-        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return (T) itemHandlerGrinder;
-        }
-
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(itemHandlerGrinder);
+        if (capability == CapabilityRotationalMember.ROTIONAL_MEMBER)
+            return CapabilityRotationalMember.ROTIONAL_MEMBER.cast(this);
         return super.getCapability(capability, facing);
     }
 
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, EnumFacing facing) {
         return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ||
+                (capability == CapabilityRotationalMember.ROTIONAL_MEMBER && facing == this.facing) ||
                 super.hasCapability(capability, facing);
     }
 
@@ -97,13 +96,4 @@ public class TileGrinder extends BaseTileEntity implements ITickable, IRotationa
         perTickRotation = rotation;
     }
 
-    private float calcEffectivePerTickRotation(EnumFacing direction) {
-        if (facing == direction) {
-            BlockPos posProvider = pos.offset(facing.getOpposite());
-            TileEntity te = world.getTileEntity(posProvider);
-            if (te != null && te instanceof IRotationalPowerMember) {
-                return ((IRotationalPowerMember) te).getEffectivePerTickRotation(facing) + getOwnRotation();
-            } else return getOwnRotation();
-        } else return 0;
-    }
 }
