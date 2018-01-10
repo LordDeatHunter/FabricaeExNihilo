@@ -71,113 +71,22 @@ public class CompatJEI implements IModPlugin {
     @SideOnly(Side.CLIENT)
     public void register(@Nonnull IModRegistry registry) {
         LogUtil.info("ModConfig Loaded: " + ExNihiloCreatio.configsLoaded);
-        IGuiHelper guiHelper = registry.getJeiHelpers().getGuiHelper();
-
 
         if (!ExNihiloCreatio.configsLoaded) {
             ExNihiloCreatio.loadConfigs();
         }
 
-        //region >>>> SIEVE RECIPES
-        List<SieveRecipe> sieveRecipes = Lists.newArrayList();
+        registerCompost(registry);
+        registerFluidBlockTransform(registry);
+        registerFluidOnTop(registry);
+        registerFluidTransform(registry);
+        registerHammer(registry);
+        registerHeat(registry);
+        registerSieve(registry);
+        registerStoneCrucible(registry);
+    }
 
-        for (Ingredient ingredient : ExNihiloRegistryManager.SIEVE_REGISTRY.getRegistry().keySet()) {
-            for (MeshType type : MeshType.values()) {
-                if (type.getID() != 0 && ingredient != null) // Bad configs strike back!
-                {
-                    SieveRecipe recipe = new SieveRecipe(ingredient, type);
-
-                    // If there's an input block, mesh, and at least one output
-                    if (!recipe.getInputs().isEmpty() && !recipe.getOutputs().isEmpty() && !sieveRecipes.contains(recipe)) {
-
-                        sieveRecipes.add(recipe);
-                    }
-                }
-            }
-        }
-        registry.addRecipes(sieveRecipes, SieveRecipeCategory.UID);
-
-        registry.addRecipeCatalyst(new ItemStack(ModBlocks.sieve), SieveRecipeCategory.UID);
-        //endregion
-
-        //region >>>> HAMMER RECIPES
-        List<HammerRecipe> hammerRecipes = Lists.newArrayList();
-
-        for (Ingredient ingredient : ExNihiloRegistryManager.HAMMER_REGISTRY.getRegistry().keySet()) {
-            HammerRecipe recipe = new HammerRecipe(ingredient);
-
-            // If there's an input block, and at least one output
-            if (!recipe.getInputs().isEmpty() && !recipe.getOutputs().isEmpty()) {
-                hammerRecipes.add(recipe);
-            }
-        }
-
-        registry.addRecipes(hammerRecipes, HammerRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModItems.hammerWood), HammerRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModItems.hammerGold), HammerRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModItems.hammerStone), HammerRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModItems.hammerIron), HammerRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModItems.hammerDiamond), HammerRecipeCategory.UID);
-        //endregion
-
-        //region >>>> FLUID TRANSFORM RECIPES
-        List<FluidTransformRecipe> fluidTransformRecipes = Lists.newArrayList();
-
-        for (FluidTransformer transformer : ExNihiloRegistryManager.FLUID_TRANSFORM_REGISTRY.getFluidTransformers()) {
-            // Make sure both fluids are registered
-            if (FluidRegistry.isFluidRegistered(transformer.getInputFluid()) && FluidRegistry.isFluidRegistered(transformer.getOutputFluid())) {
-                FluidTransformRecipe recipe = new FluidTransformRecipe(transformer);
-
-                // If theres a bucket and at least one block (and an output, for consistency)
-                if (recipe.getInputs().size() >= 2 && recipe.getOutputs().size() == 1) {
-                    fluidTransformRecipes.add(new FluidTransformRecipe(transformer));
-                }
-            }
-        }
-
-        registry.addRecipes(fluidTransformRecipes, FluidTransformRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelWood), FluidTransformRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelStone), FluidTransformRecipeCategory.UID);
-        //endregion
-
-        //region >>>> FLUID ON TOP RECIPE
-        List<FluidOnTopRecipe> fluidOnTopRecipes = Lists.newArrayList();
-        for (FluidFluidBlock transformer : ExNihiloRegistryManager.FLUID_ON_TOP_REGISTRY.getRegistry()) {
-            // Make sure both fluids are registered
-            if (FluidRegistry.isFluidRegistered(transformer.getFluidInBarrel()) && FluidRegistry.isFluidRegistered(transformer.getFluidOnTop()) && transformer.getResult().getItem() != null) {
-                FluidOnTopRecipe recipe = new FluidOnTopRecipe(transformer);
-
-                if (recipe.getInputs().size() == 2 && recipe.getOutputs().size() == 1) {
-                    fluidOnTopRecipes.add(new FluidOnTopRecipe(transformer));
-                }
-            }
-        }
-
-        registry.addRecipes(fluidOnTopRecipes, FluidOnTopRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelWood), FluidOnTopRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelStone), FluidOnTopRecipeCategory.UID);
-        //endregionS
-
-        //region >>>> FLUID BLOCK TRANSFORM RECIPE
-        List<FluidBlockTransformRecipe> fluidBlockTransformRecipes = Lists.newArrayList();
-        for (FluidBlockTransformer transformer : ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.getRegistry()) {
-            // Make sure everything's registered
-            if (FluidRegistry.isFluidRegistered(transformer.getFluidName()) && transformer.getInput().getItem() != null && transformer.getOutput().getItem() != null) {
-                FluidBlockTransformRecipe recipe = new FluidBlockTransformRecipe(transformer);
-
-                if (recipe.getInputs().size() == 2 && recipe.getOutputs().size() == 1) {
-                    fluidBlockTransformRecipes.add(new FluidBlockTransformRecipe(transformer));
-                }
-            }
-        }
-
-        registry.addRecipes(fluidBlockTransformRecipes, FluidBlockTransformRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelWood), FluidBlockTransformRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelStone), FluidBlockTransformRecipeCategory.UID);
-        //endregionS
-
-        //region >>>> COMPOST RECIPES
-
+    private void registerCompost(@Nonnull IModRegistry registry){
         List<CompostRecipe> compostRecipes = Lists.newArrayList();
 
         Map<Ingredient, Compostable> compostRegistry = ExNihiloRegistryManager.COMPOST_REGISTRY.getRegistry();
@@ -220,10 +129,130 @@ public class CompatJEI implements IModPlugin {
         registry.addRecipes(compostRecipes, CompostRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelWood), CompostRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelStone), CompostRecipeCategory.UID);
-        //endregion
+        LogUtil.info("JEI: Compost Recipes Loaded:            " + compostRecipes.size());
+    }
 
-        //region >>>> STONE CRUCIBLE RECIPES
 
+    private void registerFluidBlockTransform(@Nonnull IModRegistry registry){
+        List<FluidBlockTransformRecipe> fluidBlockTransformRecipes = Lists.newArrayList();
+        for (FluidBlockTransformer transformer : ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.getRegistry()) {
+            // Make sure everything's registered
+            if (FluidRegistry.isFluidRegistered(transformer.getFluidName()) && transformer.getInput().getItem() != null && transformer.getOutput().getItem() != null) {
+                FluidBlockTransformRecipe recipe = new FluidBlockTransformRecipe(transformer);
+
+                if (recipe.getInputs().size() == 2 && recipe.getOutputs().size() == 1) {
+                    fluidBlockTransformRecipes.add(new FluidBlockTransformRecipe(transformer));
+                }
+            }
+        }
+
+        registry.addRecipes(fluidBlockTransformRecipes, FluidBlockTransformRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelWood), FluidBlockTransformRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelStone), FluidBlockTransformRecipeCategory.UID);
+        LogUtil.info("JEI: Fluid Block Transform Recipes Loaded:       " + fluidBlockTransformRecipes.size());
+    }
+
+    private void registerFluidOnTop(@Nonnull IModRegistry registry){
+        List<FluidOnTopRecipe> fluidOnTopRecipes = Lists.newArrayList();
+        for (FluidFluidBlock transformer : ExNihiloRegistryManager.FLUID_ON_TOP_REGISTRY.getRegistry()) {
+            // Make sure both fluids are registered
+            if (FluidRegistry.isFluidRegistered(transformer.getFluidInBarrel()) && FluidRegistry.isFluidRegistered(transformer.getFluidOnTop()) && transformer.getResult().getItem() != null) {
+                FluidOnTopRecipe recipe = new FluidOnTopRecipe(transformer);
+
+                if (recipe.getInputs().size() == 2 && recipe.getOutputs().size() == 1) {
+                    fluidOnTopRecipes.add(new FluidOnTopRecipe(transformer));
+                }
+            }
+        }
+
+        registry.addRecipes(fluidOnTopRecipes, FluidOnTopRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelWood), FluidOnTopRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelStone), FluidOnTopRecipeCategory.UID);
+        LogUtil.info("JEI: Fluid On Top Recipes Loaded:       " + fluidOnTopRecipes.size());
+    }
+
+    private void registerFluidTransform(@Nonnull IModRegistry registry){
+        List<FluidTransformRecipe> fluidTransformRecipes = Lists.newArrayList();
+
+        for (FluidTransformer transformer : ExNihiloRegistryManager.FLUID_TRANSFORM_REGISTRY.getFluidTransformers()) {
+            // Make sure both fluids are registered
+            if (FluidRegistry.isFluidRegistered(transformer.getInputFluid()) && FluidRegistry.isFluidRegistered(transformer.getOutputFluid())) {
+                FluidTransformRecipe recipe = new FluidTransformRecipe(transformer);
+
+                // If theres a bucket and at least one block (and an output, for consistency)
+                if (recipe.getInputs().size() >= 2 && recipe.getOutputs().size() == 1) {
+                    fluidTransformRecipes.add(new FluidTransformRecipe(transformer));
+                }
+            }
+        }
+
+        registry.addRecipes(fluidTransformRecipes, FluidTransformRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelWood), FluidTransformRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelStone), FluidTransformRecipeCategory.UID);
+        LogUtil.info("JEI: Fluid Transform Recipes Loaded:    " + fluidTransformRecipes.size());
+    }
+
+    private void registerHammer(@Nonnull IModRegistry registry){
+        List<HammerRecipe> hammerRecipes = Lists.newArrayList();
+
+        for (Ingredient ingredient : ExNihiloRegistryManager.HAMMER_REGISTRY.getRegistry().keySet()) {
+            HammerRecipe recipe = new HammerRecipe(ingredient);
+
+            // If there's an input block, and at least one output
+            if (!recipe.getInputs().isEmpty() && !recipe.getOutputs().isEmpty()) {
+                hammerRecipes.add(recipe);
+            }
+        }
+
+        registry.addRecipes(hammerRecipes, HammerRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModItems.hammerWood), HammerRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModItems.hammerGold), HammerRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModItems.hammerStone), HammerRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModItems.hammerIron), HammerRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModItems.hammerDiamond), HammerRecipeCategory.UID);
+        LogUtil.info("JEI: Hammer Recipes Loaded:             " + hammerRecipes.size());
+    }
+
+    private void registerHeat(@Nonnull IModRegistry registry){
+        List<HeatSourcesRecipe> heatSources = Lists.newArrayList();
+
+        Map<BlockInfo, Integer> heatRegistryRegistry = ExNihiloRegistryManager.HEAT_REGISTRY.getRegistry();
+
+        for (Map.Entry<BlockInfo, Integer> blockInfoIntegerEntry : heatRegistryRegistry.entrySet()) {
+            BlockInfo block = blockInfoIntegerEntry.getKey();
+
+            heatSources.add(new HeatSourcesRecipe(block, blockInfoIntegerEntry.getValue()));
+        }
+
+        registry.addRecipes(heatSources, CrucibleHeatSourceRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.crucibleStone, 1, 1), CrucibleHeatSourceRecipeCategory.UID);
+
+        LogUtil.info("JEI: Heat Sources Loaded:             " + heatSources.size());
+    }
+
+    private void registerSieve(@Nonnull IModRegistry registry){
+        List<SieveRecipe> sieveRecipes = Lists.newArrayList();
+
+        for (Ingredient ingredient : ExNihiloRegistryManager.SIEVE_REGISTRY.getRegistry().keySet()) {
+            for (MeshType type : MeshType.values()) {
+                if (type.getID() != 0 && ingredient != null) // Bad configs strike back!
+                {
+                    SieveRecipe recipe = new SieveRecipe(ingredient, type);
+
+                    // If there's an input block, mesh, and at least one output
+                    if (!recipe.getInputs().isEmpty() && !recipe.getOutputs().isEmpty() && !sieveRecipes.contains(recipe)) {
+
+                        sieveRecipes.add(recipe);
+                    }
+                }
+            }
+        }
+        registry.addRecipes(sieveRecipes, SieveRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.sieve), SieveRecipeCategory.UID);
+        LogUtil.info("JEI: Sieve Recipes Loaded:              " + sieveRecipes.size());
+    }
+
+    private void registerStoneCrucible(@Nonnull IModRegistry registry){
         List<CrucibleRecipe> crucibleRecipes = Lists.newArrayList();
 
         Map<Ingredient, Meltable> crucibleRegistry = ExNihiloRegistryManager.CRUCIBLE_STONE_REGISTRY.getRegistry();
@@ -265,28 +294,7 @@ public class CompatJEI implements IModPlugin {
 
         registry.addRecipes(crucibleRecipes, CrucibleRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(ModBlocks.crucibleStone, 1, 1), CrucibleRecipeCategory.UID);
-        //endregion
-
-        //region >>>> HEAT RECIPES
-        List<HeatSourcesRecipe> heatSources = Lists.newArrayList();
-
-        Map<BlockInfo, Integer> heatRegistryRegistry = ExNihiloRegistryManager.HEAT_REGISTRY.getRegistry();
-
-        for (Map.Entry<BlockInfo, Integer> blockInfoIntegerEntry : heatRegistryRegistry.entrySet()) {
-            BlockInfo block = blockInfoIntegerEntry.getKey();
-
-            heatSources.add(new HeatSourcesRecipe(block, blockInfoIntegerEntry.getValue()));
-        }
-
-        registry.addRecipes(heatSources, CrucibleHeatSourceRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModBlocks.crucibleStone, 1, 1), CrucibleHeatSourceRecipeCategory.UID);
-        //endregion
-
-        LogUtil.info("JEI: Hammer Recipes Loaded:             " + hammerRecipes.size());
-        LogUtil.info("JEI: Sieve Recipes Loaded:              " + sieveRecipes.size());
-        LogUtil.info("JEI: Fluid Transform Recipes Loaded:    " + fluidTransformRecipes.size());
-        LogUtil.info("JEI: Fluid On Top Recipes Loaded:       " + fluidOnTopRecipes.size());
-        LogUtil.info("JEI: Compost Recipes Loaded:            " + compostRecipes.size());
+        LogUtil.info("JEI: Stone Crucible Recipes Loaded:       " + crucibleRecipes.size());
     }
 
     @Override
