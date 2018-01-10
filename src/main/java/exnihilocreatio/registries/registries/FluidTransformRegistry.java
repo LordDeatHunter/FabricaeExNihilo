@@ -1,12 +1,15 @@
 package exnihilocreatio.registries.registries;
 
+import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import exnihilocreatio.compatibility.jei.barrel.fluidtransform.FluidTransformRecipe;
 import exnihilocreatio.json.CustomBlockInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.FluidTransformer;
 import exnihilocreatio.util.BlockInfo;
+import net.minecraftforge.fluids.FluidRegistry;
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
@@ -90,4 +93,22 @@ public class FluidTransformRegistry extends BaseRegistryMap<String, List<FluidTr
         return fluidTransformers;
     }
 
+    @Override
+    public List<FluidTransformRecipe> getRecipeList() {
+        List<FluidTransformRecipe> fluidTransformRecipes = Lists.newArrayList();
+
+        for (FluidTransformer transformer : getFluidTransformers()) {
+            // Make sure both fluids are registered
+            if (FluidRegistry.isFluidRegistered(transformer.getInputFluid()) && FluidRegistry.isFluidRegistered(transformer.getOutputFluid())) {
+                FluidTransformRecipe recipe = new FluidTransformRecipe(transformer);
+
+                // If theres a bucket and at least one block (and an output, for consistency)
+                if (recipe.getInputs().size() >= 2 && recipe.getOutputs().size() == 1) {
+                    fluidTransformRecipes.add(new FluidTransformRecipe(transformer));
+                }
+            }
+        }
+
+        return fluidTransformRecipes;
+    }
 }

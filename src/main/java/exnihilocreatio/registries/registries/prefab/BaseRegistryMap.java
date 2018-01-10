@@ -21,4 +21,5 @@ public abstract class BaseRegistryMap<K, V> extends BaseRegistry<Map<K, V>> {
     public void clearRegistry() {
         registry.clear();
     }
+
 }

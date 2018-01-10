@@ -72,5 +72,7 @@ public abstract class BaseRegistry<RegType> {
         }
     }
 
+    public abstract List<?> getRecipeList();
+
     public abstract void clearRegistry();
 }

@@ -1,7 +1,9 @@
 package exnihilocreatio.registries.registries;
 
+import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import exnihilocreatio.compatibility.jei.barrel.fluidblocktransform.FluidBlockTransformRecipe;
 import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryList;
@@ -9,6 +11,7 @@ import exnihilocreatio.registries.types.FluidBlockTransformer;
 import exnihilocreatio.util.ItemInfo;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 
 import java.io.FileReader;
 import java.util.List;
@@ -60,5 +63,21 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
         List<FluidBlockTransformer> gsonInput = gson.fromJson(fr, new TypeToken<List<FluidBlockTransformer>>() {
         }.getType());
         registry.addAll(gsonInput);
+    }
+
+    @Override
+    public List<FluidBlockTransformRecipe> getRecipeList() {
+        List<FluidBlockTransformRecipe> fluidBlockTransformRecipes = Lists.newArrayList();
+        for (FluidBlockTransformer transformer : getRegistry()) {
+            // Make sure everything's registered
+            if (FluidRegistry.isFluidRegistered(transformer.getFluidName()) && transformer.getInput().getItem() != null && transformer.getOutput().getItem() != null) {
+                FluidBlockTransformRecipe recipe = new FluidBlockTransformRecipe(transformer);
+
+                if (recipe.getInputs().size() == 2 && recipe.getOutputs().size() == 1) {
+                    fluidBlockTransformRecipes.add(new FluidBlockTransformRecipe(transformer));
+                }
+            }
+        }
+        return fluidBlockTransformRecipes;
     }
 }

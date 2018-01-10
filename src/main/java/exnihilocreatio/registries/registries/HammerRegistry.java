@@ -1,7 +1,9 @@
 package exnihilocreatio.registries.registries;
 
+import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import exnihilocreatio.compatibility.jei.hammer.HammerRecipe;
 import exnihilocreatio.json.CustomItemStackJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
@@ -153,5 +155,22 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
                 .forEach(entry -> entry.getValue().stream().filter(value -> value.getMiningLevel() <= miningLevel).forEach(drops::add));
 
         return drops;
+    }
+
+    @Override
+    public List<HammerRecipe> getRecipeList() {
+        List<HammerRecipe> hammerRecipes = Lists.newArrayList();
+
+        for (Ingredient ingredient : getRegistry().keySet()) {
+            HammerRecipe recipe = new HammerRecipe(ingredient);
+
+            // If there's an input block, and at least one output
+            if (!recipe.getInputs().isEmpty() && !recipe.getOutputs().isEmpty()) {
+
+                hammerRecipes.add(recipe);
+            }
+        }
+
+        return hammerRecipes;
     }
 }

@@ -1,8 +1,11 @@
 package exnihilocreatio.registries.registries;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import exnihilocreatio.compatibility.jei.barrel.compost.CompostRecipe;
 import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
@@ -33,6 +36,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
@@ -182,5 +186,48 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
         Map<Ingredient, Compostable> map = (HashMap)((HashMap)registry).clone();
         map.putAll(oreRegistry);
         return map;
+    }
+
+    @Override
+    public List<CompostRecipe> getRecipeList() {
+        List<CompostRecipe> compostRecipes = Lists.newArrayList();
+
+        Map<Ingredient, Compostable> compostRegistry = getRegistry();
+        Map<ItemInfo, List<ItemStack>> compostEntries = new HashMap<>();
+
+        for (Map.Entry<Ingredient, Compostable> compostEntry : compostRegistry.entrySet()) {
+            ItemInfo compostBlock = compostEntry.getValue().getCompostBlock();
+
+            List<ItemStack> compostables = compostEntries.computeIfAbsent(compostBlock, k -> Lists.newArrayList());
+
+            Ingredient compostItem = compostEntry.getKey();
+            int compostCount = (int) Math.ceil(1.0F / compostEntry.getValue().getValue());
+
+            for (ItemStack stack : compostItem.getMatchingStacks()){
+                if (compostables.stream().noneMatch(entry -> entry.isItemEqual(stack))) {
+                    ItemStack itemStack = stack.copy();
+                    itemStack.setCount(compostCount);
+                    compostables.add(itemStack);
+                }
+            }
+        }
+
+        for (Map.Entry<ItemInfo, List<ItemStack>> compostEntry : compostEntries.entrySet()) {
+            // I heard you like lists, you I put some lists in your lists, so you can list while you list
+            List<List<ItemStack>> splitList = Lists.newArrayList(ImmutableList.of(Lists.newArrayList()));
+
+            for (ItemStack stack : compostEntry.getValue()) {
+                if (splitList.get(0).size() >= 45) {
+                    splitList.add(0, Lists.newArrayList());
+                }
+
+                splitList.get(0).add(stack);
+            }
+
+            for (List<ItemStack> compostInputs : Lists.reverse(splitList)) {
+                compostRecipes.add(new CompostRecipe(compostEntry.getKey(), compostInputs));
+            }
+        }
+        return compostRecipes;
     }
 }

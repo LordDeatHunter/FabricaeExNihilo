@@ -38,4 +38,9 @@ public class BarrelLiquidBlacklistRegistry extends BaseRegistryMap<Integer, List
             }
         });
     }
+
+    @Override
+    public List<?> getRecipeList() {
+        return null;
+    }
 }

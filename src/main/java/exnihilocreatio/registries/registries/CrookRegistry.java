@@ -96,4 +96,9 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
 
         }
     }
+
+    @Override
+    public List<?> getRecipeList() {
+        return null;
+    }
 }

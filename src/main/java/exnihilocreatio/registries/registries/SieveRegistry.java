@@ -1,7 +1,10 @@
 package exnihilocreatio.registries.registries;
 
+import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import exnihilocreatio.blocks.BlockSieve;
+import exnihilocreatio.compatibility.jei.sieve.SieveRecipe;
 import exnihilocreatio.json.CustomBlockInfoJson;
 import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
@@ -164,4 +167,25 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Sifta
         }
     }
 
+    @Override
+    public List<SieveRecipe> getRecipeList() {
+        List<SieveRecipe> sieveRecipes = Lists.newArrayList();
+
+        for (Ingredient ingredient : getRegistry().keySet()) {
+            for (BlockSieve.MeshType type : BlockSieve.MeshType.values()) {
+                if (type.getID() != 0 && ingredient != null) // Bad configs strike back!
+                {
+                    SieveRecipe recipe = new SieveRecipe(ingredient, type);
+
+                    // If there's an input block, mesh, and at least one output
+                    if (!recipe.getInputs().isEmpty() && !recipe.getOutputs().isEmpty() && !sieveRecipes.contains(recipe)) {
+
+                        sieveRecipes.add(recipe);
+                    }
+                }
+            }
+        }
+
+        return sieveRecipes;
+    }
 }

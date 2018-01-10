@@ -1,7 +1,10 @@
 package exnihilocreatio.registries.registries;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import exnihilocreatio.compatibility.jei.crucible.CrucibleRecipe;
 import exnihilocreatio.json.CustomBlockInfoJson;
 import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.IDefaultRecipeProvider;
@@ -124,5 +127,49 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
         Map<Ingredient, Meltable> map = (HashMap)((HashMap)registry).clone();
         map.putAll(oreRegistry);
         return map;
+    }
+
+    @Override
+    public List<CrucibleRecipe> getRecipeList() {
+        List<CrucibleRecipe> crucibleRecipes = Lists.newArrayList();
+
+        Map<Ingredient, Meltable> crucibleRegistry = getRegistry();
+        Map<Fluid, List<ItemStack>> crucibleEntries = new HashMap<>();
+
+        for (Map.Entry<Ingredient, Meltable> crucibleEntry : crucibleRegistry.entrySet()) {
+            Fluid fluid = FluidRegistry.getFluid(crucibleEntry.getValue().getFluid());
+
+            List<ItemStack> meltables = crucibleEntries.computeIfAbsent(fluid, k -> Lists.newArrayList());
+
+            Ingredient crucibleItem = crucibleEntry.getKey();
+            int crucibleCount = (int) Math.ceil(1000.0F / crucibleEntry.getValue().getAmount());
+
+            for (ItemStack stack : crucibleItem.getMatchingStacks()){
+                if (meltables.stream().noneMatch(entry -> entry.isItemEqual(stack))) {
+                    ItemStack itemStack = stack.copy();
+                    itemStack.setCount(crucibleCount);
+                    meltables.add(itemStack);
+                }
+            }
+        }
+
+        for (Map.Entry<Fluid, List<ItemStack>> crucibleEntry : crucibleEntries.entrySet()) {
+            // I heard you like lists, you I put some lists in your lists, so you can list while you list
+            List<List<ItemStack>> splitList = Lists.newArrayList(ImmutableList.of(Lists.newArrayList()));
+
+            for (ItemStack stack : crucibleEntry.getValue()) {
+                if (splitList.get(0).size() >= 45) {
+                    splitList.add(0, Lists.newArrayList());
+                }
+
+                splitList.get(0).add(stack);
+            }
+
+            for (List<ItemStack> crucibleInputs : Lists.reverse(splitList)) {
+                crucibleRecipes.add(new CrucibleRecipe(crucibleEntry.getKey(), crucibleInputs));
+            }
+        }
+
+        return crucibleRecipes;
     }
 }

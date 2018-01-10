@@ -1,11 +1,8 @@
 package exnihilocreatio.compatibility.jei;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.ModBlocks;
 import exnihilocreatio.ModItems;
-import exnihilocreatio.blocks.BlockSieve.MeshType;
 import exnihilocreatio.compatibility.jei.barrel.compost.CompostRecipe;
 import exnihilocreatio.compatibility.jei.barrel.compost.CompostRecipeCategory;
 import exnihilocreatio.compatibility.jei.barrel.fluidblocktransform.FluidBlockTransformRecipe;
@@ -23,24 +20,16 @@ import exnihilocreatio.compatibility.jei.hammer.HammerRecipeCategory;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipe;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipeCategory;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
-import exnihilocreatio.registries.types.*;
-import exnihilocreatio.util.BlockInfo;
-import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.LogUtil;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @JEIPlugin
 public class CompatJEI implements IModPlugin {
@@ -87,44 +76,7 @@ public class CompatJEI implements IModPlugin {
     }
 
     private void registerCompost(@Nonnull IModRegistry registry){
-        List<CompostRecipe> compostRecipes = Lists.newArrayList();
-
-        Map<Ingredient, Compostable> compostRegistry = ExNihiloRegistryManager.COMPOST_REGISTRY.getRegistry();
-        Map<ItemInfo, List<ItemStack>> compostEntries = new HashMap<>();
-
-        for (Map.Entry<Ingredient, Compostable> compostEntry : compostRegistry.entrySet()) {
-            ItemInfo compostBlock = compostEntry.getValue().getCompostBlock();
-
-            List<ItemStack> compostables = compostEntries.computeIfAbsent(compostBlock, k -> Lists.newArrayList());
-
-            Ingredient compostItem = compostEntry.getKey();
-            int compostCount = (int) Math.ceil(1.0F / compostEntry.getValue().getValue());
-
-            for (ItemStack stack : compostItem.getMatchingStacks()){
-                if (compostables.stream().noneMatch(entry -> entry.isItemEqual(stack))) {
-                    ItemStack itemStack = stack.copy();
-                    itemStack.setCount(compostCount);
-                    compostables.add(itemStack);
-                }
-            }
-        }
-
-        for (Map.Entry<ItemInfo, List<ItemStack>> compostEntry : compostEntries.entrySet()) {
-            // I heard you like lists, you I put some lists in your lists, so you can list while you list
-            List<List<ItemStack>> splitList = Lists.newArrayList(ImmutableList.of(Lists.newArrayList()));
-
-            for (ItemStack stack : compostEntry.getValue()) {
-                if (splitList.get(0).size() >= 45) {
-                    splitList.add(0, Lists.newArrayList());
-                }
-
-                splitList.get(0).add(stack);
-            }
-
-            for (List<ItemStack> compostInputs : Lists.reverse(splitList)) {
-                compostRecipes.add(new CompostRecipe(compostEntry.getKey(), compostInputs));
-            }
-        }
+        List<CompostRecipe> compostRecipes = ExNihiloRegistryManager.COMPOST_REGISTRY.getRecipeList();
 
         registry.addRecipes(compostRecipes, CompostRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelWood), CompostRecipeCategory.UID);
@@ -134,17 +86,7 @@ public class CompatJEI implements IModPlugin {
 
 
     private void registerFluidBlockTransform(@Nonnull IModRegistry registry){
-        List<FluidBlockTransformRecipe> fluidBlockTransformRecipes = Lists.newArrayList();
-        for (FluidBlockTransformer transformer : ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.getRegistry()) {
-            // Make sure everything's registered
-            if (FluidRegistry.isFluidRegistered(transformer.getFluidName()) && transformer.getInput().getItem() != null && transformer.getOutput().getItem() != null) {
-                FluidBlockTransformRecipe recipe = new FluidBlockTransformRecipe(transformer);
-
-                if (recipe.getInputs().size() == 2 && recipe.getOutputs().size() == 1) {
-                    fluidBlockTransformRecipes.add(new FluidBlockTransformRecipe(transformer));
-                }
-            }
-        }
+        List<FluidBlockTransformRecipe> fluidBlockTransformRecipes = ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.getRecipeList();
 
         registry.addRecipes(fluidBlockTransformRecipes, FluidBlockTransformRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelWood), FluidBlockTransformRecipeCategory.UID);
@@ -153,17 +95,7 @@ public class CompatJEI implements IModPlugin {
     }
 
     private void registerFluidOnTop(@Nonnull IModRegistry registry){
-        List<FluidOnTopRecipe> fluidOnTopRecipes = Lists.newArrayList();
-        for (FluidFluidBlock transformer : ExNihiloRegistryManager.FLUID_ON_TOP_REGISTRY.getRegistry()) {
-            // Make sure both fluids are registered
-            if (FluidRegistry.isFluidRegistered(transformer.getFluidInBarrel()) && FluidRegistry.isFluidRegistered(transformer.getFluidOnTop()) && transformer.getResult().getItem() != null) {
-                FluidOnTopRecipe recipe = new FluidOnTopRecipe(transformer);
-
-                if (recipe.getInputs().size() == 2 && recipe.getOutputs().size() == 1) {
-                    fluidOnTopRecipes.add(new FluidOnTopRecipe(transformer));
-                }
-            }
-        }
+        List<FluidOnTopRecipe> fluidOnTopRecipes = ExNihiloRegistryManager.FLUID_ON_TOP_REGISTRY.getRecipeList();
 
         registry.addRecipes(fluidOnTopRecipes, FluidOnTopRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelWood), FluidOnTopRecipeCategory.UID);
@@ -172,19 +104,7 @@ public class CompatJEI implements IModPlugin {
     }
 
     private void registerFluidTransform(@Nonnull IModRegistry registry){
-        List<FluidTransformRecipe> fluidTransformRecipes = Lists.newArrayList();
-
-        for (FluidTransformer transformer : ExNihiloRegistryManager.FLUID_TRANSFORM_REGISTRY.getFluidTransformers()) {
-            // Make sure both fluids are registered
-            if (FluidRegistry.isFluidRegistered(transformer.getInputFluid()) && FluidRegistry.isFluidRegistered(transformer.getOutputFluid())) {
-                FluidTransformRecipe recipe = new FluidTransformRecipe(transformer);
-
-                // If theres a bucket and at least one block (and an output, for consistency)
-                if (recipe.getInputs().size() >= 2 && recipe.getOutputs().size() == 1) {
-                    fluidTransformRecipes.add(new FluidTransformRecipe(transformer));
-                }
-            }
-        }
+        List<FluidTransformRecipe> fluidTransformRecipes = ExNihiloRegistryManager.FLUID_TRANSFORM_REGISTRY.getRecipeList();
 
         registry.addRecipes(fluidTransformRecipes, FluidTransformRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelWood), FluidTransformRecipeCategory.UID);
@@ -193,16 +113,7 @@ public class CompatJEI implements IModPlugin {
     }
 
     private void registerHammer(@Nonnull IModRegistry registry){
-        List<HammerRecipe> hammerRecipes = Lists.newArrayList();
-
-        for (Ingredient ingredient : ExNihiloRegistryManager.HAMMER_REGISTRY.getRegistry().keySet()) {
-            HammerRecipe recipe = new HammerRecipe(ingredient);
-
-            // If there's an input block, and at least one output
-            if (!recipe.getInputs().isEmpty() && !recipe.getOutputs().isEmpty()) {
-                hammerRecipes.add(recipe);
-            }
-        }
+        List<HammerRecipe> hammerRecipes = ExNihiloRegistryManager.HAMMER_REGISTRY.getRecipeList();
 
         registry.addRecipes(hammerRecipes, HammerRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(ModItems.hammerWood), HammerRecipeCategory.UID);
@@ -214,15 +125,7 @@ public class CompatJEI implements IModPlugin {
     }
 
     private void registerHeat(@Nonnull IModRegistry registry){
-        List<HeatSourcesRecipe> heatSources = Lists.newArrayList();
-
-        Map<BlockInfo, Integer> heatRegistryRegistry = ExNihiloRegistryManager.HEAT_REGISTRY.getRegistry();
-
-        for (Map.Entry<BlockInfo, Integer> blockInfoIntegerEntry : heatRegistryRegistry.entrySet()) {
-            BlockInfo block = blockInfoIntegerEntry.getKey();
-
-            heatSources.add(new HeatSourcesRecipe(block, blockInfoIntegerEntry.getValue()));
-        }
+        List<HeatSourcesRecipe> heatSources = ExNihiloRegistryManager.HEAT_REGISTRY.getRecipeList();
 
         registry.addRecipes(heatSources, CrucibleHeatSourceRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(ModBlocks.crucibleStone, 1, 1), CrucibleHeatSourceRecipeCategory.UID);
@@ -231,66 +134,15 @@ public class CompatJEI implements IModPlugin {
     }
 
     private void registerSieve(@Nonnull IModRegistry registry){
-        List<SieveRecipe> sieveRecipes = Lists.newArrayList();
+        List<SieveRecipe> sieveRecipes = ExNihiloRegistryManager.SIEVE_REGISTRY.getRecipeList();
 
-        for (Ingredient ingredient : ExNihiloRegistryManager.SIEVE_REGISTRY.getRegistry().keySet()) {
-            for (MeshType type : MeshType.values()) {
-                if (type.getID() != 0 && ingredient != null) // Bad configs strike back!
-                {
-                    SieveRecipe recipe = new SieveRecipe(ingredient, type);
-
-                    // If there's an input block, mesh, and at least one output
-                    if (!recipe.getInputs().isEmpty() && !recipe.getOutputs().isEmpty() && !sieveRecipes.contains(recipe)) {
-
-                        sieveRecipes.add(recipe);
-                    }
-                }
-            }
-        }
         registry.addRecipes(sieveRecipes, SieveRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(ModBlocks.sieve), SieveRecipeCategory.UID);
         LogUtil.info("JEI: Sieve Recipes Loaded:              " + sieveRecipes.size());
     }
 
     private void registerStoneCrucible(@Nonnull IModRegistry registry){
-        List<CrucibleRecipe> crucibleRecipes = Lists.newArrayList();
-
-        Map<Ingredient, Meltable> crucibleRegistry = ExNihiloRegistryManager.CRUCIBLE_STONE_REGISTRY.getRegistry();
-        Map<Fluid, List<ItemStack>> crucibleEntries = new HashMap<>();
-
-        for (Map.Entry<Ingredient, Meltable> crucibleEntry : crucibleRegistry.entrySet()) {
-            Fluid fluid = FluidRegistry.getFluid(crucibleEntry.getValue().getFluid());
-
-            List<ItemStack> meltables = crucibleEntries.computeIfAbsent(fluid, k -> Lists.newArrayList());
-
-            Ingredient crucibleItem = crucibleEntry.getKey();
-            int crucibleCount = (int) Math.ceil(1000.0F / crucibleEntry.getValue().getAmount());
-
-            for (ItemStack stack : crucibleItem.getMatchingStacks()){
-                if (meltables.stream().noneMatch(entry -> entry.isItemEqual(stack))) {
-                    ItemStack itemStack = stack.copy();
-                    itemStack.setCount(crucibleCount);
-                    meltables.add(itemStack);
-                }
-            }
-        }
-
-        for (Map.Entry<Fluid, List<ItemStack>> crucibleEntry : crucibleEntries.entrySet()) {
-            // I heard you like lists, you I put some lists in your lists, so you can list while you list
-            List<List<ItemStack>> splitList = Lists.newArrayList(ImmutableList.of(Lists.newArrayList()));
-
-            for (ItemStack stack : crucibleEntry.getValue()) {
-                if (splitList.get(0).size() >= 45) {
-                    splitList.add(0, Lists.newArrayList());
-                }
-
-                splitList.get(0).add(stack);
-            }
-
-            for (List<ItemStack> crucibleInputs : Lists.reverse(splitList)) {
-                crucibleRecipes.add(new CrucibleRecipe(crucibleEntry.getKey(), crucibleInputs));
-            }
-        }
+        List<CrucibleRecipe> crucibleRecipes = ExNihiloRegistryManager.CRUCIBLE_STONE_REGISTRY.getRecipeList();
 
         registry.addRecipes(crucibleRecipes, CrucibleRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(ModBlocks.crucibleStone, 1, 1), CrucibleRecipeCategory.UID);

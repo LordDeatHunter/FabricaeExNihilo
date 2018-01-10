@@ -175,4 +175,9 @@ public class OreRegistry extends BaseRegistryList<Ore> {
         }
         return false;
     }
+
+    @Override
+    public List<?> getRecipeList() {
+        return null;
+    }
 }

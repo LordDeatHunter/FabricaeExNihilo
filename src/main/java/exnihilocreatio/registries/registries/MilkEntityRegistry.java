@@ -94,4 +94,9 @@ public class MilkEntityRegistry extends BaseRegistryList<Milkable> {
         }.getType());
         registry.addAll(gsonInput);
     }
+
+    @Override
+    public List<?> getRecipeList() {
+        return null;
+    }
 }
