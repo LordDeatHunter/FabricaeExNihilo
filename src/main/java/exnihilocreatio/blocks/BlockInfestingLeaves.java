@@ -4,6 +4,7 @@ import exnihilocreatio.ModBlocks;
 import exnihilocreatio.compatibility.ITOPInfoProvider;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.tools.ICrook;
+import exnihilocreatio.tiles.BaseTileEntity;
 import exnihilocreatio.tiles.ITileLeafBlock;
 import exnihilocreatio.tiles.TileInfestingLeaves;
 import exnihilocreatio.util.Data;
@@ -81,13 +82,19 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
         this.leavesFancy = true;
     }
 
+    /**
+     * Sets a normal leave to infested
+     * @param world
+     * @param state
+     * @param pos
+     */
     public static void infestLeafBlock(World world, IBlockState state, BlockPos pos) {
         IBlockState leafState;
         //Prevents a crash with forestry using the new model system
         if (Block.REGISTRY.getNameForObject(state.getBlock()).getResourceDomain().equalsIgnoreCase("forestry"))
             leafState = Blocks.LEAVES.getDefaultState();
         else leafState = state;
-        world.setBlockState(pos, ModBlocks.infestingLeaves.getDefaultState(), 3);
+        world.setBlockState(pos, ModBlocks.infestingLeaves.getDefaultState().withProperty(DECAYABLE, true), 3);
         ((ITileLeafBlock) world.getTileEntity(pos)).setLeafBlock(leafState);
     }
 
@@ -100,9 +107,18 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
     public static void setInfested(World world, BlockPos pos, IBlockState leafState) {
         IBlockState block = world.getBlockState(pos);
         if (block.getBlock() instanceof BlockInfestingLeaves) {
-            IExtendedBlockState retval = (IExtendedBlockState) ModBlocks.infestedLeaves.getDefaultState();
-            world.setBlockState(pos, retval.withProperty(BlockInfestedLeaves.LEAFBLOCK, leafState), 7);
+            IBlockState retval = ((IExtendedBlockState) ModBlocks.infestedLeaves.getDefaultState())
+                    .withProperty(BlockInfestedLeaves.LEAFBLOCK, leafState)
+                    .withProperty(CHECK_DECAY, true)
+                    .withProperty(DECAYABLE, false);
+
+            world.setBlockState(pos, retval, 0b111);
+
             ((ITileLeafBlock)world.getTileEntity(pos)).setLeafBlock(leafState);
+            ((BaseTileEntity)world.getTileEntity(pos)).markDirtyClient();
+            
+            System.out.println("world = " + world.getBlockState(pos));
+            System.out.println("((ITileLeafBlock)world.getTileEntity(pos)).getLeafBlock() = " + ((ITileLeafBlock) world.getTileEntity(pos)).getLeafBlock());
         }
         else if (Util.isLeaves(block) && !(block.getBlock() instanceof BlockInfestedLeaves)){
             LogUtil.error("Sent leaf change to wrong method, redirecting");
@@ -112,7 +128,7 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
 
     @Override
     public void randomTick(World world, BlockPos pos, IBlockState state, Random rand) {
-        super.updateTick(world, pos, state, rand);
+        this.updateTick(world, pos, state, rand);
         spread(world, pos, state, rand);
     }
 
@@ -131,10 +147,6 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
                 }
             }
         }
-    }
-
-    @Override
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
     }
 
     @Override
@@ -161,14 +173,19 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
         if (state instanceof IExtendedBlockState){
             IExtendedBlockState retval = (IExtendedBlockState) state;
             IBlockState leafState;
-            if (world.getTileEntity(pos) != null) {
-                leafState = ((ITileLeafBlock) world.getTileEntity(pos)).getLeafBlock();
+            TileEntity te = world.getTileEntity(pos);
+
+            if (te instanceof ITileLeafBlock) {
+                leafState = ((ITileLeafBlock) te).getLeafBlock();
+            } else {
+                leafState = Blocks.LEAVES.getDefaultState();
             }
-            else leafState = Blocks.LEAVES.getDefaultState();
+
             return retval.withProperty(LEAFBLOCK, leafState);
         }
         return state;
     }
+
     @Override
     @Nonnull
     protected BlockStateContainer createBlockState() {
@@ -181,23 +198,24 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
     @Nonnull
     @Deprecated
     public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(CHECK_DECAY, meta == 0 || meta == 1 || meta == 3)
-                .withProperty(DECAYABLE, meta == 0 || meta == 2 || meta == 4)
-                .withProperty(NEARBYLEAVES, meta == 0 || meta == 1 || meta == 4);
+        return getDefaultState().withProperty(CHECK_DECAY, (meta & 0b100) != 0)
+                .withProperty(DECAYABLE, (meta & 0b010) != 0)
+                .withProperty(NEARBYLEAVES, (meta & 0b001) != 0);
     }
 
+
+    /**
+     * 3 bits for data:
+     *      0               0                0
+     *      checkDecay      decayable       nearbyLeaves
+     */
     @Override
     public int getMetaFromState(IBlockState state) {
-        boolean checkDecay = state.getValue(CHECK_DECAY);
-        boolean decayable = state.getValue(DECAYABLE);
-        boolean nearbyLeaves = state.getValue(NEARBYLEAVES);
-        if (checkDecay && decayable && nearbyLeaves)
-            return 0;
-        if (checkDecay)
-            return nearbyLeaves ? 1 : 3;
-        if (decayable)
-            return nearbyLeaves ? 2 : 4;
-        return 5;
+        int checkDecay = state.getValue(CHECK_DECAY) ? 1 : 0;
+        int decayable = state.getValue(DECAYABLE) ? 1 : 0;
+        int nearbyLeaves = state.getValue(NEARBYLEAVES) ? 1 : 0;
+
+        return checkDecay << 2 | decayable << 1 | nearbyLeaves;
     }
 
     @Override
@@ -269,6 +287,7 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
         if (state instanceof IExtendedBlockState){
             return ((IExtendedBlockState)state).getValue(BlockInfestedLeaves.LEAFBLOCK);
         }
+
         return state;
     }
 

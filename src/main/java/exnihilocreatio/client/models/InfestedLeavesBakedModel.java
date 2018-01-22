@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.property.IExtendedBlockState;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
@@ -21,7 +20,7 @@ public class InfestedLeavesBakedModel implements IBakedModel {
 
     private final IBakedModel defaultModel;
     private TextureAtlasSprite particleTexture;
-    public final static ModelResourceLocation variantTag = new ModelResourceLocation(ForgeRegistries.BLOCKS.getKey(infestedLeaves), "normal");
+    public final static ModelResourceLocation variantTag = new ModelResourceLocation(infestedLeaves.getRegistryName(), "normal");
 
     public InfestedLeavesBakedModel(IBakedModel defaultModel){
         this.defaultModel = defaultModel;
@@ -30,6 +29,7 @@ public class InfestedLeavesBakedModel implements IBakedModel {
     private IBakedModel handleBlockState(IBlockState state){
         if (state instanceof IExtendedBlockState){
             IBlockState copiedState = BlockInfestingLeaves.getLeafState(state);
+
             this.particleTexture = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelForState(copiedState).getParticleTexture();
             return Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelForState(copiedState);
         }

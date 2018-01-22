@@ -53,7 +53,7 @@ public class SieveRegistry extends BaseRegistryMap<BlockInfo, ArrayList<Siftable
         }
 
         drops.add(drop);
-        registry.put(block, drops);
+        super.register(block, drops);
     }
 
     /**
