@@ -2,8 +2,7 @@ package exnihilocreatio.items;
 
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.ModItems;
-import exnihilocreatio.blocks.leaves.BlockInfestedLeavesBase;
-import exnihilocreatio.blocks.leaves.BlockInfestingLeaves;
+import exnihilocreatio.blocks.BlockInfestingLeaves;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
 import exnihilocreatio.util.Util;
@@ -94,7 +93,7 @@ public class ItemResource extends Item implements IHasModel {
             IBlockState state = world.getBlockState(pos);
             if (state.getBlock() != Blocks.AIR && !(state.getBlock() instanceof BlockInfestingLeaves))
                 if (Util.isLeaves(state)){
-                    BlockInfestedLeavesBase.infestLeafBlock(world, state, pos);
+                    BlockInfestingLeaves.infestLeafBlock(world, state, pos);
                     stack.shrink(1);
                     return EnumActionResult.SUCCESS;
                 }

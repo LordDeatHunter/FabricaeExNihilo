@@ -1,37 +1,40 @@
-package exnihilocreatio.blocks.leaves;
+package exnihilocreatio.blocks;
 
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.tools.ICrook;
 import exnihilocreatio.tiles.TileInfestedLeaves;
+import exnihilocreatio.util.Data;
 import exnihilocreatio.util.Util;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.property.IExtendedBlockState;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BlockInfestedLeaves extends BlockInfestedLeavesBase {
+public class BlockInfestedLeaves extends BlockInfestingLeaves {
     private int[] surroundings;
 
     public BlockInfestedLeaves(){
-
+        super(InfestedType.INFESTED);
         this.setUnlocalizedName("block_infested_leaves");
         this.setRegistryName("block_infested_leaves");
-        this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, false).withProperty(DECAYABLE, false));
-        this.setTickRandomly(true);
+        Data.BLOCKS.add(this);
+        this.setDefaultState(
+                this.blockState.getBaseState().withProperty(CHECK_DECAY, false).withProperty(DECAYABLE, false));
     }
 
     @Override
@@ -42,6 +45,20 @@ public class BlockInfestedLeaves extends BlockInfestedLeavesBase {
     }
 
     @Override
+    public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos){
+        if (state instanceof IExtendedBlockState){
+            IExtendedBlockState retval = (IExtendedBlockState) state;
+            IBlockState leafState;
+            if (world.getTileEntity(pos) != null && world.getTileEntity(pos) instanceof TileInfestedLeaves) {
+                leafState = ((TileInfestedLeaves) world.getTileEntity(pos)).getLeafBlock();
+            }
+            else leafState = Blocks.LEAVES.getDefaultState();
+            return retval.withProperty(LEAFBLOCK, leafState);
+        }
+        return state;
+    }
+
+    @Override
     public void randomTick(World world, BlockPos pos, IBlockState state, Random rand) {
         if (!world.isRemote) {
             if (state.getValue(NEARBYLEAVES)) {
@@ -49,7 +66,7 @@ public class BlockInfestedLeaves extends BlockInfestedLeavesBase {
                 if (nearbyLeaves.isEmpty()) {
                     world.setBlockState(pos, state.withProperty(NEARBYLEAVES, false), 7);
                 } else {
-                    nearbyLeaves.stream().filter(leaves -> rand.nextFloat() <= ModConfig.infested_leaves.leavesSpreadChance).findAny().ifPresent(blockPos -> BlockInfestedLeavesBase.infestLeafBlock(world, world.getBlockState(blockPos), blockPos));
+                    nearbyLeaves.stream().filter(leaves -> rand.nextFloat() <= ModConfig.infested_leaves.leavesSpreadChance).findAny().ifPresent(blockPos -> BlockInfestingLeaves.infestLeafBlock(world, world.getBlockState(blockPos), blockPos));
                 }
             }
         }
@@ -150,6 +167,12 @@ public class BlockInfestedLeaves extends BlockInfestedLeavesBase {
     }
 
     @Override
+    public TileEntity createNewTileEntity(@Nonnull World worldIn, int meta) {
+        return new TileInfestedLeaves();
+    }
+
+
+    @Override
     public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
         if (!world.isRemote && !player.isCreative()) {
             TileEntity tile = world.getTileEntity(pos);
@@ -175,14 +198,10 @@ public class BlockInfestedLeaves extends BlockInfestedLeavesBase {
     }
 
     @Override
-    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
+    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world,
+                             IBlockState blockState, IProbeHitData data) {
         probeInfo.text("Progress: Done");
     }
 
 
-    @Nullable
-    @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new TileInfestedLeaves();
-    }
 }

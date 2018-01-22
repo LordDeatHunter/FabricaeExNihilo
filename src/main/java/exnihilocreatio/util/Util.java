@@ -1,6 +1,6 @@
 package exnihilocreatio.util;
 
-import exnihilocreatio.blocks.leaves.BlockInfestingLeaves;
+import exnihilocreatio.blocks.BlockInfestingLeaves;
 import exnihilocreatio.texturing.Color;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;

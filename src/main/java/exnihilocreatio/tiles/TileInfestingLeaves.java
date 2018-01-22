@@ -1,6 +1,6 @@
 package exnihilocreatio.tiles;
 
-import exnihilocreatio.blocks.leaves.BlockInfestedLeavesBase;
+import exnihilocreatio.blocks.BlockInfestingLeaves;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.networking.PacketHandler;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
-public class TileInfestingLeaves extends TileInfestedLeavesBase implements ITickable {
+public class TileInfestingLeaves extends BaseTileEntity implements ITickable {
     @Getter
     private int progress = 0;
     @Getter
@@ -29,13 +29,12 @@ public class TileInfestingLeaves extends TileInfestedLeavesBase implements ITick
             if (doProgress <= 0) {
                 progress++;
                 if (progress >= 100) {
-                    BlockInfestedLeavesBase.setInfested(world, pos, leafBlock);
+                    BlockInfestingLeaves.setInfested(world, pos, leafBlock);
                     markDirtyClient();
                 }
 
                 doProgress = (int) (ModConfig.infested_leaves.ticksToTransform / 100.0);
-
-                //Send packet at the end in case the block gets changed first.
+                //Send packet at the end incase the block gets changed first.
                 PacketHandler.sendNBTUpdate(this);
             } else {
                 doProgress--;
@@ -48,8 +47,18 @@ public class TileInfestingLeaves extends TileInfestedLeavesBase implements ITick
         return oldState.getBlock() != newState.getBlock();
     }
 
+    @Override
+    public AxisAlignedBB getRenderBoundingBox() {
+        return INFINITE_EXTENT_AABB;
+    }
+
     public void setProgress(int newProgress) {
         progress = newProgress;
+        PacketHandler.sendNBTUpdate(this);
+    }
+
+    public void setLeafBlock(IBlockState block) {
+        leafBlock = block;
         PacketHandler.sendNBTUpdate(this);
     }
 
@@ -58,6 +67,8 @@ public class TileInfestingLeaves extends TileInfestedLeavesBase implements ITick
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
         tag = super.writeToNBT(tag);
         tag.setInteger("progress", progress);
+        tag.setString("leafBlock", leafBlock.getBlock().getRegistryName() == null ? "" : leafBlock.getBlock().getRegistryName().toString());
+        tag.setInteger("leafBlockMeta", leafBlock.getBlock().getMetaFromState(leafBlock));
         return tag;
     }
 
@@ -66,6 +77,16 @@ public class TileInfestingLeaves extends TileInfestedLeavesBase implements ITick
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
         progress = tag.getInteger("progress");
+
+        if (tag.hasKey("leafBlock") && tag.hasKey("leafBlockMeta")) {
+            try {
+                leafBlock = Block.getBlockFromName(tag.getString("leafBlock")).getStateFromMeta(tag.getInteger("leafBlockMeta"));
+            } catch (Exception e) {
+                leafBlock = Blocks.LEAVES.getDefaultState();
+            }
+        } else {
+            leafBlock = Blocks.LEAVES.getDefaultState();
+        }
     }
 
     @Override
