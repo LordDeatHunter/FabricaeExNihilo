@@ -1,6 +1,8 @@
 package exnihilocreatio;
 
 import exnihilocreatio.blocks.*;
+import exnihilocreatio.blocks.leaves.BlockInfestedLeaves;
+import exnihilocreatio.blocks.leaves.BlockInfestingLeaves;
 import exnihilocreatio.tiles.*;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;

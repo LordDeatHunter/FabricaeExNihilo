@@ -1,8 +1,9 @@
 package exnihilocreatio.client.renderers;
 
-import exnihilocreatio.blocks.BlockInfestingLeaves;
+import exnihilocreatio.blocks.leaves.BlockInfestingLeaves;
 import exnihilocreatio.client.models.ModelVertex;
 import exnihilocreatio.texturing.Color;
+import exnihilocreatio.tiles.TileInfestedLeavesBase;
 import exnihilocreatio.tiles.TileInfestingLeaves;
 import exnihilocreatio.util.Util;
 import net.minecraft.block.Block;
@@ -19,9 +20,7 @@ import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.client.model.animation.FastTESR;
 
 
-public class RenderInfestingLeaves extends FastTESR<TileInfestingLeaves> {
-
-    private boolean complete = false;
+public class RenderInfestingLeaves extends FastTESR<TileInfestedLeavesBase> {
 
     private static ModelVertex[] model = new ModelVertex[24];
     static {
@@ -58,7 +57,7 @@ public class RenderInfestingLeaves extends FastTESR<TileInfestingLeaves> {
     }
 
     @Override
-    public void renderTileEntityFast(TileInfestingLeaves te, double x, double y, double z, float partialTicks, int destroyStage, float partial, BufferBuilder buffer){
+    public void renderTileEntityFast(TileInfestedLeavesBase te, double x, double y, double z, float partialTicks, int destroyStage, float partial, BufferBuilder buffer){
         final BlockPos pos = te.getPos();
         final Block block = getWorld().getBlockState(pos).getBlock();
 
@@ -71,8 +70,8 @@ public class RenderInfestingLeaves extends FastTESR<TileInfestingLeaves> {
 
         // Color
         final Color color;
-        if (block instanceof BlockInfestingLeaves)
-            color = Color.average(new Color(BiomeColorHelper.getFoliageColorAtPos(getWorld(), pos)), Util.whiteColor, (float)Math.pow((te.getProgress() / 100f), 2.0));
+        if (block instanceof BlockInfestingLeaves && te instanceof TileInfestingLeaves)
+            color = Color.average(new Color(BiomeColorHelper.getFoliageColorAtPos(getWorld(), pos)), Util.whiteColor, (float)Math.pow((((TileInfestingLeaves) te).getProgress() / 100f), 2.0));
         else
             color = Util.whiteColor;
 

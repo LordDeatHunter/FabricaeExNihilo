@@ -3,6 +3,7 @@ package exnihilocreatio.compatibility;
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.ModBlocks;
 import exnihilocreatio.blocks.*;
+import exnihilocreatio.blocks.leaves.BlockInfestingLeaves;
 import exnihilocreatio.rotationalPower.IRotationalPowerMember;
 import exnihilocreatio.tiles.*;
 import mcp.mobius.waila.api.*;
