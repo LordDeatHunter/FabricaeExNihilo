@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
-public class TileInfestingLeaves extends BaseTileEntity implements ITickable {
+public class TileInfestingLeaves extends BaseTileEntity implements ITickable, ITileLeafBlock {
     @Getter
     private int progress = 0;
     @Getter

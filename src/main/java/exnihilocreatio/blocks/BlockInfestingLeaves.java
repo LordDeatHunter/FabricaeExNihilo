@@ -4,6 +4,7 @@ import exnihilocreatio.ModBlocks;
 import exnihilocreatio.compatibility.ITOPInfoProvider;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.tools.ICrook;
+import exnihilocreatio.tiles.ITileLeafBlock;
 import exnihilocreatio.tiles.TileInfestedLeaves;
 import exnihilocreatio.tiles.TileInfestingLeaves;
 import exnihilocreatio.util.Data;
@@ -88,7 +89,7 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
             leafState = Blocks.LEAVES.getDefaultState();
         else leafState = state;
         world.setBlockState(pos, ModBlocks.infestingLeaves.getDefaultState(), 3);
-        ((TileInfestingLeaves) world.getTileEntity(pos)).setLeafBlock(leafState);
+        ((ITileLeafBlock) world.getTileEntity(pos)).setLeafBlock(leafState);
     }
 
     /**
@@ -102,7 +103,7 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
         if (block.getBlock() instanceof BlockInfestingLeaves) {
             IExtendedBlockState retval = (IExtendedBlockState) ModBlocks.infestedLeaves.getDefaultState();
             world.setBlockState(pos, retval.withProperty(BlockInfestedLeaves.LEAFBLOCK, leafState), 7);
-            ((TileInfestedLeaves)world.getTileEntity(pos)).setLeafBlock(leafState);
+            ((ITileLeafBlock)world.getTileEntity(pos)).setLeafBlock(leafState);
         }
         else if (Util.isLeaves(block) && !(block.getBlock() instanceof BlockInfestedLeaves)){
             LogUtil.error("Sent leaf change to wrong method, redirecting");
@@ -157,7 +158,7 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
             IExtendedBlockState retval = (IExtendedBlockState) state;
             IBlockState leafState;
             if (world.getTileEntity(pos) != null) {
-                leafState = ((TileInfestingLeaves) world.getTileEntity(pos)).getLeafBlock();
+                leafState = ((ITileLeafBlock) world.getTileEntity(pos)).getLeafBlock();
             }
             else leafState = Blocks.LEAVES.getDefaultState();
             return retval.withProperty(LEAFBLOCK, leafState);

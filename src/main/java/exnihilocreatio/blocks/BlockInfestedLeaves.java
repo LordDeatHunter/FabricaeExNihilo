@@ -2,6 +2,7 @@ package exnihilocreatio.blocks;
 
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.tools.ICrook;
+import exnihilocreatio.tiles.ITileLeafBlock;
 import exnihilocreatio.tiles.TileInfestedLeaves;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.Util;
@@ -49,8 +50,9 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
         if (state instanceof IExtendedBlockState){
             IExtendedBlockState retval = (IExtendedBlockState) state;
             IBlockState leafState;
-            if (world.getTileEntity(pos) != null && world.getTileEntity(pos) instanceof TileInfestedLeaves) {
-                leafState = ((TileInfestedLeaves) world.getTileEntity(pos)).getLeafBlock();
+            TileEntity te = world.getTileEntity(pos);
+            if (te  instanceof TileInfestedLeaves) {
+                leafState = ((ITileLeafBlock) te).getLeafBlock();
             }
             else leafState = Blocks.LEAVES.getDefaultState();
             return retval.withProperty(LEAFBLOCK, leafState);
