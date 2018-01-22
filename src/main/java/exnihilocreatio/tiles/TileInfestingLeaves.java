@@ -6,6 +6,7 @@ import exnihilocreatio.networking.PacketHandler;
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
@@ -22,16 +23,24 @@ public class TileInfestingLeaves extends BaseTileEntity implements ITickable, IT
     private IBlockState leafBlock = Blocks.LEAVES.getDefaultState();
 
     private int doProgress = (int) (ModConfig.infested_leaves.ticksToTransform / 100.0);
+    private int spreadCounter = 0;
 
     @Override
     public void update() {
         if (!world.isRemote) {
             if (doProgress <= 0) {
                 progress++;
+                spreadCounter++;
                 if (progress >= 100) {
                     BlockInfestingLeaves.setInfested(world, pos, leafBlock);
                     markDirtyClient();
                 }
+
+                if (spreadCounter >= ModConfig.infested_leaves.leavesUpdateFrequency) {
+                    BlockInfestingLeaves.spread(world, pos, world.getBlockState(pos), world.rand);
+                    spreadCounter = 0;
+                }
+
 
                 doProgress = (int) (ModConfig.infested_leaves.ticksToTransform / 100.0);
                 //Send packet at the end incase the block gets changed first.

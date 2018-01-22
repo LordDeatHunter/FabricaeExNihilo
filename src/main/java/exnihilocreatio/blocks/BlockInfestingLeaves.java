@@ -5,7 +5,6 @@ import exnihilocreatio.compatibility.ITOPInfoProvider;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.tools.ICrook;
 import exnihilocreatio.tiles.ITileLeafBlock;
-import exnihilocreatio.tiles.TileInfestedLeaves;
 import exnihilocreatio.tiles.TileInfestingLeaves;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
@@ -113,16 +112,21 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
 
     @Override
     public void randomTick(World world, BlockPos pos, IBlockState state, Random rand) {
-        if (!world.isRemote) {
+        super.updateTick(world, pos, state, rand);
+        spread(world, pos, state, rand);
+    }
+
+
+    public static void spread(World world, BlockPos pos, IBlockState state, Random rand) {
+        if (!world.isRemote && state != null) {
             if (state.getValue(NEARBYLEAVES)) {
                 NonNullList<BlockPos> nearbyLeaves = Util.getNearbyLeaves(world, pos);
                 if (nearbyLeaves.isEmpty())
                     world.setBlockState(pos, state.withProperty(NEARBYLEAVES, false), 7);
                 else {
-                    int progress = ((TileInfestingLeaves) world.getTileEntity(pos)).getProgress();
-                    // Delay spreading until 25%
-                    if (progress >= ModConfig.infested_leaves.leavesSpreadPercent) {
-                        nearbyLeaves.stream().filter(leaves -> rand.nextFloat() <= ModConfig.infested_leaves.leavesSpreadChance).findAny().ifPresent(blockPos -> BlockInfestingLeaves.infestLeafBlock(world, world.getBlockState(blockPos), blockPos));
+                    TileEntity te = world.getTileEntity(pos);
+                    if (te instanceof TileInfestingLeaves && ((TileInfestingLeaves) te).getProgress() > ModConfig.infested_leaves.leavesSpreadPercent) {
+                        nearbyLeaves.stream().filter(leaves -> rand.nextFloat() <= ModConfig.infested_leaves.leavesSpreadChanceFloat).findAny().ifPresent(blockPos -> BlockInfestingLeaves.infestLeafBlock(world, world.getBlockState(blockPos), blockPos));
                     }
                 }
             }

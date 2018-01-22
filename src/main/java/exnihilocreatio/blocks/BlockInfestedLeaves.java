@@ -62,13 +62,14 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
 
     @Override
     public void randomTick(World world, BlockPos pos, IBlockState state, Random rand) {
+        this.updateTick(world, pos, state, rand);
         if (!world.isRemote) {
             if (state.getValue(NEARBYLEAVES)) {
                 NonNullList<BlockPos> nearbyLeaves = Util.getNearbyLeaves(world, pos);
                 if (nearbyLeaves.isEmpty()) {
                     world.setBlockState(pos, state.withProperty(NEARBYLEAVES, false), 7);
                 } else {
-                    nearbyLeaves.stream().filter(leaves -> rand.nextFloat() <= ModConfig.infested_leaves.leavesSpreadChance).findAny().ifPresent(blockPos -> BlockInfestingLeaves.infestLeafBlock(world, world.getBlockState(blockPos), blockPos));
+                    nearbyLeaves.stream().filter(leaves -> rand.nextFloat() <= ModConfig.infested_leaves.leavesSpreadChanceFloat).findAny().ifPresent(blockPos -> BlockInfestingLeaves.infestLeafBlock(world, world.getBlockState(blockPos), blockPos));
                 }
             }
         }
