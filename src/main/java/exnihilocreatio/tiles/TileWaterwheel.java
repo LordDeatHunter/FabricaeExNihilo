@@ -2,12 +2,13 @@ package exnihilocreatio.tiles;
 
 import exnihilocreatio.rotationalPower.CapabilityRotationalMember;
 import exnihilocreatio.rotationalPower.IRotationalPowerProvider;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.IFluidBlock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -46,8 +47,11 @@ public class TileWaterwheel extends BaseTileEntity implements ITickable, IRotati
                     break;
             }
 
-            boolean lIsWater = left.getBlock() == Blocks.WATER;
-            boolean rIsWater = right.getBlock() == Blocks.WATER;
+            // boolean lIsWater = left.getBlock() == Blocks.WATER || left.getBlock() == ModFluids.blockWitchwater;
+            // boolean rIsWater = right.getBlock() == Blocks.WATER || right.getBlock() == ModFluids.blockWitchwater;
+
+            boolean lIsWater = left.getBlock() instanceof BlockLiquid || left.getBlock() instanceof IFluidBlock;
+            boolean rIsWater = right.getBlock() instanceof BlockLiquid || right.getBlock() instanceof IFluidBlock;
 
             perTickRotationOwn = 0F;
             if (lIsWater) {
