@@ -73,6 +73,9 @@ public class BarrelModeCompost implements IBarrelMode {
             if (!player.getHeldItem(hand).isEmpty()) {
                 ItemInfo info = ItemInfo.getItemInfoFromStack(player.getHeldItem(hand));
                 Compostable comp = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(info);
+
+                if (comp == null || comp.getCompostBlock() == null) return false;
+
                 IBlockState testState = Block.getBlockFromItem(comp.getCompostBlock().getItem())
                         .getStateFromMeta(comp.getCompostBlock().getMeta());
 
