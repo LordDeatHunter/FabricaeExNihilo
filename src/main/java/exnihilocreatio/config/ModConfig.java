@@ -1,6 +1,7 @@
 package exnihilocreatio.config;
 
 import exnihilocreatio.ExNihiloCreatio;
+import javafx.scene.shape.VertexFormat;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -80,6 +81,9 @@ public class ModConfig {
     public static class Compatibility {
         @Config.RequiresMcRestart
         public TinkersConstructCompat tinkers_construct_compat = new TinkersConstructCompat();
+
+        @Config.Comment("Prevents unidict from merging the ore chunks into normal ore.")
+        public boolean preventUnidict = true;
 
         public static class TinkersConstructCompat {
             public boolean doTinkersConstructCompat = true;

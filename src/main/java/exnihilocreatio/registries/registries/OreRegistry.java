@@ -3,6 +3,7 @@ package exnihilocreatio.registries.registries;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.ExNihiloCreatio;
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.ore.EnumOreSubtype;
 import exnihilocreatio.items.ore.ItemOre;
 import exnihilocreatio.items.ore.Ore;
@@ -24,12 +25,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 import org.apache.commons.lang3.StringUtils;
+import wanion.unidict.UniDict;
+import wanion.unidict.api.UniDictAPI;
+import wanion.unidict.plugin.crafttweaker.UniDictCraftTweakerPlugin;
 
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -95,9 +101,14 @@ public class OreRegistry extends BaseRegistryList<Ore> {
             ResourceLocation group = new ResourceLocation(ExNihiloCreatio.MODID, "exores");
             ResourceLocation baseName = new ResourceLocation(ExNihiloCreatio.MODID, "ore_compression_");
 
-            GameRegistry.addShapedRecipe(new ResourceLocation(baseName.getResourceDomain(), baseName.getResourcePath() + ore.getOre().getName()), group,
+            ResourceLocation recipeLocation = new ResourceLocation(baseName.getResourceDomain(), baseName.getResourcePath() + ore.getOre().getName());
+            GameRegistry.addShapedRecipe(recipeLocation, group,
                     new ItemStack(ore, 1, EnumOreSubtype.CHUNK.getMeta()),
                     "xx", "xx", 'x', new ItemStack(ore, 1, EnumOreSubtype.PIECE.getMeta()));
+
+            if (ModConfig.compatibility.preventUnidict && Loader.isModLoaded("unidict")){
+                UniDict.getConfig().recipesToIgnore.add(recipeLocation);
+            }
 
             ItemStack smeltingResult;
 
