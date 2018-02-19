@@ -80,17 +80,21 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
 
         IFocus<?> focus = recipeLayout.getFocus();
 
+
         if (focus != null) {
             hasHighlight = focus.getMode() == IFocus.Mode.OUTPUT;
+        }
 
-            int slotIndex = 2;
-            for (int i = 0; i < recipeWrapper.getOutputs().size(); i++) {
-                final int slotX = 2 + (i % 9 * 18);
-                final int slotY = 36 + (i / 9 * 18);
-                ItemStack outputStack = (ItemStack) recipeWrapper.getOutputs().get(i);
-                recipeLayout.getItemStacks().init(slotIndex + i, false, slotX, slotY);
-                recipeLayout.getItemStacks().set(slotIndex + i, outputStack);
 
+        int slotIndex = 2;
+        for (int i = 0; i < recipeWrapper.getOutputs().size(); i++) {
+            final int slotX = 2 + (i % 9 * 18);
+            final int slotY = 36 + (i / 9 * 18);
+            ItemStack outputStack = (ItemStack) recipeWrapper.getOutputs().get(i);
+            recipeLayout.getItemStacks().init(slotIndex + i, false, slotX, slotY);
+            recipeLayout.getItemStacks().set(slotIndex + i, outputStack);
+
+            if (focus != null) {
                 ItemStack focusStack = (ItemStack) focus.getValue();
                 if (focus.getMode() == IFocus.Mode.OUTPUT && !focusStack.isEmpty()
                         && focusStack.getItem() == outputStack.getItem()
