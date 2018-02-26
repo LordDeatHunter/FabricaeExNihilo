@@ -1,6 +1,5 @@
 package exnihilocreatio.registries.registries;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.GsonBuilder;
@@ -38,6 +37,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
 
@@ -190,44 +190,31 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
 
     @Override
     public List<CompostRecipe> getRecipeList() {
-        List<CompostRecipe> compostRecipes = Lists.newArrayList();
+        List<CompostRecipe> compostRecipes = Lists.newLinkedList();
 
-        Map<Ingredient, Compostable> compostRegistry = getRegistry();
-        Map<ItemInfo, List<ItemStack>> compostEntries = new HashMap<>();
-
-        for (Map.Entry<Ingredient, Compostable> compostEntry : compostRegistry.entrySet()) {
-            ItemInfo compostBlock = compostEntry.getValue().getCompostBlock();
-
-            List<ItemStack> compostables = compostEntries.computeIfAbsent(compostBlock, k -> Lists.newArrayList());
-
-            Ingredient compostItem = compostEntry.getKey();
-            int compostCount = (int) Math.ceil(1.0F / compostEntry.getValue().getValue());
-
-            for (ItemStack stack : compostItem.getMatchingStacks()){
-                if (compostables.stream().noneMatch(entry -> entry.isItemEqual(stack))) {
-                    ItemStack itemStack = stack.copy();
-                    itemStack.setCount(compostCount);
-                    compostables.add(itemStack);
+        getRegistry().forEach((key, value) -> {
+            ItemInfo compostBlock = value.getCompostBlock();
+            List<ItemStack> compostables = Lists.newLinkedList();
+            int compostCount = (int) Math.ceil(1.0F / value.getValue());
+            Stream.of(key.getMatchingStacks()).forEach(stack -> {
+                if (compostables.stream().noneMatch(stack::isItemEqual)) {
+                    ItemStack copy = stack.copy();
+                    copy.setCount(compostCount);
+                    compostables.add(copy);
                 }
-            }
-        }
+            });
 
-        for (Map.Entry<ItemInfo, List<ItemStack>> compostEntry : compostEntries.entrySet()) {
-            // I heard you like lists, you I put some lists in your lists, so you can list while you list
-            List<List<ItemStack>> splitList = Lists.newArrayList(ImmutableList.of(Lists.newArrayList()));
+            CompostRecipe recipe = compostRecipes.stream()
+                    .filter(compostRecipe -> compostRecipe.outputMatch(compostBlock.getItemStack()))
+                    .findFirst()
+                    .orElse(null);
+            if (recipe != null)
+                recipe.getInputs().addAll(compostables);
+            else
+                compostRecipes.add(new CompostRecipe(compostBlock, compostables));
 
-            for (ItemStack stack : compostEntry.getValue()) {
-                if (splitList.get(0).size() >= 45) {
-                    splitList.add(0, Lists.newArrayList());
-                }
+        });
 
-                splitList.get(0).add(stack);
-            }
-
-            for (List<ItemStack> compostInputs : Lists.reverse(splitList)) {
-                compostRecipes.add(new CompostRecipe(compostEntry.getKey(), compostInputs));
-            }
-        }
         return compostRecipes;
     }
 }

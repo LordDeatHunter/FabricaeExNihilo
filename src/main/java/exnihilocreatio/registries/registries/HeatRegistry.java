@@ -58,15 +58,9 @@ public class HeatRegistry extends BaseRegistryMap<BlockInfo, Integer> {
 
     @Override
     public List<HeatSourcesRecipe> getRecipeList() {
-        List<HeatSourcesRecipe> heatSources = Lists.newArrayList();
+        List<HeatSourcesRecipe> heatSources = Lists.newLinkedList();
 
-        Map<BlockInfo, Integer> heatRegistryRegistry = getRegistry();
-
-        for (Map.Entry<BlockInfo, Integer> blockInfoIntegerEntry : heatRegistryRegistry.entrySet()) {
-            BlockInfo block = blockInfoIntegerEntry.getKey();
-
-            heatSources.add(new HeatSourcesRecipe(block, blockInfoIntegerEntry.getValue()));
-        }
+        getRegistry().forEach((key, value) -> heatSources.add(new HeatSourcesRecipe(key, value)));
 
         return heatSources;
     }

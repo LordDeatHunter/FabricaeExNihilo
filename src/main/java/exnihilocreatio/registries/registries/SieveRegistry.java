@@ -24,6 +24,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.io.FileReader;
 import java.util.*;
+import java.util.stream.Stream;
 
 public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Siftable>> {
 
@@ -169,22 +170,15 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Sifta
 
     @Override
     public List<SieveRecipe> getRecipeList() {
-        List<SieveRecipe> sieveRecipes = Lists.newArrayList();
+        List<SieveRecipe> sieveRecipes = Lists.newLinkedList();
 
-        for (Ingredient ingredient : getRegistry().keySet()) {
-            for (BlockSieve.MeshType type : BlockSieve.MeshType.values()) {
-                if (type.getID() != 0 && ingredient != null) // Bad configs strike back!
-                {
-                    SieveRecipe recipe = new SieveRecipe(ingredient, type);
-
-                    // If there's an input block, mesh, and at least one output
-                    if (!recipe.getInputs().isEmpty() && !recipe.getOutputs().isEmpty() && !sieveRecipes.contains(recipe)) {
-
-                        sieveRecipes.add(recipe);
-                    }
-                }
+        getRegistry().keySet().forEach(ingredient -> Stream.of(BlockSieve.MeshType.values()).forEach(meshType -> {
+            if (meshType.getID() != 0 && ingredient != null){
+                SieveRecipe recipe = new SieveRecipe(ingredient, meshType);
+                if (recipe.isValid() && !sieveRecipes.contains(recipe))
+                    sieveRecipes.add(recipe);
             }
-        }
+        }));
 
         return sieveRecipes;
     }

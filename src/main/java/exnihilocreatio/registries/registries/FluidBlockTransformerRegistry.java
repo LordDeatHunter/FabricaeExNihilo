@@ -9,6 +9,7 @@ import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryList;
 import exnihilocreatio.registries.types.FluidBlockTransformer;
 import exnihilocreatio.util.ItemInfo;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -70,11 +71,12 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
         List<FluidBlockTransformRecipe> fluidBlockTransformRecipes = Lists.newArrayList();
         for (FluidBlockTransformer transformer : getRegistry()) {
             // Make sure everything's registered
-            if (FluidRegistry.isFluidRegistered(transformer.getFluidName()) && transformer.getInput().getItem() != null && transformer.getOutput().getItem() != null) {
+            if (FluidRegistry.isFluidRegistered(transformer.getFluidName())
+                    && transformer.getInput().getItem() != Items.AIR
+                    && transformer.getOutput().getItem() != Items.AIR) {
                 FluidBlockTransformRecipe recipe = new FluidBlockTransformRecipe(transformer);
-
-                if (recipe.getInputs().size() == 2 && recipe.getOutputs().size() == 1) {
-                    fluidBlockTransformRecipes.add(new FluidBlockTransformRecipe(transformer));
+                if (recipe.isValid()) {
+                    fluidBlockTransformRecipes.add(recipe);
                 }
             }
         }

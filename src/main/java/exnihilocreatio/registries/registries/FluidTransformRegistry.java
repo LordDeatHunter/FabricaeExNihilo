@@ -95,19 +95,17 @@ public class FluidTransformRegistry extends BaseRegistryMap<String, List<FluidTr
 
     @Override
     public List<FluidTransformRecipe> getRecipeList() {
-        List<FluidTransformRecipe> fluidTransformRecipes = Lists.newArrayList();
+        List<FluidTransformRecipe> fluidTransformRecipes = Lists.newLinkedList();
 
-        for (FluidTransformer transformer : getFluidTransformers()) {
+        getFluidTransformers().forEach(transformer -> {
             // Make sure both fluids are registered
             if (FluidRegistry.isFluidRegistered(transformer.getInputFluid()) && FluidRegistry.isFluidRegistered(transformer.getOutputFluid())) {
                 FluidTransformRecipe recipe = new FluidTransformRecipe(transformer);
-
-                // If theres a bucket and at least one block (and an output, for consistency)
-                if (recipe.getInputs().size() >= 2 && recipe.getOutputs().size() == 1) {
+                if (recipe.isValid()) {
                     fluidTransformRecipes.add(new FluidTransformRecipe(transformer));
                 }
             }
-        }
+        });
 
         return fluidTransformRecipes;
     }

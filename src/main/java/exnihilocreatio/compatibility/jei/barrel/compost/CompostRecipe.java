@@ -13,11 +13,11 @@ import java.util.List;
 
 public class CompostRecipe implements IRecipeWrapper {
     private final List<ItemStack> inputs;
-    private final ItemStack output;
+    private final List<ItemStack> output;
 
     public CompostRecipe(ItemInfo output, List<ItemStack> inputs) {
         this.inputs = inputs;
-        this.output = output.getItemStack();
+        this.output = ImmutableList.of(output.getItemStack());
     }
 
     @Override
@@ -31,7 +31,11 @@ public class CompostRecipe implements IRecipeWrapper {
     }
 
     public List<ItemStack> getOutputs() {
-        return ImmutableList.of(output);
+        return output;
+    }
+
+    public boolean outputMatch(ItemStack stack){
+        return output.get(0).isItemEqual(stack);
     }
 
     @Override

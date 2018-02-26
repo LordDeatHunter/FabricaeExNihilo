@@ -68,6 +68,10 @@ public class FluidTransformRecipe implements IRecipeWrapper {
         return ImmutableList.of(new FluidStack(outputFluid, 1000));
     }
 
+    public boolean isValid(){
+        return !inputStacks.isEmpty() && !outputBucket.isEmpty();
+    }
+
     @Override
     public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
 

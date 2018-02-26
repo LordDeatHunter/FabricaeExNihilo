@@ -159,17 +159,13 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
 
     @Override
     public List<HammerRecipe> getRecipeList() {
-        List<HammerRecipe> hammerRecipes = Lists.newArrayList();
+        List<HammerRecipe> hammerRecipes = Lists.newLinkedList();
 
-        for (Ingredient ingredient : getRegistry().keySet()) {
+        getRegistry().keySet().forEach(ingredient -> {
             HammerRecipe recipe = new HammerRecipe(ingredient);
-
-            // If there's an input block, and at least one output
-            if (!recipe.getInputs().isEmpty() && !recipe.getOutputs().isEmpty()) {
-
+            if (recipe.isValid())
                 hammerRecipes.add(recipe);
-            }
-        }
+        });
 
         return hammerRecipes;
     }

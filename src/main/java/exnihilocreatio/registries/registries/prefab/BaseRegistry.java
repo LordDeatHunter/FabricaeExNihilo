@@ -62,6 +62,7 @@ public abstract class BaseRegistry<RegType> {
 
     protected abstract void registerEntriesFromJSON(FileReader fr);
 
+    @SuppressWarnings("unchecked")
     public void registerDefaults() {
         if (defaultRecipeProviders != null) {
             for (IDefaultRecipeProvider defaultRecipeProvider : defaultRecipeProviders) {

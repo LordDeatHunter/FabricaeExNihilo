@@ -15,11 +15,14 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class FluidBlockTransformRecipe implements IRecipeWrapper {
+
+    @Nonnull
     private final FluidStack inputFluid;
-
+    @Nonnull
     private final ItemStack inputBucket;
+    @Nonnull
     private final ItemStack inputStack;
-
+    @Nonnull
     private final ItemStack outputStack;
 
     public FluidBlockTransformRecipe(FluidBlockTransformer recipe) {
@@ -49,6 +52,10 @@ public class FluidBlockTransformRecipe implements IRecipeWrapper {
 
     public List<FluidStack> getFluidInputs() {
         return ImmutableList.of(inputFluid);
+    }
+
+    public boolean isValid(){
+        return !inputBucket.isEmpty() && !inputStack.isEmpty() && !outputStack.isEmpty();
     }
 
     @Override

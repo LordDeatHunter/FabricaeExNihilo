@@ -9,6 +9,7 @@ import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryList;
 import exnihilocreatio.registries.types.FluidFluidBlock;
 import exnihilocreatio.util.ItemInfo;
+import net.minecraft.init.Items;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 
@@ -61,17 +62,19 @@ public class FluidOnTopRegistry extends BaseRegistryList<FluidFluidBlock> {
 
     @Override
     public List<FluidOnTopRecipe> getRecipeList() {
-        List<FluidOnTopRecipe> fluidOnTopRecipes = Lists.newArrayList();
-        for (FluidFluidBlock transformer : getRegistry()) {
+        List<FluidOnTopRecipe> fluidOnTopRecipes = Lists.newLinkedList();
+        getRegistry().forEach(transformer -> {
             // Make sure both fluids are registered
-            if (FluidRegistry.isFluidRegistered(transformer.getFluidInBarrel()) && FluidRegistry.isFluidRegistered(transformer.getFluidOnTop()) && transformer.getResult().getItem() != null) {
+            if (FluidRegistry.isFluidRegistered(transformer.getFluidInBarrel())
+                    && FluidRegistry.isFluidRegistered(transformer.getFluidOnTop())
+                    && transformer.getResult().getItem() != Items.AIR) {
                 FluidOnTopRecipe recipe = new FluidOnTopRecipe(transformer);
 
-                if (recipe.getInputs().size() == 2 && recipe.getOutputs().size() == 1) {
+                if (recipe.isValid()) {
                     fluidOnTopRecipes.add(new FluidOnTopRecipe(transformer));
                 }
             }
-        }
+        });
         return fluidOnTopRecipes;
     }
 }

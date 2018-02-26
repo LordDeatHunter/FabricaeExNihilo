@@ -53,6 +53,10 @@ public class FluidOnTopRecipe implements IRecipeWrapper {
         return ImmutableList.of(inputFluidInBarrel, inputFluidOnTop);
     }
 
+    public boolean isValid(){
+        return !inputBucketInBarrel.isEmpty() && !inputBucketOnTop.isEmpty() && !outputStack.isEmpty();
+    }
+
     @Override
     public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
 

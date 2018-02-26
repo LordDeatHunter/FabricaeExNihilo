@@ -58,6 +58,10 @@ public class HammerRecipe implements IRecipeWrapper {
         return outputs;
     }
 
+    public boolean isValid() {
+        return !inputs.isEmpty() && !outputs.isEmpty();
+    }
+
     @Override
     public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
 
