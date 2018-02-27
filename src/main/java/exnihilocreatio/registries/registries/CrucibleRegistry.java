@@ -149,12 +149,24 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
             ItemStack fluidBucket = FluidUtil.getFilledBucket(new FluidStack(fluid, 1000));
             CrucibleRecipe recipe = crucibleRecipes.stream()
                     .filter(crucibleRecipe -> crucibleRecipe.getFluid().isItemEqual(fluidBucket)
-                            && !crucibleRecipe.isRecipeFull())
-                    .findFirst().orElse(null);
-            if (recipe != null)
-                recipe.getInputs().addAll(meltables);
-            else
-                crucibleRecipes.add(new CrucibleRecipe(fluid, meltables));
+                            && crucibleRecipe.isNonFull())
+                    .findFirst()
+                    .orElse(null);
+            if (recipe == null){
+                recipe = new CrucibleRecipe(fluid, Lists.newLinkedList());
+                crucibleRecipes.add(recipe);
+            }
+
+            //This acts as a safety net, auto creating new recipes if the input list is larger than 45
+            for (ItemStack stack : meltables) {
+                if (recipe.isNonFull())
+                    recipe.getInputs().add(stack);
+                else {
+                    recipe = new CrucibleRecipe(fluid, Lists.newLinkedList());
+                    recipe.getInputs().add(stack);
+                    crucibleRecipes.add(recipe);
+                }
+            }
         });
 
         return crucibleRecipes;

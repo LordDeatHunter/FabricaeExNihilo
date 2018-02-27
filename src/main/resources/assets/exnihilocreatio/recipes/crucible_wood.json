@@ -4,7 +4,7 @@
   },
   "pattern": [
     "x x",
-    "xxx",
+    "xwx",
     "s s"
   ],
   "type": "minecraft:crafting_shaped",
@@ -16,6 +16,10 @@
     "x": {
       "type": "forge:ore_dict",
       "ore": "logWood"
+    },
+    "w": {
+      "type": "forge:ore_dict",
+      "ore": "slabWood"
     }
   }
 }

@@ -1,13 +1,14 @@
 package exnihilocreatio.tiles;
 
+import exnihilocreatio.rotationalPower.CapabilityRotationalMember;
 import exnihilocreatio.rotationalPower.IRotationalPowerMember;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.capabilities.Capability;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class TileStoneAxle extends BaseTileEntity implements ITickable, IRotationalPowerMember {
     public float rotationValue = 0;
@@ -21,13 +22,14 @@ public class TileStoneAxle extends BaseTileEntity implements ITickable, IRotatio
     public void update() {
         counter++;
 
-        if (counter % 10 == 0) {
+        if (counter > 0 && counter % 10 == 0) {
             float lastPerTickEffective = perTickEffective;
-            perTickEffective = calcEffectivePerTickRotation(facing);
+            perTickEffective = calcEffectivePerTickRotation(world, pos, facing);
 
             if (lastPerTickEffective != perTickEffective) {
                 markDirty();
             }
+            counter = 0;
         }
 
         if (world.isRemote) {
@@ -69,14 +71,17 @@ public class TileStoneAxle extends BaseTileEntity implements ITickable, IRotatio
         }
     }
 
-    private float calcEffectivePerTickRotation(EnumFacing direction) {
-        if (facing == direction) {
-            BlockPos posProvider = pos.offset(facing.getOpposite());
-            TileEntity te = world.getTileEntity(posProvider);
-            if (te != null && te instanceof IRotationalPowerMember) {
-                return ((IRotationalPowerMember) te).getEffectivePerTickRotation(facing) + getOwnRotation();
-            } else return getOwnRotation();
-        } else return 0;
+    @Override
+    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+        return capability == CapabilityRotationalMember.ROTIONAL_MEMBER && facing == this.facing || super.hasCapability(capability, facing);
+    }
+
+    @Nullable
+    @Override
+    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+        if (capability == CapabilityRotationalMember.ROTIONAL_MEMBER && facing == this.facing)
+            return CapabilityRotationalMember.ROTIONAL_MEMBER.cast(this);
+        return super.getCapability(capability, facing);
     }
 
     @Override

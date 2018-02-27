@@ -4,7 +4,8 @@ import exnihilocreatio.ModBlocks;
 import exnihilocreatio.compatibility.ITOPInfoProvider;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.tools.ICrook;
-import exnihilocreatio.tiles.TileInfestedLeaves;
+import exnihilocreatio.tiles.BaseTileEntity;
+import exnihilocreatio.tiles.ITileLeafBlock;
 import exnihilocreatio.tiles.TileInfestingLeaves;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
@@ -81,14 +82,17 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
         this.leavesFancy = true;
     }
 
+    /**
+     * Sets a normal leave to infested
+     */
     public static void infestLeafBlock(World world, IBlockState state, BlockPos pos) {
         IBlockState leafState;
         //Prevents a crash with forestry using the new model system
         if (Block.REGISTRY.getNameForObject(state.getBlock()).getResourceDomain().equalsIgnoreCase("forestry"))
             leafState = Blocks.LEAVES.getDefaultState();
         else leafState = state;
-        world.setBlockState(pos, ModBlocks.infestingLeaves.getDefaultState(), 3);
-        ((TileInfestingLeaves) world.getTileEntity(pos)).setLeafBlock(leafState);
+        world.setBlockState(pos, ModBlocks.infestingLeaves.getDefaultState().withProperty(DECAYABLE, true), 3);
+        ((ITileLeafBlock) world.getTileEntity(pos)).setLeafBlock(leafState);
     }
 
     /**
@@ -100,9 +104,14 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
     public static void setInfested(World world, BlockPos pos, IBlockState leafState) {
         IBlockState block = world.getBlockState(pos);
         if (block.getBlock() instanceof BlockInfestingLeaves) {
-            IExtendedBlockState retval = (IExtendedBlockState) ModBlocks.infestedLeaves.getDefaultState();
-            world.setBlockState(pos, retval.withProperty(BlockInfestedLeaves.LEAFBLOCK, leafState), 7);
-            ((TileInfestedLeaves)world.getTileEntity(pos)).setLeafBlock(leafState);
+            IBlockState retval = ((IExtendedBlockState) ModBlocks.infestedLeaves.getDefaultState())
+                    .withProperty(BlockInfestedLeaves.LEAFBLOCK, leafState)
+                    .withProperty(CHECK_DECAY, true)
+                    .withProperty(DECAYABLE, false);
+            world.setBlockState(pos, retval, 0b111);
+            ((ITileLeafBlock)world.getTileEntity(pos)).setLeafBlock(leafState);
+            ((BaseTileEntity)world.getTileEntity(pos)).markDirtyClient();
+
         }
         else if (Util.isLeaves(block) && !(block.getBlock() instanceof BlockInfestedLeaves)){
             LogUtil.error("Sent leaf change to wrong method, redirecting");
@@ -112,24 +121,24 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
 
     @Override
     public void randomTick(World world, BlockPos pos, IBlockState state, Random rand) {
-        if (!world.isRemote) {
+        this.updateTick(world, pos, state, rand);
+        spread(world, pos, state, rand);
+    }
+
+    public static void spread(World world, BlockPos pos, IBlockState state, Random rand){
+        if (!world.isRemote && state != null) {
             if (state.getValue(NEARBYLEAVES)) {
                 NonNullList<BlockPos> nearbyLeaves = Util.getNearbyLeaves(world, pos);
                 if (nearbyLeaves.isEmpty())
                     world.setBlockState(pos, state.withProperty(NEARBYLEAVES, false), 7);
                 else {
-                    int progress = ((TileInfestingLeaves) world.getTileEntity(pos)).getProgress();
-                    // Delay spreading until 25%
-                    if (progress >= ModConfig.infested_leaves.leavesSpreadPercent) {
-                        nearbyLeaves.stream().filter(leaves -> rand.nextFloat() <= ModConfig.infested_leaves.leavesSpreadChance).findAny().ifPresent(blockPos -> BlockInfestingLeaves.infestLeafBlock(world, world.getBlockState(blockPos), blockPos));
+                    TileEntity te = world.getTileEntity(pos);
+                    if (te instanceof TileInfestingLeaves && ((TileInfestingLeaves) te).getProgress() > ModConfig.infested_leaves.leavesSpreadPercent) {
+                        nearbyLeaves.stream().filter(leaves -> rand.nextFloat() <= ModConfig.infested_leaves.leavesSpreadChanceFloat).findAny().ifPresent(blockPos -> BlockInfestingLeaves.infestLeafBlock(world, world.getBlockState(blockPos), blockPos));
                     }
                 }
             }
         }
-    }
-
-    @Override
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
     }
 
     @Override
@@ -156,10 +165,12 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
         if (state instanceof IExtendedBlockState){
             IExtendedBlockState retval = (IExtendedBlockState) state;
             IBlockState leafState;
-            if (world.getTileEntity(pos) != null) {
-                leafState = ((TileInfestingLeaves) world.getTileEntity(pos)).getLeafBlock();
+            TileEntity te = world.getTileEntity(pos);
+            if (te instanceof ITileLeafBlock) {
+                leafState = ((ITileLeafBlock) te).getLeafBlock();
+            } else {
+                leafState = Blocks.LEAVES.getDefaultState();
             }
-            else leafState = Blocks.LEAVES.getDefaultState();
             return retval.withProperty(LEAFBLOCK, leafState);
         }
         return state;
@@ -176,23 +187,23 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
     @Nonnull
     @Deprecated
     public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(CHECK_DECAY, meta == 0 || meta == 1 || meta == 3)
-                .withProperty(DECAYABLE, meta == 0 || meta == 2 || meta == 4)
-                .withProperty(NEARBYLEAVES, meta == 0 || meta == 1 || meta == 4);
+        return getDefaultState().withProperty(CHECK_DECAY, (meta & 0b100) != 0)
+                .withProperty(DECAYABLE, (meta & 0b010) != 0)
+                .withProperty(NEARBYLEAVES, (meta & 0b001) != 0);
     }
 
+    /**
+     * 3 bits for data:
+     *      0               0                0
+     *      checkDecay      decayable       nearbyLeaves
+     */
     @Override
     public int getMetaFromState(IBlockState state) {
-        boolean checkDecay = state.getValue(CHECK_DECAY);
-        boolean decayable = state.getValue(DECAYABLE);
-        boolean nearbyLeaves = state.getValue(NEARBYLEAVES);
-        if (checkDecay && decayable && nearbyLeaves)
-            return 0;
-        if (checkDecay)
-            return nearbyLeaves ? 1 : 3;
-        if (decayable)
-            return nearbyLeaves ? 2 : 4;
-        return 5;
+        int checkDecay = state.getValue(CHECK_DECAY) ? 1 : 0;
+        int decayable = state.getValue(DECAYABLE) ? 1 : 0;
+        int nearbyLeaves = state.getValue(NEARBYLEAVES) ? 1 : 0;
+
+        return checkDecay << 2 | decayable << 1 | nearbyLeaves;
     }
 
     @Override

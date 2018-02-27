@@ -71,32 +71,36 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
 
         IFocus<?> focus = layout.getFocus();
 
+        boolean mightHaveHighlight = false;
+        ItemStack focusStack = ItemStack.EMPTY;
+
         if (focus != null) {
-            boolean mightHaveHighlight = focus.getMode() == IFocus.Mode.INPUT;
+            mightHaveHighlight = focus.getMode() == IFocus.Mode.INPUT;
             hasHighlight = false;
 
-            ItemStack focusStack = (ItemStack) focus.getValue();
+            focusStack = (ItemStack) focus.getValue();
+        }
 
-            int slotIndex = 1;
+        int slotIndex = 1;
 
-            for (int i = 0; i < recipe.getInputs().size(); i++) {
-                final int slotX = 2 + (i % 9 * 18);
-                final int slotY = 36 + (i / 9 * 18);
+        for (int i = 0; i < recipe.getInputs().size(); i++) {
+            final int slotX = 2 + (i % 9 * 18);
+            final int slotY = 36 + (i / 9 * 18);
 
-                ItemStack inputStack = recipe.getInputs().get(i);
+            ItemStack inputStack = recipe.getInputs().get(i);
 
-                layout.getItemStacks().init(slotIndex + i, true, slotX, slotY);
-                layout.getItemStacks().set(slotIndex + i, inputStack);
+            layout.getItemStacks().init(slotIndex + i, true, slotX, slotY);
+            layout.getItemStacks().set(slotIndex + i, inputStack);
 
-                if (mightHaveHighlight && ItemStack.areItemsEqual(focusStack, inputStack)) {
-                    highlightX = slotX;
-                    highlightY = slotY;
+            if (focus != null && mightHaveHighlight && ItemStack.areItemsEqual(focusStack, inputStack)) {
+                highlightX = slotX;
+                highlightY = slotY;
 
-                    hasHighlight = true;
-                    mightHaveHighlight = false;
-                }
+                hasHighlight = true;
+                mightHaveHighlight = false;
             }
         }
+
 
         layout.getItemStacks().addTooltipCallback(new CompostTooltipCallback());
     }

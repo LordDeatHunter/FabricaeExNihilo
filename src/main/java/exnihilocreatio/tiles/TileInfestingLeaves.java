@@ -15,25 +15,32 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
-public class TileInfestingLeaves extends BaseTileEntity implements ITickable {
+public class TileInfestingLeaves extends BaseTileEntity implements ITickable, ITileLeafBlock {
     @Getter
     private int progress = 0;
     @Getter
     private IBlockState leafBlock = Blocks.LEAVES.getDefaultState();
 
     private int doProgress = (int) (ModConfig.infested_leaves.ticksToTransform / 100.0);
+    private int spreadCounter = 0;
 
     @Override
     public void update() {
         if (!world.isRemote) {
             if (doProgress <= 0) {
                 progress++;
+                spreadCounter++;
                 if (progress >= 100) {
                     BlockInfestingLeaves.setInfested(world, pos, leafBlock);
                     markDirtyClient();
                 }
+                if (spreadCounter >= ModConfig.infested_leaves.leavesUpdateFrequency) {
+                    BlockInfestingLeaves.spread(world, pos, world.getBlockState(pos), world.rand);
+                    spreadCounter = 0;
+                }
 
                 doProgress = (int) (ModConfig.infested_leaves.ticksToTransform / 100.0);
+
                 //Send packet at the end incase the block gets changed first.
                 PacketHandler.sendNBTUpdate(this);
             } else {
@@ -77,7 +84,6 @@ public class TileInfestingLeaves extends BaseTileEntity implements ITickable {
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
         progress = tag.getInteger("progress");
-
         if (tag.hasKey("leafBlock") && tag.hasKey("leafBlockMeta")) {
             try {
                 leafBlock = Block.getBlockFromName(tag.getString("leafBlock")).getStateFromMeta(tag.getInteger("leafBlockMeta"));

@@ -10,7 +10,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 
 import javax.annotation.Nonnull;
 
-public class TileInfestedLeaves extends BaseTileEntity {
+public class TileInfestedLeaves extends BaseTileEntity implements ITileLeafBlock {
 
     @Getter
     private IBlockState leafBlock = Blocks.LEAVES.getDefaultState();

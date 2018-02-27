@@ -206,14 +206,24 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
 
             CompostRecipe recipe = compostRecipes.stream()
                     .filter(compostRecipe -> compostRecipe.outputMatch(compostBlock.getItemStack())
-                            && !compostRecipe.isRecipeFull())
+                            && compostRecipe.isNonFull())
                     .findFirst()
                     .orElse(null);
-            if (recipe != null)
-                recipe.getInputs().addAll(compostables);
-            else
-                compostRecipes.add(new CompostRecipe(compostBlock, compostables));
+            if (recipe == null){
+                recipe = new CompostRecipe(compostBlock, Lists.newLinkedList());
+                compostRecipes.add(recipe);
+            }
 
+            //This acts as a safety net, auto creating new recipes if the input list is larger than 45
+            for (ItemStack stack : compostables) {
+                if (recipe.isNonFull()) {
+                    recipe.getInputs().add(stack);
+                } else {
+                    recipe = new CompostRecipe(compostBlock, Lists.newLinkedList());
+                    recipe.getInputs().add(stack);
+                    compostRecipes.add(recipe);
+                }
+            }
         });
 
         return compostRecipes;

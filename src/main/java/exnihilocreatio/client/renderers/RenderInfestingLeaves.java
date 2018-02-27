@@ -21,8 +21,6 @@ import net.minecraftforge.client.model.animation.FastTESR;
 
 public class RenderInfestingLeaves extends FastTESR<TileInfestingLeaves> {
 
-    private boolean complete = false;
-
     private static final ModelVertex[] model = new ModelVertex[24];
     static {
         model[0] = new ModelVertex( EnumFacing.UP, 0, 1, 0, 0, 1 );

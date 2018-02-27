@@ -1,8 +1,8 @@
 package exnihilocreatio.tiles;
 
 import exnihilocreatio.config.ModConfig;
+import exnihilocreatio.rotationalPower.CapabilityRotationalMember;
 import exnihilocreatio.rotationalPower.IRotationalPowerConsumer;
-import exnihilocreatio.rotationalPower.IRotationalPowerMember;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.Util;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -55,8 +55,8 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
             offsetX = cx + r * (float) Math.cos(tickCounter);
         }
 
-        if (tickCounter % 10 == 0) {
-            perTickRotation = calcEffectivePerTickRotation(facing);
+        if (tickCounter > 0 && tickCounter % 10 == 0) {
+            perTickRotation = calcEffectivePerTickRotation(world, pos, facing);
 
             BlockPos posOther = pos.up();
             TileEntity te = world.getTileEntity(posOther);
@@ -66,13 +66,16 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
             } else {
                 toSift = null;
             }
+            tickCounter = 0;
         }
 
         storedRotationalPower += perTickRotation;
 
-        if (Math.abs(storedRotationalPower) > 100 && toSift != null && !world.isRemote) {
+        if (Math.abs(storedRotationalPower) > 100 && toSift != null) {
             storedRotationalPower += storedRotationalPower > 0 ? -100 : 100;
-            doAutoSieving(toSift);
+            if (!world.isRemote) {
+                doAutoSieving(toSift);
+            }
         }
 
 
@@ -169,29 +172,20 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
         perTickRotation = rotation;
     }
 
-    private float calcEffectivePerTickRotation(EnumFacing direction) {
-        if (facing == direction) {
-            BlockPos posProvider = pos.offset(facing.getOpposite());
-            TileEntity te = world.getTileEntity(posProvider);
-            if (te != null && te instanceof IRotationalPowerMember) {
-                return ((IRotationalPowerMember) te).getEffectivePerTickRotation(facing) + getOwnRotation();
-            } else return getOwnRotation();
-        } else return 0;
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing facing) {
-        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return (T) itemHandlerAutoSifter;
-        }
-
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(itemHandlerAutoSifter);
+        if (capability == CapabilityRotationalMember.ROTIONAL_MEMBER)
+            return CapabilityRotationalMember.ROTIONAL_MEMBER.cast(this);
         return super.getCapability(capability, facing);
     }
 
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, EnumFacing facing) {
         return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ||
+                (capability == CapabilityRotationalMember.ROTIONAL_MEMBER && facing == this.facing) ||
                 super.hasCapability(capability, facing);
     }
 

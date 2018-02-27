@@ -1,16 +1,17 @@
 package exnihilocreatio.tiles;
 
-import exnihilocreatio.rotationalPower.IRotationalPowerMember;
+import exnihilocreatio.rotationalPower.CapabilityRotationalMember;
 import exnihilocreatio.rotationalPower.IRotationalPowerProvider;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.IFluidBlock;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class TileWaterwheel extends BaseTileEntity implements ITickable, IRotationalPowerProvider {
     public static final float ROTATION_PER_WHEEL = 0.5F;
@@ -28,7 +29,7 @@ public class TileWaterwheel extends BaseTileEntity implements ITickable, IRotati
     @Override
     public void update() {
         counter++;
-        if (counter % 10 == 0) {
+        if (counter > 0 && counter % 10 == 0) {
             IBlockState left;
             IBlockState right;
 
@@ -46,8 +47,11 @@ public class TileWaterwheel extends BaseTileEntity implements ITickable, IRotati
                     break;
             }
 
-            boolean lIsWater = left.getBlock() == Blocks.WATER;
-            boolean rIsWater = right.getBlock() == Blocks.WATER;
+            // boolean lIsWater = left.getBlock() == Blocks.WATER || left.getBlock() == ModFluids.blockWitchwater;
+            // boolean rIsWater = right.getBlock() == Blocks.WATER || right.getBlock() == ModFluids.blockWitchwater;
+
+            boolean lIsWater = left.getBlock() instanceof BlockLiquid || left.getBlock() instanceof IFluidBlock;
+            boolean rIsWater = right.getBlock() instanceof BlockLiquid || right.getBlock() instanceof IFluidBlock;
 
             perTickRotationOwn = 0F;
             if (lIsWater) {
@@ -59,11 +63,12 @@ public class TileWaterwheel extends BaseTileEntity implements ITickable, IRotati
             }
 
             float lastPerTickEffective = perTickEffective;
-            perTickEffective = calcEffectivePerTickRotation(facing);
+            perTickEffective = calcEffectivePerTickRotation(world,pos,facing);
 
             if (lastPerTickEffective != perTickEffective) {
                 markDirty();
             }
+            counter = 0;
         }
 
         if (world.isRemote) {
@@ -106,16 +111,18 @@ public class TileWaterwheel extends BaseTileEntity implements ITickable, IRotati
         }
     }
 
-    private float calcEffectivePerTickRotation(EnumFacing direction) {
-        if (facing == direction) {
-            BlockPos posProvider = pos.offset(facing.getOpposite());
-            TileEntity te = world.getTileEntity(posProvider);
-            if (te != null && te instanceof IRotationalPowerMember) {
-                return ((IRotationalPowerMember) te).getEffectivePerTickRotation(facing) + getOwnRotation();
-            } else return getOwnRotation();
-        } else return 0;
+    @Override
+    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+        return capability == CapabilityRotationalMember.ROTIONAL_MEMBER && facing == this.facing || super.hasCapability(capability, facing);
     }
 
+    @Nullable
+    @Override
+    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+        if(capability == CapabilityRotationalMember.ROTIONAL_MEMBER && facing == this.facing)
+            return CapabilityRotationalMember.ROTIONAL_MEMBER.cast(this);
+        return super.getCapability(capability, facing);
+    }
 
     @Override
     public void setEffectivePerTickRotation(float rotation) {

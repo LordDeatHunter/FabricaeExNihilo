@@ -9,7 +9,6 @@ import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import lombok.Getter;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -21,14 +20,14 @@ public class AppliedEnergistics2 implements IRecipeDefaults {
 
     @GameRegistry.ObjectHolder("appliedenergistics2:material")
     // Certus = 0, Charged Certus = 1, Sky stone dust = 45
-    private static final Item AE_MATERIAL = ItemStack.EMPTY.getItem();
+    private static final Item AE_MATERIAL = null;
 
     @GameRegistry.ObjectHolder("appliedenergistics2:crystal_seed")
     // Pure Certus = 0
-    private static final Item AE_SEEDS = ItemStack.EMPTY.getItem();
+    private static final Item AE_SEEDS = null;
 
     @GameRegistry.ObjectHolder("appliedenergistics2:sky_stone_block")
-    private static final Block SKY_STONE = Blocks.AIR;
+    private static final Block SKY_STONE = null;
 
     public void registerSieve(SieveRegistry registry) {
         // Sky Stone Dust

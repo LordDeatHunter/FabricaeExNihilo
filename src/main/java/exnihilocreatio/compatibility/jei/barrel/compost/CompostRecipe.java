@@ -37,8 +37,8 @@ public class CompostRecipe implements IRecipeWrapper {
     /**
      * @return Returns full if the input has any space free
      */
-    public boolean isRecipeFull(){
-        return inputs.size() >= 45;
+    public boolean isNonFull(){
+        return inputs.size() < 45;
     }
 
     public boolean outputMatch(ItemStack stack){

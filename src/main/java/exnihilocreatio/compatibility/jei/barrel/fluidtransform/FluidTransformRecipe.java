@@ -7,7 +7,6 @@ import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.Util;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -23,8 +22,6 @@ public class FluidTransformRecipe implements IRecipeWrapper {
     private final ItemStack inputBucket;
     private final ItemStack outputBucket;
 
-    private final List<IBlockState> transformBlocks;
-
     private final List<ItemStack> inputStacks;
 
     public FluidTransformRecipe(FluidTransformer recipe) {
@@ -34,11 +31,9 @@ public class FluidTransformRecipe implements IRecipeWrapper {
         inputBucket = Util.getBucketStack(inputFluid.getFluid());
         outputBucket = Util.getBucketStack(outputFluid.getFluid());
 
-        transformBlocks = Lists.newArrayList();
         inputStacks = Lists.newArrayList(inputBucket);
 
         for (BlockInfo block : recipe.getTransformingBlocks()) {
-            transformBlocks.add(block.getBlockState());
             inputStacks.add(new ItemStack(block.getBlock(), 1, block.getMeta()));
         }
     }

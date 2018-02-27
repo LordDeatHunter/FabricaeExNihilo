@@ -39,18 +39,17 @@ public abstract class CommonProxy {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void registerItemsLower(RegistryEvent.Register<Item> event) {
         ExNihiloDefaultRecipes.registerDefaults();
-
-        ExNihiloCreatio.loadConfigs();
-
-        Recipes.init();
-        ExNihiloRegistryManager.ORE_REGISTRY.doRecipes();
         ExNihiloRegistryManager.ORE_REGISTRY.loadJson(new File(ExNihiloCreatio.configDirectory, "OreRegistry.json"));
         ExNihiloRegistryManager.ORE_REGISTRY.registerToGameRegistry(event.getRegistry());
+        ExNihiloRegistryManager.ORE_REGISTRY.doRecipes();
     }
 
     @SubscribeEvent
     public static void onRecipeRegistry(RegistryEvent.Register<IRecipe> e) {
         // Recipes.init();
+        ExNihiloCreatio.loadConfigs();
+
+        Recipes.init();
         e.getRegistry().registerAll(Data.RECIPES.toArray(new IRecipe[RECIPES.size()]));
     }
 

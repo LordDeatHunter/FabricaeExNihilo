@@ -46,9 +46,12 @@ public class ModConfig {
 
     public static class InfestedLeaves {
         public int ticksToTransform = 600;
-        public int leavesUpdateFrequency = 10;
-        public int leavesSpreadPercent = 25;
-        public float leavesSpreadChance = 0.5f;
+        @Config.Comment("How many ticks to wait before getting ticked again, already fully infested leaves spread much slower due to waiting for world ticks.")
+        public int leavesUpdateFrequency = 5;
+        @Config.Comment("Minimum percentage to spread")
+        public int leavesSpreadPercent = 15;
+        @Config.Comment("Chance to spread if it got ticked")
+        public float leavesSpreadChanceFloat = 0.5f;
     }
 
     public static class Crooking {
@@ -77,6 +80,9 @@ public class ModConfig {
     public static class Compatibility {
         @Config.RequiresMcRestart
         public TinkersConstructCompat tinkers_construct_compat = new TinkersConstructCompat();
+
+        @Config.Comment("Prevents unidict from merging the ore chunks into normal ore.")
+        public boolean preventUnidict = true;
 
         public static class TinkersConstructCompat {
             public boolean doTinkersConstructCompat = true;
