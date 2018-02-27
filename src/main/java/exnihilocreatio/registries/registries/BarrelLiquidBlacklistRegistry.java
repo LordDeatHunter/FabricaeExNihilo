@@ -1,5 +1,6 @@
 package exnihilocreatio.registries.registries;
 
+import com.google.common.collect.Lists;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.GsonBuilder;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
@@ -41,6 +42,6 @@ public class BarrelLiquidBlacklistRegistry extends BaseRegistryMap<Integer, List
 
     @Override
     public List<?> getRecipeList() {
-        return null;
+        return Lists.newLinkedList();
     }
 }

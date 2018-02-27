@@ -96,7 +96,6 @@ public class FluidTransformRegistry extends BaseRegistryMap<String, List<FluidTr
     @Override
     public List<FluidTransformRecipe> getRecipeList() {
         List<FluidTransformRecipe> fluidTransformRecipes = Lists.newLinkedList();
-
         getFluidTransformers().forEach(transformer -> {
             // Make sure both fluids are registered
             if (FluidRegistry.isFluidRegistered(transformer.getInputFluid()) && FluidRegistry.isFluidRegistered(transformer.getOutputFluid())) {
@@ -106,7 +105,6 @@ public class FluidTransformRegistry extends BaseRegistryMap<String, List<FluidTr
                 }
             }
         });
-
         return fluidTransformRecipes;
     }
 }

@@ -115,12 +115,12 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
         Map<String, Meltable> gsonInput = gson.fromJson(fr, new TypeToken<Map<String, Meltable>>() {
         }.getType());
 
-        for (Map.Entry<String, Meltable> entry : gsonInput.entrySet()) {
-            ItemInfo item = new ItemInfo(entry.getKey());
+        gsonInput.forEach((key, value) -> {
+            ItemInfo item = new ItemInfo(key);
             if (registry.keySet().stream().anyMatch(ingredient -> ingredient.test(item.getItemStack())))
                 LogUtil.error("Compost JSON Entry for " + item.getItemStack().getDisplayName() + " already exists, skipping.");
-            else registry.put(CraftingHelper.getIngredient(item.getItemStack()), entry.getValue());
-        }
+            else registry.put(CraftingHelper.getIngredient(item.getItemStack()), value);
+        });
     }
 
     @Override
@@ -148,7 +148,8 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
             });
             ItemStack fluidBucket = FluidUtil.getFilledBucket(new FluidStack(fluid, 1000));
             CrucibleRecipe recipe = crucibleRecipes.stream()
-                    .filter(crucibleRecipe -> crucibleRecipe.getFluid().isItemEqual(fluidBucket))
+                    .filter(crucibleRecipe -> crucibleRecipe.getFluid().isItemEqual(fluidBucket)
+                            && !crucibleRecipe.isRecipeFull())
                     .findFirst().orElse(null);
             if (recipe != null)
                 recipe.getInputs().addAll(meltables);

@@ -59,9 +59,7 @@ public class HeatRegistry extends BaseRegistryMap<BlockInfo, Integer> {
     @Override
     public List<HeatSourcesRecipe> getRecipeList() {
         List<HeatSourcesRecipe> heatSources = Lists.newLinkedList();
-
         getRegistry().forEach((key, value) -> heatSources.add(new HeatSourcesRecipe(key, value)));
-
         return heatSources;
     }
 }

@@ -32,7 +32,7 @@ public interface IBarrelMode {
 
     String getName();
 
-    boolean onBlockActivated(World world, TileBarrel barrel, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ);
+    void onBlockActivated(World world, TileBarrel barrel, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ);
 
     @SideOnly(Side.CLIENT)
     TextureAtlasSprite getTextureForRender(TileBarrel barrel);
@@ -47,7 +47,7 @@ public interface IBarrelMode {
 
     void update(TileBarrel barrel);
 
-    boolean addItem(ItemStack stack, TileBarrel barrel);
+    void addItem(ItemStack stack, TileBarrel barrel);
 
     ItemStackHandler getHandler(TileBarrel barrel);
 

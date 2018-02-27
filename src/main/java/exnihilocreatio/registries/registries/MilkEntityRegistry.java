@@ -1,5 +1,6 @@
 package exnihilocreatio.registries.registries;
 
+import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.json.CustomBlockInfoJson;
@@ -97,6 +98,6 @@ public class MilkEntityRegistry extends BaseRegistryList<Milkable> {
 
     @Override
     public List<?> getRecipeList() {
-        return null;
+        return Lists.newLinkedList();
     }
 }

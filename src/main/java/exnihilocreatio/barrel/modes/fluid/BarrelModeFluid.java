@@ -80,7 +80,7 @@ public class BarrelModeFluid implements IBarrelMode {
     }
 
     @Override
-    public boolean onBlockActivated(World world, TileBarrel barrel, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public void onBlockActivated(World world, TileBarrel barrel, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
 
         if (!stack.isEmpty()) {
@@ -102,7 +102,6 @@ public class BarrelModeFluid implements IBarrelMode {
             player.setHeldItem(hand, remainder);
         }
 
-        return false;
     }
 
     @Override
@@ -193,8 +192,7 @@ public class BarrelModeFluid implements IBarrelMode {
     }
 
     @Override
-    public boolean addItem(ItemStack stack, TileBarrel barrel) {
-        return false;
+    public void addItem(ItemStack stack, TileBarrel barrel) {
     }
 
     @Override

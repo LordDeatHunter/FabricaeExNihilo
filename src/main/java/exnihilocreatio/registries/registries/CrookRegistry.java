@@ -1,5 +1,6 @@
 package exnihilocreatio.registries.registries;
 
+import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.json.CustomBlockInfoJson;
@@ -18,7 +19,6 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import java.io.FileReader;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<CrookReward>> {
 
@@ -83,22 +83,20 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
         HashMap<String, NonNullList<CrookReward>> gsonInput = gson.fromJson(fr, new TypeToken<HashMap<String, NonNullList<CrookReward>>>() {
         }.getType());
 
-        for (Map.Entry<String, NonNullList<CrookReward>> s : gsonInput.entrySet()) {
-            BlockInfo blockInfo = new BlockInfo(s.getKey());
+        gsonInput.forEach((key, value) -> {
+            BlockInfo blockInfo = new BlockInfo(key);
             Ingredient ingredient = registry.keySet().stream().filter(entry -> entry.test(blockInfo.getItemStack())).findFirst().orElse(null);
 
-            if (ingredient != null){
-                registry.get(ingredient).addAll(s.getValue());
+            if (ingredient != null) {
+                registry.get(ingredient).addAll(value);
+            } else {
+                registry.put(CraftingHelper.getIngredient(blockInfo.getItemStack()), value);
             }
-            else {
-                registry.put(CraftingHelper.getIngredient(blockInfo.getItemStack()),s.getValue());
-            }
-
-        }
+        });
     }
 
     @Override
     public List<?> getRecipeList() {
-        return null;
+        return Lists.newLinkedList();
     }
 }

@@ -6,6 +6,7 @@ import exnihilocreatio.registries.manager.IDefaultRecipeProvider;
 import lombok.Getter;
 import org.apache.commons.io.IOUtils;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -16,11 +17,11 @@ public abstract class BaseRegistry<RegType> {
 
     @Getter
     protected RegType registry;
-    protected final List<? extends IDefaultRecipeProvider> defaultRecipeProviders;
+    private final List<? extends IDefaultRecipeProvider> defaultRecipeProviders;
 
     protected final Gson gson;
 
-    public BaseRegistry(Gson gson, RegType registry, List<? extends IDefaultRecipeProvider> defaultRecipeProviders) {
+    public BaseRegistry(Gson gson, RegType registry, @Nonnull List<? extends IDefaultRecipeProvider> defaultRecipeProviders) {
         this.gson = gson;
         this.registry = registry;
         this.defaultRecipeProviders = defaultRecipeProviders;
@@ -64,13 +65,7 @@ public abstract class BaseRegistry<RegType> {
 
     @SuppressWarnings("unchecked")
     public void registerDefaults() {
-        if (defaultRecipeProviders != null) {
-            for (IDefaultRecipeProvider defaultRecipeProvider : defaultRecipeProviders) {
-                if (defaultRecipeProvider != null) {
-                    defaultRecipeProvider.registerRecipeDefaults(this);
-                }
-            }
-        }
+        defaultRecipeProviders.forEach(recipeProvider -> recipeProvider.registerRecipeDefaults(this));
     }
 
     public abstract List<?> getRecipeList();

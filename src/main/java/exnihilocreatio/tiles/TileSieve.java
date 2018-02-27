@@ -102,16 +102,16 @@ public class TileSieve extends BaseTileEntity {
         return false;
     }
 
-    public boolean doSieving(EntityPlayer player, boolean automatedSieving) {
+    public void doSieving(EntityPlayer player, boolean automatedSieving) {
         if (!world.isRemote) {
 
             if (currentStack == null) {
-                return false;
+                return;
             }
 
             // 4 ticks is the same period of holding down right click
             if (getWorld().getTotalWorldTime() - lastSieveAction < 4 && !automatedSieving) {
-                return false;
+                return;
             }
 
             // Really good chance that they're using a macro
@@ -162,13 +162,13 @@ public class TileSieve extends BaseTileEntity {
                 fishToDrop = Math.max(fishToDrop, luckOfTheSea);
 
                 for (int i = 0; i < fishToDrop; i++) {
-                /*
-                 * Gives fish following chances:
-                 *  Normal: 43% (3/7)
-                 *  Salmon: 29% (2/7)
-                 *  Clown:  14% (1/7)
-                 *  Puffer: 14% (1/7)
-                 */
+                    /*
+                     * Gives fish following chances:
+                     *  Normal: 43% (3/7)
+                     *  Salmon: 29% (2/7)
+                     *  Clown:  14% (1/7)
+                     *  Puffer: 14% (1/7)
+                     */
 
                     int fishMeta = 0;
 
@@ -196,7 +196,6 @@ public class TileSieve extends BaseTileEntity {
                 markDirtyClient();
             }
         }
-        return true;
     }
 
     public boolean isSieveSimilar(TileSieve sieve) {

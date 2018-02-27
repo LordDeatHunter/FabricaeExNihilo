@@ -68,8 +68,8 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
 
     @Override
     public List<FluidBlockTransformRecipe> getRecipeList() {
-        List<FluidBlockTransformRecipe> fluidBlockTransformRecipes = Lists.newArrayList();
-        for (FluidBlockTransformer transformer : getRegistry()) {
+        List<FluidBlockTransformRecipe> fluidBlockTransformRecipes = Lists.newLinkedList();
+        getRegistry().forEach(transformer -> {
             // Make sure everything's registered
             if (FluidRegistry.isFluidRegistered(transformer.getFluidName())
                     && transformer.getInput().getItem() != Items.AIR
@@ -79,7 +79,7 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
                     fluidBlockTransformRecipes.add(recipe);
                 }
             }
-        }
+        });
         return fluidBlockTransformRecipes;
     }
 }

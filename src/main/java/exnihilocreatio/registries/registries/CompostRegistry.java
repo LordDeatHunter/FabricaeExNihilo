@@ -205,7 +205,8 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
             });
 
             CompostRecipe recipe = compostRecipes.stream()
-                    .filter(compostRecipe -> compostRecipe.outputMatch(compostBlock.getItemStack()))
+                    .filter(compostRecipe -> compostRecipe.outputMatch(compostBlock.getItemStack())
+                            && !compostRecipe.isRecipeFull())
                     .findFirst()
                     .orElse(null);
             if (recipe != null)

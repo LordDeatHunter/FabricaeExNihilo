@@ -35,6 +35,13 @@ public class CrucibleRecipe implements IRecipeWrapper {
         return output;
     }
 
+    /**
+     * @return Returns full if the input has any space free
+     */
+    public boolean isRecipeFull(){
+        return inputs.size() >= 45;
+    }
+
     @Override
     public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
     }

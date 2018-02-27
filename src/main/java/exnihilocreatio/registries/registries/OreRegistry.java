@@ -1,5 +1,6 @@
 package exnihilocreatio.registries.registries;
 
+import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.ExNihiloCreatio;
@@ -178,6 +179,6 @@ public class OreRegistry extends BaseRegistryList<Ore> {
 
     @Override
     public List<?> getRecipeList() {
-        return null;
+        return Lists.newLinkedList();
     }
 }
