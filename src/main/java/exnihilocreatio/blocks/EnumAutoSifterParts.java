@@ -9,8 +9,8 @@ public enum EnumAutoSifterParts implements IStringSerializable {
     ROD(3, "rod"),
     CONNECTION(4, "connection");
 
-    private int ID;
-    private String name;
+    private final int ID;
+    private final String name;
 
     EnumAutoSifterParts(int ID, String name) {
         this.ID = ID;

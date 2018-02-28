@@ -29,7 +29,7 @@ public class CapabilityHeatManager implements Capability.IStorage<ICapabilityHea
     }
 
     @Override
-    public ICapabilityHeat call() throws Exception {
+    public ICapabilityHeat call() {
         return new CapabilityHeat();
     }
 }

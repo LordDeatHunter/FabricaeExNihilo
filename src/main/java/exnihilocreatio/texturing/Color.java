@@ -2,10 +2,10 @@ package exnihilocreatio.texturing;
 
 public class Color {
 
-    public float r;
-    public float g;
-    public float b;
-    public float a;
+    public final float r;
+    public final float g;
+    public final float b;
+    public final float a;
 
     public Color(float red, float green, float blue, float alpha) {
         this.r = red;

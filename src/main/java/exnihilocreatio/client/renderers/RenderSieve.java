@@ -32,7 +32,7 @@ public class RenderSieve extends TileEntitySpecialRenderer<TileSieve> {
             offsetZ = te.autoSifter.offsetZ;
         }
 
-        renderSieve(te, x + offsetX, y + offsetY, z + offsetZ, tes, wr);
+        renderSieve(te, x + offsetX, y + offsetY, z + offsetZ, wr);
         renderBlockInSieve(te, x + offsetX, y + offsetY, z + offsetZ, tes, wr);
 
     }
@@ -69,7 +69,7 @@ public class RenderSieve extends TileEntitySpecialRenderer<TileSieve> {
 
     }
 
-    private void renderSieve(TileSieve tile, double x, double y, double z, Tessellator tessellator, BufferBuilder worldRendererBuffer) {
+    private void renderSieve(TileSieve tile, double x, double y, double z, BufferBuilder worldRendererBuffer) {
         final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
         IBlockState state = tile.getBlockType().getDefaultState().withProperty(BlockSieve.MESH, tile.getMeshType());
         // IBlockState state = tile.getBlockType().getDefaultState().withProperty(BlockSieve.MESH, BlockSieve.MeshType.getMeshTypeByID(tile.getMeshStack().getMetadata()));
@@ -78,7 +78,7 @@ public class RenderSieve extends TileEntitySpecialRenderer<TileSieve> {
         //TODO: possibly optimize to not call this every render, maybe HashMap for that?
 
 
-        tessellator = Tessellator.getInstance();
+        Tessellator tessellator = Tessellator.getInstance();
         GlStateManager.pushMatrix();
 
         GlStateManager.translate(x, y, z);

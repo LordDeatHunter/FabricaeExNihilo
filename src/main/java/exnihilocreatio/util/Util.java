@@ -31,9 +31,9 @@ import static java.lang.Math.round;
 
 public class Util {
 
-    public static Color whiteColor = new Color(1f, 1f, 1f, 1f);
-    public static Color blackColor = new Color(0f, 0f, 0f, 1f);
-    public static Color greenColor = new Color(0f, 1f, 0f, 1f);
+    public static final Color whiteColor = new Color(1f, 1f, 1f, 1f);
+    public static final Color blackColor = new Color(0f, 0f, 0f, 1f);
+    public static final Color greenColor = new Color(0f, 1f, 0f, 1f);
 
     public static void dropItemInWorld(TileEntity source, EntityPlayer player, ItemStack stack, double speedFactor) {
         if (stack == null || stack.isEmpty())

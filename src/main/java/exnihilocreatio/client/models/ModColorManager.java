@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.IBlockColor;
 
 public class ModColorManager {
-    private static Minecraft MINECRAFT = Minecraft.getMinecraft();
+    private static final Minecraft MINECRAFT = Minecraft.getMinecraft();
 
     public static void registerColorHandlers(){
         registerBlockColorHandlers(MINECRAFT.getBlockColors());

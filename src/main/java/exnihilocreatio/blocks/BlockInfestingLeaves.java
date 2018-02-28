@@ -43,9 +43,9 @@ import java.util.Random;
 
 public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProvider, ITOPInfoProvider, IHasModel {
 
-    public static PropertyBool NEARBYLEAVES = PropertyBool.create("nearby_leaves");
+    public static final PropertyBool NEARBYLEAVES = PropertyBool.create("nearby_leaves");
 
-    public static IUnlistedProperty<IBlockState> LEAFBLOCK = new IUnlistedProperty<IBlockState>() {
+    public static final IUnlistedProperty<IBlockState> LEAFBLOCK = new IUnlistedProperty<IBlockState>() {
         @Override
         public String getName() {
             return "LeafBlock";
@@ -117,8 +117,6 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
             ((ITileLeafBlock)world.getTileEntity(pos)).setLeafBlock(leafState);
             ((BaseTileEntity)world.getTileEntity(pos)).markDirtyClient();
             
-            System.out.println("world = " + world.getBlockState(pos));
-            System.out.println("((ITileLeafBlock)world.getTileEntity(pos)).getLeafBlock() = " + ((ITileLeafBlock) world.getTileEntity(pos)).getLeafBlock());
         }
         else if (Util.isLeaves(block) && !(block.getBlock() instanceof BlockInfestedLeaves)){
             LogUtil.error("Sent leaf change to wrong method, redirecting");

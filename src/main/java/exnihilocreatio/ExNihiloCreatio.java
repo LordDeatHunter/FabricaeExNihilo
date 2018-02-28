@@ -11,7 +11,6 @@ import exnihilocreatio.handlers.HandlerHammer;
 import exnihilocreatio.networking.PacketHandler;
 import exnihilocreatio.proxy.CommonProxy;
 import exnihilocreatio.registries.RegistryReloadedEvent;
-import exnihilocreatio.registries.manager.ExNihiloDefaultRecipes;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.BarrelModeRegistry;
 import exnihilocreatio.util.LogUtil;
@@ -47,12 +46,11 @@ public class ExNihiloCreatio {
     public static boolean configsLoaded = false;
     public static boolean crtActionsLoaded = false;
 
-    public static CreativeTabs tabExNihilo = new CreativeTabExNihiloCreatio();
+    public static final CreativeTabs tabExNihilo = new CreativeTabExNihiloCreatio();
 
     static {
         FluidRegistry.enableUniversalBucket();
         // registers itself to the needed registries
-        ExNihiloDefaultRecipes.registerDefaults();
     }
 
     @EventHandler
@@ -86,13 +84,6 @@ public class ExNihiloCreatio {
     @EventHandler
     public static void init(FMLInitializationEvent event) {
         proxy.init(event);
-
-        loadConfigs();
-
-        Recipes.init();
-
-        // OreRegistry.doRecipes();
-
     }
 
     @EventHandler

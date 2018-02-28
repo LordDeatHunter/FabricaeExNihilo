@@ -5,12 +5,12 @@ import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.HammerReward;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,30 +18,30 @@ public class HammerRecipe implements IRecipeWrapper {
     private List<ItemStack> inputs;
     private List<ItemStack> outputs;
 
-    public HammerRecipe(IBlockState block) {
-        if (block != null && block.getBlock() != Blocks.AIR) {
-            List<HammerReward> rewards = ExNihiloRegistryManager.HAMMER_REGISTRY.getRewards(block);
-            // Make sure no null rewards, Item or ItemStack
+    public HammerRecipe(Ingredient ingredient) {
+        List<HammerReward> rewards = ExNihiloRegistryManager.HAMMER_REGISTRY.getRewards(ingredient);
+        if (rewards.isEmpty())
+            return;
             List<ItemStack> allOutputs = Lists.newArrayList(rewards.stream().filter(reward -> reward != null && !reward.getStack().isEmpty()).map(reward -> reward.getStack().copy()).collect(Collectors.toList()));
             //allOutputs.removeIf(stack -> stack == null || stack.getItem() == Items.AIR);
 
-            inputs = Lists.newArrayList(new ItemStack(block.getBlock(), 1, block.getBlock().getMetaFromState(block)));
-            outputs = Lists.newArrayList();
+        List<ItemStack> allOutputs = rewards.stream().map(HammerReward::getStack).collect(Collectors.toList());
+        inputs = Arrays.asList(ingredient.getMatchingStacks());
+        outputs = Lists.newArrayList();
 
-            for (ItemStack stack : allOutputs) {
-                boolean alreadyExists = false;
+        for (ItemStack stack : allOutputs) {
+            boolean alreadyExists = false;
 
-                for (ItemStack outputStack : outputs) {
-                    if (stack.getItem().equals(outputStack.getItem()) && stack.getMetadata() == outputStack.getMetadata()) {
-                        outputStack.grow(stack.getCount());
-                        alreadyExists = true;
-                        break;
-                    }
+            for (ItemStack outputStack : outputs) {
+                if (ItemStack.areItemsEqual(stack, outputStack)) {
+                    outputStack.grow(stack.getCount());
+                    alreadyExists = true;
+                    break;
                 }
+            }
 
-                if (!alreadyExists) {
-                    outputs.add(stack);
-                }
+            if (!alreadyExists) {
+                outputs.add(stack);
             }
         }
     }
@@ -58,6 +58,10 @@ public class HammerRecipe implements IRecipeWrapper {
 
     public List<ItemStack> getOutputs() {
         return outputs;
+    }
+
+    public boolean isValid() {
+        return !inputs.isEmpty() && !outputs.isEmpty();
     }
 
     @Override

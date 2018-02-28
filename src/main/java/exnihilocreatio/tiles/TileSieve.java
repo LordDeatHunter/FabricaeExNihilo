@@ -33,7 +33,7 @@ import java.util.UUID;
 
 public class TileSieve extends BaseTileEntity {
 
-    private static Random rand = new Random();
+    private static final Random rand = new Random();
     public TileAutoSifter autoSifter = null;
     @Getter
     private BlockInfo currentStack;
@@ -102,16 +102,16 @@ public class TileSieve extends BaseTileEntity {
         return false;
     }
 
-    public boolean doSieving(EntityPlayer player, boolean automatedSieving) {
+    public void doSieving(EntityPlayer player, boolean automatedSieving) {
         if (!world.isRemote) {
 
             if (currentStack == null) {
-                return false;
+                return;
             }
 
             // 4 ticks is the same period of holding down right click
             if (getWorld().getTotalWorldTime() - lastSieveAction < 4 && !automatedSieving) {
-                return false;
+                return;
             }
 
             // Really good chance that they're using a macro
@@ -162,13 +162,13 @@ public class TileSieve extends BaseTileEntity {
                 fishToDrop = Math.max(fishToDrop, luckOfTheSea);
 
                 for (int i = 0; i < fishToDrop; i++) {
-                /*
-                 * Gives fish following chances:
-                 *  Normal: 43% (3/7)
-                 *  Salmon: 29% (2/7)
-                 *  Clown:  14% (1/7)
-                 *  Puffer: 14% (1/7)
-                 */
+                    /*
+                     * Gives fish following chances:
+                     *  Normal: 43% (3/7)
+                     *  Salmon: 29% (2/7)
+                     *  Clown:  14% (1/7)
+                     *  Puffer: 14% (1/7)
+                     */
 
                     int fishMeta = 0;
 
@@ -196,11 +196,10 @@ public class TileSieve extends BaseTileEntity {
                 markDirtyClient();
             }
         }
-        return true;
     }
 
     public boolean isSieveSimilar(TileSieve sieve) {
-        return sieve != null && !meshStack.isEmpty() && !sieve.getMeshStack().isEmpty() && meshStack.getItemDamage() == sieve.getMeshStack().getItemDamage() && progress == sieve.getProgress() && BlockInfo.areEqual(currentStack, sieve.getCurrentStack());
+        return sieve != null && !meshStack.isEmpty() && !sieve.getMeshStack().isEmpty() && meshStack.getItemDamage() == sieve.getMeshStack().getItemDamage() && progress == sieve.getProgress() && currentStack.equals(sieve.getCurrentStack());
     }
 
     public boolean isSieveSimilarToInput(TileSieve sieve) {

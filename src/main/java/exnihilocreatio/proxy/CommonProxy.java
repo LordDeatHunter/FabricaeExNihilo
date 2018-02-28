@@ -2,6 +2,7 @@ package exnihilocreatio.proxy;
 
 import exnihilocreatio.*;
 import exnihilocreatio.compatibility.CompatTOP;
+import exnihilocreatio.registries.manager.ExNihiloDefaultRecipes;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.util.Data;
 import net.minecraft.block.Block;
@@ -35,17 +36,21 @@ public abstract class CommonProxy {
         ModItems.registerItems(event.getRegistry());
     }
 
-    @SubscribeEvent(priority = EventPriority.LOW)
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void registerItemsLower(RegistryEvent.Register<Item> event) {
+        ExNihiloDefaultRecipes.registerDefaults();
         ExNihiloRegistryManager.ORE_REGISTRY.loadJson(new File(ExNihiloCreatio.configDirectory, "OreRegistry.json"));
         ExNihiloRegistryManager.ORE_REGISTRY.registerToGameRegistry(event.getRegistry());
+        ExNihiloRegistryManager.ORE_REGISTRY.doRecipes();
     }
 
     @SubscribeEvent
     public static void onRecipeRegistry(RegistryEvent.Register<IRecipe> e) {
         // Recipes.init();
+        ExNihiloCreatio.loadConfigs();
+
+        Recipes.init();
         e.getRegistry().registerAll(Data.RECIPES.toArray(new IRecipe[RECIPES.size()]));
-        ExNihiloRegistryManager.ORE_REGISTRY.doRecipes();
     }
 
     @SubscribeEvent

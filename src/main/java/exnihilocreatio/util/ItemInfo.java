@@ -11,26 +11,41 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nonnull;
+
 @AllArgsConstructor
 public class ItemInfo {
 
+    public static final ItemInfo EMPTY = new ItemInfo(ItemStack.EMPTY);
+
     @Getter
+    @Nonnull
     private Item item;
     @Getter
     @Setter
     private int meta;
 
-    public ItemInfo(ItemStack stack) {
-        item = stack == null ? null : stack.getItem();
-        meta = stack == null ? -1 : stack.getMetadata();
+    public ItemInfo(@Nonnull Item item) {
+        this.item = item;
+        meta = 0;
     }
 
-    public ItemInfo(Block block, int blockMeta) {
+    public ItemInfo(@Nonnull ItemStack stack) {
+        item = stack.getItem();
+        meta = stack.getMetadata();
+    }
+
+    public ItemInfo(@Nonnull Block block, int blockMeta) {
         item = Item.getItemFromBlock(block);
         meta = block == Blocks.AIR ? -1 : blockMeta;
     }
 
-    public ItemInfo(String string) {
+    public ItemInfo(@Nonnull String string) {
+        if (string.isEmpty() || string.length() < 2){
+            item = ItemStack.EMPTY.getItem();
+            meta = ItemStack.EMPTY.getMetadata();
+            return;
+        }
         String[] split = string.split(":");
 
         switch (split.length) {
@@ -55,14 +70,14 @@ public class ItemInfo {
                 }
                 break;
             default:
-                meta = -1;
-                break;
+                item = ItemStack.EMPTY.getItem();
+                meta = ItemStack.EMPTY.getMetadata();
         }
     }
 
-    public ItemInfo(IBlockState state) {
-        item = state == null ? null : Item.getItemFromBlock(state.getBlock());
-        meta = state == null ? -1 : state.getBlock().getMetaFromState(state);
+    public ItemInfo(@Nonnull IBlockState state) {
+        item = Item.getItemFromBlock(state.getBlock());
+        meta = state.getBlock().getMetaFromState(state);
     }
 
     public static ItemInfo getItemInfoFromStack(ItemStack stack) {
@@ -81,7 +96,7 @@ public class ItemInfo {
     }
 
     public ItemStack getItemStack() {
-        return item == null ? null : new ItemStack(item, 1, meta == -1 ? 0 : meta);
+        return new ItemStack(item, 1, meta == -1 ? 0 : meta);
     }
 
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
@@ -92,27 +107,20 @@ public class ItemInfo {
     }
 
     public boolean isValid() {
-        return meta <= Short.MAX_VALUE && item != null;
+        return meta <= Short.MAX_VALUE && item != ItemStack.EMPTY.getItem();
     }
 
     public int hashCode() {
-        return item == null ? 41 : item.hashCode();
+        return item.hashCode();
     }
 
     public boolean equals(Object other) {
-        if (other instanceof ItemInfo) {
-            ItemInfo info = (ItemInfo) other;
-
-            if (item == null || info.item == null) {
-                return false;
-            }
-
-            if (meta == -1 || info.meta == -1) {
-                return item.equals(info.item);
-            } else {
-                return meta == info.meta && item.equals(info.item);
-            }
-        }
+        if (other instanceof ItemInfo)
+            return ItemStack.areItemStacksEqual(((ItemInfo) other).getItemStack(), getItemStack());
+        else if (other instanceof ItemStack)
+            return ItemStack.areItemStacksEqual((ItemStack)other, getItemStack());
+        else if (other instanceof BlockInfo)
+            return ItemStack.areItemStacksEqual(((BlockInfo) other).getItemStack(), getItemStack());
 
         return false;
     }

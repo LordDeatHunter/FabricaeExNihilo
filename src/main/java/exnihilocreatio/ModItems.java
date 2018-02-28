@@ -20,76 +20,42 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ModItems {
 
-    public static final HammerBase hammerWood;
-    public static final HammerBase hammerStone;
-    public static final HammerBase hammerIron;
-    public static final HammerBase hammerDiamond;
-    public static final HammerBase hammerGold;
+    public static final HammerBase hammerWood = new HammerBase("hammer_wood", 64, Item.ToolMaterial.WOOD);
+    public static final HammerBase hammerStone = new HammerBase("hammer_stone", 128, Item.ToolMaterial.STONE);
+    public static final HammerBase hammerIron = new HammerBase("hammer_iron", 512, Item.ToolMaterial.IRON);
+    public static final HammerBase hammerDiamond = new HammerBase("hammer_diamond", 4096, Item.ToolMaterial.DIAMOND);
+    public static final HammerBase hammerGold = new HammerBase("hammer_gold", 64, Item.ToolMaterial.GOLD);
 
-    public static final CrookBase crookWood;
-    public static final CrookBase crookBone;
+    public static final CrookBase crookWood = new CrookBase("crook_wood", 64);
+    public static final CrookBase crookBone = new CrookBase("crook_bone", 256);
 
-    public static final ItemMesh mesh;
+    public static final ItemMesh mesh = new ItemMesh();
 
-    public static final ItemResource resources;
-    public static final ItemCookedSilkworm cookedSilkworm;
+    public static final ItemResource resources = new ItemResource();
+    public static final ItemCookedSilkworm cookedSilkworm = new ItemCookedSilkworm();
 
-    public static final ItemPebble pebbles;
+    public static final ItemPebble pebbles = new ItemPebble();
 
-    public static final ItemDoll dolls;
+    public static final ItemDoll dolls = new ItemDoll();
 
-    public static final ArrayList<ItemSeedBase> itemSeeds = new ArrayList<>();
-
-    static {
-        hammerWood = new HammerBase("hammer_wood", 64, Item.ToolMaterial.WOOD);
-        hammerWood.setCreativeTab(ExNihiloCreatio.tabExNihilo);
-
-        hammerStone = new HammerBase("hammer_stone", 128, Item.ToolMaterial.STONE);
-        hammerStone.setCreativeTab(ExNihiloCreatio.tabExNihilo);
-
-        hammerIron = new HammerBase("hammer_iron", 512, Item.ToolMaterial.IRON);
-        hammerIron.setCreativeTab(ExNihiloCreatio.tabExNihilo);
-
-        hammerDiamond = new HammerBase("hammer_diamond", 4096, Item.ToolMaterial.DIAMOND);
-        hammerDiamond.setCreativeTab(ExNihiloCreatio.tabExNihilo);
-
-        hammerGold = new HammerBase("hammer_gold", 64, Item.ToolMaterial.GOLD);
-        hammerGold.setCreativeTab(ExNihiloCreatio.tabExNihilo);
-
-        crookWood = new CrookBase("crook_wood", 64);
-        crookWood.setCreativeTab(ExNihiloCreatio.tabExNihilo);
-
-        crookBone = new CrookBase("crook_bone", 256);
-        crookBone.setCreativeTab(ExNihiloCreatio.tabExNihilo);
-
-        mesh = new ItemMesh();
-        mesh.setCreativeTab(ExNihiloCreatio.tabExNihilo);
-
-        resources = new ItemResource();
-
-        cookedSilkworm = new ItemCookedSilkworm();
-
-        pebbles = new ItemPebble();
-
-        itemSeeds.add(new ItemSeedBase("oak", Blocks.SAPLING.getStateFromMeta(0)));
-        itemSeeds.add(new ItemSeedBase("spruce", Blocks.SAPLING.getStateFromMeta(1)));
-        itemSeeds.add(new ItemSeedBase("birch", Blocks.SAPLING.getStateFromMeta(2)));
-        itemSeeds.add(new ItemSeedBase("jungle", Blocks.SAPLING.getStateFromMeta(3)));
-        itemSeeds.add(new ItemSeedBase("acacia", Blocks.SAPLING.getStateFromMeta(4)));
-        itemSeeds.add(new ItemSeedBase("darkoak", Blocks.SAPLING.getStateFromMeta(5)));
-        itemSeeds.add(new ItemSeedBase("cactus", Blocks.CACTUS.getDefaultState()).setPlantType(EnumPlantType.Desert));
-        itemSeeds.add(new ItemSeedBase("sugarcane", Blocks.REEDS.getDefaultState()).setPlantType(EnumPlantType.Beach));
-        itemSeeds.add(new ItemSeedBase("carrot", Blocks.CARROTS.getDefaultState()).setPlantType(EnumPlantType.Crop));
-        itemSeeds.add(new ItemSeedBase("potato", Blocks.POTATOES.getDefaultState()).setPlantType(EnumPlantType.Crop));
-
-        dolls = new ItemDoll();
-    }
+    public static final ArrayList<ItemSeedBase> itemSeeds = new ArrayList<>(Arrays.asList(
+            new ItemSeedBase("oak", Blocks.SAPLING.getStateFromMeta(0)),
+            new ItemSeedBase("spruce", Blocks.SAPLING.getStateFromMeta(1)),
+            new ItemSeedBase("birch", Blocks.SAPLING.getStateFromMeta(2)),
+            new ItemSeedBase("jungle", Blocks.SAPLING.getStateFromMeta(3)),
+            new ItemSeedBase("acacia", Blocks.SAPLING.getStateFromMeta(4)),
+            new ItemSeedBase("darkoak", Blocks.SAPLING.getStateFromMeta(5)),
+            new ItemSeedBase("cactus", Blocks.CACTUS.getDefaultState()).setPlantType(EnumPlantType.Desert),
+            new ItemSeedBase("sugarcane", Blocks.REEDS.getDefaultState()).setPlantType(EnumPlantType.Beach),
+            new ItemSeedBase("carrot", Blocks.CARROTS.getDefaultState()).setPlantType(EnumPlantType.Crop),
+            new ItemSeedBase("potato", Blocks.POTATOES.getDefaultState()).setPlantType(EnumPlantType.Crop)
+    ));
 
     public static void registerItems(IForgeRegistry<Item> registry) {
-
         for (Item item : Data.ITEMS) {
             if (!(item instanceof IHasSpecialRegistry)) {
                 registry.register(item);

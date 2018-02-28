@@ -1,13 +1,17 @@
 package exnihilocreatio.registries.registries;
 
+import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import exnihilocreatio.compatibility.jei.barrel.fluidontop.FluidOnTopRecipe;
 import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryList;
 import exnihilocreatio.registries.types.FluidFluidBlock;
 import exnihilocreatio.util.ItemInfo;
+import net.minecraft.init.Items;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 
 import java.io.FileReader;
 import java.util.List;
@@ -54,5 +58,23 @@ public class FluidOnTopRegistry extends BaseRegistryList<FluidFluidBlock> {
         List<FluidFluidBlock> gsonInput = gson.fromJson(fr, new TypeToken<List<FluidFluidBlock>>() {
         }.getType());
         registry.addAll(gsonInput);
+    }
+
+    @Override
+    public List<FluidOnTopRecipe> getRecipeList() {
+        List<FluidOnTopRecipe> fluidOnTopRecipes = Lists.newLinkedList();
+        getRegistry().forEach(transformer -> {
+            // Make sure both fluids are registered
+            if (FluidRegistry.isFluidRegistered(transformer.getFluidInBarrel())
+                    && FluidRegistry.isFluidRegistered(transformer.getFluidOnTop())
+                    && transformer.getResult().getItem() != Items.AIR) {
+                FluidOnTopRecipe recipe = new FluidOnTopRecipe(transformer);
+
+                if (recipe.isValid()) {
+                    fluidOnTopRecipes.add(new FluidOnTopRecipe(transformer));
+                }
+            }
+        });
+        return fluidOnTopRecipes;
     }
 }

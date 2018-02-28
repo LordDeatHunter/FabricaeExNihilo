@@ -6,9 +6,8 @@ import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.OreRegistry;
 import exnihilocreatio.registries.registries.SieveRegistry;
 import exnihilocreatio.texturing.Color;
+import exnihilocreatio.util.ItemInfo;
 import lombok.Getter;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 
 public class Mekanism implements IRecipeDefaults {
     @Getter
@@ -17,8 +16,8 @@ public class Mekanism implements IRecipeDefaults {
     public void registerSieve(SieveRegistry registry) {
         ItemOre osmium = ExNihiloRegistryManager.ORE_REGISTRY.getOreItem("osmium");
         if (osmium != null) {
-            registry.register(Blocks.GRAVEL.getDefaultState(), new ItemStack(osmium, 1, 0), 0.05f, BlockSieve.MeshType.IRON.getID());
-            registry.register(Blocks.GRAVEL.getDefaultState(), new ItemStack(osmium, 1, 0), 0.1f, BlockSieve.MeshType.DIAMOND.getID());
+            registry.register("gravel", new ItemInfo(osmium, 0), 0.05f, BlockSieve.MeshType.IRON.getID());
+            registry.register("gravel", new ItemInfo(osmium, 0), 0.1f, BlockSieve.MeshType.DIAMOND.getID());
         }
     }
 

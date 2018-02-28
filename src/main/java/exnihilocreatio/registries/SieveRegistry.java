@@ -7,6 +7,7 @@ import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.crafting.CraftingHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class SieveRegistry {
     }
 
     public static void register(BlockInfo block, Siftable drop) {
-        ExNihiloRegistryManager.SIEVE_REGISTRY.register(block, drop);
+        ExNihiloRegistryManager.SIEVE_REGISTRY.register(CraftingHelper.getIngredient(block.getItemStack()), drop);
     }
 
     /**

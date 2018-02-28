@@ -1,5 +1,6 @@
 package exnihilocreatio.blocks;
 
+import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.tools.ICrook;
 import exnihilocreatio.tiles.ITileLeafBlock;
@@ -19,7 +20,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.property.IExtendedBlockState;
 
@@ -28,10 +28,11 @@ import java.util.Random;
 
 public class BlockInfestedLeaves extends BlockInfestingLeaves {
 
-        public BlockInfestedLeaves(){
+    public BlockInfestedLeaves() {
         super(InfestedType.INFESTED);
         this.setUnlocalizedName("block_infested_leaves");
         this.setRegistryName("block_infested_leaves");
+        this.setCreativeTab(ExNihiloCreatio.tabExNihilo);
         Data.BLOCKS.add(this);
         this.setDefaultState(
                 this.blockState.getBaseState().withProperty(CHECK_DECAY, false).withProperty(DECAYABLE, false));

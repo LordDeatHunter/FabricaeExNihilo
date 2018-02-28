@@ -14,16 +14,16 @@ public class ModConfig {
      * All Config Variables
      */
     @Config.Comment("These configs can be changed ClientSided without making problems with connecting to a server")
-    public static Client client = new Client();
-    public static Mechanics mechanics = new Mechanics();
-    public static Composting composting = new Composting();
-    public static InfestedLeaves infested_leaves = new InfestedLeaves();
-    public static Crooking crooking = new Crooking();
-    public static Misc misc = new Misc();
-    public static Sieve sieve = new Sieve();
-    public static Compatibility compatibility = new Compatibility();
-    public static Crucible crucible = new Crucible();
-    public static World world = new World();
+    public static final Client client = new Client();
+    public static final Mechanics mechanics = new Mechanics();
+    public static final Composting composting = new Composting();
+    public static final InfestedLeaves infested_leaves = new InfestedLeaves();
+    public static final Crooking crooking = new Crooking();
+    public static final Misc misc = new Misc();
+    public static final Sieve sieve = new Sieve();
+    public static final Compatibility compatibility = new Compatibility();
+    public static final Crucible crucible = new Crucible();
+    public static final World world = new World();
 
     /**
      * All Config Classes

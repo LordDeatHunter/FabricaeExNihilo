@@ -1,7 +1,9 @@
 package exnihilocreatio.registries.registries;
 
+import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import exnihilocreatio.compatibility.jei.crucible.HeatSourcesRecipe;
 import exnihilocreatio.json.CustomBlockInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
@@ -10,6 +12,7 @@ import net.minecraft.item.ItemStack;
 
 import java.io.FileReader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class HeatRegistry extends BaseRegistryMap<BlockInfo, Integer> {
@@ -51,5 +54,12 @@ public class HeatRegistry extends BaseRegistryMap<BlockInfo, Integer> {
         for (Map.Entry<String, Integer> entry : gsonInput.entrySet()) {
             registry.put(new BlockInfo(entry.getKey()), entry.getValue());
         }
+    }
+
+    @Override
+    public List<HeatSourcesRecipe> getRecipeList() {
+        List<HeatSourcesRecipe> heatSources = Lists.newLinkedList();
+        getRegistry().forEach((key, value) -> heatSources.add(new HeatSourcesRecipe(key, value)));
+        return heatSources;
     }
 }

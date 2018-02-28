@@ -6,7 +6,7 @@ public enum EnumOreSubtype {
     DUST(2),
     INGOT(3);
 
-    int meta;
+    final int meta;
 
     EnumOreSubtype(int meta) {
         this.meta = meta;

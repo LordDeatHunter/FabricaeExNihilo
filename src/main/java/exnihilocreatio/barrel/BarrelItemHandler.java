@@ -15,7 +15,7 @@ import java.util.List;
 
 public class BarrelItemHandler extends ItemStackHandler {
 
-    private TileBarrel barrel;
+    private final TileBarrel barrel;
 
     public BarrelItemHandler(TileBarrel barrel) {
         super(1);

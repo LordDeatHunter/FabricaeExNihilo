@@ -1,5 +1,6 @@
 package exnihilocreatio.registries.registries;
 
+import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.ExNihiloCreatio;
@@ -25,7 +26,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -100,11 +101,15 @@ public class OreRegistry extends BaseRegistryList<Ore> {
         for (ItemOre ore : itemOreRegistry) {
             ResourceLocation group = new ResourceLocation(ExNihiloCreatio.MODID, "exores");
             ResourceLocation baseName = new ResourceLocation(ExNihiloCreatio.MODID, "ore_compression_");
-
             ResourceLocation recipeLocation = new ResourceLocation(baseName.getResourceDomain(), baseName.getResourcePath() + ore.getOre().getName());
+
             GameRegistry.addShapedRecipe(recipeLocation, group,
                     new ItemStack(ore, 1, EnumOreSubtype.CHUNK.getMeta()),
                     "xx", "xx", 'x', new ItemStack(ore, 1, EnumOreSubtype.PIECE.getMeta()));
+
+            if (ModConfig.compatibility.preventUnidict && Loader.isModLoaded("unidict")){
+                UniDict.getConfig().recipesToIgnore.add(recipeLocation);
+            }
 
             if (ModConfig.compatibility.preventUnidict && Loader.isModLoaded("unidict")){
                 UniDict.getConfig().recipesToIgnore.add(recipeLocation);
@@ -185,5 +190,10 @@ public class OreRegistry extends BaseRegistryList<Ore> {
             }
         }
         return false;
+    }
+
+    @Override
+    public List<?> getRecipeList() {
+        return Lists.newLinkedList();
     }
 }

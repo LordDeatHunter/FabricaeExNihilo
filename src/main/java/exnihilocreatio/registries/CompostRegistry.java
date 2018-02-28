@@ -8,12 +8,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.crafting.CraftingHelper;
 
 @Deprecated
 public class CompostRegistry {
 
     public static void register(ItemInfo item, Compostable compostable) {
-        ExNihiloRegistryManager.COMPOST_REGISTRY.register(item, compostable);
+        ExNihiloRegistryManager.COMPOST_REGISTRY.register(CraftingHelper.getIngredient(item.getItemStack()), compostable);
     }
 
     public static void register(Item item, int meta, float value, IBlockState state, Color color) {

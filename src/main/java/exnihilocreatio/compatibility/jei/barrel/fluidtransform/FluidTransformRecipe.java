@@ -7,7 +7,6 @@ import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.Util;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -17,15 +16,13 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class FluidTransformRecipe implements IRecipeWrapper {
-    private FluidStack inputFluid;
-    private FluidStack outputFluid;
+    private final FluidStack inputFluid;
+    private final FluidStack outputFluid;
 
-    private ItemStack inputBucket;
-    private ItemStack outputBucket;
+    private final ItemStack inputBucket;
+    private final ItemStack outputBucket;
 
-    private List<IBlockState> transformBlocks;
-
-    private List<ItemStack> inputStacks;
+    private final List<ItemStack> inputStacks;
 
     public FluidTransformRecipe(FluidTransformer recipe) {
         inputFluid = new FluidStack(FluidRegistry.getFluid(recipe.getInputFluid()), 1000);
@@ -34,11 +31,9 @@ public class FluidTransformRecipe implements IRecipeWrapper {
         inputBucket = Util.getBucketStack(inputFluid.getFluid());
         outputBucket = Util.getBucketStack(outputFluid.getFluid());
 
-        transformBlocks = Lists.newArrayList();
         inputStacks = Lists.newArrayList(inputBucket);
 
         for (BlockInfo block : recipe.getTransformingBlocks()) {
-            transformBlocks.add(block.getBlockState());
             inputStacks.add(new ItemStack(block.getBlock(), 1, block.getMeta()));
         }
     }
@@ -66,6 +61,10 @@ public class FluidTransformRecipe implements IRecipeWrapper {
 
     public List<FluidStack> getFluidOutputs() {
         return ImmutableList.of(new FluidStack(outputFluid, 1000));
+    }
+
+    public boolean isValid(){
+        return !inputStacks.isEmpty() && !outputBucket.isEmpty();
     }
 
     @Override

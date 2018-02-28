@@ -26,9 +26,9 @@ import javax.annotation.Nonnull;
 
 public class ItemSeedBase extends Item implements IPlantable, IHasModel {
 
-    private IBlockState plant;
+    private final IBlockState plant;
     private EnumPlantType type;
-    private String name;
+    private final String name;
 
     public ItemSeedBase(String name, IBlockState plant) {
         super();

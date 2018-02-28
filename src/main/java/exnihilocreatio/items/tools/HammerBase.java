@@ -2,6 +2,7 @@ package exnihilocreatio.items.tools;
 
 
 import com.google.common.collect.Sets;
+import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
@@ -12,7 +13,7 @@ import net.minecraft.item.ItemTool;
 
 public class HammerBase extends ItemTool implements IHammer, IHasModel {
 
-    int miningLevel;
+    final int miningLevel;
 
     public HammerBase(String name, int maxUses, ToolMaterial material) {
         super(material, Sets.newHashSet(new Block[]{}));
@@ -20,6 +21,7 @@ public class HammerBase extends ItemTool implements IHammer, IHasModel {
         this.setRegistryName(name);
         this.setMaxDamage(maxUses);
         this.miningLevel = material.getHarvestLevel();
+        this.setCreativeTab(ExNihiloCreatio.tabExNihilo);
 
         Data.ITEMS.add(this);
     }
@@ -36,11 +38,11 @@ public class HammerBase extends ItemTool implements IHammer, IHasModel {
 
     @Override
     public float getDestroySpeed(ItemStack stack, IBlockState state) {
-        return ExNihiloRegistryManager.HAMMER_REGISTRY.registered(state.getBlock()) ? this.efficiency : 1.0F;
+        return ExNihiloRegistryManager.HAMMER_REGISTRY.isRegistered(state.getBlock()) ? this.efficiency : 1.0F;
     }
 
     @Override
     public boolean canHarvestBlock(IBlockState state) {
-        return ExNihiloRegistryManager.HAMMER_REGISTRY.registered(state.getBlock());
+        return ExNihiloRegistryManager.HAMMER_REGISTRY.isRegistered(state.getBlock());
     }
 }
