@@ -141,6 +141,10 @@ public class HeatSourcesRecipe implements IRecipeWrapper {
         IBlockState state = blockInfo.getBlock().getDefaultState();
 
         BlockPos pos = new BlockPos(0, 0, 0);
+        /*if (blockInfo.getBlock() instanceof IFluidBlock || blockInfo.getBlock() instanceof BlockLiquid) {
+            pos = pos.up();
+        }*/
+
 
         // Aaaand render
         buffer.begin(7, DefaultVertexFormats.BLOCK);
