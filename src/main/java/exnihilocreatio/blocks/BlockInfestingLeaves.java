@@ -67,7 +67,7 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
         }
     };
 
-    public BlockInfestingLeaves(){
+    public BlockInfestingLeaves() {
         this(InfestedType.INFESTING);
         this.setUnlocalizedName("block_infesting_leaves");
         this.setRegistryName("block_infesting_leaves");
@@ -84,6 +84,10 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
 
     /**
      * Sets a normal leave to infested
+     *
+     * @param world
+     * @param state
+     * @param pos
      */
     public static void infestLeafBlock(World world, IBlockState state, BlockPos pos) {
         IBlockState leafState;
@@ -97,8 +101,9 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
 
     /**
      * Used to set an existing infesting leaves block to infested
-     * @param world The world this is happening in
-     * @param pos The position of the block
+     *
+     * @param world     The world this is happening in
+     * @param pos       The position of the block
      * @param leafState The leaf state captured by the infesting leaves block block
      */
     public static void setInfested(World world, BlockPos pos, IBlockState leafState) {
@@ -108,24 +113,19 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
                     .withProperty(BlockInfestedLeaves.LEAFBLOCK, leafState)
                     .withProperty(CHECK_DECAY, true)
                     .withProperty(DECAYABLE, false);
-            world.setBlockState(pos, retval, 0b111);
-            ((ITileLeafBlock)world.getTileEntity(pos)).setLeafBlock(leafState);
-            ((BaseTileEntity)world.getTileEntity(pos)).markDirtyClient();
 
-        }
-        else if (Util.isLeaves(block) && !(block.getBlock() instanceof BlockInfestedLeaves)){
+            world.setBlockState(pos, retval, 0b111);
+
+            ((ITileLeafBlock) world.getTileEntity(pos)).setLeafBlock(leafState);
+            ((BaseTileEntity) world.getTileEntity(pos)).markDirtyClient();
+
+        } else if (Util.isLeaves(block) && !(block.getBlock() instanceof BlockInfestedLeaves)) {
             LogUtil.error("Sent leaf change to wrong method, redirecting");
             infestLeafBlock(world, block, pos);
         }
     }
 
-    @Override
-    public void randomTick(World world, BlockPos pos, IBlockState state, Random rand) {
-        this.updateTick(world, pos, state, rand);
-        spread(world, pos, state, rand);
-    }
-
-    public static void spread(World world, BlockPos pos, IBlockState state, Random rand){
+    public static void spread(World world, BlockPos pos, IBlockState state, Random rand) {
         if (!world.isRemote && state != null) {
             if (state.getValue(NEARBYLEAVES)) {
                 NonNullList<BlockPos> nearbyLeaves = Util.getNearbyLeaves(world, pos);
@@ -139,6 +139,20 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
                 }
             }
         }
+    }
+
+    public static IBlockState getLeafState(IBlockState state) {
+        if (state instanceof IExtendedBlockState) {
+            return ((IExtendedBlockState) state).getValue(BlockInfestedLeaves.LEAFBLOCK);
+        }
+
+        return state;
+    }
+
+    @Override
+    public void randomTick(World world, BlockPos pos, IBlockState state, Random rand) {
+        this.updateTick(world, pos, state, rand);
+        spread(world, pos, state, rand);
     }
 
     @Override
@@ -161,20 +175,23 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
     }
 
     @Override
-    public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos){
-        if (state instanceof IExtendedBlockState){
+    public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos) {
+        if (state instanceof IExtendedBlockState) {
             IExtendedBlockState retval = (IExtendedBlockState) state;
             IBlockState leafState;
             TileEntity te = world.getTileEntity(pos);
+
             if (te instanceof ITileLeafBlock) {
                 leafState = ((ITileLeafBlock) te).getLeafBlock();
             } else {
                 leafState = Blocks.LEAVES.getDefaultState();
             }
+
             return retval.withProperty(LEAFBLOCK, leafState);
         }
         return state;
     }
+
     @Override
     @Nonnull
     protected BlockStateContainer createBlockState() {
@@ -194,8 +211,8 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
 
     /**
      * 3 bits for data:
-     *      0               0                0
-     *      checkDecay      decayable       nearbyLeaves
+     * 0               0                0
+     * checkDecay      decayable       nearbyLeaves
      */
     @Override
     public int getMetaFromState(IBlockState state) {
@@ -244,8 +261,7 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
                         if (world.rand.nextFloat() < leaves.getProgress() * ModConfig.crooking.stringChance) {
                             Util.dropItemInWorld(leaves, player, new ItemStack(Items.STRING, 1, 0), 0.02f);
                         }
-                    }
-                    else if (world.rand.nextFloat() < leaves.getProgress() * ModConfig.crooking.stringChance / 4.0d) {
+                    } else if (world.rand.nextFloat() < leaves.getProgress() * ModConfig.crooking.stringChance / 4.0d) {
                         Util.dropItemInWorld(leaves, player, new ItemStack(Items.STRING, 1, 0), 0.02f);
 
                     }
@@ -271,14 +287,7 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
 
     }
 
-    public static IBlockState getLeafState(IBlockState state){
-        if (state instanceof IExtendedBlockState){
-            return ((IExtendedBlockState)state).getValue(BlockInfestedLeaves.LEAFBLOCK);
-        }
-        return state;
-    }
-
-    enum InfestedType{
+    enum InfestedType {
         INFESTING,
         INFESTED
     }

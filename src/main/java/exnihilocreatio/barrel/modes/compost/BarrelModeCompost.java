@@ -36,20 +36,19 @@ import java.util.List;
 
 public class BarrelModeCompost implements IBarrelMode {
 
+    private final Color whiteColor = new Color(1f, 1f, 1f, 1f);
+    private final BarrelItemHandlerCompost handler;
     @Setter
     @Getter
     private float fillAmount = 0;
     @Setter
     private Color color = new Color("EEA96D");
-    private final Color whiteColor = new Color(1f, 1f, 1f, 1f);
     private Color originalColor;
     @Setter
     @Getter
     private float progress = 0;
     @Getter
     private IBlockState compostState;
-
-    private final BarrelItemHandlerCompost handler;
 
     public BarrelModeCompost() {
         handler = new BarrelItemHandlerCompost(null);

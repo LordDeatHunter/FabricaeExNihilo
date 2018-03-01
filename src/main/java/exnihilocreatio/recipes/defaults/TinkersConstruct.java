@@ -17,7 +17,7 @@ public class TinkersConstruct implements IRecipeDefaults {
     @Getter
     public String MODID = "tconstruct";
 
-    public void registerSieve(SieveRegistry registry){
+    public void registerSieve(SieveRegistry registry) {
         OreRegistry oreRegistry = ExNihiloRegistryManager.ORE_REGISTRY;
         ItemOre ardite = oreRegistry.getOreItem("ardite");
         if (ardite != null) {
@@ -35,7 +35,7 @@ public class TinkersConstruct implements IRecipeDefaults {
         registry.register(new BlockInfo(ModBlocks.netherrackCrushed.getDefaultState()), new ItemInfo(Items.BLAZE_POWDER, 0), 0.05f, BlockSieve.MeshType.IRON.getID());
     }
 
-    public void registerOreChunks(OreRegistry registry){
+    public void registerOreChunks(OreRegistry registry) {
         Item tconstructIngots = Item.getByNameOrId("tconstruct:ingots");
         if (tconstructIngots != null) {
             registry.register("ardite", new Color("FF751A"), new ItemInfo(tconstructIngots, 1));

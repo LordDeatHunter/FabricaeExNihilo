@@ -11,7 +11,7 @@ public class RenderTickCounter {
 
     @SubscribeEvent
     public static void onRenderTick(TickEvent.RenderTickEvent event) {
-        if(event.phase == TickEvent.RenderTickEvent.Phase.START) {
+        if (event.phase == TickEvent.RenderTickEvent.Phase.START) {
             renderTicks++;
         }
     }

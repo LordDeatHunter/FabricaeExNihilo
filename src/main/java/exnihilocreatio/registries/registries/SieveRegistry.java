@@ -81,7 +81,7 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Sifta
         }
 
         Ingredient search = registry.keySet().stream().filter(entry -> entry.getValidItemStacksPacked().equals(ingredient.getValidItemStacksPacked())).findAny().orElse(null);
-        if (search != null){
+        if (search != null) {
             registry.get(search).add(drop);
         } else {
             NonNullList<Siftable> drops = NonNullList.create();
@@ -117,7 +117,7 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Sifta
         return drops;
     }
 
-    public List<Siftable> getDrops(Ingredient ingredient){
+    public List<Siftable> getDrops(Ingredient ingredient) {
         List<Siftable> drops = new ArrayList<>();
         registry.entrySet().stream().filter(entry -> entry.getKey() == ingredient).forEach(entry -> drops.addAll(entry.getValue()));
         return drops;
@@ -172,7 +172,7 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Sifta
         List<SieveRecipe> sieveRecipes = Lists.newLinkedList();
 
         getRegistry().keySet().forEach(ingredient -> Stream.of(BlockSieve.MeshType.values()).forEach(meshType -> {
-            if (meshType.getID() != 0 && ingredient != null){
+            if (meshType.getID() != 0 && ingredient != null) {
                 SieveRecipe recipe = new SieveRecipe(ingredient, meshType);
                 if (recipe.isValid() && !sieveRecipes.contains(recipe))
                     sieveRecipes.add(recipe);

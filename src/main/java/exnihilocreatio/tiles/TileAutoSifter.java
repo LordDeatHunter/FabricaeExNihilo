@@ -23,21 +23,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotationalPowerConsumer {
-    public TileSieve[][] toSift = null;
     public final List<Tuple<Point3f, EnumFacing.Axis>> connectionPieces = new ArrayList<>();
-
+    public final ItemHandlerAutoSifter itemHandlerAutoSifter;
+    public TileSieve[][] toSift = null;
     public EnumFacing facing = EnumFacing.NORTH;
     public int tickCounter = 0;
     public float rotationValue = 0;
     public float perTickRotation = 0;
-
     public float storedRotationalPower = 0;
-
     public float offsetX = 0;
     public float offsetY = 0;
     public float offsetZ = 0;
-
-    public final ItemHandlerAutoSifter itemHandlerAutoSifter;
 
     public TileAutoSifter() {
         itemHandlerAutoSifter = new ItemHandlerAutoSifter();

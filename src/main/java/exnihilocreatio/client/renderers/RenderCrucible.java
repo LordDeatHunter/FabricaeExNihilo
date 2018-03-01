@@ -40,6 +40,7 @@ public class RenderCrucible extends FastTESR<TileCrucibleBase> {
         addSpriteColor(te, sprites[1], buffer, te.getFluidProportion());
         buffer.setTranslation(0, 0, 0);
     }
+
     private void addSpriteColor(TileCrucibleBase te, SpriteColor sprite, BufferBuilder buffer, float fill) {
         if (sprite == null) return;
 

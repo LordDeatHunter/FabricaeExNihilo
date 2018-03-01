@@ -12,22 +12,23 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.model.animation.FastTESR;
 
 public class RenderBarrel extends FastTESR<TileBarrel> {
-    private static final ModelVertex[] model = new ModelVertex[4];
+    private static ModelVertex[] model = new ModelVertex[4];
+
     static {
-        model[0] = new ModelVertex( EnumFacing.UP, 0.125, 0.875, 0.125, 0, 0);
-        model[1] = new ModelVertex( EnumFacing.UP, 0.875, 0.875, 0.125, 1, 0);
-        model[2] = new ModelVertex( EnumFacing.UP, 0.875, 0.875, 0.875, 1, 1);
-        model[3] = new ModelVertex( EnumFacing.UP, 0.125, 0.875, 0.875, 0, 1);
+        model[0] = new ModelVertex(EnumFacing.UP, 0.125, 0.875, 0.125, 0, 0);
+        model[1] = new ModelVertex(EnumFacing.UP, 0.875, 0.875, 0.125, 1, 0);
+        model[2] = new ModelVertex(EnumFacing.UP, 0.875, 0.875, 0.875, 1, 1);
+        model[3] = new ModelVertex(EnumFacing.UP, 0.125, 0.875, 0.875, 0, 1);
     }
 
     @Override
-    public void renderTileEntityFast(TileBarrel te, double x, double y, double z, float partialTicks, int destroyStage, float partial, BufferBuilder buffer){
-        if(te.getMode() == null) return;
+    public void renderTileEntityFast(TileBarrel te, double x, double y, double z, float partialTicks, int destroyStage, float partial, BufferBuilder buffer) {
+        if (te.getMode() == null) return;
 
         // Fill Level
         float fill = te.getMode().getFilledLevelForRender(te);
 
-        if(fill==0) return;
+        if (fill == 0) return;
 
         final SpriteColor sprite = te.getMode().getSpriteColor(te);
         buffer.setTranslation(x, y, z);
@@ -35,6 +36,7 @@ public class RenderBarrel extends FastTESR<TileBarrel> {
         buffer.setTranslation(0, 0, 0);
 
     }
+
     private void addSpriteColor(TileBarrel te, SpriteColor sprite, BufferBuilder buffer, float fill) {
         if (sprite == null) return;
 

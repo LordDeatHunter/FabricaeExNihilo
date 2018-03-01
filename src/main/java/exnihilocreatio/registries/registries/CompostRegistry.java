@@ -41,6 +41,8 @@ import java.util.stream.Stream;
 
 public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
 
+    protected final Map<Ingredient, Compostable> oreRegistry = new HashMap<>();
+
     public CompostRegistry() {
         super(
                 new GsonBuilder()
@@ -51,15 +53,13 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
         );
     }
 
-    protected final Map<Ingredient, Compostable> oreRegistry = new HashMap<>();
-
     public void register(ItemStack itemStack, float value, IBlockState state, Color color) {
         if (itemStack.isEmpty())
             return;
 
         Ingredient ingredient = CraftingHelper.getIngredient(itemStack);
 
-        if (registry.keySet().stream().anyMatch(entry -> entry.test(itemStack))){
+        if (registry.keySet().stream().anyMatch(entry -> entry.test(itemStack))) {
             LogUtil.error("Compost Entry for " + itemStack.getItem().getRegistryName() + " with meta " + itemStack.getMetadata() + " already exists, skipping.");
             return;
         }
@@ -183,7 +183,7 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
     @Override
     public Map<Ingredient, Compostable> getRegistry() {
         //noinspection unchecked
-        Map<Ingredient, Compostable> map = (HashMap)((HashMap)registry).clone();
+        Map<Ingredient, Compostable> map = (HashMap) ((HashMap) registry).clone();
         map.putAll(oreRegistry);
         return map;
     }
@@ -209,7 +209,7 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
                             && compostRecipe.isNonFull())
                     .findFirst()
                     .orElse(null);
-            if (recipe == null){
+            if (recipe == null) {
                 recipe = new CompostRecipe(compostBlock, Lists.newLinkedList());
                 compostRecipes.add(recipe);
             }

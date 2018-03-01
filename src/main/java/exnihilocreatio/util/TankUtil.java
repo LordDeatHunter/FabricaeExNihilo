@@ -11,6 +11,7 @@ import net.minecraftforge.fluids.FluidTank;
 
 public class TankUtil {
     private static final ItemStack WATER_BOTTLE;
+
     static {
         NBTTagCompound waterPotion = new NBTTagCompound();
         waterPotion.setString("Potion", "minecraft:water");

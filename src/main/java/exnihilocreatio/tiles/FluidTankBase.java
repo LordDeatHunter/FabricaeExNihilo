@@ -6,7 +6,7 @@ import net.minecraftforge.fluids.FluidTank;
 
 import javax.annotation.Nullable;
 
-public class FluidTankBase extends FluidTank{
+public class FluidTankBase extends FluidTank {
 
     private final BaseTileEntity tileEntity;
 

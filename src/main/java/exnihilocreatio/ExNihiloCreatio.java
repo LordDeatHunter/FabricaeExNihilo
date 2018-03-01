@@ -34,19 +34,14 @@ public class ExNihiloCreatio {
 
     public static final String MODID = "exnihilocreatio";
     public static final String VERSION = "@VERSION@";
-
+    public static final CreativeTabs tabExNihilo = new CreativeTabExNihiloCreatio();
     @SidedProxy(serverSide = "exnihilocreatio.proxy.ServerProxy", clientSide = "exnihilocreatio.proxy.ClientProxy")
     public static CommonProxy proxy;
-
     @Instance(MODID)
     public static ExNihiloCreatio instance;
-
     public static File configDirectory;
-
     public static boolean configsLoaded = false;
     public static boolean crtActionsLoaded = false;
-
-    public static final CreativeTabs tabExNihilo = new CreativeTabExNihiloCreatio();
 
     static {
         FluidRegistry.enableUniversalBucket();
@@ -78,6 +73,7 @@ public class ExNihiloCreatio {
         if (ModConfig.mechanics.enableBarrels) {
             BarrelModeRegistry.registerDefaults();
         }
+
     }
 
     @EventHandler

@@ -25,7 +25,7 @@ import java.util.Random;
 
 public class BlockInfestedLeaves extends BlockInfestingLeaves {
 
-    public BlockInfestedLeaves(){
+        public BlockInfestedLeaves(){
         super(InfestedType.INFESTED);
         this.setUnlocalizedName("block_infested_leaves");
         this.setRegistryName("block_infested_leaves");
@@ -91,9 +91,7 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
                     if (!player.getHeldItemMainhand().isEmpty()
                             && player.getHeldItemMainhand().getItem() instanceof ICrook) {
                         Util.dropItemInWorld(leaves, player, new ItemStack(Items.STRING, 1, 0), 0.02f);
-                    }
-
-                    else if (world.rand.nextFloat() < ModConfig.crooking.stringChance / 4.0d) {
+                    } else if (world.rand.nextFloat() < ModConfig.crooking.stringChance / 4.0d) {
                         Util.dropItemInWorld(leaves, player, new ItemStack(Items.STRING, 1, 0), 0.02f);
 
                     }

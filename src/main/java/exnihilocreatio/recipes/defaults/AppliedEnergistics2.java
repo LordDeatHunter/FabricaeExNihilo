@@ -15,19 +15,16 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class AppliedEnergistics2 implements IRecipeDefaults {
-    @Getter
-    public String MODID = "appliedenergistics2";
-
     @GameRegistry.ObjectHolder("appliedenergistics2:material")
     // Certus = 0, Charged Certus = 1, Sky stone dust = 45
     private static final Item AE_MATERIAL = null;
-
     @GameRegistry.ObjectHolder("appliedenergistics2:crystal_seed")
     // Pure Certus = 0
     private static final Item AE_SEEDS = null;
-
     @GameRegistry.ObjectHolder("appliedenergistics2:sky_stone_block")
     private static final Block SKY_STONE = null;
+    @Getter
+    public String MODID = "appliedenergistics2";
 
     public void registerSieve(SieveRegistry registry) {
         // Sky Stone Dust
@@ -51,11 +48,12 @@ public class AppliedEnergistics2 implements IRecipeDefaults {
         stack = new ItemInfo(AE_MATERIAL, 1);
         registry.register(new BlockInfo(ModBlocks.skystoneCrushed, 0), stack, 0.001f, MeshType.DIAMOND.getID());
     }
+
     public void registerHammer(HammerRegistry registry) {
         registry.register(new BlockInfo(SKY_STONE), new ItemStack(ModBlocks.skystoneCrushed, 1), 3, 1.0F, 0.0F);
     }
 
     public void registerFluidBlockTransform(FluidBlockTransformerRegistry registry) {
-        registry.register(FluidRegistry.LAVA, new ItemInfo(AE_MATERIAL,  45), new ItemInfo(SKY_STONE, 0));
+        registry.register(FluidRegistry.LAVA, new ItemInfo(AE_MATERIAL, 45), new ItemInfo(SKY_STONE, 0));
     }
 }

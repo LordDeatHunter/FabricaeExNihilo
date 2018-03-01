@@ -72,7 +72,7 @@ public class ItemDoll extends Item implements IHasModel {
      * @return true if spawn is successful
      */
     public boolean spawnMob(ItemStack stack, World world, BlockPos pos) {
-        switch (stack.getMetadata()){
+        switch (stack.getMetadata()) {
             case 0:
                 EntityBlaze blaze = new EntityBlaze(world);
                 blaze.setPosition(pos.getX(), pos.getY() + 1, pos.getZ());
@@ -121,13 +121,13 @@ public class ItemDoll extends Item implements IHasModel {
 //            ModelLoader.setCustomModelResourceLocation(this, i, new ModelResourceLocation("exnihilocreatio:itemDoll", variant));
 //        }
 
-         List<ModelResourceLocation> locations = new ArrayList<>();
+        List<ModelResourceLocation> locations = new ArrayList<>();
         for (String name : names) {
             locations.add(new ModelResourceLocation(getRegistryName(), "type=" + name));
         }
 
-         ModelBakery.registerItemVariants(this, locations.toArray(new ModelResourceLocation[0]));
-         ModelLoader.setCustomMeshDefinition(this, stack -> locations.get(stack.getMetadata()));
+        ModelBakery.registerItemVariants(this, locations.toArray(new ModelResourceLocation[0]));
+        ModelLoader.setCustomMeshDefinition(this, stack -> locations.get(stack.getMetadata()));
 
     }
 

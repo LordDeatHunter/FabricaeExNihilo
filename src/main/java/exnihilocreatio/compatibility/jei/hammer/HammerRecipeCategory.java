@@ -71,6 +71,7 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
             slotHighlight.draw(minecraft, highlightX, highlightY);
         }
     }
+
     @Override
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull HammerRecipe recipeWrapper, @Nonnull IIngredients ingredients) {
         recipeLayout.getItemStacks().init(0, true, 74, 9);

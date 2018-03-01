@@ -18,7 +18,7 @@ public class Milkable {
     @Getter
     private int coolDown;
 
-    public Milkable(String entityOnTop, String result, int amount, int coolDown){
+    public Milkable(String entityOnTop, String result, int amount, int coolDown) {
         this.entityOnTop = entityOnTop;
         this.result = result;
         this.amount = amount;

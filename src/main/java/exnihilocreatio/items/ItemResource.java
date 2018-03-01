@@ -92,7 +92,7 @@ public class ItemResource extends Item implements IHasModel {
         if (stack.getItemDamage() == names.indexOf(SILKWORM)) {
             IBlockState state = world.getBlockState(pos);
             if (state.getBlock() != Blocks.AIR && !(state.getBlock() instanceof BlockInfestingLeaves))
-                if (Util.isLeaves(state)){
+                if (Util.isLeaves(state)) {
                     BlockInfestingLeaves.infestLeafBlock(world, state, pos);
                     stack.shrink(1);
                     return EnumActionResult.SUCCESS;

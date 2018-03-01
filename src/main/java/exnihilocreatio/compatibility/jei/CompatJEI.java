@@ -75,7 +75,7 @@ public class CompatJEI implements IModPlugin {
         registerStoneCrucible(registry);
     }
 
-    private void registerCompost(@Nonnull IModRegistry registry){
+    private void registerCompost(@Nonnull IModRegistry registry) {
         List<CompostRecipe> compostRecipes = ExNihiloRegistryManager.COMPOST_REGISTRY.getRecipeList();
 
         registry.addRecipes(compostRecipes, CompostRecipeCategory.UID);
@@ -85,7 +85,7 @@ public class CompatJEI implements IModPlugin {
     }
 
 
-    private void registerFluidBlockTransform(@Nonnull IModRegistry registry){
+    private void registerFluidBlockTransform(@Nonnull IModRegistry registry) {
         List<FluidBlockTransformRecipe> fluidBlockTransformRecipes = ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.getRecipeList();
 
         registry.addRecipes(fluidBlockTransformRecipes, FluidBlockTransformRecipeCategory.UID);
@@ -94,7 +94,7 @@ public class CompatJEI implements IModPlugin {
         LogUtil.info("JEI: Fluid Block Transform Recipes Loaded:       " + fluidBlockTransformRecipes.size());
     }
 
-    private void registerFluidOnTop(@Nonnull IModRegistry registry){
+    private void registerFluidOnTop(@Nonnull IModRegistry registry) {
         List<FluidOnTopRecipe> fluidOnTopRecipes = ExNihiloRegistryManager.FLUID_ON_TOP_REGISTRY.getRecipeList();
 
         registry.addRecipes(fluidOnTopRecipes, FluidOnTopRecipeCategory.UID);
@@ -103,7 +103,7 @@ public class CompatJEI implements IModPlugin {
         LogUtil.info("JEI: Fluid On Top Recipes Loaded:       " + fluidOnTopRecipes.size());
     }
 
-    private void registerFluidTransform(@Nonnull IModRegistry registry){
+    private void registerFluidTransform(@Nonnull IModRegistry registry) {
         List<FluidTransformRecipe> fluidTransformRecipes = ExNihiloRegistryManager.FLUID_TRANSFORM_REGISTRY.getRecipeList();
 
         registry.addRecipes(fluidTransformRecipes, FluidTransformRecipeCategory.UID);
@@ -112,7 +112,7 @@ public class CompatJEI implements IModPlugin {
         LogUtil.info("JEI: Fluid Transform Recipes Loaded:    " + fluidTransformRecipes.size());
     }
 
-    private void registerHammer(@Nonnull IModRegistry registry){
+    private void registerHammer(@Nonnull IModRegistry registry) {
         List<HammerRecipe> hammerRecipes = ExNihiloRegistryManager.HAMMER_REGISTRY.getRecipeList();
 
         registry.addRecipes(hammerRecipes, HammerRecipeCategory.UID);
@@ -124,7 +124,7 @@ public class CompatJEI implements IModPlugin {
         LogUtil.info("JEI: Hammer Recipes Loaded:             " + hammerRecipes.size());
     }
 
-    private void registerHeat(@Nonnull IModRegistry registry){
+    private void registerHeat(@Nonnull IModRegistry registry) {
         List<HeatSourcesRecipe> heatSources = ExNihiloRegistryManager.HEAT_REGISTRY.getRecipeList();
 
         registry.addRecipes(heatSources, CrucibleHeatSourceRecipeCategory.UID);
@@ -133,7 +133,7 @@ public class CompatJEI implements IModPlugin {
         LogUtil.info("JEI: Heat Sources Loaded:             " + heatSources.size());
     }
 
-    private void registerSieve(@Nonnull IModRegistry registry){
+    private void registerSieve(@Nonnull IModRegistry registry) {
         List<SieveRecipe> sieveRecipes = ExNihiloRegistryManager.SIEVE_REGISTRY.getRecipeList();
 
         registry.addRecipes(sieveRecipes, SieveRecipeCategory.UID);
@@ -141,7 +141,7 @@ public class CompatJEI implements IModPlugin {
         LogUtil.info("JEI: Sieve Recipes Loaded:              " + sieveRecipes.size());
     }
 
-    private void registerStoneCrucible(@Nonnull IModRegistry registry){
+    private void registerStoneCrucible(@Nonnull IModRegistry registry) {
         List<CrucibleRecipe> crucibleRecipes = ExNihiloRegistryManager.CRUCIBLE_STONE_REGISTRY.getRecipeList();
 
         registry.addRecipes(crucibleRecipes, CrucibleRecipeCategory.UID);

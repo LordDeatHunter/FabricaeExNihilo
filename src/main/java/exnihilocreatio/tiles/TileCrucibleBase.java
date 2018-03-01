@@ -104,7 +104,7 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
                 color = new Color(Minecraft.getMinecraft().getBlockColors().colorMultiplier(block, world, pos, 0), true);
             }
         }
-        if (block != null){
+        if (block != null) {
             spriteColors[0] = new SpriteColor(Util.getTextureFromBlockState(block), color);
         }
 

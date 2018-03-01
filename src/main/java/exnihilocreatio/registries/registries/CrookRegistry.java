@@ -40,10 +40,9 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
     public void register(BlockInfo info, ItemStack reward, float chance, float fortuneChance) {
         Ingredient ingredient = registry.keySet().stream().filter(entry -> entry.test(info.getItemStack())).findFirst().orElse(null);
 
-        if (ingredient != null){
+        if (ingredient != null) {
             registry.get(ingredient).add(new CrookReward(reward, chance, fortuneChance));
-        }
-        else {
+        } else {
             NonNullList<CrookReward> list = NonNullList.create();
             list.add(new CrookReward(reward, chance, fortuneChance));
             registry.put(CraftingHelper.getIngredient(info), list);
@@ -56,10 +55,9 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
             return;
         CrookReward crookReward = new CrookReward(reward, chance, fortuneChance);
         Ingredient search = registry.keySet().stream().filter(entry -> entry.getValidItemStacksPacked().equals(ingredient.getValidItemStacksPacked())).findAny().orElse(null);
-        if (search != null){
+        if (search != null) {
             registry.get(search).add(crookReward);
-        }
-        else {
+        } else {
             NonNullList<CrookReward> drops = NonNullList.create();
             drops.add(crookReward);
             registry.put(ingredient, drops);

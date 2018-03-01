@@ -13,13 +13,11 @@ import java.io.FileWriter;
 import java.util.List;
 
 public abstract class BaseRegistry<RegType> {
+    protected final Gson gson;
+    private final List<? extends IDefaultRecipeProvider> defaultRecipeProviders;
     protected boolean hasAlreadyBeenLoaded = false;
-
     @Getter
     protected RegType registry;
-    private final List<? extends IDefaultRecipeProvider> defaultRecipeProviders;
-
-    protected final Gson gson;
 
     public BaseRegistry(Gson gson, RegType registry, @Nonnull List<? extends IDefaultRecipeProvider> defaultRecipeProviders) {
         this.gson = gson;

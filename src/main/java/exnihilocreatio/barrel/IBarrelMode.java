@@ -39,7 +39,7 @@ public interface IBarrelMode {
 
     Color getColorForRender();
 
-    default SpriteColor getSpriteColor(TileBarrel barrel){
+    default SpriteColor getSpriteColor(TileBarrel barrel) {
         return new SpriteColor(getTextureForRender(barrel), getColorForRender());
     }
 

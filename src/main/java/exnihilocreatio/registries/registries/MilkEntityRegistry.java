@@ -18,18 +18,18 @@ public class MilkEntityRegistry extends BaseRegistryList<Milkable> {
     public MilkEntityRegistry() {
         super(
                 new GsonBuilder()
-                    .setPrettyPrinting()
-                    .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
-                    .create(),
+                        .setPrettyPrinting()
+                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
+                        .create(),
                 ExNihiloRegistryManager.MILK_ENTITY_DEFAULT_REGISTRY_PROVIDERS
         );
     }
 
-    public void register(Entity entityOnTop, Fluid result, int amount, int coolDown){
+    public void register(Entity entityOnTop, Fluid result, int amount, int coolDown) {
         registry.add(new Milkable(entityOnTop.getName(), result.getName(), amount, coolDown));
     }
 
-    public void register(String entityOnTop, String result, int amount, int coolDown){
+    public void register(String entityOnTop, String result, int amount, int coolDown) {
         registry.add(new Milkable(entityOnTop, result, amount, coolDown));
     }
 
@@ -37,52 +37,52 @@ public class MilkEntityRegistry extends BaseRegistryList<Milkable> {
         return entityOnTop != null && this.isValidRecipe(entityOnTop.getName());
     }
 
-    public boolean isValidRecipe(String entityOnTop){
-        if(entityOnTop == null){
+    public boolean isValidRecipe(String entityOnTop) {
+        if (entityOnTop == null) {
             return false;
         }
-        for(Milkable milk : registry){
-            if(milk.getEntityOnTop().equals(entityOnTop)){
+        for (Milkable milk : registry) {
+            if (milk.getEntityOnTop().equals(entityOnTop)) {
                 return true;
             }
         }
         return false;
     }
 
-    public Milkable getMilkable(Entity entityOnTop){
+    public Milkable getMilkable(Entity entityOnTop) {
         // Returns the entire milkable object instead of having use multiple functions
-        if(entityOnTop == null){
+        if (entityOnTop == null) {
             return null;
         }
-        for(Milkable milk : registry){
-            if(milk.getEntityOnTop().equals(entityOnTop.getName())){
+        for (Milkable milk : registry) {
+            if (milk.getEntityOnTop().equals(entityOnTop.getName())) {
                 return milk;
             }
         }
         return null;
     }
 
-    public String getResult(Entity entityOnTop){
-        for(Milkable milk : registry){
-            if(milk.getEntityOnTop().equals(entityOnTop.getName())){
+    public String getResult(Entity entityOnTop) {
+        for (Milkable milk : registry) {
+            if (milk.getEntityOnTop().equals(entityOnTop.getName())) {
                 return milk.getResult();
             }
         }
         return null;
     }
 
-    public int getAmount(Entity entityOnTop){
-        for(Milkable milk : registry){
-            if(milk.getEntityOnTop().equals(entityOnTop.getName())){
+    public int getAmount(Entity entityOnTop) {
+        for (Milkable milk : registry) {
+            if (milk.getEntityOnTop().equals(entityOnTop.getName())) {
                 return milk.getAmount();
             }
         }
         return 0;
     }
 
-    public int getCoolDown(Entity entityOnTop){
-        for(Milkable milk : registry){
-            if(milk.getEntityOnTop().equals(entityOnTop.getName())){
+    public int getCoolDown(Entity entityOnTop) {
+        for (Milkable milk : registry) {
+            if (milk.getEntityOnTop().equals(entityOnTop.getName())) {
                 return milk.getCoolDown();
             }
         }

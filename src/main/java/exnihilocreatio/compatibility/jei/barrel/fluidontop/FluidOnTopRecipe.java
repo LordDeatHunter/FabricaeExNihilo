@@ -53,7 +53,7 @@ public class FluidOnTopRecipe implements IRecipeWrapper {
         return ImmutableList.of(inputFluidInBarrel, inputFluidOnTop);
     }
 
-    public boolean isValid(){
+    public boolean isValid() {
         return !inputBucketInBarrel.isEmpty() && !inputBucketOnTop.isEmpty() && !outputStack.isEmpty();
     }
 

@@ -16,7 +16,7 @@ public class CrucibleRecipe implements IRecipeWrapper {
     private final List<ItemStack> inputs;
     private final ItemStack output;
 
-    public CrucibleRecipe(Fluid fluid, List<ItemStack> inputs){
+    public CrucibleRecipe(Fluid fluid, List<ItemStack> inputs) {
         this.output = FluidUtil.getFilledBucket(new FluidStack(fluid, 1000));
         this.inputs = inputs;
     }
@@ -38,7 +38,7 @@ public class CrucibleRecipe implements IRecipeWrapper {
     /**
      * @return Returns full if the input has any space free
      */
-    public boolean isNonFull(){
+    public boolean isNonFull() {
         return inputs.size() < 45;
     }
 

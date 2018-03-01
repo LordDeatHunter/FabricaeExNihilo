@@ -22,41 +22,42 @@ import net.minecraftforge.client.model.animation.FastTESR;
 public class RenderInfestingLeaves extends FastTESR<TileInfestingLeaves> {
 
     private static final ModelVertex[] model = new ModelVertex[24];
+
     static {
-        model[0] = new ModelVertex( EnumFacing.UP, 0, 1, 0, 0, 1 );
-        model[1] = new ModelVertex( EnumFacing.UP, 1, 1, 0, 1, 1 );
-        model[2] = new ModelVertex( EnumFacing.UP, 1, 1, 1, 1, 0 );
-        model[3] = new ModelVertex( EnumFacing.UP, 0, 1, 1, 0, 0 );
+        model[0] = new ModelVertex(EnumFacing.UP, 0, 1, 0, 0, 1);
+        model[1] = new ModelVertex(EnumFacing.UP, 1, 1, 0, 1, 1);
+        model[2] = new ModelVertex(EnumFacing.UP, 1, 1, 1, 1, 0);
+        model[3] = new ModelVertex(EnumFacing.UP, 0, 1, 1, 0, 0);
 
-        model[4] = new ModelVertex( EnumFacing.DOWN, 0, 0, 0, 0, 0 );
-        model[5] = new ModelVertex( EnumFacing.DOWN, 1, 0, 0, 1, 0 );
-        model[6] = new ModelVertex( EnumFacing.DOWN, 1, 0, 1, 1, 1 );
-        model[7] = new ModelVertex( EnumFacing.DOWN, 0, 0, 1, 0, 1 );
+        model[4] = new ModelVertex(EnumFacing.DOWN, 0, 0, 0, 0, 0);
+        model[5] = new ModelVertex(EnumFacing.DOWN, 1, 0, 0, 1, 0);
+        model[6] = new ModelVertex(EnumFacing.DOWN, 1, 0, 1, 1, 1);
+        model[7] = new ModelVertex(EnumFacing.DOWN, 0, 0, 1, 0, 1);
 
-        model[8] = new ModelVertex( EnumFacing.NORTH, 0, 0, 0, 1, 0 );
-        model[9] = new ModelVertex( EnumFacing.NORTH, 1, 0, 0, 0, 0 );
-        model[10] = new ModelVertex( EnumFacing.NORTH, 1, 1, 0, 0, 1 );
-        model[11] = new ModelVertex( EnumFacing.NORTH, 0, 1, 0, 1, 1 );
+        model[8] = new ModelVertex(EnumFacing.NORTH, 0, 0, 0, 1, 0);
+        model[9] = new ModelVertex(EnumFacing.NORTH, 1, 0, 0, 0, 0);
+        model[10] = new ModelVertex(EnumFacing.NORTH, 1, 1, 0, 0, 1);
+        model[11] = new ModelVertex(EnumFacing.NORTH, 0, 1, 0, 1, 1);
 
-        model[12] = new ModelVertex( EnumFacing.SOUTH, 0, 0, 1, 0, 0 );
-        model[13] = new ModelVertex( EnumFacing.SOUTH, 1, 0, 1, 1, 0 );
-        model[14] = new ModelVertex( EnumFacing.SOUTH, 1, 1, 1, 1, 1 );
-        model[15] = new ModelVertex( EnumFacing.SOUTH, 0, 1, 1, 0, 1 );
+        model[12] = new ModelVertex(EnumFacing.SOUTH, 0, 0, 1, 0, 0);
+        model[13] = new ModelVertex(EnumFacing.SOUTH, 1, 0, 1, 1, 0);
+        model[14] = new ModelVertex(EnumFacing.SOUTH, 1, 1, 1, 1, 1);
+        model[15] = new ModelVertex(EnumFacing.SOUTH, 0, 1, 1, 0, 1);
 
-        model[16] = new ModelVertex( EnumFacing.EAST, 1, 0, 0, 1, 0 );
-        model[17] = new ModelVertex( EnumFacing.EAST, 1, 0, 1, 0, 0 );
-        model[18] = new ModelVertex( EnumFacing.EAST, 1, 1, 1, 0, 1 );
-        model[19] = new ModelVertex( EnumFacing.EAST, 1, 1, 0, 1, 1 );
+        model[16] = new ModelVertex(EnumFacing.EAST, 1, 0, 0, 1, 0);
+        model[17] = new ModelVertex(EnumFacing.EAST, 1, 0, 1, 0, 0);
+        model[18] = new ModelVertex(EnumFacing.EAST, 1, 1, 1, 0, 1);
+        model[19] = new ModelVertex(EnumFacing.EAST, 1, 1, 0, 1, 1);
 
-        model[20] = new ModelVertex( EnumFacing.WEST, 0, 0, 0, 0, 0 );
-        model[21] = new ModelVertex( EnumFacing.WEST, 0, 0, 1, 1, 0 );
-        model[22] = new ModelVertex( EnumFacing.WEST, 0, 1, 1, 1, 1 );
-        model[23] = new ModelVertex( EnumFacing.WEST, 0, 1, 0, 0, 1 );
+        model[20] = new ModelVertex(EnumFacing.WEST, 0, 0, 0, 0, 0);
+        model[21] = new ModelVertex(EnumFacing.WEST, 0, 0, 1, 1, 0);
+        model[22] = new ModelVertex(EnumFacing.WEST, 0, 1, 1, 1, 1);
+        model[23] = new ModelVertex(EnumFacing.WEST, 0, 1, 0, 0, 1);
 
     }
 
     @Override
-    public void renderTileEntityFast(TileInfestingLeaves te, double x, double y, double z, float partialTicks, int destroyStage, float partial, BufferBuilder buffer){
+    public void renderTileEntityFast(TileInfestingLeaves te, double x, double y, double z, float partialTicks, int destroyStage, float partial, BufferBuilder buffer) {
         final BlockPos pos = te.getPos();
         final Block block = getWorld().getBlockState(pos).getBlock();
 
@@ -70,41 +71,41 @@ public class RenderInfestingLeaves extends FastTESR<TileInfestingLeaves> {
         // Color
         final Color color;
         if (block instanceof BlockInfestingLeaves)
-            color = Color.average(new Color(BiomeColorHelper.getFoliageColorAtPos(getWorld(), pos)), Util.whiteColor, (float)Math.pow((te.getProgress() / 100f), 2.0));
+            color = Color.average(new Color(BiomeColorHelper.getFoliageColorAtPos(getWorld(), pos)), Util.whiteColor, (float) Math.pow((te.getProgress() / 100f), 2.0));
         else
             color = Util.whiteColor;
 
         final TextureAtlasSprite sprite = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(state);
-        buffer.setTranslation(x-pos.getX(), y-pos.getY(), z-pos.getZ());
+        buffer.setTranslation(x - pos.getX(), y - pos.getY(), z - pos.getZ());
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, skyLight * 16.0F, blockLight * 16.0F);
 
         Vec3d view = Minecraft.getMinecraft().getRenderViewEntity().getPositionEyes(partialTicks);
-        for ( final ModelVertex vert : model ) {
+        for (final ModelVertex vert : model) {
             final EnumFacing face = vert.face;
 
             // Dirty face culling
             double dot = 0;
-            switch(face){
+            switch (face) {
                 case DOWN:
                     dot = -(view.y - (pos.getY()));
                     break;
                 case UP:
-                    dot = (view.y - (pos.getY()+1));
+                    dot = (view.y - (pos.getY() + 1));
                     break;
                 case NORTH:
                     dot = -(view.z - (pos.getZ()));
                     break;
                 case SOUTH:
-                    dot = (view.z - (pos.getZ()+1));
+                    dot = (view.z - (pos.getZ() + 1));
                     break;
                 case WEST:
                     dot = -(view.x - (pos.getX()));
                     break;
                 case EAST:
-                    dot = (view.x - (pos.getX()+1));
+                    dot = (view.x - (pos.getX() + 1));
                     break;
             }
-            if(dot > 0 && block.shouldSideBeRendered(state, getWorld(), pos, vert.face)) {
+            if (dot > 0 && block.shouldSideBeRendered(state, getWorld(), pos, vert.face)) {
                 for (final VertexFormatElement e : buffer.getVertexFormat().getElements()) {
                     switch (e.getUsage()) {
                         case COLOR:

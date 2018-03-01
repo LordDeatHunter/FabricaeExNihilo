@@ -42,7 +42,7 @@ public class BlockInfo {
     }
 
     public BlockInfo(@Nonnull String string) {
-        if (string.isEmpty() || string.length() < 2){
+        if (string.isEmpty() || string.length() < 2) {
             block = Blocks.AIR;
             meta = 0;
             return;
@@ -112,15 +112,15 @@ public class BlockInfo {
         else if (other instanceof ItemStack)
             return ItemStack.areItemStacksEqual(((ItemStack) other), getItemStack());
         else if (other instanceof Block)
-            return Block.isEqualTo((Block)other, block);
-        else if (other instanceof ItemBlock){
-            return Block.isEqualTo(((ItemBlock)other).getBlock(), block);
+            return Block.isEqualTo((Block) other, block);
+        else if (other instanceof ItemBlock) {
+            return Block.isEqualTo(((ItemBlock) other).getBlock(), block);
         }
 
         return false;
     }
 
-    public ItemStack getItemStack(){
+    public ItemStack getItemStack() {
         Item item = Item.getItemFromBlock(block);
         return new ItemStack(item, 1, meta);
     }

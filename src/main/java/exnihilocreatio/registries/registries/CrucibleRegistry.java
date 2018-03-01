@@ -28,6 +28,8 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
+    protected final Map<Ingredient, Meltable> oreRegistry = new HashMap<>();
+
     public CrucibleRegistry(List<? extends IDefaultRecipeProvider> defaultRecipeProviders) {
         super(
                 new GsonBuilder()
@@ -38,8 +40,6 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
                 defaultRecipeProviders
         );
     }
-
-    protected final Map<Ingredient, Meltable> oreRegistry = new HashMap<>();
 
     public void register(ItemInfo item, Fluid fluid, int amount) {
         register(item.getItemStack(), fluid, amount);
@@ -68,11 +68,11 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
         else register(CraftingHelper.getIngredient(stack), meltable);
     }
 
-    public void register (String name, Fluid fluid, int amount) {
+    public void register(String name, Fluid fluid, int amount) {
         register(name, new Meltable(fluid.getName(), amount));
     }
 
-    public void register (String name, Meltable meltable) {
+    public void register(String name, Meltable meltable) {
         Ingredient ingredient = CraftingHelper.getIngredient(name);
         if (ingredient == null || ingredient.getMatchingStacks().length == 0 || !FluidRegistry.isFluidRegistered(meltable.getFluid()))
             return;
@@ -126,7 +126,7 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
     @Override
     public Map<Ingredient, Meltable> getRegistry() {
         //noinspection unchecked
-        Map<Ingredient, Meltable> map = (HashMap)((HashMap)registry).clone();
+        Map<Ingredient, Meltable> map = (HashMap) ((HashMap) registry).clone();
         map.putAll(oreRegistry);
         return map;
     }
@@ -152,7 +152,7 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
                             && crucibleRecipe.isNonFull())
                     .findFirst()
                     .orElse(null);
-            if (recipe == null){
+            if (recipe == null) {
                 recipe = new CrucibleRecipe(fluid, Lists.newLinkedList());
                 crucibleRecipes.add(recipe);
             }

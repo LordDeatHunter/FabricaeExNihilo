@@ -40,10 +40,9 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
             BlockInfo stack = new BlockInfo(s.getKey());
             Ingredient ingredient = CraftingHelper.getIngredient(stack.getItemStack());
             Ingredient search = registry.keySet().stream().filter(entry -> entry.getValidItemStacksPacked().equals(ingredient.getValidItemStacksPacked())).findAny().orElse(null);
-            if (search != null){
+            if (search != null) {
                 registry.get(search).addAll(s.getValue());
-            }
-            else {
+            } else {
                 NonNullList<HammerReward> drops = NonNullList.create();
                 drops.addAll(s.getValue());
                 registry.put(ingredient, drops);
@@ -64,34 +63,33 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
         register(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)), new HammerReward(reward, miningLevel, chance, fortuneChance));
     }
 
-    public void register(Block block, int meta, ItemStack reward, int miningLevel, float chance, float fortuneChance){
+    public void register(Block block, int meta, ItemStack reward, int miningLevel, float chance, float fortuneChance) {
         register(new ItemStack(block, 1, meta), new HammerReward(reward, miningLevel, chance, fortuneChance));
     }
 
-    public void register(BlockInfo block, ItemStack reward, int miningLevel, float chance, float fortuneChance){
+    public void register(BlockInfo block, ItemStack reward, int miningLevel, float chance, float fortuneChance) {
         register(block.getItemStack(), new HammerReward(reward, miningLevel, chance, fortuneChance));
     }
 
-    public void register (ItemStack stack, HammerReward reward){
+    public void register(ItemStack stack, HammerReward reward) {
         if (stack.isEmpty())
             return;
         Ingredient ingredient = CraftingHelper.getIngredient(stack);
         register(ingredient, reward);
     }
 
-    public void register (String name, ItemStack reward, int miningLevel, float chance, float fortuneChance){
+    public void register(String name, ItemStack reward, int miningLevel, float chance, float fortuneChance) {
         Ingredient ingredient = CraftingHelper.getIngredient(name);
         if (ingredient == null || ingredient.getMatchingStacks().length == 0)
             return;
         register(ingredient, new HammerReward(reward, miningLevel, chance, fortuneChance));
     }
 
-    public void register (Ingredient ingredient, HammerReward reward){
+    public void register(Ingredient ingredient, HammerReward reward) {
         Ingredient search = registry.keySet().stream().filter(entry -> entry.getValidItemStacksPacked().equals(ingredient.getValidItemStacksPacked())).findAny().orElse(null);
-        if (search != null){
+        if (search != null) {
             registry.get(search).add(reward);
-        }
-        else {
+        } else {
             NonNullList<HammerReward> drops = NonNullList.create();
             drops.add(reward);
             registry.put(ingredient, drops);
@@ -127,7 +125,7 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
         return drops;
     }
 
-    public NonNullList<HammerReward> getRewards(Ingredient ingredient){
+    public NonNullList<HammerReward> getRewards(Ingredient ingredient) {
         NonNullList<HammerReward> drops = NonNullList.create();
         registry.entrySet().stream().filter(entry -> entry.getKey() == ingredient).forEach(entry -> drops.addAll(entry.getValue()));
         return drops;

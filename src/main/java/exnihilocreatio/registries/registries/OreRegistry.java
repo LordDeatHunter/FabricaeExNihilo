@@ -99,11 +99,16 @@ public class OreRegistry extends BaseRegistryList<Ore> {
             ResourceLocation group = new ResourceLocation(ExNihiloCreatio.MODID, "exores");
             ResourceLocation baseName = new ResourceLocation(ExNihiloCreatio.MODID, "ore_compression_");
             ResourceLocation recipeLocation = new ResourceLocation(baseName.getResourceDomain(), baseName.getResourcePath() + ore.getOre().getName());
+
             GameRegistry.addShapedRecipe(recipeLocation, group,
                     new ItemStack(ore, 1, EnumOreSubtype.CHUNK.getMeta()),
                     "xx", "xx", 'x', new ItemStack(ore, 1, EnumOreSubtype.PIECE.getMeta()));
 
-            if (ModConfig.compatibility.preventUnidict && Loader.isModLoaded("unidict")){
+            if (ModConfig.compatibility.preventUnidict && Loader.isModLoaded("unidict")) {
+                UniDict.getConfig().recipesToIgnore.add(recipeLocation);
+            }
+
+            if (ModConfig.compatibility.preventUnidict && Loader.isModLoaded("unidict")) {
                 UniDict.getConfig().recipesToIgnore.add(recipeLocation);
             }
 
