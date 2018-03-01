@@ -73,11 +73,13 @@ public class CrucibleRecipeCategory implements IRecipeCategory<CrucibleRecipe> {
 
         IFocus<?> focus = recipeLayout.getFocus();
 
-        if (focus != null) {
-            boolean mightHaveHighlight = focus.getMode() == IFocus.Mode.INPUT;
-            hasHighlight = false;
+        boolean mightHaveHighlight = false;
+        hasHighlight = false;
 
-            ItemStack focusStack = (ItemStack) focus.getValue();
+        if (focus != null) {
+            mightHaveHighlight = focus.getMode() == IFocus.Mode.INPUT;
+        }
+
 
             int slotIndex = 1;
 
@@ -90,14 +92,14 @@ public class CrucibleRecipeCategory implements IRecipeCategory<CrucibleRecipe> {
                 recipeLayout.getItemStacks().init(slotIndex + i, true, slotX, slotY);
                 recipeLayout.getItemStacks().set(slotIndex + i, inputStack);
 
-                if (mightHaveHighlight && ItemStack.areItemsEqual(focusStack, inputStack)) {
+                if (mightHaveHighlight && ItemStack.areItemsEqual((ItemStack) focus.getValue(), inputStack)) {
                     highlightX = slotX;
                     highlightY = slotY;
 
                     hasHighlight = true;
                     mightHaveHighlight = false;
                 }
-            }
+
         }
 
         recipeLayout.getItemStacks().addTooltipCallback(new CrucibleTooltipCallback());
