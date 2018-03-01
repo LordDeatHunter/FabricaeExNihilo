@@ -64,7 +64,7 @@ public class BarrelItemHandlerFluid extends ItemStackHandler {
                 tank.drain(tank.getCapacity(), true);
                 barrel.setMode("fluid");
                 PacketHandler.sendToAllAround(new MessageBarrelModeUpdate("block", barrel.getPos()), barrel);
-                tank.fill(FluidRegistry.getFluidStack(fluidItemFluidOutput, tank.getCapacity()),true);
+                tank.fill(FluidRegistry.getFluidStack(fluidItemFluidOutput, tank.getCapacity()), true);
                 PacketHandler.sendNBTUpdate(barrel);
             }
             ItemStack ret = stack.copy();

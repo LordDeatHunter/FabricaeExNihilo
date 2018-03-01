@@ -1,6 +1,6 @@
 package exnihilocreatio.capabilities;
 
-import exnihilocreatio.rotationalPower.*;
+import exnihilocreatio.rotationalPower.CapabilityRotationalMember;
 import exnihilocreatio.rotationalPower.IRotationalPowerMember;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 

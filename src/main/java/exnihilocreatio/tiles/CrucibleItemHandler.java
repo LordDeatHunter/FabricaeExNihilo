@@ -46,6 +46,6 @@ public class CrucibleItemHandler extends ItemStackHandler {
 
     @Override
     protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
-        return te.solidAmount > 0 ? TileCrucibleBase.MAX_ITEMS -1 : TileCrucibleBase.MAX_ITEMS;
+        return te.solidAmount > 0 ? TileCrucibleBase.MAX_ITEMS - 1 : TileCrucibleBase.MAX_ITEMS;
     }
 }

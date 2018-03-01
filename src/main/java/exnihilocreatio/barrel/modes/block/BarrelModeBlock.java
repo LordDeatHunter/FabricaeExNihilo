@@ -30,11 +30,10 @@ import java.util.List;
 
 public class BarrelModeBlock implements IBarrelMode {
 
+    private final BarrelItemHandlerBlock handler = new BarrelItemHandlerBlock(null);
     @Getter
     @Setter
     private ItemInfo block;
-
-    private final BarrelItemHandlerBlock handler = new BarrelItemHandlerBlock(null);
 
     @Override
     public void writeToNBT(NBTTagCompound tag) {

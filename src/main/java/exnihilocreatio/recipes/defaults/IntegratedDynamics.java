@@ -13,13 +13,12 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import javax.annotation.Nullable;
 
 public class IntegratedDynamics implements IRecipeDefaults {
-    @Getter
-    public String MODID = "integrateddynamics";
-
     // Integrated Dynamics Support
     @Nullable
     @GameRegistry.ObjectHolder("integrateddynamics:menril_sapling")
     public static final Item MENRIL_SAPLING = null;
+    @Getter
+    public String MODID = "integrateddynamics";
 
     public void registerSieve(SieveRegistry registry) {
         // TODO: Consider instead using witch water to mutate a normal sapling into a menril sapling.

@@ -75,8 +75,7 @@ public class CompatWaila implements IWailaPlugin, IWailaDataProvider {
                 } else {
                     currenttip.add("Progress: " + tile.getProgress() + "%");
                 }
-            }
-            else {
+            } else {
                 currenttip.add("Progress: Done");
             }
         }

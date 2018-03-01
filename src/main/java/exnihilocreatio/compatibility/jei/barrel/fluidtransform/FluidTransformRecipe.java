@@ -63,7 +63,7 @@ public class FluidTransformRecipe implements IRecipeWrapper {
         return ImmutableList.of(new FluidStack(outputFluid, 1000));
     }
 
-    public boolean isValid(){
+    public boolean isValid() {
         return !inputStacks.isEmpty() && !outputBucket.isEmpty();
     }
 

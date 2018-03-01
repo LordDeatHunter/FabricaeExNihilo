@@ -10,11 +10,10 @@ import java.util.concurrent.Callable;
 
 public class CapabilityRotationalMember implements Capability.IStorage<IRotationalPowerMember>, Callable<IRotationalPowerMember> {
 
+    public static final CapabilityRotationalMember INSTANCE = new CapabilityRotationalMember();
     @SuppressWarnings("CanBeFinal")
     @CapabilityInject(IRotationalPowerMember.class)
     public static Capability<IRotationalPowerMember> ROTIONAL_MEMBER = null;
-
-    public static final CapabilityRotationalMember INSTANCE = new CapabilityRotationalMember();
 
     @Nullable
     @Override

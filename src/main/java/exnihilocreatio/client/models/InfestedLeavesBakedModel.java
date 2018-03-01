@@ -18,16 +18,16 @@ import static exnihilocreatio.ModBlocks.infestedLeaves;
 
 public class InfestedLeavesBakedModel implements IBakedModel {
 
+    public final static ModelResourceLocation variantTag = new ModelResourceLocation(infestedLeaves.getRegistryName(), "normal");
     private final IBakedModel defaultModel;
     private TextureAtlasSprite particleTexture;
-    public final static ModelResourceLocation variantTag = new ModelResourceLocation(infestedLeaves.getRegistryName(), "normal");
 
-    public InfestedLeavesBakedModel(IBakedModel defaultModel){
+    public InfestedLeavesBakedModel(IBakedModel defaultModel) {
         this.defaultModel = defaultModel;
     }
 
-    private IBakedModel handleBlockState(IBlockState state){
-        if (state instanceof IExtendedBlockState){
+    private IBakedModel handleBlockState(IBlockState state) {
+        if (state instanceof IExtendedBlockState) {
             IBlockState copiedState = BlockInfestingLeaves.getLeafState(state);
 
             this.particleTexture = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelForState(copiedState).getParticleTexture();

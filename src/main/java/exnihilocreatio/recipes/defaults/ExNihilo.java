@@ -31,7 +31,7 @@ public class ExNihilo implements IRecipeDefaults {
     public String MODID = ExNihiloCreatio.MODID;
 
 
-    public void registerCompost(CompostRegistry registry){
+    public void registerCompost(CompostRegistry registry) {
         IBlockState dirtState = Blocks.DIRT.getDefaultState();
 
         registry.register(new ItemInfo(Items.ROTTEN_FLESH, 0), 0.1f, dirtState, new Color("C45631"));
@@ -131,7 +131,7 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register("listAllmeatcooked", 0.20f, dirtState, new Color("80543D"));
     }
 
-    public void registerCrook(CrookRegistry registry){
+    public void registerCrook(CrookRegistry registry) {
         registry.register("treeLeaves", ItemResource.getResourceStack(ItemResource.SILKWORM), 0.1f, 0f);
     }
 
@@ -226,7 +226,7 @@ public class ExNihilo implements IRecipeDefaults {
 
     }
 
-    public void registerHammer(HammerRegistry registry){
+    public void registerHammer(HammerRegistry registry) {
         registry.register("cobblestone", new ItemStack(Blocks.GRAVEL, 1), 0, 1.0F, 0.0F);
         registry.register("gravel", new ItemStack(Blocks.SAND, 1), 0, 1.0F, 0.0F);
         registry.register("sand", new ItemStack(ModBlocks.dust, 1), 0, 1.0F, 0.0F);
@@ -243,12 +243,12 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register("stone", new ItemStack(ModItems.pebbles, 1, EnumPebbleSubtype.STONE.getMeta()), 1, 3F, 1.25F);
 
         // Hammer concrete into concrete powder
-        for(int meta = 0; meta < 16; meta++)
+        for (int meta = 0; meta < 16; meta++)
             registry.register(new BlockInfo(Blocks.CONCRETE.getStateFromMeta(meta)), new ItemStack(Blocks.CONCRETE_POWDER, 1, meta), 1, 1.0f, 0.0f);
 
     }
 
-    public void registerHeat(HeatRegistry registry){
+    public void registerHeat(HeatRegistry registry) {
         // Vanilla fluids are weird, the "flowing" variant is simply a temporary state of checking if it can flow.
         // So, once the lava has spread out all the way, it will all actually be "still" lava.
         // Thanks Mojang <3
@@ -258,18 +258,18 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register(new BlockInfo(Blocks.TORCH, -1), 1);
     }
 
-    public void registerBarrelLiquidBlacklist(BarrelLiquidBlacklistRegistry registry){
+    public void registerBarrelLiquidBlacklist(BarrelLiquidBlacklistRegistry registry) {
         registry.register(ModBlocks.barrelWood.getTier(), "lava");
         registry.register(ModBlocks.barrelWood.getTier(), "fire_water");
         registry.register(ModBlocks.barrelWood.getTier(), "rocket_fuel");
     }
 
-    public void registerFluidOnTop(FluidOnTopRegistry registry){
+    public void registerFluidOnTop(FluidOnTopRegistry registry) {
         registry.register(FluidRegistry.LAVA, FluidRegistry.WATER, new ItemInfo(Blocks.OBSIDIAN.getDefaultState()));
         registry.register(FluidRegistry.WATER, FluidRegistry.LAVA, new ItemInfo(Blocks.COBBLESTONE.getDefaultState()));
     }
 
-    public void registerOreChunks(OreRegistry registry){
+    public void registerOreChunks(OreRegistry registry) {
         registry.register("gold", new Color("FFFF00"), new ItemInfo(Items.GOLD_INGOT, 0));
         registry.register("iron", new Color("BF8040"), new ItemInfo(Items.IRON_INGOT, 0));
 
@@ -299,22 +299,22 @@ public class ExNihilo implements IRecipeDefaults {
         }
     }
 
-    public void registerFluidTransform(FluidTransformRegistry registry){
+    public void registerFluidTransform(FluidTransformRegistry registry) {
         registry.register("water", "witchwater", 12000, new BlockInfo[]{new BlockInfo(Blocks.MYCELIUM.getDefaultState())}, new BlockInfo[]{new BlockInfo(Blocks.BROWN_MUSHROOM.getDefaultState()), new BlockInfo(Blocks.RED_MUSHROOM.getDefaultState())});
     }
 
-    public void registerFluidBlockTransform(FluidBlockTransformerRegistry registry){
+    public void registerFluidBlockTransform(FluidBlockTransformerRegistry registry) {
         registry.register(FluidRegistry.WATER, new ItemInfo(new ItemStack(ModBlocks.dust)), new ItemInfo(new ItemStack(Blocks.CLAY)));
         registry.register(FluidRegistry.LAVA, new ItemInfo(new ItemStack(Items.REDSTONE)), new ItemInfo(new ItemStack(Blocks.NETHERRACK)));
         registry.register(FluidRegistry.LAVA, new ItemInfo(new ItemStack(Items.GLOWSTONE_DUST)), new ItemInfo(new ItemStack(Blocks.END_STONE)));
         registry.register(ModFluids.fluidWitchwater, new ItemInfo(new ItemStack(Blocks.SAND)), new ItemInfo(new ItemStack(Blocks.SOUL_SAND)));
 
         // Vanilla Concrete
-        for(int meta = 0; meta < 16; meta++)
+        for (int meta = 0; meta < 16; meta++)
             registry.register(FluidRegistry.WATER, new ItemInfo(new ItemStack(Blocks.CONCRETE_POWDER, 1, meta)), new ItemInfo(new ItemStack(Blocks.CONCRETE, 1, meta)));
     }
 
-    public void registerFluidItemFluid(FluidItemFluidRegistry registry){
+    public void registerFluidItemFluid(FluidItemFluidRegistry registry) {
         registry.register(FluidRegistry.WATER, new ItemInfo(ItemResource.getResourceStack(ItemResource.ANCIENT_SPORES)), ModFluids.fluidWitchwater);
     }
 
@@ -330,9 +330,9 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register("obsidian", FluidRegistry.LAVA, 1000);
     }
 
-    public void registerCrucibleWood(CrucibleRegistry registry){
+    public void registerCrucibleWood(CrucibleRegistry registry) {
         Meltable water = new Meltable(FluidRegistry.WATER.getName(), 250, new BlockInfo(Blocks.LEAVES, 0));
-        registry.register("treeLeaves" ,FluidRegistry.WATER, 250);
+        registry.register("treeLeaves", FluidRegistry.WATER, 250);
         registry.register("treeSapling", water);
         registry.register("listAllfruit", water);
         registry.register("listAllveggie", water);
@@ -346,13 +346,13 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register(new ItemInfo(Items.APPLE, 0), water);
     }
 
-    public void registerMilk(MilkEntityRegistry registry){
+    public void registerMilk(MilkEntityRegistry registry) {
         registry.register("Cow", "milk", 10, 20);
     }
 
-    private float getDropChance(float chance){
+    private float getDropChance(float chance) {
         if (ModConfig.world.isSkyWorld)
             return chance;
-        else return chance / 100f * (float)ModConfig.world.normalDropPercent;
+        else return chance / 100f * (float) ModConfig.world.normalDropPercent;
     }
 }

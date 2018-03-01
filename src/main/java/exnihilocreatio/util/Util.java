@@ -16,11 +16,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
@@ -155,20 +153,19 @@ public class Util {
         return FluidUtil.getFilledBucket(new FluidStack(fluid, 1000));
     }
 
-    public static boolean compareItemStack(ItemStack stack1, ItemStack stack2){
-        if (stack1.getMetadata() == OreDictionary.WILDCARD_VALUE || stack2.getMetadata() == OreDictionary.WILDCARD_VALUE){
+    public static boolean compareItemStack(ItemStack stack1, ItemStack stack2) {
+        if (stack1.getMetadata() == OreDictionary.WILDCARD_VALUE || stack2.getMetadata() == OreDictionary.WILDCARD_VALUE) {
             return stack1.getItem() == stack2.getItem();
-        }
-        else return stack1.getItem() == stack2.getItem() && stack1.getMetadata() == stack2.getMetadata();
+        } else return stack1.getItem() == stack2.getItem() && stack1.getMetadata() == stack2.getMetadata();
     }
 
-    public static int interpolate(int low, int high, float amount){
-        if(amount > 1.0f) return high;
-        if(amount < 0.0f) return low;
-        return low + round((high-low)*amount);
+    public static int interpolate(int low, int high, float amount) {
+        if (amount > 1.0f) return high;
+        if (amount < 0.0f) return low;
+        return low + round((high - low) * amount);
     }
 
-    public static NonNullList<BlockPos> getNearbyLeaves(World world, BlockPos pos){
+    public static NonNullList<BlockPos> getNearbyLeaves(World world, BlockPos pos) {
         NonNullList<BlockPos> blockPos = NonNullList.create();
         for (BlockPos checkPos : BlockPos.getAllInBox(new BlockPos(pos.getX() - 1, pos.getY() - 1, pos.getZ() - 1), new BlockPos(pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1))) {
             IBlockState newState = world.getBlockState(checkPos);
@@ -181,7 +178,7 @@ public class Util {
         return blockPos;
     }
 
-    public static boolean isLeaves(IBlockState state){
+    public static boolean isLeaves(IBlockState state) {
         ItemStack itemStack = new ItemStack(state.getBlock());
         return OreDictionary.getOres("treeLeaves").stream().anyMatch(stack1 -> Util.compareItemStack(stack1, itemStack));
     }

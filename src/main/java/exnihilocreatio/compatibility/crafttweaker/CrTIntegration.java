@@ -10,7 +10,7 @@ public class CrTIntegration {
     public static final List<IAction> removeActions = new ArrayList<>();
     public static final List<IAction> addActions = new ArrayList<>();
 
-    public static void loadIActions(){
+    public static void loadIActions() {
         removeActions.forEach(iAction -> {
             CraftTweakerAPI.logInfo(iAction.describe());
             iAction.apply();

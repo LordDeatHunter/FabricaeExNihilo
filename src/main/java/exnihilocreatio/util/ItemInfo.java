@@ -41,7 +41,7 @@ public class ItemInfo {
     }
 
     public ItemInfo(@Nonnull String string) {
-        if (string.isEmpty() || string.length() < 2){
+        if (string.isEmpty() || string.length() < 2) {
             item = ItemStack.EMPTY.getItem();
             meta = ItemStack.EMPTY.getMetadata();
             return;
@@ -118,7 +118,7 @@ public class ItemInfo {
         if (other instanceof ItemInfo)
             return ItemStack.areItemStacksEqual(((ItemInfo) other).getItemStack(), getItemStack());
         else if (other instanceof ItemStack)
-            return ItemStack.areItemStacksEqual((ItemStack)other, getItemStack());
+            return ItemStack.areItemStacksEqual((ItemStack) other, getItemStack());
         else if (other instanceof BlockInfo)
             return ItemStack.areItemStacksEqual(((BlockInfo) other).getItemStack(), getItemStack());
 

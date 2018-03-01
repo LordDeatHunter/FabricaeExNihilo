@@ -9,6 +9,7 @@ import java.util.List;
 
 public class CompatDefaultRecipes {
     private static final List<IRecipeDefaults> MODS = new ArrayList<>();
+
     static {
         // TODO use config options to dynamically add mod support
         // TODO consider making the default Ex Nihilo recipes use this same programatic method.

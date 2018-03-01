@@ -11,15 +11,12 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import javax.annotation.Nonnull;
 
 public class TileGrinder extends BaseTileEntity implements ITickable, IRotationalPowerConsumer {
+    public final ItemHandlerGrinder itemHandlerGrinder;
     public EnumFacing facing = EnumFacing.NORTH;
-
     public int tickCounter = 0;
     public float rotationValue = 0;
     public float perTickRotation = 0;
-
     public float storedRotationalPower = 0;
-
-    public final ItemHandlerGrinder itemHandlerGrinder;
 
     public TileGrinder() {
         itemHandlerGrinder = new ItemHandlerGrinder();
@@ -31,7 +28,7 @@ public class TileGrinder extends BaseTileEntity implements ITickable, IRotationa
         tickCounter++;
 
         if (tickCounter > 0 && tickCounter % 10 == 0) {
-            perTickRotation = calcEffectivePerTickRotation(world,pos,facing);
+            perTickRotation = calcEffectivePerTickRotation(world, pos, facing);
             tickCounter = 0;
         }
 
@@ -39,6 +36,7 @@ public class TileGrinder extends BaseTileEntity implements ITickable, IRotationa
             rotationValue += perTickRotation;
         }
     }
+
     @SuppressWarnings("unchecked")
     @Override
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing facing) {

@@ -41,26 +41,25 @@ public class HeatSourcesRecipe implements IRecipeWrapper {
 
 
         ItemStack item = blockInfo.getItemStack();
-        if (item.isEmpty()){
+        if (item.isEmpty()) {
             Fluid fluid = null;
             Block block = blockInfo.getBlock();
-            if (block instanceof IFluidBlock){
+            if (block instanceof IFluidBlock) {
                 fluid = ((IFluidBlock) block).getFluid();
             }
-            if (block == Blocks.LAVA || block == Blocks.FLOWING_LAVA){
+            if (block == Blocks.LAVA || block == Blocks.FLOWING_LAVA) {
                 fluid = FluidRegistry.LAVA;
             }
-            if (block == Blocks.WATER || block == Blocks.FLOWING_WATER){
+            if (block == Blocks.WATER || block == Blocks.FLOWING_WATER) {
                 fluid = FluidRegistry.WATER;
             }
-            if (fluid != null){
+            if (fluid != null) {
                 item = FluidUtil.getFilledBucket(new FluidStack(fluid, 1000));
             }
-            if (block == Blocks.FIRE){
+            if (block == Blocks.FIRE) {
                 item = new ItemStack(Items.FLINT_AND_STEEL, 1);
             }
         }
-
 
 
         inputs = new ArrayList<>(Collections.singleton(item));
@@ -163,18 +162,18 @@ public class HeatSourcesRecipe implements IRecipeWrapper {
     @SideOnly(Side.CLIENT)
     public void renderBlock(BlockRendererDispatcher blockrendererdispatcher, BufferBuilder buffer, BlockRenderLayer renderLayer, IBlockState blockState, BlockPos pos, IBlockAccess access) {
 
-            if (!blockState.getBlock().canRenderInLayer(blockState, renderLayer)) {
-                return;
-            }
+        if (!blockState.getBlock().canRenderInLayer(blockState, renderLayer)) {
+            return;
+        }
 
-            ForgeHooksClient.setRenderLayer(renderLayer);
+        ForgeHooksClient.setRenderLayer(renderLayer);
 
-            try {
-                blockrendererdispatcher.renderBlock(blockState, pos, access, buffer);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            blockrendererdispatcher.renderBlock(blockState, pos, access, buffer);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-            ForgeHooksClient.setRenderLayer(null);
+        ForgeHooksClient.setRenderLayer(null);
     }
 }

@@ -173,7 +173,7 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider, ITOPI
 
     // Barrels will attempt to milk entities
     @Override
-    public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn){
+    public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn) {
         TileEntity te = worldIn.getTileEntity(pos);
         if (te != null && te instanceof TileBarrel) {
             ((TileBarrel) te).entityOnTop(worldIn, entityIn);

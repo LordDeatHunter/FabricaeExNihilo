@@ -1,7 +1,6 @@
 package exnihilocreatio.config;
 
 import exnihilocreatio.ExNihiloCreatio;
-import javafx.scene.shape.VertexFormat;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
