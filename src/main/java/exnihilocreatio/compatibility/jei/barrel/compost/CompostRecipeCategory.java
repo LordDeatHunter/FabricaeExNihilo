@@ -118,7 +118,7 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
 
             ItemStack focusStack = (ItemStack) focus.getValue();
 
-            int slotIndex = 1;
+        int slotIndex = 1;
 
             for (int i = 0; i < recipe.getInputs().size(); i++) {
                 final int slotX = 2 + (i % 9 * 18);

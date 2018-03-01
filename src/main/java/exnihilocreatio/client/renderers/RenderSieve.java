@@ -2,6 +2,7 @@ package exnihilocreatio.client.renderers;
 
 import exnihilocreatio.blocks.BlockSieve;
 import exnihilocreatio.tiles.TileSieve;
+import exnihilocreatio.util.BlockInfo;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
@@ -42,7 +43,7 @@ public class RenderSieve extends TileEntitySpecialRenderer<TileSieve> {
         GlStateManager.translate(x, y, z);
         // GlStateManager.translate(0, 1, 0);
 
-        if (te.getTexture() != null && te.getCurrentStack() != null) {
+        if (te.getTexture() != null && te.getCurrentStack() != BlockInfo.EMPTY) {
             TextureAtlasSprite icon = te.getTexture();
             double minU = (double) icon.getMinU();
             double maxU = (double) icon.getMaxU();
