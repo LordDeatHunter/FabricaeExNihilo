@@ -49,6 +49,9 @@ public class ItemInfo {
         }
         String[] split = string.split(":");
 
+        Item item = null;
+        int meta = -1;
+
         switch (split.length) {
             case 1:
                 item = Item.getByNameOrId("minecraft:" + split[0]);
@@ -60,9 +63,6 @@ public class ItemInfo {
                 } catch (NumberFormatException e) {
                     meta = -1;
                     item = Item.getByNameOrId(split[0] + ":" + split[1]);
-                } catch (NullPointerException e) {
-                    this.item = Items.AIR;
-                    this.meta = -1;
                 }
                 break;
             case 3:
@@ -71,14 +71,20 @@ public class ItemInfo {
                     item = Item.getByNameOrId(split[0] + ":" + split[1]);
                 } catch (NumberFormatException e) {
                     meta = -1;
-                } catch (NullPointerException e) {
-                    this.item = Items.AIR;
-                    this.meta = -1;
                 }
                 break;
             default:
                 item = Items.AIR;
                 meta = -1;
+        }
+
+        if (item == null){
+            this.item = Items.AIR;
+            this.meta = -1;
+        }
+        else {
+            this.item = item;
+            this.meta = meta;
         }
     }
 

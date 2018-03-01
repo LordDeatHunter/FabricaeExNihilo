@@ -50,35 +50,47 @@ public class BlockInfo {
         }
         String[] split = string.split(":");
 
+        Block block;
+        int meta = -1;
+
         switch (split.length) {
             case 1:
-                this.block = Block.getBlockFromName("minecraft:" + split[0]);
+                block = Block.getBlockFromName("minecraft:" + split[0]);
                 break;
             case 2:
                 try {
-                    this.meta = split[1].equals("*") ? -1 : Integer.parseInt(split[1]);
-                    this.block = Block.getBlockFromName("minecraft:" + split[0]);
+                    meta = split[1].equals("*") ? -1 : Integer.parseInt(split[1]);
+                    block = Block.getBlockFromName("minecraft:" + split[0]);
                 } catch (NumberFormatException e) {
-                    this.meta = -1;
-                    this.block = Block.getBlockFromName(split[0] + ":" + split[1]);
+                    meta = -1;
+                    block = Block.getBlockFromName(split[0] + ":" + split[1]);
                 } catch (NullPointerException e) {
-                    this.block = Blocks.AIR;
-                    this.meta = -1;
+                    block = Blocks.AIR;
+                    meta = -1;
                 }
                 break;
             case 3:
                 try {
-                    this.meta = split[2].equals("*") ? -1 : Integer.parseInt(split[2]);
-                    this.block = Block.getBlockFromName(split[0] + ":" + split[1]);
+                    meta = split[2].equals("*") ? -1 : Integer.parseInt(split[2]);
+                    block = Block.getBlockFromName(split[0] + ":" + split[1]);
                 } catch (NumberFormatException | NullPointerException e) {
-                    this.block = Blocks.AIR;
-                    this.meta = -1;
+                    block = Blocks.AIR;
+                    meta = -1;
                 }
                 break;
             default:
-                this.block = Blocks.AIR;
-                this.meta = -1;
+                block = Blocks.AIR;
+                meta = -1;
                 break;
+        }
+
+        if (block == null){
+            this.block = Blocks.AIR;
+            this.meta = -1;
+        }
+        else {
+            this.block = block;
+            this.meta = meta;
         }
     }
 
