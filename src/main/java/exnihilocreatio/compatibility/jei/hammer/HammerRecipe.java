@@ -22,8 +22,6 @@ public class HammerRecipe implements IRecipeWrapper {
         List<HammerReward> rewards = ExNihiloRegistryManager.HAMMER_REGISTRY.getRewards(ingredient);
         if (rewards.isEmpty())
             return;
-            List<ItemStack> allOutputs = Lists.newArrayList(rewards.stream().filter(reward -> reward != null && !reward.getStack().isEmpty()).map(reward -> reward.getStack().copy()).collect(Collectors.toList()));
-            //allOutputs.removeIf(stack -> stack == null || stack.getItem() == Items.AIR);
 
         List<ItemStack> allOutputs = rewards.stream().map(HammerReward::getStack).collect(Collectors.toList());
         inputs = Arrays.asList(ingredient.getMatchingStacks());

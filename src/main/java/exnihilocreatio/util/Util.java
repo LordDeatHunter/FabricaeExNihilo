@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -151,7 +152,7 @@ public class Util {
     }
 
     public static ItemStack getBucketStack(Fluid fluid) {
-        return UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, fluid);
+        return FluidUtil.getFilledBucket(new FluidStack(fluid, 1000));
     }
 
     public static boolean compareItemStack(ItemStack stack1, ItemStack stack2){

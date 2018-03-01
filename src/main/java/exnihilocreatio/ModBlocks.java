@@ -28,7 +28,6 @@ public class ModBlocks {
 
     public static final BlockCrucibleStone crucibleStone = new BlockCrucibleStone();
     public static final BlockCrucibleWood crucibleWood = new BlockCrucibleWood();
-    public static final BlockInfestingLeaves infestingLeaves;
 
     public static final BlockWaterwheel watermill = new BlockWaterwheel();
     public static final BlockStoneAxle axle_stone = new BlockStoneAxle();
@@ -42,7 +41,6 @@ public class ModBlocks {
         }
 
         GameRegistry.registerTileEntity(TileBarrel.class, "block_barrel");
-        infestingLeaves = new BlockInfestingLeaves();
         GameRegistry.registerTileEntity(TileInfestingLeaves.class, "block_infesting_leaves");
         //infestingLeaves.setCreativeTab(ExNihiloCreatio.tabExNihilo);
         GameRegistry.registerTileEntity(TileInfestedLeaves.class, "block_infested_leaves");

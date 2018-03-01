@@ -83,11 +83,10 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Sifta
         Ingredient search = registry.keySet().stream().filter(entry -> entry.getValidItemStacksPacked().equals(ingredient.getValidItemStacksPacked())).findAny().orElse(null);
         if (search != null){
             registry.get(search).add(drop);
-        }
-        else {
+        } else {
             NonNullList<Siftable> drops = NonNullList.create();
             drops.add(drop);
-        super.register(block, drops);
+            super.register(ingredient, drops);
         }
     }
 
