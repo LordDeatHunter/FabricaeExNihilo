@@ -6,6 +6,7 @@ import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -42,8 +43,8 @@ public class ItemInfo {
 
     public ItemInfo(@Nonnull String string) {
         if (string.isEmpty() || string.length() < 2) {
-            item = ItemStack.EMPTY.getItem();
-            meta = ItemStack.EMPTY.getMetadata();
+            item = Items.AIR;
+            meta = -1;
             return;
         }
         String[] split = string.split(":");
@@ -59,6 +60,9 @@ public class ItemInfo {
                 } catch (NumberFormatException e) {
                     meta = -1;
                     item = Item.getByNameOrId(split[0] + ":" + split[1]);
+                } catch (NullPointerException e) {
+                    this.item = Items.AIR;
+                    this.meta = -1;
                 }
                 break;
             case 3:
@@ -67,11 +71,14 @@ public class ItemInfo {
                     item = Item.getByNameOrId(split[0] + ":" + split[1]);
                 } catch (NumberFormatException e) {
                     meta = -1;
+                } catch (NullPointerException e) {
+                    this.item = Items.AIR;
+                    this.meta = -1;
                 }
                 break;
             default:
-                item = ItemStack.EMPTY.getItem();
-                meta = ItemStack.EMPTY.getMetadata();
+                item = Items.AIR;
+                meta = -1;
         }
     }
 
@@ -107,7 +114,7 @@ public class ItemInfo {
     }
 
     public boolean isValid() {
-        return meta <= Short.MAX_VALUE && item != ItemStack.EMPTY.getItem();
+        return item != Items.AIR && meta <= Short.MAX_VALUE;
     }
 
     public int hashCode() {

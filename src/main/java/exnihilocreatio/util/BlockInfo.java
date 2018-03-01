@@ -20,59 +20,64 @@ public class BlockInfo {
     public static final BlockInfo EMPTY = new BlockInfo(ItemStack.EMPTY);
 
     @Getter
+    @Nonnull
     private Block block;
 
     @Getter
     @Setter
     private int meta;
 
-    public BlockInfo(@Nonnull Block block1) {
-        block = block1;
-        meta = -1;
+    public BlockInfo(@Nonnull Block block) {
+        this.block = block;
+        this.meta = -1;
     }
 
     public BlockInfo(@Nonnull IBlockState state) {
-        block = state.getBlock();
-        meta = state.getBlock().getMetaFromState(state);
+        this.block = state.getBlock();
+        this.meta = state.getBlock().getMetaFromState(state);
     }
 
     public BlockInfo(@Nonnull ItemStack stack) {
-        block = !(stack.getItem() instanceof ItemBlock) ? Blocks.AIR : Block.getBlockFromItem(stack.getItem());
-        meta = stack.getItemDamage();
+        this.block = !(stack.getItem() instanceof ItemBlock) ? Blocks.AIR : Block.getBlockFromItem(stack.getItem());
+        this.meta = stack.getItemDamage();
     }
 
     public BlockInfo(@Nonnull String string) {
         if (string.isEmpty() || string.length() < 2) {
-            block = Blocks.AIR;
-            meta = 0;
+            this.block = Blocks.AIR;
+            this.meta = 0;
             return;
         }
         String[] split = string.split(":");
 
         switch (split.length) {
             case 1:
-                block = Block.getBlockFromName("minecraft:" + split[0]);
+                this.block = Block.getBlockFromName("minecraft:" + split[0]);
                 break;
             case 2:
                 try {
-                    meta = split[1].equals("*") ? -1 : Integer.parseInt(split[1]);
-                    block = Block.getBlockFromName("minecraft:" + split[0]);
+                    this.meta = split[1].equals("*") ? -1 : Integer.parseInt(split[1]);
+                    this.block = Block.getBlockFromName("minecraft:" + split[0]);
                 } catch (NumberFormatException e) {
-                    meta = -1;
-                    block = Block.getBlockFromName(split[0] + ":" + split[1]);
+                    this.meta = -1;
+                    this.block = Block.getBlockFromName(split[0] + ":" + split[1]);
+                } catch (NullPointerException e) {
+                    this.block = Blocks.AIR;
+                    this.meta = -1;
                 }
                 break;
             case 3:
                 try {
-                    meta = split[2].equals("*") ? -1 : Integer.parseInt(split[2]);
-                    block = Block.getBlockFromName(split[0] + ":" + split[1]);
-                } catch (NumberFormatException e) {
-                    meta = -1;
+                    this.meta = split[2].equals("*") ? -1 : Integer.parseInt(split[2]);
+                    this.block = Block.getBlockFromName(split[0] + ":" + split[1]);
+                } catch (NumberFormatException | NullPointerException e) {
+                    this.block = Blocks.AIR;
+                    this.meta = -1;
                 }
                 break;
             default:
-                block = Blocks.AIR;
-                meta = -1;
+                this.block = Blocks.AIR;
+                this.meta = -1;
                 break;
         }
     }
@@ -97,11 +102,11 @@ public class BlockInfo {
 
     @SuppressWarnings("deprecation")
     public IBlockState getBlockState() {
-        return block == null ? null : block.getStateFromMeta(meta == -1 ? 0 : meta);
+        return block.getStateFromMeta(meta == -1 ? 0 : meta);
     }
 
     public int hashCode() {
-        return block == null ? 37 : block.hashCode();
+        return block.hashCode();
     }
 
     public boolean equals(Object other) {
