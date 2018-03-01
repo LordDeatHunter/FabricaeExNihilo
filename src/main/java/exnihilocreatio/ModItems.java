@@ -9,6 +9,8 @@ import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
 import exnihilocreatio.util.IHasSpecialRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockPlanks;
+import net.minecraft.block.BlockSapling;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -43,12 +45,12 @@ public class ModItems {
     public static final ItemDoll dolls = new ItemDoll();
 
     public static final ArrayList<ItemSeedBase> itemSeeds = new ArrayList<>(Arrays.asList(
-            new ItemSeedBase("oak", Blocks.SAPLING.getStateFromMeta(0)),
-            new ItemSeedBase("spruce", Blocks.SAPLING.getStateFromMeta(1)),
-            new ItemSeedBase("birch", Blocks.SAPLING.getStateFromMeta(2)),
-            new ItemSeedBase("jungle", Blocks.SAPLING.getStateFromMeta(3)),
-            new ItemSeedBase("acacia", Blocks.SAPLING.getStateFromMeta(4)),
-            new ItemSeedBase("darkoak", Blocks.SAPLING.getStateFromMeta(5)),
+            new ItemSeedBase("oak", Blocks.SAPLING.getDefaultState().withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.OAK)),
+            new ItemSeedBase("spruce", Blocks.SAPLING.getDefaultState().withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.SPRUCE)),
+            new ItemSeedBase("birch", Blocks.SAPLING.getDefaultState().withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.BIRCH)),
+            new ItemSeedBase("jungle", Blocks.SAPLING.getDefaultState().withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.JUNGLE)),
+            new ItemSeedBase("acacia", Blocks.SAPLING.getDefaultState().withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.ACACIA)),
+            new ItemSeedBase("darkoak", Blocks.SAPLING.getDefaultState().withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.DARK_OAK)),
             new ItemSeedBase("cactus", Blocks.CACTUS.getDefaultState()).setPlantType(EnumPlantType.Desert),
             new ItemSeedBase("sugarcane", Blocks.REEDS.getDefaultState()).setPlantType(EnumPlantType.Beach),
             new ItemSeedBase("carrot", Blocks.CARROTS.getDefaultState()).setPlantType(EnumPlantType.Crop),
