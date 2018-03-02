@@ -38,7 +38,7 @@ public class BlockInfo {
     }
 
     public BlockInfo(@Nonnull ItemStack stack) {
-        this.block = !(stack.getItem() instanceof ItemBlock) ? Blocks.AIR : Block.getBlockFromItem(stack.getItem());
+        this.block = Block.getBlockFromItem(stack.getItem());
         this.meta = stack.getItemDamage();
     }
 
