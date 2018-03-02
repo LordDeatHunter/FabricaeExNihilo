@@ -42,6 +42,7 @@ public class ModBlocks {
 
         GameRegistry.registerTileEntity(TileBarrel.class, "block_barrel");
         GameRegistry.registerTileEntity(TileInfestingLeaves.class, "block_infesting_leaves");
+        //infestingLeaves.setCreativeTab(ExNihiloCreatio.tabExNihilo);
         GameRegistry.registerTileEntity(TileInfestedLeaves.class, "block_infested_leaves");
         GameRegistry.registerTileEntity(TileCrucibleStone.class, "block_crucible");
         GameRegistry.registerTileEntity(TileCrucibleWood.class, "block_crucible_wood");

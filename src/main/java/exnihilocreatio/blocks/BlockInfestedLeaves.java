@@ -25,7 +25,7 @@ import java.util.Random;
 
 public class BlockInfestedLeaves extends BlockInfestingLeaves {
 
-        public BlockInfestedLeaves(){
+    public BlockInfestedLeaves() {
         super(InfestedType.INFESTED);
         this.setUnlocalizedName("block_infested_leaves");
         this.setRegistryName("block_infested_leaves");

@@ -34,16 +34,11 @@ public class TileInfestingLeaves extends BaseTileEntity implements ITickable, IT
                     BlockInfestingLeaves.setInfested(world, pos, leafBlock);
                     markDirtyClient();
                 }
-                if (spreadCounter >= ModConfig.infested_leaves.leavesUpdateFrequency) {
-                    BlockInfestingLeaves.spread(world, pos, world.getBlockState(pos), world.rand);
-                    spreadCounter = 0;
-                }
 
                 if (spreadCounter >= ModConfig.infested_leaves.leavesUpdateFrequency) {
                     BlockInfestingLeaves.spread(world, pos, world.getBlockState(pos), world.rand);
                     spreadCounter = 0;
                 }
-
 
                 doProgress = (int) (ModConfig.infested_leaves.ticksToTransform / 100.0);
 
@@ -90,6 +85,7 @@ public class TileInfestingLeaves extends BaseTileEntity implements ITickable, IT
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
         progress = tag.getInteger("progress");
+
         if (tag.hasKey("leafBlock") && tag.hasKey("leafBlockMeta")) {
             try {
                 leafBlock = Block.getBlockFromName(tag.getString("leafBlock")).getStateFromMeta(tag.getInteger("leafBlockMeta"));

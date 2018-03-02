@@ -80,9 +80,11 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
 
         IFocus<?> focus = recipeLayout.getFocus();
 
+
         if (focus != null) {
             hasHighlight = focus.getMode() == IFocus.Mode.OUTPUT;
         }
+
 
         int slotIndex = 2;
         for (int i = 0; i < recipeWrapper.getOutputs().size(); i++) {
