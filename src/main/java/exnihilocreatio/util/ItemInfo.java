@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 
@@ -28,7 +29,12 @@ public class ItemInfo {
 
     public ItemInfo(@Nonnull Item item) {
         this.item = item;
-        meta = 0;
+        meta = -1;
+    }
+
+    public ItemInfo(@Nonnull Item item, int meta) {
+        this.item = item;
+        this.meta = meta;
     }
 
     public ItemInfo(@Nonnull ItemStack stack) {
@@ -98,10 +104,10 @@ public class ItemInfo {
     }
 
     public static ItemInfo readFromNBT(NBTTagCompound tag) {
-        Item item_ = Item.REGISTRY.getObject(new ResourceLocation(tag.getString("item")));
-        int meta_ = tag.getInteger("meta");
+        Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(tag.getString("item")));
+        int meta = tag.getInteger("meta");
 
-        return new ItemInfo(item_, meta_);
+        return item == null ? EMPTY : new ItemInfo(item, meta);
     }
 
     public String toString() {

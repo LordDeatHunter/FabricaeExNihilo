@@ -11,6 +11,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 
@@ -32,6 +33,11 @@ public class BlockInfo {
         this.meta = -1;
     }
 
+    public BlockInfo(@Nonnull Block block, int meta) {
+        this.block = block;
+        this.meta = meta;
+    }
+
     public BlockInfo(@Nonnull IBlockState state) {
         this.block = state.getBlock();
         this.meta = state.getBlock().getMetaFromState(state);
@@ -45,7 +51,7 @@ public class BlockInfo {
     public BlockInfo(@Nonnull String string) {
         if (string.isEmpty() || string.length() < 2) {
             this.block = Blocks.AIR;
-            this.meta = 0;
+            this.meta = -1;
             return;
         }
         String[] split = string.split(":");
@@ -95,10 +101,10 @@ public class BlockInfo {
     }
 
     public static BlockInfo readFromNBT(NBTTagCompound tag) {
-        Block item_ = Block.REGISTRY.getObject(new ResourceLocation(tag.getString("block")));
-        int meta_ = tag.getInteger("meta");
+        Block item = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(tag.getString("block")));
+        int meta = tag.getInteger("meta");
 
-        return new BlockInfo(item_, meta_);
+        return item == null ? EMPTY : new BlockInfo(item, meta);
     }
 
     public String toString() {
