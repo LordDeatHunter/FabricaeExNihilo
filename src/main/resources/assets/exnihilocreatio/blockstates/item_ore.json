@@ -11,7 +11,7 @@
           "layer0": "exnihilocreatio:items/ingot"
         }
       },
-      "hunk": {
+      "chunk": {
         "textures": {
           "layer0": "exnihilocreatio:items/orechunk",
           "layer1": "exnihilocreatio:items/orechunkoverlay"

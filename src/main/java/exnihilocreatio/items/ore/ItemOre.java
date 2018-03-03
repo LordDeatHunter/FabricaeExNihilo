@@ -57,7 +57,7 @@ public class ItemOre extends Item implements IHasModel, IHasSpecialRegistry {
     @SideOnly(Side.CLIENT)
     public void initModel(ModelRegistryEvent e) {
         ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation("exnihilocreatio:item_ore", "type=piece"));
-        ModelLoader.setCustomModelResourceLocation(this, 1, new ModelResourceLocation("exnihilocreatio:item_ore", "type=hunk"));
+        ModelLoader.setCustomModelResourceLocation(this, 1, new ModelResourceLocation("exnihilocreatio:item_ore", "type=chunk"));
         ModelLoader.setCustomModelResourceLocation(this, 2, new ModelResourceLocation("exnihilocreatio:item_ore", "type=dust"));
         if (registerIngot)
             ModelLoader.setCustomModelResourceLocation(this, 3, new ModelResourceLocation("exnihilocreatio:item_ore", "type=ingot"));
