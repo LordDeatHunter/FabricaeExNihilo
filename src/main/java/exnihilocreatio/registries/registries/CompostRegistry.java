@@ -5,14 +5,13 @@ import com.google.common.collect.Maps;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.barrel.compost.CompostRecipe;
+import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.Compostable;
 import exnihilocreatio.texturing.Color;
-import exnihilocreatio.util.BlockInfo;
-import exnihilocreatio.util.ItemInfo;
-import exnihilocreatio.util.LogUtil;
+import exnihilocreatio.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -48,6 +47,9 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
                 new GsonBuilder()
                         .setPrettyPrinting()
                         .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
+                        .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
+                        .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
+                        .enableComplexMapKeySerialization()
                         .create(),
                 ExNihiloRegistryManager.COMPOST_DEFAULT_REGISTRY_PROVIDERS
         );
@@ -88,8 +90,8 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
     }
 
     public void register(String name, float value, IBlockState state, Color color) {
-        Ingredient ingredient = CraftingHelper.getIngredient(name);
-        if (ingredient == null || ingredient.getMatchingStacks().length == 0)
+        Ingredient ingredient = new OreIngredientStoring(name);
+        if (ingredient.getMatchingStacks().length == 0)
             return;
 
         Compostable compostable = new Compostable(value, color, new ItemInfo(state));
@@ -173,10 +175,12 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
         }.getType());
 
         for (Map.Entry<String, Compostable> entry : gsonInput.entrySet()) {
-            ItemInfo item = new ItemInfo(entry.getKey());
-            if (registry.keySet().stream().anyMatch(ingredient -> ingredient.test(item.getItemStack())))
-                LogUtil.error("Compost JSON Entry for " + item.getItemStack().getDisplayName() + " already exists, skipping.");
-            else registry.put(CraftingHelper.getIngredient(item.getItemStack()), entry.getValue());
+            Ingredient ingr = IngredientUtil.parseFromString(entry.getKey());
+
+            if (registry.keySet().stream().anyMatch(ingredient -> IngredientUtil.ingredientEquals(ingredient, ingr)))
+                LogUtil.error("Compost JSON Entry for " + entry.getKey() + " already exists, skipping.");
+            else
+                register(ingr, entry.getValue());
         }
     }
 

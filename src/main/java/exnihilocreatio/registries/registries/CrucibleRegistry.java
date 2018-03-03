@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.crucible.CrucibleRecipe;
 import exnihilocreatio.json.CustomBlockInfoJson;
+import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.IDefaultRecipeProvider;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
@@ -12,6 +13,7 @@ import exnihilocreatio.registries.types.Meltable;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.LogUtil;
+import exnihilocreatio.util.OreIngredientStoring;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -36,6 +38,9 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
                         .setPrettyPrinting()
                         .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
                         .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
+                        .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
+                        .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
+                        .enableComplexMapKeySerialization()
                         .create(),
                 defaultRecipeProviders
         );
@@ -73,8 +78,8 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
     }
 
     public void register(String name, Meltable meltable) {
-        Ingredient ingredient = CraftingHelper.getIngredient(name);
-        if (ingredient == null || ingredient.getMatchingStacks().length == 0 || !FluidRegistry.isFluidRegistered(meltable.getFluid()))
+        Ingredient ingredient = new OreIngredientStoring(name);
+        if (ingredient.getMatchingStacks().length == 0 || !FluidRegistry.isFluidRegistered(meltable.getFluid()))
             return;
 
         if (oreRegistry.keySet().stream().anyMatch(entry -> entry.getValidItemStacksPacked().equals(ingredient.getValidItemStacksPacked())))

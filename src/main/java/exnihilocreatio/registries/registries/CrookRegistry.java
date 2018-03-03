@@ -4,11 +4,13 @@ import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.json.CustomBlockInfoJson;
+import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.json.CustomItemStackJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.CrookReward;
 import exnihilocreatio.util.BlockInfo;
+import exnihilocreatio.util.OreIngredientStoring;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -28,6 +30,9 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
                         .setPrettyPrinting()
                         .registerTypeAdapter(ItemStack.class, new CustomItemStackJson())
                         .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
+                        .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
+                        .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
+                        .enableComplexMapKeySerialization()
                         .create(),
                 ExNihiloRegistryManager.CROOK_DEFAULT_REGISTRY_PROVIDERS
         );
@@ -50,8 +55,8 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
     }
 
     public void register(String name, ItemStack reward, float chance, float fortuneChance) {
-        Ingredient ingredient = CraftingHelper.getIngredient(name);
-        if (ingredient == null || ingredient.getMatchingStacks().length == 0)
+        Ingredient ingredient = new OreIngredientStoring(name);
+        if (ingredient.getMatchingStacks().length == 0)
             return;
         CrookReward crookReward = new CrookReward(reward, chance, fortuneChance);
         Ingredient search = registry.keySet().stream().filter(entry -> entry.getValidItemStacksPacked().equals(ingredient.getValidItemStacksPacked())).findAny().orElse(null);

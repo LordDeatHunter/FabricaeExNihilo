@@ -4,11 +4,13 @@ import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.hammer.HammerRecipe;
+import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.json.CustomItemStackJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.HammerReward;
 import exnihilocreatio.util.BlockInfo;
+import exnihilocreatio.util.OreIngredientStoring;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -26,6 +28,9 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
                 new GsonBuilder()
                         .setPrettyPrinting()
                         .registerTypeAdapter(ItemStack.class, new CustomItemStackJson())
+                        .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
+                        .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
+                        .enableComplexMapKeySerialization()
                         .create(),
                 ExNihiloRegistryManager.HAMMER_DEFAULT_REGISTRY_PROVIDERS
         );
@@ -79,8 +84,8 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
     }
 
     public void register(String name, ItemStack reward, int miningLevel, float chance, float fortuneChance) {
-        Ingredient ingredient = CraftingHelper.getIngredient(name);
-        if (ingredient == null || ingredient.getMatchingStacks().length == 0)
+        Ingredient ingredient = new OreIngredientStoring(name);
+        if (ingredient.getMatchingStacks().length == 0)
             return;
         register(ingredient, new HammerReward(reward, miningLevel, chance, fortuneChance));
     }

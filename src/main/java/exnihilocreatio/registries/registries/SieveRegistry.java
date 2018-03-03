@@ -1,19 +1,23 @@
 package exnihilocreatio.registries.registries;
 
 import com.google.common.collect.Lists;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.blocks.BlockSieve;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipe;
 import exnihilocreatio.json.CustomBlockInfoJson;
+import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.Siftable;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
+import exnihilocreatio.util.OreIngredientStoring;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -23,6 +27,7 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.io.FileReader;
+import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -34,6 +39,9 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Sifta
                         .setPrettyPrinting()
                         .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
                         .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
+                        .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
+                        .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
+                        .enableComplexMapKeySerialization()
                         .create(),
                 ExNihiloRegistryManager.SIEVE_DEFAULT_REGISTRY_PROVIDERS
         );
@@ -72,7 +80,7 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Sifta
     }
 
     public void register(String name, ItemInfo drop, float chance, int meshLevel) {
-        register(CraftingHelper.getIngredient(name), new Siftable(drop, chance, meshLevel));
+        register(new OreIngredientStoring(name), new Siftable(drop, chance, meshLevel));
     }
 
     public void register(Ingredient ingredient, Siftable drop) {
@@ -151,16 +159,16 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Sifta
 
     @Override
     public void registerEntriesFromJSON(FileReader fr) {
-        HashMap<String, ArrayList<Siftable>> gsonInput = gson.fromJson(fr, new TypeToken<HashMap<String, ArrayList<Siftable>>>() {
+        HashMap<Ingredient, ArrayList<Siftable>> gsonInput = gson.fromJson(fr, new TypeToken<HashMap<Ingredient, ArrayList<Siftable>>>() {
         }.getType());
 
-        for (Map.Entry<String, ArrayList<Siftable>> input : gsonInput.entrySet()) {
-            Ingredient block = CraftingHelper.getIngredient(input.getKey());
+        for (Map.Entry<Ingredient, ArrayList<Siftable>> input : gsonInput.entrySet()) {
+            Ingredient key = input.getKey();
 
-            if (block != null) {
+            if (key != null && key != Ingredient.EMPTY && key.getMatchingStacks().length > 0) {
                 for (Siftable siftable : input.getValue()) {
                     if (siftable.getDrop().isValid()) {
-                        register(block, siftable);
+                        register(key, siftable);
                     }
                 }
             }
