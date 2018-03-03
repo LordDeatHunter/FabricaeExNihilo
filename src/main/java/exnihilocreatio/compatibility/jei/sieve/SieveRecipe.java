@@ -29,7 +29,11 @@ public class SieveRecipe implements IRecipeWrapper {
         if (rewards.isEmpty())
             return;
 
-        List<ItemStack> allOutputs = rewards.stream().filter(reward -> reward.getMeshLevel() == mesh.getID()).map(reward -> reward.getDrop().getItemStack()).collect(Collectors.toList());
+        List<ItemStack> allOutputs = rewards.stream()
+                .filter(reward -> reward.getMeshLevel() == mesh.getID())
+                .map(reward -> reward.getDrop().getItemStack())
+                .collect(Collectors.toList());
+
         // Make sure no null rewards, Item or ItemStack
         //allOutputs.removeIf(stack -> stack == ItemStack.EMPTY);
 

@@ -33,6 +33,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -192,44 +193,46 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
         return map;
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public List<CompostRecipe> getRecipeList() {
-        List<CompostRecipe> compostRecipes = Lists.newLinkedList();
+        List<CompostRecipe> compostRecipePages = new ArrayList<>();
 
         getRegistry().forEach((key, value) -> {
             ItemInfo compostBlock = value.getCompostBlock();
-            List<ItemStack> compostables = Lists.newLinkedList();
+
+            List<ItemStack> compostables = new ArrayList<>();
             int compostCount = (int) Math.ceil(1.0F / value.getValue());
-            Stream.of(key.getMatchingStacks()).forEach(stack -> {
+
+            for (ItemStack stack : key.getMatchingStacks()) {
                 if (compostables.stream().noneMatch(stack::isItemEqual)) {
                     ItemStack copy = stack.copy();
                     copy.setCount(compostCount);
                     compostables.add(copy);
                 }
-            });
+            }
 
-            CompostRecipe recipe = compostRecipes.stream()
+            CompostRecipe recipe = compostRecipePages.stream()
                     .filter(compostRecipe -> compostRecipe.outputMatch(compostBlock.getItemStack())
                             && compostRecipe.isNonFull())
                     .findFirst()
                     .orElse(null);
+
             if (recipe == null) {
-                recipe = new CompostRecipe(compostBlock, Lists.newLinkedList());
-                compostRecipes.add(recipe);
+                recipe = new CompostRecipe(compostBlock, new ArrayList<>());
+                compostRecipePages.add(recipe);
             }
 
             //This acts as a safety net, auto creating new recipes if the input list is larger than 45
-            for (ItemStack stack : compostables) {
-                if (recipe.isNonFull()) {
-                    recipe.getInputs().add(stack);
-                } else {
-                    recipe = new CompostRecipe(compostBlock, Lists.newLinkedList());
-                    recipe.getInputs().add(stack);
-                    compostRecipes.add(recipe);
-                }
+            if (recipe.isNonFull()) {
+                recipe.getInputs().add(compostables);
+            } else {
+                recipe = new CompostRecipe(compostBlock, Lists.newLinkedList());
+                recipe.getInputs().add(compostables);
+                compostRecipePages.add(recipe);
             }
         });
 
-        return compostRecipes;
+        return compostRecipePages;
     }
 }
