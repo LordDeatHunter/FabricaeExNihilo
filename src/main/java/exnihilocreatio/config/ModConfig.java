@@ -23,6 +23,7 @@ public class ModConfig {
     public static final Compatibility compatibility = new Compatibility();
     public static final Crucible crucible = new Crucible();
     public static final World world = new World();
+    public static final Ore ore = new Ore();
 
     /**
      * All Config Classes
@@ -103,6 +104,13 @@ public class ModConfig {
     public static class World {
         public boolean isSkyWorld = true;
         public int normalDropPercent = 100;
+    }
+
+    public static class Ore {
+        public String chunkBaseOreDictName = "ore";
+        public String pieceBaseOreDictName = "piece";
+        public String dustBaseOreDictName  = "dust";
+        public String ingotBaseOreDictName = "ingot";
     }
 
     /**

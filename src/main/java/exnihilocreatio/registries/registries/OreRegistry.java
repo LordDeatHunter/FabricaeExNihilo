@@ -150,7 +150,8 @@ public class OreRegistry extends BaseRegistryList<Ore> {
         };
         for (ItemOre ore : itemOreRegistry) {
             ModelLoader.setCustomMeshDefinition(ore, ORES);
-            ModelBakery.registerItemVariants(ore, new ModelResourceLocation("exnihilocreatio:itemOre", "type=piece"),
+            ModelBakery.registerItemVariants(ore,
+                    new ModelResourceLocation("exnihilocreatio:item_ore", "type=piece"),
                     new ModelResourceLocation("exnihilocreatio:item_ore", "type=chunk"),
                     new ModelResourceLocation("exnihilocreatio:item_ore", "type=dust"),
                     new ModelResourceLocation("exnihilocreatio:item_ore", "type=ingot"));
@@ -159,17 +160,20 @@ public class OreRegistry extends BaseRegistryList<Ore> {
     }
 
     public void registerToGameRegistry(IForgeRegistry<Item> itemRegistry) {
+
+        String bChunk = ModConfig.ore.chunkBaseOreDictName, bDust = ModConfig.ore.dustBaseOreDictName, bPiece = ModConfig.ore.pieceBaseOreDictName, bIngot = ModConfig.ore.ingotBaseOreDictName;
+
         for (ItemOre itemOre : itemOreRegistry) {
             itemRegistry.register(itemOre);
 
             String oreName = itemOre.getOre().getOredictName() != null ? itemOre.getOre().getOredictName() : StringUtils.capitalize(itemOre.getOre().getName());
 
-            OreDictionary.registerOre("ore" + oreName, new ItemStack(itemOre, 1, EnumOreSubtype.CHUNK.getMeta()));
-            OreDictionary.registerOre("dust" + oreName, new ItemStack(itemOre, 1, EnumOreSubtype.DUST.getMeta()));
-            OreDictionary.registerOre("piece" + oreName, new ItemStack(itemOre, 1, EnumOreSubtype.PIECE.getMeta()));
+            OreDictionary.registerOre(bChunk + oreName, new ItemStack(itemOre, 1, EnumOreSubtype.CHUNK.getMeta()));
+            OreDictionary.registerOre(bDust + oreName, new ItemStack(itemOre, 1, EnumOreSubtype.DUST.getMeta()));
+            OreDictionary.registerOre(bPiece + oreName, new ItemStack(itemOre, 1, EnumOreSubtype.PIECE.getMeta()));
 
             if (itemOre.isRegisterIngot())
-                OreDictionary.registerOre("ingot" + StringUtils.capitalize(itemOre.getOre().getName()), new ItemStack(itemOre, 1, EnumOreSubtype.INGOT.getMeta()));
+                OreDictionary.registerOre(bIngot + oreName, new ItemStack(itemOre, 1, EnumOreSubtype.INGOT.getMeta()));
         }
     }
 
