@@ -108,10 +108,6 @@ public class OreRegistry extends BaseRegistryList<Ore> {
                 UniDict.getConfig().recipesToIgnore.add(recipeLocation);
             }
 
-            if (ModConfig.compatibility.preventUnidict && Loader.isModLoaded("unidict")) {
-                UniDict.getConfig().recipesToIgnore.add(recipeLocation);
-            }
-
             ItemStack smeltingResult;
 
             if (ore.isRegisterIngot()) {
