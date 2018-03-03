@@ -33,11 +33,6 @@ public class BlockInfo {
         this.meta = -1;
     }
 
-    public BlockInfo(@Nonnull Block block, int meta) {
-        this.block = block;
-        this.meta = meta;
-    }
-
     public BlockInfo(@Nonnull IBlockState state) {
         this.block = state.getBlock();
         this.meta = state.getBlock().getMetaFromState(state);

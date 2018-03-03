@@ -32,11 +32,6 @@ public class ItemInfo {
         meta = -1;
     }
 
-    public ItemInfo(@Nonnull Item item, int meta) {
-        this.item = item;
-        this.meta = meta;
-    }
-
     public ItemInfo(@Nonnull ItemStack stack) {
         item = stack.getItem();
         meta = stack.getMetadata();
