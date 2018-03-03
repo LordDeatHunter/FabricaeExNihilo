@@ -64,8 +64,9 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
         }
     }
 
-    private void setRecipe(IRecipeLayout layout, CompostRecipe recipe) {
-        // BlockStoneAxle
+/*
+    @Override
+    public void setRecipe(@Nonnull IRecipeLayout layout, @Nonnull CompostRecipe recipe, @Nonnull IIngredients ingredients) {
         layout.getItemStacks().init(0, false, 74, 9);
         layout.getItemStacks().set(0, recipe.getOutputs().get(0));
 
@@ -99,11 +100,14 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
                 hasHighlight = true;
                 mightHaveHighlight = false;
             }
+
         }
 
-
         layout.getItemStacks().addTooltipCallback(new CompostTooltipCallback());
+
     }
+*/
+
 
     @Override
     public void setRecipe(@Nonnull IRecipeLayout layout, @Nonnull CompostRecipe recipe, @Nonnull IIngredients ingredients) {
@@ -121,6 +125,7 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
 
             focusStack = (ItemStack) focus.getValue();
         }
+        final ItemStack finalFocus = focusStack;
 
         int slotIndex = 1;
 
@@ -128,12 +133,12 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
             final int slotX = 2 + (i % 9 * 18);
             final int slotY = 36 + (i / 9 * 18);
 
-            ItemStack inputStack = recipe.getInputs().get(i);
+            List<ItemStack> inputStack = recipe.getInputs().get(i);
 
             layout.getItemStacks().init(slotIndex + i, true, slotX, slotY);
             layout.getItemStacks().set(slotIndex + i, inputStack);
 
-            if (focus != null && mightHaveHighlight && ItemStack.areItemsEqual(focusStack, inputStack)) {
+            if (focus != null && mightHaveHighlight && inputStack.stream().anyMatch(item -> ItemStack.areItemsEqual(finalFocus, item))) {
                 highlightX = slotX;
                 highlightY = slotY;
 

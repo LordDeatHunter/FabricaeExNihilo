@@ -9,24 +9,25 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.Collections;
 import java.util.List;
 
 public class CompostRecipe implements IRecipeWrapper {
-    private final List<ItemStack> inputs;
+    private final List<List<ItemStack>> inputs;
     private final List<ItemStack> output;
 
-    public CompostRecipe(ItemInfo output, List<ItemStack> inputs) {
+    public CompostRecipe(ItemInfo output, List<List<ItemStack>> inputs) {
         this.inputs = inputs;
-        this.output = ImmutableList.of(output.getItemStack());
+        this.output = Collections.singletonList(output.getItemStack());
     }
 
     @Override
     public void getIngredients(@Nonnull IIngredients ingredients) {
-        ingredients.setInputs(ItemStack.class, inputs);
+        ingredients.setInputLists(ItemStack.class, inputs);
         ingredients.setOutput(ItemStack.class, output);
     }
 
-    public List<ItemStack> getInputs() {
+    public List<List<ItemStack>> getInputs() {
         return inputs;
     }
 

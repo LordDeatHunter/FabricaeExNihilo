@@ -177,7 +177,7 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Sifta
 
     @Override
     public List<SieveRecipe> getRecipeList() {
-        List<SieveRecipe> sieveRecipes = Lists.newLinkedList();
+        List<SieveRecipe> sieveRecipes = new ArrayList<>();
 
         getRegistry().keySet().forEach(ingredient -> Stream.of(BlockSieve.MeshType.values()).forEach(meshType -> {
             if (meshType.getID() != 0 && ingredient != null) {

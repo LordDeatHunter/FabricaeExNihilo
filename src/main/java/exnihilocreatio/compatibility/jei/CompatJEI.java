@@ -81,7 +81,7 @@ public class CompatJEI implements IModPlugin {
         registry.addRecipes(compostRecipes, CompostRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelWood), CompostRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelStone), CompostRecipeCategory.UID);
-        LogUtil.info("JEI: Compost Recipes Loaded:            " + compostRecipes.size());
+        LogUtil.info("JEI: Compost Recipe Pages Loaded:         " + compostRecipes.size());
     }
 
 
