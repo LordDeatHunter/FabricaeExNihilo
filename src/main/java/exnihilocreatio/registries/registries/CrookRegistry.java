@@ -86,7 +86,7 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
         HashMap<String, NonNullList<CrookReward>> gsonInput = gson.fromJson(fr, new TypeToken<HashMap<String, NonNullList<CrookReward>>>() {
         }.getType());
 
-        gsonInput.forEach((key, value) -> {
+        gsonInput.forEach((key, value) -> { // TODO: Parse into Ingredient/respect "ore:syntax"
             BlockInfo blockInfo = new BlockInfo(key);
             Ingredient ingredient = registry.keySet().stream().filter(entry -> entry.test(blockInfo.getItemStack())).findFirst().orElse(null);
 

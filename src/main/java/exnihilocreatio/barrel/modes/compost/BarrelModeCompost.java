@@ -57,6 +57,8 @@ public class BarrelModeCompost implements IBarrelMode {
     @SuppressWarnings("deprecation")
     @Override
     public void onBlockActivated(World world, TileBarrel barrel, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+
+
         if (fillAmount == 0) {
             if (!player.getHeldItem(hand).isEmpty()) {
                 ItemInfo info = ItemInfo.getItemInfoFromStack(player.getHeldItem(hand));
@@ -80,11 +82,15 @@ public class BarrelModeCompost implements IBarrelMode {
 
                 if (ExNihiloRegistryManager.COMPOST_REGISTRY.containsItem(info) && compostState.equals(testState)) {
                     Compostable compost = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(info);
+                    Color compColor = compost.getColor();
+                    if (compColor.equals(Color.INVALID_COLOR)) {
+                        compColor = new Color(Minecraft.getMinecraft().getItemColors().colorMultiplier(player.getHeldItemMainhand(), 0));
+                    }
 
                     if (fillAmount == 0)
-                        color = compost.getColor();
+                        color = compColor;
                     else
-                        color = Color.average(color, compost.getColor(), compost.getValue());
+                        color = Color.average(color, compColor, compost.getValue());
 
                     fillAmount += compost.getValue();
                     if (fillAmount > 1)

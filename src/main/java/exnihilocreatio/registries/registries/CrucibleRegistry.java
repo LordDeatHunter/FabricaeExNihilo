@@ -120,7 +120,7 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
         Map<String, Meltable> gsonInput = gson.fromJson(fr, new TypeToken<Map<String, Meltable>>() {
         }.getType());
 
-        gsonInput.forEach((key, value) -> {
+        gsonInput.forEach((key, value) -> { // TODO: Parse into Ingredient/respect "ore:syntax"
             ItemInfo item = new ItemInfo(key);
             if (registry.keySet().stream().anyMatch(ingredient -> ingredient.test(item.getItemStack())))
                 LogUtil.error("Compost JSON Entry for " + item.getItemStack().getDisplayName() + " already exists, skipping.");

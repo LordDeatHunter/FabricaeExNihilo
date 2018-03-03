@@ -1,6 +1,9 @@
 package exnihilocreatio.texturing;
 
+import java.util.Objects;
+
 public class Color {
+    public static final Color INVALID_COLOR = new Color(-1, -1, -1, -1);
 
     public final float r;
     public final float g;
@@ -60,4 +63,20 @@ public class Color {
         return color;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Color color = (Color) o;
+        return Float.compare(color.r, r) == 0 &&
+                Float.compare(color.g, g) == 0 &&
+                Float.compare(color.b, b) == 0 &&
+                Float.compare(color.a, a) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(r, g, b, a);
+    }
 }
