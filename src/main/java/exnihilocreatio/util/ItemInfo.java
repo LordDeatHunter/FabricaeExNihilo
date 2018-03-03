@@ -6,10 +6,12 @@ import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 
@@ -27,7 +29,7 @@ public class ItemInfo {
 
     public ItemInfo(@Nonnull Item item) {
         this.item = item;
-        meta = 0;
+        meta = -1;
     }
 
     public ItemInfo(@Nonnull ItemStack stack) {
@@ -42,11 +44,14 @@ public class ItemInfo {
 
     public ItemInfo(@Nonnull String string) {
         if (string.isEmpty() || string.length() < 2) {
-            item = ItemStack.EMPTY.getItem();
-            meta = ItemStack.EMPTY.getMetadata();
+            item = Items.AIR;
+            meta = -1;
             return;
         }
         String[] split = string.split(":");
+
+        Item item = null;
+        int meta = -1;
 
         switch (split.length) {
             case 1:
@@ -70,8 +75,17 @@ public class ItemInfo {
                 }
                 break;
             default:
-                item = ItemStack.EMPTY.getItem();
-                meta = ItemStack.EMPTY.getMetadata();
+                item = Items.AIR;
+                meta = -1;
+        }
+
+        if (item == null){
+            this.item = Items.AIR;
+            this.meta = -1;
+        }
+        else {
+            this.item = item;
+            this.meta = meta;
         }
     }
 
@@ -85,10 +99,10 @@ public class ItemInfo {
     }
 
     public static ItemInfo readFromNBT(NBTTagCompound tag) {
-        Item item_ = Item.REGISTRY.getObject(new ResourceLocation(tag.getString("item")));
-        int meta_ = tag.getInteger("meta");
+        Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(tag.getString("item")));
+        int meta = tag.getInteger("meta");
 
-        return new ItemInfo(item_, meta_);
+        return item == null ? EMPTY : new ItemInfo(item, meta);
     }
 
     public String toString() {
@@ -107,7 +121,7 @@ public class ItemInfo {
     }
 
     public boolean isValid() {
-        return meta <= Short.MAX_VALUE && item != ItemStack.EMPTY.getItem();
+        return item != Items.AIR && meta <= Short.MAX_VALUE;
     }
 
     public int hashCode() {

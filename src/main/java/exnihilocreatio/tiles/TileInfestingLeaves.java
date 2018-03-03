@@ -40,7 +40,6 @@ public class TileInfestingLeaves extends BaseTileEntity implements ITickable, IT
                     spreadCounter = 0;
                 }
 
-
                 doProgress = (int) (ModConfig.infested_leaves.ticksToTransform / 100.0);
 
                 //Send packet at the end incase the block gets changed first.

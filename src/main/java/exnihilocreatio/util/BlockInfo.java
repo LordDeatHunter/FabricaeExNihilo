@@ -11,6 +11,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 
@@ -20,34 +21,38 @@ public class BlockInfo {
     public static final BlockInfo EMPTY = new BlockInfo(ItemStack.EMPTY);
 
     @Getter
+    @Nonnull
     private Block block;
 
     @Getter
     @Setter
     private int meta;
 
-    public BlockInfo(@Nonnull Block block1) {
-        block = block1;
-        meta = -1;
+    public BlockInfo(@Nonnull Block block) {
+        this.block = block;
+        this.meta = -1;
     }
 
     public BlockInfo(@Nonnull IBlockState state) {
-        block = state.getBlock();
-        meta = state.getBlock().getMetaFromState(state);
+        this.block = state.getBlock();
+        this.meta = state.getBlock().getMetaFromState(state);
     }
 
     public BlockInfo(@Nonnull ItemStack stack) {
-        block = !(stack.getItem() instanceof ItemBlock) ? Blocks.AIR : Block.getBlockFromItem(stack.getItem());
-        meta = stack.getItemDamage();
+        this.block = Block.getBlockFromItem(stack.getItem());
+        this.meta = stack.getItemDamage();
     }
 
     public BlockInfo(@Nonnull String string) {
         if (string.isEmpty() || string.length() < 2) {
-            block = Blocks.AIR;
-            meta = 0;
+            this.block = Blocks.AIR;
+            this.meta = -1;
             return;
         }
         String[] split = string.split(":");
+
+        Block block;
+        int meta = -1;
 
         switch (split.length) {
             case 1:
@@ -60,13 +65,17 @@ public class BlockInfo {
                 } catch (NumberFormatException e) {
                     meta = -1;
                     block = Block.getBlockFromName(split[0] + ":" + split[1]);
+                } catch (NullPointerException e) {
+                    block = Blocks.AIR;
+                    meta = -1;
                 }
                 break;
             case 3:
                 try {
                     meta = split[2].equals("*") ? -1 : Integer.parseInt(split[2]);
                     block = Block.getBlockFromName(split[0] + ":" + split[1]);
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException | NullPointerException e) {
+                    block = Blocks.AIR;
                     meta = -1;
                 }
                 break;
@@ -75,13 +84,22 @@ public class BlockInfo {
                 meta = -1;
                 break;
         }
+
+        if (block == null){
+            this.block = Blocks.AIR;
+            this.meta = -1;
+        }
+        else {
+            this.block = block;
+            this.meta = meta;
+        }
     }
 
     public static BlockInfo readFromNBT(NBTTagCompound tag) {
-        Block item_ = Block.REGISTRY.getObject(new ResourceLocation(tag.getString("block")));
-        int meta_ = tag.getInteger("meta");
+        Block item = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(tag.getString("block")));
+        int meta = tag.getInteger("meta");
 
-        return new BlockInfo(item_, meta_);
+        return item == null ? EMPTY : new BlockInfo(item, meta);
     }
 
     public String toString() {
@@ -97,11 +115,11 @@ public class BlockInfo {
 
     @SuppressWarnings("deprecation")
     public IBlockState getBlockState() {
-        return block == null ? null : block.getStateFromMeta(meta == -1 ? 0 : meta);
+        return block.getStateFromMeta(meta == -1 ? 0 : meta);
     }
 
     public int hashCode() {
-        return block == null ? 37 : block.hashCode();
+        return block.hashCode();
     }
 
     public boolean equals(Object other) {
