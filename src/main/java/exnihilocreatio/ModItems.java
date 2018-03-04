@@ -13,6 +13,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -85,13 +86,17 @@ public class ModItems {
 
         if (ModConfig.misc.oredictVanillaItems){
             // Flowers:
-            OreDictionary.registerOre("flower", new ItemStack(Blocks.YELLOW_FLOWER, 1, 0));
-            for (int i = 0; i <= 8; i++)
-                OreDictionary.registerOre("flower", new ItemStack(Blocks.RED_FLOWER, 1, i));
-            for (int i = 0; i <= 5; i++)
-                OreDictionary.registerOre("flower", new ItemStack(Blocks.DOUBLE_PLANT, 1, i));
+            OreDictionary.registerOre("flower", new ItemStack(Blocks.RED_FLOWER, 1, OreDictionary.WILDCARD_VALUE));
+            OreDictionary.registerOre("flower", new ItemStack(Blocks.DOUBLE_PLANT, 1, OreDictionary.WILDCARD_VALUE));
+            OreDictionary.registerOre("flower", new ItemStack(Blocks.YELLOW_FLOWER, 1, OreDictionary.WILDCARD_VALUE));
 
-
+            // Meat:
+            OreDictionary.registerOre("listAllmeatcooked", Items.COOKED_BEEF);
+            OreDictionary.registerOre("listAllmeatcooked", Items.COOKED_CHICKEN);
+            OreDictionary.registerOre("listAllmeatcooked", new ItemStack(Items.COOKED_FISH, 1, OreDictionary.WILDCARD_VALUE));
+            OreDictionary.registerOre("listAllmeatcooked", Items.COOKED_PORKCHOP);
+            OreDictionary.registerOre("listAllmeatcooked", Items.COOKED_MUTTON);
+            OreDictionary.registerOre("listAllmeatcooked", Items.COOKED_RABBIT);
 
         }
     }
