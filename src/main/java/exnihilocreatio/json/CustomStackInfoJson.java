@@ -1,25 +1,26 @@
 package exnihilocreatio.json;
 
 import com.google.gson.*;
+import exnihilocreatio.util.IStackInfo;
 import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.LogUtil;
 import net.minecraft.item.Item;
 
 import java.lang.reflect.Type;
 
-public class CustomItemInfoJson implements JsonDeserializer<ItemInfo>, JsonSerializer<ItemInfo> {
+public class CustomStackInfoJson implements JsonDeserializer<IStackInfo>, JsonSerializer<IStackInfo> {
     @Override
-    public JsonElement serialize(ItemInfo src, Type typeOfSrc, JsonSerializationContext context) {
+    public JsonElement serialize(IStackInfo src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject obj = new JsonObject();
 
-        obj.addProperty("name", src.getItem().getRegistryName() == null ? "" : src.getItem().getRegistryName().toString());
-        obj.addProperty("meta", src.getMeta());
+        obj.addProperty("name", src.getItemStack().getItem().getRegistryName() == null ? "" : src.getItemStack().getItem().getRegistryName().toString());
+        obj.addProperty("meta", src.getItemStack().getMetadata());
 
         return obj;
     }
 
     @Override
-    public ItemInfo deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public IStackInfo deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonHelper helper = new JsonHelper(json);
 
         String name = helper.getString("name");

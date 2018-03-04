@@ -2,7 +2,7 @@ package exnihilocreatio.compatibility.jei.crucible;
 
 import exnihilocreatio.ModBlocks;
 import exnihilocreatio.blocks.BlockCrucibleStone;
-import exnihilocreatio.util.BlockInfo;
+import exnihilocreatio.util.IStackInfo;
 import exnihilocreatio.util.RenderTickCounter;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
@@ -33,17 +33,17 @@ import java.util.List;
 // Credit goes to >>>> https://github.com/thraaawn/CompactMachines/blob/1.12.1/src/main/java/org/dave/compactmachines3/jei/MultiblockRecipeWrapper.java
 public class HeatSourcesRecipe implements IRecipeWrapper {
     private final List<ItemStack> inputs;
-    private final BlockInfo blockInfo;
+    private final IStackInfo stackInfo;
     private final String heatAmountString;
 
-    public HeatSourcesRecipe(BlockInfo blockInfo, int heatAmount) {
-        this.blockInfo = blockInfo;
+    public HeatSourcesRecipe(IStackInfo stackInfo, int heatAmount) {
+        this.stackInfo = stackInfo;
 
 
-        ItemStack item = blockInfo.getItemStack();
+        ItemStack item = stackInfo.getItemStack();
         if (item.isEmpty()) {
             Fluid fluid = null;
-            Block block = blockInfo.getBlock();
+            Block block = Block.getBlockFromItem(item.getItem());
             if (block instanceof IFluidBlock) {
                 fluid = ((IFluidBlock) block).getFluid();
             }
@@ -138,7 +138,7 @@ public class HeatSourcesRecipe implements IRecipeWrapper {
         GlStateManager.enableCull();
 
         IBlockState crucible = ModBlocks.crucibleStone.getDefaultState().withProperty(BlockCrucibleStone.FIRED, true);
-        IBlockState state = blockInfo.getBlock().getDefaultState();
+        IBlockState state = Block.getBlockFromItem(stackInfo.getItemStack().getItem()).getDefaultState();
 
         BlockPos pos = new BlockPos(0, 0, 0);
         /*if (blockInfo.getBlock() instanceof IFluidBlock || blockInfo.getBlock() instanceof BlockLiquid) {

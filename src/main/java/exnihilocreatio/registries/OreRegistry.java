@@ -4,7 +4,7 @@ import exnihilocreatio.items.ore.ItemOre;
 import exnihilocreatio.items.ore.Ore;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.texturing.Color;
-import exnihilocreatio.util.ItemInfo;
+import exnihilocreatio.util.IStackInfo;
 
 import java.util.HashSet;
 
@@ -20,7 +20,7 @@ public class OreRegistry {
      *              Otherwise, the hunk will be smelted into this.
      * @return Ore, containing the base Ore object.
      */
-    public static Ore register(String name, Color color, ItemInfo info) {
+    public static Ore register(String name, Color color, IStackInfo info) {
         return ExNihiloRegistryManager.ORE_REGISTRY.register(name, color, info);
     }
 

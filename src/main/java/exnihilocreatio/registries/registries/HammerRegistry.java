@@ -9,6 +9,7 @@ import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.HammerReward;
 import exnihilocreatio.util.BlockInfo;
+import exnihilocreatio.util.IStackInfo;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -67,8 +68,8 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
         register(new ItemStack(block, 1, meta), new HammerReward(reward, miningLevel, chance, fortuneChance));
     }
 
-    public void register(BlockInfo block, ItemStack reward, int miningLevel, float chance, float fortuneChance) {
-        register(block.getItemStack(), new HammerReward(reward, miningLevel, chance, fortuneChance));
+    public void register(IStackInfo stackInfo, ItemStack reward, int miningLevel, float chance, float fortuneChance) {
+        register(stackInfo.getItemStack(), new HammerReward(reward, miningLevel, chance, fortuneChance));
     }
 
     public void register(ItemStack stack, HammerReward reward) {
@@ -118,10 +119,10 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
         return getRewards(new BlockInfo(block, meta));
     }
 
-    public NonNullList<HammerReward> getRewards(BlockInfo block) {
+    public NonNullList<HammerReward> getRewards(IStackInfo stackInfo) {
         NonNullList<HammerReward> drops = NonNullList.create();
-        if (!block.getItemStack().isEmpty())
-            registry.entrySet().stream().filter(entry -> entry.getKey().test(block.getItemStack())).forEach(entry -> drops.addAll(entry.getValue()));
+        if (!stackInfo.getItemStack().isEmpty())
+            registry.entrySet().stream().filter(entry -> entry.getKey().test(stackInfo.getItemStack())).forEach(entry -> drops.addAll(entry.getValue()));
         return drops;
     }
 
@@ -139,8 +140,8 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
         return isRegistered(new BlockInfo(block));
     }
 
-    public boolean isRegistered(BlockInfo block) {
-        return registry.keySet().stream().anyMatch(ingredient -> ingredient.test(block.getItemStack()));
+    public boolean isRegistered(IStackInfo stackInfo) {
+        return registry.keySet().stream().anyMatch(ingredient -> ingredient.test(stackInfo.getItemStack()));
     }
 
     // Legacy TODO: REMOVE if it works with ex compressum

@@ -5,14 +5,13 @@ import exnihilocreatio.registries.types.Meltable;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.texturing.SpriteColor;
 import exnihilocreatio.util.BlockInfo;
+import exnihilocreatio.util.IStackInfo;
 import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.Util;
 import lombok.Getter;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -42,7 +41,8 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
     protected int solidAmount;
 
     @Getter
-    protected ItemInfo currentItem;
+    @Nonnull
+    protected IStackInfo currentItem;
     protected int ticksSinceLast = 0;
 
     @Getter
@@ -74,7 +74,7 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
         SpriteColor[] spriteColors = new SpriteColor[2];
 
         int noItems = itemHandler.getStackInSlot(0).isEmpty() ? 0 : itemHandler.getStackInSlot(0).getCount();
-        if (noItems == 0 && currentItem == null && tank.getFluidAmount() == 0) //Empty!
+        if (noItems == 0 && !currentItem.isValid() && tank.getFluidAmount() == 0) //Empty!
             return spriteColors;
 
         FluidStack fluid = tank.getFluid();
@@ -87,18 +87,11 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
         IBlockState block = null;
         Color color = Util.whiteColor;
 
-        if (currentItem != null) {
+        if (currentItem.isValid()) {
             Meltable meltable = crucibleRegistry.getMeltable(currentItem);
             BlockInfo override = meltable.getTextureOverride();
 
-            if (override == null) {
-                if (Block.getBlockFromItem(currentItem.getItem()) != Blocks.AIR) {
-                    block = Block.getBlockFromItem(currentItem.getItem())
-                            .getStateFromMeta(currentItem.getMeta());
-                }
-            } else {
-                block = override.getBlockState();
-            }
+            block = override.getBlockState();
 
             if (block != null) {
                 color = new Color(Minecraft.getMinecraft().getBlockColors().colorMultiplier(block, world, pos, 0), true);
@@ -114,17 +107,17 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
     @SideOnly(Side.CLIENT)
     public float getFilledAmount() {
         int itemCount = itemHandler.getStackInSlot(0).isEmpty() ? 0 : itemHandler.getStackInSlot(0).getCount();
-        if (itemCount == 0 && currentItem == null && tank.getFluidAmount() == 0) //Empty!
+        if (itemCount == 0 && !currentItem.isValid() && tank.getFluidAmount() == 0) //Empty!
             return 0;
 
         float fluidProportion = ((float) tank.getFluidAmount()) / tank.getCapacity();
-        if (itemCount == 0 && currentItem == null) //Nothing being melted.
+        if (itemCount == 0 && !currentItem.isValid()) //Nothing being melted.
             return fluidProportion;
 
         float solidProportion = ((float) itemCount) / MAX_ITEMS;
-        if (currentItem != null) {
+        if (currentItem.isValid()) {
             Meltable meltable = crucibleRegistry.getMeltable(currentItem);
-            if (meltable != null)
+            if (meltable != Meltable.EMPTY)
                 solidProportion += ((double) solidAmount) / (MAX_ITEMS * meltable.getAmount());
         }
 
@@ -140,9 +133,9 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
     public float getSolidProportion() {
         int itemCount = itemHandler.getStackInSlot(0).isEmpty() ? 0 : itemHandler.getStackInSlot(0).getCount();
         float solidProportion = ((float) itemCount) / MAX_ITEMS;
-        if (currentItem != null) {
+        if (currentItem.isValid()) {
             Meltable meltable = crucibleRegistry.getMeltable(currentItem);
-            if (meltable != null)
+            if (meltable != Meltable.EMPTY)
                 solidProportion += ((double) solidAmount) / (MAX_ITEMS * meltable.getAmount());
         }
         return solidProportion;
@@ -173,7 +166,7 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
         if (!ItemStack.areItemStacksEqual(addStack, insertStack)) {
             itemHandler.insertItem(0, addStack, false);
 
-            if (currentItem == null) currentItem = new ItemInfo(stack);
+            if (!currentItem.isValid()) currentItem = new ItemInfo(stack);
 
             if (!player.isCreative()) stack.shrink(1);
 
@@ -206,7 +199,7 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
     @Override
     @Nonnull
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
-        if (currentItem != null) {
+        if (currentItem.isValid()) {
             NBTTagCompound currentItemTag = currentItem.writeToNBT(new NBTTagCompound());
             tag.setTag("currentItem", currentItemTag);
         }
@@ -227,7 +220,7 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
         if (tag.hasKey("currentItem")) {
             currentItem = ItemInfo.readFromNBT(tag.getCompoundTag("currentItem"));
         } else {
-            currentItem = null;
+            currentItem = BlockInfo.EMPTY;
         }
 
         solidAmount = tag.getInteger("solidAmount");

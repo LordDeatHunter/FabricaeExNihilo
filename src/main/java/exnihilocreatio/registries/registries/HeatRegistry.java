@@ -4,10 +4,11 @@ import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.crucible.HeatSourcesRecipe;
-import exnihilocreatio.json.CustomBlockInfoJson;
+import exnihilocreatio.json.CustomStackInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.util.BlockInfo;
+import exnihilocreatio.util.IStackInfo;
 import net.minecraft.item.ItemStack;
 
 import java.io.FileReader;
@@ -15,19 +16,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HeatRegistry extends BaseRegistryMap<BlockInfo, Integer> {
+public class HeatRegistry extends BaseRegistryMap<IStackInfo, Integer> {
 
     public HeatRegistry() {
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
+                        .registerTypeAdapter(IStackInfo.class, new CustomStackInfoJson())
                         .create(),
                 ExNihiloRegistryManager.HEAT_DEFAULT_REGISTRY_PROVIDERS
         );
     }
 
-    public void register(BlockInfo info, int heatAmount) {
+    public void register(IStackInfo info, int heatAmount) {
         registry.put(info, heatAmount);
     }
 
@@ -39,7 +40,7 @@ public class HeatRegistry extends BaseRegistryMap<BlockInfo, Integer> {
         return registry.get(new BlockInfo(stack));
     }
 
-    public int getHeatAmount(BlockInfo info) {
+    public int getHeatAmount(IStackInfo info) {
         if (registry.containsKey(info))
             return registry.get(info);
 

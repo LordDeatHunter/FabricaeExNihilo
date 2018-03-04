@@ -7,7 +7,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -16,7 +15,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import javax.annotation.Nonnull;
 
 @AllArgsConstructor
-public class BlockInfo {
+public class BlockInfo implements IStackInfo {
 
     public static final BlockInfo EMPTY = new BlockInfo(ItemStack.EMPTY);
 
@@ -102,10 +101,33 @@ public class BlockInfo {
         return item == null ? EMPTY : new BlockInfo(item, meta);
     }
 
+
+    //IStackInfo
+
+    @Override
     public String toString() {
         return Block.REGISTRY.getNameForObject(block) + (meta == -1 ? "" : (":" + meta));
     }
 
+    @Nonnull
+    @Override
+    public ItemStack getItemStack() {
+        Item item = Item.getItemFromBlock(block);
+        return new ItemStack(item, 1, meta);
+    }
+
+    @Nonnull
+    @Override
+    public IBlockState getBlockState(){
+        // This can fail, so in the event it does, we only grab the default state
+        try {
+            return block.getStateFromMeta(meta);
+        } catch (Exception e){
+            return block.getDefaultState();
+        }
+    }
+
+    @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
         tag.setString("block", Block.REGISTRY.getNameForObject(block).toString());
         tag.setInteger("meta", meta);
@@ -113,33 +135,14 @@ public class BlockInfo {
         return tag;
     }
 
-    @SuppressWarnings("deprecation")
-    public IBlockState getBlockState() {
-        return block.getStateFromMeta(meta == -1 ? 0 : meta);
+    @Override
+    public boolean isValid() {
+        return this != BlockInfo.EMPTY && meta <= Short.MAX_VALUE;
     }
 
+    @Override
     public int hashCode() {
         return block.hashCode();
     }
 
-    public boolean equals(Object other) {
-        if (other instanceof BlockInfo)
-            return ItemStack.areItemStacksEqual(((BlockInfo) other).getItemStack(), getItemStack());
-        else if (other instanceof ItemInfo)
-            return ItemStack.areItemStacksEqual(((ItemInfo) other).getItemStack(), getItemStack());
-        else if (other instanceof ItemStack)
-            return ItemStack.areItemStacksEqual(((ItemStack) other), getItemStack());
-        else if (other instanceof Block)
-            return Block.isEqualTo((Block) other, block);
-        else if (other instanceof ItemBlock) {
-            return Block.isEqualTo(((ItemBlock) other).getBlock(), block);
-        }
-
-        return false;
-    }
-
-    public ItemStack getItemStack() {
-        Item item = Item.getItemFromBlock(block);
-        return new ItemStack(item, 1, meta);
-    }
 }

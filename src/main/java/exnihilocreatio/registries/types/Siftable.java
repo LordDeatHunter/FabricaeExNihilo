@@ -1,6 +1,6 @@
 package exnihilocreatio.registries.types;
 
-import exnihilocreatio.util.ItemInfo;
+import exnihilocreatio.util.IStackInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -8,7 +8,7 @@ import lombok.Getter;
 public class Siftable {
 
     @Getter
-    private ItemInfo drop;
+    private IStackInfo drop;
     @Getter
     private float chance;
     @Getter

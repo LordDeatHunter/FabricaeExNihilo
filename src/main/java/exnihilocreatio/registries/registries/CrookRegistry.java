@@ -3,12 +3,13 @@ package exnihilocreatio.registries.registries;
 import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import exnihilocreatio.json.CustomBlockInfoJson;
 import exnihilocreatio.json.CustomItemStackJson;
+import exnihilocreatio.json.CustomStackInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.CrookReward;
 import exnihilocreatio.util.BlockInfo;
+import exnihilocreatio.util.IStackInfo;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -27,7 +28,7 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
                 new GsonBuilder()
                         .setPrettyPrinting()
                         .registerTypeAdapter(ItemStack.class, new CustomItemStackJson())
-                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
+                        .registerTypeAdapter(IStackInfo.class, new CustomStackInfoJson())
                         .create(),
                 ExNihiloRegistryManager.CROOK_DEFAULT_REGISTRY_PROVIDERS
         );
@@ -37,7 +38,7 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
         register(new BlockInfo(block, meta), reward, chance, fortuneChance);
     }
 
-    public void register(BlockInfo info, ItemStack reward, float chance, float fortuneChance) {
+    public void register(IStackInfo info, ItemStack reward, float chance, float fortuneChance) {
         Ingredient ingredient = registry.keySet().stream().filter(entry -> entry.test(info.getItemStack())).findFirst().orElse(null);
 
         if (ingredient != null) {

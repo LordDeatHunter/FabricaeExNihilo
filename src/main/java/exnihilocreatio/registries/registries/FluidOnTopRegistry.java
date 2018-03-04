@@ -4,15 +4,16 @@ import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.barrel.fluidontop.FluidOnTopRecipe;
-import exnihilocreatio.json.CustomItemInfoJson;
+import exnihilocreatio.json.CustomStackInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryList;
 import exnihilocreatio.registries.types.FluidFluidBlock;
-import exnihilocreatio.util.ItemInfo;
-import net.minecraft.init.Items;
+import exnihilocreatio.util.BlockInfo;
+import exnihilocreatio.util.IStackInfo;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 
+import javax.annotation.Nonnull;
 import java.io.FileReader;
 import java.util.List;
 
@@ -21,13 +22,13 @@ public class FluidOnTopRegistry extends BaseRegistryList<FluidFluidBlock> {
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
+                        .registerTypeAdapter(IStackInfo.class, new CustomStackInfoJson())
                         .create(),
                 ExNihiloRegistryManager.FLUID_ON_TOP_DEFAULT_REGISTRY_PROVIDERS
         );
     }
 
-    public void register(Fluid fluidInBarrel, Fluid fluidOnTop, ItemInfo result) {
+    public void register(Fluid fluidInBarrel, Fluid fluidOnTop, IStackInfo result) {
         registry.add(new FluidFluidBlock(fluidInBarrel.getName(), fluidOnTop.getName(), result));
     }
 
@@ -43,14 +44,15 @@ public class FluidOnTopRegistry extends BaseRegistryList<FluidFluidBlock> {
         return false;
     }
 
-    public ItemInfo getTransformedBlock(Fluid fluidInBarrel, Fluid fluidOnTop) {
+    @Nonnull
+    public IStackInfo getTransformedBlock(Fluid fluidInBarrel, Fluid fluidOnTop) {
         for (FluidFluidBlock fBlock : registry) {
             if (fBlock.getFluidInBarrel().equals(fluidInBarrel.getName()) &&
                     fBlock.getFluidOnTop().equals(fluidOnTop.getName()))
                 return fBlock.getResult();
         }
 
-        return null;
+        return BlockInfo.EMPTY;
     }
 
     @Override
@@ -67,7 +69,7 @@ public class FluidOnTopRegistry extends BaseRegistryList<FluidFluidBlock> {
             // Make sure both fluids are registered
             if (FluidRegistry.isFluidRegistered(transformer.getFluidInBarrel())
                     && FluidRegistry.isFluidRegistered(transformer.getFluidOnTop())
-                    && transformer.getResult().getItem() != Items.AIR) {
+                    && transformer.getResult().isValid()) {
                 FluidOnTopRecipe recipe = new FluidOnTopRecipe(transformer);
 
                 if (recipe.isValid()) {

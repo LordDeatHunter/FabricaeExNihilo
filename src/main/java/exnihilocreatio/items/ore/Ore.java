@@ -1,7 +1,7 @@
 package exnihilocreatio.items.ore;
 
 import exnihilocreatio.texturing.Color;
-import exnihilocreatio.util.ItemInfo;
+import exnihilocreatio.util.IStackInfo;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -13,9 +13,9 @@ public class Ore {
     @Getter
     private Color color;
     @Getter
-    private ItemInfo result;
+    private IStackInfo result;
 
-    public Ore(String name, Color color, ItemInfo result) {
+    public Ore(String name, Color color, IStackInfo result) {
         this.name = name;
         this.color = color;
         this.result = result;

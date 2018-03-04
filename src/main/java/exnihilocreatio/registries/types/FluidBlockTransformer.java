@@ -1,6 +1,6 @@
 package exnihilocreatio.registries.types;
 
-import exnihilocreatio.util.ItemInfo;
+import exnihilocreatio.util.IStackInfo;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,9 +13,9 @@ public class FluidBlockTransformer {
     private String fluidName;
 
     @Getter
-    private ItemInfo input;
+    private IStackInfo input;
 
     @Getter
-    private ItemInfo output;
+    private IStackInfo output;
 
 }

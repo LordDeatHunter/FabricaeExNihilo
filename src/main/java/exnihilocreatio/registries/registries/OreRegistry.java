@@ -8,14 +8,12 @@ import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.ore.EnumOreSubtype;
 import exnihilocreatio.items.ore.ItemOre;
 import exnihilocreatio.items.ore.Ore;
-import exnihilocreatio.json.CustomBlockInfoJson;
-import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.json.CustomOreJson;
+import exnihilocreatio.json.CustomStackInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryList;
 import exnihilocreatio.texturing.Color;
-import exnihilocreatio.util.BlockInfo;
-import exnihilocreatio.util.ItemInfo;
+import exnihilocreatio.util.IStackInfo;
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
@@ -53,8 +51,8 @@ public class OreRegistry extends BaseRegistryList<Ore> {
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
-                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
+                        .registerTypeAdapter(IStackInfo.class, new CustomStackInfoJson())
+                        .registerTypeAdapter(IStackInfo.class, new CustomStackInfoJson())
                         .registerTypeAdapter(Ore.class, new CustomOreJson())
                         .create(),
                 ExNihiloRegistryManager.ORE_DEFAULT_REGISTRY_PROVIDERS
@@ -71,7 +69,7 @@ public class OreRegistry extends BaseRegistryList<Ore> {
      *              Otherwise, the hunk will be smelted into this.
      * @return Ore, containing the base Ore object.
      */
-    public Ore register(String name, Color color, ItemInfo info) {
+    public Ore register(String name, Color color, IStackInfo info) {
         Ore ore = new Ore(name, color, info);
         registry.add(ore);
         itemOreRegistry.add(new ItemOre(ore));

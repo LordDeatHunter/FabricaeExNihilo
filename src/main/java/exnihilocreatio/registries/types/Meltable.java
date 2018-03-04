@@ -6,6 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.annotation.Nonnull;
+
 @AllArgsConstructor
 @EqualsAndHashCode(exclude = {"textureOverride"})
 public class Meltable {
@@ -20,12 +22,13 @@ public class Meltable {
     private int amount;
 
     @Getter
+    @Nonnull
     private BlockInfo textureOverride;
 
     public Meltable(String fluid, int amount) {
         this.fluid = fluid;
         this.amount = amount;
-        this.textureOverride = null;
+        this.textureOverride = BlockInfo.EMPTY;
     }
 
     public Meltable copy() {

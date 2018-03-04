@@ -3,10 +3,11 @@ package exnihilocreatio.registries.registries;
 import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import exnihilocreatio.json.CustomItemInfoJson;
+import exnihilocreatio.json.CustomStackInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryList;
 import exnihilocreatio.registries.types.FluidItemFluid;
+import exnihilocreatio.util.IStackInfo;
 import exnihilocreatio.util.ItemInfo;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
@@ -20,17 +21,17 @@ public class FluidItemFluidRegistry extends BaseRegistryList<FluidItemFluid> {
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
+                        .registerTypeAdapter(IStackInfo.class, new CustomStackInfoJson())
                         .create(),
                 ExNihiloRegistryManager.FLUID_ITEM_FLUID_DEFAULT_REGISTRY_PROVIDERS
         );
     }
 
-    public void register(String inputFluid, ItemInfo reactant, String outputFluid) {
+    public void register(String inputFluid, IStackInfo reactant, String outputFluid) {
         registry.add(new FluidItemFluid(inputFluid, reactant, outputFluid));
     }
 
-    public void register(Fluid inputFluid, ItemInfo reactant, Fluid outputFluid) {
+    public void register(Fluid inputFluid, IStackInfo reactant, Fluid outputFluid) {
         registry.add(new FluidItemFluid(inputFluid.getName(), reactant, outputFluid.getName()));
     }
 

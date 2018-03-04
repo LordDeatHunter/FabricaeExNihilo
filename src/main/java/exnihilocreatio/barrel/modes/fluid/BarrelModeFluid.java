@@ -9,7 +9,7 @@ import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.FluidTransformer;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.tiles.TileBarrel;
-import exnihilocreatio.util.ItemInfo;
+import exnihilocreatio.util.IStackInfo;
 import exnihilocreatio.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -147,7 +147,7 @@ public class BarrelModeFluid implements IBarrelMode {
             }
 
             if (ExNihiloRegistryManager.FLUID_ON_TOP_REGISTRY.isValidRecipe(fluidInBarrel, fluidOnTop)) {
-                ItemInfo info = ExNihiloRegistryManager.FLUID_ON_TOP_REGISTRY.getTransformedBlock(fluidInBarrel, fluidOnTop);
+                IStackInfo info = ExNihiloRegistryManager.FLUID_ON_TOP_REGISTRY.getTransformedBlock(fluidInBarrel, fluidOnTop);
                 tank.drain(tank.getCapacity(), true);
                 barrel.setMode("block");
                 PacketHandler.sendToAllAround(new MessageBarrelModeUpdate("block", barrel.getPos()), barrel);

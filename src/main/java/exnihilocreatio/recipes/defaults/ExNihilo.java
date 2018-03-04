@@ -15,9 +15,12 @@ import exnihilocreatio.registries.registries.*;
 import exnihilocreatio.registries.types.Meltable;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.BlockInfo;
+import exnihilocreatio.util.IStackInfo;
 import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.Util;
 import lombok.Getter;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -25,6 +28,9 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class ExNihilo implements IRecipeDefaults {
     @Getter
@@ -224,6 +230,33 @@ public class ExNihilo implements IRecipeDefaults {
             registry.register("dirt", new ItemInfo(seed), getDropChance(0.05f), MeshType.STRING.getID());
         }
 
+        getLeavesSapling().forEach((leaves, sapling) -> {
+            BlockLeaves blockLeaves = ((BlockLeaves) Block.getBlockFromItem(leaves.getItemStack().getItem()));
+            float chance = blockLeaves.getSaplingDropChance(blockLeaves.getDefaultState()) / 100f;
+
+            registry.register(leaves, sapling, Math.min(chance * 4, 1.0f), MeshType.STRING.getID());
+            registry.register(leaves, sapling, Math.min(chance * 6, 1.0f), MeshType.FLINT.getID());
+            registry.register(leaves, sapling, Math.min(chance * 8, 1.0f), MeshType.IRON.getID());
+            registry.register(leaves, sapling, Math.min(chance * 10, 1.0f), MeshType.DIAMOND.getID());
+
+            //Apple
+            registry.register(leaves, new ItemInfo(Items.APPLE, 0), 0.10f, MeshType.STRING.getID());
+            registry.register(leaves, new ItemInfo(Items.APPLE, 0), 0.20f, MeshType.FLINT.getID());
+            registry.register(leaves, new ItemInfo(Items.APPLE, 0), 0.30f, MeshType.IRON.getID());
+            registry.register(leaves, new ItemInfo(Items.APPLE, 0), 0.40f, MeshType.DIAMOND.getID());
+
+            //Golden Apple
+            registry.register(leaves, new ItemInfo(Items.GOLDEN_APPLE, 0), 0.005f, MeshType.STRING.getID());
+            registry.register(leaves, new ItemInfo(Items.GOLDEN_APPLE, 0), 0.01f, MeshType.FLINT.getID());
+            registry.register(leaves, new ItemInfo(Items.GOLDEN_APPLE, 0), 0.02f, MeshType.IRON.getID());
+            registry.register(leaves, new ItemInfo(Items.GOLDEN_APPLE, 0), 0.05f, MeshType.DIAMOND.getID());
+
+            //Silk Worm
+            registry.register(leaves, new ItemInfo(ItemResource.getResourceStack(ItemResource.SILKWORM)), 0.05f, MeshType.STRING.getID());
+            registry.register(leaves, new ItemInfo(ItemResource.getResourceStack(ItemResource.SILKWORM)), 0.1f, MeshType.FLINT.getID());
+            registry.register(leaves, new ItemInfo(ItemResource.getResourceStack(ItemResource.SILKWORM)), 0.25f, MeshType.IRON.getID());
+            registry.register(leaves, new ItemInfo(ItemResource.getResourceStack(ItemResource.SILKWORM)), 0.5f, MeshType.DIAMOND.getID());
+        });
     }
 
     public void registerHammer(HammerRegistry registry) {
@@ -354,5 +387,16 @@ public class ExNihilo implements IRecipeDefaults {
         if (ModConfig.world.isSkyWorld)
             return chance;
         else return chance / 100f * (float) ModConfig.world.normalDropPercent;
+    }
+
+    public static Map<IStackInfo, IStackInfo> getLeavesSapling(){
+        Map<IStackInfo, IStackInfo> saplingMap = new LinkedHashMap<>();
+        saplingMap.put(new BlockInfo(Blocks.LEAVES, 1), new BlockInfo(Blocks.SAPLING, 1));
+        saplingMap.put(new BlockInfo(Blocks.LEAVES, 2), new BlockInfo(Blocks.SAPLING, 2));
+        saplingMap.put(new BlockInfo(Blocks.LEAVES, 3), new BlockInfo(Blocks.SAPLING, 3));
+        saplingMap.put(new BlockInfo(Blocks.LEAVES2, 1), new BlockInfo(Blocks.SAPLING, 4));
+        saplingMap.put(new BlockInfo(Blocks.LEAVES2, 2), new BlockInfo(Blocks.SAPLING, 5));
+
+        return saplingMap;
     }
 }

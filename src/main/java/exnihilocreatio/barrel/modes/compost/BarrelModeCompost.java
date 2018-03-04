@@ -62,8 +62,7 @@ public class BarrelModeCompost implements IBarrelMode {
                 ItemInfo info = ItemInfo.getItemInfoFromStack(player.getHeldItem(hand));
                 if (ExNihiloRegistryManager.COMPOST_REGISTRY.containsItem(info)) {
                     Compostable comp = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(info);
-                    compostState = Block.getBlockFromItem(comp.getCompostBlock().getItem())
-                            .getStateFromMeta(comp.getCompostBlock().getMeta());
+                    compostState = comp.getCompostBlock().getBlockState();
                     PacketHandler.sendNBTUpdate(barrel);
                 }
             }
@@ -73,10 +72,9 @@ public class BarrelModeCompost implements IBarrelMode {
                 ItemInfo info = ItemInfo.getItemInfoFromStack(player.getHeldItem(hand));
                 Compostable comp = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(info);
 
-                if (comp == null || comp.getCompostBlock() == null) return;
+                if (comp == null || !comp.getCompostBlock().isValid()) return;
 
-                IBlockState testState = Block.getBlockFromItem(comp.getCompostBlock().getItem())
-                        .getStateFromMeta(comp.getCompostBlock().getMeta());
+                IBlockState testState = comp.getCompostBlock().getBlockState();
 
                 if (ExNihiloRegistryManager.COMPOST_REGISTRY.containsItem(info) && compostState.equals(testState)) {
                     Compostable compost = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(info);
@@ -121,8 +119,7 @@ public class BarrelModeCompost implements IBarrelMode {
             if (stack != null) {
                 ItemInfo info = ItemInfo.getItemInfoFromStack(stack);
                 Compostable comp = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(info);
-                IBlockState testState = Block.getBlockFromItem(comp.getCompostBlock().getItem())
-                        .getStateFromMeta(comp.getCompostBlock().getMeta());
+                IBlockState testState = comp.getCompostBlock().getBlockState();
 
                 if (ExNihiloRegistryManager.COMPOST_REGISTRY.containsItem(info) && compostState == null) {
                     compostState = testState;

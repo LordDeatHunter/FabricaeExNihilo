@@ -5,12 +5,13 @@ import com.google.common.collect.Maps;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.barrel.compost.CompostRecipe;
-import exnihilocreatio.json.CustomItemInfoJson;
+import exnihilocreatio.json.CustomStackInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.Compostable;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.BlockInfo;
+import exnihilocreatio.util.IStackInfo;
 import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.LogUtil;
 import net.minecraft.block.Block;
@@ -47,7 +48,7 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
+                        .registerTypeAdapter(IStackInfo.class, new CustomStackInfoJson())
                         .create(),
                 ExNihiloRegistryManager.COMPOST_DEFAULT_REGISTRY_PROVIDERS
         );
@@ -75,12 +76,8 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
         register(new ItemStack(block, 1, meta), value, state, color);
     }
 
-    public void register(ItemInfo item, float value, IBlockState state, Color color) {
+    public void register(IStackInfo item, float value, IBlockState state, Color color) {
         register(item.getItemStack(), value, state, color);
-    }
-
-    public void register(BlockInfo block, float value, IBlockState state, Color color) {
-        register(block.getItemStack(), value, state, color);
     }
 
     public void register(ResourceLocation location, int meta, float value, IBlockState state, Color color) {
@@ -111,7 +108,7 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
         else return Compostable.EMPTY;
     }
 
-    public Compostable getItem(ItemInfo info) {
+    public Compostable getItem(IStackInfo info) {
         return getItem(info.getItemStack());
     }
 
@@ -123,7 +120,7 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
         return registry.keySet().stream().anyMatch(entry -> entry.test(stack)) || oreRegistry.keySet().stream().anyMatch(entry -> entry.test(stack));
     }
 
-    public boolean containsItem(ItemInfo info) {
+    public boolean containsItem(IStackInfo info) {
         return containsItem(info.getItemStack());
     }
 
@@ -151,7 +148,7 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
                     if (!containsItem(foodStack)) {
                         int hungerRestored = food.getHealAmount(foodStack);
 
-                        recommended.put(foodItemInfo.toString(), new Compostable(hungerRestored * 0.025F, brown, new ItemInfo(dirt)));
+                        recommended.put(foodItemInfo.toString(), new Compostable(hungerRestored * 0.025F, brown, new BlockInfo(dirt)));
                     }
                 }
             }
@@ -193,7 +190,7 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
         List<CompostRecipe> compostRecipes = Lists.newLinkedList();
 
         getRegistry().forEach((key, value) -> {
-            ItemInfo compostBlock = value.getCompostBlock();
+            IStackInfo compostBlock = value.getCompostBlock();
             List<ItemStack> compostables = Lists.newLinkedList();
             int compostCount = (int) Math.ceil(1.0F / value.getValue());
             Stream.of(key.getMatchingStacks()).forEach(stack -> {

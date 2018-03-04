@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import javax.annotation.Nonnull;
 
 @AllArgsConstructor
-public class ItemInfo {
+public class ItemInfo implements IStackInfo {
 
     public static final ItemInfo EMPTY = new ItemInfo(ItemStack.EMPTY);
 
@@ -105,14 +105,36 @@ public class ItemInfo {
         return item == null ? EMPTY : new ItemInfo(item, meta);
     }
 
+    //IStackInfo
+
+    @Override
     public String toString() {
         return Item.REGISTRY.getNameForObject(item) + (meta == -1 ? "" : (":" + meta));
     }
 
+    @Nonnull
+    @Override
     public ItemStack getItemStack() {
         return new ItemStack(item, 1, meta == -1 ? 0 : meta);
     }
 
+    @Nonnull
+    @Override
+    public Block getBlock() {
+        return Block.getBlockFromItem(item);
+    }
+
+    @Nonnull
+    @Override
+    public IBlockState getBlockState() {
+        try {
+            return Block.getBlockFromItem(item).getStateFromMeta(meta);
+        } catch (Exception e){
+            return Block.getBlockFromItem(item).getDefaultState();
+        }
+    }
+
+    @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
         tag.setString("item", Item.REGISTRY.getNameForObject(item) == null ? "" : Item.REGISTRY.getNameForObject(item).toString());
         tag.setInteger("meta", meta);
@@ -120,22 +142,14 @@ public class ItemInfo {
         return tag;
     }
 
+    @Override
     public boolean isValid() {
-        return item != Items.AIR && meta <= Short.MAX_VALUE;
+        return this != ItemInfo.EMPTY && meta <= Short.MAX_VALUE;
     }
 
+    @Override
     public int hashCode() {
-        return item.hashCode();
+        return this.item.hashCode();
     }
 
-    public boolean equals(Object other) {
-        if (other instanceof ItemInfo)
-            return ItemStack.areItemStacksEqual(((ItemInfo) other).getItemStack(), getItemStack());
-        else if (other instanceof ItemStack)
-            return ItemStack.areItemStacksEqual((ItemStack) other, getItemStack());
-        else if (other instanceof BlockInfo)
-            return ItemStack.areItemStacksEqual(((BlockInfo) other).getItemStack(), getItemStack());
-
-        return false;
-    }
 }
