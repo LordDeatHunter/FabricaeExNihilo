@@ -4,12 +4,13 @@ import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.barrel.fluidtransform.FluidTransformRecipe;
-import exnihilocreatio.json.CustomStackInfoJson;
+import exnihilocreatio.json.CustomBlockInfoJson;
+import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.FluidTransformer;
 import exnihilocreatio.util.BlockInfo;
-import exnihilocreatio.util.IStackInfo;
+import exnihilocreatio.util.ItemInfo;
 import net.minecraftforge.fluids.FluidRegistry;
 import org.apache.commons.io.IOUtils;
 
@@ -21,7 +22,11 @@ import java.util.List;
 
 public class FluidTransformRegistry extends BaseRegistryMap<String, List<FluidTransformer>> {
     public FluidTransformRegistry() {
-        super(new GsonBuilder().setPrettyPrinting().registerTypeAdapter(IStackInfo.class, new CustomStackInfoJson()).create(),
+        super(new GsonBuilder()
+                        .setPrettyPrinting()
+                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
+                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
+                        .create(),
                 ExNihiloRegistryManager.FLUID_TRANSFORM_DEFAULT_REGISTRY_PROVIDERS);
     }
 

@@ -106,7 +106,8 @@ public class TileBarrel extends BaseTileEntity implements ITickable {
                     && bucketStack.getFluid() == tankStack.getFluid()
                     && tank.fill(FluidUtil.getFluidContained(stack), false) != 0) {
                 tank.drain(Fluid.BUCKET_VOLUME, true);
-                result = FluidUtil.interactWithFluidHandler(player, hand, fluidHandler);
+                if (fluidHandler != null)
+                    result = FluidUtil.interactWithFluidHandler(player, hand, fluidHandler);
 
                 if (result && !player.isCreative()) {
                     stack.shrink(1);

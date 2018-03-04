@@ -5,12 +5,14 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.blocks.BlockSieve;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipe;
-import exnihilocreatio.json.CustomStackInfoJson;
+import exnihilocreatio.json.CustomBlockInfoJson;
+import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.Siftable;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.IStackInfo;
+import exnihilocreatio.util.ItemInfo;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
@@ -31,8 +33,8 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Sifta
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(IStackInfo.class, new CustomStackInfoJson())
-                        .registerTypeAdapter(IStackInfo.class, new CustomStackInfoJson())
+                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
+                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
                         .create(),
                 ExNihiloRegistryManager.SIEVE_DEFAULT_REGISTRY_PROVIDERS
         );

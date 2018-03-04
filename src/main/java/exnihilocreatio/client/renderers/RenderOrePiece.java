@@ -5,12 +5,13 @@ import exnihilocreatio.items.ore.Ore;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
 import java.awt.*;
 
 public class RenderOrePiece implements IItemColor {
 
     @Override
-    public int colorMultiplier(ItemStack stack, int tintIndex) {
+    public int colorMultiplier(@Nonnull ItemStack stack, int tintIndex) {
         if (stack.isEmpty())
             return 0;
 

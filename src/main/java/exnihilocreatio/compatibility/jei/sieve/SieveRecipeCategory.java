@@ -53,6 +53,7 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
     }
 
     @Override
+    @Nonnull
     public String getModName() {
         return ExNihiloCreatio.MODID;
     }

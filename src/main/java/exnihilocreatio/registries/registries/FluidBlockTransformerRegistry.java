@@ -4,10 +4,12 @@ import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.barrel.fluidblocktransform.FluidBlockTransformRecipe;
-import exnihilocreatio.json.CustomStackInfoJson;
+import exnihilocreatio.json.CustomBlockInfoJson;
+import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryList;
 import exnihilocreatio.registries.types.FluidBlockTransformer;
+import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.IStackInfo;
 import exnihilocreatio.util.ItemInfo;
 import net.minecraft.item.ItemStack;
@@ -24,7 +26,8 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(IStackInfo.class, new CustomStackInfoJson())
+                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
+                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
                         .create(),
                 ExNihiloRegistryManager.FLUID_BLOCK_DEFAULT_REGISTRY_PROVIDERS
         );

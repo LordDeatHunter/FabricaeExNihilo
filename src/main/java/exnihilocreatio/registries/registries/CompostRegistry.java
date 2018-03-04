@@ -5,7 +5,8 @@ import com.google.common.collect.Maps;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.barrel.compost.CompostRecipe;
-import exnihilocreatio.json.CustomStackInfoJson;
+import exnihilocreatio.json.CustomBlockInfoJson;
+import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.Compostable;
@@ -48,7 +49,8 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(IStackInfo.class, new CustomStackInfoJson())
+                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
+                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
                         .create(),
                 ExNihiloRegistryManager.COMPOST_DEFAULT_REGISTRY_PROVIDERS
         );

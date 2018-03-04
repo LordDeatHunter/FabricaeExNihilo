@@ -3,13 +3,15 @@ package exnihilocreatio.registries.registries;
 import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import exnihilocreatio.json.CustomBlockInfoJson;
+import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.json.CustomItemStackJson;
-import exnihilocreatio.json.CustomStackInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.CrookReward;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.IStackInfo;
+import exnihilocreatio.util.ItemInfo;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -28,7 +30,8 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
                 new GsonBuilder()
                         .setPrettyPrinting()
                         .registerTypeAdapter(ItemStack.class, new CustomItemStackJson())
-                        .registerTypeAdapter(IStackInfo.class, new CustomStackInfoJson())
+                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
+                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
                         .create(),
                 ExNihiloRegistryManager.CROOK_DEFAULT_REGISTRY_PROVIDERS
         );

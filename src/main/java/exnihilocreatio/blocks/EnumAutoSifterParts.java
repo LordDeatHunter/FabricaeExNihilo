@@ -2,6 +2,8 @@ package exnihilocreatio.blocks;
 
 import net.minecraft.util.IStringSerializable;
 
+import javax.annotation.Nonnull;
+
 public enum EnumAutoSifterParts implements IStringSerializable {
     EMPTY(0, "empty"),
     BOX(1, "box"),
@@ -18,6 +20,7 @@ public enum EnumAutoSifterParts implements IStringSerializable {
     }
 
     @Override
+    @Nonnull
     public String getName() {
         return name;
     }

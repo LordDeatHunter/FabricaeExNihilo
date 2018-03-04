@@ -6,6 +6,7 @@ import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -30,6 +31,11 @@ public class BlockInfo implements IStackInfo {
     public BlockInfo(@Nonnull Block block) {
         this.block = block;
         this.meta = -1;
+    }
+
+    public BlockInfo(@Nonnull ItemInfo itemInfo) {
+        this.block = Block.getBlockFromItem(itemInfo.getItem());
+        this.meta = itemInfo.getMeta();
     }
 
     public BlockInfo(@Nonnull IBlockState state) {
@@ -113,7 +119,7 @@ public class BlockInfo implements IStackInfo {
     @Override
     public ItemStack getItemStack() {
         Item item = Item.getItemFromBlock(block);
-        return new ItemStack(item, 1, meta);
+        return item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item, 1, meta);
     }
 
     @Nonnull
@@ -137,7 +143,7 @@ public class BlockInfo implements IStackInfo {
 
     @Override
     public boolean isValid() {
-        return this != BlockInfo.EMPTY && meta <= Short.MAX_VALUE;
+        return this.block != Blocks.AIR && meta <= Short.MAX_VALUE;
     }
 
     @Override

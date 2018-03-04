@@ -106,7 +106,7 @@ public class ItemDoll extends Item implements IHasModel {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(@Nullable CreativeTabs tab, NonNullList<ItemStack> list) {
+    public void getSubItems(@Nullable CreativeTabs tab, @Nonnull NonNullList<ItemStack> list) {
         if (this.isInCreativeTab(tab))
             for (int i = 0; i < names.size(); i++)
                 list.add(new ItemStack(this, 1, i));

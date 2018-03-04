@@ -17,6 +17,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 @WailaPlugin(ExNihiloCreatio.MODID)
@@ -36,17 +37,20 @@ public class CompatWaila implements IWailaPlugin, IWailaDataProvider {
     }
 
     @Override
+    @Nonnull
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Override
+    @Nonnull
     public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
         return currenttip;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
+    @Nonnull
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
         if (accessor.getBlock() instanceof BlockBarrel) {
             TileBarrel barrel = (TileBarrel) accessor.getTileEntity();
@@ -69,11 +73,15 @@ public class CompatWaila implements IWailaPlugin, IWailaDataProvider {
         if (accessor.getBlock() instanceof BlockInfestingLeaves) {
             if (accessor.getBlock() == ModBlocks.infestingLeaves) {
                 TileInfestingLeaves tile = (TileInfestingLeaves) accessor.getTileEntity();
+                if (tile != null) {
 
-                if (tile.getProgress() >= 100) {
-                    currenttip.add("Progress: Done");
+                    if (tile.getProgress() >= 100) {
+                        currenttip.add("Progress: Done");
+                    } else {
+                        currenttip.add("Progress: " + tile.getProgress() + "%");
+                    }
                 } else {
-                    currenttip.add("Progress: " + tile.getProgress() + "%");
+                    currenttip.add("Progress: Done");
                 }
             } else {
                 currenttip.add("Progress: Done");
@@ -83,10 +91,10 @@ public class CompatWaila implements IWailaPlugin, IWailaDataProvider {
         if (accessor.getTileEntity() instanceof TileCrucibleBase) {
             TileCrucibleBase tile = (TileCrucibleBase) accessor.getTileEntity();
 
-            ItemStack solid = tile.getCurrentItem() == null ? null : tile.getCurrentItem().getItemStack();
+            ItemStack solid = tile.getCurrentItem().getItemStack();
             FluidStack liquid = tile.getTank().getFluid();
 
-            String solidName = solid == null ? "None" : solid.getDisplayName();
+            String solidName = solid == ItemStack.EMPTY ? "None" : solid.getDisplayName();
             String liquidName = liquid == null ? "None" : liquid.getLocalizedName();
 
             int solidAmount = Math.max(0, tile.getSolidAmount());
@@ -136,11 +144,13 @@ public class CompatWaila implements IWailaPlugin, IWailaDataProvider {
     }
 
     @Override
+    @Nonnull
     public List<String> getWailaTail(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
         return currenttip;
     }
 
     @Override
+    @Nonnull
     public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
         return tag;
     }

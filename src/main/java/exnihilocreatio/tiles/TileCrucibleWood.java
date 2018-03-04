@@ -2,6 +2,7 @@ package exnihilocreatio.tiles;
 
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
+import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.TankUtil;
 import net.minecraft.block.state.IBlockState;
@@ -47,8 +48,8 @@ public class TileCrucibleWood extends TileCrucibleBase {
 
                     solidAmount = crucibleRegistry.getMeltable(currentItem).getAmount();
                 } else {
-                    if (currentItem != null) {
-                        currentItem = null;
+                    if (currentItem.isValid()) {
+                        currentItem = BlockInfo.EMPTY;
 
                         markDirtyClient();
                     }
@@ -74,7 +75,7 @@ public class TileCrucibleWood extends TileCrucibleBase {
                 heatRate = solidAmount;
             }
 
-            if (heatRate > 0 && currentItem != null && crucibleRegistry.canBeMelted(currentItem)) {
+            if (heatRate > 0 && currentItem.isValid() && crucibleRegistry.canBeMelted(currentItem)) {
                 FluidStack toFill = new FluidStack(FluidRegistry.getFluid(crucibleRegistry.getMeltable(currentItem).getFluid()), heatRate);
                 int filled = tank.fillInternal(toFill, true);
                 solidAmount -= filled;

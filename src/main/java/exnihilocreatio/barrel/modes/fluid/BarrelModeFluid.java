@@ -152,7 +152,7 @@ public class BarrelModeFluid implements IBarrelMode {
                 barrel.setMode("block");
                 PacketHandler.sendToAllAround(new MessageBarrelModeUpdate("block", barrel.getPos()), barrel);
 
-                barrel.getMode().addItem(info == null || info.getItemStack() == null ? ItemStack.EMPTY : info.getItemStack(), barrel);
+                barrel.getMode().addItem(info.getItemStack(), barrel);
 
                 return;
             }

@@ -32,6 +32,11 @@ public class ItemInfo implements IStackInfo {
         meta = -1;
     }
 
+    public ItemInfo(@Nonnull BlockInfo blockInfo) {
+        this.item = blockInfo.getItemStack().getItem();
+        meta = blockInfo.getMeta();
+    }
+
     public ItemInfo(@Nonnull ItemStack stack) {
         item = stack.getItem();
         meta = stack.getMetadata();
@@ -115,7 +120,7 @@ public class ItemInfo implements IStackInfo {
     @Nonnull
     @Override
     public ItemStack getItemStack() {
-        return new ItemStack(item, 1, meta == -1 ? 0 : meta);
+        return item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item, 1, meta == -1 ? 0 : meta);
     }
 
     @Nonnull
@@ -144,7 +149,7 @@ public class ItemInfo implements IStackInfo {
 
     @Override
     public boolean isValid() {
-        return this != ItemInfo.EMPTY && meta <= Short.MAX_VALUE;
+        return this.item != Items.AIR && meta <= Short.MAX_VALUE;
     }
 
     @Override

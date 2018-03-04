@@ -42,7 +42,7 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
 
     @Getter
     @Nonnull
-    protected IStackInfo currentItem;
+    protected IStackInfo currentItem = BlockInfo.EMPTY;
     protected int ticksSinceLast = 0;
 
     @Getter
@@ -90,10 +90,8 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
         if (currentItem.isValid()) {
             Meltable meltable = crucibleRegistry.getMeltable(currentItem);
             BlockInfo override = meltable.getTextureOverride();
-
-            block = override.getBlockState();
-
-            if (block != null) {
+            if (override.isValid()) {
+                block = override.getBlockState();
                 color = new Color(Minecraft.getMinecraft().getBlockColors().colorMultiplier(block, world, pos, 0), true);
             }
         }

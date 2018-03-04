@@ -4,11 +4,13 @@ import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.crucible.HeatSourcesRecipe;
-import exnihilocreatio.json.CustomStackInfoJson;
+import exnihilocreatio.json.CustomBlockInfoJson;
+import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.IStackInfo;
+import exnihilocreatio.util.ItemInfo;
 import net.minecraft.item.ItemStack;
 
 import java.io.FileReader;
@@ -22,7 +24,8 @@ public class HeatRegistry extends BaseRegistryMap<IStackInfo, Integer> {
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(IStackInfo.class, new CustomStackInfoJson())
+                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
+                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
                         .create(),
                 ExNihiloRegistryManager.HEAT_DEFAULT_REGISTRY_PROVIDERS
         );

@@ -78,7 +78,7 @@ public class ItemResource extends Item implements IHasModel {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(@Nonnull CreativeTabs tab, NonNullList<ItemStack> list) {
+    public void getSubItems(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> list) {
         if (this.isInCreativeTab(tab))
             for (int i = 1; i < names.size(); i++) {
                 list.add(new ItemStack(this, 1, i));

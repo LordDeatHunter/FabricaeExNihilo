@@ -47,6 +47,7 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
     }
 
     @Override
+    @Nonnull
     public String getModName() {
         return ExNihiloCreatio.MODID;
     }

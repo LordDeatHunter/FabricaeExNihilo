@@ -18,6 +18,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.client.model.animation.FastTESR;
 
+import javax.annotation.Nullable;
+
 
 public class RenderInfestingLeaves extends FastTESR<TileInfestingLeaves> {
 
@@ -57,7 +59,8 @@ public class RenderInfestingLeaves extends FastTESR<TileInfestingLeaves> {
     }
 
     @Override
-    public void renderTileEntityFast(TileInfestingLeaves te, double x, double y, double z, float partialTicks, int destroyStage, float partial, BufferBuilder buffer) {
+    public void renderTileEntityFast(@Nullable TileInfestingLeaves te, double x, double y, double z, float partialTicks, int destroyStage, float partial, @Nullable BufferBuilder buffer) {
+        if (te == null || buffer == null) return;
         final BlockPos pos = te.getPos();
         final Block block = getWorld().getBlockState(pos).getBlock();
 

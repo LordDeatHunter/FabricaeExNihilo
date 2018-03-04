@@ -28,6 +28,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 
 @SideOnly(Side.CLIENT)
@@ -52,7 +53,8 @@ public class ClientProxy extends CommonProxy {
 
         StateMapperBase ignoreState = new StateMapperBase() {
             @Override
-            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+            @Nonnull
+            protected ModelResourceLocation getModelResourceLocation(@Nonnull IBlockState state) {
                 return InfestedLeavesBakedModel.variantTag;
             }
         };

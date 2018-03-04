@@ -37,6 +37,7 @@ public class FluidOnTopRecipeCategory implements IRecipeCategory<FluidOnTopRecip
     }
 
     @Override
+    @Nonnull
     public String getModName() {
         return ExNihiloCreatio.MODID;
     }

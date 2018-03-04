@@ -3,6 +3,7 @@ package exnihilocreatio.tiles;
 import exnihilocreatio.blocks.BlockInfestingLeaves;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.networking.PacketHandler;
+import exnihilocreatio.util.BlockInfo;
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -51,11 +52,12 @@ public class TileInfestingLeaves extends BaseTileEntity implements ITickable, IT
     }
 
     @Override
-    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
+    public boolean shouldRefresh(World world, BlockPos pos, @Nonnull IBlockState oldState, @Nonnull IBlockState newState) {
         return oldState.getBlock() != newState.getBlock();
     }
 
     @Override
+    @Nonnull
     public AxisAlignedBB getRenderBoundingBox() {
         return INFINITE_EXTENT_AABB;
     }
@@ -87,11 +89,10 @@ public class TileInfestingLeaves extends BaseTileEntity implements ITickable, IT
         progress = tag.getInteger("progress");
 
         if (tag.hasKey("leafBlock") && tag.hasKey("leafBlockMeta")) {
-            try {
-                leafBlock = Block.getBlockFromName(tag.getString("leafBlock")).getStateFromMeta(tag.getInteger("leafBlockMeta"));
-            } catch (Exception e) {
-                leafBlock = Blocks.LEAVES.getDefaultState();
-            }
+            BlockInfo leaves = new BlockInfo(Block.getBlockFromName(tag.getString("leafBlock")), tag.getInteger("leafBlockMeta"));
+            if (leaves.isValid())
+                leafBlock = leaves.getBlockState();
+            else leafBlock = Blocks.LEAVES.getDefaultState();
         } else {
             leafBlock = Blocks.LEAVES.getDefaultState();
         }
