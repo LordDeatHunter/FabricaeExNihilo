@@ -8,8 +8,10 @@ import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.json.CustomItemStackJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
+import exnihilocreatio.registries.types.Compostable;
 import exnihilocreatio.registries.types.CrookReward;
 import exnihilocreatio.util.BlockInfo;
+import exnihilocreatio.util.IngredientUtil;
 import exnihilocreatio.util.OreIngredientStoring;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -19,8 +21,10 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.crafting.CraftingHelper;
 
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<CrookReward>> {
 
@@ -76,8 +80,13 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
 
     public List<CrookReward> getRewards(IBlockState state) {
         BlockInfo info = new BlockInfo(state);
-        NonNullList<CrookReward> list = NonNullList.create();
-        registry.entrySet().stream().filter(ingredient -> ingredient.getKey().test(info.getItemStack())).forEach(ingredient -> list.addAll(ingredient.getValue()));
+        ArrayList<CrookReward> list = new ArrayList<>();
+
+        registry.entrySet()
+                .stream()
+                .filter(ingredient -> ingredient.getKey().test(info.getItemStack()))
+                .forEach(ingredient -> list.addAll(ingredient.getValue()));
+
         return list;
     }
 
@@ -86,14 +95,13 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
         HashMap<String, NonNullList<CrookReward>> gsonInput = gson.fromJson(fr, new TypeToken<HashMap<String, NonNullList<CrookReward>>>() {
         }.getType());
 
-        gsonInput.forEach((key, value) -> { // TODO: Parse into Ingredient/respect "ore:syntax"
-            BlockInfo blockInfo = new BlockInfo(key);
-            Ingredient ingredient = registry.keySet().stream().filter(entry -> entry.test(blockInfo.getItemStack())).findFirst().orElse(null);
+        gsonInput.forEach((key, value) -> {
+            Ingredient ingredient = IngredientUtil.parseFromString(key);
 
             if (ingredient != null) {
-                registry.get(ingredient).addAll(value);
-            } else {
-                registry.put(CraftingHelper.getIngredient(blockInfo.getItemStack()), value);
+                NonNullList<CrookReward> list = registry.getOrDefault(ingredient, NonNullList.create());
+                list.addAll(value);
+                registry.put(ingredient, list);
             }
         });
     }

@@ -9,7 +9,7 @@ import java.util.List;
 public abstract class BaseRegistryList<V> extends BaseRegistry<List<V>> {
 
     public BaseRegistryList(Gson gson, List<? extends IDefaultRecipeProvider> defaultRecipeProviders) {
-        super(gson, new ArrayList<>(), defaultRecipeProviders);
+        super(gson, new ArrayList<>(), null,  defaultRecipeProviders);
     }
 
     @Override

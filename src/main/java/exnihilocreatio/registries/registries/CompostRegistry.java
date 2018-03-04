@@ -56,6 +56,8 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
                         .registerTypeAdapter(Color.class, new CustomColorJson())
                         .enableComplexMapKeySerialization()
                         .create(),
+                new TypeToken<Map<Ingredient, Compostable>>() {
+                }.getType(),
                 ExNihiloRegistryManager.COMPOST_DEFAULT_REGISTRY_PROVIDERS
         );
     }
@@ -103,7 +105,7 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
 
         if (oreRegistry.keySet().stream().anyMatch(entry -> entry.getValidItemStacksPacked().equals(ingredient.getValidItemStacksPacked())))
             LogUtil.error("Compost Ore Entry for " + name + " already exists, skipping.");
-        else oreRegistry.put(ingredient, compostable);
+        else register(ingredient, compostable);
     }
 
     /**
