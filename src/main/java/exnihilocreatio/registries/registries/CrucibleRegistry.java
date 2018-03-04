@@ -4,14 +4,12 @@ import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.crucible.CrucibleRecipe;
+import exnihilocreatio.json.CustomBlockInfoJson;
 import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.registries.manager.IDefaultRecipeProvider;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.Meltable;
-import exnihilocreatio.util.IngredientUtil;
-import exnihilocreatio.util.LogUtil;
-import exnihilocreatio.util.OreIngredientStoring;
-import exnihilocreatio.util.StackInfo;
+import exnihilocreatio.util.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -35,6 +33,7 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
+                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
                         .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
                         .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
                         .enableComplexMapKeySerialization()

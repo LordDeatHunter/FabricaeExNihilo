@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.json.CustomIngredientJson;
+import exnihilocreatio.json.CustomItemStackJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.CrookReward;
@@ -29,6 +30,7 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
+                        .registerTypeAdapter(ItemStack.class, new CustomItemStackJson())
                         .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
                         .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
                         .enableComplexMapKeySerialization()
