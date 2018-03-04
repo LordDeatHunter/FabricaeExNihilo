@@ -127,7 +127,7 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
 
     public NonNullList<HammerReward> getRewards(BlockInfo stackInfo) {
         NonNullList<HammerReward> drops = NonNullList.create();
-        if (!stackInfo.getItemStack().isEmpty())
+        if (stackInfo.isValid())
             registry.entrySet().stream().filter(entry -> entry.getKey().test(stackInfo.getItemStack())).forEach(entry -> drops.addAll(entry.getValue()));
         return drops;
     }

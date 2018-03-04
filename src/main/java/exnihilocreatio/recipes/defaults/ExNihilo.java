@@ -287,10 +287,10 @@ public class ExNihilo implements IRecipeDefaults {
         // Vanilla fluids are weird, the "flowing" variant is simply a temporary state of checking if it can flow.
         // So, once the lava has spread out all the way, it will all actually be "still" lava.
         // Thanks Mojang <3
-        registry.register(new BlockInfo(Blocks.FLOWING_LAVA, -1), 3);
-        registry.register(new BlockInfo(Blocks.LAVA, -1), 3);
-        registry.register(new BlockInfo(Blocks.FIRE, -1), 4);
-        registry.register(new BlockInfo(Blocks.TORCH, -1), 1);
+        registry.register(new BlockInfo(Blocks.FLOWING_LAVA), 3);
+        registry.register(new BlockInfo(Blocks.LAVA), 3);
+        registry.register(new BlockInfo(Blocks.FIRE), 4);
+        registry.register(new BlockInfo(Blocks.TORCH), 1);
     }
 
     public void registerBarrelLiquidBlacklist(BarrelLiquidBlacklistRegistry registry) {
@@ -393,11 +393,12 @@ public class ExNihilo implements IRecipeDefaults {
 
     public static Map<BlockInfo, BlockInfo> getLeavesSapling(){
         Map<BlockInfo, BlockInfo> saplingMap = new LinkedHashMap<>();
+        saplingMap.put(new BlockInfo(Blocks.LEAVES, 0), new BlockInfo(Blocks.SAPLING, 0));
         saplingMap.put(new BlockInfo(Blocks.LEAVES, 1), new BlockInfo(Blocks.SAPLING, 1));
         saplingMap.put(new BlockInfo(Blocks.LEAVES, 2), new BlockInfo(Blocks.SAPLING, 2));
         saplingMap.put(new BlockInfo(Blocks.LEAVES, 3), new BlockInfo(Blocks.SAPLING, 3));
-        saplingMap.put(new BlockInfo(Blocks.LEAVES2, 1), new BlockInfo(Blocks.SAPLING, 4));
-        saplingMap.put(new BlockInfo(Blocks.LEAVES2, 2), new BlockInfo(Blocks.SAPLING, 5));
+        saplingMap.put(new BlockInfo(Blocks.LEAVES2, 0), new BlockInfo(Blocks.SAPLING, 4));
+        saplingMap.put(new BlockInfo(Blocks.LEAVES2, 1), new BlockInfo(Blocks.SAPLING, 5));
 
         return saplingMap;
     }

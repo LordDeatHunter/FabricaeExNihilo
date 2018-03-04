@@ -34,17 +34,17 @@ import java.util.List;
 // Credit goes to >>>> https://github.com/thraaawn/CompactMachines/blob/1.12.1/src/main/java/org/dave/compactmachines3/jei/MultiblockRecipeWrapper.java
 public class HeatSourcesRecipe implements IRecipeWrapper {
     private final List<ItemStack> inputs;
-    private final BlockInfo stackInfo;
+    private final BlockInfo blockInfo;
     private final String heatAmountString;
 
-    public HeatSourcesRecipe(BlockInfo stackInfo, int heatAmount) {
-        this.stackInfo = stackInfo;
+    public HeatSourcesRecipe(BlockInfo blockInfo, int heatAmount) {
+        this.blockInfo = blockInfo;
 
 
-        ItemStack item = stackInfo.getItemStack();
+        ItemStack item = blockInfo.getItemStack();
         if (item.isEmpty()) {
             Fluid fluid = null;
-            Block block = Block.getBlockFromItem(item.getItem());
+            Block block = blockInfo.getBlock();
             if (block instanceof IFluidBlock) {
                 fluid = ((IFluidBlock) block).getFluid();
             }
@@ -139,7 +139,7 @@ public class HeatSourcesRecipe implements IRecipeWrapper {
         GlStateManager.enableCull();
 
         IBlockState crucible = ModBlocks.crucibleStone.getDefaultState().withProperty(BlockCrucibleStone.FIRED, true);
-        IBlockState state = Block.getBlockFromItem(stackInfo.getItemStack().getItem()).getDefaultState();
+        IBlockState state = blockInfo.getBlockState();
 
         BlockPos pos = new BlockPos(0, 0, 0);
         /*if (blockInfo.getBlock() instanceof IFluidBlock || blockInfo.getBlock() instanceof BlockLiquid) {

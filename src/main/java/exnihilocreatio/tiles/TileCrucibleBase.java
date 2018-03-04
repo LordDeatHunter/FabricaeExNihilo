@@ -89,10 +89,10 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
         if (currentItem.isValid()) {
             Meltable meltable = crucibleRegistry.getMeltable(currentItem);
             BlockInfo override = meltable.getTextureOverride();
-            if (override.isValid()) {
+            if (override.isValid())
                 block = override.getBlockState();
-                color = new Color(Minecraft.getMinecraft().getBlockColors().colorMultiplier(block, world, pos, 0), true);
-            }
+            else block = currentItem.getBlockState();
+            color = new Color(Minecraft.getMinecraft().getBlockColors().colorMultiplier(block, world, pos, 0), true);
         }
         if (block != null) {
             spriteColors[0] = new SpriteColor(Util.getTextureFromBlockState(block), color);

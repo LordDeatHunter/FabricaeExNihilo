@@ -93,7 +93,7 @@ public class TileCrucibleStone extends TileCrucibleBase {
             return 0;
         }
 
-        int heat = ExNihiloRegistryManager.HEAT_REGISTRY.getHeatAmount(new BlockInfo(stateBelow));
+        int heat = ExNihiloRegistryManager.HEAT_REGISTRY.getHeatAmount(new BlockInfo(stateBelow.getBlock()));
 
         if (heat != 0) {
             return heat;

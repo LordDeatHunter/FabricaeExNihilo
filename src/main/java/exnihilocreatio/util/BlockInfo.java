@@ -8,6 +8,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -151,4 +152,20 @@ public class BlockInfo extends StackInfo {
         return block.hashCode();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof BlockInfo)
+            return ItemStack.areItemStacksEqual(((BlockInfo) other).getItemStack(), getItemStack());
+        else if (other instanceof ItemInfo)
+            return ItemStack.areItemStacksEqual(((ItemInfo) other).getItemStack(), getItemStack());
+        else if (other instanceof ItemStack)
+            return ItemStack.areItemStacksEqual(((ItemStack) other), getItemStack());
+        else if (other instanceof Block)
+            return Block.isEqualTo((Block) other, block);
+        else if (other instanceof ItemBlock) {
+            return Block.isEqualTo(((ItemBlock) other).getBlock(), block);
+        }
+
+        return false;
+    }
 }

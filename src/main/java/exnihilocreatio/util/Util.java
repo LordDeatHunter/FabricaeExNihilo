@@ -23,6 +23,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
@@ -87,10 +88,7 @@ public class Util {
     }
 
     @SideOnly(Side.CLIENT)
-    public static TextureAtlasSprite getTextureFromBlockState(IBlockState state) {
-        if (state == null)
-            return Minecraft.getMinecraft().getTextureMapBlocks().getMissingSprite();
-
+    public static TextureAtlasSprite getTextureFromBlockState(@Nonnull IBlockState state) {
         return Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(state);
     }
 
