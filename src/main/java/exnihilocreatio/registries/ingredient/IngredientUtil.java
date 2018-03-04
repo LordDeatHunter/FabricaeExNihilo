@@ -1,5 +1,7 @@
-package exnihilocreatio.util;
+package exnihilocreatio.registries.ingredient;
 
+import exnihilocreatio.util.LogUtil;
+import exnihilocreatio.util.Util;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;

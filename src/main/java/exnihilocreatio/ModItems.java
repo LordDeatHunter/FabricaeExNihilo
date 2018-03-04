@@ -1,6 +1,7 @@
 package exnihilocreatio;
 
 import exnihilocreatio.blocks.ItemBlockCrucible;
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.*;
 import exnihilocreatio.items.seeds.ItemSeedBase;
 import exnihilocreatio.items.tools.CrookBase;
@@ -12,8 +13,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.fml.relauncher.Side;
@@ -72,11 +75,30 @@ public class ModItems {
 
         registry.register(new ItemBlockCrucible(ModBlocks.crucibleStone));
 
+        registerOredicts();
+    }
+
+    public static void registerOredicts(){
         OreDictionary.registerOre("clayPorcelain", ItemResource.getResourceStack(ItemResource.PORCELAIN_CLAY));
         OreDictionary.registerOre("gearStone", ItemResource.getResourceStack(ItemResource.GEAR_STONE));
         OreDictionary.registerOre("stickStone", ItemResource.getResourceStack(ItemResource.ROD_STONE));
         OreDictionary.registerOre("rodStone", ItemResource.getResourceStack(ItemResource.ROD_STONE));
 
+        if (ModConfig.misc.oredictVanillaItems){
+            // Flowers:
+            OreDictionary.registerOre("flower", new ItemStack(Blocks.RED_FLOWER, 1, OreDictionary.WILDCARD_VALUE));
+            OreDictionary.registerOre("flower", new ItemStack(Blocks.DOUBLE_PLANT, 1, OreDictionary.WILDCARD_VALUE));
+            OreDictionary.registerOre("flower", new ItemStack(Blocks.YELLOW_FLOWER, 1, OreDictionary.WILDCARD_VALUE));
+
+            // Meat:
+            OreDictionary.registerOre("listAllmeatcooked", Items.COOKED_BEEF);
+            OreDictionary.registerOre("listAllmeatcooked", Items.COOKED_CHICKEN);
+            OreDictionary.registerOre("listAllmeatcooked", new ItemStack(Items.COOKED_FISH, 1, OreDictionary.WILDCARD_VALUE));
+            OreDictionary.registerOre("listAllmeatcooked", Items.COOKED_PORKCHOP);
+            OreDictionary.registerOre("listAllmeatcooked", Items.COOKED_MUTTON);
+            OreDictionary.registerOre("listAllmeatcooked", Items.COOKED_RABBIT);
+
+        }
     }
 
     @SideOnly(Side.CLIENT)
