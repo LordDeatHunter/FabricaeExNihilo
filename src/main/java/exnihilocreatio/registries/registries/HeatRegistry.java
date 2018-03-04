@@ -23,6 +23,7 @@ public class HeatRegistry extends BaseRegistryMap<BlockInfo, Integer> {
                         .setPrettyPrinting()
                         .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
                         .create(),
+                new com.google.gson.reflect.TypeToken<Map<BlockInfo, Integer>>() {}.getType(),
                 ExNihiloRegistryManager.HEAT_DEFAULT_REGISTRY_PROVIDERS
         );
     }

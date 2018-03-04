@@ -38,6 +38,8 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
                         .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
                         .enableComplexMapKeySerialization()
                         .create(),
+                new TypeToken<Map<Ingredient, List<CrookReward>>>() {
+                }.getType(),
                 ExNihiloRegistryManager.CROOK_DEFAULT_REGISTRY_PROVIDERS
         );
     }

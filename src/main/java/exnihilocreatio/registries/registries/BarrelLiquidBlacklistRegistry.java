@@ -5,6 +5,8 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.GsonBuilder;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
+import exnihilocreatio.registries.types.Meltable;
+import net.minecraft.item.crafting.Ingredient;
 
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -14,7 +16,11 @@ import java.util.Map;
 
 public class BarrelLiquidBlacklistRegistry extends BaseRegistryMap<Integer, List<String>> {
     public BarrelLiquidBlacklistRegistry() {
-        super(new GsonBuilder().setPrettyPrinting().create(), ExNihiloRegistryManager.BARREL_LIQUID_BLACKLIST_DEFAULT_REGISTRY_PROVIDERS);
+        super(new GsonBuilder()
+                .setPrettyPrinting()
+                .create(),
+                new com.google.gson.reflect.TypeToken<Map<Integer, List<String>>>() {}.getType(),
+                ExNihiloRegistryManager.BARREL_LIQUID_BLACKLIST_DEFAULT_REGISTRY_PROVIDERS);
     }
 
     @SuppressWarnings("unchecked")

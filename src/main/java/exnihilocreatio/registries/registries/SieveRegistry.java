@@ -10,6 +10,7 @@ import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
+import exnihilocreatio.registries.types.FluidTransformer;
 import exnihilocreatio.registries.types.Siftable;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
@@ -43,6 +44,7 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Sifta
                         .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
                         .enableComplexMapKeySerialization()
                         .create(),
+                new com.google.gson.reflect.TypeToken<Map<Ingredient, List<Siftable>>>() {}.getType(),
                 ExNihiloRegistryManager.SIEVE_DEFAULT_REGISTRY_PROVIDERS
         );
     }

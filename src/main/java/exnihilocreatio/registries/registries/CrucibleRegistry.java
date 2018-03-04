@@ -9,11 +9,9 @@ import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.IDefaultRecipeProvider;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
+import exnihilocreatio.registries.types.CrookReward;
 import exnihilocreatio.registries.types.Meltable;
-import exnihilocreatio.util.BlockInfo;
-import exnihilocreatio.util.ItemInfo;
-import exnihilocreatio.util.LogUtil;
-import exnihilocreatio.util.OreIngredientStoring;
+import exnihilocreatio.util.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -42,6 +40,8 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
                         .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
                         .enableComplexMapKeySerialization()
                         .create(),
+                new TypeToken<Map<Ingredient, Meltable>>() {
+                }.getType(),
                 defaultRecipeProviders
         );
     }
@@ -121,10 +121,13 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
         }.getType());
 
         gsonInput.forEach((key, value) -> { // TODO: Parse into Ingredient/respect "ore:syntax"
-            ItemInfo item = new ItemInfo(key);
-            if (registry.keySet().stream().anyMatch(ingredient -> ingredient.test(item.getItemStack())))
-                LogUtil.error("Compost JSON Entry for " + item.getItemStack().getDisplayName() + " already exists, skipping.");
-            else registry.put(CraftingHelper.getIngredient(item.getItemStack()), value);
+            Ingredient ingredient = IngredientUtil.parseFromString(key);
+
+            //if (registry.keySet().stream().anyMatch(ingredient -> ingredient.test(item.getItemStack())))
+            //    LogUtil.error("Compost JSON Entry for " + item.getItemStack().getDisplayName() + " already exists, skipping.");
+            // else
+
+            registry.put(ingredient, value);
         });
     }
 

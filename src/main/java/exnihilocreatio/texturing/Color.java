@@ -91,4 +91,14 @@ public class Color {
 
         return Objects.hash(r, g, b, a);
     }
+
+    @Override
+    public String toString() {
+        return "Color{" +
+                "r=" + r +
+                ", g=" + g +
+                ", b=" + b +
+                ", a=" + a +
+                '}';
+    }
 }

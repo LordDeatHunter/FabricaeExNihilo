@@ -9,6 +9,7 @@ import exnihilocreatio.json.CustomItemStackJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.HammerReward;
+import exnihilocreatio.registries.types.Siftable;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.OreIngredientStoring;
 import net.minecraft.block.Block;
@@ -32,6 +33,7 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
                         .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
                         .enableComplexMapKeySerialization()
                         .create(),
+                new com.google.gson.reflect.TypeToken<Map<Ingredient, List<HammerReward>>>() {}.getType(),
                 ExNihiloRegistryManager.HAMMER_DEFAULT_REGISTRY_PROVIDERS
         );
     }

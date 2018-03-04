@@ -9,6 +9,7 @@ import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.Compostable;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.tiles.TileBarrel;
+import exnihilocreatio.util.ColorStealer;
 import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.Util;
 import lombok.Getter;
@@ -19,6 +20,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -28,6 +30,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
@@ -70,6 +74,7 @@ public class BarrelModeCompost implements IBarrelMode {
         }
         if (fillAmount < 1 && compostState != null) {
             if (!player.getHeldItem(hand).isEmpty()) {
+                ItemStack stack = player.getHeldItem(hand);
                 ItemInfo info = ItemInfo.getItemInfoFromStack(player.getHeldItem(hand));
                 Compostable comp = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(info);
 
@@ -80,15 +85,19 @@ public class BarrelModeCompost implements IBarrelMode {
 
                 if (ExNihiloRegistryManager.COMPOST_REGISTRY.containsItem(info) && compostState.equals(testState)) {
                     Compostable compost = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(info);
-                    Color compColor = compost.getColor();
-                    if (compColor.equals(Color.INVALID_COLOR)) {
-                        compColor = new Color(Minecraft.getMinecraft().getItemColors().colorMultiplier(player.getHeldItemMainhand(), 0));
-                    }
 
-                    if (fillAmount == 0)
-                        color = compColor;
-                    else
-                        color = Color.average(color, compColor, compost.getValue());
+                    if (FMLCommonHandler.instance().getSide() == Side.CLIENT && false){
+                        Color compColor = compost.getColor();
+                        if (compColor.equals(Color.INVALID_COLOR)) {
+                            // compColor = new Color(Minecraft.getMinecraft().getItemColors().colorMultiplier(player.getHeldItemMainhand(), 0));
+                            compColor = ColorStealer.getColor(stack);
+                        }
+
+                        if (fillAmount == 0)
+                            color = compColor;
+                        else
+                            color = Color.average(color, compColor, compost.getValue());
+                    }
 
                     fillAmount += compost.getValue();
                     if (fillAmount > 1)

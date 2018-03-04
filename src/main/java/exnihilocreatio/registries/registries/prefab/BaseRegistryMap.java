@@ -10,10 +10,6 @@ import java.util.Map;
 
 public abstract class BaseRegistryMap<K, V> extends BaseRegistry<Map<K, V>> {
 
-    public BaseRegistryMap(Gson gson, List<? extends IDefaultRecipeProvider> defaultRecipeProviders) {
-        super(gson, new HashMap<>(), null, defaultRecipeProviders);
-    }
-
     public BaseRegistryMap(Gson gson, Type typeOfSource, List<? extends IDefaultRecipeProvider> defaultRecipeProviders) {
         super(gson, new HashMap<>(), typeOfSource,   defaultRecipeProviders);
     }
