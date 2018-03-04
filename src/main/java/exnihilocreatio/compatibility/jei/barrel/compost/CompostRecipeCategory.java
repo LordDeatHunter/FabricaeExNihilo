@@ -65,47 +65,6 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
         }
     }
 
-    private void setRecipe(IRecipeLayout layout, CompostRecipe recipe) {
-        // BlockStoneAxle
-        layout.getItemStacks().init(0, false, 74, 9);
-        layout.getItemStacks().set(0, recipe.getOutputs().get(0));
-
-        IFocus<?> focus = layout.getFocus();
-
-        boolean mightHaveHighlight = false;
-        ItemStack focusStack = ItemStack.EMPTY;
-
-        if (focus != null) {
-            mightHaveHighlight = focus.getMode() == IFocus.Mode.INPUT;
-            hasHighlight = false;
-
-            focusStack = (ItemStack) focus.getValue();
-        }
-
-        int slotIndex = 1;
-
-        for (int i = 0; i < recipe.getInputs().size(); i++) {
-            final int slotX = 2 + (i % 9 * 18);
-            final int slotY = 36 + (i / 9 * 18);
-
-            ItemStack inputStack = recipe.getInputs().get(i);
-
-            layout.getItemStacks().init(slotIndex + i, true, slotX, slotY);
-            layout.getItemStacks().set(slotIndex + i, inputStack);
-
-            if (focus != null && mightHaveHighlight && ItemStack.areItemsEqual(focusStack, inputStack)) {
-                highlightX = slotX;
-                highlightY = slotY;
-
-                hasHighlight = true;
-                mightHaveHighlight = false;
-            }
-        }
-
-
-        layout.getItemStacks().addTooltipCallback(new CompostTooltipCallback());
-    }
-
     @Override
     public void setRecipe(@Nonnull IRecipeLayout layout, @Nonnull CompostRecipe recipe, @Nonnull IIngredients ingredients) {
         layout.getItemStacks().init(0, false, 74, 9);
@@ -122,6 +81,7 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
 
             focusStack = (ItemStack) focus.getValue();
         }
+        final ItemStack finalFocus = focusStack;
 
         int slotIndex = 1;
 
@@ -129,12 +89,12 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
             final int slotX = 2 + (i % 9 * 18);
             final int slotY = 36 + (i / 9 * 18);
 
-            ItemStack inputStack = recipe.getInputs().get(i);
+            List<ItemStack> inputStack = recipe.getInputs().get(i);
 
             layout.getItemStacks().init(slotIndex + i, true, slotX, slotY);
             layout.getItemStacks().set(slotIndex + i, inputStack);
 
-            if (focus != null && mightHaveHighlight && ItemStack.areItemsEqual(focusStack, inputStack)) {
+            if (focus != null && mightHaveHighlight && inputStack.stream().anyMatch(item -> ItemStack.areItemsEqual(finalFocus, item))) {
                 highlightX = slotX;
                 highlightY = slotY;
 

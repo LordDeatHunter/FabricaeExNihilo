@@ -25,6 +25,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.function.BiPredicate;
 
 import static java.lang.Math.round;
 
@@ -181,6 +182,28 @@ public class Util {
     public static boolean isLeaves(IBlockState state) {
         ItemStack itemStack = new ItemStack(state.getBlock());
         return OreDictionary.getOres("treeLeaves").stream().anyMatch(stack1 -> Util.compareItemStack(stack1, itemStack));
+    }
+
+    public static <T, U>boolean arrayEqualsPredicate(T[] a, U[] a2, BiPredicate<T, U> predicate) {
+        if (a==a2)
+            return true;
+
+        if (a==null || a2==null)
+            return false;
+
+        int length = a.length;
+        if (a2.length != length)
+            return false;
+
+        for (int i=0; i<length; i++) {
+            T o1 = a[i];
+            U o2 = a2[i];
+
+            if (!(o1==null ? o2==null : predicate.test(o1, o2)))
+                return false;
+        }
+
+        return true;
     }
 
 }

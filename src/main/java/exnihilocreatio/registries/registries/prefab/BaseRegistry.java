@@ -10,6 +10,7 @@ import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.lang.reflect.Type;
 import java.util.List;
 
 public abstract class BaseRegistry<RegType> {
@@ -19,9 +20,13 @@ public abstract class BaseRegistry<RegType> {
     @Getter
     protected RegType registry;
 
-    public BaseRegistry(Gson gson, RegType registry, @Nonnull List<? extends IDefaultRecipeProvider> defaultRecipeProviders) {
+    @Getter
+    protected Type typeOfSource;
+
+    public BaseRegistry(Gson gson, RegType registry, Type typeOfSource, @Nonnull List<? extends IDefaultRecipeProvider> defaultRecipeProviders) {
         this.gson = gson;
         this.registry = registry;
+        this.typeOfSource = typeOfSource;
         this.defaultRecipeProviders = defaultRecipeProviders;
     }
 
@@ -29,8 +34,12 @@ public abstract class BaseRegistry<RegType> {
         FileWriter fw = null;
         try {
             fw = new FileWriter(file);
-
-            gson.toJson(registry, fw);
+            // TODO remove null again
+            if (typeOfSource != null) {
+                gson.toJson(registry, typeOfSource, fw);
+            } else {
+                gson.toJson(registry, fw);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

@@ -9,7 +9,6 @@ import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.util.BlockInfo;
-import exnihilocreatio.util.IStackInfo;
 import exnihilocreatio.util.ItemInfo;
 import net.minecraft.item.ItemStack;
 
@@ -18,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HeatRegistry extends BaseRegistryMap<IStackInfo, Integer> {
+public class HeatRegistry extends BaseRegistryMap<BlockInfo, Integer> {
 
     public HeatRegistry() {
         super(
@@ -27,11 +26,12 @@ public class HeatRegistry extends BaseRegistryMap<IStackInfo, Integer> {
                         .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
                         .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
                         .create(),
+                new com.google.gson.reflect.TypeToken<Map<BlockInfo, Integer>>() {}.getType(),
                 ExNihiloRegistryManager.HEAT_DEFAULT_REGISTRY_PROVIDERS
         );
     }
 
-    public void register(IStackInfo info, int heatAmount) {
+    public void register(BlockInfo info, int heatAmount) {
         registry.put(info, heatAmount);
     }
 
@@ -43,7 +43,7 @@ public class HeatRegistry extends BaseRegistryMap<IStackInfo, Integer> {
         return registry.get(new BlockInfo(stack));
     }
 
-    public int getHeatAmount(IStackInfo info) {
+    public int getHeatAmount(BlockInfo info) {
         if (registry.containsKey(info))
             return registry.get(info);
 

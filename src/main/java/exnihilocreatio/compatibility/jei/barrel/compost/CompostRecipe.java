@@ -1,32 +1,31 @@
 package exnihilocreatio.compatibility.jei.barrel.compost;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import exnihilocreatio.util.IStackInfo;
+import exnihilocreatio.util.BlockInfo;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.Collections;
 import java.util.List;
 
 public class CompostRecipe implements IRecipeWrapper {
-    private final List<ItemStack> inputs;
+    private final List<List<ItemStack>> inputs;
     private final List<ItemStack> output;
-
-    public CompostRecipe(IStackInfo output, List<ItemStack> inputs) {
+    public CompostRecipe(BlockInfo output, List<List<ItemStack>> inputs) {
         this.inputs = inputs;
-        this.output = ImmutableList.of(output.getItemStack());
+        this.output = Collections.singletonList(output.getItemStack());
     }
 
     @Override
     public void getIngredients(@Nonnull IIngredients ingredients) {
-        ingredients.setInputs(ItemStack.class, inputs);
+        ingredients.setInputLists(ItemStack.class, inputs);
         ingredients.setOutput(ItemStack.class, output);
     }
 
-    public List<ItemStack> getInputs() {
+    public List<List<ItemStack>> getInputs() {
         return inputs;
     }
 

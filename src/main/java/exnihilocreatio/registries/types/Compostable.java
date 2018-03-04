@@ -2,7 +2,6 @@ package exnihilocreatio.registries.types;
 
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.BlockInfo;
-import exnihilocreatio.util.IStackInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -19,5 +18,5 @@ public class Compostable {
     private Color color;
     @Getter
     @Nonnull
-    private IStackInfo compostBlock;
+    private BlockInfo compostBlock;
 }

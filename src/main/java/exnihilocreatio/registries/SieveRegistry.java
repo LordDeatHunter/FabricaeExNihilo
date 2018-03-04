@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.Siftable;
 import exnihilocreatio.util.BlockInfo;
-import exnihilocreatio.util.IStackInfo;
 import exnihilocreatio.util.ItemInfo;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -17,11 +16,11 @@ import java.util.Random;
 @Deprecated
 public class SieveRegistry {
 
-    public static void register(IStackInfo block, IStackInfo drop, float chance, int meshLevel) {
+    public static void register(BlockInfo block, ItemInfo drop, float chance, int meshLevel) {
         register(block, new Siftable(drop, chance, meshLevel));
     }
 
-    public static void register(IBlockState state, IStackInfo drop, float chance, int meshLevel) {
+    public static void register(IBlockState state, ItemInfo drop, float chance, int meshLevel) {
         register(new BlockInfo(state), new Siftable(drop, chance, meshLevel));
     }
 
@@ -29,7 +28,7 @@ public class SieveRegistry {
         register(new BlockInfo(state), new Siftable(new ItemInfo(drop), chance, meshLevel));
     }
 
-    public static void register(IStackInfo block, Siftable drop) {
+    public static void register(BlockInfo block, Siftable drop) {
         ExNihiloRegistryManager.SIEVE_REGISTRY.register(CraftingHelper.getIngredient(block.getItemStack()), drop);
     }
 
@@ -41,7 +40,7 @@ public class SieveRegistry {
      * @return ArrayList of {@linkplain exnihilocreatio.registries.types.Siftable}
      * that could *potentially* be dropped.
      */
-    public static ArrayList<Siftable> getDrops(IStackInfo block) {
+    public static ArrayList<Siftable> getDrops(BlockInfo block) {
         return (ArrayList<Siftable>) ExNihiloRegistryManager.SIEVE_REGISTRY.getDrops(block);
     }
 

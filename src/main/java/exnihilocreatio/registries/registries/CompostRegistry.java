@@ -5,16 +5,14 @@ import com.google.common.collect.Maps;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.barrel.compost.CompostRecipe;
-import exnihilocreatio.json.CustomBlockInfoJson;
-import exnihilocreatio.json.CustomItemInfoJson;
+import exnihilocreatio.json.CustomColorJson;
+import exnihilocreatio.json.CustomCompostableJson;
+import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.Compostable;
 import exnihilocreatio.texturing.Color;
-import exnihilocreatio.util.BlockInfo;
-import exnihilocreatio.util.IStackInfo;
-import exnihilocreatio.util.ItemInfo;
-import exnihilocreatio.util.LogUtil;
+import exnihilocreatio.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -36,10 +34,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
 
@@ -49,9 +47,14 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
-                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
+                        .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
+                        .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
+                        .registerTypeAdapter(Compostable.class, new CustomCompostableJson())
+                        .registerTypeAdapter(Color.class, new CustomColorJson())
+                        .enableComplexMapKeySerialization()
                         .create(),
+                new TypeToken<Map<Ingredient, Compostable>>() {
+                }.getType(),
                 ExNihiloRegistryManager.COMPOST_DEFAULT_REGISTRY_PROVIDERS
         );
     }
@@ -66,7 +69,7 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
             LogUtil.error("Compost Entry for " + itemStack.getItem().getRegistryName() + " with meta " + itemStack.getMetadata() + " already exists, skipping.");
             return;
         }
-        Compostable compostable = new Compostable(value, color, new ItemInfo(state));
+        Compostable compostable = new Compostable(value, color, new BlockInfo(state));
         register(ingredient, compostable);
     }
 
@@ -78,7 +81,7 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
         register(new ItemStack(block, 1, meta), value, state, color);
     }
 
-    public void register(IStackInfo item, float value, IBlockState state, Color color) {
+    public void register(StackInfo item, float value, IBlockState state, Color color) {
         register(item.getItemStack(), value, state, color);
     }
 
@@ -87,15 +90,22 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
     }
 
     public void register(String name, float value, IBlockState state, Color color) {
-        Ingredient ingredient = CraftingHelper.getIngredient(name);
-        if (ingredient == null || ingredient.getMatchingStacks().length == 0)
+        Ingredient ingredient = new OreIngredientStoring(name);
+        if (ingredient.getMatchingStacks().length == 0)
             return;
 
-        Compostable compostable = new Compostable(value, color, new ItemInfo(state));
+        Compostable compostable = new Compostable(value, color, new BlockInfo(state));
 
         if (oreRegistry.keySet().stream().anyMatch(entry -> entry.getValidItemStacksPacked().equals(ingredient.getValidItemStacksPacked())))
             LogUtil.error("Compost Ore Entry for " + name + " already exists, skipping.");
-        else oreRegistry.put(ingredient, compostable);
+        else register(ingredient, compostable);
+    }
+
+    /**
+     * Registers a oredict for sifting with a dynamic color based on the itemColor
+     */
+    public void register(String name, float value, IBlockState state) {
+        register(name, value, state, Color.INVALID_COLOR);
     }
 
     public Compostable getItem(Item item, int meta) {
@@ -110,7 +120,7 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
         else return Compostable.EMPTY;
     }
 
-    public Compostable getItem(IStackInfo info) {
+    public Compostable getItem(StackInfo info) {
         return getItem(info.getItemStack());
     }
 
@@ -122,7 +132,7 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
         return registry.keySet().stream().anyMatch(entry -> entry.test(stack)) || oreRegistry.keySet().stream().anyMatch(entry -> entry.test(stack));
     }
 
-    public boolean containsItem(IStackInfo info) {
+    public boolean containsItem(StackInfo info) {
         return containsItem(info.getItemStack());
     }
 
@@ -172,10 +182,12 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
         }.getType());
 
         for (Map.Entry<String, Compostable> entry : gsonInput.entrySet()) {
-            ItemInfo item = new ItemInfo(entry.getKey());
-            if (registry.keySet().stream().anyMatch(ingredient -> ingredient.test(item.getItemStack())))
-                LogUtil.error("Compost JSON Entry for " + item.getItemStack().getDisplayName() + " already exists, skipping.");
-            else registry.put(CraftingHelper.getIngredient(item.getItemStack()), entry.getValue());
+            Ingredient ingr = IngredientUtil.parseFromString(entry.getKey());
+
+            if (registry.keySet().stream().anyMatch(ingredient -> IngredientUtil.ingredientEquals(ingredient, ingr)))
+                LogUtil.error("Compost JSON Entry for " + entry.getKey() + " already exists, skipping.");
+            else
+                register(ingr, entry.getValue());
         }
     }
 
@@ -187,44 +199,45 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
         return map;
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public List<CompostRecipe> getRecipeList() {
-        List<CompostRecipe> compostRecipes = Lists.newLinkedList();
+        List<CompostRecipe> compostRecipePages = new ArrayList<>();
 
         getRegistry().forEach((key, value) -> {
-            IStackInfo compostBlock = value.getCompostBlock();
+            BlockInfo compostBlock = value.getCompostBlock();
             List<ItemStack> compostables = Lists.newLinkedList();
             int compostCount = (int) Math.ceil(1.0F / value.getValue());
-            Stream.of(key.getMatchingStacks()).forEach(stack -> {
+
+            for (ItemStack stack : key.getMatchingStacks()) {
                 if (compostables.stream().noneMatch(stack::isItemEqual)) {
                     ItemStack copy = stack.copy();
                     copy.setCount(compostCount);
                     compostables.add(copy);
                 }
-            });
+            }
 
-            CompostRecipe recipe = compostRecipes.stream()
+            CompostRecipe recipe = compostRecipePages.stream()
                     .filter(compostRecipe -> compostRecipe.outputMatch(compostBlock.getItemStack())
                             && compostRecipe.isNonFull())
                     .findFirst()
                     .orElse(null);
+
             if (recipe == null) {
-                recipe = new CompostRecipe(compostBlock, Lists.newLinkedList());
-                compostRecipes.add(recipe);
+                recipe = new CompostRecipe(compostBlock, new ArrayList<>());
+                compostRecipePages.add(recipe);
             }
 
             //This acts as a safety net, auto creating new recipes if the input list is larger than 45
-            for (ItemStack stack : compostables) {
-                if (recipe.isNonFull()) {
-                    recipe.getInputs().add(stack);
-                } else {
-                    recipe = new CompostRecipe(compostBlock, Lists.newLinkedList());
-                    recipe.getInputs().add(stack);
-                    compostRecipes.add(recipe);
-                }
+            if (recipe.isNonFull()) {
+                recipe.getInputs().add(compostables);
+            } else {
+                recipe = new CompostRecipe(compostBlock, Lists.newLinkedList());
+                recipe.getInputs().add(compostables);
+                compostRecipePages.add(recipe);
             }
         });
 
-        return compostRecipes;
+        return compostRecipePages;
     }
 }

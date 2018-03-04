@@ -1,6 +1,6 @@
 package exnihilocreatio.registries.types;
 
-import exnihilocreatio.util.IStackInfo;
+import exnihilocreatio.util.BlockInfo;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -16,5 +16,5 @@ public class FluidFluidBlock {
     private String fluidOnTop;
 
     @Getter
-    private IStackInfo result;
+    private BlockInfo result;
 }

@@ -1,13 +1,13 @@
 package exnihilocreatio.registries;
 
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
-import exnihilocreatio.util.IStackInfo;
+import exnihilocreatio.util.BlockInfo;
 import net.minecraft.item.ItemStack;
 
 @Deprecated
 public class HeatRegistry {
 
-    public static void register(IStackInfo info, int heatAmount) {
+    public static void register(BlockInfo info, int heatAmount) {
         ExNihiloRegistryManager.HEAT_REGISTRY.register(info, heatAmount);
     }
 
@@ -15,7 +15,7 @@ public class HeatRegistry {
         return ExNihiloRegistryManager.HEAT_REGISTRY.getHeatAmount(stack);
     }
 
-    public static int getHeatAmount(IStackInfo info) {
+    public static int getHeatAmount(BlockInfo info) {
         return ExNihiloRegistryManager.HEAT_REGISTRY.getHeatAmount(info);
     }
 }

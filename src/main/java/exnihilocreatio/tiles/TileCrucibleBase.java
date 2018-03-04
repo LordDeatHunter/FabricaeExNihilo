@@ -5,7 +5,6 @@ import exnihilocreatio.registries.types.Meltable;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.texturing.SpriteColor;
 import exnihilocreatio.util.BlockInfo;
-import exnihilocreatio.util.IStackInfo;
 import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.Util;
 import lombok.Getter;
@@ -42,7 +41,7 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
 
     @Getter
     @Nonnull
-    protected IStackInfo currentItem = BlockInfo.EMPTY;
+    protected ItemInfo currentItem = ItemInfo.EMPTY;
     protected int ticksSinceLast = 0;
 
     @Getter
@@ -218,7 +217,7 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
         if (tag.hasKey("currentItem")) {
             currentItem = ItemInfo.readFromNBT(tag.getCompoundTag("currentItem"));
         } else {
-            currentItem = BlockInfo.EMPTY;
+            currentItem = ItemInfo.EMPTY;
         }
 
         solidAmount = tag.getInteger("solidAmount");

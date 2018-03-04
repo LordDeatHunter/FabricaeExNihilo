@@ -4,12 +4,14 @@ import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.hammer.HammerRecipe;
+import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.json.CustomItemStackJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.HammerReward;
 import exnihilocreatio.util.BlockInfo;
-import exnihilocreatio.util.IStackInfo;
+import exnihilocreatio.util.OreIngredientStoring;
+import exnihilocreatio.util.StackInfo;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -27,7 +29,11 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
                 new GsonBuilder()
                         .setPrettyPrinting()
                         .registerTypeAdapter(ItemStack.class, new CustomItemStackJson())
+                        .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
+                        .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
+                        .enableComplexMapKeySerialization()
                         .create(),
+                new com.google.gson.reflect.TypeToken<Map<Ingredient, List<HammerReward>>>() {}.getType(),
                 ExNihiloRegistryManager.HAMMER_DEFAULT_REGISTRY_PROVIDERS
         );
     }
@@ -37,7 +43,7 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
         HashMap<String, ArrayList<HammerReward>> gsonInput = gson.fromJson(fr, new TypeToken<HashMap<String, ArrayList<HammerReward>>>() {
         }.getType());
 
-        for (Map.Entry<String, ArrayList<HammerReward>> s : gsonInput.entrySet()) {
+        for (Map.Entry<String, ArrayList<HammerReward>> s : gsonInput.entrySet()) {// TODO: Parse into Ingredient/respect "ore:syntax"
             BlockInfo stack = new BlockInfo(s.getKey());
             Ingredient ingredient = CraftingHelper.getIngredient(stack.getItemStack());
             Ingredient search = registry.keySet().stream().filter(entry -> entry.getValidItemStacksPacked().equals(ingredient.getValidItemStacksPacked())).findAny().orElse(null);
@@ -68,7 +74,7 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
         register(new ItemStack(block, 1, meta), new HammerReward(reward, miningLevel, chance, fortuneChance));
     }
 
-    public void register(IStackInfo stackInfo, ItemStack reward, int miningLevel, float chance, float fortuneChance) {
+    public void register(StackInfo stackInfo, ItemStack reward, int miningLevel, float chance, float fortuneChance) {
         register(stackInfo.getItemStack(), new HammerReward(reward, miningLevel, chance, fortuneChance));
     }
 
@@ -80,8 +86,8 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
     }
 
     public void register(String name, ItemStack reward, int miningLevel, float chance, float fortuneChance) {
-        Ingredient ingredient = CraftingHelper.getIngredient(name);
-        if (ingredient == null || ingredient.getMatchingStacks().length == 0)
+        Ingredient ingredient = new OreIngredientStoring(name);
+        if (ingredient.getMatchingStacks().length == 0)
             return;
         register(ingredient, new HammerReward(reward, miningLevel, chance, fortuneChance));
     }
@@ -119,7 +125,7 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
         return getRewards(new BlockInfo(block, meta));
     }
 
-    public NonNullList<HammerReward> getRewards(IStackInfo stackInfo) {
+    public NonNullList<HammerReward> getRewards(BlockInfo stackInfo) {
         NonNullList<HammerReward> drops = NonNullList.create();
         if (!stackInfo.getItemStack().isEmpty())
             registry.entrySet().stream().filter(entry -> entry.getKey().test(stackInfo.getItemStack())).forEach(entry -> drops.addAll(entry.getValue()));
@@ -140,7 +146,7 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
         return isRegistered(new BlockInfo(block));
     }
 
-    public boolean isRegistered(IStackInfo stackInfo) {
+    public boolean isRegistered(BlockInfo stackInfo) {
         return registry.keySet().stream().anyMatch(ingredient -> ingredient.test(stackInfo.getItemStack()));
     }
 

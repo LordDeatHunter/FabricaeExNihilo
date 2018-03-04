@@ -14,7 +14,11 @@ import java.util.Map;
 
 public class BarrelLiquidBlacklistRegistry extends BaseRegistryMap<Integer, List<String>> {
     public BarrelLiquidBlacklistRegistry() {
-        super(new GsonBuilder().setPrettyPrinting().create(), ExNihiloRegistryManager.BARREL_LIQUID_BLACKLIST_DEFAULT_REGISTRY_PROVIDERS);
+        super(new GsonBuilder()
+                .setPrettyPrinting()
+                .create(),
+                new com.google.gson.reflect.TypeToken<Map<Integer, List<String>>>() {}.getType(),
+                ExNihiloRegistryManager.BARREL_LIQUID_BLACKLIST_DEFAULT_REGISTRY_PROVIDERS);
     }
 
     @SuppressWarnings("unchecked")

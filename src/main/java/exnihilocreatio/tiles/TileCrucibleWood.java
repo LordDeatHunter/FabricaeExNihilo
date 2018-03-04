@@ -2,7 +2,6 @@ package exnihilocreatio.tiles;
 
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
-import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.TankUtil;
 import net.minecraft.block.state.IBlockState;
@@ -49,7 +48,7 @@ public class TileCrucibleWood extends TileCrucibleBase {
                     solidAmount = crucibleRegistry.getMeltable(currentItem).getAmount();
                 } else {
                     if (currentItem.isValid()) {
-                        currentItem = BlockInfo.EMPTY;
+                        currentItem = ItemInfo.EMPTY;
 
                         markDirtyClient();
                     }

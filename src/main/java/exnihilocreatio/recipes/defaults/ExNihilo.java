@@ -15,7 +15,6 @@ import exnihilocreatio.registries.registries.*;
 import exnihilocreatio.registries.types.Meltable;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.BlockInfo;
-import exnihilocreatio.util.IStackInfo;
 import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.Util;
 import lombok.Getter;
@@ -42,6 +41,7 @@ public class ExNihilo implements IRecipeDefaults {
 
         registry.register(new ItemInfo(Items.ROTTEN_FLESH, 0), 0.1f, dirtState, new Color("C45631"));
 
+        /*
         registry.register(new BlockInfo(Blocks.SAPLING, 0), 0.125f, dirtState, new Color("35A82A"));
         registry.register(new BlockInfo(Blocks.SAPLING, 1), 0.125f, dirtState, new Color("2E8042"));
         registry.register(new BlockInfo(Blocks.SAPLING, 2), 0.125f, dirtState, new Color("6CC449"));
@@ -55,6 +55,7 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register(new BlockInfo(Blocks.LEAVES, 3), 0.125f, dirtState, new Color("22A116"));
         registry.register(new BlockInfo(Blocks.LEAVES2, 0), 0.125f, dirtState, new Color("B8C754"));
         registry.register(new BlockInfo(Blocks.LEAVES2, 1), 0.125f, dirtState, new Color("378030"));
+        */
 
         registry.register(new ItemInfo(Items.SPIDER_EYE, 0), 0.08f, dirtState, new Color("963E44"));
 
@@ -126,8 +127,9 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register(new ItemInfo(Items.STRING, 0), 0.04f, dirtState, Util.whiteColor);
 
         //Register any missed items
-        registry.register("treeSapling", 0.125f, dirtState, new Color("35A82A"));
-        registry.register("treeLeaves", 0.125f, dirtState, new Color("35A82A"));
+        registry.register("treeSapling", 0.125f, dirtState);
+        registry.register("treeLeaves", 0.125f, dirtState);
+
         registry.register("listAllfruit", 0.10f, dirtState, new Color("35A82A"));
         registry.register("listAllveggie", 0.10f, dirtState, new Color("FFF1B5"));
         registry.register("listAllGrain", 0.08f, dirtState, new Color("E3E162"));
@@ -298,8 +300,8 @@ public class ExNihilo implements IRecipeDefaults {
     }
 
     public void registerFluidOnTop(FluidOnTopRegistry registry) {
-        registry.register(FluidRegistry.LAVA, FluidRegistry.WATER, new ItemInfo(Blocks.OBSIDIAN.getDefaultState()));
-        registry.register(FluidRegistry.WATER, FluidRegistry.LAVA, new ItemInfo(Blocks.COBBLESTONE.getDefaultState()));
+        registry.register(FluidRegistry.LAVA, FluidRegistry.WATER, new BlockInfo(Blocks.OBSIDIAN.getDefaultState()));
+        registry.register(FluidRegistry.WATER, FluidRegistry.LAVA, new BlockInfo(Blocks.COBBLESTONE.getDefaultState()));
     }
 
     public void registerOreChunks(OreRegistry registry) {
@@ -389,8 +391,8 @@ public class ExNihilo implements IRecipeDefaults {
         else return chance / 100f * (float) ModConfig.world.normalDropPercent;
     }
 
-    public static Map<IStackInfo, IStackInfo> getLeavesSapling(){
-        Map<IStackInfo, IStackInfo> saplingMap = new LinkedHashMap<>();
+    public static Map<BlockInfo, BlockInfo> getLeavesSapling(){
+        Map<BlockInfo, BlockInfo> saplingMap = new LinkedHashMap<>();
         saplingMap.put(new BlockInfo(Blocks.LEAVES, 1), new BlockInfo(Blocks.SAPLING, 1));
         saplingMap.put(new BlockInfo(Blocks.LEAVES, 2), new BlockInfo(Blocks.SAPLING, 2));
         saplingMap.put(new BlockInfo(Blocks.LEAVES, 3), new BlockInfo(Blocks.SAPLING, 3));

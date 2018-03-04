@@ -1,9 +1,11 @@
 package exnihilocreatio.items.ore;
 
 import exnihilocreatio.texturing.Color;
-import exnihilocreatio.util.IStackInfo;
+import exnihilocreatio.util.ItemInfo;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+
+import java.util.HashMap;
 
 @EqualsAndHashCode
 public class Ore {
@@ -13,12 +15,18 @@ public class Ore {
     @Getter
     private Color color;
     @Getter
-    private IStackInfo result;
+    private ItemInfo result;
+    @Getter
+    private HashMap<String, String> translations;
+    @Getter
+    private String oredictName;
 
-    public Ore(String name, Color color, IStackInfo result) {
+    public Ore(String name, Color color, ItemInfo result, HashMap<String, String> translations, String oredictName) {
         this.name = name;
         this.color = color;
         this.result = result;
+        this.translations = translations;
+        this.oredictName = oredictName;
     }
 
 }

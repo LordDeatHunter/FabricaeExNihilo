@@ -47,7 +47,7 @@ public class TileCrucibleStone extends TileCrucibleBase {
                     solidAmount = crucibleRegistry.getMeltable(currentItem).getAmount();
                 } else {
                     if (currentItem.isValid()) {
-                        currentItem = BlockInfo.EMPTY;
+                        currentItem = ItemInfo.EMPTY;
 
                         PacketHandler.sendNBTUpdate(this);
                     }

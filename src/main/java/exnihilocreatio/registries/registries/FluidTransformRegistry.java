@@ -19,6 +19,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class FluidTransformRegistry extends BaseRegistryMap<String, List<FluidTransformer>> {
     public FluidTransformRegistry() {
@@ -27,6 +28,7 @@ public class FluidTransformRegistry extends BaseRegistryMap<String, List<FluidTr
                         .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
                         .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
                         .create(),
+                new com.google.gson.reflect.TypeToken<Map<String, List<FluidTransformer>>>() {}.getType(),
                 ExNihiloRegistryManager.FLUID_TRANSFORM_DEFAULT_REGISTRY_PROVIDERS);
     }
 

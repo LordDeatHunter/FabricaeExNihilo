@@ -3,15 +3,13 @@ package exnihilocreatio.registries.registries;
 import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import exnihilocreatio.json.CustomBlockInfoJson;
-import exnihilocreatio.json.CustomItemInfoJson;
-import exnihilocreatio.json.CustomItemStackJson;
+import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.CrookReward;
 import exnihilocreatio.util.BlockInfo;
-import exnihilocreatio.util.IStackInfo;
-import exnihilocreatio.util.ItemInfo;
+import exnihilocreatio.util.IngredientUtil;
+import exnihilocreatio.util.OreIngredientStoring;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -20,8 +18,10 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.crafting.CraftingHelper;
 
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<CrookReward>> {
 
@@ -29,10 +29,12 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(ItemStack.class, new CustomItemStackJson())
-                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
-                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
+                        .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
+                        .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
+                        .enableComplexMapKeySerialization()
                         .create(),
+                new TypeToken<Map<Ingredient, List<CrookReward>>>() {
+                }.getType(),
                 ExNihiloRegistryManager.CROOK_DEFAULT_REGISTRY_PROVIDERS
         );
     }
@@ -41,7 +43,11 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
         register(new BlockInfo(block, meta), reward, chance, fortuneChance);
     }
 
-    public void register(IStackInfo info, ItemStack reward, float chance, float fortuneChance) {
+    public void register(IBlockState state, ItemStack reward, float chance, float fortuneChance) {
+        register(new BlockInfo(state), reward, chance, fortuneChance);
+    }
+
+    public void register(BlockInfo info, ItemStack reward, float chance, float fortuneChance) {
         Ingredient ingredient = registry.keySet().stream().filter(entry -> entry.test(info.getItemStack())).findFirst().orElse(null);
 
         if (ingredient != null) {
@@ -54,8 +60,8 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
     }
 
     public void register(String name, ItemStack reward, float chance, float fortuneChance) {
-        Ingredient ingredient = CraftingHelper.getIngredient(name);
-        if (ingredient == null || ingredient.getMatchingStacks().length == 0)
+        Ingredient ingredient = new OreIngredientStoring(name);
+        if (ingredient.getMatchingStacks().length == 0)
             return;
         CrookReward crookReward = new CrookReward(reward, chance, fortuneChance);
         Ingredient search = registry.keySet().stream().filter(entry -> entry.getValidItemStacksPacked().equals(ingredient.getValidItemStacksPacked())).findAny().orElse(null);
@@ -75,8 +81,13 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
 
     public List<CrookReward> getRewards(IBlockState state) {
         BlockInfo info = new BlockInfo(state);
-        NonNullList<CrookReward> list = NonNullList.create();
-        registry.entrySet().stream().filter(ingredient -> ingredient.getKey().test(info.getItemStack())).forEach(ingredient -> list.addAll(ingredient.getValue()));
+        ArrayList<CrookReward> list = new ArrayList<>();
+
+        registry.entrySet()
+                .stream()
+                .filter(ingredient -> ingredient.getKey().test(info.getItemStack()))
+                .forEach(ingredient -> list.addAll(ingredient.getValue()));
+
         return list;
     }
 
@@ -86,13 +97,12 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
         }.getType());
 
         gsonInput.forEach((key, value) -> {
-            BlockInfo blockInfo = new BlockInfo(key);
-            Ingredient ingredient = registry.keySet().stream().filter(entry -> entry.test(blockInfo.getItemStack())).findFirst().orElse(null);
+            Ingredient ingredient = IngredientUtil.parseFromString(key);
 
             if (ingredient != null) {
-                registry.get(ingredient).addAll(value);
-            } else {
-                registry.put(CraftingHelper.getIngredient(blockInfo.getItemStack()), value);
+                NonNullList<CrookReward> list = registry.getOrDefault(ingredient, NonNullList.create());
+                list.addAll(value);
+                registry.put(ingredient, list);
             }
         });
     }

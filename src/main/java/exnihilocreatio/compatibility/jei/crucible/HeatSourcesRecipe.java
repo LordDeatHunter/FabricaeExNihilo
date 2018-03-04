@@ -2,7 +2,7 @@ package exnihilocreatio.compatibility.jei.crucible;
 
 import exnihilocreatio.ModBlocks;
 import exnihilocreatio.blocks.BlockCrucibleStone;
-import exnihilocreatio.util.IStackInfo;
+import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.RenderTickCounter;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
@@ -34,10 +34,10 @@ import java.util.List;
 // Credit goes to >>>> https://github.com/thraaawn/CompactMachines/blob/1.12.1/src/main/java/org/dave/compactmachines3/jei/MultiblockRecipeWrapper.java
 public class HeatSourcesRecipe implements IRecipeWrapper {
     private final List<ItemStack> inputs;
-    private final IStackInfo stackInfo;
+    private final BlockInfo stackInfo;
     private final String heatAmountString;
 
-    public HeatSourcesRecipe(IStackInfo stackInfo, int heatAmount) {
+    public HeatSourcesRecipe(BlockInfo stackInfo, int heatAmount) {
         this.stackInfo = stackInfo;
 
 

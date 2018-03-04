@@ -1,18 +1,17 @@
 package exnihilocreatio.registries.registries;
 
-import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.blocks.BlockSieve;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipe;
-import exnihilocreatio.json.CustomBlockInfoJson;
-import exnihilocreatio.json.CustomItemInfoJson;
+import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.Siftable;
 import exnihilocreatio.util.BlockInfo;
-import exnihilocreatio.util.IStackInfo;
 import exnihilocreatio.util.ItemInfo;
+import exnihilocreatio.util.OreIngredientStoring;
+import exnihilocreatio.util.StackInfo;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
@@ -33,43 +32,51 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Sifta
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
-                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
+                        .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
+                        .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
+                        .enableComplexMapKeySerialization()
                         .create(),
+                new com.google.gson.reflect.TypeToken<Map<Ingredient, List<Siftable>>>() {}.getType(),
                 ExNihiloRegistryManager.SIEVE_DEFAULT_REGISTRY_PROVIDERS
         );
     }
 
 
-    public void register(ItemStack itemStack, IStackInfo drop, float chance, int meshLevel) {
+    public void register(ItemStack itemStack, StackInfo drop, float chance, int meshLevel) {
         if (itemStack.isEmpty()) {
             return;
         }
-        register(CraftingHelper.getIngredient(itemStack), new Siftable(drop, chance, meshLevel));
+        if (drop instanceof ItemInfo)
+            register(CraftingHelper.getIngredient(itemStack), new Siftable((ItemInfo)drop, chance, meshLevel));
+        else
+            register(CraftingHelper.getIngredient(itemStack), new Siftable(new ItemInfo(drop.getItemStack()), chance, meshLevel));
     }
 
-    public void register(Item item, int meta, IStackInfo drop, float chance, int meshLevel) {
+    public void register(Item item, int meta, StackInfo drop, float chance, int meshLevel) {
         register(new ItemStack(item, 1, meta), drop, chance, meshLevel);
     }
 
-    public void register(IStackInfo item, IStackInfo drop, float chance, int meshLevel) {
+    public void register(StackInfo item, StackInfo drop, float chance, int meshLevel) {
         register(item.getItemStack(), drop, chance, meshLevel);
     }
 
-    public void register(Block block, int meta, IStackInfo drop, float chance, int meshLevel) {
+    public void register(Block block, int meta, StackInfo drop, float chance, int meshLevel) {
         register(new ItemStack(block, 1, meta), drop, chance, meshLevel);
     }
 
-    public void register(IBlockState state, IStackInfo drop, float chance, int meshLevel) {
+    public void register(IBlockState state, StackInfo drop, float chance, int meshLevel) {
         register(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)), drop, chance, meshLevel);
     }
 
-    public void register(ResourceLocation location, int meta, IStackInfo drop, float chance, int meshLevel) {
+    public void register(ResourceLocation location, int meta, StackInfo drop, float chance, int meshLevel) {
         register(new ItemStack(ForgeRegistries.ITEMS.getValue(location), 1, meta), drop, chance, meshLevel);
     }
 
-    public void register(String name, IStackInfo drop, float chance, int meshLevel) {
-        register(CraftingHelper.getIngredient(name), new Siftable(drop, chance, meshLevel));
+    public void register(String name, StackInfo drop, float chance, int meshLevel) {
+        if (drop instanceof ItemInfo)
+            register(new OreIngredientStoring(name), new Siftable((ItemInfo)drop, chance, meshLevel));
+        else
+            register(new OreIngredientStoring(name), new Siftable(new ItemInfo(drop.getItemStack()), chance, meshLevel));
     }
 
     public void register(Ingredient ingredient, Siftable drop) {
@@ -91,12 +98,12 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Sifta
      * Gets *all* possible drops from the sieve. It is up to the dropper to
      * check whether or not the drops should be dropped!
      *
-     * @param block The block to get the sieve drops for
+     * @param stack The block to get the sieve drops for
      * @return ArrayList of {@linkplain Siftable}
      * that could *potentially* be dropped.
      */
-    public List<Siftable> getDrops(IStackInfo block) {
-        return getDrops(block.getItemStack());
+    public List<Siftable> getDrops(StackInfo stack) {
+        return getDrops(stack.getItemStack());
     }
 
     /**
@@ -148,16 +155,16 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Sifta
 
     @Override
     public void registerEntriesFromJSON(FileReader fr) {
-        HashMap<String, ArrayList<Siftable>> gsonInput = gson.fromJson(fr, new TypeToken<HashMap<String, ArrayList<Siftable>>>() {
+        HashMap<Ingredient, ArrayList<Siftable>> gsonInput = gson.fromJson(fr, new TypeToken<HashMap<Ingredient, ArrayList<Siftable>>>() {
         }.getType());
 
-        for (Map.Entry<String, ArrayList<Siftable>> input : gsonInput.entrySet()) {
-            Ingredient block = CraftingHelper.getIngredient(input.getKey());
+        for (Map.Entry<Ingredient, ArrayList<Siftable>> input : gsonInput.entrySet()) {
+            Ingredient key = input.getKey();
 
-            if (block != null) {
+            if (key != null && key != Ingredient.EMPTY && key.getMatchingStacks().length > 0) {
                 for (Siftable siftable : input.getValue()) {
                     if (siftable.getDrop().isValid()) {
-                        register(block, siftable);
+                        register(key, siftable);
                     }
                 }
             }
@@ -166,7 +173,7 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Sifta
 
     @Override
     public List<SieveRecipe> getRecipeList() {
-        List<SieveRecipe> sieveRecipes = Lists.newLinkedList();
+        List<SieveRecipe> sieveRecipes = new ArrayList<>();
 
         getRegistry().keySet().forEach(ingredient -> Stream.of(BlockSieve.MeshType.values()).forEach(meshType -> {
             if (meshType.getID() != 0 && ingredient != null) {

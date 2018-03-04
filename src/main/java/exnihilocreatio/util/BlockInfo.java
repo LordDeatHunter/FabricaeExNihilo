@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import javax.annotation.Nonnull;
 
 @AllArgsConstructor
-public class BlockInfo implements IStackInfo {
+public class BlockInfo extends StackInfo {
 
     public static final BlockInfo EMPTY = new BlockInfo(ItemStack.EMPTY);
 
@@ -31,11 +31,6 @@ public class BlockInfo implements IStackInfo {
     public BlockInfo(@Nonnull Block block) {
         this.block = block;
         this.meta = -1;
-    }
-
-    public BlockInfo(@Nonnull ItemInfo itemInfo) {
-        this.block = Block.getBlockFromItem(itemInfo.getItem());
-        this.meta = itemInfo.getMeta();
     }
 
     public BlockInfo(@Nonnull IBlockState state) {
@@ -108,7 +103,7 @@ public class BlockInfo implements IStackInfo {
     }
 
 
-    //IStackInfo
+    //StackInfo
 
     @Override
     public String toString() {
@@ -120,6 +115,11 @@ public class BlockInfo implements IStackInfo {
     public ItemStack getItemStack() {
         Item item = Item.getItemFromBlock(block);
         return item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item, 1, meta);
+    }
+
+    @Override
+    public boolean hasBlock() {
+        return true;
     }
 
     @Nonnull

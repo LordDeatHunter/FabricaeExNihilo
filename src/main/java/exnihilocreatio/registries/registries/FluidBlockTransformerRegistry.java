@@ -4,14 +4,13 @@ import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.barrel.fluidblocktransform.FluidBlockTransformRecipe;
-import exnihilocreatio.json.CustomBlockInfoJson;
 import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryList;
 import exnihilocreatio.registries.types.FluidBlockTransformer;
 import exnihilocreatio.util.BlockInfo;
-import exnihilocreatio.util.IStackInfo;
 import exnihilocreatio.util.ItemInfo;
+import exnihilocreatio.util.StackInfo;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -27,22 +26,26 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
                 new GsonBuilder()
                         .setPrettyPrinting()
                         .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
-                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
                         .create(),
                 ExNihiloRegistryManager.FLUID_BLOCK_DEFAULT_REGISTRY_PROVIDERS
         );
     }
 
-    public void register(Fluid fluid, IStackInfo inputBlock, IStackInfo outputBlock) {
+    public void register(Fluid fluid, StackInfo inputBlock, ItemInfo outputBlock) {
+        if (outputBlock.hasBlock())
+            registry.add(new FluidBlockTransformer(fluid.getName(), inputBlock, new BlockInfo(outputBlock.getItemStack())));
+    }
+
+    public void register(Fluid fluid, StackInfo inputBlock, BlockInfo outputBlock) {
         registry.add(new FluidBlockTransformer(fluid.getName(), inputBlock, outputBlock));
     }
 
-    public void register(String fluid, IStackInfo inputBlock, IStackInfo outputBlock) {
+    public void register(String fluid, StackInfo inputBlock, BlockInfo outputBlock) {
         registry.add(new FluidBlockTransformer(fluid, inputBlock, outputBlock));
     }
 
     public boolean canBlockBeTransformedWithThisFluid(Fluid fluid, ItemStack stack) {
-        ItemInfo info = ItemInfo.getItemInfoFromStack(stack);
+        ItemInfo info = new ItemInfo(stack);
 
         for (FluidBlockTransformer transformer : registry) {
             if (fluid.getName().equals(transformer.getFluidName()) && info.equals(transformer.getInput()))
@@ -52,8 +55,8 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
     }
 
     @Nonnull
-    public IStackInfo getBlockForTransformation(Fluid fluid, ItemStack stack) {
-        IStackInfo info = ItemInfo.getItemInfoFromStack(stack);
+    public BlockInfo getBlockForTransformation(Fluid fluid, ItemStack stack) {
+        BlockInfo info = new BlockInfo(stack);
 
         for (FluidBlockTransformer transformer : registry) {
             if (fluid.getName().equals(transformer.getFluidName()) && info.equals(transformer.getInput())) {
@@ -61,7 +64,7 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
             }
         }
 
-        return ItemInfo.EMPTY;
+        return BlockInfo.EMPTY;
     }
 
     @Override

@@ -55,7 +55,7 @@ item.itemMesh.3.name=Malha enrijecida de Ferro
 item.itemMesh.4.name=Malha enrijecida de Diamante
 
 orepiece.name=fragmento de Minério
-orehunk.name=Pedaço de Minério
+orechunk.name=Pedaço de Minério
 oredust.name=Minério em pò
 oreingot.name=Barra
 

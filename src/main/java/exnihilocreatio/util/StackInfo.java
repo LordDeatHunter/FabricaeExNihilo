@@ -8,31 +8,34 @@ import net.minecraft.nbt.NBTTagCompound;
 
 import javax.annotation.Nonnull;
 
-public interface IStackInfo {
+public abstract class StackInfo {
 
-    String toString();
-
-    @Nonnull
-    ItemStack getItemStack();
+    public abstract String toString();
 
     @Nonnull
-    Block getBlock();
+    public abstract ItemStack getItemStack();
+
+    public abstract boolean hasBlock();
 
     @Nonnull
-    IBlockState getBlockState();
+    public abstract Block getBlock();
 
-    boolean isValid();
+    @Nonnull
+    public abstract IBlockState getBlockState();
 
-    NBTTagCompound writeToNBT(NBTTagCompound tag);
+    public abstract boolean isValid();
 
-    int hashCode();
+    public abstract NBTTagCompound writeToNBT(NBTTagCompound tag);
+
+    public abstract int hashCode();
 
     /**
      * This is used to check if the contents equals the objects, based on what the object is
      * @param obj The object to check
      * @return Returns true if the output ItemStacks match
      */
-    default boolean matches(Object obj) {
+    @Override
+    public boolean equals(Object obj) {
         if (obj instanceof ItemInfo)
             return ItemStack.areItemStacksEqual(((ItemInfo) obj).getItemStack(), getItemStack());
         else if (obj instanceof ItemStack)

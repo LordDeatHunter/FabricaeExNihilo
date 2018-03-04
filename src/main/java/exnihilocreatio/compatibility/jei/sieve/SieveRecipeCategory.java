@@ -5,7 +5,7 @@ import com.google.common.collect.Multiset;
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.Siftable;
-import exnihilocreatio.util.IStackInfo;
+import exnihilocreatio.util.StackInfo;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IDrawableStatic;
@@ -75,7 +75,8 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
         //Mesh
         recipeLayout.getItemStacks().init(0, true, 61, 9);
         recipeLayout.getItemStacks().set(0, recipeWrapper.getMesh());
-        //BlockStoneAxle
+
+        //Input
         recipeLayout.getItemStacks().init(1, true, 87, 9);
         recipeLayout.getItemStacks().set(1, ingredients.getInputs(ItemStack.class).get(0));
 
@@ -116,7 +117,7 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
                     for (Siftable siftable : ExNihiloRegistryManager.SIEVE_REGISTRY.getDrops((ItemStack) recipeWrapper.getInputs().get(0))) {
                         if (siftable.getMeshLevel() != mesh.getItemDamage())
                             continue;
-                        IStackInfo info = siftable.getDrop();
+                        StackInfo info = siftable.getDrop();
                         if (info.getItemStack().getItem() != ingredient.getItem() || info.getItemStack().getItemDamage() != ingredient.getItemDamage())
                             continue;
 

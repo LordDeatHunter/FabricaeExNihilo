@@ -8,6 +8,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -16,7 +17,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import javax.annotation.Nonnull;
 
 @AllArgsConstructor
-public class ItemInfo implements IStackInfo {
+public class ItemInfo extends StackInfo {
 
     public static final ItemInfo EMPTY = new ItemInfo(ItemStack.EMPTY);
 
@@ -30,11 +31,6 @@ public class ItemInfo implements IStackInfo {
     public ItemInfo(@Nonnull Item item) {
         this.item = item;
         meta = -1;
-    }
-
-    public ItemInfo(@Nonnull BlockInfo blockInfo) {
-        this.item = blockInfo.getItemStack().getItem();
-        meta = blockInfo.getMeta();
     }
 
     public ItemInfo(@Nonnull ItemStack stack) {
@@ -99,10 +95,6 @@ public class ItemInfo implements IStackInfo {
         meta = state.getBlock().getMetaFromState(state);
     }
 
-    public static ItemInfo getItemInfoFromStack(ItemStack stack) {
-        return new ItemInfo(stack);
-    }
-
     public static ItemInfo readFromNBT(NBTTagCompound tag) {
         Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(tag.getString("item")));
         int meta = tag.getInteger("meta");
@@ -110,7 +102,7 @@ public class ItemInfo implements IStackInfo {
         return item == null ? EMPTY : new ItemInfo(item, meta);
     }
 
-    //IStackInfo
+    //StackInfo
 
     @Override
     public String toString() {
@@ -121,6 +113,11 @@ public class ItemInfo implements IStackInfo {
     @Override
     public ItemStack getItemStack() {
         return item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item, 1, meta == -1 ? 0 : meta);
+    }
+
+    @Override
+    public boolean hasBlock() {
+        return item instanceof ItemBlock;
     }
 
     @Nonnull

@@ -9,8 +9,8 @@ import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryList;
 import exnihilocreatio.registries.types.FluidItemFluid;
 import exnihilocreatio.util.BlockInfo;
-import exnihilocreatio.util.IStackInfo;
 import exnihilocreatio.util.ItemInfo;
+import exnihilocreatio.util.StackInfo;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 
@@ -30,26 +30,16 @@ public class FluidItemFluidRegistry extends BaseRegistryList<FluidItemFluid> {
         );
     }
 
-    public void register(String inputFluid, IStackInfo reactant, String outputFluid) {
+    public void register(String inputFluid, StackInfo reactant, String outputFluid) {
         registry.add(new FluidItemFluid(inputFluid, reactant, outputFluid));
     }
 
-    public void register(Fluid inputFluid, IStackInfo reactant, Fluid outputFluid) {
+    public void register(Fluid inputFluid, StackInfo reactant, Fluid outputFluid) {
         registry.add(new FluidItemFluid(inputFluid.getName(), reactant, outputFluid.getName()));
     }
 
-    public boolean canFluidBeTransformedWithThisItem(Fluid fluid, ItemStack stack) {
-        ItemInfo info = ItemInfo.getItemInfoFromStack(stack);
-
-        for (FluidItemFluid transformer : registry) {
-            if (fluid.getName().equals(transformer.getInputFluid()) && info.equals(transformer.getReactant()))
-                return true;
-        }
-        return false;
-    }
-
     public String getFLuidForTransformation(Fluid fluid, ItemStack stack) {
-        ItemInfo info = ItemInfo.getItemInfoFromStack(stack);
+        ItemInfo info = new ItemInfo(stack);
 
         for (FluidItemFluid transformer : registry) {
             if (fluid.getName().equals(transformer.getInputFluid()) && info.equals(transformer.getReactant())) {
