@@ -25,7 +25,7 @@ public class OreIngredientStoring extends OreIngredient {
 
     @Override
     public boolean apply(ItemStack input) {
-        if (input == null)
+        if (input == null || input.isEmpty())
             return false;
         if (!OreDictionary.doesOreNameExist(oreName))
             return false;
