@@ -34,23 +34,13 @@ public class ExNihilo implements IRecipeDefaults {
     public void registerCompost(CompostRegistry registry) {
         IBlockState dirtState = Blocks.DIRT.getDefaultState();
 
+        registry.register("treeSapling", 0.125f, dirtState);
+        registry.register("treeLeaves", 0.125f, dirtState);
+        registry.register("flower", 0.1f, dirtState);
+        registry.register("fish", 0.15f, dirtState);
+
+
         registry.register(new ItemInfo(Items.ROTTEN_FLESH, 0), 0.1f, dirtState, new Color("C45631"));
-
-        /*
-        registry.register(new BlockInfo(Blocks.SAPLING, 0), 0.125f, dirtState, new Color("35A82A"));
-        registry.register(new BlockInfo(Blocks.SAPLING, 1), 0.125f, dirtState, new Color("2E8042"));
-        registry.register(new BlockInfo(Blocks.SAPLING, 2), 0.125f, dirtState, new Color("6CC449"));
-        registry.register(new BlockInfo(Blocks.SAPLING, 3), 0.125f, dirtState, new Color("22A116"));
-        registry.register(new BlockInfo(Blocks.SAPLING, 4), 0.125f, dirtState, new Color("B8C754"));
-        registry.register(new BlockInfo(Blocks.SAPLING, 5), 0.125f, dirtState, new Color("378030"));
-
-        registry.register(new BlockInfo(Blocks.LEAVES, 0), 0.125f, dirtState, new Color("35A82A"));
-        registry.register(new BlockInfo(Blocks.LEAVES, 1), 0.125f, dirtState, new Color("2E8042"));
-        registry.register(new BlockInfo(Blocks.LEAVES, 2), 0.125f, dirtState, new Color("6CC449"));
-        registry.register(new BlockInfo(Blocks.LEAVES, 3), 0.125f, dirtState, new Color("22A116"));
-        registry.register(new BlockInfo(Blocks.LEAVES2, 0), 0.125f, dirtState, new Color("B8C754"));
-        registry.register(new BlockInfo(Blocks.LEAVES2, 1), 0.125f, dirtState, new Color("378030"));
-        */
 
         registry.register(new ItemInfo(Items.SPIDER_EYE, 0), 0.08f, dirtState, new Color("963E44"));
 
@@ -58,7 +48,7 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register(new ItemInfo(Items.WHEAT_SEEDS, 0), 0.08f, dirtState, new Color("35A82A"));
         registry.register(new ItemInfo(Items.BREAD, 0), 0.16f, dirtState, new Color("D1AF60"));
 
-        registry.register(new BlockInfo(Blocks.YELLOW_FLOWER, 0), 0.10f, dirtState, new Color("FFF461"));
+        /*registry.register(new BlockInfo(Blocks.YELLOW_FLOWER, 0), 0.10f, dirtState, new Color("FFF461"));
         registry.register(new BlockInfo(Blocks.RED_FLOWER, 0), 0.10f, dirtState, new Color("FF1212"));
         registry.register(new BlockInfo(Blocks.RED_FLOWER, 1), 0.10f, dirtState, new Color("33CFFF"));
         registry.register(new BlockInfo(Blocks.RED_FLOWER, 2), 0.10f, dirtState, new Color("F59DFA"));
@@ -72,7 +62,7 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register(new BlockInfo(Blocks.DOUBLE_PLANT, 0), 0.10f, dirtState, new Color("FFDD00"));
         registry.register(new BlockInfo(Blocks.DOUBLE_PLANT, 1), 0.10f, dirtState, new Color("FCC7F0"));
         registry.register(new BlockInfo(Blocks.DOUBLE_PLANT, 4), 0.10f, dirtState, new Color("FF1212"));
-        registry.register(new BlockInfo(Blocks.DOUBLE_PLANT, 5), 0.10f, dirtState, new Color("F3D2FC"));
+        registry.register(new BlockInfo(Blocks.DOUBLE_PLANT, 5), 0.10f, dirtState, new Color("F3D2FC"));*/
 
         registry.register(new BlockInfo(Blocks.BROWN_MUSHROOM, 0), 0.10f, dirtState, new Color("CFBFB6"));
         registry.register(new BlockInfo(Blocks.RED_MUSHROOM, 0), 0.10f, dirtState, new Color("D6A8A5"));
@@ -88,14 +78,15 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register(new ItemInfo(Items.CHICKEN, 0), 0.2f, dirtState, new Color("FFE8E8"));
         registry.register(new ItemInfo(Items.COOKED_CHICKEN, 0), 0.2f, dirtState, new Color("FA955F"));
 
-        registry.register(new ItemInfo(Items.FISH, 0), 0.15f, dirtState, new Color("6DCFB3"));
+        /*registry.register(new ItemInfo(Items.FISH, 0), 0.15f, dirtState, new Color("6DCFB3"));*/
         registry.register(new ItemInfo(Items.COOKED_FISH, 0), 0.15f, dirtState, new Color("D8EBE5"));
 
-        registry.register(new ItemInfo(Items.FISH, 1), 0.15f, dirtState, new Color("FF2E4A"));
+        /*registry.register(new ItemInfo(Items.FISH, 1), 0.15f, dirtState, new Color("FF2E4A"));*/
         registry.register(new ItemInfo(Items.COOKED_FISH, 1), 0.15f, dirtState, new Color("E87A3F"));
 
+        /*
         registry.register(new ItemInfo(Items.FISH, 2), 0.15f, dirtState, new Color("FF771C"));
-        registry.register(new ItemInfo(Items.FISH, 3), 0.15f, dirtState, new Color("DBFAFF"));
+        registry.register(new ItemInfo(Items.FISH, 3), 0.15f, dirtState, new Color("DBFAFF"));*/
 
         registry.register(new ItemInfo(ModItems.resources, ItemResource.getMetaFromName(ItemResource.SILKWORM)), 0.04f, dirtState, new Color("ff9966"));
         registry.register(new ItemInfo(ModItems.cookedSilkworm, 0), 0.04f, dirtState, new Color("cc6600"));
@@ -122,14 +113,11 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register(new ItemInfo(Items.STRING, 0), 0.04f, dirtState, Util.whiteColor);
 
         //Register any missed items
-        registry.register("treeSapling", 0.125f, dirtState);
-        registry.register("treeLeaves", 0.125f, dirtState);
-
         registry.register("listAllfruit", 0.10f, dirtState, new Color("35A82A"));
         registry.register("listAllveggie", 0.10f, dirtState, new Color("FFF1B5"));
         registry.register("listAllGrain", 0.08f, dirtState, new Color("E3E162"));
         registry.register("listAllseed", 0.08f, dirtState, new Color("35A82A"));
-        registry.register("fish", 0.15f, dirtState, new Color("6DCFB3"));
+        // registry.register("fish", 0.15f, dirtState, new Color("6DCFB3"));
         registry.register("listAllmeatraw", 0.20f, dirtState, new Color("FFA091"));
         registry.register("listAllmeatcooked", 0.20f, dirtState, new Color("80543D"));
     }

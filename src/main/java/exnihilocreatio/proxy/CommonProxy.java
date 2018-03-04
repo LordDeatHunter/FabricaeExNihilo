@@ -47,6 +47,7 @@ public abstract class CommonProxy {
     @SubscribeEvent
     public static void onRecipeRegistry(RegistryEvent.Register<IRecipe> e) {
         // Recipes.init();
+
         ExNihiloCreatio.loadConfigs();
 
         Recipes.init();
@@ -66,11 +67,9 @@ public abstract class CommonProxy {
     }
 
     public void init(FMLInitializationEvent event) {
-
     }
 
     public void postInit(FMLPostInitializationEvent event) {
-
     }
 
     public void registerModels(ModelRegistryEvent event) {

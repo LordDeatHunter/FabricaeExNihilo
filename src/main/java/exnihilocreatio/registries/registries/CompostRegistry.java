@@ -9,6 +9,8 @@ import exnihilocreatio.json.CustomColorJson;
 import exnihilocreatio.json.CustomCompostableJson;
 import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.json.CustomItemInfoJson;
+import exnihilocreatio.registries.ingredient.IngredientUtil;
+import exnihilocreatio.registries.ingredient.OreIngredientStoring;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.Compostable;
@@ -35,11 +37,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
+import java.util.*;
 
 public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
 
@@ -98,14 +96,18 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
 
     public void register(String name, float value, IBlockState state, Color color) {
         Ingredient ingredient = new OreIngredientStoring(name);
-        if (ingredient.getMatchingStacks().length == 0)
-            return;
+        System.out.println("ingredient = " + ingredient);
+        System.out.println("ingredient.getMatchingStacks() = " + Arrays.toString(ingredient.getMatchingStacks()));
+
+        /*if (ingredient.getMatchingStacks().length == 0)
+            return;*/
 
         Compostable compostable = new Compostable(value, color, new ItemInfo(state));
 
-        if (oreRegistry.keySet().stream().anyMatch(entry -> entry.getValidItemStacksPacked().equals(ingredient.getValidItemStacksPacked())))
+        // if (oreRegistry.keySet().stream().anyMatch(entry -> entry.getValidItemStacksPacked().equals(ingredient.getValidItemStacksPacked())))
             LogUtil.error("Compost Ore Entry for " + name + " already exists, skipping.");
-        else register(ingredient, compostable);
+        // else
+            register(ingredient, compostable);
     }
 
     /**

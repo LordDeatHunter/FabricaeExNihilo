@@ -1,6 +1,5 @@
 package exnihilocreatio.registries.registries;
 
-import com.google.common.collect.Lists;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.blocks.BlockSieve;
@@ -10,15 +9,12 @@ import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
-import exnihilocreatio.registries.types.FluidTransformer;
 import exnihilocreatio.registries.types.Siftable;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
-import exnihilocreatio.util.OreIngredientStoring;
+import exnihilocreatio.registries.ingredient.OreIngredientStoring;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -28,7 +24,6 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.io.FileReader;
-import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Stream;
 

@@ -1,6 +1,7 @@
 package exnihilocreatio;
 
 import exnihilocreatio.blocks.ItemBlockCrucible;
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.*;
 import exnihilocreatio.items.seeds.ItemSeedBase;
 import exnihilocreatio.items.tools.CrookBase;
@@ -14,6 +15,7 @@ import net.minecraft.block.BlockSapling;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.fml.relauncher.Side;
@@ -72,11 +74,26 @@ public class ModItems {
 
         registry.register(new ItemBlockCrucible(ModBlocks.crucibleStone));
 
+        registerOredicts();
+    }
+
+    public static void registerOredicts(){
         OreDictionary.registerOre("clayPorcelain", ItemResource.getResourceStack(ItemResource.PORCELAIN_CLAY));
         OreDictionary.registerOre("gearStone", ItemResource.getResourceStack(ItemResource.GEAR_STONE));
         OreDictionary.registerOre("stickStone", ItemResource.getResourceStack(ItemResource.ROD_STONE));
         OreDictionary.registerOre("rodStone", ItemResource.getResourceStack(ItemResource.ROD_STONE));
 
+        if (ModConfig.misc.oredictVanillaItems){
+            // Flowers:
+            OreDictionary.registerOre("flower", new ItemStack(Blocks.YELLOW_FLOWER, 1, 0));
+            for (int i = 0; i <= 8; i++)
+                OreDictionary.registerOre("flower", new ItemStack(Blocks.RED_FLOWER, 1, i));
+            for (int i = 0; i <= 5; i++)
+                OreDictionary.registerOre("flower", new ItemStack(Blocks.DOUBLE_PLANT, 1, i));
+
+
+
+        }
     }
 
     @SideOnly(Side.CLIENT)

@@ -1,15 +1,11 @@
 package exnihilocreatio.json;
 
 import com.google.gson.*;
-import exnihilocreatio.util.IngredientUtil;
+import exnihilocreatio.registries.ingredient.IngredientUtil;
 import exnihilocreatio.util.LogUtil;
-import exnihilocreatio.util.OreIngredientStoring;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
+import exnihilocreatio.registries.ingredient.OreIngredientStoring;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.oredict.OreIngredient;
 
 import java.lang.reflect.Type;
 

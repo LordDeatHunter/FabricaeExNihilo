@@ -70,6 +70,8 @@ public class ModConfig {
                 "This is recommended to enable for Packmakers",
                 "For players just playing with this without wanting to configure something this is recommended to keep disabled"})
         public boolean enableJSONLoading = false;
+
+        public boolean oredictVanillaItems = true;
     }
 
     public static class Sieve {
