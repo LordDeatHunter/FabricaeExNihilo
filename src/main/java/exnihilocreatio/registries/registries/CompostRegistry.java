@@ -5,6 +5,8 @@ import com.google.common.collect.Maps;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.barrel.compost.CompostRecipe;
+import exnihilocreatio.json.CustomColorJson;
+import exnihilocreatio.json.CustomCompostableJson;
 import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
@@ -50,6 +52,8 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
                         .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
                         .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
                         .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
+                        .registerTypeAdapter(Compostable.class, new CustomCompostableJson())
+                        .registerTypeAdapter(Color.class, new CustomColorJson())
                         .enableComplexMapKeySerialization()
                         .create(),
                 ExNihiloRegistryManager.COMPOST_DEFAULT_REGISTRY_PROVIDERS
@@ -100,6 +104,13 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
         if (oreRegistry.keySet().stream().anyMatch(entry -> entry.getValidItemStacksPacked().equals(ingredient.getValidItemStacksPacked())))
             LogUtil.error("Compost Ore Entry for " + name + " already exists, skipping.");
         else oreRegistry.put(ingredient, compostable);
+    }
+
+    /**
+     * Registers a oredict for sifting with a dynamic color based on the itemColor
+     */
+    public void register(String name, float value, IBlockState state) {
+        register(name, value, state, Color.INVALID_COLOR);
     }
 
     public Compostable getItem(Item item, int meta) {

@@ -35,7 +35,7 @@ public class CustomOreJson implements JsonDeserializer<Ore>, JsonSerializer<Ore>
         String name = helper.getString("name");
         Color color = context.deserialize(json.getAsJsonObject().get("color"), Color.class);
         ItemInfo result = context.deserialize(json.getAsJsonObject().get("result"), ItemInfo.class);
-        if (result.getMeta() == -1)
+        if (result != null && result.getMeta() == -1)
             result.setMeta(0);
 
         HashMap<String, String> translations = null;
