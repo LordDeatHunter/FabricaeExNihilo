@@ -20,17 +20,12 @@ public class ColorStealer {
 
     public static Color getColor(ItemStack stack) {
         if (stack.isEmpty()) return Color.INVALID_COLOR;
-        System.out.println("info = " + stack);
-
         ItemInfo info = new ItemInfo(stack);
 
         if (colorCache.containsKey(info)) {
-            System.out.println("info = " + info);
             return colorCache.get(info);
         } else if (Loader.isModLoaded("jei")) {
             List<java.awt.Color> color = ColorGetter.getColors(stack, 1);
-
-            System.out.println("color = " + color);
             if (color.size() > 0){
                 java.awt.Color domColor = color.get(0);
                 Color exColor = new Color(domColor.getRGB());

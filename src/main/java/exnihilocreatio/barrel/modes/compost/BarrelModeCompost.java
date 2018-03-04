@@ -47,6 +47,7 @@ public class BarrelModeCompost implements IBarrelMode {
     private float fillAmount = 0;
     @Setter
     private Color color = new Color("EEA96D");
+    @Getter @Setter
     private Color originalColor;
     @Setter
     @Getter
@@ -85,26 +86,17 @@ public class BarrelModeCompost implements IBarrelMode {
 
                 if (ExNihiloRegistryManager.COMPOST_REGISTRY.containsItem(info) && compostState.equals(testState)) {
                     Compostable compost = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(info);
+                    Color compColor = compost.getColor();
 
-                    if (FMLCommonHandler.instance().getSide() == Side.CLIENT && false){
-                        Color compColor = compost.getColor();
-                        if (compColor.equals(Color.INVALID_COLOR)) {
-                            // compColor = new Color(Minecraft.getMinecraft().getItemColors().colorMultiplier(player.getHeldItemMainhand(), 0));
-                            compColor = ColorStealer.getColor(stack);
-                        }
-
-                        if (fillAmount == 0)
-                            color = compColor;
-                        else
-                            color = Color.average(color, compColor, compost.getValue());
-                    }
+                    boolean isFirst = fillAmount == 0;
 
                     fillAmount += compost.getValue();
                     if (fillAmount > 1)
                         fillAmount = 1;
-                    if (!player.capabilities.isCreativeMode)
+                    if (!player.capabilities.isCreativeMode) {
                         player.getHeldItem(hand).shrink(1);
-                    PacketHandler.sendToAllAround(new MessageCompostUpdate(this.fillAmount, this.color, this.progress, barrel.getPos()), barrel);
+                    }
+                    PacketHandler.sendToAllAround(new MessageCompostUpdate(this.fillAmount, compColor, stack, this.progress, comp.getValue(), barrel.getPos(), isFirst), barrel);
                     barrel.markDirty();
                 }
             }
@@ -121,7 +113,7 @@ public class BarrelModeCompost implements IBarrelMode {
         color = new Color("EEA96D");
         handler.setStackInSlot(0, ItemStack.EMPTY);
         compostState = null;
-        PacketHandler.sendToAllAround(new MessageCompostUpdate(this.fillAmount, this.color, this.progress, barrel.getPos()), barrel);
+        PacketHandler.sendToAllAround(new MessageCompostUpdate(this.fillAmount, this.color, ItemStack.EMPTY, this.progress,0.0f,  barrel.getPos(), false), barrel);
         barrel.setMode("null");
         IBlockState state = barrel.getWorld().getBlockState(barrel.getPos());
         PacketHandler.sendToAllAround(new MessageBarrelModeUpdate("null", barrel.getPos()), barrel);
@@ -131,7 +123,7 @@ public class BarrelModeCompost implements IBarrelMode {
     @SuppressWarnings("deprecation")
     public void addItem(ItemStack stack, TileBarrel barrel) {
         if (fillAmount < 1) {
-            if (stack != null) {
+            if (stack != null && !stack.isEmpty()) {
                 ItemInfo info = ItemInfo.getItemInfoFromStack(stack);
                 Compostable comp = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(info);
                 IBlockState testState = Block.getBlockFromItem(comp.getCompostBlock().getItem())
@@ -144,15 +136,12 @@ public class BarrelModeCompost implements IBarrelMode {
                 if (ExNihiloRegistryManager.COMPOST_REGISTRY.containsItem(info) && compostState.equals(testState)) {
                     Compostable compost = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(info);
 
-                    if (fillAmount == 0)
-                        color = compost.getColor();
-                    else
-                        color = Color.average(color, compost.getColor(), compost.getValue());
-
+                    boolean isFirst = fillAmount == 0;
                     fillAmount += compost.getValue();
                     if (fillAmount > 1)
                         fillAmount = 1;
-                    PacketHandler.sendToAllAround(new MessageCompostUpdate(this.fillAmount, this.color, this.progress, barrel.getPos()), barrel);
+                    PacketHandler.sendToAllAround(new MessageCompostUpdate(this.fillAmount, comp.getColor(), stack, this.progress, comp.getValue(), barrel.getPos(), isFirst), barrel);
+                    // PacketHandler.sendToAllAround(new MessageCompostUpdate(this.fillAmount, this.color, this.progress, barrel.getPos()), barrel);
                     barrel.markDirty();
                 }
             }
@@ -167,10 +156,10 @@ public class BarrelModeCompost implements IBarrelMode {
             }
 
             progress += 1.0 / ModConfig.composting.ticksToFormDirt;
-
             color = Color.average(originalColor, whiteColor, progress);
 
-            PacketHandler.sendToAllAround(new MessageCompostUpdate(this.fillAmount, this.color, this.progress, barrel.getPos()), barrel);
+            // TODO: maybe don't send it _every_ tick
+            PacketHandler.sendToAllAround(new MessageCompostUpdate(this.fillAmount, this.color, ItemStack.EMPTY, this.progress, 0.0f, barrel.getPos(), false), barrel);
 
             barrel.markDirty();
         }
