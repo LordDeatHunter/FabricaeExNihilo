@@ -63,6 +63,18 @@ public class Color {
         return color;
     }
 
+    public int toIntNoAlpha() {
+        int color = 0;
+        color |= (int) (this.r * 255) << 16;
+        color |= (int) (this.g * 255) << 8;
+        color |= (int) (this.b * 255);
+        return color;
+    }
+
+    public String getAsHexNoAlpha(){
+        return Integer.toHexString(toIntNoAlpha());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

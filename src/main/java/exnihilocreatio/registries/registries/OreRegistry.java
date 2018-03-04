@@ -9,6 +9,7 @@ import exnihilocreatio.items.ore.EnumOreSubtype;
 import exnihilocreatio.items.ore.ItemOre;
 import exnihilocreatio.items.ore.Ore;
 import exnihilocreatio.json.CustomBlockInfoJson;
+import exnihilocreatio.json.CustomColorJson;
 import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.json.CustomOreJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
@@ -53,6 +54,7 @@ public class OreRegistry extends BaseRegistryList<Ore> {
                         .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
                         .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
                         .registerTypeAdapter(Ore.class, new CustomOreJson())
+                        .registerTypeAdapter(Color.class, new CustomColorJson())
                         .create(),
                 ExNihiloRegistryManager.ORE_DEFAULT_REGISTRY_PROVIDERS
         );
