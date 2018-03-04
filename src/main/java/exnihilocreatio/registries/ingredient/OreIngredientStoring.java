@@ -27,6 +27,8 @@ public class OreIngredientStoring extends OreIngredient {
     public boolean apply(ItemStack input) {
         if (input == null)
             return false;
+        if (!OreDictionary.doesOreNameExist(oreName))
+            return false;
 
         for (ItemStack stack : OreDictionary.getOres(oreName, false)) {
             if (OreDictionary.itemMatches(stack, input, false))
@@ -54,6 +56,4 @@ public class OreIngredientStoring extends OreIngredient {
 
         return list.toArray(new ItemStack[0]);
     }
-
-
 }

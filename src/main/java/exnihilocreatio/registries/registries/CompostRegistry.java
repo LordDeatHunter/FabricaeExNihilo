@@ -96,17 +96,11 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
 
     public void register(String name, float value, IBlockState state, Color color) {
         Ingredient ingredient = new OreIngredientStoring(name);
-        System.out.println("ingredient = " + ingredient);
-        System.out.println("ingredient.getMatchingStacks() = " + Arrays.toString(ingredient.getMatchingStacks()));
-
-        /*if (ingredient.getMatchingStacks().length == 0)
-            return;*/
-
         Compostable compostable = new Compostable(value, color, new ItemInfo(state));
 
-        // if (oreRegistry.keySet().stream().anyMatch(entry -> entry.getValidItemStacksPacked().equals(ingredient.getValidItemStacksPacked())))
+        if (oreRegistry.keySet().stream().anyMatch(entry -> IngredientUtil.ingredientEquals(entry, ingredient)))
             LogUtil.error("Compost Ore Entry for " + name + " already exists, skipping.");
-        // else
+        else
             register(ingredient, compostable);
     }
 
@@ -219,7 +213,10 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
             List<ItemStack> compostables = new ArrayList<>();
             int compostCount = (int) Math.ceil(1.0F / value.getValue());
 
-            for (ItemStack stack : key.getMatchingStacks()) {
+            ItemStack[] stacks = key.getMatchingStacks();
+            if (stacks.length <= 0) return;
+
+            for (ItemStack stack : stacks) {
                 if (compostables.stream().noneMatch(stack::isItemEqual)) {
                     ItemStack copy = stack.copy();
                     copy.setCount(compostCount);
