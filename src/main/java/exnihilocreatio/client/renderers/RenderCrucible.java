@@ -16,7 +16,7 @@ import net.minecraftforge.client.model.animation.FastTESR;
 import javax.annotation.Nullable;
 
 public class RenderCrucible extends FastTESR<TileCrucibleBase> {
-    private static ModelVertex[] model = new ModelVertex[4];
+    private static final ModelVertex[] model = new ModelVertex[4];
 
     static {
         model[0] = new ModelVertex(EnumFacing.UP, 0.125, 0.6875, 0.125, 0, 0);

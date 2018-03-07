@@ -14,7 +14,7 @@ import java.util.List;
  * TODO: remove dep on JEI
  */
 public class ColorStealer {
-    public static HashMap<ItemInfo, Color> colorCache = new HashMap<>();
+    public static final HashMap<ItemInfo, Color> colorCache = new HashMap<>();
 
     public static Color getColor(ItemStack stack) {
         if (stack.isEmpty()) return Color.INVALID_COLOR;

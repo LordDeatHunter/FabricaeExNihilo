@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
 
@@ -26,33 +27,31 @@ public class ItemInfo extends StackInfo {
     private Item item;
     @Getter
     @Setter
-    private int meta;
+    private int meta = 0;
 
     public ItemInfo(@Nonnull Item item) {
         this.item = item;
-        meta = -1;
     }
 
     public ItemInfo(@Nonnull ItemStack stack) {
-        item = stack.getItem();
-        meta = stack.getMetadata();
+        this.item = stack.getItem();
+        this.meta = stack.getItemDamage();
     }
 
     public ItemInfo(@Nonnull Block block, int blockMeta) {
-        item = Item.getItemFromBlock(block);
-        meta = block == Blocks.AIR ? -1 : blockMeta;
+        this.item = Item.getItemFromBlock(block);
+        this.meta = block == Blocks.AIR ? 0 : blockMeta;
     }
 
     public ItemInfo(@Nonnull String string) {
         if (string.isEmpty() || string.length() < 2) {
             item = Items.AIR;
-            meta = -1;
             return;
         }
         String[] split = string.split(":");
 
         Item item = null;
-        int meta = -1;
+        int meta = 0;
 
         switch (split.length) {
             case 1:
@@ -60,29 +59,28 @@ public class ItemInfo extends StackInfo {
                 break;
             case 2:
                 try {
-                    meta = split[1].equals("*") ? -1 : Integer.parseInt(split[1]);
+                    meta = split[1].equals("*") ? 0 : Integer.parseInt(split[1]);
                     item = Item.getByNameOrId("minecraft:" + split[0]);
                 } catch (NumberFormatException e) {
-                    meta = -1;
+                    meta = 0;
                     item = Item.getByNameOrId(split[0] + ":" + split[1]);
                 }
                 break;
             case 3:
                 try {
-                    meta = split[2].equals("*") ? -1 : Integer.parseInt(split[2]);
+                    meta = split[2].equals("*") ? 0 : Integer.parseInt(split[2]);
                     item = Item.getByNameOrId(split[0] + ":" + split[1]);
                 } catch (NumberFormatException e) {
-                    meta = -1;
+                    meta = 0;
                 }
                 break;
             default:
-                item = Items.AIR;
-                meta = -1;
+                this.item = Items.AIR;
+                return;
         }
 
         if (item == null){
             this.item = Items.AIR;
-            this.meta = -1;
         }
         else {
             this.item = item;
@@ -106,13 +104,13 @@ public class ItemInfo extends StackInfo {
 
     @Override
     public String toString() {
-        return Item.REGISTRY.getNameForObject(item) + (meta == -1 ? "" : (":" + meta));
+        return ForgeRegistries.ITEMS.getKey(item) + (meta == 0 ? "" : (":" + meta));
     }
 
     @Nonnull
     @Override
     public ItemStack getItemStack() {
-        return item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item, 1, meta == -1 ? 0 : meta);
+        return item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item, 1, meta);
     }
 
     @Override
@@ -129,6 +127,8 @@ public class ItemInfo extends StackInfo {
     @Nonnull
     @Override
     public IBlockState getBlockState() {
+        if (item == Items.AIR)
+            return Blocks.AIR.getDefaultState();
         try {
             return Block.getBlockFromItem(item).getStateFromMeta(meta);
         } catch (Exception e){
@@ -138,7 +138,7 @@ public class ItemInfo extends StackInfo {
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
-        tag.setString("item", Item.REGISTRY.getNameForObject(item) == null ? "" : Item.REGISTRY.getNameForObject(item).toString());
+        tag.setString("item", ForgeRegistries.ITEMS.getKey(item) == null ? "" : ForgeRegistries.ITEMS.getKey(item).toString());
         tag.setInteger("meta", meta);
 
         return tag;
@@ -146,7 +146,7 @@ public class ItemInfo extends StackInfo {
 
     @Override
     public boolean isValid() {
-        return this.item != Items.AIR && meta <= Short.MAX_VALUE;
+        return this.item != Items.AIR && meta <= OreDictionary.WILDCARD_VALUE;
     }
 
     @Override
