@@ -109,7 +109,7 @@ public class BlockInfo extends StackInfo {
     @Override
     public String toString() {
         int meta = getMeta();
-        return ForgeRegistries.BLOCKS.getKey(state.getBlock()) + (meta == -1 ? "" : (":" + meta));
+        return ForgeRegistries.BLOCKS.getKey(state.getBlock()) + (meta == 0 ? "" : (":" + meta));
     }
 
     @Nonnull
