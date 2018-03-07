@@ -8,14 +8,16 @@ import exnihilocreatio.compatibility.jei.barrel.compost.CompostRecipe;
 import exnihilocreatio.json.CustomColorJson;
 import exnihilocreatio.json.CustomCompostableJson;
 import exnihilocreatio.json.CustomIngredientJson;
-import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.ingredient.IngredientUtil;
 import exnihilocreatio.registries.ingredient.OreIngredientStoring;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.Compostable;
 import exnihilocreatio.texturing.Color;
-import exnihilocreatio.util.*;
+import exnihilocreatio.util.BlockInfo;
+import exnihilocreatio.util.ItemInfo;
+import exnihilocreatio.util.LogUtil;
+import exnihilocreatio.util.StackInfo;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -37,7 +39,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
 
@@ -91,7 +96,7 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
 
     public void register(String name, float value, IBlockState state, Color color) {
         Ingredient ingredient = new OreIngredientStoring(name);
-        Compostable compostable = new Compostable(value, color, new ItemInfo(state));
+        Compostable compostable = new Compostable(value, color, new BlockInfo(state));
 
         if (oreRegistry.keySet().stream().anyMatch(entry -> IngredientUtil.ingredientEquals(entry, ingredient)))
             LogUtil.error("Compost Ore Entry for " + name + " already exists, skipping.");

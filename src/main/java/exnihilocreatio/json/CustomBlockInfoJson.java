@@ -30,6 +30,7 @@ public class CustomBlockInfoJson implements JsonDeserializer<BlockInfo>, JsonSer
         if (block == null) {
             LogUtil.error("Error parsing JSON: Invalid BlockStoneAxle: " + json.toString());
             LogUtil.error("This may result in crashing or other undefined behavior");
+            return BlockInfo.EMPTY;
         }
 
         return new BlockInfo(block, meta);

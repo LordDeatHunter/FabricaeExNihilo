@@ -33,9 +33,6 @@ public class CustomCompostableJson implements JsonDeserializer<Compostable>, Jso
         }
 
         BlockInfo result = context.deserialize(json.getAsJsonObject().get("compostBlock"), BlockInfo.class);
-        if (result.getMeta() == -1)
-            result.setMeta(0);
-
 
         return new Compostable(value, color, result);
     }

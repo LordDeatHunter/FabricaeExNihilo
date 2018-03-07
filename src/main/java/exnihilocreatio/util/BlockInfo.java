@@ -1,8 +1,6 @@
 package exnihilocreatio.util;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -13,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
 
@@ -21,33 +20,24 @@ public class BlockInfo extends StackInfo {
 
     public static final BlockInfo EMPTY = new BlockInfo(ItemStack.EMPTY);
 
-    @Getter
     @Nonnull
-    private Block block;
-
-    @Getter
-    @Setter
-    private int meta;
+    private IBlockState state = Blocks.AIR.getDefaultState();
 
     public BlockInfo(@Nonnull Block block) {
-        this.block = block;
-        this.meta = -1;
+        setState(block, -1);
     }
 
-    public BlockInfo(@Nonnull IBlockState state) {
-        this.block = state.getBlock();
-        this.meta = state.getBlock().getMetaFromState(state);
+    public BlockInfo(@Nonnull Block block, int meta) {
+        setState(block, meta);
     }
 
     public BlockInfo(@Nonnull ItemStack stack) {
-        this.block = Block.getBlockFromItem(stack.getItem());
-        this.meta = stack.getItemDamage();
+        setState(Block.getBlockFromItem(stack.getItem()), stack.getItemDamage());
     }
 
     public BlockInfo(@Nonnull String string) {
         if (string.isEmpty() || string.length() < 2) {
-            this.block = Blocks.AIR;
-            this.meta = -1;
+            this.state = Blocks.AIR.getDefaultState();
             return;
         }
         String[] split = string.split(":");
@@ -87,13 +77,30 @@ public class BlockInfo extends StackInfo {
         }
 
         if (block == null){
-            this.block = Blocks.AIR;
-            this.meta = -1;
+            this.state = Blocks.AIR.getDefaultState();
         }
         else {
-            this.block = block;
-            this.meta = meta;
+            setState(block, meta);
         }
+    }
+
+    public void setState(@Nonnull IBlockState state) {
+        this.state = state;
+    }
+
+    public void setState(@Nonnull Block block, int meta) {
+        // This checks for any "all" meta values, before attempting to get the state via meta
+        // As it's faster to just grab the default state
+        if (meta == 0 || meta == -1 || meta == OreDictionary.WILDCARD_VALUE)
+            this.state = block.getDefaultState();
+
+        // This can fail, so in the event it does, we only grab the default state
+        else
+            try {
+                this.state = block.getStateFromMeta(meta);
+            } catch (Exception e) {
+                this.state = block.getDefaultState();
+            }
     }
 
     public static BlockInfo readFromNBT(NBTTagCompound tag) {
@@ -108,14 +115,15 @@ public class BlockInfo extends StackInfo {
 
     @Override
     public String toString() {
-        return Block.REGISTRY.getNameForObject(block) + (meta == -1 ? "" : (":" + meta));
+        int meta = state.getBlock().getMetaFromState(state);
+        return Block.REGISTRY.getNameForObject(state.getBlock()) + (meta == -1 ? "" : (":" + meta));
     }
 
     @Nonnull
     @Override
     public ItemStack getItemStack() {
-        Item item = Item.getItemFromBlock(block);
-        return item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item, 1, meta);
+        Item item = Item.getItemFromBlock(state.getBlock());
+        return item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item, 1, state.getBlock().getMetaFromState(state));
     }
 
     @Override
@@ -125,31 +133,37 @@ public class BlockInfo extends StackInfo {
 
     @Nonnull
     @Override
-    public IBlockState getBlockState(){
-        // This can fail, so in the event it does, we only grab the default state
-        try {
-            return block.getStateFromMeta(meta);
-        } catch (Exception e){
-            return block.getDefaultState();
-        }
+    public Block getBlock() {
+        return state.getBlock();
+    }
+
+    @Nonnull
+    @Override
+    public IBlockState getBlockState() {
+        return state;
+    }
+
+    @Override
+    public int getMeta() {
+        return state.getBlock().getMetaFromState(state);
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
-        tag.setString("block", Block.REGISTRY.getNameForObject(block).toString());
-        tag.setInteger("meta", meta);
+        tag.setString("block", Block.REGISTRY.getNameForObject(state.getBlock()).toString());
+        tag.setInteger("meta", state.getBlock().getMetaFromState(state));
 
         return tag;
     }
 
     @Override
     public boolean isValid() {
-        return this.block != Blocks.AIR && meta <= Short.MAX_VALUE;
+        return this.state != Blocks.AIR.getDefaultState();
     }
 
     @Override
     public int hashCode() {
-        return block.hashCode();
+        return state.hashCode();
     }
 
     @Override
@@ -161,11 +175,10 @@ public class BlockInfo extends StackInfo {
         else if (other instanceof ItemStack)
             return ItemStack.areItemStacksEqual(((ItemStack) other), getItemStack());
         else if (other instanceof Block)
-            return Block.isEqualTo((Block) other, block);
+            return Block.isEqualTo(state.getBlock(), (Block)other);
         else if (other instanceof ItemBlock) {
-            return Block.isEqualTo(((ItemBlock) other).getBlock(), block);
+            return Block.isEqualTo(state.getBlock(), ((ItemBlock) other).getBlock());
         }
-
         return false;
     }
 }

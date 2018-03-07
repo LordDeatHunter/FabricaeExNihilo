@@ -19,6 +19,8 @@ public abstract class StackInfo {
     @Nonnull
     public abstract Block getBlock();
 
+    public abstract int getMeta();
+
     @Nonnull
     public abstract IBlockState getBlockState();
 

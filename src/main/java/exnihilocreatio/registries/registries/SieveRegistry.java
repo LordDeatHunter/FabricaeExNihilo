@@ -1,16 +1,17 @@
 package exnihilocreatio.registries.registries;
 
-import com.google.gson.*;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.blocks.BlockSieve;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipe;
 import exnihilocreatio.json.CustomIngredientJson;
+import exnihilocreatio.registries.ingredient.OreIngredientStoring;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.Siftable;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
-import exnihilocreatio.registries.ingredient.OreIngredientStoring;
+import exnihilocreatio.util.StackInfo;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;

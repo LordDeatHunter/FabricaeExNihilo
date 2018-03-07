@@ -29,6 +29,7 @@ public class CustomItemInfoJson implements JsonDeserializer<ItemInfo>, JsonSeria
             if (item == null) {
                 LogUtil.error("Error parsing JSON: Invalid Item: " + json.toString());
                 LogUtil.error("This may result in crashing or other undefined behavior");
+                return ItemInfo.EMPTY;
             }
 
             return new ItemInfo(item, meta);

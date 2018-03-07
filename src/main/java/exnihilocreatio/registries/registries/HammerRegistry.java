@@ -6,11 +6,12 @@ import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.hammer.HammerRecipe;
 import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.json.CustomItemStackJson;
+import exnihilocreatio.registries.ingredient.OreIngredientStoring;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.HammerReward;
 import exnihilocreatio.util.BlockInfo;
-import exnihilocreatio.registries.ingredient.OreIngredientStoring;
+import exnihilocreatio.util.StackInfo;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -142,7 +143,7 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
     }
 
     public boolean isRegistered(Block block) {
-        return isRegistered(new BlockInfo(block));
+        return isRegistered(new BlockInfo(block.getDefaultState()));
     }
 
     public boolean isRegistered(BlockInfo stackInfo) {
