@@ -57,8 +57,8 @@ public class BlockInfo extends StackInfo {
                     meta = -1;
                     block = Block.getBlockFromName(split[0] + ":" + split[1]);
                 } catch (NullPointerException e) {
-                    block = Blocks.AIR;
-                    meta = -1;
+                    state = Blocks.AIR.getDefaultState();
+                    return;
                 }
                 break;
             case 3:
@@ -66,14 +66,13 @@ public class BlockInfo extends StackInfo {
                     meta = split[2].equals("*") ? -1 : Integer.parseInt(split[2]);
                     block = Block.getBlockFromName(split[0] + ":" + split[1]);
                 } catch (NumberFormatException | NullPointerException e) {
-                    block = Blocks.AIR;
-                    meta = -1;
+                    state = Blocks.AIR.getDefaultState();
+                    return;
                 }
                 break;
             default:
-                block = Blocks.AIR;
-                meta = -1;
-                break;
+                state = Blocks.AIR.getDefaultState();
+                return;
         }
 
         if (block == null){
@@ -115,7 +114,7 @@ public class BlockInfo extends StackInfo {
 
     @Override
     public String toString() {
-        int meta = state.getBlock().getMetaFromState(state);
+        int meta = getMeta();
         return Block.REGISTRY.getNameForObject(state.getBlock()) + (meta == -1 ? "" : (":" + meta));
     }
 
@@ -123,7 +122,7 @@ public class BlockInfo extends StackInfo {
     @Override
     public ItemStack getItemStack() {
         Item item = Item.getItemFromBlock(state.getBlock());
-        return item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item, 1, state.getBlock().getMetaFromState(state));
+        return item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item, 1, getMeta());
     }
 
     @Override
