@@ -1,8 +1,6 @@
 package exnihilocreatio.util;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -17,7 +15,6 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
 
-@AllArgsConstructor
 public class ItemInfo extends StackInfo {
 
     public static final ItemInfo EMPTY = new ItemInfo(ItemStack.EMPTY);
@@ -25,12 +22,25 @@ public class ItemInfo extends StackInfo {
     @Getter
     @Nonnull
     private Item item;
-    @Getter
-    @Setter
+
     private int meta = 0;
+
+    @Getter
+    private boolean isWildcard = false;
 
     public ItemInfo(@Nonnull Item item) {
         this.item = item;
+        this.isWildcard = true;
+    }
+
+    public ItemInfo(@Nonnull Item item, int meta) {
+        this.item = item;
+        if (meta == -1 || meta == OreDictionary.WILDCARD_VALUE) {
+            this.meta = 0;
+            this.isWildcard = true;
+        }
+        else
+            this.meta = meta;
     }
 
     public ItemInfo(@Nonnull ItemStack stack) {
@@ -38,14 +48,31 @@ public class ItemInfo extends StackInfo {
         this.meta = stack.getItemDamage();
     }
 
+    public ItemInfo(@Nonnull Block block) {
+        this.item = Item.getItemFromBlock(block);
+        this.meta = 0;
+        this.isWildcard = true;
+    }
+
     public ItemInfo(@Nonnull Block block, int blockMeta) {
         this.item = Item.getItemFromBlock(block);
-        this.meta = block == Blocks.AIR ? 0 : blockMeta;
+        if (this.item == Items.AIR){
+            this.meta = 0;
+            this.isWildcard = true;
+        }
+        else {
+            if (blockMeta == -1 || blockMeta == OreDictionary.WILDCARD_VALUE) {
+                this.meta = 0;
+                this.isWildcard = true;
+            } else
+                this.meta = blockMeta;
+        }
     }
 
     public ItemInfo(@Nonnull String string) {
         if (string.isEmpty() || string.length() < 2) {
-            item = Items.AIR;
+            this.item = Items.AIR;
+            this.isWildcard = true;
             return;
         }
         String[] split = string.split(":");
@@ -59,23 +86,26 @@ public class ItemInfo extends StackInfo {
                 break;
             case 2:
                 try {
-                    meta = split[1].equals("*") ? 0 : Integer.parseInt(split[1]);
+                    meta = split[1].equals("*") ? -1 : Integer.parseInt(split[1]);
                     item = Item.getByNameOrId("minecraft:" + split[0]);
                 } catch (NumberFormatException e) {
+                    this.isWildcard = true;
                     meta = 0;
                     item = Item.getByNameOrId(split[0] + ":" + split[1]);
                 }
                 break;
             case 3:
                 try {
-                    meta = split[2].equals("*") ? 0 : Integer.parseInt(split[2]);
+                    meta = split[2].equals("*") ? -1 : Integer.parseInt(split[2]);
                     item = Item.getByNameOrId(split[0] + ":" + split[1]);
                 } catch (NumberFormatException e) {
                     meta = 0;
+                    this.isWildcard = true;
                 }
                 break;
             default:
                 this.item = Items.AIR;
+                this.isWildcard = true;
                 return;
         }
 
@@ -84,7 +114,11 @@ public class ItemInfo extends StackInfo {
         }
         else {
             this.item = item;
-            this.meta = meta;
+            if (meta == -1 || meta == OreDictionary.WILDCARD_VALUE) {
+                this.meta = 0;
+                this.isWildcard = true;
+            } else
+                this.meta = meta;
         }
     }
 
@@ -137,6 +171,11 @@ public class ItemInfo extends StackInfo {
     }
 
     @Override
+    public int getMeta() {
+        return isWildcard ? -1 : meta;
+    }
+
+    @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
         tag.setString("item", ForgeRegistries.ITEMS.getKey(item) == null ? "" : ForgeRegistries.ITEMS.getKey(item).toString());
         tag.setInteger("meta", meta);
@@ -156,19 +195,35 @@ public class ItemInfo extends StackInfo {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof ItemInfo)
-            return ItemStack.areItemStacksEqual(((ItemInfo) obj).getItemStack(), getItemStack());
-        else if (obj instanceof ItemStack)
-            return ItemStack.areItemStacksEqual((ItemStack) obj, getItemStack());
-        else if (obj instanceof BlockInfo)
-            return ItemStack.areItemStacksEqual(((BlockInfo) obj).getItemStack(), getItemStack());
-        else if (obj instanceof Block){
-            BlockInfo block = new BlockInfo((Block)obj);
-            return ItemStack.areItemStacksEqual(block.getItemStack(), getItemStack());
+        if (isWildcard){
+            if (obj instanceof ItemInfo)
+                return ItemStack.areItemsEqualIgnoreDurability(((ItemInfo) obj).getItemStack(), getItemStack());
+            else if (obj instanceof ItemStack)
+                return ItemStack.areItemsEqualIgnoreDurability((ItemStack) obj, getItemStack());
+            else if (obj instanceof BlockInfo)
+                return ItemStack.areItemsEqualIgnoreDurability(((BlockInfo) obj).getItemStack(), getItemStack());
+            else if (obj instanceof Block) {
+                BlockInfo block = new BlockInfo((Block) obj);
+                return ItemStack.areItemsEqualIgnoreDurability(block.getItemStack(), getItemStack());
+            } else if (obj instanceof Item) {
+                ItemInfo item = new ItemInfo((Item) obj);
+                return ItemStack.areItemsEqualIgnoreDurability(item.getItemStack(), getItemStack());
+            }
         }
-        else if (obj instanceof Item){
-            ItemInfo item = new ItemInfo((Item)obj);
-            return ItemStack.areItemStacksEqual(item.getItemStack(), getItemStack());
+        else {
+            if (obj instanceof ItemInfo)
+                return ItemStack.areItemStacksEqual(((ItemInfo) obj).getItemStack(), getItemStack());
+            else if (obj instanceof ItemStack)
+                return ItemStack.areItemStacksEqual((ItemStack) obj, getItemStack());
+            else if (obj instanceof BlockInfo)
+                return ItemStack.areItemStacksEqual(((BlockInfo) obj).getItemStack(), getItemStack());
+            else if (obj instanceof Block) {
+                BlockInfo block = new BlockInfo((Block) obj);
+                return ItemStack.areItemStacksEqual(block.getItemStack(), getItemStack());
+            } else if (obj instanceof Item) {
+                ItemInfo item = new ItemInfo((Item) obj);
+                return ItemStack.areItemStacksEqual(item.getItemStack(), getItemStack());
+            }
         }
         return false;
     }

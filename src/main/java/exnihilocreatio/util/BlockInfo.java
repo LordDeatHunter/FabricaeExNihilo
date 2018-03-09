@@ -1,6 +1,6 @@
 package exnihilocreatio.util;
 
-import lombok.AllArgsConstructor;
+import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -11,10 +11,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
 
-@AllArgsConstructor
 public class BlockInfo extends StackInfo {
 
     public static final BlockInfo EMPTY = new BlockInfo(ItemStack.EMPTY);
@@ -22,12 +22,22 @@ public class BlockInfo extends StackInfo {
     @Nonnull
     private IBlockState state;
 
+    @Getter
+    private boolean isWildcard = false;
+
     public BlockInfo(@Nonnull Block block) {
         this.state = getStateFromMeta(block, 0);
+        this.isWildcard = true;
     }
 
     public BlockInfo(@Nonnull Block block, int meta) {
         this.state = getStateFromMeta(block, meta);
+        if (meta == -1 || meta == OreDictionary.WILDCARD_VALUE)
+            this.isWildcard = true;
+    }
+
+    public BlockInfo(@Nonnull IBlockState state){
+        this.state = state;
     }
 
     public BlockInfo(@Nonnull ItemStack stack) {
@@ -37,6 +47,7 @@ public class BlockInfo extends StackInfo {
     public BlockInfo(@Nonnull String string) {
         if (string.isEmpty() || string.length() < 2) {
             this.state = Blocks.AIR.getDefaultState();
+            this.isWildcard = true;
             return;
         }
         String[] split = string.split(":");
@@ -50,27 +61,30 @@ public class BlockInfo extends StackInfo {
                 break;
             case 2:
                 try {
-                    meta = split[1].equals("*") ? 0 : Integer.parseInt(split[1]);
+                    meta = split[1].equals("*") ? -1 : Integer.parseInt(split[1]);
                     block = Block.getBlockFromName("minecraft:" + split[0]);
                 } catch (NumberFormatException e) {
                     meta = 0;
                     block = Block.getBlockFromName(split[0] + ":" + split[1]);
                 } catch (NullPointerException e) {
-                    state = Blocks.AIR.getDefaultState();
+                    this.state = Blocks.AIR.getDefaultState();
+                    this.isWildcard = true;
                     return;
                 }
                 break;
             case 3:
                 try {
-                    meta = split[2].equals("*") ? 0 : Integer.parseInt(split[2]);
+                    meta = split[2].equals("*") ? -1 : Integer.parseInt(split[2]);
                     block = Block.getBlockFromName(split[0] + ":" + split[1]);
                 } catch (NumberFormatException | NullPointerException e) {
-                    state = Blocks.AIR.getDefaultState();
+                    this.state = Blocks.AIR.getDefaultState();
+                    this.isWildcard = true;
                     return;
                 }
                 break;
             default:
-                state = Blocks.AIR.getDefaultState();
+                this.state = Blocks.AIR.getDefaultState();
+                this.isWildcard = true;
                 return;
         }
 
@@ -78,7 +92,12 @@ public class BlockInfo extends StackInfo {
             this.state = Blocks.AIR.getDefaultState();
         }
         else {
-            this.state = getStateFromMeta(block, meta);
+            if (meta == -1 || meta == OreDictionary.WILDCARD_VALUE) {
+                this.state = getStateFromMeta(block, 0);
+                this.isWildcard = true;
+            }
+            else
+                this.state = getStateFromMeta(block, meta);
         }
     }
 
@@ -138,7 +157,7 @@ public class BlockInfo extends StackInfo {
 
     @Override
     public int getMeta() {
-        return state.getBlock().getMetaFromState(state);
+        return isWildcard ? -1 : state.getBlock().getMetaFromState(state);
     }
 
     @Override
@@ -159,19 +178,40 @@ public class BlockInfo extends StackInfo {
         return state.hashCode();
     }
 
+    /**
+     * Equals will vary base on Wildcard value. If wildcard is true
+     * this will only compare blocks, otherwise it will also factor
+     * in meta values.
+     */
     @Override
     public boolean equals(Object other) {
-        if (other instanceof BlockInfo)
-            return state == ((BlockInfo) other).state;
-        else if (other instanceof ItemInfo)
-            return state == ((ItemInfo) other).getBlockState();
-        else if (other instanceof ItemStack)
-            return state == BlockInfo.getStateFromMeta(Block.getBlockFromItem(((ItemStack) other).getItem()), ((ItemStack) other).getItemDamage());
-        else if (other instanceof Block)
-            return Block.isEqualTo(state.getBlock(), (Block)other);
-        else if (other instanceof ItemBlock) {
-            return Block.isEqualTo(state.getBlock(), ((ItemBlock) other).getBlock());
+        if (isWildcard){
+            if (other instanceof BlockInfo)
+                return Block.isEqualTo(state.getBlock(), ((BlockInfo) other).getBlock());
+            else if (other instanceof ItemInfo)
+                return Block.isEqualTo(state.getBlock(), ((ItemInfo) other).getBlock());
+            else if (other instanceof ItemStack)
+                return Block.isEqualTo(state.getBlock(), Block.getBlockFromItem(((ItemStack) other).getItem()));
+            else if (other instanceof Block)
+                return Block.isEqualTo(state.getBlock(), (Block)other);
+            else if (other instanceof ItemBlock) {
+                return Block.isEqualTo(state.getBlock(), ((ItemBlock) other).getBlock());
+            }
         }
+        else {
+            if (other instanceof BlockInfo)
+                return state == ((BlockInfo) other).state;
+            else if (other instanceof ItemInfo)
+                return state == ((ItemInfo) other).getBlockState();
+            else if (other instanceof ItemStack)
+                return state == BlockInfo.getStateFromMeta(Block.getBlockFromItem(((ItemStack) other).getItem()), ((ItemStack) other).getItemDamage());
+            else if (other instanceof Block)
+                return Block.isEqualTo(state.getBlock(), (Block)other);
+            else if (other instanceof ItemBlock) {
+                return Block.isEqualTo(state.getBlock(), ((ItemBlock) other).getBlock());
+            }
+        }
+
         return false;
     }
 }
