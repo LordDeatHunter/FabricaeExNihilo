@@ -36,7 +36,6 @@ public class ItemInfo extends StackInfo {
     public ItemInfo(@Nonnull Item item, int meta) {
         this.item = item;
         if (meta == -1 || meta == OreDictionary.WILDCARD_VALUE) {
-            this.meta = 0;
             this.isWildcard = true;
         }
         else
@@ -57,12 +56,10 @@ public class ItemInfo extends StackInfo {
     public ItemInfo(@Nonnull Block block, int blockMeta) {
         this.item = Item.getItemFromBlock(block);
         if (this.item == Items.AIR){
-            this.meta = 0;
             this.isWildcard = true;
         }
         else {
             if (blockMeta == -1 || blockMeta == OreDictionary.WILDCARD_VALUE) {
-                this.meta = 0;
                 this.isWildcard = true;
             } else
                 this.meta = blockMeta;
@@ -111,11 +108,11 @@ public class ItemInfo extends StackInfo {
 
         if (item == null){
             this.item = Items.AIR;
+            this.isWildcard = true;
         }
         else {
             this.item = item;
             if (meta == -1 || meta == OreDictionary.WILDCARD_VALUE) {
-                this.meta = 0;
                 this.isWildcard = true;
             } else
                 this.meta = meta;

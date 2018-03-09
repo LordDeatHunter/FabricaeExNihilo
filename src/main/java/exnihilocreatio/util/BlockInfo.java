@@ -90,6 +90,7 @@ public class BlockInfo extends StackInfo {
 
         if (block == null){
             this.state = Blocks.AIR.getDefaultState();
+            this.isWildcard = true;
         }
         else {
             if (meta == -1 || meta == OreDictionary.WILDCARD_VALUE) {
