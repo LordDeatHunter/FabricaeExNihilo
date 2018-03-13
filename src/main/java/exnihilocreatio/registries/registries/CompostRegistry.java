@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.barrel.compost.CompostRecipe;
+import exnihilocreatio.json.CustomBlockInfoJson;
 import exnihilocreatio.json.CustomColorJson;
 import exnihilocreatio.json.CustomCompostableJson;
 import exnihilocreatio.json.CustomIngredientJson;
@@ -56,6 +57,7 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
                         .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
                         .registerTypeAdapter(Compostable.class, new CustomCompostableJson())
                         .registerTypeAdapter(Color.class, new CustomColorJson())
+                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
                         .enableComplexMapKeySerialization()
                         .create(),
                 new TypeToken<Map<Ingredient, Compostable>>() {

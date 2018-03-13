@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.blocks.BlockSieve;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipe;
 import exnihilocreatio.json.CustomIngredientJson;
+import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.ingredient.OreIngredientStoring;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
@@ -34,6 +35,7 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Sifta
                         .setPrettyPrinting()
                         .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
                         .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
+                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
                         .enableComplexMapKeySerialization()
                         .create(),
                 new com.google.gson.reflect.TypeToken<Map<Ingredient, List<Siftable>>>() {}.getType(),
