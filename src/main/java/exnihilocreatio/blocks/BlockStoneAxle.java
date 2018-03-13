@@ -25,6 +25,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class BlockStoneAxle extends BlockBase implements ITileEntityProvider, ITOPInfoProvider {
@@ -44,21 +45,24 @@ public class BlockStoneAxle extends BlockBase implements ITileEntityProvider, IT
 
     @Nullable
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
+    public TileEntity createNewTileEntity(@Nonnull World worldIn, int meta) {
         return new TileStoneAxle();
     }
 
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+    @Nonnull
+    public IBlockState getActualState(@Nonnull IBlockState state, IBlockAccess worldIn, BlockPos pos) {
         return state.withProperty(IS_AXLE, false);
     }
 
     @Override
+    @Nonnull
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, IS_AXLE);
     }
 
     @Override
+    @Nonnull
     public IBlockState getStateFromMeta(int meta) {
         return getDefaultState();
     }
@@ -69,7 +73,7 @@ public class BlockStoneAxle extends BlockBase implements ITileEntityProvider, IT
     }
 
     @Override
-    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+    public boolean shouldSideBeRendered(IBlockState blockState, @Nonnull IBlockAccess blockAccess, @Nonnull BlockPos pos, EnumFacing side) {
         return false;
     }
 
@@ -110,7 +114,7 @@ public class BlockStoneAxle extends BlockBase implements ITileEntityProvider, IT
 
     @Nullable
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, @Nonnull IBlockAccess worldIn, @Nonnull BlockPos pos) {
         TileEntity te = worldIn.getTileEntity(pos);
         if (te != null && te instanceof TileStoneAxle) {
             switch (((TileStoneAxle) te).facing) {
@@ -129,6 +133,7 @@ public class BlockStoneAxle extends BlockBase implements ITileEntityProvider, IT
     }
 
     @Override
+    @Nonnull
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         TileEntity te = source.getTileEntity(pos);
         if (te != null && te instanceof TileStoneAxle) {

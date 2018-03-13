@@ -6,13 +6,14 @@ import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.crucible.CrucibleRecipe;
 import exnihilocreatio.json.CustomBlockInfoJson;
 import exnihilocreatio.json.CustomIngredientJson;
-import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.ingredient.IngredientUtil;
 import exnihilocreatio.registries.ingredient.OreIngredientStoring;
 import exnihilocreatio.registries.manager.IDefaultRecipeProvider;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.Meltable;
-import exnihilocreatio.util.*;
+import exnihilocreatio.util.BlockInfo;
+import exnihilocreatio.util.LogUtil;
+import exnihilocreatio.util.StackInfo;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -22,6 +23,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 
+import javax.annotation.Nonnull;
 import java.io.FileReader;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +37,6 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
                         .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
                         .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
                         .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
@@ -47,20 +48,12 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
         );
     }
 
-    public void register(ItemInfo item, Fluid fluid, int amount) {
+    public void register(StackInfo item, Fluid fluid, int amount) {
         register(item.getItemStack(), fluid, amount);
     }
 
-    public void register(ItemInfo item, Meltable meltable) {
+    public void register(StackInfo item, Meltable meltable) {
         register(item.getItemStack(), meltable);
-    }
-
-    public void register(BlockInfo block, Fluid fluid, int amount) {
-        register(block.getItemStack(), fluid, amount);
-    }
-
-    public void register(BlockInfo block, Meltable meltable) {
-        register(block.getItemStack(), meltable);
     }
 
     public void register(ItemStack stack, Fluid fluid, int amount) {
@@ -92,14 +85,11 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
         return registry.keySet().stream().anyMatch(entry -> entry.test(stack)) || oreRegistry.keySet().stream().anyMatch(entry -> entry.test(stack));
     }
 
-    public boolean canBeMelted(ItemInfo info) {
+    public boolean canBeMelted(StackInfo info) {
         return canBeMelted(info.getItemStack());
     }
 
-    public boolean canBeMelted(Item item, int meta) {
-        return canBeMelted(new ItemStack(item, meta));
-    }
-
+    @Nonnull
     public Meltable getMeltable(ItemStack stack) {
         Ingredient ingredient = registry.keySet().stream().filter(entry -> entry.test(stack)).findFirst().orElse(null);
         if (ingredient != null) return registry.get(ingredient);
@@ -108,10 +98,12 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
         else return Meltable.EMPTY;
     }
 
-    public Meltable getMeltable(ItemInfo info) {
+    @Nonnull
+    public Meltable getMeltable(StackInfo info) {
         return getMeltable(info.getItemStack());
     }
 
+    @Nonnull
     public Meltable getMeltable(Item item, int meta) {
         return getMeltable(new ItemStack(item, meta));
     }

@@ -27,7 +27,7 @@ public class BigReactors implements IRecipeDefaults {
     public void registerSieve(SieveRegistry registry) {
         ItemOre ore = ExNihiloRegistryManager.ORE_REGISTRY.getOreItem("yellorium");
         if (ore != null) {
-            registry.register(new BlockInfo(ModBlocks.dust, 0), new ItemInfo(ore, 0), 0.01f, MeshType.DIAMOND.getID());
+            registry.register(new BlockInfo(ModBlocks.dust.getDefaultState()), new ItemInfo(ore, 0), 0.01f, MeshType.DIAMOND.getID());
         }
     }
 
@@ -47,7 +47,7 @@ public class BigReactors implements IRecipeDefaults {
         // 3 = Blutonium
         Block brBlocks = Block.getBlockFromName("bigreactors:blockmetals");
         if (brBlocks != null) {
-            registry.register(new BlockInfo(brBlocks, 0), 10);
+            registry.register(new BlockInfo(brBlocks.getDefaultState()), 10);
             registry.register(new BlockInfo(brBlocks, 1), 15);
             registry.register(new BlockInfo(brBlocks, 3), 20);
         }

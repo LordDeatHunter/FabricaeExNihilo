@@ -55,6 +55,7 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
     }
 
     @Override
+    @Nonnull
     public String getModName() {
         return ExNihiloCreatio.MODID;
     }

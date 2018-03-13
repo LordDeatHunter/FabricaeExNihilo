@@ -1,21 +1,19 @@
 package exnihilocreatio.json;
 
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
-import exnihilocreatio.items.ore.Ore;
 import exnihilocreatio.registries.types.Compostable;
 import exnihilocreatio.texturing.Color;
-import exnihilocreatio.util.ItemInfo;
+import exnihilocreatio.util.BlockInfo;
+import exnihilocreatio.util.StackInfo;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
 
 public class CustomCompostableJson implements JsonDeserializer<Compostable>, JsonSerializer<Compostable> {
     @Override
     public JsonElement serialize(Compostable src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject obj = new JsonObject();
         obj.addProperty("value", src.getValue());
-        obj.add("compostBlock", context.serialize(src.getCompostBlock(), ItemInfo.class));
+        obj.add("compostBlock", context.serialize(src.getCompostBlock(), StackInfo.class));
         if (!src.getColor().equals(Color.INVALID_COLOR)){
             obj.add("color", context.serialize(src.getColor(), Color.class));
         }
@@ -34,10 +32,7 @@ public class CustomCompostableJson implements JsonDeserializer<Compostable>, Jso
             color = context.deserialize(json.getAsJsonObject().get("color"), Color.class);
         }
 
-        ItemInfo result = context.deserialize(json.getAsJsonObject().get("compostBlock"), ItemInfo.class);
-        if (result.getMeta() == -1)
-            result.setMeta(0);
-
+        BlockInfo result = context.deserialize(json.getAsJsonObject().get("compostBlock"), BlockInfo.class);
 
         return new Compostable(value, color, result);
     }

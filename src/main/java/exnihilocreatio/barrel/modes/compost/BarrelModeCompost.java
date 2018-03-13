@@ -9,7 +9,6 @@ import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.Compostable;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.tiles.TileBarrel;
-import exnihilocreatio.util.ColorStealer;
 import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.Util;
 import lombok.Getter;
@@ -20,7 +19,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -30,8 +28,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
@@ -64,11 +60,10 @@ public class BarrelModeCompost implements IBarrelMode {
     public void onBlockActivated(World world, TileBarrel barrel, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (fillAmount == 0) {
             if (!player.getHeldItem(hand).isEmpty()) {
-                ItemInfo info = ItemInfo.getItemInfoFromStack(player.getHeldItem(hand));
+                ItemInfo info = new ItemInfo(player.getHeldItem(hand));
                 if (ExNihiloRegistryManager.COMPOST_REGISTRY.containsItem(info)) {
                     Compostable comp = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(info);
-                    compostState = Block.getBlockFromItem(comp.getCompostBlock().getItem())
-                            .getStateFromMeta(comp.getCompostBlock().getMeta());
+                    compostState = comp.getCompostBlock().getBlockState();
                     PacketHandler.sendNBTUpdate(barrel);
                 }
             }
@@ -76,13 +71,12 @@ public class BarrelModeCompost implements IBarrelMode {
         if (fillAmount < 1 && compostState != null) {
             if (!player.getHeldItem(hand).isEmpty()) {
                 ItemStack stack = player.getHeldItem(hand);
-                ItemInfo info = ItemInfo.getItemInfoFromStack(player.getHeldItem(hand));
+                ItemInfo info = new ItemInfo(player.getHeldItem(hand));
                 Compostable comp = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(info);
 
-                if (comp == null || comp.getCompostBlock() == null) return;
+                if (comp == null || !comp.getCompostBlock().isValid()) return;
 
-                IBlockState testState = Block.getBlockFromItem(comp.getCompostBlock().getItem())
-                        .getStateFromMeta(comp.getCompostBlock().getMeta());
+                IBlockState testState = comp.getCompostBlock().getBlockState();
 
                 if (ExNihiloRegistryManager.COMPOST_REGISTRY.containsItem(info) && compostState.equals(testState)) {
                     Compostable compost = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(info);
@@ -124,10 +118,9 @@ public class BarrelModeCompost implements IBarrelMode {
     public void addItem(ItemStack stack, TileBarrel barrel) {
         if (fillAmount < 1) {
             if (stack != null && !stack.isEmpty()) {
-                ItemInfo info = ItemInfo.getItemInfoFromStack(stack);
+                ItemInfo info = new ItemInfo(stack);
                 Compostable comp = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(info);
-                IBlockState testState = Block.getBlockFromItem(comp.getCompostBlock().getItem())
-                        .getStateFromMeta(comp.getCompostBlock().getMeta());
+                IBlockState testState = comp.getCompostBlock().getBlockState();
 
                 if (ExNihiloRegistryManager.COMPOST_REGISTRY.containsItem(info) && compostState == null) {
                     compostState = testState;

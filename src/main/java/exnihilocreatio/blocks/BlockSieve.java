@@ -183,7 +183,7 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPIn
     }
 
     @Override
-    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+    public boolean shouldSideBeRendered(IBlockState blockState, @Nonnull IBlockAccess blockAccess, @Nonnull BlockPos pos, EnumFacing side) {
         return false;
     }
     //endregion

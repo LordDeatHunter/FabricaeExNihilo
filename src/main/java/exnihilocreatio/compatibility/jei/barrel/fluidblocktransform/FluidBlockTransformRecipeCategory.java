@@ -37,6 +37,7 @@ public class FluidBlockTransformRecipeCategory implements IRecipeCategory<FluidB
     }
 
     @Override
+    @Nonnull
     public String getModName() {
         return ExNihiloCreatio.MODID;
     }

@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
  * Exactly the same as OreIngredient, but it still has the name in it so we can store it to JSON, YAML or whatever.
  */
 public class OreIngredientStoring extends OreIngredient {
-    private String oreName;
+    private final String oreName;
 
     public OreIngredientStoring(String ore) {
         super(ore);

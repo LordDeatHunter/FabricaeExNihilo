@@ -41,10 +41,7 @@ public class HeatRegistry extends BaseRegistryMap<BlockInfo, Integer> {
     }
 
     public int getHeatAmount(BlockInfo info) {
-        if (registry.containsKey(info))
-            return registry.get(info);
-
-        return 0;
+        return registry.getOrDefault(info, 0);
     }
 
     @Override

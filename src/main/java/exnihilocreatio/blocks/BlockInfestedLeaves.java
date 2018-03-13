@@ -43,7 +43,7 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
     }
 
     @Override
-    public void randomTick(World world, BlockPos pos, IBlockState state, Random rand) {
+    public void randomTick(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull Random rand) {
         this.updateTick(world, pos, state, rand);
         if (!world.isRemote) {
             if (state.getValue(NEARBYLEAVES)) {

@@ -34,7 +34,7 @@ public class FluidTransformRecipe implements IRecipeWrapper {
         inputStacks = Lists.newArrayList(inputBucket);
 
         for (BlockInfo block : recipe.getTransformingBlocks()) {
-            inputStacks.add(new ItemStack(block.getBlock(), 1, block.getMeta()));
+            inputStacks.add(block.getItemStack());
         }
     }
 

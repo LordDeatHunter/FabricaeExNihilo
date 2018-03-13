@@ -11,8 +11,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.model.animation.FastTESR;
 
+import javax.annotation.Nullable;
+
 public class RenderBarrel extends FastTESR<TileBarrel> {
-    private static ModelVertex[] model = new ModelVertex[4];
+    private static final ModelVertex[] model = new ModelVertex[4];
 
     static {
         model[0] = new ModelVertex(EnumFacing.UP, 0.125, 0.875, 0.125, 0, 0);
@@ -22,8 +24,8 @@ public class RenderBarrel extends FastTESR<TileBarrel> {
     }
 
     @Override
-    public void renderTileEntityFast(TileBarrel te, double x, double y, double z, float partialTicks, int destroyStage, float partial, BufferBuilder buffer) {
-        if (te.getMode() == null) return;
+    public void renderTileEntityFast(@Nullable TileBarrel te, double x, double y, double z, float partialTicks, int destroyStage, float partial, @Nullable BufferBuilder buffer) {
+        if (te == null || te.getMode() == null || buffer == null) return;
 
         // Fill Level
         float fill = te.getMode().getFilledLevelForRender(te);

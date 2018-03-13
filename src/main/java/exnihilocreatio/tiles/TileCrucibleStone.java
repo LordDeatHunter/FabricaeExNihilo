@@ -46,8 +46,8 @@ public class TileCrucibleStone extends TileCrucibleBase {
 
                     solidAmount = crucibleRegistry.getMeltable(currentItem).getAmount();
                 } else {
-                    if (currentItem != null) {
-                        currentItem = null;
+                    if (currentItem.isValid()) {
+                        currentItem = ItemInfo.EMPTY;
 
                         PacketHandler.sendNBTUpdate(this);
                     }
@@ -73,7 +73,7 @@ public class TileCrucibleStone extends TileCrucibleBase {
                 heatRate = solidAmount;
             }
 
-            if (heatRate > 0 && currentItem != null && crucibleRegistry.canBeMelted(currentItem)) {
+            if (heatRate > 0 && currentItem.isValid() && crucibleRegistry.canBeMelted(currentItem)) {
                 FluidStack toFill = new FluidStack(FluidRegistry.getFluid(crucibleRegistry.getMeltable(currentItem).getFluid()), heatRate);
                 int filled = tank.fillInternal(toFill, true);
                 solidAmount -= filled;
@@ -93,7 +93,7 @@ public class TileCrucibleStone extends TileCrucibleBase {
             return 0;
         }
 
-        int heat = ExNihiloRegistryManager.HEAT_REGISTRY.getHeatAmount(new BlockInfo(stateBelow));
+        int heat = ExNihiloRegistryManager.HEAT_REGISTRY.getHeatAmount(new BlockInfo(stateBelow.getBlock()));
 
         if (heat != 0) {
             return heat;

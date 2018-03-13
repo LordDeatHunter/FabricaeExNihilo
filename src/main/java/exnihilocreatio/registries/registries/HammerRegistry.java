@@ -6,11 +6,12 @@ import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.hammer.HammerRecipe;
 import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.json.CustomItemStackJson;
+import exnihilocreatio.registries.ingredient.OreIngredientStoring;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.HammerReward;
 import exnihilocreatio.util.BlockInfo;
-import exnihilocreatio.registries.ingredient.OreIngredientStoring;
+import exnihilocreatio.util.StackInfo;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -73,8 +74,8 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
         register(new ItemStack(block, 1, meta), new HammerReward(reward, miningLevel, chance, fortuneChance));
     }
 
-    public void register(BlockInfo block, ItemStack reward, int miningLevel, float chance, float fortuneChance) {
-        register(block.getItemStack(), new HammerReward(reward, miningLevel, chance, fortuneChance));
+    public void register(StackInfo stackInfo, ItemStack reward, int miningLevel, float chance, float fortuneChance) {
+        register(stackInfo.getItemStack(), new HammerReward(reward, miningLevel, chance, fortuneChance));
     }
 
     public void register(ItemStack stack, HammerReward reward) {
@@ -124,10 +125,10 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
         return getRewards(new BlockInfo(block, meta));
     }
 
-    public NonNullList<HammerReward> getRewards(BlockInfo block) {
+    public NonNullList<HammerReward> getRewards(BlockInfo stackInfo) {
         NonNullList<HammerReward> drops = NonNullList.create();
-        if (!block.getItemStack().isEmpty())
-            registry.entrySet().stream().filter(entry -> entry.getKey().test(block.getItemStack())).forEach(entry -> drops.addAll(entry.getValue()));
+        if (stackInfo.isValid())
+            registry.entrySet().stream().filter(entry -> entry.getKey().test(stackInfo.getItemStack())).forEach(entry -> drops.addAll(entry.getValue()));
         return drops;
     }
 
@@ -142,11 +143,11 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
     }
 
     public boolean isRegistered(Block block) {
-        return isRegistered(new BlockInfo(block));
+        return isRegistered(new BlockInfo(block.getDefaultState()));
     }
 
-    public boolean isRegistered(BlockInfo block) {
-        return registry.keySet().stream().anyMatch(ingredient -> ingredient.test(block.getItemStack()));
+    public boolean isRegistered(BlockInfo stackInfo) {
+        return registry.keySet().stream().anyMatch(ingredient -> ingredient.test(stackInfo.getItemStack()));
     }
 
     // Legacy TODO: REMOVE if it works with ex compressum

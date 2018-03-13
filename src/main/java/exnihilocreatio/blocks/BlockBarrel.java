@@ -51,7 +51,7 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider, ITOPI
     }
 
     @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+    public void breakBlock(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
         TileEntity te = worldIn.getTileEntity(pos);
         if (te != null && te instanceof TileBarrel) {
             TileBarrel barrel = (TileBarrel) te;

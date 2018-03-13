@@ -59,7 +59,7 @@ public class TileSieve extends BaseTileEntity {
     }
 
     public boolean setMesh(ItemStack newMesh, boolean simulate) {
-        if (progress != 0 || currentStack != BlockInfo.EMPTY)
+        if (progress != 0 || currentStack.isValid())
             return false;
 
         if (meshStack.isEmpty()) {
@@ -88,7 +88,7 @@ public class TileSieve extends BaseTileEntity {
     }
 
     public boolean addBlock(ItemStack stack) {
-        if (currentStack == BlockInfo.EMPTY && ExNihiloRegistryManager.SIEVE_REGISTRY.canBeSifted(stack)) {
+        if (!currentStack.isValid() && ExNihiloRegistryManager.SIEVE_REGISTRY.canBeSifted(stack)) {
             if (meshStack.isEmpty())
                 return false;
             int meshLevel = meshStack.getItemDamage();
@@ -107,7 +107,7 @@ public class TileSieve extends BaseTileEntity {
     public void doSieving(EntityPlayer player, boolean automatedSieving) {
         if (!world.isRemote) {
 
-            if (currentStack == BlockInfo.EMPTY) {
+            if (!currentStack.isValid()) {
                 return;
             }
 
@@ -201,11 +201,11 @@ public class TileSieve extends BaseTileEntity {
     }
 
     public boolean isSieveSimilar(TileSieve sieve) {
-        return sieve != null && !meshStack.isEmpty() && !sieve.getMeshStack().isEmpty() && meshStack.getItemDamage() == sieve.getMeshStack().getItemDamage() && progress == sieve.getProgress() && currentStack != BlockInfo.EMPTY && currentStack.equals(sieve.getCurrentStack());
+        return sieve != null && !meshStack.isEmpty() && !sieve.getMeshStack().isEmpty() && meshStack.getItemDamage() == sieve.getMeshStack().getItemDamage() && progress == sieve.getProgress() && currentStack.isValid() && currentStack.equals(sieve.getCurrentStack());
     }
 
     public boolean isSieveSimilarToInput(TileSieve sieve) {
-        return !meshStack.isEmpty() && !sieve.getMeshStack().isEmpty() && meshStack.getItemDamage() == sieve.getMeshStack().getItemDamage() && progress == sieve.getProgress() && sieve.getCurrentStack() == BlockInfo.EMPTY;
+        return !meshStack.isEmpty() && !sieve.getMeshStack().isEmpty() && meshStack.getItemDamage() == sieve.getMeshStack().getItemDamage() && progress == sieve.getProgress() && !sieve.getCurrentStack().isValid();
     }
 
     private void resetSieve() {
@@ -222,7 +222,7 @@ public class TileSieve extends BaseTileEntity {
 
     @SideOnly(Side.CLIENT)
     public TextureAtlasSprite getTexture() {
-        if (currentStack != BlockInfo.EMPTY) {
+        if (currentStack.isValid()) {
             return Util.getTextureFromBlockState(currentStack.getBlockState());
         }
         return null;
@@ -236,7 +236,7 @@ public class TileSieve extends BaseTileEntity {
     @Override
     @Nonnull
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
-        if (currentStack != BlockInfo.EMPTY) {
+        if (currentStack.isValid()) {
             NBTTagCompound stackTag = currentStack.writeToNBT(new NBTTagCompound());
             tag.setTag("stack", stackTag);
         }

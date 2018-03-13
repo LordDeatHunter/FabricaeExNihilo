@@ -3,7 +3,6 @@ package exnihilocreatio.registries.registries;
 import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import exnihilocreatio.json.CustomBlockInfoJson;
 import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.json.CustomItemStackJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
@@ -32,7 +31,6 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
                 new GsonBuilder()
                         .setPrettyPrinting()
                         .registerTypeAdapter(ItemStack.class, new CustomItemStackJson())
-                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
                         .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
                         .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
                         .enableComplexMapKeySerialization()
@@ -45,6 +43,10 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
 
     public void register(Block block, int meta, ItemStack reward, float chance, float fortuneChance) {
         register(new BlockInfo(block, meta), reward, chance, fortuneChance);
+    }
+
+    public void register(IBlockState state, ItemStack reward, float chance, float fortuneChance) {
+        register(new BlockInfo(state), reward, chance, fortuneChance);
     }
 
     public void register(BlockInfo info, ItemStack reward, float chance, float fortuneChance) {

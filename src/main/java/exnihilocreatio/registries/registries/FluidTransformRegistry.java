@@ -5,10 +5,12 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.barrel.fluidtransform.FluidTransformRecipe;
 import exnihilocreatio.json.CustomBlockInfoJson;
+import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.FluidTransformer;
 import exnihilocreatio.util.BlockInfo;
+import exnihilocreatio.util.ItemInfo;
 import net.minecraftforge.fluids.FluidRegistry;
 import org.apache.commons.io.IOUtils;
 
@@ -21,7 +23,9 @@ import java.util.Map;
 
 public class FluidTransformRegistry extends BaseRegistryMap<String, List<FluidTransformer>> {
     public FluidTransformRegistry() {
-        super(new GsonBuilder().setPrettyPrinting()
+        super(new GsonBuilder()
+                        .setPrettyPrinting()
+                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
                         .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
                         .create(),
                 new com.google.gson.reflect.TypeToken<Map<String, List<FluidTransformer>>>() {}.getType(),

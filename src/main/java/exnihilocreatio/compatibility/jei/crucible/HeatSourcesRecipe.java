@@ -25,6 +25,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
+import javax.annotation.Nonnull;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,7 +68,7 @@ public class HeatSourcesRecipe implements IRecipeWrapper {
     }
 
     @Override
-    public void getIngredients(IIngredients ingredients) {
+    public void getIngredients(@Nonnull IIngredients ingredients) {
         ingredients.setInputs(ItemStack.class, inputs);
     }
 
@@ -138,7 +139,7 @@ public class HeatSourcesRecipe implements IRecipeWrapper {
         GlStateManager.enableCull();
 
         IBlockState crucible = ModBlocks.crucibleStone.getDefaultState().withProperty(BlockCrucibleStone.FIRED, true);
-        IBlockState state = blockInfo.getBlock().getDefaultState();
+        IBlockState state = blockInfo.getBlockState();
 
         BlockPos pos = new BlockPos(0, 0, 0);
         /*if (blockInfo.getBlock() instanceof IFluidBlock || blockInfo.getBlock() instanceof BlockLiquid) {

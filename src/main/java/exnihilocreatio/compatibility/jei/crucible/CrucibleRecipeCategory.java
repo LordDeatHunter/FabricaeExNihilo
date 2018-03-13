@@ -49,6 +49,7 @@ public class CrucibleRecipeCategory implements IRecipeCategory<CrucibleRecipe> {
     }
 
     @Override
+    @Nonnull
     public String getModName() {
         return ExNihiloCreatio.MODID;
     }

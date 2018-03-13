@@ -40,7 +40,7 @@ public class RenderAutoSifter extends TileEntitySpecialRenderer<TileAutoSifter> 
             }
         }
 
-        if (te.connectionPieces != null && ModConfig.client.clientFancyAutoSieveAnimations) {
+        if (ModConfig.client.clientFancyAutoSieveAnimations) {
             for (Tuple<Point3f, EnumFacing.Axis> connectionPiece : te.connectionPieces) {
                 renderConnection(te, x + connectionPiece.getFirst().x, y + connectionPiece.getFirst().y, z + connectionPiece.getFirst().z, connectionPiece.getSecond());
             }

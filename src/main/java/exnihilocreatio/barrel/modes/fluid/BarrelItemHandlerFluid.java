@@ -6,7 +6,7 @@ import exnihilocreatio.networking.MessageBarrelModeUpdate;
 import exnihilocreatio.networking.PacketHandler;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.tiles.TileBarrel;
-import exnihilocreatio.util.ItemInfo;
+import exnihilocreatio.util.BlockInfo;
 import lombok.Setter;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
@@ -35,19 +35,15 @@ public class BarrelItemHandlerFluid extends ItemStackHandler {
             return stack;
 
         if (ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.canBlockBeTransformedWithThisFluid(tank.getFluid().getFluid(), stack) && tank.getFluidAmount() == tank.getCapacity()) {
-            ItemInfo info = ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.getBlockForTransformation(tank.getFluid().getFluid(), stack);
+            BlockInfo info = ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.getBlockForTransformation(tank.getFluid().getFluid(), stack);
 
-            if (info != null) {
+            if (info.isValid()) {
                 if (!simulate) {
                     tank.drain(tank.getCapacity(), true);
                     barrel.setMode("block");
                     PacketHandler.sendToAllAround(new MessageBarrelModeUpdate("block", barrel.getPos()), barrel);
 
                     barrel.getMode().addItem(info.getItemStack(), barrel);
-                }
-
-                if (stack.getItem().hasContainerItem(stack)) {
-
                 }
 
                 ItemStack ret = stack.copy();

@@ -18,6 +18,8 @@ import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.Util;
 import lombok.Getter;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -25,6 +27,9 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class ExNihilo implements IRecipeDefaults {
     @Getter
@@ -48,8 +53,8 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register(new ItemInfo(Items.WHEAT_SEEDS, 0), 0.08f, dirtState, new Color("35A82A"));
         registry.register(new ItemInfo(Items.BREAD, 0), 0.16f, dirtState, new Color("D1AF60"));
 
-        registry.register(new BlockInfo(Blocks.BROWN_MUSHROOM, 0), 0.10f, dirtState, new Color("CFBFB6"));
-        registry.register(new BlockInfo(Blocks.RED_MUSHROOM, 0), 0.10f, dirtState, new Color("D6A8A5"));
+        registry.register(new BlockInfo(Blocks.BROWN_MUSHROOM.getDefaultState()), 0.10f, dirtState, new Color("CFBFB6"));
+        registry.register(new BlockInfo(Blocks.RED_MUSHROOM.getDefaultState()), 0.10f, dirtState, new Color("D6A8A5"));
 
         registry.register(new ItemInfo(Items.PUMPKIN_PIE, 0), 0.16f, dirtState, new Color("E39A6D"));
 
@@ -62,19 +67,19 @@ public class ExNihilo implements IRecipeDefaults {
 
         registry.register(new ItemInfo(Items.APPLE, 0), 0.10f, dirtState, new Color("FFF68F"));
         registry.register(new ItemInfo(Items.MELON, 0), 0.04f, dirtState, new Color("FF443B"));
-        registry.register(new BlockInfo(Blocks.MELON_BLOCK, 0), 1.0f / 6, dirtState, new Color("FF443B"));
-        registry.register(new BlockInfo(Blocks.PUMPKIN, 0), 1.0f / 6, dirtState, new Color("FFDB66"));
-        registry.register(new BlockInfo(Blocks.LIT_PUMPKIN, 0), 1.0f / 6, dirtState, new Color("FFDB66"));
+        registry.register(new BlockInfo(Blocks.MELON_BLOCK.getDefaultState()), 1.0f / 6, dirtState, new Color("FF443B"));
+        registry.register(new BlockInfo(Blocks.PUMPKIN.getDefaultState()), 1.0f / 6, dirtState, new Color("FFDB66"));
+        registry.register(new BlockInfo(Blocks.LIT_PUMPKIN.getDefaultState()), 1.0f / 6, dirtState, new Color("FFDB66"));
 
-        registry.register(new BlockInfo(Blocks.CACTUS, 0), 0.10f, dirtState, new Color("DEFFB5"));
+        registry.register(new BlockInfo(Blocks.CACTUS.getDefaultState()), 0.10f, dirtState, new Color("DEFFB5"));
 
         registry.register(new ItemInfo(Items.CARROT, 0), 0.08f, dirtState, new Color("FF9B0F"));
         registry.register(new ItemInfo(Items.POTATO, 0), 0.08f, dirtState, new Color("FFF1B5"));
         registry.register(new ItemInfo(Items.BAKED_POTATO, 0), 0.08f, dirtState, new Color("FFF1B5"));
         registry.register(new ItemInfo(Items.POISONOUS_POTATO, 0), 0.08f, dirtState, new Color("E0FF8A"));
 
-        registry.register(new BlockInfo(Blocks.WATERLILY, 0), 0.10f, dirtState, new Color("269900"));
-        registry.register(new BlockInfo(Blocks.VINE, 0), 0.10f, dirtState, new Color("23630E"));
+        registry.register(new BlockInfo(Blocks.WATERLILY.getDefaultState()), 0.10f, dirtState, new Color("269900"));
+        registry.register(new BlockInfo(Blocks.VINE.getDefaultState()), 0.10f, dirtState, new Color("23630E"));
         registry.register(new BlockInfo(Blocks.TALLGRASS, 1), 0.08f, dirtState, new Color("23630E"));
         registry.register(new ItemInfo(Items.EGG, 0), 0.08f, dirtState, new Color("FFFA66"));
         registry.register(new ItemInfo(Items.NETHER_WART, 0), 0.10f, dirtState, new Color("FF2B52"));
@@ -139,23 +144,23 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register("gravel", new ItemInfo(Items.EMERALD, 0), getDropChance(0.016f), MeshType.DIAMOND.getID());
 
 
-        registry.register(new BlockInfo(Blocks.SOUL_SAND, 0), new ItemInfo(Items.QUARTZ, 0), getDropChance(1f), MeshType.FLINT.getID());
-        registry.register(new BlockInfo(Blocks.SOUL_SAND, 0), new ItemInfo(Items.QUARTZ, 0), getDropChance(0.33f), MeshType.FLINT.getID());
+        registry.register(new BlockInfo(Blocks.SOUL_SAND.getDefaultState()), new ItemInfo(Items.QUARTZ, 0), getDropChance(1f), MeshType.FLINT.getID());
+        registry.register(new BlockInfo(Blocks.SOUL_SAND.getDefaultState()), new ItemInfo(Items.QUARTZ, 0), getDropChance(0.33f), MeshType.FLINT.getID());
 
-        registry.register(new BlockInfo(Blocks.SOUL_SAND, 0), new ItemInfo(Items.NETHER_WART, 0), getDropChance(0.1f), MeshType.STRING.getID());
+        registry.register(new BlockInfo(Blocks.SOUL_SAND.getDefaultState()), new ItemInfo(Items.NETHER_WART, 0), getDropChance(0.1f), MeshType.STRING.getID());
 
-        registry.register(new BlockInfo(Blocks.SOUL_SAND, 0), new ItemInfo(Items.GHAST_TEAR, 0), getDropChance(0.02f), MeshType.DIAMOND.getID());
-        registry.register(new BlockInfo(Blocks.SOUL_SAND, 0), new ItemInfo(Items.QUARTZ, 0), getDropChance(1f), MeshType.DIAMOND.getID());
-        registry.register(new BlockInfo(Blocks.SOUL_SAND, 0), new ItemInfo(Items.QUARTZ, 0), getDropChance(0.8f), MeshType.DIAMOND.getID());
+        registry.register(new BlockInfo(Blocks.SOUL_SAND.getDefaultState()), new ItemInfo(Items.GHAST_TEAR, 0), getDropChance(0.02f), MeshType.DIAMOND.getID());
+        registry.register(new BlockInfo(Blocks.SOUL_SAND.getDefaultState()), new ItemInfo(Items.QUARTZ, 0), getDropChance(1f), MeshType.DIAMOND.getID());
+        registry.register(new BlockInfo(Blocks.SOUL_SAND.getDefaultState()), new ItemInfo(Items.QUARTZ, 0), getDropChance(0.8f), MeshType.DIAMOND.getID());
 
-        registry.register(new BlockInfo(ModBlocks.dust, 0), new ItemInfo(Items.DYE, 15), getDropChance(0.2f), MeshType.STRING.getID());
-        registry.register(new BlockInfo(ModBlocks.dust, 0), new ItemInfo(Items.GUNPOWDER, 0), getDropChance(0.07f), MeshType.STRING.getID());
+        registry.register(new BlockInfo(ModBlocks.dust.getDefaultState()), new ItemInfo(Items.DYE, 15), getDropChance(0.2f), MeshType.STRING.getID());
+        registry.register(new BlockInfo(ModBlocks.dust.getDefaultState()), new ItemInfo(Items.GUNPOWDER, 0), getDropChance(0.07f), MeshType.STRING.getID());
 
-        registry.register(new BlockInfo(ModBlocks.dust, 0), new ItemInfo(Items.REDSTONE, 0), getDropChance(0.125f), MeshType.IRON.getID());
-        registry.register(new BlockInfo(ModBlocks.dust, 0), new ItemInfo(Items.REDSTONE, 0), getDropChance(0.25f), MeshType.DIAMOND.getID());
+        registry.register(new BlockInfo(ModBlocks.dust.getDefaultState()), new ItemInfo(Items.REDSTONE, 0), getDropChance(0.125f), MeshType.IRON.getID());
+        registry.register(new BlockInfo(ModBlocks.dust.getDefaultState()), new ItemInfo(Items.REDSTONE, 0), getDropChance(0.25f), MeshType.DIAMOND.getID());
 
-        registry.register(new BlockInfo(ModBlocks.dust, 0), new ItemInfo(Items.GLOWSTONE_DUST, 0), getDropChance(0.0625f), MeshType.IRON.getID());
-        registry.register(new BlockInfo(ModBlocks.dust, 0), new ItemInfo(Items.BLAZE_POWDER, 0), getDropChance(0.05f), MeshType.IRON.getID());
+        registry.register(new BlockInfo(ModBlocks.dust.getDefaultState()), new ItemInfo(Items.GLOWSTONE_DUST, 0), getDropChance(0.0625f), MeshType.IRON.getID());
+        registry.register(new BlockInfo(ModBlocks.dust.getDefaultState()), new ItemInfo(Items.BLAZE_POWDER, 0), getDropChance(0.05f), MeshType.IRON.getID());
 
         // Custom Ores for other mods
         OreRegistry oreRegistry = ExNihiloRegistryManager.ORE_REGISTRY;
@@ -163,9 +168,9 @@ public class ExNihilo implements IRecipeDefaults {
         // Gold from nether rack
         ItemOre gold = oreRegistry.getOreItem("gold");
         if (gold != null) {
-            registry.register(new BlockInfo(ModBlocks.netherrackCrushed, 0), new ItemInfo(gold, 0), getDropChance(0.25f), MeshType.FLINT.getID());
-            registry.register(new BlockInfo(ModBlocks.netherrackCrushed, 0), new ItemInfo(gold, 0), getDropChance(0.25f), MeshType.IRON.getID());
-            registry.register(new BlockInfo(ModBlocks.netherrackCrushed, 0), new ItemInfo(gold, 0), getDropChance(0.4f), MeshType.DIAMOND.getID());
+            registry.register(new BlockInfo(ModBlocks.netherrackCrushed.getDefaultState()), new ItemInfo(gold, 0), getDropChance(0.25f), MeshType.FLINT.getID());
+            registry.register(new BlockInfo(ModBlocks.netherrackCrushed.getDefaultState()), new ItemInfo(gold, 0), getDropChance(0.25f), MeshType.IRON.getID());
+            registry.register(new BlockInfo(ModBlocks.netherrackCrushed.getDefaultState()), new ItemInfo(gold, 0), getDropChance(0.4f), MeshType.DIAMOND.getID());
         }
 
 
@@ -182,6 +187,33 @@ public class ExNihilo implements IRecipeDefaults {
             registry.register("dirt", new ItemInfo(seed), getDropChance(0.05f), MeshType.STRING.getID());
         }
 
+        getLeavesSapling().forEach((leaves, sapling) -> {
+            BlockLeaves blockLeaves = ((BlockLeaves) Block.getBlockFromItem(leaves.getItemStack().getItem()));
+            float chance = blockLeaves.getSaplingDropChance(blockLeaves.getDefaultState()) / 100f;
+
+            registry.register(leaves, sapling, Math.min(chance * 4, 1.0f), MeshType.STRING.getID());
+            registry.register(leaves, sapling, Math.min(chance * 6, 1.0f), MeshType.FLINT.getID());
+            registry.register(leaves, sapling, Math.min(chance * 8, 1.0f), MeshType.IRON.getID());
+            registry.register(leaves, sapling, Math.min(chance * 10, 1.0f), MeshType.DIAMOND.getID());
+
+            //Apple
+            registry.register(leaves, new ItemInfo(Items.APPLE, 0), 0.10f, MeshType.STRING.getID());
+            registry.register(leaves, new ItemInfo(Items.APPLE, 0), 0.20f, MeshType.FLINT.getID());
+            registry.register(leaves, new ItemInfo(Items.APPLE, 0), 0.30f, MeshType.IRON.getID());
+            registry.register(leaves, new ItemInfo(Items.APPLE, 0), 0.40f, MeshType.DIAMOND.getID());
+
+            //Golden Apple
+            registry.register(leaves, new ItemInfo(Items.GOLDEN_APPLE, 0), 0.005f, MeshType.STRING.getID());
+            registry.register(leaves, new ItemInfo(Items.GOLDEN_APPLE, 0), 0.01f, MeshType.FLINT.getID());
+            registry.register(leaves, new ItemInfo(Items.GOLDEN_APPLE, 0), 0.02f, MeshType.IRON.getID());
+            registry.register(leaves, new ItemInfo(Items.GOLDEN_APPLE, 0), 0.05f, MeshType.DIAMOND.getID());
+
+            //Silk Worm
+            registry.register(leaves, new ItemInfo(ItemResource.getResourceStack(ItemResource.SILKWORM)), 0.05f, MeshType.STRING.getID());
+            registry.register(leaves, new ItemInfo(ItemResource.getResourceStack(ItemResource.SILKWORM)), 0.1f, MeshType.FLINT.getID());
+            registry.register(leaves, new ItemInfo(ItemResource.getResourceStack(ItemResource.SILKWORM)), 0.25f, MeshType.IRON.getID());
+            registry.register(leaves, new ItemInfo(ItemResource.getResourceStack(ItemResource.SILKWORM)), 0.5f, MeshType.DIAMOND.getID());
+        });
     }
 
     public void registerHammer(HammerRegistry registry) {
@@ -210,10 +242,10 @@ public class ExNihilo implements IRecipeDefaults {
         // Vanilla fluids are weird, the "flowing" variant is simply a temporary state of checking if it can flow.
         // So, once the lava has spread out all the way, it will all actually be "still" lava.
         // Thanks Mojang <3
-        registry.register(new BlockInfo(Blocks.FLOWING_LAVA, -1), 3);
-        registry.register(new BlockInfo(Blocks.LAVA, -1), 3);
-        registry.register(new BlockInfo(Blocks.FIRE, -1), 4);
-        registry.register(new BlockInfo(Blocks.TORCH, -1), 1);
+        registry.register(new BlockInfo(Blocks.FLOWING_LAVA.getDefaultState()), 3);
+        registry.register(new BlockInfo(Blocks.LAVA.getDefaultState()), 3);
+        registry.register(new BlockInfo(Blocks.FIRE.getDefaultState()), 4);
+        registry.register(new BlockInfo(Blocks.TORCH.getDefaultState()), 1);
     }
 
     public void registerBarrelLiquidBlacklist(BarrelLiquidBlacklistRegistry registry) {
@@ -223,8 +255,8 @@ public class ExNihilo implements IRecipeDefaults {
     }
 
     public void registerFluidOnTop(FluidOnTopRegistry registry) {
-        registry.register(FluidRegistry.LAVA, FluidRegistry.WATER, new ItemInfo(Blocks.OBSIDIAN.getDefaultState()));
-        registry.register(FluidRegistry.WATER, FluidRegistry.LAVA, new ItemInfo(Blocks.COBBLESTONE.getDefaultState()));
+        registry.register(FluidRegistry.LAVA, FluidRegistry.WATER, new BlockInfo(Blocks.OBSIDIAN.getDefaultState()));
+        registry.register(FluidRegistry.WATER, FluidRegistry.LAVA, new BlockInfo(Blocks.COBBLESTONE.getDefaultState()));
     }
 
     public void registerOreChunks(OreRegistry registry) {
@@ -281,7 +313,7 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register("stone", FluidRegistry.LAVA, 250);
         registry.register("gravel", FluidRegistry.LAVA, 200);
         registry.register("sand", FluidRegistry.LAVA, 100);
-        registry.register(new BlockInfo(ModBlocks.dust), FluidRegistry.LAVA, 50);
+        registry.register(new BlockInfo(ModBlocks.dust.getDefaultState()), FluidRegistry.LAVA, 50);
 
         // 1:1 Back to lava
         registry.register("netherrack", FluidRegistry.LAVA, 1000);
@@ -312,5 +344,17 @@ public class ExNihilo implements IRecipeDefaults {
         if (ModConfig.world.isSkyWorld)
             return chance;
         else return chance / 100f * (float) ModConfig.world.normalDropPercent;
+    }
+
+    public static Map<BlockInfo, BlockInfo> getLeavesSapling(){
+        Map<BlockInfo, BlockInfo> saplingMap = new LinkedHashMap<>();
+        saplingMap.put(new BlockInfo(Blocks.LEAVES, 0), new BlockInfo(Blocks.SAPLING, 0));
+        saplingMap.put(new BlockInfo(Blocks.LEAVES, 1), new BlockInfo(Blocks.SAPLING, 1));
+        saplingMap.put(new BlockInfo(Blocks.LEAVES, 2), new BlockInfo(Blocks.SAPLING, 2));
+        saplingMap.put(new BlockInfo(Blocks.LEAVES, 3), new BlockInfo(Blocks.SAPLING, 3));
+        saplingMap.put(new BlockInfo(Blocks.LEAVES2, 0), new BlockInfo(Blocks.SAPLING, 4));
+        saplingMap.put(new BlockInfo(Blocks.LEAVES2, 1), new BlockInfo(Blocks.SAPLING, 5));
+
+        return saplingMap;
     }
 }

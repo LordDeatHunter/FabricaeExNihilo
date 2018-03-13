@@ -4,10 +4,12 @@ import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.json.CustomBlockInfoJson;
+import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryList;
 import exnihilocreatio.registries.types.Milkable;
 import exnihilocreatio.util.BlockInfo;
+import exnihilocreatio.util.ItemInfo;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fluids.Fluid;
 
@@ -19,6 +21,7 @@ public class MilkEntityRegistry extends BaseRegistryList<Milkable> {
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
+                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
                         .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
                         .create(),
                 ExNihiloRegistryManager.MILK_ENTITY_DEFAULT_REGISTRY_PROVIDERS

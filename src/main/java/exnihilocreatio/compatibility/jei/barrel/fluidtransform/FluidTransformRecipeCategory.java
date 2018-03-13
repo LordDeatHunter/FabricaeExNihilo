@@ -46,6 +46,7 @@ public class FluidTransformRecipeCategory implements IRecipeCategory<FluidTransf
     }
 
     @Override
+    @Nonnull
     public String getModName() {
         return ExNihiloCreatio.MODID;
     }

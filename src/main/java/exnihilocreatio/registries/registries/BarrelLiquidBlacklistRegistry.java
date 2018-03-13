@@ -5,8 +5,6 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.GsonBuilder;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
-import exnihilocreatio.registries.types.Meltable;
-import net.minecraft.item.crafting.Ingredient;
 
 import java.io.FileReader;
 import java.util.ArrayList;
