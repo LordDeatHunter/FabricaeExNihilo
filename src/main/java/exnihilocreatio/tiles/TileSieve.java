@@ -223,7 +223,6 @@ public class TileSieve extends BaseTileEntity {
 
 
                 resetSieve();
-                markDirtyClient();
             }
         }
     }
