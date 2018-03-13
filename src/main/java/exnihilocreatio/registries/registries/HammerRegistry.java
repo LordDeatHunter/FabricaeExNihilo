@@ -44,10 +44,11 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
         HashMap<String, ArrayList<HammerReward>> gsonInput = gson.fromJson(fr, new TypeToken<HashMap<String, ArrayList<HammerReward>>>() {
         }.getType());
 
-        for (Map.Entry<String, ArrayList<HammerReward>> s : gsonInput.entrySet()) {// TODO: Parse into Ingredient/respect "ore:syntax"
-            BlockInfo stack = new BlockInfo(s.getKey());
-            Ingredient ingredient = CraftingHelper.getIngredient(stack.getItemStack());
-            Ingredient search = registry.keySet().stream().filter(entry -> entry.getValidItemStacksPacked().equals(ingredient.getValidItemStacksPacked())).findAny().orElse(null);
+        for (Map.Entry<String, ArrayList<HammerReward>> s : gsonInput.entrySet()) {
+            Ingredient ingredient = IngredientUtil.parseFromString(s.getKey());
+
+
+            Ingredient search = registry.keySet().stream().filter(entry -> IngredientUtil.ingredientEquals(ingredient, entry)).findAny().orElse(null);
             if (search != null) {
                 registry.get(search).addAll(s.getValue());
             } else {
@@ -93,6 +94,7 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
 
     public void register(Ingredient ingredient, HammerReward reward) {
         Ingredient search = registry.keySet().stream().filter(entry -> IngredientUtil.ingredientEquals(ingredient, entry)).findAny().orElse(null);
+
         if (search != null) {
             registry.get(search).add(reward);
         } else {

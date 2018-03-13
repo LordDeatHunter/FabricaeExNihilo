@@ -49,7 +49,8 @@ public class IngredientUtil {
             return Objects.equals(((OreIngredientStoring) ingr1).getOreName(), ((OreIngredientStoring) ingr2).getOreName());
         }
 
-        return Util.arrayEqualsPredicate(ingr1.getMatchingStacks(), ingr2.getMatchingStacks(), ItemStack::areItemStacksEqual);
+        return ingr1.getValidItemStacksPacked().equals(ingr2.getValidItemStacksPacked());
+        // return Util.arrayEqualsPredicate(ingr1.getMatchingStacks(), ingr2.getMatchingStacks(), ItemStack::areItemStacksEqual);
     }
 
 

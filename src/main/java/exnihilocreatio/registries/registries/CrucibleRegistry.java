@@ -25,6 +25,7 @@ import net.minecraftforge.fluids.FluidUtil;
 
 import javax.annotation.Nonnull;
 import java.io.FileReader;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -112,12 +113,11 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
         Map<String, Meltable> gsonInput = gson.fromJson(fr, new TypeToken<Map<String, Meltable>>() {
         }.getType());
 
-        gsonInput.forEach((key, value) -> { // TODO: Parse into Ingredient/respect "ore:syntax"
+        gsonInput.forEach((key, value) -> {
             Ingredient ingredient = IngredientUtil.parseFromString(key);
 
-            //if (registry.keySet().stream().anyMatch(ingredient -> ingredient.test(item.getItemStack())))
-            //    LogUtil.error("Compost JSON Entry for " + item.getItemStack().getDisplayName() + " already exists, skipping.");
-            // else
+            if (registry.keySet().stream().anyMatch(entry -> IngredientUtil.ingredientEquals(ingredient, entry)))
+                LogUtil.error("Compost JSON Entry for " + Arrays.toString(ingredient.getMatchingStacks()) + " already exists, skipping.");
 
             registry.put(ingredient, value);
         });
