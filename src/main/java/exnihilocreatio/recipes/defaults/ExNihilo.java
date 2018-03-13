@@ -153,14 +153,14 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register(new BlockInfo(Blocks.SOUL_SAND.getDefaultState()), new ItemInfo(Items.QUARTZ, 0), getDropChance(1f), MeshType.DIAMOND.getID());
         registry.register(new BlockInfo(Blocks.SOUL_SAND.getDefaultState()), new ItemInfo(Items.QUARTZ, 0), getDropChance(0.8f), MeshType.DIAMOND.getID());
 
-        registry.register(new BlockInfo(ModBlocks.dust.getDefaultState()), new ItemInfo(Items.DYE, 15), getDropChance(0.2f), MeshType.STRING.getID());
-        registry.register(new BlockInfo(ModBlocks.dust.getDefaultState()), new ItemInfo(Items.GUNPOWDER, 0), getDropChance(0.07f), MeshType.STRING.getID());
+        registry.register("dust", new ItemInfo(Items.DYE, 15), getDropChance(0.2f), MeshType.STRING.getID());
+        registry.register("dust", new ItemInfo(Items.GUNPOWDER, 0), getDropChance(0.07f), MeshType.STRING.getID());
 
-        registry.register(new BlockInfo(ModBlocks.dust.getDefaultState()), new ItemInfo(Items.REDSTONE, 0), getDropChance(0.125f), MeshType.IRON.getID());
-        registry.register(new BlockInfo(ModBlocks.dust.getDefaultState()), new ItemInfo(Items.REDSTONE, 0), getDropChance(0.25f), MeshType.DIAMOND.getID());
+        registry.register("dust", new ItemInfo(Items.REDSTONE, 0), getDropChance(0.125f), MeshType.IRON.getID());
+        registry.register("dust", new ItemInfo(Items.REDSTONE, 0), getDropChance(0.25f), MeshType.DIAMOND.getID());
 
-        registry.register(new BlockInfo(ModBlocks.dust.getDefaultState()), new ItemInfo(Items.GLOWSTONE_DUST, 0), getDropChance(0.0625f), MeshType.IRON.getID());
-        registry.register(new BlockInfo(ModBlocks.dust.getDefaultState()), new ItemInfo(Items.BLAZE_POWDER, 0), getDropChance(0.05f), MeshType.IRON.getID());
+        registry.register("dust", new ItemInfo(Items.GLOWSTONE_DUST, 0), getDropChance(0.0625f), MeshType.IRON.getID());
+        registry.register("dust", new ItemInfo(Items.BLAZE_POWDER, 0), getDropChance(0.05f), MeshType.IRON.getID());
 
         // Custom Ores for other mods
         OreRegistry oreRegistry = ExNihiloRegistryManager.ORE_REGISTRY;

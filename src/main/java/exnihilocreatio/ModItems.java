@@ -83,6 +83,9 @@ public class ModItems {
         OreDictionary.registerOre("gearStone", ItemResource.getResourceStack(ItemResource.GEAR_STONE));
         OreDictionary.registerOre("stickStone", ItemResource.getResourceStack(ItemResource.ROD_STONE));
         OreDictionary.registerOre("rodStone", ItemResource.getResourceStack(ItemResource.ROD_STONE));
+        OreDictionary.registerOre("dust", ModBlocks.dust);
+
+
 
         if (ModConfig.misc.oredictVanillaItems){
             // Flowers:
