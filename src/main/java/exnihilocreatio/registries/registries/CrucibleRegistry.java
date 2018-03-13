@@ -73,10 +73,9 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
 
     public void register(String name, Meltable meltable) {
         Ingredient ingredient = new OreIngredientStoring(name);
-        if (ingredient.getMatchingStacks().length == 0 || !FluidRegistry.isFluidRegistered(meltable.getFluid()))
-            return;
+        if (!FluidRegistry.isFluidRegistered(meltable.getFluid()))
 
-        if (oreRegistry.keySet().stream().anyMatch(entry -> entry.getValidItemStacksPacked().equals(ingredient.getValidItemStacksPacked())))
+        if (oreRegistry.keySet().stream().anyMatch(entry -> IngredientUtil.ingredientEquals(entry, ingredient)))
             LogUtil.error("Crucible Ore Entry for " + name + " already exists, skipping.");
         else oreRegistry.put(ingredient, meltable);
     }

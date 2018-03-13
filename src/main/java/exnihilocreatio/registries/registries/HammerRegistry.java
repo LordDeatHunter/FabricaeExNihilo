@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.hammer.HammerRecipe;
 import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.json.CustomItemStackJson;
+import exnihilocreatio.registries.ingredient.IngredientUtil;
 import exnihilocreatio.registries.ingredient.OreIngredientStoring;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
@@ -87,13 +88,11 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
 
     public void register(String name, ItemStack reward, int miningLevel, float chance, float fortuneChance) {
         Ingredient ingredient = new OreIngredientStoring(name);
-        if (ingredient.getMatchingStacks().length == 0)
-            return;
         register(ingredient, new HammerReward(reward, miningLevel, chance, fortuneChance));
     }
 
     public void register(Ingredient ingredient, HammerReward reward) {
-        Ingredient search = registry.keySet().stream().filter(entry -> entry.getValidItemStacksPacked().equals(ingredient.getValidItemStacksPacked())).findAny().orElse(null);
+        Ingredient search = registry.keySet().stream().filter(entry -> IngredientUtil.ingredientEquals(ingredient, entry)).findAny().orElse(null);
         if (search != null) {
             registry.get(search).add(reward);
         } else {
