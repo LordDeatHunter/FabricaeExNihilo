@@ -17,6 +17,8 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
@@ -24,6 +26,8 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -192,7 +196,31 @@ public class TileSieve extends BaseTileEntity {
                     drops.add(new ItemStack(Items.FISH, 1, fishMeta));
                 }
 
-                drops.forEach(stack -> Util.dropItemInWorld(this, player, stack, 1));
+                TileEntity teUp = world.getTileEntity(pos.up());
+                IItemHandler cap;
+
+                if (teUp != null
+                        && teUp.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN)
+                        && (cap = teUp.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN)) != null) {
+
+                    int slotAmount = cap.getSlots();
+
+                    for (ItemStack drop : drops) {
+                        ItemStack newStack = drop;
+                        for (int i = 0; i < slotAmount && !newStack.isEmpty(); i++) {
+                            newStack = cap.insertItem(i, newStack, false);
+                        }
+
+                        if (!newStack.isEmpty()){
+                            Util.dropItemInWorld(this, player, newStack, 1);
+                        }
+
+                    }
+                } else {
+                    drops.forEach(stack -> Util.dropItemInWorld(this, player, stack, 1));
+                }
+
+
 
                 resetSieve();
                 markDirtyClient();

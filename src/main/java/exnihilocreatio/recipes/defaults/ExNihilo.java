@@ -68,8 +68,8 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register(new ItemInfo(Items.APPLE, 0), 0.10f, dirtState, new Color("FFF68F"));
         registry.register(new ItemInfo(Items.MELON, 0), 0.04f, dirtState, new Color("FF443B"));
         registry.register(new BlockInfo(Blocks.MELON_BLOCK.getDefaultState()), 1.0f / 6, dirtState, new Color("FF443B"));
-        registry.register(new BlockInfo(Blocks.PUMPKIN.getDefaultState()), 1.0f / 6, dirtState, new Color("FFDB66"));
-        registry.register(new BlockInfo(Blocks.LIT_PUMPKIN.getDefaultState()), 1.0f / 6, dirtState, new Color("FFDB66"));
+        registry.register(new BlockInfo(Blocks.PUMPKIN, 0), 1.0f / 6, dirtState, new Color("FFDB66"));
+        registry.register(new BlockInfo(Blocks.LIT_PUMPKIN, 0), 1.0f / 6, dirtState, new Color("FFDB66"));
 
         registry.register(new BlockInfo(Blocks.CACTUS.getDefaultState()), 0.10f, dirtState, new Color("DEFFB5"));
 
@@ -212,7 +212,7 @@ public class ExNihilo implements IRecipeDefaults {
             registry.register(leaves, new ItemInfo(ItemResource.getResourceStack(ItemResource.SILKWORM)), 0.025f, MeshType.STRING.getID());
             registry.register(leaves, new ItemInfo(ItemResource.getResourceStack(ItemResource.SILKWORM)), 0.05f, MeshType.FLINT.getID());
             registry.register(leaves, new ItemInfo(ItemResource.getResourceStack(ItemResource.SILKWORM)), 0.1f, MeshType.IRON.getID());
-            registry.register(leaves, new ItemInfo(ItemResource.getResourceStack(ItemResource.SILKWORM)), 0.25f, MeshType.DIAMOND.getID());
+            registry.register(leaves, new ItemInfo(ItemResource.getResourceStack(ItemResource.SILKWORM)), 0.2f, MeshType.DIAMOND.getID());
         });
     }
 
