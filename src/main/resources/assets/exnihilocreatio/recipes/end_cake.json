@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "exnihilocreatio:block_end_cake"
+  },
+  "pattern": [
+    "ece",
+    "eke",
+    "ece"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "e": {
+      "item": "minecraft:ender_eye"
+    },
+    "k": {
+      "item": "minecraft:cake"
+    },
+    "c": {
+      "item": "minecraft:end_crystal"
+    }
+  }
+}

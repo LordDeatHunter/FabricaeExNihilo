@@ -23,7 +23,6 @@ public class BlockEndCake extends BlockCake implements IHasModel {
         setSoundType(SoundType.CLOTH);
         setRegistryName("block_end_cake");
         setUnlocalizedName("block_end_cake");
-        this.setDefaultState(this.blockState.getBaseState().withProperty(BITES, 5));
         Data.BLOCKS.add(this);
     }
 
