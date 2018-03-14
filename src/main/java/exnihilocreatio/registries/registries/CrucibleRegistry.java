@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.crucible.CrucibleRecipe;
 import exnihilocreatio.json.CustomBlockInfoJson;
 import exnihilocreatio.json.CustomIngredientJson;
+import exnihilocreatio.json.CustomMeltableJson;
 import exnihilocreatio.registries.ingredient.IngredientUtil;
 import exnihilocreatio.registries.ingredient.OreIngredientStoring;
 import exnihilocreatio.registries.manager.IDefaultRecipeProvider;
@@ -39,6 +40,7 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
                         .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
                         .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
                         .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
+                        .registerTypeAdapter(Meltable.class, new CustomMeltableJson())
                         .enableComplexMapKeySerialization()
                         .create(),
                 new TypeToken<Map<Ingredient, Meltable>>() {

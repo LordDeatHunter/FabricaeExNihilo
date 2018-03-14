@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.hammer.HammerRecipe;
+import exnihilocreatio.json.CustomHammerRewardJson;
 import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.json.CustomItemStackJson;
 import exnihilocreatio.registries.ingredient.IngredientUtil;
@@ -32,6 +33,7 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
                         .registerTypeAdapter(ItemStack.class, new CustomItemStackJson())
                         .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
                         .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
+                        .registerTypeAdapter(HammerReward.class, new CustomHammerRewardJson())
                         .enableComplexMapKeySerialization()
                         .create(),
                 new com.google.gson.reflect.TypeToken<Map<Ingredient, List<HammerReward>>>() {}.getType(),
