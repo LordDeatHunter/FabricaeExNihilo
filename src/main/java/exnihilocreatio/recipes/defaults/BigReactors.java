@@ -47,7 +47,7 @@ public class BigReactors implements IRecipeDefaults {
         // 3 = Blutonium
         Block brBlocks = Block.getBlockFromName("bigreactors:blockmetals");
         if (brBlocks != null) {
-            registry.register(new BlockInfo(brBlocks.getDefaultState()), 10);
+            registry.register(new BlockInfo(brBlocks), 10);
             registry.register(new BlockInfo(brBlocks, 1), 15);
             registry.register(new BlockInfo(brBlocks, 3), 20);
         }

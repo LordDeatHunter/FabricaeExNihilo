@@ -21,18 +21,18 @@ public class TinkersConstruct implements IRecipeDefaults {
         OreRegistry oreRegistry = ExNihiloRegistryManager.ORE_REGISTRY;
         ItemOre ardite = oreRegistry.getOreItem("ardite");
         if (ardite != null) {
-            registry.register(new BlockInfo(ModBlocks.netherrackCrushed.getDefaultState()), new ItemInfo(ardite, 0), 0.1f, BlockSieve.MeshType.FLINT.getID());
-            registry.register(new BlockInfo(ModBlocks.netherrackCrushed.getDefaultState()), new ItemInfo(ardite, 0), 0.2f, BlockSieve.MeshType.IRON.getID());
-            registry.register(new BlockInfo(ModBlocks.netherrackCrushed.getDefaultState()), new ItemInfo(ardite, 0), 0.3f, BlockSieve.MeshType.DIAMOND.getID());
+            registry.register(new BlockInfo(ModBlocks.netherrackCrushed), new ItemInfo(ardite), 0.1f, BlockSieve.MeshType.FLINT.getID());
+            registry.register(new BlockInfo(ModBlocks.netherrackCrushed), new ItemInfo(ardite), 0.2f, BlockSieve.MeshType.IRON.getID());
+            registry.register(new BlockInfo(ModBlocks.netherrackCrushed), new ItemInfo(ardite), 0.3f, BlockSieve.MeshType.DIAMOND.getID());
         }
 
         ItemOre cobalt = oreRegistry.getOreItem("cobalt");
         if (cobalt != null) {
-            registry.register(new BlockInfo(ModBlocks.netherrackCrushed.getDefaultState()), new ItemInfo(cobalt, 0), 0.1f, BlockSieve.MeshType.FLINT.getID());
-            registry.register(new BlockInfo(ModBlocks.netherrackCrushed.getDefaultState()), new ItemInfo(cobalt, 0), 0.2f, BlockSieve.MeshType.IRON.getID());
-            registry.register(new BlockInfo(ModBlocks.netherrackCrushed.getDefaultState()), new ItemInfo(cobalt, 0), 0.3f, BlockSieve.MeshType.DIAMOND.getID());
+            registry.register(new BlockInfo(ModBlocks.netherrackCrushed), new ItemInfo(cobalt), 0.1f, BlockSieve.MeshType.FLINT.getID());
+            registry.register(new BlockInfo(ModBlocks.netherrackCrushed), new ItemInfo(cobalt), 0.2f, BlockSieve.MeshType.IRON.getID());
+            registry.register(new BlockInfo(ModBlocks.netherrackCrushed), new ItemInfo(cobalt), 0.3f, BlockSieve.MeshType.DIAMOND.getID());
         }
-        registry.register(new BlockInfo(ModBlocks.netherrackCrushed.getDefaultState()), new ItemInfo(Items.BLAZE_POWDER, 0), 0.05f, BlockSieve.MeshType.IRON.getID());
+        registry.register(new BlockInfo(ModBlocks.netherrackCrushed), new ItemInfo(Items.BLAZE_POWDER), 0.05f, BlockSieve.MeshType.IRON.getID());
     }
 
     public void registerOreChunks(OreRegistry registry) {
@@ -40,7 +40,7 @@ public class TinkersConstruct implements IRecipeDefaults {
         if (tconstructIngots != null) {
             registry.register("ardite", new Color("FF751A"), new ItemInfo(tconstructIngots, 1));
             registry.getSieveBlackList().add(ExNihiloRegistryManager.ORE_REGISTRY.getOreItem("ardite")); //Disables the default sieve recipes
-            registry.register("cobalt", new Color("3333FF"), new ItemInfo(tconstructIngots, 0));
+            registry.register("cobalt", new Color("3333FF"), new ItemInfo(tconstructIngots));
             registry.getSieveBlackList().add(ExNihiloRegistryManager.ORE_REGISTRY.getOreItem("cobalt")); //Disables the default sieve recipes
         }
     }
