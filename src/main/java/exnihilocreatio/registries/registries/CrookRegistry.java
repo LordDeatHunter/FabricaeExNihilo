@@ -63,10 +63,16 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
 
     public void register(String name, ItemStack reward, float chance, float fortuneChance) {
         Ingredient ingredient = new OreIngredientStoring(name);
-        if (ingredient.getMatchingStacks().length == 0)
-            return;
+
         CrookReward crookReward = new CrookReward(reward, chance, fortuneChance);
-        Ingredient search = registry.keySet().stream().filter(entry -> entry.getValidItemStacksPacked().equals(ingredient.getValidItemStacksPacked())).findAny().orElse(null);
+
+        Ingredient search = registry.keySet()
+                .stream()
+                .filter(entry -> IngredientUtil.ingredientEquals(entry, ingredient))
+                .findAny()
+                .orElse(null);
+
+
         if (search != null) {
             registry.get(search).add(crookReward);
         } else {

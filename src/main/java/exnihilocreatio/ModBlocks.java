@@ -35,6 +35,8 @@ public class ModBlocks {
     public static final BlockGrinder grinder = new BlockGrinder();
     public static final BlockAutoSifter autoSifter = new BlockAutoSifter();
 
+    public static final BlockEndCake endCake = new BlockEndCake();
+
     public static void registerBlocks(IForgeRegistry<Block> registry) {
         for (Block block : Data.BLOCKS) {
             registry.register(block);
@@ -42,7 +44,6 @@ public class ModBlocks {
 
         GameRegistry.registerTileEntity(TileBarrel.class, "block_barrel");
         GameRegistry.registerTileEntity(TileInfestingLeaves.class, "block_infesting_leaves");
-        //infestingLeaves.setCreativeTab(ExNihiloCreatio.tabExNihilo);
         GameRegistry.registerTileEntity(TileInfestedLeaves.class, "block_infested_leaves");
         GameRegistry.registerTileEntity(TileCrucibleStone.class, "block_crucible");
         GameRegistry.registerTileEntity(TileCrucibleWood.class, "block_crucible_wood");

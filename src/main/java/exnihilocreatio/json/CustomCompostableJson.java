@@ -13,7 +13,7 @@ public class CustomCompostableJson implements JsonDeserializer<Compostable>, Jso
     public JsonElement serialize(Compostable src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject obj = new JsonObject();
         obj.addProperty("value", src.getValue());
-        obj.add("compostBlock", context.serialize(src.getCompostBlock(), StackInfo.class));
+        obj.add("compostBlock", context.serialize(src.getCompostBlock(), BlockInfo.class));
         if (!src.getColor().equals(Color.INVALID_COLOR)){
             obj.add("color", context.serialize(src.getColor(), Color.class));
         }

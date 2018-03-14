@@ -4,8 +4,10 @@ import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.hammer.HammerRecipe;
+import exnihilocreatio.json.CustomHammerRewardJson;
 import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.json.CustomItemStackJson;
+import exnihilocreatio.registries.ingredient.IngredientUtil;
 import exnihilocreatio.registries.ingredient.OreIngredientStoring;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
@@ -31,6 +33,7 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
                         .registerTypeAdapter(ItemStack.class, new CustomItemStackJson())
                         .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
                         .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
+                        .registerTypeAdapter(HammerReward.class, new CustomHammerRewardJson())
                         .enableComplexMapKeySerialization()
                         .create(),
                 new com.google.gson.reflect.TypeToken<Map<Ingredient, List<HammerReward>>>() {}.getType(),
@@ -43,10 +46,11 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
         HashMap<String, ArrayList<HammerReward>> gsonInput = gson.fromJson(fr, new TypeToken<HashMap<String, ArrayList<HammerReward>>>() {
         }.getType());
 
-        for (Map.Entry<String, ArrayList<HammerReward>> s : gsonInput.entrySet()) {// TODO: Parse into Ingredient/respect "ore:syntax"
-            BlockInfo stack = new BlockInfo(s.getKey());
-            Ingredient ingredient = CraftingHelper.getIngredient(stack.getItemStack());
-            Ingredient search = registry.keySet().stream().filter(entry -> entry.getValidItemStacksPacked().equals(ingredient.getValidItemStacksPacked())).findAny().orElse(null);
+        for (Map.Entry<String, ArrayList<HammerReward>> s : gsonInput.entrySet()) {
+            Ingredient ingredient = IngredientUtil.parseFromString(s.getKey());
+
+
+            Ingredient search = registry.keySet().stream().filter(entry -> IngredientUtil.ingredientEquals(ingredient, entry)).findAny().orElse(null);
             if (search != null) {
                 registry.get(search).addAll(s.getValue());
             } else {
@@ -87,13 +91,12 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
 
     public void register(String name, ItemStack reward, int miningLevel, float chance, float fortuneChance) {
         Ingredient ingredient = new OreIngredientStoring(name);
-        if (ingredient.getMatchingStacks().length == 0)
-            return;
         register(ingredient, new HammerReward(reward, miningLevel, chance, fortuneChance));
     }
 
     public void register(Ingredient ingredient, HammerReward reward) {
-        Ingredient search = registry.keySet().stream().filter(entry -> entry.getValidItemStacksPacked().equals(ingredient.getValidItemStacksPacked())).findAny().orElse(null);
+        Ingredient search = registry.keySet().stream().filter(entry -> IngredientUtil.ingredientEquals(ingredient, entry)).findAny().orElse(null);
+
         if (search != null) {
             registry.get(search).add(reward);
         } else {

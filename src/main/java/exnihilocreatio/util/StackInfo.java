@@ -7,28 +7,28 @@ import net.minecraft.nbt.NBTTagCompound;
 
 import javax.annotation.Nonnull;
 
-public abstract class StackInfo {
+public interface StackInfo {
 
-    public abstract String toString();
-
-    @Nonnull
-    public abstract ItemStack getItemStack();
-
-    public abstract boolean hasBlock();
+    String toString();
 
     @Nonnull
-    public abstract Block getBlock();
+    ItemStack getItemStack();
 
-    public abstract int getMeta();
+    boolean hasBlock();
 
     @Nonnull
-    public abstract IBlockState getBlockState();
+    Block getBlock();
 
-    public abstract boolean isValid();
+    int getMeta();
 
-    public abstract NBTTagCompound writeToNBT(NBTTagCompound tag);
+    @Nonnull
+    IBlockState getBlockState();
 
-    public abstract int hashCode();
+    boolean isValid();
+
+    NBTTagCompound writeToNBT(NBTTagCompound tag);
+
+    int hashCode();
 
     /**
      * This is used to check if the contents equals the objects, based on what the object is
@@ -36,5 +36,5 @@ public abstract class StackInfo {
      * @return Returns true if the output ItemStacks match
      */
     @Override
-    public abstract boolean equals(Object obj);
+    boolean equals(Object obj);
 }

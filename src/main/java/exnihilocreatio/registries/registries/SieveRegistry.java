@@ -5,6 +5,8 @@ import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.blocks.BlockSieve;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipe;
 import exnihilocreatio.json.CustomIngredientJson;
+import exnihilocreatio.json.CustomItemInfoJson;
+import exnihilocreatio.registries.ingredient.IngredientUtil;
 import exnihilocreatio.registries.ingredient.OreIngredientStoring;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
@@ -34,6 +36,7 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Sifta
                         .setPrettyPrinting()
                         .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
                         .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
+                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
                         .enableComplexMapKeySerialization()
                         .create(),
                 new com.google.gson.reflect.TypeToken<Map<Ingredient, List<Siftable>>>() {}.getType(),
@@ -80,11 +83,10 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Sifta
     }
 
     public void register(Ingredient ingredient, Siftable drop) {
-        if (ingredient == null || ingredient.getMatchingStacks().length == 0) {
+        if (ingredient == null)
             return;
-        }
 
-        Ingredient search = registry.keySet().stream().filter(entry -> entry.getValidItemStacksPacked().equals(ingredient.getValidItemStacksPacked())).findAny().orElse(null);
+        Ingredient search = registry.keySet().stream().filter(entry -> IngredientUtil.ingredientEquals(entry, ingredient)).findAny().orElse(null);
         if (search != null) {
             registry.get(search).add(drop);
         } else {
@@ -161,7 +163,7 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Sifta
         for (Map.Entry<Ingredient, ArrayList<Siftable>> input : gsonInput.entrySet()) {
             Ingredient key = input.getKey();
 
-            if (key != null && key != Ingredient.EMPTY && key.getMatchingStacks().length > 0) {
+            if (key != null && key != Ingredient.EMPTY) {
                 for (Siftable siftable : input.getValue()) {
                     if (siftable.getDrop().isValid()) {
                         register(key, siftable);

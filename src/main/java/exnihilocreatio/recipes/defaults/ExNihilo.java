@@ -152,14 +152,14 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register(new BlockInfo(Blocks.SOUL_SAND), new ItemInfo(Items.QUARTZ), getDropChance(1f), MeshType.DIAMOND.getID());
         registry.register(new BlockInfo(Blocks.SOUL_SAND), new ItemInfo(Items.QUARTZ), getDropChance(0.8f), MeshType.DIAMOND.getID());
 
-        registry.register(new BlockInfo(ModBlocks.dust), new ItemInfo(Items.DYE, 15), getDropChance(0.2f), MeshType.STRING.getID());
-        registry.register(new BlockInfo(ModBlocks.dust), new ItemInfo(Items.GUNPOWDER), getDropChance(0.07f), MeshType.STRING.getID());
+        registry.register("dust", new ItemInfo(Items.DYE, 15), getDropChance(0.2f), MeshType.STRING.getID());
+        registry.register("dust", new ItemInfo(Items.GUNPOWDER), getDropChance(0.07f), MeshType.STRING.getID());
 
-        registry.register(new BlockInfo(ModBlocks.dust), new ItemInfo(Items.REDSTONE), getDropChance(0.125f), MeshType.IRON.getID());
-        registry.register(new BlockInfo(ModBlocks.dust), new ItemInfo(Items.REDSTONE), getDropChance(0.25f), MeshType.DIAMOND.getID());
+        registry.register("dust", new ItemInfo(Items.REDSTONE), getDropChance(0.125f), MeshType.IRON.getID());
+        registry.register("dust", new ItemInfo(Items.REDSTONE), getDropChance(0.25f), MeshType.DIAMOND.getID());
 
-        registry.register(new BlockInfo(ModBlocks.dust), new ItemInfo(Items.GLOWSTONE_DUST), getDropChance(0.0625f), MeshType.IRON.getID());
-        registry.register(new BlockInfo(ModBlocks.dust), new ItemInfo(Items.BLAZE_POWDER), getDropChance(0.05f), MeshType.IRON.getID());
+        registry.register("dust", new ItemInfo(Items.GLOWSTONE_DUST), getDropChance(0.0625f), MeshType.IRON.getID());
+        registry.register("dust", new ItemInfo(Items.BLAZE_POWDER), getDropChance(0.05f), MeshType.IRON.getID());
 
         // Custom Ores for other mods
         OreRegistry oreRegistry = ExNihiloRegistryManager.ORE_REGISTRY;
@@ -190,28 +190,28 @@ public class ExNihilo implements IRecipeDefaults {
             BlockLeaves blockLeaves = ((BlockLeaves) Block.getBlockFromItem(leaves.getItemStack().getItem()));
             float chance = blockLeaves.getSaplingDropChance(blockLeaves.getDefaultState()) / 100f;
 
-            registry.register(leaves, sapling, Math.min(chance * 4, 1.0f), MeshType.STRING.getID());
-            registry.register(leaves, sapling, Math.min(chance * 6, 1.0f), MeshType.FLINT.getID());
-            registry.register(leaves, sapling, Math.min(chance * 8, 1.0f), MeshType.IRON.getID());
-            registry.register(leaves, sapling, Math.min(chance * 10, 1.0f), MeshType.DIAMOND.getID());
+            registry.register(leaves, sapling, Math.min(chance * 1, 1.0f), MeshType.STRING.getID());
+            registry.register(leaves, sapling, Math.min(chance * 2, 1.0f), MeshType.FLINT.getID());
+            registry.register(leaves, sapling, Math.min(chance * 3, 1.0f), MeshType.IRON.getID());
+            registry.register(leaves, sapling, Math.min(chance * 4, 1.0f), MeshType.DIAMOND.getID());
 
             //Apple
-            registry.register(leaves, new ItemInfo(Items.APPLE), 0.10f, MeshType.STRING.getID());
-            registry.register(leaves, new ItemInfo(Items.APPLE), 0.20f, MeshType.FLINT.getID());
-            registry.register(leaves, new ItemInfo(Items.APPLE), 0.30f, MeshType.IRON.getID());
-            registry.register(leaves, new ItemInfo(Items.APPLE), 0.40f, MeshType.DIAMOND.getID());
+            registry.register(leaves, new ItemInfo(Items.APPLE), 0.05f, MeshType.STRING.getID());
+            registry.register(leaves, new ItemInfo(Items.APPLE), 0.10f, MeshType.FLINT.getID());
+            registry.register(leaves, new ItemInfo(Items.APPLE), 0.15f, MeshType.IRON.getID());
+            registry.register(leaves, new ItemInfo(Items.APPLE), 0.20f, MeshType.DIAMOND.getID());
 
             //Golden Apple
-            registry.register(leaves, new ItemInfo(Items.GOLDEN_APPLE), 0.005f, MeshType.STRING.getID());
-            registry.register(leaves, new ItemInfo(Items.GOLDEN_APPLE), 0.01f, MeshType.FLINT.getID());
-            registry.register(leaves, new ItemInfo(Items.GOLDEN_APPLE), 0.02f, MeshType.IRON.getID());
-            registry.register(leaves, new ItemInfo(Items.GOLDEN_APPLE), 0.05f, MeshType.DIAMOND.getID());
+            registry.register(leaves, new ItemInfo(Items.GOLDEN_APPLE), 0.001f, MeshType.STRING.getID());
+            registry.register(leaves, new ItemInfo(Items.GOLDEN_APPLE), 0.003f, MeshType.FLINT.getID());
+            registry.register(leaves, new ItemInfo(Items.GOLDEN_APPLE), 0.005f, MeshType.IRON.getID());
+            registry.register(leaves, new ItemInfo(Items.GOLDEN_APPLE), 0.01f, MeshType.DIAMOND.getID());
 
             //Silk Worm
-            registry.register(leaves, new ItemInfo(ItemResource.getResourceStack(ItemResource.SILKWORM)), 0.05f, MeshType.STRING.getID());
-            registry.register(leaves, new ItemInfo(ItemResource.getResourceStack(ItemResource.SILKWORM)), 0.1f, MeshType.FLINT.getID());
-            registry.register(leaves, new ItemInfo(ItemResource.getResourceStack(ItemResource.SILKWORM)), 0.25f, MeshType.IRON.getID());
-            registry.register(leaves, new ItemInfo(ItemResource.getResourceStack(ItemResource.SILKWORM)), 0.5f, MeshType.DIAMOND.getID());
+            registry.register(leaves, new ItemInfo(ItemResource.getResourceStack(ItemResource.SILKWORM)), 0.025f, MeshType.STRING.getID());
+            registry.register(leaves, new ItemInfo(ItemResource.getResourceStack(ItemResource.SILKWORM)), 0.05f, MeshType.FLINT.getID());
+            registry.register(leaves, new ItemInfo(ItemResource.getResourceStack(ItemResource.SILKWORM)), 0.1f, MeshType.IRON.getID());
+            registry.register(leaves, new ItemInfo(ItemResource.getResourceStack(ItemResource.SILKWORM)), 0.2f, MeshType.DIAMOND.getID());
         });
     }
 

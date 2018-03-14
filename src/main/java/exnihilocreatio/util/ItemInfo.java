@@ -16,7 +16,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
 
-public class ItemInfo extends StackInfo {
+public class ItemInfo implements StackInfo {
 
     public static final ItemInfo EMPTY = new ItemInfo(ItemStack.EMPTY);
 

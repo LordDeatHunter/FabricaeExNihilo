@@ -20,6 +20,7 @@ public class CompatDefaultRecipes {
         MODS.add(new Mekanism());
         MODS.add(new BigReactors());
         MODS.add(new ActuallyAdditions());
+        MODS.add(new EnderIO());
     }
 
     public void registerCompost(CompostRegistry registry) {
