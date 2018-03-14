@@ -43,6 +43,9 @@ tile.block_dust.name=Dust
 tile.block_netherrack_crushed.name=Crushed Netherrack
 tile.block_endstone_crushed.name=Crushed Endstone
 tile.block_skystone_crushed.name=Crushed Sky Stone
+tile.block_diorite_crushed.name=Crushed Diorite
+tile.block_andesite_crushed.name=Crushed Andesite
+tile.block_granite_crushed.name=Crushed Granite
 
 tile.block_barrel0.name=Wooden Barrel
 tile.block_barrel1.name=Stone Barrel
@@ -58,6 +61,8 @@ tile.block_auto_sifter.name=Auto Sifter
 tile.block_axle_stone.name=Stone Axle
 tile.block_grinder.name=Grinder [WIP! Does nothing yet!]
 tile.block_waterwheel.name=Waterwheel
+
+tile.block_end_cake.name=End Cake
 
 tile.block_sieve.name=Sieve
 item.item_mesh.1.name=String Mesh

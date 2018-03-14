@@ -1,6 +1,7 @@
 package exnihilocreatio.blocks;
 
 import exnihilocreatio.ExNihiloCreatio;
+import exnihilocreatio.ModBlocks;
 import exnihilocreatio.recipes.defaults.ExNihilo;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
@@ -75,5 +76,11 @@ public class BlockEndCake extends BlockCake implements IHasModel {
 
             return true;
         }
+    }
+
+    @Override
+    public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state)
+    {
+        return new ItemStack(ModBlocks.endCake);
     }
 }
