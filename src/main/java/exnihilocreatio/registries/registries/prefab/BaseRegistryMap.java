@@ -11,7 +11,7 @@ import java.util.Map;
 public abstract class BaseRegistryMap<K, V> extends BaseRegistry<Map<K, V>> {
 
     public BaseRegistryMap(Gson gson, Type typeOfSource, List<? extends IDefaultRecipeProvider> defaultRecipeProviders) {
-        super(gson, new HashMap<>(), typeOfSource,   defaultRecipeProviders);
+        super(gson, new HashMap<>(), typeOfSource, defaultRecipeProviders);
     }
 
     public void register(K key, V value) {

@@ -32,8 +32,6 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
-    protected final Map<Ingredient, Meltable> oreRegistry = new HashMap<>();
-
     public CrucibleRegistry(List<? extends IDefaultRecipeProvider> defaultRecipeProviders) {
         super(
                 new GsonBuilder()
@@ -77,13 +75,13 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
         if (!FluidRegistry.isFluidRegistered(meltable.getFluid()))
             return;
 
-        if (oreRegistry.keySet().stream().anyMatch(entry -> IngredientUtil.ingredientEquals(entry, ingredient)))
+        if (registry.keySet().stream().anyMatch(entry -> IngredientUtil.ingredientEquals(entry, ingredient)))
             LogUtil.error("Crucible Ore Entry for " + name + " already exists, skipping.");
-        else oreRegistry.put(ingredient, meltable);
+        else registry.put(ingredient, meltable);
     }
 
     public boolean canBeMelted(ItemStack stack) {
-        return registry.keySet().stream().anyMatch(entry -> entry.test(stack)) || oreRegistry.keySet().stream().anyMatch(entry -> entry.test(stack));
+        return registry.keySet().stream().anyMatch(entry -> entry.test(stack));
     }
 
     public boolean canBeMelted(StackInfo info) {
@@ -93,10 +91,12 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
     @Nonnull
     public Meltable getMeltable(ItemStack stack) {
         Ingredient ingredient = registry.keySet().stream().filter(entry -> entry.test(stack)).findFirst().orElse(null);
-        if (ingredient != null) return registry.get(ingredient);
-        ingredient = oreRegistry.keySet().stream().filter(entry -> entry.test(stack)).findFirst().orElse(null);
-        if (ingredient != null) return oreRegistry.get(ingredient);
-        else return Meltable.EMPTY;
+
+        if (ingredient != null) {
+            return registry.get(ingredient);
+        } else {
+            return Meltable.EMPTY;
+        }
     }
 
     @Nonnull
@@ -126,10 +126,7 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
 
     @Override
     public Map<Ingredient, Meltable> getRegistry() {
-        //noinspection unchecked
-        Map<Ingredient, Meltable> map = (HashMap) ((HashMap) registry).clone();
-        map.putAll(oreRegistry);
-        return map;
+        return registry;
     }
 
     @Override
