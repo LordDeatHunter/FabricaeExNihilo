@@ -40,11 +40,11 @@ public class HammerBase extends ItemTool implements IHammer, IHasModel {
 
     @Override
     public float getDestroySpeed(@Nullable ItemStack stack, IBlockState state) {
-        return ExNihiloRegistryManager.HAMMER_REGISTRY.isRegistered(state.getBlock()) ? this.efficiency : 1.0F;
+        return ExNihiloRegistryManager.HAMMER_REGISTRY.isRegistered(state) ? this.efficiency : 1.0F;
     }
 
     @Override
     public boolean canHarvestBlock(IBlockState state) {
-        return ExNihiloRegistryManager.HAMMER_REGISTRY.isRegistered(state.getBlock());
+        return ExNihiloRegistryManager.HAMMER_REGISTRY.isRegistered(state);
     }
 }

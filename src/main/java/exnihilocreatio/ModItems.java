@@ -84,7 +84,9 @@ public class ModItems {
         OreDictionary.registerOre("stickStone", ItemResource.getResourceStack(ItemResource.ROD_STONE));
         OreDictionary.registerOre("rodStone", ItemResource.getResourceStack(ItemResource.ROD_STONE));
         OreDictionary.registerOre("dust", ModBlocks.dust);
-
+        OreDictionary.registerOre("crushedGranite", ModBlocks.crushedGranite);
+        OreDictionary.registerOre("crushedAndesite", ModBlocks.crushedAndesite);
+        OreDictionary.registerOre("crushedDiorite", ModBlocks.crushedDiorite);
 
 
         if (ModConfig.misc.oredictVanillaItems){

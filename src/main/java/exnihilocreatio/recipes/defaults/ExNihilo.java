@@ -25,6 +25,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.LinkedHashMap;
@@ -222,14 +223,12 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register("netherrack", new ItemStack(ModBlocks.netherrackCrushed, 1), 0, 1.0F, 0.0F);
         registry.register("endstone", new ItemStack(ModBlocks.endstoneCrushed, 1), 0, 1.0F, 0.0F);
 
-        // Hammering stone into pebbles (no idea why anyone should do that, but hey :P)
-        registry.register(new BlockInfo(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.STONE)), new ItemStack(ModItems.pebbles, 1, EnumPebbleSubtype.STONE.getMeta()), 1, 3F, 1.25F);
-        registry.register(new BlockInfo(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE)), new ItemStack(ModItems.pebbles, 1, EnumPebbleSubtype.ANDESITE.getMeta()), 1, 3F, 1.25F);
-        registry.register(new BlockInfo(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE)), new ItemStack(ModItems.pebbles, 1, EnumPebbleSubtype.GRANITE.getMeta()), 1, 3F, 1.25F);
-        registry.register(new BlockInfo(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.DIORITE)), new ItemStack(ModItems.pebbles, 1, EnumPebbleSubtype.DIORITE.getMeta()), 1, 3F, 1.25F);
+        registry.register("stoneAndesite", new ItemStack(ModBlocks.crushedAndesite), 0, 1f, 0);
+        registry.register("stoneGranite", new ItemStack(ModBlocks.crushedGranite), 0, 1f, 0);
+        registry.register("stoneDiorite", new ItemStack(ModBlocks.crushedDiorite), 0, 1f, 0);
 
-        // Fill in the rest
-        registry.register("stone", new ItemStack(ModItems.pebbles, 1, EnumPebbleSubtype.STONE.getMeta()), 1, 3F, 1.25F);
+        registry.register("crushedGranite", new ItemStack(Blocks.SAND, 1, 1), 0, 1.0f, 0.0f);
+
 
         // Hammer concrete into concrete powder
         for (int meta = 0; meta < 16; meta++)
