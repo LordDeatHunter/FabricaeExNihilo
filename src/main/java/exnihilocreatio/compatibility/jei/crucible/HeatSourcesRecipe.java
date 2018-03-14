@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
@@ -37,11 +38,17 @@ public class HeatSourcesRecipe implements IRecipeWrapper {
     private final BlockInfo blockInfo;
     private final String heatAmountString;
 
+    private static final Item torch = Item.getItemFromBlock(Blocks.TORCH);
+
     public HeatSourcesRecipe(BlockInfo blockInfo, int heatAmount) {
         this.blockInfo = blockInfo;
 
 
         ItemStack item = blockInfo.getItemStack();
+
+        if (item.getItem() == torch)
+            item = new ItemStack(torch, 1, 0);
+
         if (item.isEmpty()) {
             Fluid fluid = null;
             Block block = blockInfo.getBlock();
