@@ -1,5 +1,7 @@
 package exnihilocreatio.blocks;
 
+import exnihilocreatio.ExNihiloCreatio;
+import exnihilocreatio.recipes.defaults.ExNihilo;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
 import net.minecraft.block.BlockCake;
@@ -23,6 +25,7 @@ public class BlockEndCake extends BlockCake implements IHasModel {
         setSoundType(SoundType.CLOTH);
         setRegistryName("block_end_cake");
         setUnlocalizedName("block_end_cake");
+        setCreativeTab(ExNihiloCreatio.tabExNihilo);
         Data.BLOCKS.add(this);
     }
 

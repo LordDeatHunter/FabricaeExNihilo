@@ -3,7 +3,7 @@
   "defaults": {
     "model": "cube_all",
     "textures": {
-      "all": "exnihilocreatio:blocks/blockendstonecrushed"
+      "all": "exnihilocreatio:blocks/crushed_granite"
     }
   },
   "variants": {

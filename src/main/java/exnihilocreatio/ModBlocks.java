@@ -20,6 +20,12 @@ public class ModBlocks {
     public static final BlockBaseFalling netherrackCrushed = (BlockBaseFalling) new BlockBaseFalling(SoundType.GROUND, "block_netherrack_crushed").setHardness(0.7F);
     public static final BlockBaseFalling endstoneCrushed = (BlockBaseFalling) new BlockBaseFalling(SoundType.GROUND, "block_endstone_crushed").setHardness(0.7F);
     public static final BlockBaseFalling skystoneCrushed = Loader.isModLoaded("appliedenergistics2") ? (BlockBaseFalling) new BlockBaseFalling(SoundType.GROUND, "block_skystone_crushed").setHardness(0.7F) : null;
+
+    public static final BlockBaseFalling crushedAndesite = (BlockBaseFalling) new BlockBaseFalling(SoundType.GROUND, "block_andesite_crushed").setHardness(0.7F);
+    public static final BlockBaseFalling crushedDiorite = (BlockBaseFalling) new BlockBaseFalling(SoundType.GROUND, "block_diorite_crushed").setHardness(0.7F);
+    public static final BlockBaseFalling crushedGranite = (BlockBaseFalling) new BlockBaseFalling(SoundType.GROUND, "block_granite_crushed").setHardness(0.7F);
+
+
     public static final BlockBarrel barrelWood = new BlockBarrel(0, Material.WOOD);
     public static final BlockBarrel barrelStone = new BlockBarrel(1, Material.ROCK);
     public static final BlockInfestingLeaves infestingLeaves = new BlockInfestingLeaves();
