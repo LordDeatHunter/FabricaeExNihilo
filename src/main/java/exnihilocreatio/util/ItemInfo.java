@@ -140,9 +140,9 @@ public class ItemInfo implements StackInfo {
 
 
     private void checkWildcard(){
-        // This checks if the block has sub items or not.
-        // If not, accept any block that matches this, otherwise
-        // Only accept blocks with meta 0
+        // This checks if the item has sub items or not.
+        // If not, accept any item that matches this, otherwise
+        // Only accept items with meta 0
         NonNullList<ItemStack> subItems = NonNullList.create();
         item.getSubItems(item.getCreativeTab(), subItems);
         if (subItems.size() <= 1)
