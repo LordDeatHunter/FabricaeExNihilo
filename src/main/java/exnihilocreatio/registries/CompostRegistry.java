@@ -3,6 +3,7 @@ package exnihilocreatio.registries;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.Compostable;
 import exnihilocreatio.texturing.Color;
+import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -18,11 +19,11 @@ public class CompostRegistry {
     }
 
     public static void register(Item item, int meta, float value, IBlockState state, Color color) {
-        ExNihiloRegistryManager.COMPOST_REGISTRY.register(item, meta, value, state, color);
+        ExNihiloRegistryManager.COMPOST_REGISTRY.register(item, meta, value, new BlockInfo(state), color);
     }
 
     public static void register(Block block, int meta, float value, IBlockState state, Color color) {
-        ExNihiloRegistryManager.COMPOST_REGISTRY.register(block, meta, value, state, color);
+        ExNihiloRegistryManager.COMPOST_REGISTRY.register(block, meta, value, new BlockInfo(state), color);
     }
 
     public static Compostable getItem(Item item, int meta) {

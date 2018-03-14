@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
@@ -30,7 +31,7 @@ public class ItemInfo extends StackInfo {
 
     public ItemInfo(@Nonnull Item item) {
         this.item = item;
-        this.isWildcard = true;
+        checkWildcard();
     }
 
     public ItemInfo(@Nonnull Item item, int meta) {
@@ -38,19 +39,21 @@ public class ItemInfo extends StackInfo {
         if (meta == -1 || meta == OreDictionary.WILDCARD_VALUE) {
             this.isWildcard = true;
         }
-        else
+        else {
             this.meta = meta;
+            checkWildcard();
+        }
     }
 
     public ItemInfo(@Nonnull ItemStack stack) {
         this.item = stack.getItem();
         this.meta = stack.getItemDamage();
+        checkWildcard();
     }
 
     public ItemInfo(@Nonnull Block block) {
         this.item = Item.getItemFromBlock(block);
-        this.meta = 0;
-        this.isWildcard = true;
+        checkWildcard();
     }
 
     public ItemInfo(@Nonnull Block block, int blockMeta) {
@@ -61,8 +64,10 @@ public class ItemInfo extends StackInfo {
         else {
             if (blockMeta == -1 || blockMeta == OreDictionary.WILDCARD_VALUE) {
                 this.isWildcard = true;
-            } else
+            } else {
                 this.meta = blockMeta;
+                checkWildcard();
+            }
         }
     }
 
@@ -114,8 +119,10 @@ public class ItemInfo extends StackInfo {
             this.item = item;
             if (meta == -1 || meta == OreDictionary.WILDCARD_VALUE) {
                 this.isWildcard = true;
-            } else
+            } else {
                 this.meta = meta;
+                checkWildcard();
+            }
         }
     }
 
@@ -129,6 +136,17 @@ public class ItemInfo extends StackInfo {
         int meta = tag.getInteger("meta");
 
         return item == null ? EMPTY : new ItemInfo(item, meta);
+    }
+
+
+    private void checkWildcard(){
+        // This checks if the block has sub items or not.
+        // If not, accept any block that matches this, otherwise
+        // Only accept blocks with meta 0
+        NonNullList<ItemStack> subItems = NonNullList.create();
+        item.getSubItems(item.getCreativeTab(), subItems);
+        if (subItems.size() <= 1)
+            this.isWildcard = true;
     }
 
     //StackInfo

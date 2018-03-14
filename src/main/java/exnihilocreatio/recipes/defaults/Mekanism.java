@@ -16,8 +16,8 @@ public class Mekanism implements IRecipeDefaults {
     public void registerSieve(SieveRegistry registry) {
         ItemOre osmium = ExNihiloRegistryManager.ORE_REGISTRY.getOreItem("osmium");
         if (osmium != null) {
-            registry.register("gravel", new ItemInfo(osmium, 0), 0.05f, BlockSieve.MeshType.IRON.getID());
-            registry.register("gravel", new ItemInfo(osmium, 0), 0.1f, BlockSieve.MeshType.DIAMOND.getID());
+            registry.register("gravel", new ItemInfo(osmium), 0.05f, BlockSieve.MeshType.IRON.getID());
+            registry.register("gravel", new ItemInfo(osmium), 0.1f, BlockSieve.MeshType.DIAMOND.getID());
         }
     }
 

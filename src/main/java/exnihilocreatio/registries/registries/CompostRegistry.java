@@ -64,7 +64,7 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
         );
     }
 
-    public void register(ItemStack itemStack, float value, IBlockState state, Color color) {
+    public void register(ItemStack itemStack, float value, BlockInfo state, Color color) {
         if (itemStack.isEmpty())
             return;
 
@@ -74,29 +74,29 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
             LogUtil.error("Compost Entry for " + itemStack.getItem().getRegistryName() + " with meta " + itemStack.getMetadata() + " already exists, skipping.");
             return;
         }
-        Compostable compostable = new Compostable(value, color, new BlockInfo(state));
+        Compostable compostable = new Compostable(value, color, state);
         register(ingredient, compostable);
     }
 
-    public void register(Item item, int meta, float value, IBlockState state, Color color) {
+    public void register(Item item, int meta, float value, BlockInfo state, Color color) {
         register(new ItemStack(item, 1, meta), value, state, color);
     }
 
-    public void register(Block block, int meta, float value, IBlockState state, Color color) {
+    public void register(Block block, int meta, float value, BlockInfo state, Color color) {
         register(new ItemStack(block, 1, meta), value, state, color);
     }
 
-    public void register(StackInfo item, float value, IBlockState state, Color color) {
+    public void register(StackInfo item, float value, BlockInfo state, Color color) {
         register(item.getItemStack(), value, state, color);
     }
 
-    public void register(ResourceLocation location, int meta, float value, IBlockState state, Color color) {
+    public void register(ResourceLocation location, int meta, float value, BlockInfo state, Color color) {
         register(ForgeRegistries.ITEMS.getValue(location), meta, value, state, color);
     }
 
-    public void register(String name, float value, IBlockState state, Color color) {
+    public void register(String name, float value, BlockInfo state, Color color) {
         Ingredient ingredient = new OreIngredientStoring(name);
-        Compostable compostable = new Compostable(value, color, new BlockInfo(state));
+        Compostable compostable = new Compostable(value, color, state);
 
         if (oreRegistry.keySet().stream().anyMatch(entry -> IngredientUtil.ingredientEquals(entry, ingredient)))
             LogUtil.error("Compost Ore Entry for " + name + " already exists, skipping.");
@@ -107,7 +107,7 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
     /**
      * Registers a oredict for sifting with a dynamic color based on the itemColor
      */
-    public void register(String name, float value, IBlockState state) {
+    public void register(String name, float value, BlockInfo state) {
         register(name, value, state, Color.INVALID_COLOR);
     }
 

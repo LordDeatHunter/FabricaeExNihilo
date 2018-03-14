@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
@@ -27,21 +28,29 @@ public class BlockInfo extends StackInfo {
 
     public BlockInfo(@Nonnull Block block) {
         this.state = getStateFromMeta(block, 0);
-        this.isWildcard = true;
+        checkWildcard();
     }
 
     public BlockInfo(@Nonnull Block block, int meta) {
         this.state = getStateFromMeta(block, meta);
         if (meta == -1 || meta == OreDictionary.WILDCARD_VALUE)
             this.isWildcard = true;
+        else
+            checkWildcard();
     }
 
+    /**
+     * Only use this if you need a very specific state
+     * or want to compare against a very specific state,
+     * otherwise use block, meta or just block
+     */
     public BlockInfo(@Nonnull IBlockState state){
         this.state = state;
     }
 
     public BlockInfo(@Nonnull ItemStack stack) {
         this.state = getStateFromMeta(Block.getBlockFromItem(stack.getItem()), stack.getItemDamage());
+        checkWildcard();
     }
 
     public BlockInfo(@Nonnull String string) {
@@ -97,8 +106,10 @@ public class BlockInfo extends StackInfo {
                 this.state = getStateFromMeta(block, 0);
                 this.isWildcard = true;
             }
-            else
+            else {
                 this.state = getStateFromMeta(block, meta);
+                checkWildcard();
+            }
         }
     }
 
@@ -123,6 +134,15 @@ public class BlockInfo extends StackInfo {
         }
     }
 
+    private void checkWildcard(){
+        // This checks if the block has sub items or not.
+        // If not, accept any block that matches this, otherwise
+        // Only accept blocks with meta 0
+        NonNullList<ItemStack> subItems = NonNullList.create();
+        state.getBlock().getSubBlocks(state.getBlock().getCreativeTabToDisplayOn(), subItems);
+        if (subItems.size() <= 1)
+            this.isWildcard = true;
+    }
 
     //StackInfo
 
