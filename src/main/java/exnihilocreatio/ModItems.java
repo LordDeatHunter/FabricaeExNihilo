@@ -3,9 +3,12 @@ package exnihilocreatio;
 import exnihilocreatio.blocks.ItemBlockCrucible;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.*;
+import exnihilocreatio.items.ore.EnumOreSubtype;
+import exnihilocreatio.items.ore.ItemOre;
 import exnihilocreatio.items.seeds.ItemSeedBase;
 import exnihilocreatio.items.tools.CrookBase;
 import exnihilocreatio.items.tools.HammerBase;
+import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
 import exnihilocreatio.util.IHasSpecialRegistry;
@@ -102,7 +105,12 @@ public class ModItems {
             OreDictionary.registerOre("listAllmeatcooked", Items.COOKED_PORKCHOP);
             OreDictionary.registerOre("listAllmeatcooked", Items.COOKED_MUTTON);
             OreDictionary.registerOre("listAllmeatcooked", Items.COOKED_RABBIT);
+        }
 
+
+        ItemOre oreYellorium = ExNihiloRegistryManager.ORE_REGISTRY.getOreItem("yellorium");
+        if (oreYellorium != null){
+            OreDictionary.registerOre("oreYellorite",new ItemStack(oreYellorium, 1, EnumOreSubtype.CHUNK.getMeta()));
         }
     }
 
