@@ -187,7 +187,6 @@ public class OreRegistry extends BaseRegistryList<Ore> {
 
     public ItemOre getOreItem(String name) {
         for (ItemOre itemOre : itemOreRegistry) {
-            System.out.println(itemOre.getOre().getName() + " + " + name + " = " + itemOre.getOre().getName().equals(name));
             if (itemOre.getOre().getName().equals(name)) {
                 return itemOre;
             }

@@ -87,6 +87,8 @@ public class ModConfig {
         @Config.Comment("Prevents unidict from merging the ore chunks into normal ore.")
         public boolean preventUnidict = true;
         public boolean addYelloriteOreDict = true;
+        public boolean dankNullIntegration = true;
+        public boolean generalItemHandlerCompat = true;
 
         public static class TinkersConstructCompat {
             public boolean doTinkersConstructCompat = true;
