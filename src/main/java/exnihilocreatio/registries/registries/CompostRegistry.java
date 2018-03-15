@@ -141,46 +141,6 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
         return containsItem(info.getItemStack());
     }
 
-    @SideOnly(Side.CLIENT)
-    public void recommendAllFood(File file) {
-        if (FMLCommonHandler.instance().getSide().isServer()) {
-            return;
-        }
-
-        IBlockState dirt = Blocks.DIRT.getDefaultState();
-        Color brown = new Color("7F3F0F");
-
-        Map<String, Compostable> recommended = Maps.newHashMap();
-
-        for (Item item : Item.REGISTRY) {
-            if (item instanceof ItemFood) {
-                ItemFood food = (ItemFood) item;
-
-                NonNullList<ItemStack> stacks = NonNullList.create();
-                food.getSubItems(CreativeTabs.FOOD, stacks);
-
-                for (ItemStack foodStack : stacks) {
-                    ItemInfo foodItemInfo = new ItemInfo(foodStack);
-
-                    if (!containsItem(foodStack)) {
-                        int hungerRestored = food.getHealAmount(foodStack);
-
-                        recommended.put(foodItemInfo.toString(), new Compostable(hungerRestored * 0.025F, brown, new BlockInfo(dirt)));
-                    }
-                }
-            }
-        }
-
-        String json = gson.toJson(recommended, new TypeToken<Map<String, Compostable>>() {
-        }.getType());
-
-        try {
-            Files.write(file.toPath(), json.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void registerEntriesFromJSON(FileReader fr) {
         Map<String, Compostable> gsonInput = gson.fromJson(fr, new TypeToken<Map<String, Compostable>>() {
@@ -204,7 +164,6 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
         return map;
     }
 
-    @SuppressWarnings("Duplicates")
     @Override
     public List<CompostRecipe> getRecipeList() {
         List<CompostRecipe> compostRecipePages = new ArrayList<>();

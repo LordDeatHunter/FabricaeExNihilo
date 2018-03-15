@@ -96,9 +96,4 @@ public class ClientProxy extends CommonProxy {
     public boolean runningOnServer() {
         return false;
     }
-
-    @Override
-    public void registerConfigs(File configDirectory) {
-        ExNihiloRegistryManager.COMPOST_REGISTRY.recommendAllFood(new File(configDirectory, "RecommendedFoodRegistry.json"));
-    }
 }

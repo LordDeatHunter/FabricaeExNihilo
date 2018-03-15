@@ -57,9 +57,6 @@ public class ExNihiloCreatio {
         configDirectory = new File(event.getModConfigurationDirectory(), "exnihilocreatio");
         configDirectory.mkdirs();
 
-        proxy.registerConfigs(configDirectory);
-
-
         ENCapabilities.init();
         ENEntities.init();
 

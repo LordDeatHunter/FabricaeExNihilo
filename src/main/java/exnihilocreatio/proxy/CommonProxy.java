@@ -91,9 +91,4 @@ public abstract class CommonProxy {
     public boolean runningOnServer() {
         return true;
     }
-
-    public void registerConfigs(File configDirectory) {
-
-    }
-
 }
