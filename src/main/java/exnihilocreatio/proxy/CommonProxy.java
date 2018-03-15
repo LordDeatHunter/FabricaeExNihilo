@@ -2,12 +2,16 @@ package exnihilocreatio.proxy;
 
 import exnihilocreatio.*;
 import exnihilocreatio.compatibility.CompatTOP;
+import exnihilocreatio.config.ModConfig;
+import exnihilocreatio.items.ore.EnumOreSubtype;
+import exnihilocreatio.items.ore.ItemOre;
 import exnihilocreatio.registries.manager.ExNihiloDefaultRecipes;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.util.Data;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
@@ -18,6 +22,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.io.File;
 
@@ -42,6 +47,14 @@ public abstract class CommonProxy {
         ExNihiloRegistryManager.ORE_REGISTRY.loadJson(new File(ExNihiloCreatio.configDirectory, "OreRegistry.json"));
         ExNihiloRegistryManager.ORE_REGISTRY.registerToGameRegistry(event.getRegistry());
         ExNihiloRegistryManager.ORE_REGISTRY.doRecipes();
+
+        ItemOre oreYellorium = ExNihiloRegistryManager.ORE_REGISTRY.getOreItem("yellorium");
+        if (ModConfig.compatibility.addYelloriteOreDict && oreYellorium != null){
+            OreDictionary.registerOre("oreYellorite", new ItemStack(oreYellorium, 1, EnumOreSubtype.CHUNK.getMeta()));
+            OreDictionary.registerOre("oreUranium", new ItemStack(oreYellorium, 1, EnumOreSubtype.CHUNK.getMeta()));
+            OreDictionary.registerOre("dustUranium", new ItemStack(oreYellorium, 1, EnumOreSubtype.DUST.getMeta()));
+            OreDictionary.registerOre("pieceUranium", new ItemStack(oreYellorium, 1, EnumOreSubtype.PIECE.getMeta()));
+        }
     }
 
     @SubscribeEvent

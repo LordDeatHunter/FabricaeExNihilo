@@ -106,12 +106,6 @@ public class ModItems {
             OreDictionary.registerOre("listAllmeatcooked", Items.COOKED_MUTTON);
             OreDictionary.registerOre("listAllmeatcooked", Items.COOKED_RABBIT);
         }
-
-
-        ItemOre oreYellorium = ExNihiloRegistryManager.ORE_REGISTRY.getOreItem("yellorium");
-        if (oreYellorium != null){
-            OreDictionary.registerOre("oreYellorite",new ItemStack(oreYellorium, 1, EnumOreSubtype.CHUNK.getMeta()));
-        }
     }
 
     @SideOnly(Side.CLIENT)

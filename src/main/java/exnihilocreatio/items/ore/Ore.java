@@ -4,10 +4,12 @@ import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.ItemInfo;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.HashMap;
 
 @EqualsAndHashCode
+@ToString
 public class Ore {
 
     @Getter
