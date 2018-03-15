@@ -11,6 +11,7 @@ import exnihilocreatio.handlers.HandlerHammer;
 import exnihilocreatio.networking.PacketHandler;
 import exnihilocreatio.proxy.CommonProxy;
 import exnihilocreatio.registries.RegistryReloadedEvent;
+import exnihilocreatio.registries.manager.ExNihiloDefaultRecipes;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.BarrelModeRegistry;
 import exnihilocreatio.util.LogUtil;
@@ -63,13 +64,13 @@ public class ExNihiloCreatio {
         PacketHandler.initPackets();
 
         MinecraftForge.EVENT_BUS.register(new HandlerHammer());
-
         MinecraftForge.EVENT_BUS.register(new HandlerCrook());
-
 
         if (ModConfig.mechanics.enableBarrels) {
             BarrelModeRegistry.registerDefaults();
         }
+
+        ExNihiloDefaultRecipes.registerDefaults();
 
     }
 

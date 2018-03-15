@@ -8,6 +8,7 @@ import exnihilocreatio.items.ore.ItemOre;
 import exnihilocreatio.items.seeds.ItemSeedBase;
 import exnihilocreatio.items.tools.CrookBase;
 import exnihilocreatio.items.tools.HammerBase;
+import exnihilocreatio.registries.manager.ExNihiloDefaultRecipes;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
@@ -27,6 +28,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -77,6 +79,12 @@ public class ModItems {
         }
 
         registry.register(new ItemBlockCrucible(ModBlocks.crucibleStone));
+    }
+
+    public static void registerItemsLowest(IForgeRegistry<Item> registry) {
+        ExNihiloRegistryManager.ORE_REGISTRY.loadJson(new File(ExNihiloCreatio.configDirectory, "OreRegistry.json"));
+        ExNihiloRegistryManager.ORE_REGISTRY.registerToGameRegistry(registry);
+        ExNihiloRegistryManager.ORE_REGISTRY.doRecipes();
 
         registerOredicts();
     }
@@ -105,6 +113,14 @@ public class ModItems {
             OreDictionary.registerOre("listAllmeatcooked", Items.COOKED_PORKCHOP);
             OreDictionary.registerOre("listAllmeatcooked", Items.COOKED_MUTTON);
             OreDictionary.registerOre("listAllmeatcooked", Items.COOKED_RABBIT);
+        }
+
+        ItemOre oreYellorium = ExNihiloRegistryManager.ORE_REGISTRY.getOreItem("yellorium");
+        if (ModConfig.compatibility.addYelloriteOreDict && oreYellorium != null){
+            OreDictionary.registerOre("oreYellorite", new ItemStack(oreYellorium, 1, EnumOreSubtype.CHUNK.getMeta()));
+            OreDictionary.registerOre("oreUranium", new ItemStack(oreYellorium, 1, EnumOreSubtype.CHUNK.getMeta()));
+            OreDictionary.registerOre("dustUranium", new ItemStack(oreYellorium, 1, EnumOreSubtype.DUST.getMeta()));
+            OreDictionary.registerOre("pieceUranium", new ItemStack(oreYellorium, 1, EnumOreSubtype.PIECE.getMeta()));
         }
     }
 
