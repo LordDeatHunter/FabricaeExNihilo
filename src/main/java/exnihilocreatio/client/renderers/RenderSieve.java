@@ -2,6 +2,7 @@ package exnihilocreatio.client.renderers;
 
 import exnihilocreatio.blocks.BlockSieve;
 import exnihilocreatio.tiles.TileSieve;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
@@ -71,8 +72,11 @@ public class RenderSieve extends TileEntitySpecialRenderer<TileSieve> {
 
     private void renderSieve(TileSieve tile, double x, double y, double z, BufferBuilder worldRendererBuffer) {
         final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
-        IBlockState state = tile.getBlockType().getDefaultState().withProperty(BlockSieve.MESH, tile.getMeshType());
-        // IBlockState state = tile.getBlockType().getDefaultState().withProperty(BlockSieve.MESH, BlockSieve.MeshType.getMeshTypeByID(tile.getMeshStack().getMetadata()));
+        Block blocktype = tile.getBlockType();
+
+        if (!(blocktype instanceof BlockSieve)) return;
+
+        IBlockState state = blocktype.getDefaultState().withProperty(BlockSieve.MESH, tile.getMeshType());
 
         List<BakedQuad> quadsSieve = blockRenderer.getModelForState(state).getQuads(state, null, 0);
         //TODO: possibly optimize to not call this every render, maybe HashMap for that?
