@@ -43,6 +43,11 @@ public class ItemMesh extends Item implements IHasModel {
     }
 
     @Override
+    public boolean isEnchantable(ItemStack stack){
+        return true;
+    }
+
+    @Override
     @Nonnull
     public String getUnlocalizedName(ItemStack stack) {
         return super.getUnlocalizedName() + "." + stack.getItemDamage();
