@@ -31,7 +31,7 @@ public class EnchantmentFortune extends Enchantment {
     }
 
     /**
-     * Returns the maximum value of enchantability nedded on the enchantment level passed.
+     * Returns the maximum value of enchantability needed on the enchantment level passed.
      */
     @Override
     public int getMaxEnchantability(int enchantmentLevel) {
