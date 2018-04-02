@@ -10,6 +10,7 @@ import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryList;
 import exnihilocreatio.registries.types.FluidBlockTransformer;
 import exnihilocreatio.util.BlockInfo;
+import exnihilocreatio.util.EntityInfo;
 import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.StackInfo;
 import net.minecraft.item.ItemStack;
@@ -37,6 +38,11 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
     public void register(Fluid fluid, StackInfo inputBlock, ItemInfo outputBlock) {
         if (outputBlock.hasBlock())
             registry.add(new FluidBlockTransformer(fluid.getName(), inputBlock, new BlockInfo(outputBlock.getItemStack())));
+    }
+
+    public void register(Fluid fluid, StackInfo inputBlock, ItemInfo outputBlock, String entityName) {
+        if (outputBlock.hasBlock())
+            registry.add(new FluidBlockTransformer(fluid.getName(), inputBlock, new BlockInfo(outputBlock.getItemStack()), entityName));
     }
 
     public void register(Fluid fluid, StackInfo inputBlock, BlockInfo outputBlock) {
@@ -68,6 +74,31 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
         }
 
         return BlockInfo.EMPTY;
+    }
+
+    @Nonnull
+    public int getSpawnCountForTransformation(Fluid fluid, ItemStack stack) {
+        BlockInfo info = new BlockInfo(stack);
+
+        for (FluidBlockTransformer transformer : registry) {
+            if (fluid.getName().equals(transformer.getFluidName()) && info.equals(transformer.getInput())) {
+                return transformer.getSpawnCount();
+            }
+        }
+
+        return 0;
+    }
+
+    public EntityInfo getSpawnForTransformation(Fluid fluid, ItemStack stack) {
+        BlockInfo info = new BlockInfo(stack);
+
+        for (FluidBlockTransformer transformer : registry) {
+            if (fluid.getName().equals(transformer.getFluidName()) && info.equals(transformer.getInput())) {
+                return transformer.getToSpawn();
+            }
+        }
+
+        return null;
     }
 
     @Override

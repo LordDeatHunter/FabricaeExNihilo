@@ -2,11 +2,8 @@ package exnihilocreatio.json;
 
 import com.google.gson.*;
 import exnihilocreatio.registries.types.HammerReward;
-import exnihilocreatio.registries.types.Meltable;
-import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.LogUtil;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import java.lang.reflect.Type;

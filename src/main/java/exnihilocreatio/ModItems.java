@@ -8,7 +8,6 @@ import exnihilocreatio.items.ore.ItemOre;
 import exnihilocreatio.items.seeds.ItemSeedBase;
 import exnihilocreatio.items.tools.CrookBase;
 import exnihilocreatio.items.tools.HammerBase;
-import exnihilocreatio.registries.manager.ExNihiloDefaultRecipes;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;

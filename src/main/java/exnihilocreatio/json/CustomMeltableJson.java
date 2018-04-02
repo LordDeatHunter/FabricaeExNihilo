@@ -1,9 +1,7 @@
 package exnihilocreatio.json;
 
 import com.google.gson.*;
-import exnihilocreatio.registries.types.Compostable;
 import exnihilocreatio.registries.types.Meltable;
-import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.BlockInfo;
 
 import java.lang.reflect.Type;

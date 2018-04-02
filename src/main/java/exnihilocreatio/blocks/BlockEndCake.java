@@ -2,7 +2,6 @@ package exnihilocreatio.blocks;
 
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.ModBlocks;
-import exnihilocreatio.recipes.defaults.ExNihilo;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
 import net.minecraft.block.BlockCake;
