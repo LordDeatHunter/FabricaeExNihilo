@@ -26,6 +26,9 @@ public class FluidBlockTransformer {
     @Getter
     private int spawnCount;
 
+    @Getter
+    private int spawnRange;
+
     public FluidBlockTransformer(String fluidName, StackInfo input, BlockInfo output){
         this.fluidName = fluidName;
         this.input = input;
@@ -39,6 +42,7 @@ public class FluidBlockTransformer {
         this.output = output;
         this.toSpawn = new EntityInfo(entityName);
         this.spawnCount = 4;
+        this.spawnRange = 4;
     }
 
     public FluidBlockTransformer(String fluidName, StackInfo input, BlockInfo output, String entityName, int spawnCount){
@@ -47,6 +51,16 @@ public class FluidBlockTransformer {
         this.output = output;
         this.toSpawn = new EntityInfo(entityName);
         this.spawnCount = spawnCount;
+        this.spawnRange = 4;
+    }
+
+    public FluidBlockTransformer(String fluidName, StackInfo input, BlockInfo output, String entityName, int spawnCount, int spawnRange){
+        this.fluidName = fluidName;
+        this.input = input;
+        this.output = output;
+        this.toSpawn = new EntityInfo(entityName);
+        this.spawnCount = spawnCount;
+        this.spawnRange = spawnRange;
     }
 
 }

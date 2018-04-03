@@ -5,6 +5,7 @@ import exnihilocreatio.items.ItemDoll;
 import exnihilocreatio.networking.MessageBarrelModeUpdate;
 import exnihilocreatio.networking.PacketHandler;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
+import exnihilocreatio.registries.types.FluidBlockTransformer;
 import exnihilocreatio.tiles.TileBarrel;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.EntityInfo;
@@ -36,10 +37,11 @@ public class BarrelItemHandlerFluid extends ItemStackHandler {
             return stack;
 
         if (ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.canBlockBeTransformedWithThisFluid(tank.getFluid().getFluid(), stack) && tank.getFluidAmount() == tank.getCapacity()) {
-            BlockInfo info = ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.getBlockForTransformation(tank.getFluid().getFluid(), stack);
-            int spawnCount = ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.getSpawnCountForTransformation(tank.getFluid().getFluid(), stack);
-            EntityInfo entityInfo = ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.getSpawnForTransformation(tank.getFluid().getFluid(), stack);
-            if (info.isValid()) {
+            FluidBlockTransformer transformer = ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.getTransformation(tank.getFluid().getFluid(), stack);
+
+            if (transformer != null) {
+                BlockInfo info = transformer.getOutput();
+                int spawnCount = transformer.getSpawnCount();
                 if (!simulate) {
                     tank.drain(tank.getCapacity(), true);
                     barrel.setMode("block");
@@ -47,8 +49,10 @@ public class BarrelItemHandlerFluid extends ItemStackHandler {
 
                     barrel.getMode().addItem(info.getItemStack(), barrel);
                     if(spawnCount > 0){
+                        int spawnRange = transformer.getSpawnRange();
+                        EntityInfo entityInfo = transformer.getToSpawn();
                         for(int i=0; i<spawnCount; i++){
-                            entityInfo.spawnEntityNear(barrel.getPos(), 4, barrel.getWorld());
+                            entityInfo.spawnEntityNear(barrel.getPos(), spawnRange, barrel.getWorld());
                         }
                     }
                 }

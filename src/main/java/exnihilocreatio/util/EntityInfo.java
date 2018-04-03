@@ -12,9 +12,14 @@ public class EntityInfo {
     @Getter
     private Class <? extends Entity > entityClass;
 
+    @Getter
+    private String name;
+
     public EntityInfo(String entityName){
-        entityClass = EntityList.getClassFromName(entityName);
+        this.name = entityName;
+        this.entityClass = EntityList.getClassFromName(entityName);
     }
+
 
     /**
      * Attempts to spawn entity located  within `range` of `pos`

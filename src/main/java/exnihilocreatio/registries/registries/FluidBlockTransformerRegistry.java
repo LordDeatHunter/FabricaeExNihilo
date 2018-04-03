@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.barrel.fluidblocktransform.FluidBlockTransformRecipe;
 import exnihilocreatio.json.CustomBlockInfoJson;
+import exnihilocreatio.json.CustomEntityInfoJson;
 import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryList;
@@ -30,6 +31,7 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
                         .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
                         .registerTypeAdapter(StackInfo.class, new CustomItemInfoJson())
                         .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
+                        .registerTypeAdapter(EntityInfo.class, new CustomEntityInfoJson())
                         .create(),
                 ExNihiloRegistryManager.FLUID_BLOCK_DEFAULT_REGISTRY_PROVIDERS
         );
@@ -87,6 +89,31 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
         }
 
         return 0;
+    }
+
+    @Nonnull
+    public int getSpawnRangeForTransformation(Fluid fluid, ItemStack stack) {
+        BlockInfo info = new BlockInfo(stack);
+
+        for (FluidBlockTransformer transformer : registry) {
+            if (fluid.getName().equals(transformer.getFluidName()) && info.equals(transformer.getInput())) {
+                return transformer.getSpawnRange();
+            }
+        }
+
+        return 0;
+    }
+
+    public FluidBlockTransformer getTransformation(Fluid fluid, ItemStack stack) {
+        BlockInfo info = new BlockInfo(stack);
+
+        for (FluidBlockTransformer transformer : registry) {
+            if (fluid.getName().equals(transformer.getFluidName()) && info.equals(transformer.getInput())) {
+                return transformer;
+            }
+        }
+
+        return null;
     }
 
     public EntityInfo getSpawnForTransformation(Fluid fluid, ItemStack stack) {
