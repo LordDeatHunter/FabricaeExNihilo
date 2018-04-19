@@ -1,9 +1,9 @@
 package exnihilocreatio.networking;
 
 import exnihilocreatio.barrel.modes.compost.BarrelModeCompost;
+import exnihilocreatio.client.color.ColorGetter;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.tiles.TileBarrel;
-import exnihilocreatio.util.ColorStealer;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
@@ -128,7 +128,7 @@ public class MessageCompostUpdate implements IMessage {
                             Color compColor = msg.color;
                             // Dynamic color on invalid_color
                             if (compColor.equals(Color.INVALID_COLOR) && !msg.stack.isEmpty()) {
-                                compColor = ColorStealer.getColor(msg.stack);
+                                compColor = ColorGetter.getColor(msg.stack);
                             }
 
                             if (msg.fillAmount == 0 || msg.isFirst) {

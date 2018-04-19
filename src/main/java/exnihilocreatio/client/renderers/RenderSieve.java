@@ -13,11 +13,11 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import org.lwjgl.opengl.GL11;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RenderSieve extends TileEntitySpecialRenderer<TileSieve> {
-
-
     @Override
     public void render(TileSieve te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         Tessellator tes = Tessellator.getInstance();
@@ -79,8 +79,6 @@ public class RenderSieve extends TileEntitySpecialRenderer<TileSieve> {
         IBlockState state = blocktype.getDefaultState().withProperty(BlockSieve.MESH, tile.getMeshType());
 
         List<BakedQuad> quadsSieve = blockRenderer.getModelForState(state).getQuads(state, null, 0);
-        //TODO: possibly optimize to not call this every render, maybe HashMap for that?
-
 
         Tessellator tessellator = Tessellator.getInstance();
         GlStateManager.pushMatrix();
