@@ -13,7 +13,7 @@ buildscript {
 
         maven {
             name = "gradle"
-            url "https://plugins.gradle.org/m2/"
+            url = "https://plugins.gradle.org/m2/"
         }
 
         maven {
@@ -38,7 +38,7 @@ sourceCompatibility=1.8
 targetCompatibility=1.8
 
 minecraft {
-    version = "1.12.2-14.23.2.2618"
+    version = "1.12.2-14.23.3.2669"
     runDir = "run"
 	mappings = "snapshot_20180201"
     useDepAts = true
