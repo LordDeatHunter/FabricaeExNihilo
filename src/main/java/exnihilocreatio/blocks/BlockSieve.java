@@ -6,7 +6,6 @@ import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.compatibility.ITOPInfoProvider;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.ItemMesh;
-import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.tiles.TileSieve;
 import exnihilocreatio.util.Util;
 import mcjty.theoneprobe.api.IProbeHitData;

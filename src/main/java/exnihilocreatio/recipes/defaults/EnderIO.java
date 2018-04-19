@@ -7,8 +7,6 @@ import lombok.Getter;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-import javax.annotation.Nullable;
-
 @SuppressWarnings("ConstantConditions")
 public class EnderIO implements IRecipeDefaults {
     @GameRegistry.ObjectHolder("enderio:item_material")

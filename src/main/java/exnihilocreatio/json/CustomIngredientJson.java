@@ -2,8 +2,8 @@ package exnihilocreatio.json;
 
 import com.google.gson.*;
 import exnihilocreatio.registries.ingredient.IngredientUtil;
-import exnihilocreatio.util.LogUtil;
 import exnihilocreatio.registries.ingredient.OreIngredientStoring;
+import exnihilocreatio.util.LogUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 

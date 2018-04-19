@@ -6,7 +6,6 @@ import exnihilocreatio.ModFluids;
 import exnihilocreatio.ModItems;
 import exnihilocreatio.blocks.BlockSieve.MeshType;
 import exnihilocreatio.config.ModConfig;
-import exnihilocreatio.items.EnumPebbleSubtype;
 import exnihilocreatio.items.ItemResource;
 import exnihilocreatio.items.ore.ItemOre;
 import exnihilocreatio.items.seeds.ItemSeedBase;
@@ -20,12 +19,10 @@ import exnihilocreatio.util.Util;
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockStone;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.LinkedHashMap;
@@ -296,6 +293,8 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register(FluidRegistry.LAVA, new ItemInfo(new ItemStack(Items.REDSTONE)), new ItemInfo(new ItemStack(Blocks.NETHERRACK)));
         registry.register(FluidRegistry.LAVA, new ItemInfo(new ItemStack(Items.GLOWSTONE_DUST)), new ItemInfo(new ItemStack(Blocks.END_STONE)));
         registry.register(ModFluids.fluidWitchwater, new ItemInfo(new ItemStack(Blocks.SAND)), new ItemInfo(new ItemStack(Blocks.SOUL_SAND)));
+        registry.register(FluidRegistry.getFluid("milk"), new ItemInfo(new ItemStack(Blocks.BROWN_MUSHROOM)), new ItemInfo(new ItemStack(Blocks.SLIME_BLOCK)), "Slime");
+        registry.register(FluidRegistry.getFluid("milk"), new ItemInfo(new ItemStack(Blocks.RED_MUSHROOM)), new ItemInfo(new ItemStack(Blocks.SLIME_BLOCK)), "Slime");
 
         // Vanilla Concrete
         for (int meta = 0; meta < 16; meta++)

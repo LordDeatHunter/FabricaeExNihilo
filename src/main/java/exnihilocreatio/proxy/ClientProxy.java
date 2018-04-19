@@ -29,7 +29,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
-import java.io.File;
 
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy {

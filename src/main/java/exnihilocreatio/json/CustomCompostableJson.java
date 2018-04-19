@@ -4,7 +4,6 @@ import com.google.gson.*;
 import exnihilocreatio.registries.types.Compostable;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.BlockInfo;
-import exnihilocreatio.util.StackInfo;
 
 import java.lang.reflect.Type;
 

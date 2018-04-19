@@ -2,10 +2,8 @@ package exnihilocreatio.json;
 
 import com.google.gson.*;
 import exnihilocreatio.util.BlockInfo;
-import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.LogUtil;
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 
 import java.lang.reflect.Type;
 
