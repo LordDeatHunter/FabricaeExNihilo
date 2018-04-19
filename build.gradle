@@ -102,7 +102,7 @@ dependencies
     }
 
     // deobfCompile ("cofh:ThermalFoundation:1.12.2-2.+:universal")
-    deobfCompile ('CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.+')
+    deobfCompile ('CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.6.467')
 
     compileOnly "org.projectlombok:lombok:1.16.10"
 }
