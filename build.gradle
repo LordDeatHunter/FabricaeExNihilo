@@ -94,12 +94,12 @@ dependencies
     compileOnly "mcp.mobius.waila:Hwyla:1.8.23-B38_1.12:api"
     runtime "mcp.mobius.waila:Hwyla:1.8.23-B38_1.12"
 
-    compileOnly ("mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.19-11:api") {
+    compileOnly ("mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.19-11:api")/* {
         exclude group: "cofh", module: "RedstoneFlux"
-    }
-    runtime ("mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.19-11") {
+    }*/
+    runtime ("mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.19-11") /*{
         exclude group: "cofh", module: "RedstoneFlux"
-    }
+    }*/
 
     // deobfCompile ("cofh:ThermalFoundation:1.12.2-2.+:universal")
     deobfCompile ('CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.6.467')

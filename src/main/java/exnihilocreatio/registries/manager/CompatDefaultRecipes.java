@@ -12,7 +12,6 @@ public class CompatDefaultRecipes {
 
     static {
         // TODO use config options to dynamically add mod support
-        // TODO consider making the default Ex Nihilo recipes use this same programatic method.
         MODS.add(new ExNihilo()); // Not exactly a "cross" mod support ¯\_(ツ)_/¯
         MODS.add(new TinkersConstruct());
         MODS.add(new AppliedEnergistics2());
@@ -21,6 +20,7 @@ public class CompatDefaultRecipes {
         MODS.add(new BigReactors());
         MODS.add(new ActuallyAdditions());
         MODS.add(new EnderIO());
+        MODS.add(new DraconicEvolution());
     }
 
     public void registerCompost(CompostRegistry registry) {
