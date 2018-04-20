@@ -36,6 +36,7 @@ public class BarrelItemHandlerFluid extends ItemStackHandler {
         if (tank.getFluid() == null)
             return stack;
 
+        // Fluid to block transformations
         if (ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.canBlockBeTransformedWithThisFluid(tank.getFluid().getFluid(), stack) && tank.getFluidAmount() == tank.getCapacity()) {
             FluidBlockTransformer transformer = ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.getTransformation(tank.getFluid().getFluid(), stack);
 
@@ -65,6 +66,7 @@ public class BarrelItemHandlerFluid extends ItemStackHandler {
 
         }
 
+        // Fluid to Fluid transformations
         String fluidItemFluidOutput = ExNihiloRegistryManager.FLUID_ITEM_FLUID_REGISTRY.getFLuidForTransformation(tank.getFluid().getFluid(), stack);
         if (fluidItemFluidOutput != null && tank.getFluidAmount() == tank.getCapacity()) {
             if (!simulate) {
@@ -80,6 +82,8 @@ public class BarrelItemHandlerFluid extends ItemStackHandler {
             return ret.isEmpty() ? ItemStack.EMPTY : ret;
         }
 
+
+        // Checks for mobspawn
         if (!stack.isEmpty() && tank.getFluidAmount() == tank.getCapacity() && stack.getItem() instanceof ItemDoll
                 && ((ItemDoll) stack.getItem()).getSpawnFluid(stack) == tank.getFluid().getFluid()) {
             if (!simulate) {

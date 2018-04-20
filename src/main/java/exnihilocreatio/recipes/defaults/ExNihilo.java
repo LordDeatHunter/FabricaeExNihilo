@@ -174,9 +174,9 @@ public class ExNihilo implements IRecipeDefaults {
         // All default Ores
         for (ItemOre ore : oreRegistry.getItemOreRegistry()) {
             if (oreRegistry.getSieveBlackList().contains(ore)) continue;
-            registry.register("gravel", new ItemInfo(ore), getDropChance(0.2f), MeshType.FLINT.getID());
-            registry.register("gravel", new ItemInfo(ore), getDropChance(0.2f), MeshType.IRON.getID());
-            registry.register("gravel", new ItemInfo(ore), getDropChance(0.1f), MeshType.DIAMOND.getID());
+            registry.register("gravel", new ItemInfo(ore), getDropChance(0.07f), MeshType.FLINT.getID());
+            registry.register("gravel", new ItemInfo(ore), getDropChance(0.1f), MeshType.IRON.getID());
+            registry.register("gravel", new ItemInfo(ore), getDropChance(0.2f), MeshType.DIAMOND.getID());
 
         }
         // Seeds
@@ -293,8 +293,11 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register(FluidRegistry.LAVA, "dustRedstone", new ItemInfo(new ItemStack(Blocks.NETHERRACK)));
         registry.register(FluidRegistry.LAVA, "dustGlowstone", new ItemInfo(new ItemStack(Blocks.END_STONE)));
         registry.register(ModFluids.fluidWitchwater, "sand", new ItemInfo(new ItemStack(Blocks.SOUL_SAND)));
-        registry.register(FluidRegistry.getFluid("milk"), new ItemInfo(new ItemStack(Blocks.BROWN_MUSHROOM)), new ItemInfo(new ItemStack(Blocks.SLIME_BLOCK)), "Slime");
-        registry.register(FluidRegistry.getFluid("milk"), new ItemInfo(new ItemStack(Blocks.RED_MUSHROOM)), new ItemInfo(new ItemStack(Blocks.SLIME_BLOCK)), "Slime");
+
+        if (FluidRegistry.isFluidRegistered("milk")){
+            registry.register(FluidRegistry.getFluid("milk"), new ItemInfo(new ItemStack(Blocks.BROWN_MUSHROOM)), new ItemInfo(new ItemStack(Blocks.SLIME_BLOCK)), "Slime");
+            registry.register(FluidRegistry.getFluid("milk"), new ItemInfo(new ItemStack(Blocks.RED_MUSHROOM)), new ItemInfo(new ItemStack(Blocks.SLIME_BLOCK)), "Slime");
+        }
 
         // Vanilla Concrete
         for (int meta = 0; meta < 16; meta++)
