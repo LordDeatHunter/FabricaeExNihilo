@@ -20,7 +20,6 @@ public class EntityInfo {
         this.entityClass = EntityList.getClassFromName(entityName);
     }
 
-
     /**
      * Attempts to spawn entity located  within `range` of `pos`
      * @param pos
@@ -29,6 +28,9 @@ public class EntityInfo {
      * @return
      */
     public boolean spawnEntityNear(BlockPos pos, int range, World worldIn){
+        if (entityClass == null || name == null)
+            return false;
+
         if(!worldIn.isRemote && worldIn.getDifficulty() != EnumDifficulty.PEACEFUL){
             Entity entity = EntityList.newEntity(entityClass, worldIn);
             if(entity instanceof EntityLiving){
@@ -57,4 +59,6 @@ public class EntityInfo {
 
         return false;
     }
+
+    public static EntityInfo EMPTY = new EntityInfo(null);
 }

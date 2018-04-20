@@ -34,13 +34,14 @@ public class FluidBlockTransformer {
         this.input = input;
         this.output = output;
         this.spawnCount = 0;
+        this.spawnRange = 0;
     }
 
     public FluidBlockTransformer(String fluidName, StackInfo input, BlockInfo output, String entityName){
         this.fluidName = fluidName;
         this.input = input;
         this.output = output;
-        this.toSpawn = new EntityInfo(entityName);
+        this.toSpawn = entityName == null ? null : new EntityInfo(entityName);
         this.spawnCount = 4;
         this.spawnRange = 4;
     }

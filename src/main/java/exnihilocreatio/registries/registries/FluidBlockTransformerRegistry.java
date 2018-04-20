@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.compatibility.jei.barrel.fluidblocktransform.FluidBlockTransformRecipe;
 import exnihilocreatio.json.CustomBlockInfoJson;
 import exnihilocreatio.json.CustomEntityInfoJson;
+import exnihilocreatio.json.CustomFluidBlockTransformerJson;
 import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryList;
@@ -32,6 +33,7 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
                         .registerTypeAdapter(StackInfo.class, new CustomItemInfoJson())
                         .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
                         .registerTypeAdapter(EntityInfo.class, new CustomEntityInfoJson())
+                        .registerTypeAdapter(FluidBlockTransformer.class, new CustomFluidBlockTransformerJson())
                         .create(),
                 ExNihiloRegistryManager.FLUID_BLOCK_DEFAULT_REGISTRY_PROVIDERS
         );
