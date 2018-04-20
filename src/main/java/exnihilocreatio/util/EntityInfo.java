@@ -17,7 +17,7 @@ public class EntityInfo {
 
     public EntityInfo(String entityName){
         this.name = entityName;
-        this.entityClass = EntityList.getClassFromName(entityName);
+        this.entityClass = entityName == null ? null : EntityList.getClassFromName(entityName);
     }
 
     /**
