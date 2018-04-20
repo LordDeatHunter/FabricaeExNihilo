@@ -43,6 +43,16 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
     }
 
     public void register(Fluid fluid, StackInfo inputBlock, StackInfo outputBlock, String entityName) {
+        if (fluid == null){
+            LogUtil.error("Fluid is null, this may not happen!");
+            for (StackTraceElement stackTraceElement : Thread.currentThread().getStackTrace()) {
+                LogUtil.warn(stackTraceElement);
+            }
+
+            return;
+        }
+
+
         register(fluid.getName(), Ingredient.fromStacks(inputBlock.getItemStack()), outputBlock, entityName, entityName == null ? 0 : 4, entityName == null ? 0 : 4);
     }
 
