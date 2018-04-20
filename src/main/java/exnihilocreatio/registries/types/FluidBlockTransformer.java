@@ -30,36 +30,18 @@ public class FluidBlockTransformer {
     private int spawnRange;
 
     public FluidBlockTransformer(String fluidName, StackInfo input, BlockInfo output){
-        this.fluidName = fluidName;
-        this.input = input;
-        this.output = output;
-        this.spawnCount = 0;
-        this.spawnRange = 0;
+        this(fluidName, input, output, (String) null, 0, 0);
     }
 
     public FluidBlockTransformer(String fluidName, StackInfo input, BlockInfo output, String entityName){
-        this.fluidName = fluidName;
-        this.input = input;
-        this.output = output;
-        this.toSpawn = entityName == null ? null : new EntityInfo(entityName);
-        this.spawnCount = 4;
-        this.spawnRange = 4;
-    }
-
-    public FluidBlockTransformer(String fluidName, StackInfo input, BlockInfo output, String entityName, int spawnCount){
-        this.fluidName = fluidName;
-        this.input = input;
-        this.output = output;
-        this.toSpawn = new EntityInfo(entityName);
-        this.spawnCount = spawnCount;
-        this.spawnRange = 4;
+        this(fluidName, input, output, entityName, 4, 4);
     }
 
     public FluidBlockTransformer(String fluidName, StackInfo input, BlockInfo output, String entityName, int spawnCount, int spawnRange){
         this.fluidName = fluidName;
         this.input = input;
         this.output = output;
-        this.toSpawn = new EntityInfo(entityName);
+        this.toSpawn = entityName == null ? EntityInfo.EMPTY : new EntityInfo(entityName);
         this.spawnCount = spawnCount;
         this.spawnRange = spawnRange;
     }

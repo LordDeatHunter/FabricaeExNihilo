@@ -15,6 +15,7 @@ import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.EntityInfo;
 import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.StackInfo;
+import lombok.NonNull;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -22,6 +23,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import javax.annotation.Nonnull;
 import java.io.FileReader;
 import java.util.List;
+import java.util.Objects;
 
 public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTransformer> {
 
@@ -39,22 +41,14 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
         );
     }
 
-    public void register(Fluid fluid, StackInfo inputBlock, ItemInfo outputBlock) {
+    public void register(Fluid fluid, StackInfo inputBlock, StackInfo outputBlock) {
         if (outputBlock.hasBlock())
-            registry.add(new FluidBlockTransformer(fluid.getName(), inputBlock, new BlockInfo(outputBlock.getItemStack())));
+            register(new FluidBlockTransformer(fluid.getName(), inputBlock, new BlockInfo(outputBlock.getBlockState())));
     }
 
-    public void register(Fluid fluid, StackInfo inputBlock, ItemInfo outputBlock, String entityName) {
+    public void register(Fluid fluid, StackInfo inputBlock, StackInfo outputBlock, String entityName) {
         if (outputBlock.hasBlock())
-            registry.add(new FluidBlockTransformer(fluid.getName(), inputBlock, new BlockInfo(outputBlock.getItemStack()), entityName));
-    }
-
-    public void register(Fluid fluid, StackInfo inputBlock, BlockInfo outputBlock) {
-        registry.add(new FluidBlockTransformer(fluid.getName(), inputBlock, outputBlock));
-    }
-
-    public void register(String fluid, StackInfo inputBlock, BlockInfo outputBlock) {
-        registry.add(new FluidBlockTransformer(fluid, inputBlock, outputBlock));
+            register(new FluidBlockTransformer(fluid.getName(), inputBlock, new BlockInfo(outputBlock.getBlockState()), entityName));
     }
 
     public boolean canBlockBeTransformedWithThisFluid(Fluid fluid, ItemStack stack) {

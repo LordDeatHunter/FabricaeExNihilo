@@ -35,9 +35,9 @@ public class CustomFluidBlockTransformerJson implements JsonDeserializer<FluidBl
         JsonObject obj = json.getAsJsonObject();
 
         return new FluidBlockTransformer(obj.getAsJsonPrimitive("fluidName").getAsString(),
-                context.deserialize(obj.getAsJsonObject("input"), StackInfo.class),
-                context.deserialize(obj.getAsJsonObject("output"), BlockInfo.class),
-                obj.has("toSpawn") ? (EntityInfo) context.deserialize(obj.getAsJsonObject("toSpawn"), EntityInfo.class) : EntityInfo.EMPTY,
+                context.deserialize(obj.get("input"), StackInfo.class),
+                context.deserialize(obj.get("output"), BlockInfo.class),
+                obj.has("toSpawn") ? (EntityInfo) context.deserialize(obj.get("toSpawn"), EntityInfo.class) : EntityInfo.EMPTY,
                 obj.has("spawnCount") ? obj.getAsJsonPrimitive("spawnCount").getAsInt() : 0,
                 obj.has("spawnRange") ? obj.getAsJsonPrimitive("spawnRange").getAsInt() : 0
                 );
