@@ -6,6 +6,7 @@ import exnihilocreatio.util.StackInfo;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import net.minecraft.item.crafting.Ingredient;
 
 @AllArgsConstructor
 @EqualsAndHashCode
@@ -15,7 +16,7 @@ public class FluidBlockTransformer {
     private String fluidName;
 
     @Getter
-    private StackInfo input;
+    private Ingredient input;
 
     @Getter
     private BlockInfo output;
@@ -29,15 +30,15 @@ public class FluidBlockTransformer {
     @Getter
     private int spawnRange;
 
-    public FluidBlockTransformer(String fluidName, StackInfo input, BlockInfo output){
+    public FluidBlockTransformer(String fluidName, Ingredient input, BlockInfo output){
         this(fluidName, input, output, (String) null, 0, 0);
     }
 
-    public FluidBlockTransformer(String fluidName, StackInfo input, BlockInfo output, String entityName){
+    public FluidBlockTransformer(String fluidName, Ingredient input, BlockInfo output, String entityName){
         this(fluidName, input, output, entityName, 4, 4);
     }
 
-    public FluidBlockTransformer(String fluidName, StackInfo input, BlockInfo output, String entityName, int spawnCount, int spawnRange){
+    public FluidBlockTransformer(String fluidName, Ingredient input, BlockInfo output, String entityName, int spawnCount, int spawnRange){
         this.fluidName = fluidName;
         this.input = input;
         this.output = output;

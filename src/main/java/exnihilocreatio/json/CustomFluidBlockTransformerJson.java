@@ -5,6 +5,7 @@ import exnihilocreatio.registries.types.FluidBlockTransformer;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.EntityInfo;
 import exnihilocreatio.util.StackInfo;
+import net.minecraft.item.crafting.Ingredient;
 
 import java.lang.reflect.Type;
 
@@ -34,8 +35,9 @@ public class CustomFluidBlockTransformerJson implements JsonDeserializer<FluidBl
     public FluidBlockTransformer deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject obj = json.getAsJsonObject();
 
-        return new FluidBlockTransformer(obj.getAsJsonPrimitive("fluidName").getAsString(),
-                context.deserialize(obj.get("input"), StackInfo.class),
+        return new FluidBlockTransformer(
+                obj.getAsJsonPrimitive("fluidName").getAsString(),
+                context.deserialize(obj.get("input"), Ingredient.class),
                 context.deserialize(obj.get("output"), BlockInfo.class),
                 obj.has("toSpawn") ? (EntityInfo) context.deserialize(obj.get("toSpawn"), EntityInfo.class) : EntityInfo.EMPTY,
                 obj.has("spawnCount") ? obj.getAsJsonPrimitive("spawnCount").getAsInt() : 0,

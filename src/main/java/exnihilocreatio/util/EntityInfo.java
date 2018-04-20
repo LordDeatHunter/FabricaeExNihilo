@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
@@ -17,7 +18,7 @@ public class EntityInfo {
 
     public EntityInfo(String entityName){
         this.name = entityName;
-        this.entityClass = entityName == null ? null : EntityList.getClassFromName(entityName);
+        this.entityClass = entityName == null ? null : EntityList.getClass(new ResourceLocation(entityName));
     }
 
     /**
@@ -25,7 +26,7 @@ public class EntityInfo {
      * @param pos
      * @param range
      * @param worldIn
-     * @return
+     * @return whether it did spawn the mob
      */
     public boolean spawnEntityNear(BlockPos pos, int range, World worldIn){
         if (entityClass == null || name == null)

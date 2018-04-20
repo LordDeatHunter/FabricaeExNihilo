@@ -29,7 +29,7 @@ public class FluidBlockTransformRecipe implements IRecipeWrapper {
         inputFluid = new FluidStack(FluidRegistry.getFluid(recipe.getFluidName()), 1000);
 
         inputBucket = Util.getBucketStack(inputFluid.getFluid());
-        inputStack = recipe.getInput().getItemStack();
+        inputStack = recipe.getInput().getMatchingStacks().length > 0 ? recipe.getInput().getMatchingStacks()[0] : ItemStack.EMPTY;
 
         outputStack = recipe.getOutput().getItemStack();
     }
