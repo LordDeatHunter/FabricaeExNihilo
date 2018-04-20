@@ -53,6 +53,7 @@ public class FluidBlockTransformRecipeCategory implements IRecipeCategory<FluidB
 
     }
 
+    @SuppressWarnings("Duplicates")
     private void setRecipe(IRecipeLayout recipeLayout, FluidBlockTransformRecipe recipeWrapper) {
         recipeLayout.getItemStacks().init(0, true, 74, 36);
         recipeLayout.getItemStacks().init(1, true, 47, 36);
@@ -62,7 +63,7 @@ public class FluidBlockTransformRecipeCategory implements IRecipeCategory<FluidB
         recipeLayout.getItemStacks().set(0, new ItemStack(ModBlocks.barrelStone, 1, 0));
         recipeLayout.getItemStacks().set(1, recipeWrapper.getInputs().get(0));
         recipeLayout.getItemStacks().set(2, recipeWrapper.getInputs().get(1));
-        recipeLayout.getItemStacks().set(3, recipeWrapper.getOutputs().get(0));
+        recipeLayout.getItemStacks().set(3, recipeWrapper.getOutput());
     }
 
     @Override

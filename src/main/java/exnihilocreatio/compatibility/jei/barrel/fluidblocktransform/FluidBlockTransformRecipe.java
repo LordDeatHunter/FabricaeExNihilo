@@ -12,6 +12,8 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class FluidBlockTransformRecipe implements IRecipeWrapper {
@@ -21,7 +23,7 @@ public class FluidBlockTransformRecipe implements IRecipeWrapper {
     @Nonnull
     private final ItemStack inputBucket;
     @Nonnull
-    private final ItemStack inputStack;
+    private final List<ItemStack> inputStacks;
     @Nonnull
     private final ItemStack outputStack;
 
@@ -29,25 +31,25 @@ public class FluidBlockTransformRecipe implements IRecipeWrapper {
         inputFluid = new FluidStack(FluidRegistry.getFluid(recipe.getFluidName()), 1000);
 
         inputBucket = Util.getBucketStack(inputFluid.getFluid());
-        inputStack = recipe.getInput().getMatchingStacks().length > 0 ? recipe.getInput().getMatchingStacks()[0] : ItemStack.EMPTY;
 
+        inputStacks = Arrays.asList(recipe.getInput().getMatchingStacks());
         outputStack = recipe.getOutput().getItemStack();
     }
 
     @Override
     public void getIngredients(@Nonnull IIngredients ingredients) {
-        ingredients.setInputs(ItemStack.class, getInputs());
+        ingredients.setInputLists(ItemStack.class, getInputs());
         ingredients.setInputs(FluidStack.class, getFluidInputs());
 
         ingredients.setOutput(ItemStack.class, outputStack);
     }
 
-    public List<ItemStack> getInputs() {
-        return ImmutableList.of(inputBucket, inputStack);
+    public List<List<ItemStack>> getInputs() {
+        return ImmutableList.of(Collections.singletonList(inputBucket), inputStacks);
     }
 
-    public List<ItemStack> getOutputs() {
-        return ImmutableList.of(outputStack);
+    public ItemStack getOutput() {
+        return outputStack;
     }
 
     public List<FluidStack> getFluidInputs() {
@@ -55,7 +57,7 @@ public class FluidBlockTransformRecipe implements IRecipeWrapper {
     }
 
     public boolean isValid() {
-        return !inputBucket.isEmpty() && !inputStack.isEmpty() && !outputStack.isEmpty();
+        return !inputBucket.isEmpty() && !inputStacks.isEmpty() && !outputStack.isEmpty();
     }
 
     @Override
