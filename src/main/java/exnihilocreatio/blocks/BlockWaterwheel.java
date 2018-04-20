@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class BlockWaterwheel extends BlockBase implements ITileEntityProvider {
@@ -27,30 +28,31 @@ public class BlockWaterwheel extends BlockBase implements ITileEntityProvider {
     public BlockWaterwheel() {
         super(Material.GLASS, "block_waterwheel");
         setCreativeTab(ExNihiloCreatio.tabExNihilo);
-
         setHardness(2);
         setHarvestLevel("axe", 0);
-
         setDefaultState(blockState.getBaseState().withProperty(IS_WHEEL, false));
     }
 
     @Nullable
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
+    public TileEntity createNewTileEntity(@Nonnull World worldIn, int meta) {
         return new TileWaterwheel();
     }
 
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+    @Nonnull
+    public IBlockState getActualState(@Nonnull IBlockState state, IBlockAccess worldIn, BlockPos pos) {
         return state.withProperty(IS_WHEEL, false);
     }
 
     @Override
+    @Nonnull
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, IS_WHEEL);
     }
 
     @Override
+    @Nonnull
     public IBlockState getStateFromMeta(int meta) {
         return getDefaultState();
     }
@@ -87,12 +89,13 @@ public class BlockWaterwheel extends BlockBase implements ITileEntityProvider {
     }
 
     @SideOnly(Side.CLIENT)
+    @Nonnull
     public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT;
     }
 
     @Override
-    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+    public boolean shouldSideBeRendered(IBlockState blockState, @Nonnull IBlockAccess blockAccess, @Nonnull BlockPos pos, EnumFacing side) {
         return false;
     }
 

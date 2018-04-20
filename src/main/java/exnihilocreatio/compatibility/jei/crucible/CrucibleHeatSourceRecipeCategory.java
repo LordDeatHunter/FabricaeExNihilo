@@ -10,6 +10,8 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.config.Constants;
 
+import javax.annotation.Nonnull;
+
 public class CrucibleHeatSourceRecipeCategory implements IRecipeCategory<HeatSourcesRecipe> {
     public static final String UID = "exnihilocreatio:heat_sources";
     private final IDrawableStatic background;
@@ -20,27 +22,31 @@ public class CrucibleHeatSourceRecipeCategory implements IRecipeCategory<HeatSou
 
 
     @Override
+    @Nonnull
     public String getUid() {
         return UID;
     }
 
     @Override
+    @Nonnull
     public String getTitle() {
         return "Crucible Heat Sources";
     }
 
     @Override
+    @Nonnull
     public String getModName() {
         return ExNihiloCreatio.MODID;
     }
 
     @Override
+    @Nonnull
     public IDrawable getBackground() {
         return background;
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, HeatSourcesRecipe recipeWrapper, IIngredients ingredients) {
+    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull HeatSourcesRecipe recipeWrapper, @Nonnull IIngredients ingredients) {
         IGuiItemStackGroup guiItemStackGroup = recipeLayout.getItemStacks();
 
         guiItemStackGroup.init(0, true, 0, 16);

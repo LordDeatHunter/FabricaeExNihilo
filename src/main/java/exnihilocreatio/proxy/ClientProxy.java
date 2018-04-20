@@ -28,7 +28,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.io.File;
+import javax.annotation.Nonnull;
 
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
@@ -52,7 +52,8 @@ public class ClientProxy extends CommonProxy {
 
         StateMapperBase ignoreState = new StateMapperBase() {
             @Override
-            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+            @Nonnull
+            protected ModelResourceLocation getModelResourceLocation(@Nonnull IBlockState state) {
                 return InfestedLeavesBakedModel.variantTag;
             }
         };
@@ -93,10 +94,5 @@ public class ClientProxy extends CommonProxy {
     @Override
     public boolean runningOnServer() {
         return false;
-    }
-
-    @Override
-    public void registerConfigs(File configDirectory) {
-        ExNihiloRegistryManager.COMPOST_REGISTRY.recommendAllFood(new File(configDirectory, "RecommendedFoodRegistry.json"));
     }
 }

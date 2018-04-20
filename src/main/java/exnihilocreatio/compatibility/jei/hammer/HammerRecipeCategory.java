@@ -55,6 +55,7 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
     }
 
     @Override
+    @Nonnull
     public String getModName() {
         return ExNihiloCreatio.MODID;
     }
@@ -72,9 +73,10 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
         }
     }
 
-    private void setRecipe(IRecipeLayout recipeLayout, HammerRecipe recipeWrapper) {
+    @Override
+    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull HammerRecipe recipeWrapper, @Nonnull IIngredients ingredients) {
         recipeLayout.getItemStacks().init(0, true, 74, 9);
-        recipeLayout.getItemStacks().set(0, recipeWrapper.getInputs().get(0));
+        recipeLayout.getItemStacks().set(0, ingredients.getInputs(ItemStack.class).get(0));
 
         IFocus<?> focus = recipeLayout.getFocus();
 
@@ -102,13 +104,8 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
             }
         }
 
-        recipeLayout.getItemStacks().addTooltipCallback(new HammerTooltipCallback(recipeWrapper));
-    }
 
-    @Override
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull HammerRecipe recipeWrapper, @Nonnull IIngredients ingredients) {
-        // I learn from the best
-        setRecipe(recipeLayout, recipeWrapper);
+        recipeLayout.getItemStacks().addTooltipCallback(new HammerTooltipCallback(recipeWrapper));
     }
 
     @Override
@@ -117,7 +114,7 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
     }
 
     private static class HammerTooltipCallback implements ITooltipCallback<ItemStack> {
-        private HammerRecipe recipe;
+        private final HammerRecipe recipe;
 
         private HammerTooltipCallback(HammerRecipe recipeWrapper) {
             this.recipe = recipeWrapper;

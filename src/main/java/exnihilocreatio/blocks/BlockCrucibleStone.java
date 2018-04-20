@@ -27,7 +27,6 @@ public class BlockCrucibleStone extends BlockCrucibleBase implements IHasSpecial
 
     public BlockCrucibleStone() {
         super("block_crucible", Material.ROCK);
-
         this.setHardness(2.0f);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FIRED, false).withProperty(THIN, ModConfig.client.thinCrucibleModel));
     }

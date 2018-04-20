@@ -1,5 +1,6 @@
 package exnihilocreatio.items;
 
+import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.blocks.BlockSieve.MeshType;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
@@ -23,6 +24,7 @@ public class ItemMesh extends Item implements IHasModel {
         this.setUnlocalizedName("item_mesh");
         this.setRegistryName("item_mesh");
         this.setMaxStackSize(1);
+        this.setCreativeTab(ExNihiloCreatio.tabExNihilo);
         Data.ITEMS.add(this);
     }
 
@@ -55,7 +57,7 @@ public class ItemMesh extends Item implements IHasModel {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(@Nonnull CreativeTabs tab, NonNullList<ItemStack> list) {
+    public void getSubItems(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> list) {
         if (this.isInCreativeTab(tab))
             for (int i = 1; i < MeshType.values().length - 1; i++) { //0 is the "none" case, 5 the "no render" case
                 list.add(new ItemStack(this, 1, i));

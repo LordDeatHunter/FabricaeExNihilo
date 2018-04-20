@@ -1,12 +1,17 @@
 package exnihilocreatio.registries.registries;
 
+import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import exnihilocreatio.compatibility.jei.barrel.fluidtransform.FluidTransformRecipe;
 import exnihilocreatio.json.CustomBlockInfoJson;
+import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.FluidTransformer;
 import exnihilocreatio.util.BlockInfo;
+import exnihilocreatio.util.ItemInfo;
+import net.minecraftforge.fluids.FluidRegistry;
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
@@ -14,10 +19,16 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class FluidTransformRegistry extends BaseRegistryMap<String, List<FluidTransformer>> {
     public FluidTransformRegistry() {
-        super(new GsonBuilder().setPrettyPrinting().registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson()).create(),
+        super(new GsonBuilder()
+                        .setPrettyPrinting()
+                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
+                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
+                        .create(),
+                new com.google.gson.reflect.TypeToken<Map<String, List<FluidTransformer>>>() {}.getType(),
                 ExNihiloRegistryManager.FLUID_TRANSFORM_DEFAULT_REGISTRY_PROVIDERS);
     }
 
@@ -90,4 +101,18 @@ public class FluidTransformRegistry extends BaseRegistryMap<String, List<FluidTr
         return fluidTransformers;
     }
 
+    @Override
+    public List<FluidTransformRecipe> getRecipeList() {
+        List<FluidTransformRecipe> fluidTransformRecipes = Lists.newLinkedList();
+        getFluidTransformers().forEach(transformer -> {
+            // Make sure both fluids are registered
+            if (FluidRegistry.isFluidRegistered(transformer.getInputFluid()) && FluidRegistry.isFluidRegistered(transformer.getOutputFluid())) {
+                FluidTransformRecipe recipe = new FluidTransformRecipe(transformer);
+                if (recipe.isValid()) {
+                    fluidTransformRecipes.add(new FluidTransformRecipe(transformer));
+                }
+            }
+        });
+        return fluidTransformRecipes;
+    }
 }

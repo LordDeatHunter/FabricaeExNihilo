@@ -1,9 +1,12 @@
 package exnihilocreatio.registries.registries;
 
+import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import exnihilocreatio.json.CustomBlockInfoJson;
+import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.json.CustomItemStackJson;
+import exnihilocreatio.registries.ingredient.IngredientUtil;
+import exnihilocreatio.registries.ingredient.OreIngredientStoring;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.CrookReward;
@@ -11,6 +14,9 @@ import exnihilocreatio.util.BlockInfo;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.NonNullList;
+import net.minecraftforge.common.crafting.CraftingHelper;
 
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -18,61 +24,99 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CrookRegistry extends BaseRegistryMap<BlockInfo, List<CrookReward>> {
+public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<CrookReward>> {
 
     public CrookRegistry() {
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
                         .registerTypeAdapter(ItemStack.class, new CustomItemStackJson())
-                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
+                        .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
+                        .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
+                        .enableComplexMapKeySerialization()
                         .create(),
+                new TypeToken<Map<Ingredient, List<CrookReward>>>() {
+                }.getType(),
                 ExNihiloRegistryManager.CROOK_DEFAULT_REGISTRY_PROVIDERS
         );
     }
 
-    @Override
-    public void register(BlockInfo key, List<CrookReward> value) {
-        List<CrookReward> list = registry.get(key);
+    public void register(Block block, int meta, ItemStack reward, float chance, float fortuneChance) {
+        register(new BlockInfo(block, meta), reward, chance, fortuneChance);
+    }
 
-        if (list == null) {
-            list = new ArrayList<>();
-        }
-
-        list.addAll(value);
+    public void register(IBlockState state, ItemStack reward, float chance, float fortuneChance) {
+        register(new BlockInfo(state), reward, chance, fortuneChance);
     }
 
     public void register(BlockInfo info, ItemStack reward, float chance, float fortuneChance) {
-        List<CrookReward> list = registry.get(info);
+        Ingredient ingredient = registry.keySet().stream().filter(entry -> entry.test(info.getItemStack())).findFirst().orElse(null);
 
-        if (list == null) {
-            list = new ArrayList<>();
+        if (ingredient != null) {
+            registry.get(ingredient).add(new CrookReward(reward, chance, fortuneChance));
+        } else {
+            NonNullList<CrookReward> list = NonNullList.create();
+            list.add(new CrookReward(reward, chance, fortuneChance));
+            registry.put(CraftingHelper.getIngredient(info), list);
         }
+    }
 
-        list.add(new CrookReward(reward, chance, fortuneChance));
-        registry.put(info, list);
+    public void register(String name, ItemStack reward, float chance, float fortuneChance) {
+        Ingredient ingredient = new OreIngredientStoring(name);
+
+        CrookReward crookReward = new CrookReward(reward, chance, fortuneChance);
+
+        Ingredient search = registry.keySet()
+                .stream()
+                .filter(entry -> IngredientUtil.ingredientEquals(entry, ingredient))
+                .findAny()
+                .orElse(null);
+
+
+        if (search != null) {
+            registry.get(search).add(crookReward);
+        } else {
+            NonNullList<CrookReward> drops = NonNullList.create();
+            drops.add(crookReward);
+            registry.put(ingredient, drops);
+        }
     }
 
     public boolean isRegistered(Block block) {
-        return registry.containsKey(new BlockInfo(block.getDefaultState()));
+        ItemStack stack = new ItemStack(block);
+        return registry.keySet().stream().anyMatch(ingredient -> ingredient.test(stack));
     }
 
     public List<CrookReward> getRewards(IBlockState state) {
         BlockInfo info = new BlockInfo(state);
-        if (!registry.containsKey(info))
-            return null;
+        ArrayList<CrookReward> list = new ArrayList<>();
 
-        return registry.get(info);
+        registry.entrySet()
+                .stream()
+                .filter(ingredient -> ingredient.getKey().test(info.getItemStack()))
+                .forEach(ingredient -> list.addAll(ingredient.getValue()));
+
+        return list;
     }
 
     @Override
     public void registerEntriesFromJSON(FileReader fr) {
-        HashMap<String, ArrayList<CrookReward>> gsonInput = gson.fromJson(fr, new TypeToken<HashMap<String, ArrayList<CrookReward>>>() {
+        HashMap<String, NonNullList<CrookReward>> gsonInput = gson.fromJson(fr, new TypeToken<HashMap<String, NonNullList<CrookReward>>>() {
         }.getType());
 
-        for (Map.Entry<String, ArrayList<CrookReward>> s : gsonInput.entrySet()) {
-            BlockInfo blockInfo = new BlockInfo(s.getKey());
-            registry.put(blockInfo, s.getValue());
-        }
+        gsonInput.forEach((key, value) -> {
+            Ingredient ingredient = IngredientUtil.parseFromString(key);
+
+            if (ingredient != null) {
+                NonNullList<CrookReward> list = registry.getOrDefault(ingredient, NonNullList.create());
+                list.addAll(value);
+                registry.put(ingredient, list);
+            }
+        });
+    }
+
+    @Override
+    public List<?> getRecipeList() {
+        return Lists.newLinkedList();
     }
 }

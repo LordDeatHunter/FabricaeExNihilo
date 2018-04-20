@@ -1,11 +1,14 @@
 package exnihilocreatio.texturing;
 
-public class Color {
+import java.util.Objects;
 
-    public float r;
-    public float g;
-    public float b;
-    public float a;
+public class Color {
+    public static final Color INVALID_COLOR = new Color(-1, -1, -1, -1);
+
+    public final float r;
+    public final float g;
+    public final float b;
+    public final float a;
 
     public Color(float red, float green, float blue, float alpha) {
         this.r = red;
@@ -60,4 +63,42 @@ public class Color {
         return color;
     }
 
+    public int toIntNoAlpha() {
+        int color = 0;
+        color |= (int) (this.r * 255) << 16;
+        color |= (int) (this.g * 255) << 8;
+        color |= (int) (this.b * 255);
+        return color;
+    }
+
+    public String getAsHexNoAlpha(){
+        return Integer.toHexString(toIntNoAlpha());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Color color = (Color) o;
+        return Float.compare(color.r, r) == 0 &&
+                Float.compare(color.g, g) == 0 &&
+                Float.compare(color.b, b) == 0 &&
+                Float.compare(color.a, a) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(r, g, b, a);
+    }
+
+    @Override
+    public String toString() {
+        return "Color{" +
+                "r=" + r +
+                ", g=" + g +
+                ", b=" + b +
+                ", a=" + a +
+                '}';
+    }
 }

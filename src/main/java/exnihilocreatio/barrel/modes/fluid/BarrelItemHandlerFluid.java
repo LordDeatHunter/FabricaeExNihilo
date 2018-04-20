@@ -5,8 +5,10 @@ import exnihilocreatio.items.ItemDoll;
 import exnihilocreatio.networking.MessageBarrelModeUpdate;
 import exnihilocreatio.networking.PacketHandler;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
+import exnihilocreatio.registries.types.FluidBlockTransformer;
 import exnihilocreatio.tiles.TileBarrel;
-import exnihilocreatio.util.ItemInfo;
+import exnihilocreatio.util.BlockInfo;
+import exnihilocreatio.util.EntityInfo;
 import lombok.Setter;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
@@ -35,19 +37,24 @@ public class BarrelItemHandlerFluid extends ItemStackHandler {
             return stack;
 
         if (ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.canBlockBeTransformedWithThisFluid(tank.getFluid().getFluid(), stack) && tank.getFluidAmount() == tank.getCapacity()) {
-            ItemInfo info = ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.getBlockForTransformation(tank.getFluid().getFluid(), stack);
+            FluidBlockTransformer transformer = ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.getTransformation(tank.getFluid().getFluid(), stack);
 
-            if (info != null) {
+            if (transformer != null) {
+                BlockInfo info = transformer.getOutput();
+                int spawnCount = transformer.getSpawnCount();
                 if (!simulate) {
                     tank.drain(tank.getCapacity(), true);
                     barrel.setMode("block");
                     PacketHandler.sendToAllAround(new MessageBarrelModeUpdate("block", barrel.getPos()), barrel);
 
                     barrel.getMode().addItem(info.getItemStack(), barrel);
-                }
-
-                if (stack.getItem().hasContainerItem(stack)) {
-
+                    if(spawnCount > 0){
+                        int spawnRange = transformer.getSpawnRange();
+                        EntityInfo entityInfo = transformer.getToSpawn();
+                        for(int i=0; i<spawnCount; i++){
+                            entityInfo.spawnEntityNear(barrel.getPos(), spawnRange, barrel.getWorld());
+                        }
+                    }
                 }
 
                 ItemStack ret = stack.copy();
@@ -64,7 +71,7 @@ public class BarrelItemHandlerFluid extends ItemStackHandler {
                 tank.drain(tank.getCapacity(), true);
                 barrel.setMode("fluid");
                 PacketHandler.sendToAllAround(new MessageBarrelModeUpdate("block", barrel.getPos()), barrel);
-                tank.fill(FluidRegistry.getFluidStack(fluidItemFluidOutput, tank.getCapacity()),true);
+                tank.fill(FluidRegistry.getFluidStack(fluidItemFluidOutput, tank.getCapacity()), true);
                 PacketHandler.sendNBTUpdate(barrel);
             }
             ItemStack ret = stack.copy();

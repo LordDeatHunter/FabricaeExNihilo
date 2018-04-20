@@ -30,11 +30,10 @@ import java.util.List;
 
 public class BarrelModeBlock implements IBarrelMode {
 
+    private final BarrelItemHandlerBlock handler = new BarrelItemHandlerBlock(null);
     @Getter
     @Setter
     private ItemInfo block;
-
-    private BarrelItemHandlerBlock handler = new BarrelItemHandlerBlock(null);
 
     @Override
     public void writeToNBT(NBTTagCompound tag) {
@@ -78,7 +77,7 @@ public class BarrelModeBlock implements IBarrelMode {
     }
 
     @Override
-    public boolean onBlockActivated(World world, TileBarrel barrel, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public void onBlockActivated(World world, TileBarrel barrel, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!handler.getStackInSlot(0).isEmpty()) {
             Util.dropItemInWorld(barrel, player, handler.getStackInSlot(0), 0.02);
             handler.setBarrel(barrel);
@@ -86,9 +85,7 @@ public class BarrelModeBlock implements IBarrelMode {
             barrel.setMode("null");
             PacketHandler.sendToAllAround(new MessageBarrelModeUpdate("null", barrel.getPos()), barrel);
             barrel.markDirty();
-            return true;
         }
-        return false;
     }
 
     @SuppressWarnings("deprecation")
@@ -117,13 +114,11 @@ public class BarrelModeBlock implements IBarrelMode {
     }
 
     @Override
-    public boolean addItem(ItemStack stack, TileBarrel barrel) {
+    public void addItem(ItemStack stack, TileBarrel barrel) {
         handler.setBarrel(barrel);
         if (handler.getStackInSlot(0).isEmpty()) {
             handler.insertItem(0, stack, false);
-            return true;
         }
-        return false;
     }
 
     @Override

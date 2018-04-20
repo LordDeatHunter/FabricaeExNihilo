@@ -33,12 +33,14 @@ public class BlockCrucibleWood extends BlockCrucibleBase {
     }
 
     @Override
+    @Nonnull
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, THIN);
     }
 
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+    @Nonnull
+    public IBlockState getActualState(@Nonnull IBlockState state, IBlockAccess worldIn, BlockPos pos) {
         return state.withProperty(THIN, ModConfig.client.thinCrucibleModel);
     }
 
@@ -48,6 +50,7 @@ public class BlockCrucibleWood extends BlockCrucibleBase {
     }
 
     @Override
+    @Nonnull
     public IBlockState getStateFromMeta(int meta) {
         return getDefaultState();
     }

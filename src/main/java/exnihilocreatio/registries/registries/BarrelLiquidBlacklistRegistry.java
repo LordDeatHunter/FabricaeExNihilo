@@ -1,5 +1,6 @@
 package exnihilocreatio.registries.registries;
 
+import com.google.common.collect.Lists;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.GsonBuilder;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
@@ -13,7 +14,11 @@ import java.util.Map;
 
 public class BarrelLiquidBlacklistRegistry extends BaseRegistryMap<Integer, List<String>> {
     public BarrelLiquidBlacklistRegistry() {
-        super(new GsonBuilder().setPrettyPrinting().create(), ExNihiloRegistryManager.BARREL_LIQUID_BLACKLIST_DEFAULT_REGISTRY_PROVIDERS);
+        super(new GsonBuilder()
+                .setPrettyPrinting()
+                .create(),
+                new com.google.gson.reflect.TypeToken<Map<Integer, List<String>>>() {}.getType(),
+                ExNihiloRegistryManager.BARREL_LIQUID_BLACKLIST_DEFAULT_REGISTRY_PROVIDERS);
     }
 
     @SuppressWarnings("unchecked")
@@ -37,5 +42,10 @@ public class BarrelLiquidBlacklistRegistry extends BaseRegistryMap<Integer, List
                 register(integer, string);
             }
         });
+    }
+
+    @Override
+    public List<?> getRecipeList() {
+        return Lists.newLinkedList();
     }
 }

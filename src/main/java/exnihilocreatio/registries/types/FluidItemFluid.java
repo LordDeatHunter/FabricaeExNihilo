@@ -1,6 +1,6 @@
 package exnihilocreatio.registries.types;
 
-import exnihilocreatio.util.ItemInfo;
+import exnihilocreatio.util.StackInfo;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,7 +13,7 @@ public class FluidItemFluid {
     private String inputFluid;
 
     @Getter
-    private ItemInfo reactant;
+    private StackInfo reactant;
 
     @Getter
     private String output;

@@ -27,7 +27,7 @@ public class HammerRegistry {
     }
 
     public static void register(IBlockState state, ItemStack reward, int miningLevel, float chance, float fortuneChance, boolean wildcard) {
-        ExNihiloRegistryManager.HAMMER_REGISTRY.register(state, reward, miningLevel, chance, fortuneChance, wildcard);
+        ExNihiloRegistryManager.HAMMER_REGISTRY.register(state, reward, miningLevel, chance, fortuneChance);
     }
 
     public static List<ItemStack> getRewardDrops(Random random, IBlockState block, int miningLevel, int fortuneLevel) {
@@ -40,12 +40,11 @@ public class HammerRegistry {
     }
 
     public static boolean registered(Block block) {
-        return ExNihiloRegistryManager.HAMMER_REGISTRY.registered(block);
+        return ExNihiloRegistryManager.HAMMER_REGISTRY.isRegistered(block);
     }
 
     // Legacy
     @Deprecated
-    @SuppressWarnings("unchecked")
     public static ArrayList<HammerReward> getRewards(IBlockState state, int miningLevel) {
         return (ArrayList<HammerReward>) ExNihiloRegistryManager.HAMMER_REGISTRY.getRewards(state, miningLevel);
     }

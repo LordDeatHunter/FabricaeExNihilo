@@ -6,23 +6,27 @@ import exnihilocreatio.registries.manager.IDefaultRecipeProvider;
 import lombok.Getter;
 import org.apache.commons.io.IOUtils;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.lang.reflect.Type;
 import java.util.List;
 
 public abstract class BaseRegistry<RegType> {
+    protected final Gson gson;
+    private final List<? extends IDefaultRecipeProvider> defaultRecipeProviders;
     protected boolean hasAlreadyBeenLoaded = false;
-
     @Getter
     protected RegType registry;
-    protected List<? extends IDefaultRecipeProvider> defaultRecipeProviders;
 
-    protected Gson gson;
+    @Getter
+    protected Type typeOfSource;
 
-    public BaseRegistry(Gson gson, RegType registry, List<? extends IDefaultRecipeProvider> defaultRecipeProviders) {
+    public BaseRegistry(Gson gson, RegType registry, Type typeOfSource, @Nonnull List<? extends IDefaultRecipeProvider> defaultRecipeProviders) {
         this.gson = gson;
         this.registry = registry;
+        this.typeOfSource = typeOfSource;
         this.defaultRecipeProviders = defaultRecipeProviders;
     }
 
@@ -30,8 +34,12 @@ public abstract class BaseRegistry<RegType> {
         FileWriter fw = null;
         try {
             fw = new FileWriter(file);
-
-            gson.toJson(registry, fw);
+            // TODO remove null again
+            if (typeOfSource != null) {
+                gson.toJson(registry, typeOfSource, fw);
+            } else {
+                gson.toJson(registry, fw);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -62,15 +70,12 @@ public abstract class BaseRegistry<RegType> {
 
     protected abstract void registerEntriesFromJSON(FileReader fr);
 
+    @SuppressWarnings("unchecked")
     public void registerDefaults() {
-        if (defaultRecipeProviders != null) {
-            for (IDefaultRecipeProvider defaultRecipeProvider : defaultRecipeProviders) {
-                if (defaultRecipeProvider != null) {
-                    defaultRecipeProvider.registerRecipeDefaults(this);
-                }
-            }
-        }
+        defaultRecipeProviders.forEach(recipeProvider -> recipeProvider.registerRecipeDefaults(this));
     }
+
+    public abstract List<?> getRecipeList();
 
     public abstract void clearRegistry();
 }

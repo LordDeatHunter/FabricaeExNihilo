@@ -3,10 +3,8 @@ package exnihilocreatio.tiles;
 import exnihilocreatio.rotationalPower.CapabilityRotationalMember;
 import exnihilocreatio.rotationalPower.IRotationalPowerMember;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 
 import javax.annotation.Nonnull;
@@ -74,14 +72,13 @@ public class TileStoneAxle extends BaseTileEntity implements ITickable, IRotatio
     }
 
     @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-        if (capability == CapabilityRotationalMember.ROTIONAL_MEMBER && facing == this.facing)
-            return true;
-        return super.hasCapability(capability, facing);
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+        return capability == CapabilityRotationalMember.ROTIONAL_MEMBER && facing == this.facing || super.hasCapability(capability, facing);
     }
 
+    @Nullable
     @Override
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
         if (capability == CapabilityRotationalMember.ROTIONAL_MEMBER && facing == this.facing)
             return CapabilityRotationalMember.ROTIONAL_MEMBER.cast(this);
         return super.getCapability(capability, facing);

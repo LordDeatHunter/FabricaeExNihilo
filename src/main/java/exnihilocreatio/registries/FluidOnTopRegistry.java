@@ -12,7 +12,7 @@ public class FluidOnTopRegistry {
     }
 
     public static ItemInfo getTransformedBlock(Fluid fluidInBarrel, Fluid fluidOnTop) {
-        return ExNihiloRegistryManager.FLUID_ON_TOP_REGISTRY.getTransformedBlock(fluidInBarrel, fluidOnTop);
+        return new ItemInfo(ExNihiloRegistryManager.FLUID_ON_TOP_REGISTRY.getTransformedBlock(fluidInBarrel, fluidOnTop).getItemStack());
     }
 
     public void register(Fluid fluidInBarrel, Fluid fluidOnTop, ItemInfo result) {

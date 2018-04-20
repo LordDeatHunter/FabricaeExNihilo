@@ -17,6 +17,6 @@ public class FluidBlockTransformerRegistry {
     }
 
     public static ItemInfo getBlockForTransformation(Fluid fluid, ItemStack stack) {
-        return ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.getBlockForTransformation(fluid, stack);
+        return new ItemInfo(ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.getBlockForTransformation(fluid, stack).getItemStack());
     }
 }

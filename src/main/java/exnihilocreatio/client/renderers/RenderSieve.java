@@ -2,6 +2,7 @@ package exnihilocreatio.client.renderers;
 
 import exnihilocreatio.blocks.BlockSieve;
 import exnihilocreatio.tiles.TileSieve;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
@@ -12,11 +13,11 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import org.lwjgl.opengl.GL11;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RenderSieve extends TileEntitySpecialRenderer<TileSieve> {
-
-
     @Override
     public void render(TileSieve te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         Tessellator tes = Tessellator.getInstance();
@@ -32,7 +33,7 @@ public class RenderSieve extends TileEntitySpecialRenderer<TileSieve> {
             offsetZ = te.autoSifter.offsetZ;
         }
 
-        renderSieve(te, x + offsetX, y + offsetY, z + offsetZ, tes, wr);
+        renderSieve(te, x + offsetX, y + offsetY, z + offsetZ, wr);
         renderBlockInSieve(te, x + offsetX, y + offsetY, z + offsetZ, tes, wr);
 
     }
@@ -42,7 +43,7 @@ public class RenderSieve extends TileEntitySpecialRenderer<TileSieve> {
         GlStateManager.translate(x, y, z);
         // GlStateManager.translate(0, 1, 0);
 
-        if (te.getTexture() != null && te.getCurrentStack() != null) {
+        if (te.getTexture() != null && te.getCurrentStack().isValid()) {
             TextureAtlasSprite icon = te.getTexture();
             double minU = (double) icon.getMinU();
             double maxU = (double) icon.getMaxU();
@@ -69,16 +70,17 @@ public class RenderSieve extends TileEntitySpecialRenderer<TileSieve> {
 
     }
 
-    private void renderSieve(TileSieve tile, double x, double y, double z, Tessellator tessellator, BufferBuilder worldRendererBuffer) {
+    private void renderSieve(TileSieve tile, double x, double y, double z, BufferBuilder worldRendererBuffer) {
         final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
-        IBlockState state = tile.getBlockType().getDefaultState().withProperty(BlockSieve.MESH, tile.getMeshType());
-        // IBlockState state = tile.getBlockType().getDefaultState().withProperty(BlockSieve.MESH, BlockSieve.MeshType.getMeshTypeByID(tile.getMeshStack().getMetadata()));
+        Block blocktype = tile.getBlockType();
+
+        if (!(blocktype instanceof BlockSieve)) return;
+
+        IBlockState state = blocktype.getDefaultState().withProperty(BlockSieve.MESH, tile.getMeshType());
 
         List<BakedQuad> quadsSieve = blockRenderer.getModelForState(state).getQuads(state, null, 0);
-        //TODO: possibly optimize to not call this every render, maybe HashMap for that?
 
-
-        tessellator = Tessellator.getInstance();
+        Tessellator tessellator = Tessellator.getInstance();
         GlStateManager.pushMatrix();
 
         GlStateManager.translate(x, y, z);

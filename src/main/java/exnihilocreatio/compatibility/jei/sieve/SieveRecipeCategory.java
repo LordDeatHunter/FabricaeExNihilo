@@ -5,7 +5,7 @@ import com.google.common.collect.Multiset;
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.Siftable;
-import exnihilocreatio.util.ItemInfo;
+import exnihilocreatio.util.StackInfo;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IDrawableStatic;
@@ -53,6 +53,7 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
     }
 
     @Override
+    @Nonnull
     public String getModName() {
         return ExNihiloCreatio.MODID;
     }
@@ -70,13 +71,14 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
         }
     }
 
-    private void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull final SieveRecipe recipeWrapper) {
+    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull SieveRecipe recipeWrapper, @Nonnull IIngredients ingredients) {
         //Mesh
         recipeLayout.getItemStacks().init(0, true, 61, 9);
-        recipeLayout.getItemStacks().set(0, (ItemStack) recipeWrapper.getInputs().get(0));
-        //BlockStoneAxle
+        recipeLayout.getItemStacks().set(0, recipeWrapper.getMesh());
+
+        //Input
         recipeLayout.getItemStacks().init(1, true, 87, 9);
-        recipeLayout.getItemStacks().set(1, (ItemStack) recipeWrapper.getInputs().get(1));
+        recipeLayout.getItemStacks().set(1, ingredients.getInputs(ItemStack.class).get(0));
 
         IFocus<?> focus = recipeLayout.getFocus();
 
@@ -110,13 +112,13 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
             @SideOnly(Side.CLIENT)
             public void onTooltip(int slotIndex, boolean input, @Nonnull ItemStack ingredient, @Nonnull List<String> tooltip) {
                 if (!input) {
-                    ItemStack mesh = (ItemStack) recipeWrapper.getInputs().get(0);
+                    ItemStack mesh = recipeWrapper.getMesh();
                     Multiset<String> condensedTooltips = HashMultiset.create();
-                    for (Siftable siftable : ExNihiloRegistryManager.SIEVE_REGISTRY.getDrops((ItemStack) recipeWrapper.getInputs().get(1))) {
+                    for (Siftable siftable : ExNihiloRegistryManager.SIEVE_REGISTRY.getDrops((ItemStack) recipeWrapper.getInputs().get(0))) {
                         if (siftable.getMeshLevel() != mesh.getItemDamage())
                             continue;
-                        ItemInfo info = siftable.getDrop();
-                        if (info.getItem() != ingredient.getItem() || info.getMeta() != ingredient.getItemDamage())
+                        StackInfo info = siftable.getDrop();
+                        if (info.getItemStack().getItem() != ingredient.getItem() || info.getItemStack().getItemDamage() != ingredient.getItemDamage())
                             continue;
 
                         String s;
@@ -135,10 +137,6 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
                 }
             }
         });
-    }
-
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull SieveRecipe recipeWrapper, @Nonnull IIngredients ingredients) {
-        setRecipe(recipeLayout, recipeWrapper); //I'm sure this is bad.
 
     }
 

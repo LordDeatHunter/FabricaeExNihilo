@@ -6,7 +6,6 @@ import exnihilocreatio.blocks.BlockSieve;
 import exnihilocreatio.compatibility.crafttweaker.prefab.ENCBaseAdd;
 import exnihilocreatio.compatibility.crafttweaker.prefab.ENCBaseRemove;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
-import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -19,27 +18,27 @@ import stanhebben.zenscript.annotations.ZenMethod;
 public class Sieve {
 
     @ZenMethod
-    public static void removeAll(){
+    public static void removeAll() {
         CrTIntegration.removeActions.add(new RemoveAll());
     }
 
     @ZenMethod
-    public static void addStringMeshRecipe(IItemStack block, IItemStack drop, float chance){
+    public static void addStringMeshRecipe(IItemStack block, IItemStack drop, float chance) {
         CrTIntegration.addActions.add(new AddRecipe(block, drop, chance, BlockSieve.MeshType.STRING));
     }
 
     @ZenMethod
-    public static void addFlintMeshRecipe(IItemStack block, IItemStack drop, float chance){
+    public static void addFlintMeshRecipe(IItemStack block, IItemStack drop, float chance) {
         CrTIntegration.addActions.add(new AddRecipe(block, drop, chance, BlockSieve.MeshType.FLINT));
     }
 
     @ZenMethod
-    public static void addIronMeshRecipe(IItemStack block, IItemStack drop, float chance){
+    public static void addIronMeshRecipe(IItemStack block, IItemStack drop, float chance) {
         CrTIntegration.addActions.add(new AddRecipe(block, drop, chance, BlockSieve.MeshType.IRON));
     }
 
     @ZenMethod
-    public static void addDiamondMeshRecipe(IItemStack block, IItemStack drop, float chance){
+    public static void addDiamondMeshRecipe(IItemStack block, IItemStack drop, float chance) {
         CrTIntegration.addActions.add(new AddRecipe(block, drop, chance, BlockSieve.MeshType.DIAMOND));
     }
 
@@ -65,9 +64,9 @@ public class Sieve {
         AddRecipe(IItemStack block, IItemStack drop, float chance, BlockSieve.MeshType meshType) {
 
             Block siftBlock = Block.getBlockFromItem(((ItemStack) block.getInternal()).getItem());
-            if (siftBlock != Blocks.AIR){
+            if (siftBlock != Blocks.AIR) {
                 this.block = siftBlock;
-            }else {
+            } else {
                 this.block = null;
             }
 
@@ -79,12 +78,12 @@ public class Sieve {
 
         @Override
         public void apply() {
-            ExNihiloRegistryManager.SIEVE_REGISTRY.register(new BlockInfo(block, itemStackIn.getDamage()), new ItemInfo((ItemStack) drop.getInternal()), chance, meshType.getID());
+            ExNihiloRegistryManager.SIEVE_REGISTRY.register(new ItemInfo(block, itemStackIn.getDamage()), new ItemInfo((ItemStack) drop.getInternal()), chance, meshType.getID());
         }
 
         @Override
         public String describe() {
-            if (block == null){
+            if (block == null) {
                 return "Can't add Sieve recipe for " + itemStackIn.toString() + " as it has no Block";
             }
             return "Adding Sieve recipe for " + itemStackIn.toString() + " for Mesh " + meshType.getName();

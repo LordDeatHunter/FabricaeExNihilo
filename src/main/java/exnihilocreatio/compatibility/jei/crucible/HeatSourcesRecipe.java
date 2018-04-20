@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
@@ -25,6 +26,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
+import javax.annotation.Nonnull;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,31 +38,36 @@ public class HeatSourcesRecipe implements IRecipeWrapper {
     private final BlockInfo blockInfo;
     private final String heatAmountString;
 
+    private static final Item torch = Item.getItemFromBlock(Blocks.TORCH);
+
     public HeatSourcesRecipe(BlockInfo blockInfo, int heatAmount) {
         this.blockInfo = blockInfo;
 
 
         ItemStack item = blockInfo.getItemStack();
-        if (item.isEmpty()){
+
+        if (item.getItem() == torch)
+            item = new ItemStack(torch, 1, 0);
+
+        if (item.isEmpty()) {
             Fluid fluid = null;
             Block block = blockInfo.getBlock();
-            if (block instanceof IFluidBlock){
+            if (block instanceof IFluidBlock) {
                 fluid = ((IFluidBlock) block).getFluid();
             }
-            if (block == Blocks.LAVA || block == Blocks.FLOWING_LAVA){
+            if (block == Blocks.LAVA || block == Blocks.FLOWING_LAVA) {
                 fluid = FluidRegistry.LAVA;
             }
-            if (block == Blocks.WATER || block == Blocks.FLOWING_WATER){
+            if (block == Blocks.WATER || block == Blocks.FLOWING_WATER) {
                 fluid = FluidRegistry.WATER;
             }
-            if (fluid != null){
+            if (fluid != null) {
                 item = FluidUtil.getFilledBucket(new FluidStack(fluid, 1000));
             }
-            if (block == Blocks.FIRE){
+            if (block == Blocks.FIRE) {
                 item = new ItemStack(Items.FLINT_AND_STEEL, 1);
             }
         }
-
 
 
         inputs = new ArrayList<>(Collections.singleton(item));
@@ -68,7 +75,7 @@ public class HeatSourcesRecipe implements IRecipeWrapper {
     }
 
     @Override
-    public void getIngredients(IIngredients ingredients) {
+    public void getIngredients(@Nonnull IIngredients ingredients) {
         ingredients.setInputs(ItemStack.class, inputs);
     }
 
@@ -139,9 +146,13 @@ public class HeatSourcesRecipe implements IRecipeWrapper {
         GlStateManager.enableCull();
 
         IBlockState crucible = ModBlocks.crucibleStone.getDefaultState().withProperty(BlockCrucibleStone.FIRED, true);
-        IBlockState state = blockInfo.getBlock().getDefaultState();
+        IBlockState state = blockInfo.getBlockState();
 
         BlockPos pos = new BlockPos(0, 0, 0);
+        /*if (blockInfo.getBlock() instanceof IFluidBlock || blockInfo.getBlock() instanceof BlockLiquid) {
+            pos = pos.up();
+        }*/
+
 
         // Aaaand render
         buffer.begin(7, DefaultVertexFormats.BLOCK);
@@ -163,18 +174,18 @@ public class HeatSourcesRecipe implements IRecipeWrapper {
     @SideOnly(Side.CLIENT)
     public void renderBlock(BlockRendererDispatcher blockrendererdispatcher, BufferBuilder buffer, BlockRenderLayer renderLayer, IBlockState blockState, BlockPos pos, IBlockAccess access) {
 
-            if (!blockState.getBlock().canRenderInLayer(blockState, renderLayer)) {
-                return;
-            }
+        if (!blockState.getBlock().canRenderInLayer(blockState, renderLayer)) {
+            return;
+        }
 
-            ForgeHooksClient.setRenderLayer(renderLayer);
+        ForgeHooksClient.setRenderLayer(renderLayer);
 
-            try {
-                blockrendererdispatcher.renderBlock(blockState, pos, access, buffer);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            blockrendererdispatcher.renderBlock(blockState, pos, access, buffer);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-            ForgeHooksClient.setRenderLayer(null);
+        ForgeHooksClient.setRenderLayer(null);
     }
 }

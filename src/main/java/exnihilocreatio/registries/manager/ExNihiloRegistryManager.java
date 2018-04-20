@@ -94,7 +94,7 @@ public final class ExNihiloRegistryManager {
         BARREL_LIQUID_BLACKLIST_DEFAULT_REGISTRY_PROVIDERS.add(provider);
     }
 
-    public static void registerMilkEntityDefaultRecipeHandler(IMilkEntityDefaultRegistryProvider provider){
+    public static void registerMilkEntityDefaultRecipeHandler(IMilkEntityDefaultRegistryProvider provider) {
         MILK_ENTITY_DEFAULT_REGISTRY_PROVIDERS.add(provider);
     }
     //endregion

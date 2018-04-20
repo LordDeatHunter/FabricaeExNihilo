@@ -6,9 +6,9 @@ import net.minecraftforge.fluids.FluidTank;
 
 import javax.annotation.Nullable;
 
-public class FluidTankBase extends FluidTank{
+public class FluidTankBase extends FluidTank {
 
-    private BaseTileEntity tileEntity;
+    private final BaseTileEntity tileEntity;
 
     public FluidTankBase(int capacity, BaseTileEntity tileEntity) {
         super(capacity);

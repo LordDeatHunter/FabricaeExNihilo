@@ -89,8 +89,7 @@ public class BarrelModeFluidTransform implements IBarrelMode {
     }
 
     @Override
-    public boolean onBlockActivated(World world, TileBarrel barrel, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-        return false;
+    public void onBlockActivated(World world, TileBarrel barrel, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     }
 
     @Override
@@ -176,8 +175,7 @@ public class BarrelModeFluidTransform implements IBarrelMode {
     }
 
     @Override
-    public boolean addItem(ItemStack stack, TileBarrel barrel) {
-        return false;
+    public void addItem(ItemStack stack, TileBarrel barrel) {
     }
 
     @Override

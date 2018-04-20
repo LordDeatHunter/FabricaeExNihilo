@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class LogUtil {
-    private static Logger logger = LogManager.getLogger("Ex Nihilo Creatio");
+    private static final Logger logger = LogManager.getLogger("Ex Nihilo Creatio");
     private static File logFile;
     private static PrintWriter logWriter;
 

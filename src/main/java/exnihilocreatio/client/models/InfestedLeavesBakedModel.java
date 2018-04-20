@@ -9,6 +9,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import org.apache.commons.lang3.tuple.Pair;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.vecmath.Matrix4f;
 import java.util.List;
@@ -18,16 +19,16 @@ import static exnihilocreatio.ModBlocks.infestedLeaves;
 
 public class InfestedLeavesBakedModel implements IBakedModel {
 
+    public final static ModelResourceLocation variantTag = new ModelResourceLocation(infestedLeaves.getRegistryName(), "normal");
     private final IBakedModel defaultModel;
     private TextureAtlasSprite particleTexture;
-    public final static ModelResourceLocation variantTag = new ModelResourceLocation(infestedLeaves.getRegistryName(), "normal");
 
-    public InfestedLeavesBakedModel(IBakedModel defaultModel){
+    public InfestedLeavesBakedModel(IBakedModel defaultModel) {
         this.defaultModel = defaultModel;
     }
 
-    private IBakedModel handleBlockState(IBlockState state){
-        if (state instanceof IExtendedBlockState){
+    private IBakedModel handleBlockState(IBlockState state) {
+        if (state instanceof IExtendedBlockState) {
             IBlockState copiedState = BlockInfestingLeaves.getLeafState(state);
 
             this.particleTexture = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelForState(copiedState).getParticleTexture();
@@ -37,17 +38,20 @@ public class InfestedLeavesBakedModel implements IBakedModel {
     }
 
     @Override
+    @Nonnull
     public TextureAtlasSprite getParticleTexture() {
         return this.particleTexture;
     }
 
 
     @Override
+    @Nonnull
     public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
         return handleBlockState(state).getQuads(state, side, rand);
     }
 
     @Override
+    @Nonnull
     public ItemCameraTransforms getItemCameraTransforms() {
         return defaultModel.getItemCameraTransforms();
     }
@@ -68,12 +72,14 @@ public class InfestedLeavesBakedModel implements IBakedModel {
     }
 
     @Override
+    @Nonnull
     public ItemOverrideList getOverrides() {
         return defaultModel.getOverrides();
     }
 
     @Override
-    public Pair<? extends IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType) {
+    @Nonnull
+    public Pair<? extends IBakedModel, Matrix4f> handlePerspective(@Nonnull ItemCameraTransforms.TransformType cameraTransformType) {
         return Pair.of(this, defaultModel.handlePerspective(cameraTransformType).getRight());
     }
 }

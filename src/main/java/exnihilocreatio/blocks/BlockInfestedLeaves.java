@@ -1,8 +1,8 @@
 package exnihilocreatio.blocks;
 
+import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.tools.ICrook;
-import exnihilocreatio.tiles.ITileLeafBlock;
 import exnihilocreatio.tiles.TileInfestedLeaves;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.Util;
@@ -12,26 +12,24 @@ import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.property.IExtendedBlockState;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
 
 public class BlockInfestedLeaves extends BlockInfestingLeaves {
 
-        public BlockInfestedLeaves(){
+    public BlockInfestedLeaves() {
         super(InfestedType.INFESTED);
         this.setUnlocalizedName("block_infested_leaves");
         this.setRegistryName("block_infested_leaves");
+        this.setCreativeTab(ExNihiloCreatio.tabExNihilo);
         Data.BLOCKS.add(this);
         this.setDefaultState(
                 this.blockState.getBaseState().withProperty(CHECK_DECAY, false).withProperty(DECAYABLE, false));
@@ -45,7 +43,7 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
     }
 
     @Override
-    public void randomTick(World world, BlockPos pos, IBlockState state, Random rand) {
+    public void randomTick(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull Random rand) {
         this.updateTick(world, pos, state, rand);
         if (!world.isRemote) {
             if (state.getValue(NEARBYLEAVES)) {
@@ -93,9 +91,7 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
                     if (!player.getHeldItemMainhand().isEmpty()
                             && player.getHeldItemMainhand().getItem() instanceof ICrook) {
                         Util.dropItemInWorld(leaves, player, new ItemStack(Items.STRING, 1, 0), 0.02f);
-                    }
-
-                    else if (world.rand.nextFloat() < ModConfig.crooking.stringChance / 4.0d) {
+                    } else if (world.rand.nextFloat() < ModConfig.crooking.stringChance / 4.0d) {
                         Util.dropItemInWorld(leaves, player, new ItemStack(Items.STRING, 1, 0), 0.02f);
 
                     }

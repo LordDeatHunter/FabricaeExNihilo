@@ -1,5 +1,6 @@
 package exnihilocreatio.blocks;
 
+import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.barrel.IBarrelMode;
 import exnihilocreatio.barrel.modes.block.BarrelModeBlock;
 import exnihilocreatio.barrel.modes.compost.BarrelModeCompost;
@@ -46,10 +47,11 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider, ITOPI
         super(material, "block_barrel" + tier);
         this.tier = tier;
         this.setHardness(2.0f);
+        this.setCreativeTab(ExNihiloCreatio.tabExNihilo);
     }
 
     @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+    public void breakBlock(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
         TileEntity te = worldIn.getTileEntity(pos);
         if (te != null && te instanceof TileBarrel) {
             TileBarrel barrel = (TileBarrel) te;
@@ -171,7 +173,7 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider, ITOPI
 
     // Barrels will attempt to milk entities
     @Override
-    public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn){
+    public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn) {
         TileEntity te = worldIn.getTileEntity(pos);
         if (te != null && te instanceof TileBarrel) {
             ((TileBarrel) te).entityOnTop(worldIn, entityIn);

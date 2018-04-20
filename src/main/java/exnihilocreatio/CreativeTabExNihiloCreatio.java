@@ -6,14 +6,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+
 public class CreativeTabExNihiloCreatio extends CreativeTabs {
 
-    public CreativeTabExNihiloCreatio() {
+    CreativeTabExNihiloCreatio() {
         super("exNihilo");
     }
 
     @Override
     @SideOnly(Side.CLIENT)
+    @Nonnull
     public ItemStack getTabIconItem() {
         return new ItemStack(Item.getItemFromBlock(ModBlocks.sieve), 1);
     }

@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CompatDefaultRecipes {
-    private static List<IRecipeDefaults> MODS = new ArrayList<>();
+    private static final List<IRecipeDefaults> MODS = new ArrayList<>();
+
     static {
         // TODO use config options to dynamically add mod support
-        // TODO consider making the default Ex Nihilo recipes use this same programatic method.
         MODS.add(new ExNihilo()); // Not exactly a "cross" mod support ¯\_(ツ)_/¯
         MODS.add(new TinkersConstruct());
         MODS.add(new AppliedEnergistics2());
@@ -19,118 +19,77 @@ public class CompatDefaultRecipes {
         MODS.add(new Mekanism());
         MODS.add(new BigReactors());
         MODS.add(new ActuallyAdditions());
+        MODS.add(new EnderIO());
+        MODS.add(new DraconicEvolution());
     }
 
     public void registerCompost(CompostRegistry registry) {
-        for(IRecipeDefaults mod : MODS){
-            if(Loader.isModLoaded(mod.getMODID())){
-                mod.registerCompost(registry);
-            }
-        }
+        MODS.stream().filter(mod -> Loader.isModLoaded(mod.getMODID()))
+                .forEach(mod -> mod.registerCompost(registry));
     }
 
     public void registerCrook(CrookRegistry registry) {
-        for(IRecipeDefaults mod : MODS){
-            if(Loader.isModLoaded(mod.getMODID())){
-                mod.registerCrook(registry);
-            }
-        }
+        MODS.stream().filter(mod -> Loader.isModLoaded(mod.getMODID()))
+                .forEach(mod -> mod.registerCrook(registry));
     }
 
     public void registerSieve(SieveRegistry registry) {
-        for(IRecipeDefaults mod : MODS){
-            if(Loader.isModLoaded(mod.getMODID())){
-                mod.registerSieve(registry);
-            }
-        }
+        MODS.stream().filter(mod -> Loader.isModLoaded(mod.getMODID()))
+                .forEach(mod -> mod.registerSieve(registry));
     }
 
     public void registerHammer(HammerRegistry registry) {
-        for(IRecipeDefaults mod : MODS){
-            if(Loader.isModLoaded(mod.getMODID())){
-                mod.registerHammer(registry);
-            }
-        }
+        MODS.stream().filter(mod -> Loader.isModLoaded(mod.getMODID()))
+                .forEach(mod -> mod.registerHammer(registry));
     }
 
     public void registerHeat(HeatRegistry registry) {
-        for(IRecipeDefaults mod : MODS){
-            if(Loader.isModLoaded(mod.getMODID())){
-                mod.registerHeat(registry);
-            }
-        }
+        MODS.stream().filter(mod -> Loader.isModLoaded(mod.getMODID()))
+                .forEach(mod -> mod.registerHeat(registry));
     }
 
     public void registerBarrel(BarrelLiquidBlacklistRegistry registry) {
-        for(IRecipeDefaults mod : MODS){
-            if(Loader.isModLoaded(mod.getMODID())){
-                mod.registerBarrelLiquidBlacklist(registry);
-            }
-        }
+        MODS.stream().filter(mod -> Loader.isModLoaded(mod.getMODID()))
+                .forEach(mod -> mod.registerBarrelLiquidBlacklist(registry));
     }
 
     public void registerFluidOnTop(FluidOnTopRegistry registry) {
-        for(IRecipeDefaults mod : MODS){
-            if(Loader.isModLoaded(mod.getMODID())){
-                mod.registerFluidOnTop(registry);
-            }
-        }
+        MODS.stream().filter(mod -> Loader.isModLoaded(mod.getMODID()))
+                .forEach(mod -> mod.registerFluidOnTop(registry));
     }
 
     public void registerOreChunks(OreRegistry registry) {
-        for(IRecipeDefaults mod : MODS){
-            if(Loader.isModLoaded(mod.getMODID())){
-                mod.registerOreChunks(registry);
-            }
-        }
+        MODS.stream().filter(mod -> Loader.isModLoaded(mod.getMODID()))
+                .forEach(mod -> mod.registerOreChunks(registry));
     }
 
     public void registerFluidTransform(FluidTransformRegistry registry) {
-        for(IRecipeDefaults mod : MODS){
-            if(Loader.isModLoaded(mod.getMODID())){
-                mod.registerFluidTransform(registry);
-            }
-        }
+        MODS.stream().filter(mod -> Loader.isModLoaded(mod.getMODID()))
+                .forEach(mod -> mod.registerFluidTransform(registry));
     }
 
     public void registerFluidBlockTransform(FluidBlockTransformerRegistry registry) {
-        for(IRecipeDefaults mod : MODS){
-            if(Loader.isModLoaded(mod.getMODID())){
-                mod.registerFluidBlockTransform(registry);
-            }
-        }
+        MODS.stream().filter(mod -> Loader.isModLoaded(mod.getMODID()))
+                .forEach(mod -> mod.registerFluidBlockTransform(registry));
     }
 
     public void registerFluidItemFluid(FluidItemFluidRegistry registry) {
-        for(IRecipeDefaults mod : MODS){
-            if(Loader.isModLoaded(mod.getMODID())){
-                mod.registerFluidItemFluid(registry);
-            }
-        }
+        MODS.stream().filter(mod -> Loader.isModLoaded(mod.getMODID()))
+                .forEach(mod -> mod.registerFluidItemFluid(registry));
     }
 
     public void registerCrucibleStone(CrucibleRegistry registry) {
-        for(IRecipeDefaults mod : MODS){
-            if(Loader.isModLoaded(mod.getMODID())){
-                mod.registerCrucibleStone(registry);
-            }
-        }
+        MODS.stream().filter(mod -> Loader.isModLoaded(mod.getMODID()))
+                .forEach(mod -> mod.registerCrucibleStone(registry));
     }
 
     public void registerCrucibleWood(CrucibleRegistry registry) {
-        for(IRecipeDefaults mod : MODS){
-            if(Loader.isModLoaded(mod.getMODID())){
-                mod.registerCrucibleWood(registry);
-            }
-        }
-
+        MODS.stream().filter(mod -> Loader.isModLoaded(mod.getMODID()))
+                .forEach(mod -> mod.registerCrucibleWood(registry));
     }
 
     public void registerMilk(MilkEntityRegistry registry) {
-        for(IRecipeDefaults mod : MODS){
-            if(Loader.isModLoaded(mod.getMODID())){
-                mod.registerMilk(registry);
-            }
-        }
+        MODS.stream().filter(mod -> Loader.isModLoaded(mod.getMODID()))
+                .forEach(mod -> mod.registerMilk(registry));
     }
 }

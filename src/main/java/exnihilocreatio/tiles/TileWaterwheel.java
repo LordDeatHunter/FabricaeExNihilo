@@ -63,7 +63,7 @@ public class TileWaterwheel extends BaseTileEntity implements ITickable, IRotati
             }
 
             float lastPerTickEffective = perTickEffective;
-            perTickEffective = calcEffectivePerTickRotation(world,pos,facing);
+            perTickEffective = calcEffectivePerTickRotation(world, pos, facing);
 
             if (lastPerTickEffective != perTickEffective) {
                 markDirty();
@@ -111,24 +111,21 @@ public class TileWaterwheel extends BaseTileEntity implements ITickable, IRotati
         }
     }
 
-
     @Override
-    public void setEffectivePerTickRotation(float rotation) {
-        perTickEffective = rotation;
-    }
-
-    @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-        if(capability == CapabilityRotationalMember.ROTIONAL_MEMBER && facing == this.facing)
-            return true;
-        return super.hasCapability(capability, facing);
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+        return capability == CapabilityRotationalMember.ROTIONAL_MEMBER && facing == this.facing || super.hasCapability(capability, facing);
     }
 
     @Nullable
     @Override
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-        if(capability == CapabilityRotationalMember.ROTIONAL_MEMBER && facing == this.facing)
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
+        if (capability == CapabilityRotationalMember.ROTIONAL_MEMBER && facing == this.facing)
             return CapabilityRotationalMember.ROTIONAL_MEMBER.cast(this);
         return super.getCapability(capability, facing);
+    }
+
+    @Override
+    public void setEffectivePerTickRotation(float rotation) {
+        perTickEffective = rotation;
     }
 }

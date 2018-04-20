@@ -8,9 +8,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class RenderEvent {
 
     @SubscribeEvent
-    public void onModelBake(ModelBakeEvent evt){
+    public void onModelBake(ModelBakeEvent evt) {
         IBakedModel model = evt.getModelRegistry().getObject(InfestedLeavesBakedModel.variantTag);
-        if (model != null){
+        if (model != null) {
             IBakedModel customModel = new InfestedLeavesBakedModel(model);
             evt.getModelRegistry().putObject(InfestedLeavesBakedModel.variantTag, customModel);
         }

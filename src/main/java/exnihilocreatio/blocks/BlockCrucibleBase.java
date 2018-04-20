@@ -97,10 +97,10 @@ public abstract class BlockCrucibleBase extends Block implements ITOPInfoProvide
         if (crucible == null)
             return;
 
-        ItemStack solid = crucible.getCurrentItem() == null ? null : crucible.getCurrentItem().getItemStack();
+        ItemStack solid = crucible.getCurrentItem().getItemStack();
         FluidStack liquid = crucible.getTank().getFluid();
 
-        String solidName = solid == null ? "None" : solid.getDisplayName();
+        String solidName = solid == ItemStack.EMPTY ? "None" : solid.getDisplayName();
         String liquidName = liquid == null ? "None" : liquid.getLocalizedName();
 
         int solidAmount = Math.max(0, crucible.getSolidAmount());

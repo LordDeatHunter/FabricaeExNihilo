@@ -2,7 +2,6 @@ package exnihilocreatio.command;
 
 import exnihilocreatio.ExNihiloCreatio;
 import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -30,7 +29,7 @@ public class CommandReloadConfig extends CommandBase {
     }
 
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) throws CommandException {
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         ExNihiloCreatio.loadConfigs();
         ConfigManager.load(ExNihiloCreatio.MODID, Config.Type.INSTANCE);
         // ModConfig.doNormalConfig(new File(ExNihiloCreatio.configDirectory, "ExNihiloCreatio.cfg"));

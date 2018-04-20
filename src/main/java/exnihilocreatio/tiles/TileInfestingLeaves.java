@@ -3,10 +3,10 @@ package exnihilocreatio.tiles;
 import exnihilocreatio.blocks.BlockInfestingLeaves;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.networking.PacketHandler;
+import exnihilocreatio.util.BlockInfo;
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
@@ -41,8 +41,8 @@ public class TileInfestingLeaves extends BaseTileEntity implements ITickable, IT
                     spreadCounter = 0;
                 }
 
-
                 doProgress = (int) (ModConfig.infested_leaves.ticksToTransform / 100.0);
+
                 //Send packet at the end incase the block gets changed first.
                 PacketHandler.sendNBTUpdate(this);
             } else {
@@ -52,11 +52,12 @@ public class TileInfestingLeaves extends BaseTileEntity implements ITickable, IT
     }
 
     @Override
-    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
+    public boolean shouldRefresh(World world, BlockPos pos, @Nonnull IBlockState oldState, @Nonnull IBlockState newState) {
         return oldState.getBlock() != newState.getBlock();
     }
 
     @Override
+    @Nonnull
     public AxisAlignedBB getRenderBoundingBox() {
         return INFINITE_EXTENT_AABB;
     }
@@ -88,11 +89,10 @@ public class TileInfestingLeaves extends BaseTileEntity implements ITickable, IT
         progress = tag.getInteger("progress");
 
         if (tag.hasKey("leafBlock") && tag.hasKey("leafBlockMeta")) {
-            try {
-                leafBlock = Block.getBlockFromName(tag.getString("leafBlock")).getStateFromMeta(tag.getInteger("leafBlockMeta"));
-            } catch (Exception e) {
-                leafBlock = Blocks.LEAVES.getDefaultState();
-            }
+            BlockInfo leaves = new BlockInfo(Block.getBlockFromName(tag.getString("leafBlock")), tag.getInteger("leafBlockMeta"));
+            if (leaves.isValid())
+                leafBlock = leaves.getBlockState();
+            else leafBlock = Blocks.LEAVES.getDefaultState();
         } else {
             leafBlock = Blocks.LEAVES.getDefaultState();
         }

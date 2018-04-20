@@ -10,8 +10,8 @@ import javax.annotation.Nonnull;
 
 public class CrucibleItemHandler extends ItemStackHandler {
 
-    protected TileCrucibleBase te;
-    protected CrucibleRegistry crucibleRegistry;
+    protected final TileCrucibleBase te;
+    protected final CrucibleRegistry crucibleRegistry;
 
     public CrucibleItemHandler(TileCrucibleBase te, CrucibleRegistry crucibleRegistry) {
         super(1);
@@ -46,6 +46,6 @@ public class CrucibleItemHandler extends ItemStackHandler {
 
     @Override
     protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
-        return te.solidAmount > 0 ? TileCrucibleBase.MAX_ITEMS -1 : TileCrucibleBase.MAX_ITEMS;
+        return te.solidAmount > 0 ? TileCrucibleBase.MAX_ITEMS - 1 : TileCrucibleBase.MAX_ITEMS;
     }
 }

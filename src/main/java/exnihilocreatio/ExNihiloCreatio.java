@@ -35,24 +35,18 @@ public class ExNihiloCreatio {
 
     public static final String MODID = "exnihilocreatio";
     public static final String VERSION = "@VERSION@";
-
+    public static final CreativeTabs tabExNihilo = new CreativeTabExNihiloCreatio();
     @SidedProxy(serverSide = "exnihilocreatio.proxy.ServerProxy", clientSide = "exnihilocreatio.proxy.ClientProxy")
     public static CommonProxy proxy;
-
     @Instance(MODID)
     public static ExNihiloCreatio instance;
-
     public static File configDirectory;
-
     public static boolean configsLoaded = false;
     public static boolean crtActionsLoaded = false;
-
-    public static CreativeTabs tabExNihilo = new CreativeTabExNihiloCreatio();
 
     static {
         FluidRegistry.enableUniversalBucket();
         // registers itself to the needed registries
-        ExNihiloDefaultRecipes.registerDefaults();
     }
 
     @EventHandler
@@ -64,35 +58,25 @@ public class ExNihiloCreatio {
         configDirectory = new File(event.getModConfigurationDirectory(), "exnihilocreatio");
         configDirectory.mkdirs();
 
-        proxy.registerConfigs(configDirectory);
-
-
         ENCapabilities.init();
         ENEntities.init();
 
         PacketHandler.initPackets();
 
         MinecraftForge.EVENT_BUS.register(new HandlerHammer());
-
         MinecraftForge.EVENT_BUS.register(new HandlerCrook());
-
 
         if (ModConfig.mechanics.enableBarrels) {
             BarrelModeRegistry.registerDefaults();
         }
+
+        ExNihiloDefaultRecipes.registerDefaults();
 
     }
 
     @EventHandler
     public static void init(FMLInitializationEvent event) {
         proxy.init(event);
-
-        loadConfigs();
-
-        Recipes.init();
-
-        // OreRegistry.doRecipes();
-
     }
 
     @EventHandler

@@ -37,7 +37,7 @@ public class ItemResource extends Item implements IHasModel {
     public static final String ROD_STONE = "rod_stone";
     public static final String GEAR_STONE = "gear_stone";
 
-    private static ArrayList<String> names = new ArrayList<>();
+    private static final ArrayList<String> names = new ArrayList<>();
 
     public ItemResource() {
         super();
@@ -78,7 +78,7 @@ public class ItemResource extends Item implements IHasModel {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(@Nonnull CreativeTabs tab, NonNullList<ItemStack> list) {
+    public void getSubItems(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> list) {
         if (this.isInCreativeTab(tab))
             for (int i = 1; i < names.size(); i++) {
                 list.add(new ItemStack(this, 1, i));
@@ -92,7 +92,7 @@ public class ItemResource extends Item implements IHasModel {
         if (stack.getItemDamage() == names.indexOf(SILKWORM)) {
             IBlockState state = world.getBlockState(pos);
             if (state.getBlock() != Blocks.AIR && !(state.getBlock() instanceof BlockInfestingLeaves))
-                if (Util.isLeaves(state)){
+                if (Util.isLeaves(state)) {
                     BlockInfestingLeaves.infestLeafBlock(world, state, pos);
                     stack.shrink(1);
                     return EnumActionResult.SUCCESS;

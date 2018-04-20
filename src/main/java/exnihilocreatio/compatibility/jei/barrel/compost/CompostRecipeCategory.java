@@ -3,7 +3,6 @@ package exnihilocreatio.compatibility.jei.barrel.compost;
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.Compostable;
-import exnihilocreatio.util.ItemInfo;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IDrawableStatic;
@@ -48,6 +47,7 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
     }
 
     @Override
+    @Nonnull
     public String getModName() {
         return ExNihiloCreatio.MODID;
     }
@@ -65,8 +65,8 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
         }
     }
 
-    private void setRecipe(IRecipeLayout layout, CompostRecipe recipe) {
-        // BlockStoneAxle
+    @Override
+    public void setRecipe(@Nonnull IRecipeLayout layout, @Nonnull CompostRecipe recipe, @Nonnull IIngredients ingredients) {
         layout.getItemStacks().init(0, false, 74, 9);
         layout.getItemStacks().set(0, recipe.getOutputs().get(0));
 
@@ -81,6 +81,7 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
 
             focusStack = (ItemStack) focus.getValue();
         }
+        final ItemStack finalFocus = focusStack;
 
         int slotIndex = 1;
 
@@ -88,12 +89,12 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
             final int slotX = 2 + (i % 9 * 18);
             final int slotY = 36 + (i / 9 * 18);
 
-            ItemStack inputStack = recipe.getInputs().get(i);
+            List<ItemStack> inputStack = recipe.getInputs().get(i);
 
             layout.getItemStacks().init(slotIndex + i, true, slotX, slotY);
             layout.getItemStacks().set(slotIndex + i, inputStack);
 
-            if (focus != null && mightHaveHighlight && ItemStack.areItemsEqual(focusStack, inputStack)) {
+            if (focus != null && mightHaveHighlight && inputStack.stream().anyMatch(item -> ItemStack.areItemsEqual(finalFocus, item))) {
                 highlightX = slotX;
                 highlightY = slotY;
 
@@ -104,12 +105,7 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
         }
 
         layout.getItemStacks().addTooltipCallback(new CompostTooltipCallback());
-    }
 
-    @Override
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull CompostRecipe recipeWrapper, @Nonnull IIngredients ingredients) {
-        // I learn from the best
-        setRecipe(recipeLayout, recipeWrapper);
     }
 
     @Override
@@ -121,7 +117,7 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
         @Override
         public void onTooltip(int slotIndex, boolean input, @Nonnull ItemStack ingredient, @Nonnull List<String> tooltip) {
             if (input) {
-                Compostable entry = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(new ItemInfo(ingredient));
+                Compostable entry = ExNihiloRegistryManager.COMPOST_REGISTRY.getItem(ingredient);
 
                 tooltip.add(String.format("Value: %.1f%%", 100.0F * entry.getValue()));
             }

@@ -106,7 +106,8 @@ public class TileBarrel extends BaseTileEntity implements ITickable {
                     && bucketStack.getFluid() == tankStack.getFluid()
                     && tank.fill(FluidUtil.getFluidContained(stack), false) != 0) {
                 tank.drain(Fluid.BUCKET_VOLUME, true);
-                result = FluidUtil.interactWithFluidHandler(player, hand, fluidHandler);
+                if (fluidHandler != null)
+                    result = FluidUtil.interactWithFluidHandler(player, hand, fluidHandler);
 
                 if (result && !player.isCreative()) {
                     stack.shrink(1);
@@ -252,16 +253,16 @@ public class TileBarrel extends BaseTileEntity implements ITickable {
     }
 
     //TODO: Add Moo Fluids support if it ever updates
-    public void entityOnTop(World world, Entity entityIn){
+    public void entityOnTop(World world, Entity entityIn) {
         long currentTime = world.getTotalWorldTime(); //Get the current time, shouldn't be affected by in-game /time command
-        if(currentTime < this.entityWalkCooldown) return; // Cooldown hasn't elapsed, do nothing
+        if (currentTime < this.entityWalkCooldown) return; // Cooldown hasn't elapsed, do nothing
 
         Milkable milk = ExNihiloRegistryManager.MILK_ENTITY_REGISTRY.getMilkable(entityIn);
-        if(milk == null) return; // Not a valid recipe
+        if (milk == null) return; // Not a valid recipe
 
         // Attempt to add the fluid if it is a valid fluid
         Fluid result = FluidRegistry.getFluid(milk.getResult());
-        if(result != null)
+        if (result != null)
             this.tank.fill(new FluidStack(result, milk.getAmount()), true);
 
         //Set the new cooldown time

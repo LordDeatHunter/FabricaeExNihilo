@@ -1,36 +1,47 @@
 package exnihilocreatio.compatibility.jei.barrel.compost;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import exnihilocreatio.util.BlockInfo;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.Collections;
 import java.util.List;
 
 public class CompostRecipe implements IRecipeWrapper {
-    private List<ItemStack> inputs;
-    private ItemStack output;
-
-    public CompostRecipe(ItemStack output, List<ItemStack> inputs) {
-        this.inputs = ImmutableList.copyOf(inputs);
-        this.output = output.copy();
+    private final List<List<ItemStack>> inputs;
+    private final List<ItemStack> output;
+    public CompostRecipe(BlockInfo output, List<List<ItemStack>> inputs) {
+        this.inputs = inputs;
+        this.output = Collections.singletonList(output.getItemStack());
     }
 
     @Override
     public void getIngredients(@Nonnull IIngredients ingredients) {
-        ingredients.setInputs(ItemStack.class, inputs);
+        ingredients.setInputLists(ItemStack.class, inputs);
         ingredients.setOutput(ItemStack.class, output);
     }
 
-    public List<ItemStack> getInputs() {
+    public List<List<ItemStack>> getInputs() {
         return inputs;
     }
 
     public List<ItemStack> getOutputs() {
-        return ImmutableList.of(output);
+        return output;
+    }
+
+    /**
+     * @return Returns full if the input has any space free
+     */
+    public boolean isNonFull() {
+        return inputs.size() < 45;
+    }
+
+    public boolean outputMatch(ItemStack stack) {
+        return output.get(0).isItemEqual(stack);
     }
 
     @Override

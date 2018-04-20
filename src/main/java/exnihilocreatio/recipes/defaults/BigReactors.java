@@ -13,7 +13,6 @@ import exnihilocreatio.util.ItemInfo;
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 
 public class BigReactors implements IRecipeDefaults {
     /*
@@ -27,15 +26,15 @@ public class BigReactors implements IRecipeDefaults {
 
     public void registerSieve(SieveRegistry registry) {
         ItemOre ore = ExNihiloRegistryManager.ORE_REGISTRY.getOreItem("yellorium");
-        if(ore !=null){
-            registry.register(ModBlocks.dust.getDefaultState(), new ItemStack(ore, 1, 0), 0.01f, MeshType.DIAMOND.getID());
+        if (ore != null) {
+            registry.register(new BlockInfo(ModBlocks.dust.getDefaultState()), new ItemInfo(ore, 0), 0.01f, MeshType.DIAMOND.getID());
         }
     }
 
     public void registerOreChunks(OreRegistry registry) {
         // 0 = Yellorium
         Item yellorium = Item.getByNameOrId("bigreactors:ingotmetals");
-        if(yellorium != null){
+        if (yellorium != null) {
             registry.register("yellorium", new Color("DCF400"), new ItemInfo(yellorium, 0));
             ItemOre ore = ExNihiloRegistryManager.ORE_REGISTRY.getOreItem("yellorium");
             registry.getSieveBlackList().add(ore); //Disables the default sieve recipes
@@ -47,8 +46,8 @@ public class BigReactors implements IRecipeDefaults {
         // 1 = Cyanite
         // 3 = Blutonium
         Block brBlocks = Block.getBlockFromName("bigreactors:blockmetals");
-        if(brBlocks != null){
-            registry.register(new BlockInfo(brBlocks, 0), 10);
+        if (brBlocks != null) {
+            registry.register(new BlockInfo(brBlocks), 10);
             registry.register(new BlockInfo(brBlocks, 1), 15);
             registry.register(new BlockInfo(brBlocks, 3), 20);
         }

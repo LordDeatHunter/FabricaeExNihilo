@@ -43,9 +43,9 @@ import java.util.Random;
 
 public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProvider, ITOPInfoProvider, IHasModel {
 
-    public static PropertyBool NEARBYLEAVES = PropertyBool.create("nearby_leaves");
+    public static final PropertyBool NEARBYLEAVES = PropertyBool.create("nearby_leaves");
 
-    public static IUnlistedProperty<IBlockState> LEAFBLOCK = new IUnlistedProperty<IBlockState>() {
+    public static final IUnlistedProperty<IBlockState> LEAFBLOCK = new IUnlistedProperty<IBlockState>() {
         @Override
         public String getName() {
             return "LeafBlock";
@@ -67,7 +67,7 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
         }
     };
 
-    public BlockInfestingLeaves(){
+    public BlockInfestingLeaves() {
         this(InfestedType.INFESTING);
         this.setUnlocalizedName("block_infesting_leaves");
         this.setRegistryName("block_infesting_leaves");
@@ -84,9 +84,6 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
 
     /**
      * Sets a normal leave to infested
-     * @param world
-     * @param state
-     * @param pos
      */
     public static void infestLeafBlock(World world, IBlockState state, BlockPos pos) {
         IBlockState leafState;
@@ -95,13 +92,15 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
             leafState = Blocks.LEAVES.getDefaultState();
         else leafState = state;
         world.setBlockState(pos, ModBlocks.infestingLeaves.getDefaultState().withProperty(DECAYABLE, true), 3);
-        ((ITileLeafBlock) world.getTileEntity(pos)).setLeafBlock(leafState);
+        if (world.getTileEntity(pos) != null)
+            ((ITileLeafBlock) world.getTileEntity(pos)).setLeafBlock(leafState);
     }
 
     /**
      * Used to set an existing infesting leaves block to infested
-     * @param world The world this is happening in
-     * @param pos The position of the block
+     *
+     * @param world     The world this is happening in
+     * @param pos       The position of the block
      * @param leafState The leaf state captured by the infesting leaves block block
      */
     public static void setInfested(World world, BlockPos pos, IBlockState leafState) {
@@ -114,24 +113,15 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
 
             world.setBlockState(pos, retval, 0b111);
 
-            ((ITileLeafBlock)world.getTileEntity(pos)).setLeafBlock(leafState);
-            ((BaseTileEntity)world.getTileEntity(pos)).markDirtyClient();
-            
-            System.out.println("world = " + world.getBlockState(pos));
-            System.out.println("((ITileLeafBlock)world.getTileEntity(pos)).getLeafBlock() = " + ((ITileLeafBlock) world.getTileEntity(pos)).getLeafBlock());
-        }
-        else if (Util.isLeaves(block) && !(block.getBlock() instanceof BlockInfestedLeaves)){
+            if (world.getTileEntity(pos) != null) {
+                ((ITileLeafBlock) world.getTileEntity(pos)).setLeafBlock(leafState);
+                ((BaseTileEntity) world.getTileEntity(pos)).markDirtyClient();
+            }
+        } else if (Util.isLeaves(block) && !(block.getBlock() instanceof BlockInfestedLeaves)) {
             LogUtil.error("Sent leaf change to wrong method, redirecting");
             infestLeafBlock(world, block, pos);
         }
     }
-
-    @Override
-    public void randomTick(World world, BlockPos pos, IBlockState state, Random rand) {
-        this.updateTick(world, pos, state, rand);
-        spread(world, pos, state, rand);
-    }
-
 
     public static void spread(World world, BlockPos pos, IBlockState state, Random rand) {
         if (!world.isRemote && state != null) {
@@ -147,6 +137,20 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
                 }
             }
         }
+    }
+
+    public static IBlockState getLeafState(IBlockState state) {
+        if (state instanceof IExtendedBlockState) {
+            return ((IExtendedBlockState) state).getValue(BlockInfestedLeaves.LEAFBLOCK);
+        }
+
+        return state;
+    }
+
+    @Override
+    public void randomTick(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull Random rand) {
+        this.updateTick(world, pos, state, rand);
+        spread(world, pos, state, rand);
     }
 
     @Override
@@ -169,8 +173,9 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
     }
 
     @Override
-    public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos){
-        if (state instanceof IExtendedBlockState){
+    @Nonnull
+    public IBlockState getExtendedState(@Nonnull IBlockState state, IBlockAccess world, BlockPos pos) {
+        if (state instanceof IExtendedBlockState) {
             IExtendedBlockState retval = (IExtendedBlockState) state;
             IBlockState leafState;
             TileEntity te = world.getTileEntity(pos);
@@ -203,11 +208,10 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
                 .withProperty(NEARBYLEAVES, (meta & 0b001) != 0);
     }
 
-
     /**
      * 3 bits for data:
-     *      0               0                0
-     *      checkDecay      decayable       nearbyLeaves
+     * 0               0                0
+     * checkDecay      decayable       nearbyLeaves
      */
     @Override
     public int getMetaFromState(IBlockState state) {
@@ -225,6 +229,7 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
     }
 
     @Override
+    @Nonnull
     public List<ItemStack> onSheared(@Nonnull ItemStack item, IBlockAccess world, BlockPos pos, int fortune) {
         ArrayList<ItemStack> ret = new ArrayList<>();
         ret.add(new ItemStack(this));
@@ -256,8 +261,7 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
                         if (world.rand.nextFloat() < leaves.getProgress() * ModConfig.crooking.stringChance) {
                             Util.dropItemInWorld(leaves, player, new ItemStack(Items.STRING, 1, 0), 0.02f);
                         }
-                    }
-                    else if (world.rand.nextFloat() < leaves.getProgress() * ModConfig.crooking.stringChance / 4.0d) {
+                    } else if (world.rand.nextFloat() < leaves.getProgress() * ModConfig.crooking.stringChance / 4.0d) {
                         Util.dropItemInWorld(leaves, player, new ItemStack(Items.STRING, 1, 0), 0.02f);
 
                     }
@@ -283,15 +287,7 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
 
     }
 
-    public static IBlockState getLeafState(IBlockState state){
-        if (state instanceof IExtendedBlockState){
-            return ((IExtendedBlockState)state).getValue(BlockInfestedLeaves.LEAFBLOCK);
-        }
-
-        return state;
-    }
-
-    enum InfestedType{
+    enum InfestedType {
         INFESTING,
         INFESTED
     }

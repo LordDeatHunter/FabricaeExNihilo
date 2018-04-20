@@ -1,7 +1,6 @@
 package exnihilocreatio.config;
 
 import exnihilocreatio.ExNihiloCreatio;
-import javafx.scene.shape.VertexFormat;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -14,16 +13,17 @@ public class ModConfig {
      * All Config Variables
      */
     @Config.Comment("These configs can be changed ClientSided without making problems with connecting to a server")
-    public static Client client = new Client();
-    public static Mechanics mechanics = new Mechanics();
-    public static Composting composting = new Composting();
-    public static InfestedLeaves infested_leaves = new InfestedLeaves();
-    public static Crooking crooking = new Crooking();
-    public static Misc misc = new Misc();
-    public static Sieve sieve = new Sieve();
-    public static Compatibility compatibility = new Compatibility();
-    public static Crucible crucible = new Crucible();
-    public static World world = new World();
+    public static final Client client = new Client();
+    public static final Mechanics mechanics = new Mechanics();
+    public static final Composting composting = new Composting();
+    public static final InfestedLeaves infested_leaves = new InfestedLeaves();
+    public static final Crooking crooking = new Crooking();
+    public static final Misc misc = new Misc();
+    public static final Sieve sieve = new Sieve();
+    public static final Compatibility compatibility = new Compatibility();
+    public static final Crucible crucible = new Crucible();
+    public static final World world = new World();
+    public static final Ore ore = new Ore();
 
     /**
      * All Config Classes
@@ -70,6 +70,8 @@ public class ModConfig {
                 "This is recommended to enable for Packmakers",
                 "For players just playing with this without wanting to configure something this is recommended to keep disabled"})
         public boolean enableJSONLoading = false;
+
+        public boolean oredictVanillaItems = true;
     }
 
     public static class Sieve {
@@ -84,6 +86,9 @@ public class ModConfig {
 
         @Config.Comment("Prevents unidict from merging the ore chunks into normal ore.")
         public boolean preventUnidict = true;
+        public boolean addYelloriteOreDict = true;
+        public boolean dankNullIntegration = true;
+        public boolean generalItemHandlerCompat = true;
 
         public static class TinkersConstructCompat {
             public boolean doTinkersConstructCompat = true;
@@ -104,6 +109,13 @@ public class ModConfig {
     public static class World {
         public boolean isSkyWorld = true;
         public int normalDropPercent = 100;
+    }
+
+    public static class Ore {
+        public String chunkBaseOreDictName = "ore";
+        public String pieceBaseOreDictName = "piece";
+        public String dustBaseOreDictName  = "dust";
+        public String ingotBaseOreDictName = "ingot";
     }
 
     /**

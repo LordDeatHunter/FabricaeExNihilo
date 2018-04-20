@@ -1,5 +1,8 @@
 package exnihilocreatio.blocks;
 
+import com.rwtema.extrautils2.itemhandler.SingleStackHandlerBase;
+import com.rwtema.extrautils2.items.ItemBagOfHolding;
+import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.compatibility.ITOPInfoProvider;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.ItemMesh;
@@ -27,12 +30,20 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import p455w0rd.danknull.init.ModItems;
+import p455w0rd.danknull.inventory.InventoryDankNull;
+import p455w0rd.danknull.util.DankNullUtils;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Map;
+
+import static exnihilocreatio.registries.manager.ExNihiloRegistryManager.SIEVE_REGISTRY;
 
 public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPInfoProvider {
 
@@ -41,6 +52,7 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPIn
     public BlockSieve() {
         super(Material.WOOD, "block_sieve");
         this.setHardness(2.0f);
+        this.setCreativeTab(ExNihiloCreatio.tabExNihilo);
         this.setDefaultState(this.blockState.getBaseState().withProperty(MESH, MeshType.NO_RENDER));
     }
 
@@ -77,6 +89,39 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPIn
                 return true;
             }
 
+            //region >>>>>> Checks whether the sieve is clicked with a inventory, if yes, then it takes a stack out of there
+            InventoryDankNull dank = null;
+            IItemHandler cap = null;
+            int slotNumber = -1;
+
+            if (!SIEVE_REGISTRY.canBeSifted(heldItem) && heldItem.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
+                if (ModConfig.compatibility.dankNullIntegration && Loader.isModLoaded("danknull") && heldItem.getItem() == ModItems.DANK_NULL) {
+                    dank = DankNullUtils.getNewDankNullInventory(heldItem);
+                    ItemStack dankStack = DankNullUtils.getSelectedStack(dank);
+                    if (SIEVE_REGISTRY.canBeSifted(dankStack)) {
+                        heldItem = dankStack;
+                    }
+                } else if (ModConfig.compatibility.generalItemHandlerCompat){
+                    cap = heldItem.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+                    if (cap != null){
+                        int slots = cap.getSlots();
+                        for (int i = 0; i < slots; i++) {
+                            ItemStack capStack = cap.getStackInSlot(i);
+                            if (capStack.isEmpty())
+                                continue;
+
+                            if (SIEVE_REGISTRY.canBeSifted(capStack)){
+                                heldItem = capStack;
+                                slotNumber = i;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            //endregion
+
+
             if (te.addBlock(heldItem)) {
                 if (!player.isCreative())
                     heldItem.shrink(1);
@@ -89,7 +134,22 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPIn
 
                             if (!heldItem.isEmpty() && te.isSieveSimilarToInput(sieve)) {
                                 if (sieve.addBlock(heldItem) && !player.isCreative()) {
+
                                     heldItem.shrink(1);
+
+                                    // dank/null needing this to show the correct amount
+                                    if (dank != null){
+                                        DankNullUtils.reArrangeStacks(dank);
+                                    } else if (cap != null && slotNumber != -1) {
+
+                                        // Extra Utils being special again....
+                                        if (cap instanceof ItemBagOfHolding.BagHoldingItemHandler) {
+                                            IItemHandler slotHandler = ((ItemBagOfHolding.BagHoldingItemHandler) cap).getSlotHandler(slotNumber);
+                                            if (slotHandler instanceof SingleStackHandlerBase) {
+                                                ((SingleStackHandlerBase) slotHandler).setStack(heldItem);
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -181,7 +241,7 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPIn
     }
 
     @Override
-    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+    public boolean shouldSideBeRendered(IBlockState blockState, @Nonnull IBlockAccess blockAccess, @Nonnull BlockPos pos, EnumFacing side) {
         return false;
     }
     //endregion
@@ -213,8 +273,8 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPIn
     public enum MeshType implements IStringSerializable {
         NONE(0, "none"), STRING(1, "string"), FLINT(2, "flint"), IRON(3, "iron"), DIAMOND(4, "diamond"), NO_RENDER(5, "no_render");
 
-        private int id;
-        private String name;
+        private final int id;
+        private final String name;
 
         MeshType(int id, String name) {
             this.id = id;

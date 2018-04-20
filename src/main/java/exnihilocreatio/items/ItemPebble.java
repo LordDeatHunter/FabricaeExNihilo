@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemPebble extends Item implements IHasModel {
-    private static List<String> names = Lists.newArrayList("stone", "granite", "diorite", "andesite");
+    private static final List<String> names = Lists.newArrayList("stone", "granite", "diorite", "andesite");
 
     public ItemPebble() {
         setUnlocalizedName("item_pebble");
@@ -49,7 +49,7 @@ public class ItemPebble extends Item implements IHasModel {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(@Nullable CreativeTabs tab, NonNullList<ItemStack> list) {
+    public void getSubItems(@Nullable CreativeTabs tab, @Nonnull NonNullList<ItemStack> list) {
         if (this.isInCreativeTab(tab))
             for (int i = 0; i < names.size(); i++) {
                 list.add(new ItemStack(this, 1, i));

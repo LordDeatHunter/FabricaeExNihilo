@@ -14,6 +14,8 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class ProjectileStone extends EntityThrowable {
     @Setter
     private ItemStack stack;
@@ -31,7 +33,7 @@ public class ProjectileStone extends EntityThrowable {
     }
 
     @Override
-    protected void onImpact(RayTraceResult result) {
+    protected void onImpact(@Nonnull RayTraceResult result) {
         if (result.entityHit != null) {
             result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, getThrower()), world.rand.nextInt(1));
         } else if (!getEntityWorld().isRemote) {

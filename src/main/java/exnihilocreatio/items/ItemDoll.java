@@ -35,7 +35,7 @@ public class ItemDoll extends Item implements IHasModel {
     public static final String SHULKER = "shulker"; // 2
     public static final String GUARDIAN = "guardian"; // 3
 
-    private static ArrayList<String> names = new ArrayList<>();
+    private static final ArrayList<String> names = new ArrayList<>();
 
     public ItemDoll() {
         super();
@@ -72,7 +72,7 @@ public class ItemDoll extends Item implements IHasModel {
      * @return true if spawn is successful
      */
     public boolean spawnMob(ItemStack stack, World world, BlockPos pos) {
-        switch (stack.getMetadata()){
+        switch (stack.getMetadata()) {
             case 0:
                 EntityBlaze blaze = new EntityBlaze(world);
                 blaze.setPosition(pos.getX(), pos.getY() + 1, pos.getZ());
@@ -106,7 +106,7 @@ public class ItemDoll extends Item implements IHasModel {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(@Nullable CreativeTabs tab, NonNullList<ItemStack> list) {
+    public void getSubItems(@Nullable CreativeTabs tab, @Nonnull NonNullList<ItemStack> list) {
         if (this.isInCreativeTab(tab))
             for (int i = 0; i < names.size(); i++)
                 list.add(new ItemStack(this, 1, i));
@@ -121,13 +121,13 @@ public class ItemDoll extends Item implements IHasModel {
 //            ModelLoader.setCustomModelResourceLocation(this, i, new ModelResourceLocation("exnihilocreatio:itemDoll", variant));
 //        }
 
-         List<ModelResourceLocation> locations = new ArrayList<>();
+        List<ModelResourceLocation> locations = new ArrayList<>();
         for (String name : names) {
             locations.add(new ModelResourceLocation(getRegistryName(), "type=" + name));
         }
 
-         ModelBakery.registerItemVariants(this, locations.toArray(new ModelResourceLocation[0]));
-         ModelLoader.setCustomMeshDefinition(this, stack -> locations.get(stack.getMetadata()));
+        ModelBakery.registerItemVariants(this, locations.toArray(new ModelResourceLocation[0]));
+        ModelLoader.setCustomMeshDefinition(this, stack -> locations.get(stack.getMetadata()));
 
     }
 
