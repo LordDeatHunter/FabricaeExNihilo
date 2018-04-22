@@ -149,6 +149,14 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
         return isRegistered(new BlockInfo(block.getDefaultState()));
     }
 
+    /**
+     * Just so that tinkers complement doesn't crash
+     */
+    @Deprecated
+    public boolean registered(Block block) {
+        return isRegistered(new BlockInfo(block.getDefaultState()));
+    }
+
     public boolean isRegistered(BlockInfo stackInfo) {
         return registry.keySet().stream().anyMatch(ingredient -> ingredient.test(stackInfo.getItemStack()));
     }
