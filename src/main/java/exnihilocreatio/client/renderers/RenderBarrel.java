@@ -4,12 +4,14 @@ import exnihilocreatio.client.models.ModelVertex;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.texturing.SpriteColor;
 import exnihilocreatio.tiles.TileBarrel;
+import exnihilocreatio.util.LogUtil;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.model.animation.FastTESR;
+import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nullable;
 

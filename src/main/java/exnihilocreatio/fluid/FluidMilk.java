@@ -10,12 +10,11 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class FluidWitchWater extends Fluid {
-
-    public FluidWitchWater() {
-        super("witchwater",
-                new ResourceLocation("exnihilocreatio:blocks/fluidwitchwaterstill"),
-                new ResourceLocation("exnihilocreatio:blocks/fluidwitchwaterflow"));
+public class FluidMilk extends Fluid  {
+    public FluidMilk() {
+        super("milk",
+                new ResourceLocation("exnihilocreatio:blocks/fluidmilkstill"),
+                new ResourceLocation("exnihilocreatio:blocks/fluidmilkflow"));
 
         FluidRegistry.registerFluid(this);
     }
@@ -34,5 +33,4 @@ public class FluidWitchWater extends Fluid {
 
         ModelLoader.setCustomStateMapper(block, mapper);
     }
-
 }
