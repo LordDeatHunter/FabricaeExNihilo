@@ -4,11 +4,12 @@
     "model": "forge:fluid"
   },
   "variants": {
-    "witchwater": [{
-        "custom": {"fluid": "witchwater"}
-      }],
-    "milk": [{
-        "custom": {"fluid": "milk"}
-      }]
+    "witchwater": [
+      {
+        "custom": {
+          "fluid": "witchwater"
+        }
+      }
+    ]
   }
 }

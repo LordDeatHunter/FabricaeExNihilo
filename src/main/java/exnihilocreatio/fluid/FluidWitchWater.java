@@ -13,9 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class FluidWitchWater extends Fluid {
 
     public FluidWitchWater() {
-        super("witchwater",
-                new ResourceLocation("exnihilocreatio:blocks/fluidwitchwaterstill"),
-                new ResourceLocation("exnihilocreatio:blocks/fluidwitchwaterflow"));
+        super("witchwater", new ResourceLocation("exnihilocreatio:blocks/fluidwitchwaterstill"), new ResourceLocation("exnihilocreatio:blocks/fluidwitchwaterflow"));
 
         FluidRegistry.registerFluid(this);
     }
