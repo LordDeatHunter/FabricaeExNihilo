@@ -93,11 +93,15 @@ public class TileCrucibleStone extends TileCrucibleBase {
             return 0;
         }
 
-        int heat = ExNihiloRegistryManager.HEAT_REGISTRY.getHeatAmount(new BlockInfo(stateBelow.getBlock()));
+        // Try to match metadata
+        int heat = ExNihiloRegistryManager.HEAT_REGISTRY.getHeatAmount(new BlockInfo(stateBelow));
 
-        if (heat != 0) {
+        // Try to match without metadata
+        if (heat == 0)
+            heat = ExNihiloRegistryManager.HEAT_REGISTRY.getHeatAmount(new BlockInfo(stateBelow.getBlock()));
+
+        if (heat != 0)
             return heat;
-        }
 
         TileEntity tile = getWorld().getTileEntity(posBelow);
 
