@@ -1,0 +1,33 @@
+{
+  "result": {
+    "item": "exnihilocreatio:item_doll",
+    "data": 5
+  },
+  "pattern": [
+    "xyx",
+    "zwz",
+    "xvx"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "v": {
+      "item": "minecraft:nether_wart"
+    },
+    "w": {
+      "item": "exnihilocreatio:item_material",
+      "data": 5
+    },
+    "x": {
+      "item": "thermalfoundation:material",
+      "data": 772
+    },
+    "y": {
+      "type": "forge:ore_dict",
+      "ore": "dustRedstone"
+    },
+    "z": {
+      "type": "forge:ore_dict",
+      "ore": "dustGlowstone"
+    }
+  }
+}

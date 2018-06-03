@@ -1,0 +1,32 @@
+{
+  "result": {
+    "item": "exnihilocreatio:item_doll",
+    "data": 7
+  },
+  "pattern": [
+    "xyx",
+    "zwz",
+    "xvx"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "v": {
+      "item": "minecraft:water_bucket"
+    },
+    "w": {
+      "item": "exnihilocreatio:item_material",
+      "data": 5
+    },
+    "x": {
+      "item": "minecraft:slime_ball"
+    },
+    "y": {
+      "item": "minecraft:dye",
+      "data": 4
+    },
+    "z": {
+      "type": "forge:ore_dict",
+      "ore": "dustGlowstone"
+    }
+  }
+}

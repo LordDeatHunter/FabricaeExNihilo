@@ -33,6 +33,26 @@
         "textures": {
           "layer0": "exnihilocreatio:items/dollguardian"
         }
+      },
+      "blizz": {
+        "textures": {
+          "layer0": "exnihilocreatio:items/dollblizz"
+        }
+      },
+      "blitz": {
+        "textures": {
+          "layer0": "exnihilocreatio:items/dollblitz"
+        }
+      },
+      "basalz": {
+        "textures": {
+          "layer0": "exnihilocreatio:items/dollbasalz"
+        }
+      },
+      "blueslime": {
+        "textures": {
+          "layer0": "exnihilocreatio:items/dollblueslime"
+        }
       }
     }
   }
