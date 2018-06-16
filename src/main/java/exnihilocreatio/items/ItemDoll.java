@@ -6,20 +6,22 @@ import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.monster.EntityBlaze;
-import net.minecraft.entity.monster.EntityEnderman;
-import net.minecraft.entity.monster.EntityGuardian;
-import net.minecraft.entity.monster.EntityShulker;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -30,12 +32,32 @@ import java.util.List;
 
 public class ItemDoll extends Item implements IHasModel {
 
-    public static final String BLAZE = "blaze"; // 0
-    public static final String ENDERMAN = "enderman"; // 1
-    public static final String SHULKER = "shulker"; // 2
-    public static final String GUARDIAN = "guardian"; // 3
+    public enum DollType {
+        BLAZE(0, "blaze", "minecraft:blaze", "lava", 1),
+        ENDERMAN(1, "enderman", "minecraft:enderman", "witchwater", 2),
+        SHULKER(2, "shulker", "minecraft:shulker", "witchwater", 1.5),
+        GUARDIAN(3, "guardian", "minecraft:guardian", "water", 1),
+        BLIZZ(4, "blizz", "thermalfoundation:blizz", "pyrotheum", 1),
+        BLITZ(5, "blitz", "thermalfoundation:blitz", "pyrotheum", 1),
+        BASALZ(6, "basalz", "thermalfoundation:basalz", "pyrotheum", 1),
+        BLUESLIME(7, "blueslime", "tconstruct:blueslime", "milk", 2);
 
-    private static final ArrayList<String> names = new ArrayList<>();
+        public final int meta;
+        public final String name;
+        public final String entityname;
+        public final String fluidname;
+        public final double posYCorrection;
+
+        private DollType(int meta, String name, String entityname, String fluidname, double posYCorrection) {
+            this.meta = meta;
+            this.name = name;
+            this.entityname = entityname;
+            this.fluidname = fluidname;
+            this.posYCorrection = posYCorrection;
+        }
+    }
+
+    private static final ArrayList<DollType> types = new ArrayList<>();
 
     public ItemDoll() {
         super();
@@ -45,23 +67,30 @@ public class ItemDoll extends Item implements IHasModel {
         setCreativeTab(ExNihiloCreatio.tabExNihilo);
         setHasSubtypes(true);
 
-        names.add(BLAZE);
-        names.add(ENDERMAN);
-        names.add(SHULKER);
-        names.add(GUARDIAN);
+        types.add(DollType.BLAZE.meta,DollType.BLAZE);
+        types.add(DollType.ENDERMAN.meta,DollType.ENDERMAN);
+        types.add(DollType.SHULKER.meta,DollType.SHULKER);
+        types.add(DollType.GUARDIAN.meta,DollType.GUARDIAN);
+
+        if (Loader.isModLoaded("thermalfoundation")) {
+            types.add(DollType.BLIZZ.meta,DollType.BLIZZ);
+            types.add(DollType.BLITZ.meta,DollType.BLITZ);
+            types.add(DollType.BASALZ.meta,DollType.BASALZ);
+        }
+
+        if (Loader.isModLoaded("tconstruct")) {
+            types.add(DollType.BLUESLIME.meta,DollType.BLUESLIME);
+        }
 
         Data.ITEMS.add(this);
     }
 
     public Fluid getSpawnFluid(ItemStack stack) {
-        switch (stack.getMetadata()) {
-            case 0:
-                return FluidRegistry.LAVA;
-            case 3:
-                return FluidRegistry.WATER;
-            default:
-                return ModFluids.fluidWitchwater;
-        }
+        Fluid fluid = FluidRegistry.getFluid(types.get(stack.getMetadata()).fluidname);
+        if (fluid != null)
+            return fluid;
+        else
+            return ModFluids.fluidWitchwater;
     }
 
     /**
@@ -72,63 +101,51 @@ public class ItemDoll extends Item implements IHasModel {
      * @return true if spawn is successful
      */
     public boolean spawnMob(ItemStack stack, World world, BlockPos pos) {
-        switch (stack.getMetadata()) {
-            case 0:
-                EntityBlaze blaze = new EntityBlaze(world);
-                blaze.setPosition(pos.getX(), pos.getY() + 1, pos.getZ());
+        DollType type = types.get(stack.getMetadata());
+        if (type == null) return false;
 
-                return world.spawnEntity(blaze);
-            case 1:
-                EntityEnderman enderman = new EntityEnderman(world);
-                enderman.setPosition(pos.getX(), pos.getY() + 2, pos.getZ());
-
-                return world.spawnEntity(enderman);
-            case 2:
-                EntityShulker shulker = new EntityShulker(world);
-                shulker.setPosition(pos.getX(), pos.getY() + 1.5, pos.getZ());
-
-                return world.spawnEntity(shulker);
-            case 3:
-                EntityGuardian guardian = new EntityGuardian(world);
-                guardian.setPosition(pos.getX(), pos.getY() + 1, pos.getZ());
-
-                return world.spawnEntity(guardian);
-            default:
-                return false;
-        }
+        Entity spawnee = EntityList.createEntityByIDFromName(new ResourceLocation(type.entityname), world);
+        if (spawnee != null) {
+            spawnee.setPosition(pos.getX(), pos.getY() + type.posYCorrection, pos.getZ());
+            return world.spawnEntity(spawnee);
+        } else
+            return false;
     }
 
     @Override
     @Nonnull
     public String getUnlocalizedName(ItemStack stack) {
-        return getUnlocalizedName() + "." + names.get(stack.getItemDamage());
+        return getUnlocalizedName() + "." + types.get(stack.getItemDamage()).name;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(@Nullable CreativeTabs tab, @Nonnull NonNullList<ItemStack> list) {
         if (this.isInCreativeTab(tab))
-            for (int i = 0; i < names.size(); i++)
-                list.add(new ItemStack(this, 1, i));
+            for (DollType type : types) {
+                list.add(new ItemStack(this, 1, type.meta));
+            }
     }
 
-    @SideOnly(Side.CLIENT)
     @Override
+    @SideOnly(Side.CLIENT)
     public void initModel(ModelRegistryEvent event) {
 
-//        for (int i = 0; i < names.size(); i++) {
-//            String variant = "type=" + names.get(i);
-//            ModelLoader.setCustomModelResourceLocation(this, i, new ModelResourceLocation("exnihilocreatio:itemDoll", variant));
-//        }
-
         List<ModelResourceLocation> locations = new ArrayList<>();
-        for (String name : names) {
-            locations.add(new ModelResourceLocation(getRegistryName(), "type=" + name));
+        for (DollType type : types) {
+            locations.add(new ModelResourceLocation(getRegistryName(), "type=" + type.name));
         }
 
         ModelBakery.registerItemVariants(this, locations.toArray(new ModelResourceLocation[0]));
         ModelLoader.setCustomMeshDefinition(this, stack -> locations.get(stack.getMetadata()));
 
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+    {
+        tooltip.add(I18n.translateToLocal(getUnlocalizedName(stack) + ".desc"));
     }
 
 }
