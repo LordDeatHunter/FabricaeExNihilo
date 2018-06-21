@@ -8,6 +8,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -17,7 +18,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -91,7 +91,7 @@ public class ItemDoll extends Item implements IHasModel {
     @Override
     @Nonnull
     public String getUnlocalizedName(ItemStack stack) {
-        return getUnlocalizedName() + "." + DollType.getByMeta(stack.getItemDamage()).name;
+        return getUnlocalizedName() + "." + DollType.getByMeta(stack.getMetadata()).name;
     }
 
     @Override
@@ -108,7 +108,7 @@ public class ItemDoll extends Item implements IHasModel {
     public void initModel(ModelRegistryEvent event) {
 
         Int2ObjectMap<ModelResourceLocation> locations = new Int2ObjectArrayMap<>();
-        for (DollType type : existingTypes.values()) {
+        for (DollType type : DollType.values()) {
             locations.put(type.meta, new ModelResourceLocation(getRegistryName(), "type=" + type.name));
         }
 
@@ -120,19 +120,23 @@ public class ItemDoll extends Item implements IHasModel {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(I18n.translateToLocal(getUnlocalizedName(stack) + ".desc"));
+        if (existingTypes.containsKey(stack.getMetadata())) {
+            tooltip.add(I18n.format(getUnlocalizedName(stack) + ".desc"));
+        } else {
+            tooltip.add(I18n.format("debug.mod_not_installed.desc", DollType.getByMeta(stack.getMetadata()).modid));
+        }
     }
 
     public enum DollType {
         // @formatter:off
-        BLAZE(      0, "blaze",     "minecraft:blaze",          "lava",         1),
-        ENDERMAN(   1, "enderman",  "minecraft:enderman",       "witchwater",   2),
-        SHULKER(    2, "shulker",   "minecraft:shulker",        "witchwater",   1.5),
-        GUARDIAN(   3, "guardian",  "minecraft:guardian",       "water",        1),
-        BLIZZ(      4, "blizz",     "thermalfoundation:blizz",  "pyrotheum",    1),
-        BLITZ(      5, "blitz",     "thermalfoundation:blitz",  "pyrotheum",    1),
-        BASALZ(     6, "basalz",    "thermalfoundation:basalz", "pyrotheum",    1),
-        BLUESLIME(  7, "blueslime", "tconstruct:blueslime",      "milk",        2);
+        BLAZE(      0, "blaze",     "minecraft",        "minecraft:blaze",          "lava",         1),
+        ENDERMAN(   1, "enderman",  "minecraft",        "minecraft:enderman",       "witchwater",   2),
+        SHULKER(    2, "shulker",   "minecraft",        "minecraft:shulker",        "witchwater",   1.5),
+        GUARDIAN(   3, "guardian",  "minecraft",        "minecraft:guardian",       "water",        1),
+        BLIZZ(      4, "blizz",     "thermalfoundation","thermalfoundation:blizz",  "pyrotheum",    1),
+        BLITZ(      5, "blitz",     "thermalfoundation","thermalfoundation:blitz",  "pyrotheum",    1),
+        BASALZ(     6, "basalz",    "thermalfoundation","thermalfoundation:basalz", "pyrotheum",    1),
+        BLUESLIME(  7, "blueslime", "tconstruct",       "tconstruct:blueslime",      "milk",        2);
         // @formatter:on
         private static final Int2ObjectMap<DollType> ALL_TYPES = new Int2ObjectArrayMap<>();
 
@@ -144,13 +148,15 @@ public class ItemDoll extends Item implements IHasModel {
 
         public final int meta;
         public final String name;
+        public final String modid;
         public final String entityname;
         public final String fluidname;
         public final double posYCorrection;
 
-        DollType(int meta, String name, String entityname, String fluidname, double posYCorrection) {
+        DollType(int meta, String name, String modid, String entityname, String fluidname, double posYCorrection) {
             this.meta = meta;
             this.name = name;
+            this.modid = modid;
             this.entityname = entityname;
             this.fluidname = fluidname;
             this.posYCorrection = posYCorrection;

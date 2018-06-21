@@ -38,6 +38,9 @@ item.item_doll.basalz.desc=Drop in a barrel of pyrotheum to spawn Basalz
 item.item_doll.blueslime.name=Oozing Doll
 item.item_doll.blueslime.desc=Drop in a barrel of milk to spawn Blue Slime
 
+#This will look like '!!!{modid} is not installed, Item has no use!!!'
+debug.mod_not_installed.desc=!!!%s is not installed, Item has no use!!!
+
 item.item_cooked_silkworm.name=Cooked Silkworm
 
 item.item_seed_birch.name=Birch Seed
