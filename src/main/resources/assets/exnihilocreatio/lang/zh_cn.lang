@@ -38,6 +38,9 @@ item.item_doll.basalz.desc=向装有烈焰之炽焱的桶中投入其会生成�
 item.item_doll.blueslime.name=粘液人偶
 item.item_doll.blueslime.desc=向装有牛奶的桶中投入其会生成蓝色史莱姆
 
+#This will look like '!!!{modid} is not installed, Item has no use!!!'
+debug.mod_not_installed.desc=！！！%s没有安装，此物品暂无用处！！！
+
 item.item_cooked_silkworm.name=烤蚕
 
 item.item_seed_birch.name=白桦木种子
