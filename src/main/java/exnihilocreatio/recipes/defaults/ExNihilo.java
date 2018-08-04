@@ -291,6 +291,10 @@ public class ExNihilo implements IRecipeDefaults {
         if (!OreDictionary.getOres("oreNickel").isEmpty()) {
             registry.register("nickel", new Color("FFFFCC"), null);
         }
+
+        if (!OreDictionary.getOres("oreUranium").isEmpty()) {
+            registry.register("uranium", new Color("4E5B43"), null);
+        }
     }
 
     @Override
