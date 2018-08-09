@@ -114,6 +114,14 @@ public class ModItems {
             OreDictionary.registerOre("listAllmeatcooked", Items.COOKED_RABBIT);
         }
 
+
+        if (ModConfig.misc.oredictExNihiloSeeds){
+            // Seeds
+            for(ItemSeedBase seed : itemSeeds){
+                OreDictionary.registerOre("listAllseed", (Item) seed);
+            }
+        }
+
         ItemOre oreYellorium = ExNihiloRegistryManager.ORE_REGISTRY.getOreItem("yellorium");
         if (ModConfig.compatibility.addYelloriteOreDict && oreYellorium != null){
             OreDictionary.registerOre("oreYellorite", new ItemStack(oreYellorium, 1, EnumOreSubtype.CHUNK.getMeta()));

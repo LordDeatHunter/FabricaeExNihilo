@@ -72,6 +72,8 @@ public class ModConfig {
         public boolean enableJSONLoading = false;
 
         public boolean oredictVanillaItems = true;
+
+        public boolean oredictExNihiloSeeds = true;
     }
 
     public static class Sieve {
