@@ -120,6 +120,8 @@ public class ModItems {
             for(ItemSeedBase seed : itemSeeds){
                 OreDictionary.registerOre("listAllseed", (Item) seed);
             }
+            // Grass Seeds
+            OreDictionary.registerOre("listAllseed", new ItemStack((Item) resources, 1, 4));
         }
 
         ItemOre oreYellorium = ExNihiloRegistryManager.ORE_REGISTRY.getOreItem("yellorium");
