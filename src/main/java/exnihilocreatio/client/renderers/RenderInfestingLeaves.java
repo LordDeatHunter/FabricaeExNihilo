@@ -116,7 +116,7 @@ public class RenderInfestingLeaves extends FastTESR<TileInfestingLeaves> {
                             break;
 
                         case NORMAL:
-                            buffer.normal(face.getFrontOffsetX(), face.getFrontOffsetY(), face.getFrontOffsetZ());
+                            buffer.normal(face.getXOffset(), face.getYOffset(), face.getZOffset());
                             break;
 
                         case POSITION:

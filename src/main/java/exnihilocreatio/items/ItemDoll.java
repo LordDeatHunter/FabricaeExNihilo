@@ -37,7 +37,7 @@ public class ItemDoll extends Item implements IHasModel {
 
     public ItemDoll() {
         super();
-        setUnlocalizedName("item_doll");
+        setTranslationKey("item_doll");
         setRegistryName("item_doll");
 
         setCreativeTab(ExNihiloCreatio.tabExNihilo);
@@ -90,8 +90,8 @@ public class ItemDoll extends Item implements IHasModel {
 
     @Override
     @Nonnull
-    public String getUnlocalizedName(ItemStack stack) {
-        return getUnlocalizedName() + "." + DollType.getByMeta(stack.getMetadata()).name;
+    public String getTranslationKey(ItemStack stack) {
+        return getTranslationKey() + "." + DollType.getByMeta(stack.getMetadata()).name;
     }
 
     @Override
@@ -121,7 +121,7 @@ public class ItemDoll extends Item implements IHasModel {
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         if (existingTypes.containsKey(stack.getMetadata())) {
-            tooltip.add(I18n.format(getUnlocalizedName(stack) + ".desc"));
+            tooltip.add(I18n.format(getTranslationKey(stack) + ".desc"));
         } else {
             tooltip.add(I18n.format("debug.mod_not_installed.desc", DollType.getByMeta(stack.getMetadata()).modid));
         }

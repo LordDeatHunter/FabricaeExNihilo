@@ -43,7 +43,7 @@ public class ItemResource extends Item implements IHasModel {
         super();
 
         setCreativeTab(ExNihiloCreatio.tabExNihilo);
-        setUnlocalizedName("item_material");
+        setTranslationKey("item_material");
         setRegistryName("item_material");
         setHasSubtypes(true);
         Data.ITEMS.add(this);
@@ -72,8 +72,8 @@ public class ItemResource extends Item implements IHasModel {
 
     @Override
     @Nonnull
-    public String getUnlocalizedName(ItemStack stack) {
-        return getUnlocalizedName() + "." + names.get(stack.getItemDamage());
+    public String getTranslationKey(ItemStack stack) {
+        return getTranslationKey() + "." + names.get(stack.getItemDamage());
     }
 
     @Override

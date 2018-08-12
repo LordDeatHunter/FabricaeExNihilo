@@ -6,6 +6,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
+import javax.annotation.meta.When;
 
 public class ItemBlockMeta extends ItemBlock implements IHasModel {
 
@@ -20,10 +21,10 @@ public class ItemBlockMeta extends ItemBlock implements IHasModel {
         return damage;
     }
 
+
     @Override
     @Nonnull
-    public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName(stack) + "." + stack.getItemDamage();
+    public String getTranslationKey(ItemStack stack) {
+        return super.getTranslationKey(stack) + "." + stack.getItemDamage();
     }
-
 }

@@ -60,7 +60,7 @@ public class RenderBarrel extends FastTESR<TileBarrel> {
                         break;
 
                     case NORMAL:
-                        buffer.normal(vert.face.getFrontOffsetX(), vert.face.getFrontOffsetY(), vert.face.getFrontOffsetZ());
+                        buffer.normal(vert.face.getXOffset(), vert.face.getYOffset(), vert.face.getZOffset());
                         break;
 
                     case POSITION:

@@ -10,7 +10,7 @@ public class ItemCookedSilkworm extends ItemFood implements IHasModel {
 
     public ItemCookedSilkworm() {
         super(2, 0.6f, false);
-        this.setUnlocalizedName("item_cooked_silkworm");
+        this.setTranslationKey("item_cooked_silkworm");
         this.setRegistryName("item_cooked_silkworm");
         Data.ITEMS.add(this);
     }

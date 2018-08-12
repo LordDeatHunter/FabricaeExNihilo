@@ -29,7 +29,7 @@ public class ItemPebble extends Item implements IHasModel {
     private static final List<String> names = Lists.newArrayList("stone", "granite", "diorite", "andesite");
 
     public ItemPebble() {
-        setUnlocalizedName("item_pebble");
+        setTranslationKey("item_pebble");
         setRegistryName("item_pebble");
         setCreativeTab(ExNihiloCreatio.tabExNihilo);
         setHasSubtypes(true);
@@ -43,8 +43,8 @@ public class ItemPebble extends Item implements IHasModel {
 
     @Override
     @Nonnull
-    public String getUnlocalizedName(ItemStack stack) {
-        return getUnlocalizedName() + "." + names.get(stack.getItemDamage());
+    public String getTranslationKey(ItemStack stack) {
+        return getTranslationKey() + "." + names.get(stack.getItemDamage());
     }
 
     @Override

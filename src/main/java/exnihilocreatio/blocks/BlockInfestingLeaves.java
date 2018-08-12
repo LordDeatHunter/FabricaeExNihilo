@@ -69,7 +69,7 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
 
     public BlockInfestingLeaves() {
         this(InfestedType.INFESTING);
-        this.setUnlocalizedName("block_infesting_leaves");
+        this.setTranslationKey("block_infesting_leaves");
         this.setRegistryName("block_infesting_leaves");
         Data.BLOCKS.add(this);
         this.setDefaultState(
@@ -88,7 +88,7 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
     public static void infestLeafBlock(World world, IBlockState state, BlockPos pos) {
         IBlockState leafState;
         //Prevents a crash with forestry using the new model system
-        if (Block.REGISTRY.getNameForObject(state.getBlock()).getResourceDomain().equalsIgnoreCase("forestry"))
+        if (Block.REGISTRY.getNameForObject(state.getBlock()).getNamespace().equalsIgnoreCase("forestry"))
             leafState = Blocks.LEAVES.getDefaultState();
         else leafState = state;
         world.setBlockState(pos, ModBlocks.infestingLeaves.getDefaultState().withProperty(DECAYABLE, true), 3);

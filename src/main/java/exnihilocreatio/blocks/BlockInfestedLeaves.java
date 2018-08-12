@@ -27,7 +27,7 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
 
     public BlockInfestedLeaves() {
         super(InfestedType.INFESTED);
-        this.setUnlocalizedName("block_infested_leaves");
+        this.setTranslationKey("block_infested_leaves");
         this.setRegistryName("block_infested_leaves");
         this.setCreativeTab(ExNihiloCreatio.tabExNihilo);
         Data.BLOCKS.add(this);

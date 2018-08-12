@@ -21,7 +21,7 @@ public class ItemMesh extends Item implements IHasModel {
     public ItemMesh() {
         super();
         this.setHasSubtypes(true);
-        this.setUnlocalizedName("item_mesh");
+        this.setTranslationKey("item_mesh");
         this.setRegistryName("item_mesh");
         this.setMaxStackSize(1);
         this.setCreativeTab(ExNihiloCreatio.tabExNihilo);
@@ -51,8 +51,8 @@ public class ItemMesh extends Item implements IHasModel {
 
     @Override
     @Nonnull
-    public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName() + "." + stack.getItemDamage();
+    public String getTranslationKey(ItemStack stack) {
+        return super.getTranslationKey() + "." + stack.getItemDamage();
     }
 
     @Override

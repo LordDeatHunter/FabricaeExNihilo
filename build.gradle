@@ -27,6 +27,7 @@ buildscript {
 
 plugins {
     id "com.github.ben-manes.versions" version "0.19.0"
+    id "org.jetbrains.kotlin.jvm" version "1.2.51"
 }
 
 apply plugin: "net.minecraftforge.gradle.forge"
@@ -41,9 +42,9 @@ sourceCompatibility=1.8
 targetCompatibility=1.8
 
 minecraft {
-    version = "1.12.2-14.23.4.2708"
+    version = "1.12.2-14.23.4.2749"
     runDir = "run"
-	mappings = "snapshot_20180601"
+	mappings = "snapshot_20180811"
     useDepAts = true
 
     replace "@VERSION@", "$mod_version"
@@ -85,6 +86,11 @@ repositories
     maven {
         url "http://chickenbones.net/maven/"
     }
+
+    // for forgelin
+    maven {
+        url "http://maven.shadowfacts.net/"
+    }
 }
 
 dependencies
@@ -108,6 +114,9 @@ dependencies
     deobfCompile ('CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.8.476')
 
     compileOnly "org.projectlombok:lombok:1.18.0"
+
+    compile group: "net.shadowfacts", name: "Forgelin", version: "1.7.3"
+    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 }
 
 processResources
@@ -157,5 +166,11 @@ uploadArchives {
         mavenDeployer {
             repository(url: "file://" + System.getenv("local_maven"))
         }
+    }
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }

@@ -139,7 +139,7 @@ public class BlockInfo implements StackInfo {
         // If not, accept any block that matches this, otherwise
         // Only accept blocks with meta 0
         NonNullList<ItemStack> subItems = NonNullList.create();
-        state.getBlock().getSubBlocks(state.getBlock().getCreativeTabToDisplayOn(), subItems);
+        state.getBlock().getSubBlocks(state.getBlock().getCreativeTab(), subItems);
         if (subItems.size() <= 1)
             this.isWildcard = true;
     }

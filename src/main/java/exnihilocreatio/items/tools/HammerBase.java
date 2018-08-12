@@ -19,7 +19,7 @@ public class HammerBase extends ItemTool implements IHammer, IHasModel {
 
     public HammerBase(String name, int maxUses, ToolMaterial material) {
         super(material, Sets.newHashSet(new Block[]{}));
-        this.setUnlocalizedName(name);
+        this.setTranslationKey(name);
         this.setRegistryName(name);
         this.setMaxDamage(maxUses);
         this.miningLevel = material.getHarvestLevel();

@@ -21,13 +21,13 @@ public class BlockFluidWitchwater extends BlockFluidClassic {
         super(ModFluids.fluidWitchwater, Material.WATER);
 
         this.setRegistryName("witchwater");
-        this.setUnlocalizedName("witchwater");
+        this.setTranslationKey("witchwater");
 
         Data.BLOCKS.add(this);
     }
 
     @Override
-    public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+    public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
 
         if (world.isRemote)
             return;

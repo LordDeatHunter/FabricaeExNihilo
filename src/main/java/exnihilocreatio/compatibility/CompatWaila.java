@@ -64,7 +64,7 @@ public class CompatWaila implements IWailaPlugin, IWailaDataProvider {
             TileSieve sieve = (TileSieve) accessor.getTileEntity();
 
             if (!sieve.getMeshStack().isEmpty()) {
-                currenttip.add("Mesh: " + I18n.format(sieve.getMeshStack().getUnlocalizedName() + ".name"));
+                currenttip.add("Mesh: " + I18n.format(sieve.getMeshStack().getTranslationKey() + ".name"));
             } else {
                 currenttip.add("Mesh: None");
             }

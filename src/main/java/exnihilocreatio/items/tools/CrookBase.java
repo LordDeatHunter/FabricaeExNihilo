@@ -19,7 +19,7 @@ public class CrookBase extends ItemTool implements ICrook, IHasModel {
     public CrookBase(String name, int maxUses) {
         super(ToolMaterial.WOOD, Sets.newHashSet(new Block[]{}));
 
-        this.setUnlocalizedName(name);
+        this.setTranslationKey(name);
         this.setRegistryName(name);
         this.setMaxDamage(maxUses);
         this.setCreativeTab(ExNihiloCreatio.tabExNihilo);

@@ -33,7 +33,7 @@ public class ItemSeedBase extends Item implements IPlantable, IHasModel {
     public ItemSeedBase(String name, IBlockState plant) {
         super();
         this.setRegistryName("item_seed_" + name);
-        this.setUnlocalizedName("item_seed_" + name);
+        this.setTranslationKey("item_seed_" + name);
         this.plant = plant;
         this.name = name;
         type = EnumPlantType.Plains;

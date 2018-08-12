@@ -10,7 +10,7 @@ import net.minecraft.block.material.Material;
 public class BlockBaseFalling extends BlockFalling implements IHasModel {
     public BlockBaseFalling(SoundType sound, String name) {
         super(Material.SAND);
-        this.setUnlocalizedName(name);
+        this.setTranslationKey(name);
         this.setRegistryName(name);
         this.setSoundType(sound);
         this.setCreativeTab(ExNihiloCreatio.tabExNihilo);

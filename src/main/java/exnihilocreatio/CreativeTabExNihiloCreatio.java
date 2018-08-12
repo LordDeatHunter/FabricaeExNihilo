@@ -17,7 +17,7 @@ public class CreativeTabExNihiloCreatio extends CreativeTabs {
     @Override
     @SideOnly(Side.CLIENT)
     @Nonnull
-    public ItemStack getTabIconItem() {
+    public ItemStack createIcon() {
         return new ItemStack(Item.getItemFromBlock(ModBlocks.sieve), 1);
     }
 }

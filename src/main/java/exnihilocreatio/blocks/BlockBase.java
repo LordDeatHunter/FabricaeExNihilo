@@ -8,7 +8,7 @@ import net.minecraft.block.material.Material;
 public class BlockBase extends Block implements IHasModel {
     public BlockBase(Material mat, String name) {
         super(mat);
-        setUnlocalizedName(name);
+        setTranslationKey(name);
         setRegistryName(name);
         Data.BLOCKS.add(this);
     }

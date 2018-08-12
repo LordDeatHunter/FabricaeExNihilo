@@ -259,7 +259,7 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPIn
             probeInfo.text("Mesh: None");
             return;
         }
-        probeInfo.text("Mesh: " + I18n.format(sieve.getMeshStack().getUnlocalizedName() + ".name"));
+        probeInfo.text("Mesh: " + I18n.format(sieve.getMeshStack().getTranslationKey() + ".name"));
 
         if (mode == ProbeMode.EXTENDED) {
             Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(sieve.getMeshStack());

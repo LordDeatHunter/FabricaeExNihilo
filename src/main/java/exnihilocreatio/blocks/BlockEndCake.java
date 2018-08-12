@@ -24,7 +24,7 @@ public class BlockEndCake extends BlockCake implements IHasModel {
         setHardness(0.5F);
         setSoundType(SoundType.CLOTH);
         setRegistryName("block_end_cake");
-        setUnlocalizedName("block_end_cake");
+        setTranslationKey("block_end_cake");
         setCreativeTab(ExNihiloCreatio.tabExNihilo);
         Data.BLOCKS.add(this);
     }

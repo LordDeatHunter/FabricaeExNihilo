@@ -69,7 +69,7 @@ public class BlockCrucibleStone extends BlockCrucibleBase implements IHasSpecial
 
     @Override
     public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
-        if (itemIn == getCreativeTabToDisplayOn()) {
+        if (itemIn == getCreativeTab()) {
             items.add(new ItemStack(this, 1, 0));
             items.add(new ItemStack(this, 1, 1));
         }

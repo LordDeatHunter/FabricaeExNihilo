@@ -110,7 +110,7 @@ public class OreRegistry extends BaseRegistryList<Ore> {
         for (ItemOre ore : itemOreRegistry) {
             ResourceLocation group = new ResourceLocation(ExNihiloCreatio.MODID, "exores");
             ResourceLocation baseName = new ResourceLocation(ExNihiloCreatio.MODID, "ore_compression_");
-            ResourceLocation recipeLocation = new ResourceLocation(baseName.getResourceDomain(), baseName.getResourcePath() + ore.getOre().getName());
+            ResourceLocation recipeLocation = new ResourceLocation(baseName.getNamespace(), baseName.getPath() + ore.getOre().getName());
 
             GameRegistry.addShapedRecipe(recipeLocation, group,
                     new ItemStack(ore, 1, EnumOreSubtype.CHUNK.getMeta()),

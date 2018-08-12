@@ -34,7 +34,7 @@ public abstract class BlockCrucibleBase extends Block implements ITOPInfoProvide
 
     public BlockCrucibleBase(String name, Material material) {
         super(material);
-        setUnlocalizedName(name);
+        setTranslationKey(name);
         setRegistryName(name);
 
         setCreativeTab(ExNihiloCreatio.tabExNihilo);
