@@ -96,7 +96,7 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> {
         if (ingredient != null) {
             return registry.get(ingredient);
         } else {
-            return Meltable.EMPTY;
+            return Meltable.Companion.getEMPTY();
         }
     }
 

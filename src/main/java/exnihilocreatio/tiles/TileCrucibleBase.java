@@ -114,7 +114,7 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
         float solidProportion = ((float) itemCount) / MAX_ITEMS;
         if (currentItem.isValid()) {
             Meltable meltable = crucibleRegistry.getMeltable(currentItem);
-            if (meltable != Meltable.EMPTY)
+            if (meltable != Meltable.Companion.getEMPTY())
                 solidProportion += ((double) solidAmount) / (MAX_ITEMS * meltable.getAmount());
         }
 
@@ -132,7 +132,7 @@ public abstract class TileCrucibleBase extends BaseTileEntity implements ITickab
         float solidProportion = ((float) itemCount) / MAX_ITEMS;
         if (currentItem.isValid()) {
             Meltable meltable = crucibleRegistry.getMeltable(currentItem);
-            if (meltable != Meltable.EMPTY)
+            if (meltable != Meltable.Companion.getEMPTY())
                 solidProportion += ((double) solidAmount) / (MAX_ITEMS * meltable.getAmount());
         }
         return solidProportion;

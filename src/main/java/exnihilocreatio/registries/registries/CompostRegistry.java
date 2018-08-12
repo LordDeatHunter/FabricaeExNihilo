@@ -108,7 +108,7 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
         if (ingredient != null) return registry.get(ingredient);
         ingredient = oreRegistry.keySet().stream().filter(entry -> entry.test(stack)).findFirst().orElse(null);
         if (ingredient != null) return oreRegistry.get(ingredient);
-        else return Compostable.EMPTY;
+        else return Compostable.Companion.getEMPTY();
     }
 
     public Compostable getItem(StackInfo info) {

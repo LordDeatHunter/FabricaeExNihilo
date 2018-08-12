@@ -63,9 +63,12 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
 
     public void register(String name, ItemStack reward, float chance, float fortuneChance) {
         Ingredient ingredient = new OreIngredientStoring(name);
-
         CrookReward crookReward = new CrookReward(reward, chance, fortuneChance);
 
+        register(ingredient, crookReward);
+    }
+
+    public void register(Ingredient ingredient, CrookReward reward) {
         Ingredient search = registry.keySet()
                 .stream()
                 .filter(entry -> IngredientUtil.ingredientEquals(entry, ingredient))
@@ -74,10 +77,10 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
 
 
         if (search != null) {
-            registry.get(search).add(crookReward);
+            registry.get(search).add(reward);
         } else {
             NonNullList<CrookReward> drops = NonNullList.create();
-            drops.add(crookReward);
+            drops.add(reward);
             registry.put(ingredient, drops);
         }
     }
