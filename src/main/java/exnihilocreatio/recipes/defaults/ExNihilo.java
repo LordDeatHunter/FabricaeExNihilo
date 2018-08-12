@@ -177,10 +177,22 @@ public class ExNihilo implements IRecipeDefaults {
         // All default Ores
         for (ItemOre ore : oreRegistry.getItemOreRegistry()) {
             if (oreRegistry.getSieveBlackList().contains(ore)) continue;
-            registry.register("gravel", new ItemInfo(ore), getDropChance(0.07f), MeshType.FLINT.getID());
-            registry.register("gravel", new ItemInfo(ore), getDropChance(0.1f), MeshType.IRON.getID());
-            registry.register("gravel", new ItemInfo(ore), getDropChance(0.2f), MeshType.DIAMOND.getID());
-
+            if(ore.getOre().getName() == "iron"){
+                registry.register("gravel", new ItemInfo(ore), getDropChance(0.1f), MeshType.FLINT.getID());
+                registry.register("gravel", new ItemInfo(ore), getDropChance(0.15f), MeshType.IRON.getID());
+                registry.register("gravel", new ItemInfo(ore), getDropChance(0.25f), MeshType.DIAMOND.getID());
+                registry.register(new BlockInfo(Blocks.SAND,1), new ItemInfo(ore), getDropChance(0.4f), MeshType.DIAMOND.getID());
+            }
+            else if (ore.getOre().getName() == "uranium") {
+                registry.register("gravel", new ItemInfo(ore), getDropChance(0.008f), MeshType.FLINT.getID());
+                registry.register("gravel", new ItemInfo(ore), getDropChance(0.009f), MeshType.IRON.getID());
+                registry.register("gravel", new ItemInfo(ore), getDropChance(0.01f), MeshType.DIAMOND.getID());
+            }
+            else{
+                registry.register("gravel", new ItemInfo(ore), getDropChance(0.05f), MeshType.FLINT.getID());
+                registry.register("gravel", new ItemInfo(ore), getDropChance(0.075f), MeshType.IRON.getID());
+                registry.register("gravel", new ItemInfo(ore), getDropChance(0.15f), MeshType.DIAMOND.getID());
+            }
         }
         // Seeds
         for (ItemSeedBase seed : ModItems.itemSeeds) {
@@ -290,6 +302,10 @@ public class ExNihilo implements IRecipeDefaults {
 
         if (!OreDictionary.getOres("oreNickel").isEmpty()) {
             registry.register("nickel", new Color("FFFFCC"), null);
+        }
+
+        if (!OreDictionary.getOres("oreUranium").isEmpty()) {
+            registry.register("uranium", new Color("4E5B43"), null);
         }
     }
 
