@@ -3,6 +3,7 @@ package exnihilocreatio.util;
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -144,7 +145,7 @@ public class ItemInfo implements StackInfo {
         // If not, accept any item that matches this, otherwise
         // Only accept items with meta 0
         NonNullList<ItemStack> subItems = NonNullList.create();
-        item.getSubItems(item.getCreativeTab(), subItems);
+        item.getSubItems(item.getCreativeTab() == null ? CreativeTabs.SEARCH : item.getCreativeTab(), subItems);
         if (subItems.size() <= 1)
             this.isWildcard = true;
     }
