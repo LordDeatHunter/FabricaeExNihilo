@@ -20,7 +20,7 @@ object Crook {
     @ZenMethod
     @JvmStatic
     fun removeAll() {
-        CrTIntegration.removeActions += ENCRemoveAll(ExNihiloRegistryManager.COMPOST_REGISTRY, "Crook")
+        CrTIntegration.removeActions += ENCRemoveAll(ExNihiloRegistryManager.CROOK_REGISTRY, "Crook")
     }
 
     @ZenMethod
@@ -38,10 +38,7 @@ object Crook {
         private val input: Ingredient = CraftTweakerMC.getIngredient(input)
         private val reward = CrookReward(reward.internal as ItemStack, chance, fortuneChance)
 
-        override fun apply() {
-            ExNihiloRegistryManager.CROOK_REGISTRY.register(input, reward)
-        }
-
-        override fun describe() = "Adding Compost recipe for $input with reward $reward"
+        override fun apply() = ExNihiloRegistryManager.CROOK_REGISTRY.register(input, reward)
+        override fun describe() = "Adding Compost recipe for ${input.matchingStacks} with reward $reward"
     }
 }

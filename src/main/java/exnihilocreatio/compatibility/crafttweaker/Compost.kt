@@ -45,6 +45,6 @@ object Compost {
             ExNihiloRegistryManager.COMPOST_REGISTRY.register(input, Compostable(value, color, block))
         }
 
-        override fun describe() = "Adding Compost recipe for $input with value $value and Color $color"
+        override fun describe() = "Adding Compost recipe for ${input.matchingStacks} with value $value and Color $color"
     }
 }

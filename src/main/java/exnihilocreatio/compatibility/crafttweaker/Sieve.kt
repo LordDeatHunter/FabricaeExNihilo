@@ -61,6 +61,6 @@ object Sieve {
             ExNihiloRegistryManager.SIEVE_REGISTRY.register(input, Siftable(ItemInfo(drop.internal as ItemStack), chance, meshType.id))
         }
 
-        override fun describe() = "Adding Sieve recipe for $input for Mesh ${meshType.getName()}"
+        override fun describe() = "Adding Sieve recipe for ${input.matchingStacks} for Mesh ${meshType.getName()}"
     }
 }

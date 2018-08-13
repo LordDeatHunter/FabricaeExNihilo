@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @EqualsAndHashCode
 @ToString
@@ -19,11 +20,11 @@ public class Ore {
     @Getter
     private ItemInfo result;
     @Getter
-    private HashMap<String, String> translations;
+    private Map<String, String> translations;
     @Getter
     private String oredictName;
 
-    public Ore(String name, Color color, ItemInfo result, HashMap<String, String> translations, String oredictName) {
+    public Ore(String name, Color color, ItemInfo result, Map<String, String> translations, String oredictName) {
         this.name = name;
         this.color = color;
         this.result = result;

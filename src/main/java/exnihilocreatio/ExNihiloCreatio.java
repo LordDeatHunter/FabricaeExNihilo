@@ -86,6 +86,12 @@ public class ExNihiloCreatio {
         if (Loader.isModLoaded("tconstruct") && ModConfig.compatibility.tinkers_construct_compat.doTinkersConstructCompat) {
             CompatTConstruct.postInit();
         }
+
+        if (Loader.isModLoaded("crafttweaker")) {
+            System.out.println("Loading crt");
+            CrTIntegration.loadIActions();
+            crtActionsLoaded = true;
+        }
     }
 
     @SubscribeEvent
@@ -111,11 +117,6 @@ public class ExNihiloCreatio {
         ExNihiloRegistryManager.MILK_ENTITY_REGISTRY.loadJson(new File(configDirectory, "MilkEntityRegistry.json"));
 
         MinecraftForge.EVENT_BUS.post(new RegistryReloadedEvent());
-
-        if (Loader.isModLoaded("crafttweaker")) {
-            CrTIntegration.loadIActions();
-            crtActionsLoaded = true;
-        }
     }
 
     @EventHandler

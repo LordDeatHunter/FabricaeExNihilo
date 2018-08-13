@@ -84,7 +84,7 @@ public class OreRegistry extends BaseRegistryList<Ore> {
          *              Otherwise, the hunk will be smelted into this.
          * @return Ore, containing the base Ore object.
          */
-    public Ore register(String name, Color color, ItemInfo info, HashMap<String, String> translations, String oredictName) {
+    public Ore register(String name, Color color, ItemInfo info, Map<String, String> translations, String oredictName) {
         Ore ore = new Ore(name, color, info, translations, oredictName);
         register(ore);
 
