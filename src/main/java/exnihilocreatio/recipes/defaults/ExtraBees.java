@@ -4,7 +4,6 @@ import exnihilocreatio.registries.registries.*;
 import exnihilocreatio.util.BlockInfo;
 import lombok.Getter;
 import net.minecraft.init.Blocks;
-import net.minecraftforge.fluids.FluidRegistry;
 
 public class ExtraBees implements IRecipeDefaults {
     @Getter
