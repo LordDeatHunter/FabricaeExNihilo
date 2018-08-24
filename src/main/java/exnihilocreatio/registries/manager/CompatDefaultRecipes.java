@@ -22,6 +22,8 @@ public class CompatDefaultRecipes {
         MODS.add(new EnderIO());
         MODS.add(new DraconicEvolution());
         MODS.add(new ThermalFoundation());
+        MODS.add(new Forestry());
+
     }
 
     public void registerCompost(CompostRegistry registry) {

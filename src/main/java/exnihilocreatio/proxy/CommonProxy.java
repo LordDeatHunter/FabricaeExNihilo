@@ -39,9 +39,6 @@ public abstract class CommonProxy {
 
     @SubscribeEvent
     public static void onRecipeRegistry(RegistryEvent.Register<IRecipe> e) {
-        // Recipes.init();
-
-        ExNihiloCreatio.loadConfigs();
 
         Recipes.init();
         e.getRegistry().registerAll(Data.RECIPES.toArray(new IRecipe[RECIPES.size()]));
@@ -63,6 +60,7 @@ public abstract class CommonProxy {
     }
 
     public void postInit(FMLPostInitializationEvent event) {
+        ExNihiloCreatio.loadConfigs(); // Moved here to allow Forestry to register Bee templates. ... Breaks Ex Compressum
     }
 
     public void registerModels(ModelRegistryEvent event) {
