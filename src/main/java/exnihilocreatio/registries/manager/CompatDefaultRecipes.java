@@ -23,6 +23,10 @@ public class CompatDefaultRecipes {
         MODS.add(new DraconicEvolution());
         MODS.add(new ThermalFoundation());
         MODS.add(new Forestry());
+        MODS.add(new MoreBees());
+        MODS.add(new ExtraBees());
+        MODS.add(new MagicBees());
+        MODS.add(new BinniesBotany());
 
     }
 

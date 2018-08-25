@@ -57,10 +57,11 @@ public abstract class CommonProxy {
     }
 
     public void init(FMLInitializationEvent event) {
+        ExNihiloCreatio.loadConfigs(); // Moved here to allow Forestry to register Bee templates.
+
     }
 
     public void postInit(FMLPostInitializationEvent event) {
-        ExNihiloCreatio.loadConfigs(); // Moved here to allow Forestry to register Bee templates. ... Breaks Ex Compressum
     }
 
     public void registerModels(ModelRegistryEvent event) {
