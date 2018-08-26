@@ -13,7 +13,6 @@ public class EntityInfo {
     @Getter
     private Class <? extends Entity > entityClass;
 
-    @Getter
     private String name;
 
     public EntityInfo(String entityName){
@@ -62,4 +61,8 @@ public class EntityInfo {
     }
 
     public static EntityInfo EMPTY = new EntityInfo(null);
+
+    public String getName() {
+        return name;
+    }
 }

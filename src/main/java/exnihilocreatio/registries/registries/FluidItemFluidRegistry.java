@@ -23,9 +23,9 @@ public class FluidItemFluidRegistry extends BaseRegistryList<FluidItemFluid> {
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
-                        .registerTypeAdapter(StackInfo.class, new CustomItemInfoJson())
-                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
+                        .registerTypeAdapter(ItemInfo.class, CustomItemInfoJson.INSTANCE)
+                        .registerTypeAdapter(StackInfo.class, CustomItemInfoJson.INSTANCE)
+                        .registerTypeAdapter(BlockInfo.class, CustomBlockInfoJson.INSTANCE)
                         .create(),
                 ExNihiloRegistryManager.FLUID_ITEM_FLUID_DEFAULT_REGISTRY_PROVIDERS
         );

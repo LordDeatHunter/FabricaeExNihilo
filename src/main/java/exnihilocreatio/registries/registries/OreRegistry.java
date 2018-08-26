@@ -51,10 +51,10 @@ public class OreRegistry extends BaseRegistryList<Ore> {
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
-                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
-                        .registerTypeAdapter(Ore.class, new CustomOreJson())
-                        .registerTypeAdapter(Color.class, new CustomColorJson())
+                        .registerTypeAdapter(ItemInfo.class,  CustomItemInfoJson.INSTANCE)
+                        .registerTypeAdapter(BlockInfo.class,  CustomBlockInfoJson.INSTANCE)
+                        .registerTypeAdapter(Ore.class,  CustomOreJson.INSTANCE)
+                        .registerTypeAdapter(Color.class,  CustomColorJson.INSTANCE)
                         .create(),
                 ExNihiloRegistryManager.ORE_DEFAULT_REGISTRY_PROVIDERS
         );

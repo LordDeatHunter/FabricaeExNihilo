@@ -34,9 +34,9 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Sifta
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
-                        .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
-                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
+                        .registerTypeAdapter(Ingredient.class, CustomIngredientJson.INSTANCE)
+                        .registerTypeAdapter(OreIngredientStoring.class, CustomIngredientJson.INSTANCE)
+                        .registerTypeAdapter(ItemInfo.class, CustomItemInfoJson.INSTANCE)
                         .enableComplexMapKeySerialization()
                         .create(),
                 new com.google.gson.reflect.TypeToken<Map<Ingredient, List<Siftable>>>() {}.getType(),

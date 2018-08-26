@@ -30,9 +30,9 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(ItemStack.class, new CustomItemStackJson())
-                        .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
-                        .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
+                        .registerTypeAdapter(ItemStack.class, CustomItemStackJson.INSTANCE)
+                        .registerTypeAdapter(Ingredient.class, CustomIngredientJson.INSTANCE)
+                        .registerTypeAdapter(OreIngredientStoring.class, CustomIngredientJson.INSTANCE)
                         .enableComplexMapKeySerialization()
                         .create(),
                 new TypeToken<Map<Ingredient, List<CrookReward>>>() {

@@ -30,10 +30,10 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<Hamm
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(ItemStack.class, new CustomItemStackJson())
-                        .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
-                        .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
-                        .registerTypeAdapter(HammerReward.class, new CustomHammerRewardJson())
+                        .registerTypeAdapter(ItemStack.class,  CustomItemStackJson.INSTANCE)
+                        .registerTypeAdapter(Ingredient.class,  CustomIngredientJson.INSTANCE)
+                        .registerTypeAdapter(OreIngredientStoring.class,  CustomIngredientJson.INSTANCE)
+                        .registerTypeAdapter(HammerReward.class,  CustomHammerRewardJson.INSTANCE)
                         .enableComplexMapKeySerialization()
                         .create(),
                 new com.google.gson.reflect.TypeToken<Map<Ingredient, List<HammerReward>>>() {}.getType(),
