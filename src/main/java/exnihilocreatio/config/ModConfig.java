@@ -4,6 +4,7 @@ import exnihilocreatio.ExNihiloCreatio;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -59,6 +60,8 @@ public class ModConfig {
         public double stringChance = 1.0;
         public double stringFortuneChance = 1.0;
         public int numberOfTimesToTestVanillaDrops = 3;
+        @Config.Comment("Disable the ExNihilo Crooks, useful if another mod adds compatible crooks")
+        public boolean disableCrookCrafting = Loader.isModLoaded("inspirations");
     }
 
     public static class Misc {
