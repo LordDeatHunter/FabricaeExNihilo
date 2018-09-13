@@ -5,6 +5,7 @@ import exnihilocreatio.util.Data
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.Entity
+import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.entity.monster.*
 import net.minecraft.entity.passive.EntityAnimal
@@ -35,16 +36,7 @@ class BlockFluidWitchwater : BlockFluidClassic(ModFluids.fluidWitchwater, Materi
             return
 
         when (entity) {
-            is EntitySkeleton -> {
-                entity.setDead()
-
-                val witherSkeleton = EntityWitherSkeleton(world)
-                witherSkeleton.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, entity.rotationYaw, entity.rotationPitch)
-                witherSkeleton.renderYawOffset = entity.renderYawOffset
-                witherSkeleton.health = witherSkeleton.maxHealth
-
-                world.spawnEntity(witherSkeleton)
-            }
+            is EntitySkeleton -> replaceMob(world, entity, EntityWitherSkeleton(world))
 
             is EntityCreeper -> {
                 if (!entity.powered) {
@@ -53,29 +45,12 @@ class BlockFluidWitchwater : BlockFluidClassic(ModFluids.fluidWitchwater, Materi
                 }
             }
 
-            is EntitySpider -> {
-                if (entity !is EntityCaveSpider) {
-                    entity.setDead()
+            is EntitySpider ->
+                if (entity !is EntityCaveSpider)
+                    replaceMob(world, entity, EntityCaveSpider(world))
 
-                    val caveSpider = EntityCaveSpider(world)
-                    caveSpider.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, entity.rotationYaw, entity.rotationPitch)
-                    caveSpider.renderYawOffset = entity.renderYawOffset
-                    caveSpider.health = caveSpider.maxHealth
 
-                    world.spawnEntity(caveSpider)
-                }
-            }
-
-            is EntitySquid -> {
-                entity.setDead()
-
-                val ghast = EntityGhast(world)
-                ghast.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, entity.rotationYaw, entity.rotationPitch)
-                ghast.renderYawOffset = entity.renderYawOffset
-                ghast.health = ghast.maxHealth
-
-                world.spawnEntity(ghast)
-            }
+            is EntitySquid -> replaceMob(world, entity, EntityGhast(world))
 
             is EntityVillager -> {
                 val prof = entity.professionForge
@@ -87,17 +62,12 @@ class BlockFluidWitchwater : BlockFluidClassic(ModFluids.fluidWitchwater, Materi
                     else -> EntityZombieVillager(world).apply { this.forgeProfession = prof }
                 }
 
-                entity.setDead()
-                spawnEntity.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, entity.rotationYaw, entity.rotationPitch)
-                spawnEntity.renderYawOffset = entity.renderYawOffset
-                spawnEntity.health = spawnEntity.maxHealth
-
-                world.spawnEntity(spawnEntity)
+                replaceMob(world, entity, spawnEntity)
             }
 
-            is EntityAnimal -> {
+            is EntityAnimal ->
                 entity.onStruckByLightning(EntityLightningBolt(world, entity.posX, entity.posY, entity.posZ, true))
-            }
+
 
             is EntityPlayer -> {
                 entity.addPotionEffect(PotionEffect(MobEffects.BLINDNESS, 210, 0))
@@ -107,6 +77,16 @@ class BlockFluidWitchwater : BlockFluidClassic(ModFluids.fluidWitchwater, Materi
             }
 
         }
+    }
+
+    fun replaceMob(world: World, toKill: EntityLivingBase, toSpawn: EntityLivingBase) {
+        toSpawn.setLocationAndAngles(toKill.posX, toKill.posY, toKill.posZ, toKill.rotationYaw, toKill.rotationPitch)
+        toSpawn.renderYawOffset = toKill.renderYawOffset
+        toSpawn.health = toSpawn.maxHealth
+
+        toKill.setDead()
+        world.spawnEntity(toSpawn)
+
     }
 
     companion object {
