@@ -361,11 +361,11 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register("listAllveggie", water);
 
         registry.register(new ItemInfo(Blocks.SAPLING, 0), water);
-        registry.register(new ItemInfo(Blocks.SAPLING, 1), water.copy().setTextureOverride(new BlockInfo(Blocks.LEAVES, 1)));
-        registry.register(new ItemInfo(Blocks.SAPLING, 2), water.copy().setTextureOverride(new BlockInfo(Blocks.LEAVES, 2)));
-        registry.register(new ItemInfo(Blocks.SAPLING, 3), water.copy().setTextureOverride(new BlockInfo(Blocks.LEAVES, 3)));
-        registry.register(new ItemInfo(Blocks.SAPLING, 4), water.copy().setTextureOverride(new BlockInfo(Blocks.LEAVES2, 0)));
-        registry.register(new ItemInfo(Blocks.SAPLING, 5), water.copy().setTextureOverride(new BlockInfo(Blocks.LEAVES2, 1)));
+        registry.register(new ItemInfo(Blocks.SAPLING, 1), water.copy().setTextureOverrideChain(new BlockInfo(Blocks.LEAVES, 1)));
+        registry.register(new ItemInfo(Blocks.SAPLING, 2), water.copy().setTextureOverrideChain(new BlockInfo(Blocks.LEAVES, 2)));
+        registry.register(new ItemInfo(Blocks.SAPLING, 3), water.copy().setTextureOverrideChain(new BlockInfo(Blocks.LEAVES, 3)));
+        registry.register(new ItemInfo(Blocks.SAPLING, 4), water.copy().setTextureOverrideChain(new BlockInfo(Blocks.LEAVES2, 0)));
+        registry.register(new ItemInfo(Blocks.SAPLING, 5), water.copy().setTextureOverrideChain(new BlockInfo(Blocks.LEAVES2, 1)));
         registry.register(new ItemInfo(Items.APPLE), water);
     }
 
