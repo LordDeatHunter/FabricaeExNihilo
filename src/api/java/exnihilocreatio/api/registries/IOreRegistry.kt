@@ -23,7 +23,7 @@ interface IOreRegistry : IRegistryList<Ore> {
      * Otherwise, the hunk will be smelted into this.
      * @return Ore, containing the base Ore object.
      */
-    fun register(name: String, color: Color, info: ItemInfo, translations: Map<String, String>? = null, oredictName: String? = null): Ore
+    fun register(name: String, color: Color, info: ItemInfo? = null, translations: Map<String, String>? = null, oredictName: String? = null): Ore
 
     fun getOreItem(name: String): ItemOre?
     fun isRegistered(name: String): Boolean

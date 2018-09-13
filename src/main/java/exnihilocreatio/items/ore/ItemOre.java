@@ -21,6 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings("deprecation")
 public class ItemOre extends Item implements IHasModel, IHasSpecialRegistry {
@@ -88,7 +89,7 @@ public class ItemOre extends Item implements IHasModel, IHasSpecialRegistry {
                 break;
         }
 
-        HashMap<String, String> transMap = getOre().getTranslations();
+        Map<String, String> transMap = getOre().getTranslations();
         String transString = StringUtils.capitalize(name);
 
         if (transMap != null && FMLCommonHandler.instance().getSide() == Side.CLIENT){

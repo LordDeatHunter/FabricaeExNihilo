@@ -1,13 +1,11 @@
 package exnihilocreatio.registries.types
 
 import exnihilocreatio.util.BlockInfo
-import lombok.AllArgsConstructor
-import lombok.EqualsAndHashCode
 
 data class Meltable @JvmOverloads constructor(
         val fluid: String,
         var amount: Int,
-        var textureOverride: BlockInfo = BlockInfo.EMPTY
+        private var textureOverride: BlockInfo = BlockInfo.EMPTY
 ) {
     fun copy(): Meltable {
         return Meltable(fluid, amount, textureOverride)
@@ -17,6 +15,8 @@ data class Meltable @JvmOverloads constructor(
         this.textureOverride = textureOverride
         return this
     }
+
+    fun getTextureOverride(): BlockInfo = textureOverride
 
     companion object {
         val EMPTY = Meltable("", 0)
