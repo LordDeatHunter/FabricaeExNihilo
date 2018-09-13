@@ -39,8 +39,8 @@ public class ModItems {
     public static final HammerBase hammerDiamond = new HammerBase("hammer_diamond", 4096, Item.ToolMaterial.DIAMOND);
     public static final HammerBase hammerGold = new HammerBase("hammer_gold", 64, Item.ToolMaterial.GOLD);
 
-    public static final CrookBase crookWood = new CrookBase("crook_wood", 64);
-    public static final CrookBase crookBone = new CrookBase("crook_bone", 256);
+    public static final CrookBase crookWood = new CrookBase("crook_wood", 64,0);
+    public static final CrookBase crookBone = new CrookBase("crook_bone", 256, 1);
 
     public static final ItemMesh mesh = new ItemMesh();
 

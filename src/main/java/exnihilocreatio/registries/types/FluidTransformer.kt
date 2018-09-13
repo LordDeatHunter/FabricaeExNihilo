@@ -4,7 +4,7 @@ import exnihilocreatio.util.BlockInfo
 import lombok.EqualsAndHashCode
 import java.util.*
 
-@EqualsAndHashCode
+// TODO: MOVE TO API PACKAGE ON BREAKING VERSION CHANGE
 data class FluidTransformer(
         val inputFluid: String,
         val outputFluid: String,

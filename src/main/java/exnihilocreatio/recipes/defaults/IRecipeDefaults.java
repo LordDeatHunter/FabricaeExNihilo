@@ -2,6 +2,7 @@ package exnihilocreatio.recipes.defaults;
 
 import exnihilocreatio.registries.registries.*;
 
+// TODO: MOVE TO API PACKAGE ON BREAKING VERSION CHANGE
 public interface IRecipeDefaults {
     String getMODID();
 

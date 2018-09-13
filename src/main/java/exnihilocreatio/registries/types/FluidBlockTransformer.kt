@@ -4,6 +4,7 @@ import exnihilocreatio.util.BlockInfo
 import exnihilocreatio.util.EntityInfo
 import net.minecraft.item.crafting.Ingredient
 
+// TODO: MOVE TO API PACKAGE ON BREAKING VERSION CHANGE
 data class FluidBlockTransformer(val fluidName: String,
                                  val input: Ingredient,
                                  val output: BlockInfo,

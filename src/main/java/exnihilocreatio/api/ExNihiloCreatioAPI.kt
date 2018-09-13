@@ -3,10 +3,12 @@ package exnihilocreatio.api
 import exnihilocreatio.api.registries.*
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager
 
+// TODO: MOVE TO API PACKAGE ON BREAKING VERSION CHANGE
 object ExNihiloCreatioAPI {
     //---------------------------------------------------------------
     //                        ALL REGISTRIES
     //---------------------------------------------------------------
+
     val COMPOST_REGISTRY: ICompostRegistry = ExNihiloRegistryManager.COMPOST_REGISTRY
     val CROOK_REGISTRY: ICrookRegistry = ExNihiloRegistryManager.CROOK_REGISTRY
     val SIEVE_REGISTRY: ISieveRegistry = ExNihiloRegistryManager.SIEVE_REGISTRY
@@ -21,4 +23,5 @@ object ExNihiloCreatioAPI {
     val CRUCIBLE_STONE_REGISTRY: ICrucibleRegistry = ExNihiloRegistryManager.CRUCIBLE_STONE_REGISTRY
     val CRUCIBLE_WOOD_REGISTRY: ICrucibleRegistry = ExNihiloRegistryManager.CRUCIBLE_WOOD_REGISTRY
     val MILK_ENTITY_REGISTRY: IMilkEntityRegistry = ExNihiloRegistryManager.MILK_ENTITY_REGISTRY
+
 }

@@ -18,7 +18,6 @@ import exnihilocreatio.registries.registries.prefab.BaseRegistryList;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
-import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelBakery;

@@ -3,6 +3,7 @@ package exnihilocreatio.registries.types
 import exnihilocreatio.texturing.Color
 import exnihilocreatio.util.BlockInfo
 
+// TODO: MOVE TO API PACKAGE ON BREAKING VERSION CHANGE
 data class Compostable(
         val value: Float = 0.toFloat(),
         val color: Color? = null,

@@ -2,6 +2,7 @@ package exnihilocreatio.registries.types
 
 import exnihilocreatio.util.BlockInfo
 
+// TODO: MOVE TO API PACKAGE ON BREAKING VERSION CHANGE
 data class Meltable @JvmOverloads constructor(
         val fluid: String,
         var amount: Int,
