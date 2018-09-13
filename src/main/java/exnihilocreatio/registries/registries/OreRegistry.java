@@ -35,6 +35,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import wanion.unidict.UniDict;
 
 import java.io.FileReader;
@@ -42,10 +43,7 @@ import java.util.*;
 
 public class OreRegistry extends BaseRegistryList<Ore> implements IOreRegistry {
 
-    @Getter
     private List<ItemOre> itemOreRegistry = new ArrayList<>();
-
-    @Getter
     private Set<ItemOre> sieveBlackList = new HashSet<>(); // A black list of ores to not register
 
     public OreRegistry() {
@@ -208,5 +206,17 @@ public class OreRegistry extends BaseRegistryList<Ore> implements IOreRegistry {
     @Override
     public List<?> getRecipeList() {
         return Lists.newLinkedList();
+    }
+
+    @NotNull
+    @Override
+    public List<ItemOre> getItemOreRegistry() {
+        return itemOreRegistry;
+    }
+
+    @NotNull
+    @Override
+    public Set<ItemOre> getSieveBlackList() {
+        return sieveBlackList;
     }
 }

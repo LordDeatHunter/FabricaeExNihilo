@@ -40,7 +40,6 @@ import java.util.List;
 public class BlockBarrel extends BlockBase implements ITileEntityProvider, ITOPInfoProvider {
 
     private final AxisAlignedBB boundingBox = new AxisAlignedBB(0.0625f, 0, 0.0625f, 0.9375f, 1f, 0.9375f);
-    @Getter
     private int tier;
 
     public BlockBarrel(int tier, Material material) {
@@ -180,5 +179,7 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider, ITOPI
         }
     }
 
-
+    public int getTier() {
+        return tier;
+    }
 }

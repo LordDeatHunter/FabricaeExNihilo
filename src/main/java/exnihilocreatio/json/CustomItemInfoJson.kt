@@ -4,12 +4,23 @@ import com.google.gson.*
 import exnihilocreatio.util.ItemInfo
 import exnihilocreatio.util.LogUtil
 import net.minecraft.item.Item
+import net.minecraft.nbt.JsonToNBT
+import net.minecraft.nbt.NBTException
+import net.minecraft.nbt.NBTTagCompound
 
 import java.lang.reflect.Type
 
 object CustomItemInfoJson : JsonDeserializer<ItemInfo>, JsonSerializer<ItemInfo> {
     override fun serialize(src: ItemInfo, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
-        return JsonPrimitive(src.item.registryName!!.toString() + ":" + src.meta)
+
+        if (src.nbt == null || src.nbt.isEmpty)
+            return JsonPrimitive(src.item.registryName!!.toString() + ":" + src.meta)
+
+        return JsonObject().apply {
+            add("name", context.serialize(src.item.registryName!!.toString()))
+            add("meta", context.serialize(src.meta))
+            add("nbt", context.serialize(src.nbt.toString()))
+        }
     }
 
     @Throws(JsonParseException::class)
@@ -25,13 +36,22 @@ object CustomItemInfoJson : JsonDeserializer<ItemInfo>, JsonSerializer<ItemInfo>
 
             val item = Item.getByNameOrId(name)
 
+            var nbt = NBTTagCompound()
+            if (json.asJsonObject.has("nbt")) {
+                try {
+                    nbt = JsonToNBT.getTagFromJson(json.asJsonObject.get("nbt").toString())
+                } catch (e: NBTException) {
+                    LogUtil.error("Could not convert JSON to NBT: " + json.asJsonObject.get("nbt").toString())
+                }
+            }
+
             if (item == null) {
                 LogUtil.error("Error parsing JSON: Invalid Item: " + json.toString())
                 LogUtil.error("This may result in crashing or other undefined behavior")
                 return ItemInfo.EMPTY
             }
 
-            return ItemInfo(item, meta)
+            return ItemInfo(item, meta, nbt)
         }
     }
 }
