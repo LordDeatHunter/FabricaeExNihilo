@@ -3,6 +3,7 @@ package exnihilocreatio.registries.registries;
 import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import exnihilocreatio.api.registries.IMilkEntityRegistry;
 import exnihilocreatio.json.CustomBlockInfoJson;
 import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
@@ -16,7 +17,7 @@ import net.minecraftforge.fluids.Fluid;
 import java.io.FileReader;
 import java.util.List;
 
-public class MilkEntityRegistry extends BaseRegistryList<Milkable> {
+public class MilkEntityRegistry extends BaseRegistryList<Milkable> implements IMilkEntityRegistry {
     public MilkEntityRegistry() {
         super(
                 new GsonBuilder()

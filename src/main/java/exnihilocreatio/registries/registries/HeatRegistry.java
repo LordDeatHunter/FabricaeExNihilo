@@ -3,6 +3,7 @@ package exnihilocreatio.registries.registries;
 import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import exnihilocreatio.api.registries.IHeatRegistry;
 import exnihilocreatio.compatibility.jei.crucible.HeatSourcesRecipe;
 import exnihilocreatio.json.CustomBlockInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
@@ -15,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HeatRegistry extends BaseRegistryMap<BlockInfo, Integer> {
+public class HeatRegistry extends BaseRegistryMap<BlockInfo, Integer> implements IHeatRegistry {
 
     public HeatRegistry() {
         super(

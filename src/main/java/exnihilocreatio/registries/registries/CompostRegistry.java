@@ -3,6 +3,7 @@ package exnihilocreatio.registries.registries;
 import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import exnihilocreatio.api.registries.ICompostRegistry;
 import exnihilocreatio.compatibility.jei.barrel.compost.CompostRecipe;
 import exnihilocreatio.json.CustomBlockInfoJson;
 import exnihilocreatio.json.CustomColorJson;
@@ -31,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> {
+public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> implements ICompostRegistry {
 
     protected final Map<Ingredient, Compostable> oreRegistry = new HashMap<>();
 

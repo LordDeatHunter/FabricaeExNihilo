@@ -3,6 +3,7 @@ package exnihilocreatio.registries.registries;
 import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import exnihilocreatio.api.registries.ICrookRegistry;
 import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.json.CustomItemStackJson;
 import exnihilocreatio.registries.ingredient.IngredientUtil;
@@ -24,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<CrookReward>> {
+public class CrookRegistry extends BaseRegistryMap<Ingredient, List<CrookReward>> implements ICrookRegistry {
 
     public CrookRegistry() {
         super(
@@ -111,7 +112,7 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, NonNullList<Crook
             Ingredient ingredient = IngredientUtil.parseFromString(key);
 
             if (ingredient != null) {
-                NonNullList<CrookReward> list = registry.getOrDefault(ingredient, NonNullList.create());
+                List<CrookReward> list = registry.getOrDefault(ingredient, NonNullList.create());
                 list.addAll(value);
                 registry.put(ingredient, list);
             }

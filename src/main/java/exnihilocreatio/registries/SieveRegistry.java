@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * @deprecated use classes from [{@link exnihilocreatio.api.ExNihiloCreatioAPI}]
+ */
 @Deprecated
 public class SieveRegistry {
 

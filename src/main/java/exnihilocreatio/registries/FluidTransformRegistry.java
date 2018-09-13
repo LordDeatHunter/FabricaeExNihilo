@@ -5,7 +5,9 @@ import exnihilocreatio.registries.types.FluidTransformer;
 import exnihilocreatio.util.BlockInfo;
 
 import java.util.ArrayList;
-
+/**
+ * @deprecated use classes from [{@link exnihilocreatio.api.ExNihiloCreatioAPI}]
+ */
 @Deprecated
 public class FluidTransformRegistry {
 

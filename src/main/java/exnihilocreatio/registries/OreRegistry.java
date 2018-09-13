@@ -7,7 +7,9 @@ import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.ItemInfo;
 
 import java.util.HashSet;
-
+/**
+ * @deprecated use classes from [{@link exnihilocreatio.api.ExNihiloCreatioAPI}]
+ */
 @Deprecated
 public class OreRegistry {
     /**

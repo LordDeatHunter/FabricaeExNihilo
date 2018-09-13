@@ -11,6 +11,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.crafting.CraftingHelper;
 
+/**
+ * @deprecated use classes from [{@link exnihilocreatio.api.ExNihiloCreatioAPI}]
+ */
 @Deprecated
 public class CompostRegistry {
 

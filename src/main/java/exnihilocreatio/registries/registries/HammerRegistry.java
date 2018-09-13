@@ -3,6 +3,7 @@ package exnihilocreatio.registries.registries;
 import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import exnihilocreatio.api.registries.IHammerRegistry;
 import exnihilocreatio.compatibility.jei.hammer.HammerRecipe;
 import exnihilocreatio.json.CustomHammerRewardJson;
 import exnihilocreatio.json.CustomIngredientJson;
@@ -24,7 +25,7 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import java.io.FileReader;
 import java.util.*;
 
-public class HammerRegistry extends BaseRegistryMap<Ingredient, NonNullList<HammerReward>> {
+public class HammerRegistry extends BaseRegistryMap<Ingredient, List<HammerReward>> implements IHammerRegistry {
 
     public HammerRegistry() {
         super(

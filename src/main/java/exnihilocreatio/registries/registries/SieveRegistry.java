@@ -2,6 +2,7 @@ package exnihilocreatio.registries.registries;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import exnihilocreatio.api.registries.ISieveRegistry;
 import exnihilocreatio.blocks.BlockSieve;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipe;
 import exnihilocreatio.json.CustomIngredientJson;
@@ -28,7 +29,7 @@ import java.io.FileReader;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class SieveRegistry extends BaseRegistryMap<Ingredient, NonNullList<Siftable>> {
+public class SieveRegistry extends BaseRegistryMap<Ingredient, List<Siftable>> implements ISieveRegistry {
 
     public SieveRegistry() {
         super(

@@ -3,6 +3,7 @@ package exnihilocreatio.registries.registries;
 import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import exnihilocreatio.api.registries.IFluidOnTopRegistry;
 import exnihilocreatio.compatibility.jei.barrel.fluidontop.FluidOnTopRecipe;
 import exnihilocreatio.json.CustomBlockInfoJson;
 import exnihilocreatio.json.CustomItemInfoJson;
@@ -18,7 +19,7 @@ import javax.annotation.Nonnull;
 import java.io.FileReader;
 import java.util.List;
 
-public class FluidOnTopRegistry extends BaseRegistryList<FluidFluidBlock> {
+public class FluidOnTopRegistry extends BaseRegistryList<FluidFluidBlock> implements IFluidOnTopRegistry {
     public FluidOnTopRegistry() {
         super(
                 new GsonBuilder()

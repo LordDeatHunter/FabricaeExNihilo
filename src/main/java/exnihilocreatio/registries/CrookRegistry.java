@@ -9,6 +9,9 @@ import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 
+/**
+ * @deprecated use classes from [{@link exnihilocreatio.api.ExNihiloCreatioAPI}]
+ */
 @Deprecated
 public class CrookRegistry {
     public static void register(BlockInfo info, ItemStack reward, float chance, float fortuneChance) {

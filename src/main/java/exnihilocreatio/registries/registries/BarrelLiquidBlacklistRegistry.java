@@ -3,6 +3,7 @@ package exnihilocreatio.registries.registries;
 import com.google.common.collect.Lists;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.GsonBuilder;
+import exnihilocreatio.api.registries.IBarrelLiquidBlacklistRegistry;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 
@@ -12,12 +13,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class BarrelLiquidBlacklistRegistry extends BaseRegistryMap<Integer, List<String>> {
+public class BarrelLiquidBlacklistRegistry extends BaseRegistryMap<Integer, List<String>> implements IBarrelLiquidBlacklistRegistry {
     public BarrelLiquidBlacklistRegistry() {
         super(new GsonBuilder()
-                .setPrettyPrinting()
-                .create(),
-                new com.google.gson.reflect.TypeToken<Map<Integer, List<String>>>() {}.getType(),
+                        .setPrettyPrinting()
+                        .create(),
+                new com.google.gson.reflect.TypeToken<Map<Integer, List<String>>>() {
+                }.getType(),
                 ExNihiloRegistryManager.BARREL_LIQUID_BLACKLIST_DEFAULT_REGISTRY_PROVIDERS);
     }
 

@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.ExNihiloCreatio;
+import exnihilocreatio.api.registries.IOreRegistry;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.ore.EnumOreSubtype;
 import exnihilocreatio.items.ore.ItemOre;
@@ -39,7 +40,7 @@ import wanion.unidict.UniDict;
 import java.io.FileReader;
 import java.util.*;
 
-public class OreRegistry extends BaseRegistryList<Ore> {
+public class OreRegistry extends BaseRegistryList<Ore> implements IOreRegistry {
 
     @Getter
     private List<ItemOre> itemOreRegistry = new ArrayList<>();

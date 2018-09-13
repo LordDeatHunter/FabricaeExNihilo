@@ -1,6 +1,7 @@
 package exnihilocreatio.registries.registries.prefab;
 
 import com.google.gson.Gson;
+import exnihilocreatio.api.registries.IRegistry;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.registries.manager.IDefaultRecipeProvider;
 import lombok.Getter;
@@ -13,7 +14,7 @@ import java.io.FileWriter;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public abstract class BaseRegistry<RegType> {
+public abstract class BaseRegistry<RegType> implements IRegistry<RegType> {
     protected final Gson gson;
     private final List<? extends IDefaultRecipeProvider> defaultRecipeProviders;
     protected boolean hasAlreadyBeenLoaded = false;

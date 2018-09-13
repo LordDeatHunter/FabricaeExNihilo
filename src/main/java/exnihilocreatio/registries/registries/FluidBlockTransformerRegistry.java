@@ -2,6 +2,7 @@ package exnihilocreatio.registries.registries;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import exnihilocreatio.api.registries.IFluidBlockTransformerRegistry;
 import exnihilocreatio.compatibility.jei.barrel.fluidblocktransform.FluidBlockTransformRecipe;
 import exnihilocreatio.json.*;
 import exnihilocreatio.registries.ingredient.OreIngredientStoring;
@@ -20,7 +21,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTransformer> {
+public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTransformer> implements IFluidBlockTransformerRegistry {
 
     public FluidBlockTransformerRegistry() {
         super(
