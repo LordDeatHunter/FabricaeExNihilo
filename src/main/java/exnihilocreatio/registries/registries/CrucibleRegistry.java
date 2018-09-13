@@ -37,10 +37,10 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> impl
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
-                        .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
-                        .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
-                        .registerTypeAdapter(Meltable.class, new CustomMeltableJson())
+                        .registerTypeAdapter(BlockInfo.class, CustomBlockInfoJson.INSTANCE)
+                        .registerTypeAdapter(Ingredient.class, CustomIngredientJson.INSTANCE)
+                        .registerTypeAdapter(OreIngredientStoring.class, CustomIngredientJson.INSTANCE)
+                        .registerTypeAdapter(Meltable.class, CustomMeltableJson.INSTANCE)
                         .enableComplexMapKeySerialization()
                         .create(),
                 new TypeToken<Map<Ingredient, Meltable>>() {

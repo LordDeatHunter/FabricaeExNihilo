@@ -21,7 +21,6 @@ public class ItemInfo implements StackInfo {
 
     public static final ItemInfo EMPTY = new ItemInfo(ItemStack.EMPTY);
 
-    @Getter
     @Nonnull
     private Item item;
 
@@ -242,5 +241,10 @@ public class ItemInfo implements StackInfo {
             }
         }
         return false;
+    }
+
+    @Nonnull
+    public Item getItem() {
+        return item;
     }
 }

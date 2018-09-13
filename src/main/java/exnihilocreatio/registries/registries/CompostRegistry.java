@@ -40,11 +40,11 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> im
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
-                        .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
-                        .registerTypeAdapter(Compostable.class, new CustomCompostableJson())
-                        .registerTypeAdapter(Color.class, new CustomColorJson())
-                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
+                        .registerTypeAdapter(Ingredient.class, CustomIngredientJson.INSTANCE)
+                        .registerTypeAdapter(OreIngredientStoring.class, CustomIngredientJson.INSTANCE)
+                        .registerTypeAdapter(Compostable.class, CustomCompostableJson.INSTANCE)
+                        .registerTypeAdapter(Color.class, CustomColorJson.INSTANCE)
+                        .registerTypeAdapter(BlockInfo.class, CustomBlockInfoJson.INSTANCE)
                         .enableComplexMapKeySerialization()
                         .create(),
                 new TypeToken<Map<Ingredient, Compostable>>() {

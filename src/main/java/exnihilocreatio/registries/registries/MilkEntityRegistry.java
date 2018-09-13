@@ -22,8 +22,8 @@ public class MilkEntityRegistry extends BaseRegistryList<Milkable> implements IM
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
-                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
+                        .registerTypeAdapter(ItemInfo.class, CustomItemInfoJson.INSTANCE)
+                        .registerTypeAdapter(BlockInfo.class, CustomBlockInfoJson.INSTANCE)
                         .create(),
                 ExNihiloRegistryManager.MILK_ENTITY_DEFAULT_REGISTRY_PROVIDERS
         );

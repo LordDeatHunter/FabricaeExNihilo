@@ -22,7 +22,7 @@ public class HeatRegistry extends BaseRegistryMap<BlockInfo, Integer> implements
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
+                        .registerTypeAdapter(BlockInfo.class, CustomBlockInfoJson.INSTANCE)
                         .create(),
                 new com.google.gson.reflect.TypeToken<Map<BlockInfo, Integer>>() {}.getType(),
                 ExNihiloRegistryManager.HEAT_DEFAULT_REGISTRY_PROVIDERS

@@ -24,8 +24,8 @@ public class FluidOnTopRegistry extends BaseRegistryList<FluidFluidBlock> implem
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
-                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
+                        .registerTypeAdapter(ItemInfo.class, CustomItemInfoJson.INSTANCE)
+                        .registerTypeAdapter(BlockInfo.class, CustomBlockInfoJson.INSTANCE)
                         .create(),
                 ExNihiloRegistryManager.FLUID_ON_TOP_DEFAULT_REGISTRY_PROVIDERS
         );

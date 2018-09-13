@@ -27,13 +27,13 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
         super(
                 new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
-                        .registerTypeAdapter(StackInfo.class, new CustomItemInfoJson())
-                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
-                        .registerTypeAdapter(Ingredient.class, new CustomIngredientJson())
-                        .registerTypeAdapter(OreIngredientStoring.class, new CustomIngredientJson())
-                        .registerTypeAdapter(EntityInfo.class, new CustomEntityInfoJson())
-                        .registerTypeAdapter(FluidBlockTransformer.class, new CustomFluidBlockTransformerJson())
+                        .registerTypeAdapter(ItemInfo.class,  CustomItemInfoJson.INSTANCE)
+                        .registerTypeAdapter(StackInfo.class,  CustomItemInfoJson.INSTANCE)
+                        .registerTypeAdapter(BlockInfo.class,  CustomBlockInfoJson.INSTANCE)
+                        .registerTypeAdapter(Ingredient.class,  CustomIngredientJson.INSTANCE)
+                        .registerTypeAdapter(OreIngredientStoring.class,  CustomIngredientJson.INSTANCE)
+                        .registerTypeAdapter(EntityInfo.class,  CustomEntityInfoJson.INSTANCE)
+                        .registerTypeAdapter(FluidBlockTransformer.class,  CustomFluidBlockTransformerJson.INSTANCE)
                         .create(),
                 ExNihiloRegistryManager.FLUID_BLOCK_DEFAULT_REGISTRY_PROVIDERS
         );

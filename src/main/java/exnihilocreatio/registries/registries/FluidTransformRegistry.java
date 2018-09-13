@@ -26,8 +26,8 @@ public class FluidTransformRegistry extends BaseRegistryMap<String, List<FluidTr
     public FluidTransformRegistry() {
         super(new GsonBuilder()
                         .setPrettyPrinting()
-                        .registerTypeAdapter(ItemInfo.class, new CustomItemInfoJson())
-                        .registerTypeAdapter(BlockInfo.class, new CustomBlockInfoJson())
+                        .registerTypeAdapter(ItemInfo.class, CustomItemInfoJson.INSTANCE)
+                        .registerTypeAdapter(BlockInfo.class, CustomBlockInfoJson.INSTANCE)
                         .create(),
                 new com.google.gson.reflect.TypeToken<Map<String, List<FluidTransformer>>>() {}.getType(),
                 ExNihiloRegistryManager.FLUID_TRANSFORM_DEFAULT_REGISTRY_PROVIDERS);
