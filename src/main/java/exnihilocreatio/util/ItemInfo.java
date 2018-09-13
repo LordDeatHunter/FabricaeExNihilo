@@ -9,6 +9,8 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.JsonToNBT;
+import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -25,6 +27,9 @@ public class ItemInfo implements StackInfo {
     private Item item;
 
     private int meta = 0;
+
+    @Getter
+    private NBTTagCompound nbt = new NBTTagCompound();
 
     @Getter
     private boolean isWildcard = false;
@@ -48,6 +53,7 @@ public class ItemInfo implements StackInfo {
     public ItemInfo(@Nonnull ItemStack stack) {
         this.item = stack.getItem();
         this.meta = stack.getItemDamage();
+        this.nbt = stack.getTagCompound();
         checkWildcard();
     }
 
@@ -57,17 +63,47 @@ public class ItemInfo implements StackInfo {
     }
 
     public ItemInfo(@Nonnull Block block, int blockMeta) {
-        this.item = Item.getItemFromBlock(block);
+        this(block, blockMeta, new NBTTagCompound());
+    }
+
+    public ItemInfo(@Nonnull Block block, int blockMeta, @Nonnull NBTTagCompound tag) {
+        this(Item.getItemFromBlock(block), blockMeta, tag);
+    }
+
+    public ItemInfo(@Nonnull Item item, int meta, @Nonnull NBTTagCompound tag) {
+        this.item = item;
+        this.nbt = tag.copy();
         if (this.item == Items.AIR){
             this.isWildcard = true;
         }
         else {
-            if (blockMeta == -1 || blockMeta == OreDictionary.WILDCARD_VALUE) {
+            if (meta == -1 || meta == OreDictionary.WILDCARD_VALUE) {
                 this.isWildcard = true;
             } else {
-                this.meta = blockMeta;
+                this.meta = meta;
                 checkWildcard();
             }
+        }
+    }
+
+    public ItemInfo(@Nonnull Item item, int meta, @Nonnull String tag) {
+        this.item = item;
+        if (this.item == Items.AIR){
+            this.isWildcard = true;
+        }
+        else {
+            if (meta == -1 || meta == OreDictionary.WILDCARD_VALUE) {
+                this.isWildcard = true;
+            } else {
+                this.meta = meta;
+                checkWildcard();
+            }
+        }
+        try{
+            this.nbt = JsonToNBT.getTagFromJson(tag);
+        } catch (NBTException e){
+            LogUtil.error("Could not parse NBTTag: " + tag);
+            this.nbt = new NBTTagCompound();
         }
     }
 
@@ -134,7 +170,9 @@ public class ItemInfo implements StackInfo {
     public static ItemInfo readFromNBT(NBTTagCompound tag) {
         Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(tag.getString("item")));
         int meta = tag.getInteger("meta");
-
+        if(tag.hasKey("nbt")){
+            return item == null ? EMPTY : new ItemInfo(item, meta, tag.getCompoundTag("nbt"));
+        }
         return item == null ? EMPTY : new ItemInfo(item, meta);
     }
 
@@ -159,7 +197,11 @@ public class ItemInfo implements StackInfo {
     @Nonnull
     @Override
     public ItemStack getItemStack() {
-        return item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item, 1, meta);
+        if(item == Items.AIR)
+            return ItemStack.EMPTY;
+        ItemStack stack = new ItemStack(item, 1, meta);
+        stack.setTagCompound(nbt);
+        return stack;
     }
 
     @Override
@@ -194,7 +236,9 @@ public class ItemInfo implements StackInfo {
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
         tag.setString("item", ForgeRegistries.ITEMS.getKey(item) == null ? "" : ForgeRegistries.ITEMS.getKey(item).toString());
         tag.setInteger("meta", meta);
-
+        if(!this.nbt.hasNoTags()){
+            tag.setTag("nbt", this.nbt);
+        }
         return tag;
     }
 
