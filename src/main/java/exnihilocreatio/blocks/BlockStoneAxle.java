@@ -153,7 +153,6 @@ public class BlockStoneAxle extends BlockBase implements ITileEntityProvider, IT
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
     public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
 
         TileStoneAxle axle = (TileStoneAxle) world.getTileEntity(data.getPos());

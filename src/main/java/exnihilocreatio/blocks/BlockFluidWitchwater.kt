@@ -79,7 +79,7 @@ class BlockFluidWitchwater : BlockFluidClassic(ModFluids.fluidWitchwater, Materi
         }
     }
 
-    fun replaceMob(world: World, toKill: EntityLivingBase, toSpawn: EntityLivingBase) {
+    private fun replaceMob(world: World, toKill: EntityLivingBase, toSpawn: EntityLivingBase) {
         toSpawn.setLocationAndAngles(toKill.posX, toKill.posY, toKill.posZ, toKill.rotationYaw, toKill.rotationPitch)
         toSpawn.renderYawOffset = toKill.renderYawOffset
         toSpawn.health = toSpawn.maxHealth

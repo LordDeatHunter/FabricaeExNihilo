@@ -10,6 +10,7 @@ import exnihilocreatio.tiles.TileSieve;
 import exnihilocreatio.util.Util;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
+import mcjty.theoneprobe.api.ITextStyle;
 import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -247,7 +248,6 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPIn
     //endregion
 
     @Override
-    @SideOnly(Side.CLIENT)
     public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world,
                              IBlockState blockState, IProbeHitData data) {
 
@@ -259,7 +259,8 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPIn
             probeInfo.text("Mesh: None");
             return;
         }
-        probeInfo.text("Mesh: " + I18n.format(sieve.getMeshStack().getTranslationKey() + ".name"));
+
+        probeInfo.text("Mesh: " + IProbeInfo.STARTLOC + sieve.getMeshStack().getTranslationKey() + ".name" + IProbeInfo.ENDLOC);
 
         if (mode == ProbeMode.EXTENDED) {
             Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(sieve.getMeshStack());
