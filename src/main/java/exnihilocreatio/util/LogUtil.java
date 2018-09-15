@@ -14,6 +14,9 @@ import java.util.Date;
 
 public class LogUtil {
     private static final Logger logger = LogManager.getLogger("Ex Nihilo Creatio");
+    static {
+        LogManager.getFormatterLogger();
+    }
     private static File logFile;
     private static PrintWriter logWriter;
 
@@ -46,6 +49,13 @@ public class LogUtil {
 
     public static void error(Object object) {
         log(Level.ERROR, object);
+    }
+
+    public static void error(Object object, Throwable throwable) {
+        log(Level.ERROR, object);
+
+        logger.error(throwable);
+        throwable.printStackTrace(logWriter);
     }
 
     public static void warn(Object object) {
