@@ -13,7 +13,8 @@ import java.lang.reflect.Type
 object CustomItemInfoJson : JsonDeserializer<ItemInfo>, JsonSerializer<ItemInfo> {
     override fun serialize(src: ItemInfo, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
 
-        if (src.nbt == null || src.nbt.isEmpty)
+        val nbt = src.nbt
+        if (nbt == null || nbt.isEmpty)
             return JsonPrimitive(src.item.registryName!!.toString() + ":" + src.meta)
 
         return JsonObject().apply {

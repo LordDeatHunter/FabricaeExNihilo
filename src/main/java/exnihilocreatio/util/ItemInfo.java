@@ -18,6 +18,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class ItemInfo implements StackInfo {
 
@@ -28,7 +29,8 @@ public class ItemInfo implements StackInfo {
 
     private int meta = 0;
 
-    private NBTTagCompound nbt = new NBTTagCompound();
+    @Nullable
+    private NBTTagCompound nbt = null;
 
     @Getter
     private boolean isWildcard = false;
@@ -61,16 +63,17 @@ public class ItemInfo implements StackInfo {
     }
 
     public ItemInfo(@Nonnull Block block, int blockMeta) {
-        this(block, blockMeta, new NBTTagCompound());
+        this(block, blockMeta, null);
     }
 
-    public ItemInfo(@Nonnull Block block, int blockMeta, @Nonnull NBTTagCompound tag) {
+    public ItemInfo(@Nonnull Block block, int blockMeta, @Nullable NBTTagCompound tag) {
         this(Item.getItemFromBlock(block), blockMeta, tag);
     }
 
-    public ItemInfo(@Nonnull Item item, int meta, @Nonnull NBTTagCompound tag) {
+    public ItemInfo(@Nonnull Item item, int meta, @Nullable NBTTagCompound tag) {
         this.item = item;
-        this.nbt = tag.copy();
+        if (tag != null)
+            this.nbt = tag.copy();
         if (this.item == Items.AIR) {
             this.isWildcard = true;
         } else {
@@ -195,7 +198,9 @@ public class ItemInfo implements StackInfo {
         if (item == Items.AIR)
             return ItemStack.EMPTY;
         ItemStack stack = new ItemStack(item, 1, meta);
-        stack.setTagCompound(nbt);
+        if (nbt != null)
+            stack.setTagCompound(nbt);
+
         return stack;
     }
 
@@ -229,9 +234,10 @@ public class ItemInfo implements StackInfo {
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
-        tag.setString("item", ForgeRegistries.ITEMS.getKey(item) == null ? "" : ForgeRegistries.ITEMS.getKey(item).toString());
+        ResourceLocation key = ForgeRegistries.ITEMS.getKey(item);
+        tag.setString("item", key == null ? "" : key.toString());
         tag.setInteger("meta", meta);
-        if (!this.nbt.isEmpty()) {
+        if (nbt != null && !this.nbt.isEmpty()) {
             tag.setTag("nbt", this.nbt);
         }
         return tag;
@@ -286,6 +292,7 @@ public class ItemInfo implements StackInfo {
         return item;
     }
 
+    @Nullable
     public NBTTagCompound getNbt() {
         return nbt;
     }
