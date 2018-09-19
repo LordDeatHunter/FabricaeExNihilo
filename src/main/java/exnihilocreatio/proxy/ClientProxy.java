@@ -8,6 +8,7 @@ import exnihilocreatio.client.models.InfestedLeavesBakedModel;
 import exnihilocreatio.client.models.ModColorManager;
 import exnihilocreatio.client.models.event.RenderEvent;
 import exnihilocreatio.client.renderers.*;
+import exnihilocreatio.compatibility.tconstruct.CompatTConstruct;
 import exnihilocreatio.entities.ProjectileStone;
 import exnihilocreatio.items.ore.ItemOre;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
@@ -22,6 +23,7 @@ import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -84,6 +86,9 @@ public class ClientProxy extends CommonProxy {
         ExNihiloRegistryManager.ORE_REGISTRY.initModels();
         Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new RenderOrePiece(), ExNihiloRegistryManager.ORE_REGISTRY.getItemOreRegistry().toArray(new ItemOre[0]));
         ModColorManager.registerColorHandlers();
+
+        if(Loader.isModLoaded("tconstruct"))
+            CompatTConstruct.initClient(event);
     }
 
     @Override

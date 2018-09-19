@@ -1,6 +1,7 @@
 package exnihilocreatio;
 
 import exnihilocreatio.blocks.ItemBlockCrucible;
+import exnihilocreatio.compatibility.tconstruct.CompatTConstruct;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.*;
 import exnihilocreatio.items.ore.EnumOreSubtype;
@@ -22,6 +23,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.EnumPlantType;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
@@ -78,6 +80,9 @@ public class ModItems {
         }
 
         registry.register(new ItemBlockCrucible(ModBlocks.crucibleStone));
+
+        if(Loader.isModLoaded("tconstruct"))
+            CompatTConstruct.registerItems(registry);
     }
 
     public static void registerItemsLowest(IForgeRegistry<Item> registry) {

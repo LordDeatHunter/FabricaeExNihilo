@@ -3,6 +3,8 @@ item.hammer_stone.name=Stone Hammer
 item.hammer_iron.name=Iron Hammer
 item.hammer_gold.name=Gold Hammer
 item.hammer_diamond.name=Diamond Hammer
+item.exnihilocreatio.hammer_tconstruct.name=Sledge Hammer
+item.exnihilocreatio.hammer_tconstruct.desc=Crush your blocks like your enemies. Performs Ex Nihilo hammer crushing.
 
 item.crook_wood.name=Wooden Crook
 item.crook_bone.name=Bone Crook

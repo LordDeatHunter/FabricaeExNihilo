@@ -21,7 +21,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
-import java.util.Map;
 
 @SuppressWarnings("deprecation")
 public class ItemOre extends Item implements IHasModel, IHasSpecialRegistry {

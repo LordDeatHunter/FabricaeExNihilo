@@ -1,7 +1,6 @@
 package exnihilocreatio.registries.types
 
 import exnihilocreatio.util.BlockInfo
-import lombok.EqualsAndHashCode
 import java.util.*
 
 // TODO: MOVE TO API PACKAGE ON BREAKING VERSION CHANGE
