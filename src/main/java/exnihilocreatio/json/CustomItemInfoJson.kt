@@ -37,7 +37,7 @@ object CustomItemInfoJson : JsonDeserializer<ItemInfo>, JsonSerializer<ItemInfo>
 
             val item = Item.getByNameOrId(name)
 
-            var nbt = NBTTagCompound()
+            var nbt: NBTTagCompound? = null
             if (json.asJsonObject.has("nbt")) {
                 try {
                     nbt = JsonToNBT.getTagFromJson(json.asJsonObject.get("nbt").asString)
