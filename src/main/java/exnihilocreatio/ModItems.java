@@ -123,7 +123,7 @@ public class ModItems {
         if (ModConfig.misc.oredictExNihiloSeeds){
             // Seeds
             for(ItemSeedBase seed : itemSeeds){
-                OreDictionary.registerOre("listAllseed", (Item) seed);
+                OreDictionary.registerOre("listAllseed", seed);
             }
             // Grass Seeds
             OreDictionary.registerOre("listAllseed", new ItemStack((Item) resources, 1, 4));

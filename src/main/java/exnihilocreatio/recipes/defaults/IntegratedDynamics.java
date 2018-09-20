@@ -18,7 +18,7 @@ public class IntegratedDynamics implements IRecipeDefaults {
     @GameRegistry.ObjectHolder("integrateddynamics:menril_sapling")
     public static final Item MENRIL_SAPLING = null;
     @Getter
-    public String MODID = "integrateddynamics";
+    private final String MODID = "integrateddynamics";
 
     public void registerSieve(SieveRegistry registry) {
         // TODO: Consider instead using witch water to mutate a normal sapling into a menril sapling.

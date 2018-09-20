@@ -9,7 +9,7 @@ import net.minecraft.init.Blocks;
 
 public class BinniesBotany implements IRecipeDefaults {
     @Getter
-    public String MODID = "botany";
+    private final String MODID = "botany";
 
     @Override
     public void registerCompost(CompostRegistry registry) {

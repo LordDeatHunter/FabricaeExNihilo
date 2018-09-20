@@ -72,7 +72,7 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider, ITOPI
     public int getLightValue(@Nonnull IBlockState state, IBlockAccess world, @Nonnull BlockPos pos) {
         TileEntity te = world.getTileEntity(pos);
 
-        if (te != null && te instanceof TileBarrel) {
+        if (te != null && te instanceof TileBarrel && ModConfig.misc.enableBarrelLighting) {
             TileBarrel tile = (TileBarrel) te;
             if (tile.getMode() instanceof BarrelModeBlock) {
                 BarrelModeBlock mode = (BarrelModeBlock) tile.getMode();

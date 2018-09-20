@@ -15,7 +15,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 
 public class Forestry implements IRecipeDefaults {
     @Getter
-    public String MODID = "forestry";
+    private final String MODID = "forestry";
 
     @Override
     public void registerCompost(CompostRegistry registry) {

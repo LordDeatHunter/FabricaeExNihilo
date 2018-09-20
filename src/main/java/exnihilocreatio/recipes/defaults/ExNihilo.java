@@ -30,8 +30,7 @@ import java.util.Map;
 
 public class ExNihilo implements IRecipeDefaults {
     @Getter
-    public String MODID = ExNihiloCreatio.MODID;
-
+    private final String MODID = ExNihiloCreatio.MODID;
 
     @Override
     public void registerCompost(CompostRegistry registry) {

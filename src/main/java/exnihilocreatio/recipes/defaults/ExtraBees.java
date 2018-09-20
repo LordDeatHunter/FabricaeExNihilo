@@ -10,7 +10,7 @@ import net.minecraft.init.Blocks;
 
 public class ExtraBees implements IRecipeDefaults {
     @Getter
-    public String MODID = "extrabees";
+    private final String MODID = "extrabees";
 
     @Override
     public void registerSieve(SieveRegistry registry) {

@@ -13,7 +13,7 @@ import net.minecraft.init.Blocks;
 
 public class MagicBees implements IRecipeDefaults {
     @Getter
-    public String MODID = "magicbees";
+    private final String MODID = "magicbees";
 
     @Override
     public void registerCompost(CompostRegistry registry) {

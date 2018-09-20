@@ -65,6 +65,10 @@ public class ModConfig {
     }
 
     public static class Misc {
+        @Config.Comment({"Barrel light up if their contents do,",
+                "disabling this makes `B:enableBarrelTransformLighting` do nothing"})
+        public boolean enableBarrelLighting = true;
+        @Config.Comment("Barrel lighting can change during transformations")
         public boolean enableBarrelTransformLighting = true; // maybe move to client?
 
         @Config.RequiresMcRestart

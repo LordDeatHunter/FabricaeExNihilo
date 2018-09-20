@@ -11,7 +11,7 @@ import lombok.Getter;
 
 public class Mekanism implements IRecipeDefaults {
     @Getter
-    public String MODID = "mekanism";
+    private final String MODID = "mekanism";
 
     public void registerSieve(SieveRegistry registry) {
         ItemOre osmium = ExNihiloRegistryManager.ORE_REGISTRY.getOreItem("osmium");

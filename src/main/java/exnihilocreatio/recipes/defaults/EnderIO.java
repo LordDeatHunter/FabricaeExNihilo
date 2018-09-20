@@ -13,7 +13,7 @@ public class EnderIO implements IRecipeDefaults {
     // 20 = Grains of Infinity/Bedrock Dust
     public static final Item EIO_DUST_BEDROCK = null;
     @Getter
-    public String MODID = "enderio";
+    private final String MODID = "enderio";
 
     public void registerSieve(SieveRegistry registry) {
         if (EIO_DUST_BEDROCK != null){
