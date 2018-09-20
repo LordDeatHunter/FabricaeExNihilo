@@ -51,12 +51,12 @@ public class Forestry implements IRecipeDefaults {
     public void registerCrook(CrookRegistry registry) {
         // All Leaves for Forest Bees
         registry.register("treeLeaves", ForestryHelper.getDroneInfo("forestry.speciesForest").getItemStack(), 0.02f, 0.2f);
-        registry.register("treeLeaves", ForestryHelper.getIgnobleInfo("forestry.speciesForest").getItemStack(), 0.01f, 0.01f);
-        registry.register("treeLeaves", ForestryHelper.getPristineInfo("forestry.speciesForest").getItemStack(), 0.005f, 0.5f);
+        registry.register("treeLeaves", ForestryHelper.getIgnobleInfo("forestry.speciesForest").getItemStack(), 0.01f, 0.02f);
+        registry.register("treeLeaves", ForestryHelper.getPristineInfo("forestry.speciesForest").getItemStack(), 0.001f, 0.01f);
         // Jungle Leaves for Tropical
         registry.register("treeLeaves", ForestryHelper.getDroneInfo("forestry.speciesTropical").getItemStack(), 0.02f, 0.2f);
-        registry.register("treeLeaves", ForestryHelper.getIgnobleInfo("forestry.speciesTropical").getItemStack(), 0.01f, 0.01f);
-        registry.register("treeLeaves", ForestryHelper.getPristineInfo("forestry.speciesTropical").getItemStack(), 0.005f, 0.5f);
+        registry.register("treeLeaves", ForestryHelper.getIgnobleInfo("forestry.speciesTropical").getItemStack(), 0.01f, 0.02f);
+        registry.register("treeLeaves", ForestryHelper.getPristineInfo("forestry.speciesTropical").getItemStack(), 0.001f, 0.01f);
     }
 
     @Override

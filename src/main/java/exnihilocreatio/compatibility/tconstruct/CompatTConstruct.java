@@ -27,15 +27,19 @@ public class CompatTConstruct {
     public static TiCrook crook = new TiCrook();
 
     public static void registerItems(IForgeRegistry<Item> registry) {
-        // Register Sledge Hammer
-        registry.register(sledgeHammer);
-        TinkerRegistry.registerToolCrafting(sledgeHammer);
-        ModelRegisterUtil.registerToolModel(sledgeHammer);
-        // Register Crook
-        registry.register(crook);
-        TinkerRegistry.registerToolCrafting(crook);
-        ModelRegisterUtil.registerToolModel(crook);
-
+        ToolBuildGuiInfo info;
+        if(ModConfig.compatibility.tinkers_construct_compat.addExNihiloHammer){
+            // Register Sledge Hammer
+            registry.register(sledgeHammer);
+            TinkerRegistry.registerToolCrafting(sledgeHammer);
+            ModelRegisterUtil.registerToolModel(sledgeHammer);
+        }
+        if(ModConfig.compatibility.tinkers_construct_compat.addExNihiloCrook){
+            // Register Crook
+            registry.register(crook);
+            TinkerRegistry.registerToolCrafting(crook);
+            ModelRegisterUtil.registerToolModel(crook);
+        }
         // Register Modifiers
         for (IModifier modifier: new IModifier[] {
                 TinkerModifiers.modDiamond,
@@ -54,18 +58,22 @@ public class CompatTConstruct {
 
     public static void initClient(FMLInitializationEvent event) {
         ToolBuildGuiInfo info;
-        // Sledge Hammer Crafting
-        info = new ToolBuildGuiInfo(sledgeHammer);
-        info.addSlotPosition(33 - 18, 42 + 18); // Handle
-        info.addSlotPosition(33 + 20, 42 - 20); // Head
-        info.addSlotPosition(33, 42); // Binding
-        TinkerRegistryClient.addToolBuilding(info);
-        // Crook Crafting
-        info = new ToolBuildGuiInfo(crook);
-        info.addSlotPosition(33 - 11, 42 + 11); // handle
-        info.addSlotPosition(33 - 2, 42 - 20); // head
-        info.addSlotPosition(33 + 18, 42 - 8); // binding
-        TinkerRegistryClient.addToolBuilding(info);
+        if(ModConfig.compatibility.tinkers_construct_compat.addExNihiloHammer){
+            // Sledge Hammer Crafting
+            info = new ToolBuildGuiInfo(sledgeHammer);
+            info.addSlotPosition(33 - 18, 42 + 18); // Handle
+            info.addSlotPosition(33 + 20, 42 - 20); // Head
+            info.addSlotPosition(33, 42); // Binding
+            TinkerRegistryClient.addToolBuilding(info);
+        }
+        if(ModConfig.compatibility.tinkers_construct_compat.addExNihiloCrook){
+            // Crook Crafting
+            info = new ToolBuildGuiInfo(crook);
+            info.addSlotPosition(33 - 11, 42 + 11); // handle
+            info.addSlotPosition(33 - 2, 42 - 20); // head
+            info.addSlotPosition(33 + 18, 42 - 8); // binding
+            TinkerRegistryClient.addToolBuilding(info);
+        }
     }
 
     public static void postInit() {

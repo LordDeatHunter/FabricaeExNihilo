@@ -106,6 +106,11 @@ public class ModConfig {
             public boolean addMeltingOfDust = true;
             public double ingotsPerDustWhenMelting = 1.0;
 
+            @Config.Comment("Add a Ex Nihilo style hammer to the tool station.")
+            public boolean addExNihiloHammer = true;
+            @Config.Comment("Add a Ex Nihilo style crook to the tool station.")
+            public boolean addExNihiloCrook = true;
+
         }
     }
 
