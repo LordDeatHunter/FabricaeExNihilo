@@ -39,6 +39,6 @@ object Crook {
         private val reward = CrookReward(reward.internal as ItemStack, chance, fortuneChance)
 
         override fun apply() = ExNihiloRegistryManager.CROOK_REGISTRY.register(input, reward)
-        override fun describe() = "Adding Compost recipe for ${input.matchingStacks} with reward $reward"
+        override fun describe() = "Adding Compost recipe for ${input.matchingStacks.joinToString(prefix = "[", postfix = "]")} with reward $reward"
     }
 }

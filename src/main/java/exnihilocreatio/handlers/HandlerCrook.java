@@ -32,7 +32,7 @@ public class HandlerCrook {
             return;
 
         List<CrookReward> rewards = ExNihiloRegistryManager.CROOK_REGISTRY.getRewards(event.getState());
-        if (rewards != null && rewards.size() > 0) {
+        if (rewards.size() > 0) {
             event.getDrops().clear();
             event.setDropChance(1f);
 

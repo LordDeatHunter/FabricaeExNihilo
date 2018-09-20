@@ -47,8 +47,7 @@ public class ColorThief {
         if (palette == null) {
             return null;
         }
-        int[] dominantColor = palette[0];
-        return dominantColor;
+        return palette[0];
     }
 
     /**
@@ -70,8 +69,7 @@ public class ColorThief {
         if (palette == null) {
             return null;
         }
-        int[] dominantColor = palette[0];
-        return dominantColor;
+        return palette[0];
     }
 
     /**
@@ -151,8 +149,8 @@ public class ColorThief {
 
         // Send array to quantize function which clusters values using median
         // cut algorithm
-        MMCQ.CMap cmap = MMCQ.quantize(pixelArray, colorCount);
-        return cmap;
+        return MMCQ.quantize(pixelArray, colorCount);
+
     }
 
     /**
@@ -283,7 +281,7 @@ public class ColorThief {
             r = (rgb >> 16) & 0xFF;
             g = (rgb >> 8) & 0xFF;
             b = (rgb) & 0xFF;
-            if (!(ignoreWhite && r > 250 && r > 250 && r > 250)) {
+            if (!(ignoreWhite && r > 250 && g > 250 && b > 250)) {
                 res[numUsedPixels] = new int[]{r, g, b};
                 numUsedPixels++;
             }

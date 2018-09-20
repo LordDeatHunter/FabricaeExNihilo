@@ -71,7 +71,7 @@ public class BarrelModeFluid implements IBarrelMode {
     public List<String> getWailaTooltip(TileBarrel barrel, List<String> currenttip) {
         if (barrel.getTank().getFluid() != null) {
             currenttip.add(barrel.getTank().getFluid().getLocalizedName());
-            currenttip.add("Amount: " + String.valueOf(barrel.getTank().getFluidAmount()) + "mb");
+            currenttip.add("Amount: " + barrel.getTank().getFluidAmount() + "mb");
         } else {
             currenttip.add("Empty");
         }

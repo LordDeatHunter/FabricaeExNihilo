@@ -27,7 +27,7 @@ import java.util.*;
  * @author https://github.com/mezz
  */
 @SuppressWarnings("ALL")
-public class MMCQ {
+public class MMCQ implements Cloneable{
 
     private static final int SIGBITS = 5;
     private static final int RSHIFT = 8 - SIGBITS;

@@ -15,11 +15,14 @@ public class ActuallyAdditions implements IRecipeDefaults {
     // 5 = Black Quartz
     public static final Item AA_ITEM_MISC = null;
     @Getter
-    public String MODID = "actuallyadditions";
+    public final String MODID = "actuallyadditions";
 
     public void registerSieve(SieveRegistry registry) {
-        // Actually Additions crashes if these are actually registered
-        registry.register("sand", new ItemInfo(AA_ITEM_MISC, 5), 0.02f, BlockSieve.MeshType.IRON.getID());
-        registry.register("sand", new ItemInfo(AA_ITEM_MISC, 5), 0.05f, BlockSieve.MeshType.DIAMOND.getID());
+        //noinspection ConstantConditions
+        if (AA_ITEM_MISC != null) {
+            // Actually Additions crashes if these are actually registered
+            registry.register("sand", new ItemInfo(AA_ITEM_MISC, 5), 0.02f, BlockSieve.MeshType.IRON.getID());
+            registry.register("sand", new ItemInfo(AA_ITEM_MISC, 5), 0.05f, BlockSieve.MeshType.DIAMOND.getID());
+        }
     }
 }

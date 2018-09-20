@@ -88,9 +88,11 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
     public static void infestLeafBlock(World world, IBlockState state, BlockPos pos) {
         IBlockState leafState;
         //Prevents a crash with forestry using the new model system
-        if (Block.REGISTRY.getNameForObject(state.getBlock()).getNamespace().equalsIgnoreCase("forestry"))
+        if (Block.REGISTRY.getNameForObject(state.getBlock()).getNamespace().equalsIgnoreCase("forestry")) {
             leafState = Blocks.LEAVES.getDefaultState();
-        else leafState = state;
+        } else {
+            leafState = state;
+        }
         world.setBlockState(pos, ModBlocks.infestingLeaves.getDefaultState().withProperty(DECAYABLE, true), 3);
         if (world.getTileEntity(pos) != null)
             ((ITileLeafBlock) world.getTileEntity(pos)).setLeafBlock(leafState);
@@ -127,9 +129,9 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
         if (!world.isRemote && state != null) {
             if (state.getValue(NEARBYLEAVES)) {
                 NonNullList<BlockPos> nearbyLeaves = Util.getNearbyLeaves(world, pos);
-                if (nearbyLeaves.isEmpty())
+                if (nearbyLeaves.isEmpty()) {
                     world.setBlockState(pos, state.withProperty(NEARBYLEAVES, false), 7);
-                else {
+                } else {
                     TileEntity te = world.getTileEntity(pos);
                     if (te instanceof TileInfestingLeaves && ((TileInfestingLeaves) te).getProgress() > ModConfig.infested_leaves.leavesSpreadPercent) {
                         nearbyLeaves.stream().filter(leaves -> rand.nextFloat() <= ModConfig.infested_leaves.leavesSpreadChanceFloat).findAny().ifPresent(blockPos -> BlockInfestingLeaves.infestLeafBlock(world, world.getBlockState(blockPos), blockPos));

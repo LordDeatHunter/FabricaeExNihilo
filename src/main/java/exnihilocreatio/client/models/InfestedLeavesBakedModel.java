@@ -19,7 +19,7 @@ import static exnihilocreatio.ModBlocks.infestedLeaves;
 
 public class InfestedLeavesBakedModel implements IBakedModel {
 
-    public final static ModelResourceLocation variantTag = new ModelResourceLocation(infestedLeaves.getRegistryName(), "normal");
+    public static final ModelResourceLocation variantTag = new ModelResourceLocation(infestedLeaves.getRegistryName(), "normal");
     private final IBakedModel defaultModel;
     private TextureAtlasSprite particleTexture;
 

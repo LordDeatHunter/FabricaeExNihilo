@@ -18,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -91,7 +92,8 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, List<CrookReward>
         return registry.keySet().stream().anyMatch(ingredient -> ingredient.test(stack));
     }
 
-    public List<CrookReward> getRewards(IBlockState state) {
+    @NotNull
+    public List<CrookReward> getRewards(@NotNull IBlockState state) {
         BlockInfo info = new BlockInfo(state);
         ArrayList<CrookReward> list = new ArrayList<>();
 

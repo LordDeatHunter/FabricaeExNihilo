@@ -71,7 +71,7 @@ public class HeatSourcesRecipe implements IRecipeWrapper {
 
 
         inputs = new ArrayList<>(Collections.singleton(item));
-        heatAmountString = String.valueOf(heatAmount) + "x";
+        heatAmountString = heatAmount + "x";
     }
 
     @Override

@@ -24,7 +24,7 @@ public class AppliedEnergistics2 implements IRecipeDefaults {
     @GameRegistry.ObjectHolder("appliedenergistics2:sky_stone_block")
     private static final Block SKY_STONE = null;
     @Getter
-    public String MODID = "appliedenergistics2";
+    public final String MODID = "appliedenergistics2";
 
     public void registerSieve(SieveRegistry registry) {
         // Sky Stone Dust

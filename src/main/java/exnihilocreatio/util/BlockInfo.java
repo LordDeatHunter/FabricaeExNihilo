@@ -33,10 +33,11 @@ public class BlockInfo implements StackInfo {
 
     public BlockInfo(@Nonnull Block block, int meta) {
         this.state = getStateFromMeta(block, meta);
-        if (meta == -1 || meta == OreDictionary.WILDCARD_VALUE)
+        if (meta == -1 || meta == OreDictionary.WILDCARD_VALUE) {
             this.isWildcard = true;
-        else
+        } else {
             checkWildcard();
+        }
     }
 
     /**

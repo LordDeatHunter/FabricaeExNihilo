@@ -42,6 +42,6 @@ object Hammer {
             ExNihiloRegistryManager.HAMMER_REGISTRY.register(input, HammerReward(drop.internal as ItemStack, miningLevel, chance, fortuneChance))
         }
 
-        override fun describe() = "Adding Hammer recipe for ${input.matchingStacks} with drop $drop at a chance of $chance with mining level $miningLevel"
+        override fun describe() = "Adding Hammer recipe for ${input.matchingStacks.joinToString(prefix = "[", postfix = "]")} with drop $drop at a chance of $chance with mining level $miningLevel"
     }
 }

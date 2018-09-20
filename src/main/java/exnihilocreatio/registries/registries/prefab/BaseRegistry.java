@@ -32,9 +32,7 @@ public abstract class BaseRegistry<RegType> implements IRegistry<RegType> {
     }
 
     public void saveJson(File file) {
-        FileWriter fw = null;
-        try {
-            fw = new FileWriter(file);
+        try(FileWriter fw = new FileWriter(file)) {
             // TODO remove null again
             if (typeOfSource != null) {
                 gson.toJson(registry, typeOfSource, fw);
@@ -43,8 +41,6 @@ public abstract class BaseRegistry<RegType> implements IRegistry<RegType> {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            IOUtils.closeQuietly(fw);
         }
     }
 
@@ -52,8 +48,7 @@ public abstract class BaseRegistry<RegType> implements IRegistry<RegType> {
         if (hasAlreadyBeenLoaded) clearRegistry();
 
         if (file.exists() && ModConfig.misc.enableJSONLoading) {
-            try {
-                FileReader fr = new FileReader(file);
+            try(FileReader fr = new FileReader(file)) {
                 registerEntriesFromJSON(fr);
 
             } catch (Exception e) {
