@@ -6,6 +6,7 @@ import exnihilocreatio.compatibility.crafttweaker.CrTIntegration;
 import exnihilocreatio.compatibility.tconstruct.CompatTConstruct;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.entities.ENEntities;
+import exnihilocreatio.handlers.HandlerAnvil;
 import exnihilocreatio.handlers.HandlerCrook;
 import exnihilocreatio.handlers.HandlerHammer;
 import exnihilocreatio.networking.PacketHandler;
@@ -70,6 +71,7 @@ public class ExNihiloCreatio {
 
         MinecraftForge.EVENT_BUS.register(new HandlerHammer());
         MinecraftForge.EVENT_BUS.register(new HandlerCrook());
+        MinecraftForge.EVENT_BUS.register(new HandlerAnvil());
 
         if (ModConfig.mechanics.enableBarrels) {
             BarrelModeRegistry.registerDefaults();
