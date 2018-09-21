@@ -2,7 +2,7 @@ package exnihilocreatio.recipes.defaults;
 
 import exnihilocreatio.ModBlocks;
 import exnihilocreatio.blocks.BlockSieve;
-import exnihilocreatio.compatibility.ForestryHelper;
+import exnihilocreatio.compatibility.forestry.ForestryHelper;
 import exnihilocreatio.registries.registries.SieveRegistry;
 import exnihilocreatio.util.BlockInfo;
 import lombok.Getter;

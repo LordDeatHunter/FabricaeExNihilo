@@ -1,6 +1,7 @@
 package exnihilocreatio;
 
 import exnihilocreatio.blocks.ItemBlockCrucible;
+import exnihilocreatio.compatibility.forestry.ItemBlockHive;
 import exnihilocreatio.compatibility.tconstruct.CompatTConstruct;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.*;
@@ -77,6 +78,10 @@ public class ModItems {
             if (!(block instanceof IHasSpecialRegistry)) {
                 registry.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
             }
+        }
+
+        if(Loader.isModLoaded("forestry")){
+            registry.register(new ItemBlockHive(ModBlocks.exnihiloHive).setRegistryName(ModBlocks.exnihiloHive.getRegistryName()));
         }
 
         registry.register(new ItemBlockCrucible(ModBlocks.crucibleStone));

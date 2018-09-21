@@ -1,6 +1,7 @@
 package exnihilocreatio;
 
 import exnihilocreatio.blocks.*;
+import exnihilocreatio.compatibility.forestry.BlockHive;
 import exnihilocreatio.tiles.*;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
@@ -43,9 +44,14 @@ public class ModBlocks {
 
     public static final BlockEndCake endCake = new BlockEndCake();
 
+    public static final BlockHive exnihiloHive = new BlockHive(Material.WOOD, "hive");
+
     public static void registerBlocks(IForgeRegistry<Block> registry) {
         for (Block block : Data.BLOCKS) {
             registry.register(block);
+        }
+        if(Loader.isModLoaded("forestry")){
+            registry.register(exnihiloHive);
         }
 
         // TODO: Change in 1.13 as this is world breaking
@@ -67,6 +73,9 @@ public class ModBlocks {
             if (block instanceof IHasModel) {
                 ((IHasModel) block).initModel(e);
             }
+        }
+        if(Loader.isModLoaded("forestry")){
+            ((IHasModel) exnihiloHive).initModel(e);
         }
     }
 }
