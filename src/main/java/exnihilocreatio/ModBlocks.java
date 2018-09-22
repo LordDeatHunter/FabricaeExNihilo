@@ -1,7 +1,6 @@
 package exnihilocreatio;
 
 import exnihilocreatio.blocks.*;
-import exnihilocreatio.compatibility.forestry.BlockHive;
 import exnihilocreatio.tiles.*;
 import exnihilocreatio.util.Data;
 import exnihilocreatio.util.IHasModel;
@@ -9,7 +8,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -20,7 +18,6 @@ public class ModBlocks {
     public static final BlockBaseFalling dust = (BlockBaseFalling) new BlockBaseFalling(SoundType.CLOTH, "block_dust").setHardness(0.7F);
     public static final BlockBaseFalling netherrackCrushed = (BlockBaseFalling) new BlockBaseFalling(SoundType.GROUND, "block_netherrack_crushed").setHardness(0.7F);
     public static final BlockBaseFalling endstoneCrushed = (BlockBaseFalling) new BlockBaseFalling(SoundType.GROUND, "block_endstone_crushed").setHardness(0.7F);
-    public static final BlockBaseFalling skystoneCrushed = Loader.isModLoaded("appliedenergistics2") ? (BlockBaseFalling) new BlockBaseFalling(SoundType.GROUND, "block_skystone_crushed").setHardness(0.7F) : null;
 
     public static final BlockBaseFalling crushedAndesite = (BlockBaseFalling) new BlockBaseFalling(SoundType.GROUND, "block_andesite_crushed").setHardness(0.7F);
     public static final BlockBaseFalling crushedDiorite = (BlockBaseFalling) new BlockBaseFalling(SoundType.GROUND, "block_diorite_crushed").setHardness(0.7F);
@@ -44,14 +41,9 @@ public class ModBlocks {
 
     public static final BlockEndCake endCake = new BlockEndCake();
 
-    public static final BlockHive exnihiloHive = new BlockHive(Material.WOOD, "hive");
-
     public static void registerBlocks(IForgeRegistry<Block> registry) {
         for (Block block : Data.BLOCKS) {
             registry.register(block);
-        }
-        if(Loader.isModLoaded("forestry")){
-            registry.register(exnihiloHive);
         }
 
         // TODO: Change in 1.13 as this is world breaking
@@ -73,9 +65,6 @@ public class ModBlocks {
             if (block instanceof IHasModel) {
                 ((IHasModel) block).initModel(e);
             }
-        }
-        if(Loader.isModLoaded("forestry")){
-            ((IHasModel) exnihiloHive).initModel(e);
         }
     }
 }

@@ -1,6 +1,7 @@
-package exnihilocreatio.compatibility.forestry;
+package exnihilocreatio.modules.forestry.blocks;
 
 import exnihilocreatio.ExNihiloCreatio;
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.util.IHasModel;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
@@ -24,6 +25,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
+import javax.annotation.Nonnull;
 import java.util.Random;
 
 public class BlockHive extends Block implements IHasModel {
@@ -35,6 +37,7 @@ public class BlockHive extends Block implements IHasModel {
         this.setTranslationKey(ExNihiloCreatio.MODID + "." + name);
         this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumType.ARTIFICIAL));
         this.setCreativeTab(ExNihiloCreatio.tabExNihilo);
+        this.setTickRandomly(true);
     }
 
     @Override
@@ -72,8 +75,21 @@ public class BlockHive extends Block implements IHasModel {
     }
 
     @Override
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+    public void randomTick(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull Random rand) {
         //TODO Transformation logic
+        if(world.isRemote) // Maybe add some random particles?
+            return;
+        if(state.getValue(VARIANT) == EnumType.ARTIFICIAL)
+            return;
+        if(rand.nextInt(ModConfig.compatibility.forestry_compat.hiveTransformChance) != 0)
+            return;
+
+        //for(HiveRequirements req : HiveRequirementRegistry){
+        //  if(req.check(world, pos)){
+        //      do transform
+        //      return;
+        //  }
+        //}
     }
 
     public static enum EnumType implements IStringSerializable {

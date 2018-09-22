@@ -1,4 +1,4 @@
-package exnihilocreatio.compatibility.tconstruct;
+package exnihilocreatio.modules.tconstruct.modifiers;
 
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import net.minecraft.enchantment.Enchantment;

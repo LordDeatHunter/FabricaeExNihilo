@@ -1,5 +1,6 @@
-package exnihilocreatio.compatibility.forestry;
+package exnihilocreatio.modules.forestry.items;
 
+import exnihilocreatio.modules.forestry.blocks.BlockHive;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;

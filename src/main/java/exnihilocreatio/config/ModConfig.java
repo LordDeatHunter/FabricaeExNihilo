@@ -94,6 +94,7 @@ public class ModConfig {
     public static class Compatibility {
         @Config.RequiresMcRestart
         public TinkersConstructCompat tinkers_construct_compat = new TinkersConstructCompat();
+        public ForestryCompat forestry_compat = new ForestryCompat();
 
         @Config.Comment("Prevents unidict from merging the ore chunks into normal ore.")
         public boolean preventUnidict = true;
@@ -114,6 +115,15 @@ public class ModConfig {
             public boolean addExNihiloHammer = true;
             @Config.Comment("Add a Ex Nihilo style crook to the tool station.")
             public boolean addExNihiloCrook = true;
+
+        }
+
+        public static class ForestryCompat {
+            @Config.Comment({"Attempt to transform if rand(0,value) == 0, during and random block tick.",
+                    "Should result in an average wait time of [68.27 * ln(0.5) / ln(1-1/x)] seconds,",
+                    "Assuming vanilla random tickspeed and no lag: 16 -> ~12.2 minutes."
+            })
+            public int hiveTransformChance = 16;
 
         }
     }

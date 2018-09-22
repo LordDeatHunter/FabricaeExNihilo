@@ -23,6 +23,8 @@ public class AppliedEnergistics2 implements IRecipeDefaults {
     private static final Item AE_SEEDS = null;
     @GameRegistry.ObjectHolder("appliedenergistics2:sky_stone_block")
     private static final Block SKY_STONE = null;
+    @GameRegistry.ObjectHolder("exnihilocreatio:block_skystone_crushed")
+    private static final Block CRUSHED_SKY_STONE = null;
     @Getter
     public final String MODID = "appliedenergistics2";
 
@@ -34,23 +36,23 @@ public class AppliedEnergistics2 implements IRecipeDefaults {
 
         // Certus Quartz
         ItemInfo stack = new ItemInfo(AE_MATERIAL);
-        registry.register(new BlockInfo(ModBlocks.skystoneCrushed), stack, 0.01f, MeshType.IRON.getID());
-        registry.register(new BlockInfo(ModBlocks.skystoneCrushed), stack, 0.02f, MeshType.DIAMOND.getID());
+        registry.register(new BlockInfo(CRUSHED_SKY_STONE), stack, 0.01f, MeshType.IRON.getID());
+        registry.register(new BlockInfo(CRUSHED_SKY_STONE), stack, 0.02f, MeshType.DIAMOND.getID());
 
         // Pure Certus Quartz Seed
         stack = new ItemInfo(AE_SEEDS);
-        registry.register(new BlockInfo(ModBlocks.skystoneCrushed), stack, 0.01f, MeshType.STRING.getID());
-        registry.register(new BlockInfo(ModBlocks.skystoneCrushed), stack, 0.01f, MeshType.FLINT.getID());
-        registry.register(new BlockInfo(ModBlocks.skystoneCrushed), stack, 0.02f, MeshType.IRON.getID());
-        registry.register(new BlockInfo(ModBlocks.skystoneCrushed), stack, 0.02f, MeshType.DIAMOND.getID());
+        registry.register(new BlockInfo(CRUSHED_SKY_STONE), stack, 0.01f, MeshType.STRING.getID());
+        registry.register(new BlockInfo(CRUSHED_SKY_STONE), stack, 0.01f, MeshType.FLINT.getID());
+        registry.register(new BlockInfo(CRUSHED_SKY_STONE), stack, 0.02f, MeshType.IRON.getID());
+        registry.register(new BlockInfo(CRUSHED_SKY_STONE), stack, 0.02f, MeshType.DIAMOND.getID());
 
         // Charged Certus Quartz
         stack = new ItemInfo(AE_MATERIAL, 1);
-        registry.register(new BlockInfo(ModBlocks.skystoneCrushed), stack, 0.001f, MeshType.DIAMOND.getID());
+        registry.register(new BlockInfo(CRUSHED_SKY_STONE), stack, 0.001f, MeshType.DIAMOND.getID());
     }
 
     public void registerHammer(HammerRegistry registry) {
-        registry.register(new BlockInfo(SKY_STONE), new ItemStack(ModBlocks.skystoneCrushed, 1), 3, 1.0F, 0.0F);
+        registry.register(new BlockInfo(SKY_STONE), new ItemStack(CRUSHED_SKY_STONE, 1), 3, 1.0F, 0.0F);
     }
 
     public void registerFluidBlockTransform(FluidBlockTransformerRegistry registry) {

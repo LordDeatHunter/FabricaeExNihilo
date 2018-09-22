@@ -1,4 +1,4 @@
-package exnihilocreatio.compatibility.tconstruct;
+package exnihilocreatio.modules.tconstruct.tools;
 
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.items.tools.IHammer;

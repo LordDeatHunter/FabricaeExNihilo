@@ -2,6 +2,7 @@ package exnihilocreatio.proxy;
 
 import exnihilocreatio.*;
 import exnihilocreatio.compatibility.CompatTOP;
+import exnihilocreatio.modules.IExNihiloCreatioModule;
 import exnihilocreatio.util.Data;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
@@ -25,11 +26,15 @@ public abstract class CommonProxy {
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         ModBlocks.registerBlocks(event.getRegistry());
+        for(IExNihiloCreatioModule module : ExNihiloCreatio.loadedModules)
+            module.registerBlocks(event.getRegistry());
     }
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
         ModItems.registerItems(event.getRegistry());
+        for(IExNihiloCreatioModule module : ExNihiloCreatio.loadedModules)
+            module.registerItems(event.getRegistry());
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -39,7 +44,6 @@ public abstract class CommonProxy {
 
     @SubscribeEvent
     public static void onRecipeRegistry(RegistryEvent.Register<IRecipe> e) {
-
         Recipes.init();
         e.getRegistry().registerAll(Data.RECIPES.toArray(new IRecipe[RECIPES.size()]));
     }
@@ -54,14 +58,21 @@ public abstract class CommonProxy {
         if (Loader.isModLoaded("theoneprobe")) {
             CompatTOP.register();
         }
+
+        // Pre-Init call on the modules
+        for(IExNihiloCreatioModule module : ExNihiloCreatio.loadedModules)
+            module.preInit(event);
     }
 
     public void init(FMLInitializationEvent event) {
         ExNihiloCreatio.loadConfigs(); // Moved here to allow Forestry to register Bee templates.
-
+        for(IExNihiloCreatioModule module : ExNihiloCreatio.loadedModules)
+            module.init(event);
     }
 
     public void postInit(FMLPostInitializationEvent event) {
+        for(IExNihiloCreatioModule module : ExNihiloCreatio.loadedModules)
+            module.postInit(event);
     }
 
     public void registerModels(ModelRegistryEvent event) {

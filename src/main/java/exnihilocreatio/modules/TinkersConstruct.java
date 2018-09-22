@@ -1,17 +1,22 @@
-package exnihilocreatio.compatibility.tconstruct;
+package exnihilocreatio.modules;
 
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.ModItems;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.ore.EnumOreSubtype;
 import exnihilocreatio.items.ore.ItemOre;
+import exnihilocreatio.modules.tconstruct.modifiers.ModifierSmashing;
+import exnihilocreatio.modules.tconstruct.tools.SledgeHammer;
+import exnihilocreatio.modules.tconstruct.tools.TiCrook;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
+import lombok.Getter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import slimeknights.tconstruct.common.ModelRegisterUtil;
 import slimeknights.tconstruct.library.TinkerRegistry;
@@ -22,23 +27,28 @@ import slimeknights.tconstruct.library.modifiers.IModifier;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.tools.TinkerModifiers;
 
-public class CompatTConstruct {
-    public static SledgeHammer sledgeHammer = new SledgeHammer();
-    public static TiCrook crook = new TiCrook();
+public class TinkersConstruct implements IExNihiloCreatioModule {
+    @Getter
+    private final String MODID = "tconstruct";
 
-    public static void registerItems(IForgeRegistry<Item> registry) {
+    public SledgeHammer SLEDGE_HAMMER;
+    public TiCrook TINKERS_CROOK;
+
+    public void registerItems(IForgeRegistry<Item> registry) {
+        SLEDGE_HAMMER = new SledgeHammer();
+        TINKERS_CROOK = new TiCrook();
         ToolBuildGuiInfo info;
         if(ModConfig.compatibility.tinkers_construct_compat.addExNihiloHammer){
             // Register Sledge Hammer
-            registry.register(sledgeHammer);
-            TinkerRegistry.registerToolCrafting(sledgeHammer);
-            ModelRegisterUtil.registerToolModel(sledgeHammer);
+            registry.register(SLEDGE_HAMMER);
+            TinkerRegistry.registerToolCrafting(SLEDGE_HAMMER);
+            ModelRegisterUtil.registerToolModel(SLEDGE_HAMMER);
         }
         if(ModConfig.compatibility.tinkers_construct_compat.addExNihiloCrook){
             // Register Crook
-            registry.register(crook);
-            TinkerRegistry.registerToolCrafting(crook);
-            ModelRegisterUtil.registerToolModel(crook);
+            registry.register(TINKERS_CROOK);
+            TinkerRegistry.registerToolCrafting(TINKERS_CROOK);
+            ModelRegisterUtil.registerToolModel(TINKERS_CROOK);
         }
         // Register Modifiers
         for (IModifier modifier: new IModifier[] {
@@ -56,11 +66,12 @@ public class CompatTConstruct {
         }
     }
 
-    public static void initClient(FMLInitializationEvent event) {
+    @Override
+    public void initClient(FMLInitializationEvent event) {
         ToolBuildGuiInfo info;
         if(ModConfig.compatibility.tinkers_construct_compat.addExNihiloHammer){
             // Sledge Hammer Crafting
-            info = new ToolBuildGuiInfo(sledgeHammer);
+            info = new ToolBuildGuiInfo(SLEDGE_HAMMER);
             info.addSlotPosition(33 - 18, 42 + 18); // Handle
             info.addSlotPosition(33 + 20, 42 - 20); // Head
             info.addSlotPosition(33, 42); // Binding
@@ -68,7 +79,7 @@ public class CompatTConstruct {
         }
         if(ModConfig.compatibility.tinkers_construct_compat.addExNihiloCrook){
             // Crook Crafting
-            info = new ToolBuildGuiInfo(crook);
+            info = new ToolBuildGuiInfo(TINKERS_CROOK);
             info.addSlotPosition(33 - 11, 42 + 11); // handle
             info.addSlotPosition(33 - 2, 42 - 20); // head
             info.addSlotPosition(33 + 18, 42 - 8); // binding
@@ -76,7 +87,8 @@ public class CompatTConstruct {
         }
     }
 
-    public static void postInit() {
+    @Override
+    public void postInit(FMLPostInitializationEvent event){
         if (ModConfig.compatibility.tinkers_construct_compat.addModifer) {
             Modifier smashingModifier = new ModifierSmashing();
             smashingModifier.addItem(ModItems.hammerDiamond);
