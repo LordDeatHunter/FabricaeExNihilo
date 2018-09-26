@@ -1,5 +1,6 @@
 package exnihilocreatio.registries.manager
 
+import exnihilocreatio.modules.forestry.registry.HiveRequirementsRegistry
 import exnihilocreatio.registries.registries.*
 import exnihilocreatio.registries.registries.prefab.BaseRegistry
 
@@ -21,3 +22,5 @@ interface ICrucibleStoneDefaultRegistryProvider : IDefaultRecipeProvider<Crucibl
 interface ICrookDefaultRegistryProvider : IDefaultRecipeProvider<CrookRegistry>
 interface ICompostDefaultRegistryProvider : IDefaultRecipeProvider<CompostRegistry>
 interface IBarrelLiquidBlacklistDefaultRegistryProvider : IDefaultRecipeProvider<BarrelLiquidBlacklistRegistry>
+
+interface IHiveDefaultRegistryProvider : IDefaultRecipeProvider<HiveRequirementsRegistry>

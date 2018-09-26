@@ -3,6 +3,7 @@ package exnihilocreatio.modules.forestry.registry;
 import exnihilocreatio.util.BlockInfo;
 import lombok.Getter;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -11,7 +12,6 @@ import javax.annotation.Nonnull;
 import java.util.*;
 
 public class HiveRequirements {
-    @Getter
     private BlockInfo hive = BlockInfo.EMPTY;
     @Getter
     private Integer dimension = null;
@@ -30,10 +30,39 @@ public class HiveRequirements {
     @Getter
     private Integer maxElevation = null;
     @Getter
-    private Map<BlockInfo, Integer> adjacentBlocks = new HashMap<>();
+    private Map<Ingredient, Integer> adjacentBlocks = new HashMap<>();
     @Getter
-    private Map<BlockInfo, Integer> nearbyBlocks = new HashMap<>();
+    private Map<Ingredient, Integer> nearbyBlocks = new HashMap<>();
 
+    // Kotlin doesn't like Lombok @AllArgsConstructor
+    public HiveRequirements(BlockInfo hive, Integer dim, Set<Integer> biomes,
+                            Float minT, Float maxT,
+                            Integer minL, Integer maxL,
+                            Integer minY, Integer maxY,
+                            Map<Ingredient, Integer> adjacent, Map<Ingredient, Integer> nearby){
+        this.hive = hive;
+        this.dimension = dim;
+        this.allowedBiomes = biomes;
+        this.minTemperature = minT;
+        this.maxTemperature = maxT;
+        this.minElevation = minY;
+        this.maxElevation = maxY;
+        this.adjacentBlocks = adjacent;
+        this.nearbyBlocks = nearby;
+    }
+    public HiveRequirements(BlockInfo hive, Integer dim, Set<Integer> biomes,
+                            Map<Ingredient, Integer> adjacent, Map<Ingredient, Integer> nearby){
+        this.hive = hive;
+        this.dimension = dim;
+        this.allowedBiomes = biomes;
+        this.adjacentBlocks = adjacent;
+        this.nearbyBlocks = nearby;
+    }
+
+    // Kotlin doesn't like Lombok @Getter
+    public BlockInfo getHive(){
+        return hive;
+    }
 
     public boolean check(@Nonnull World world, @Nonnull BlockPos pos){
         // Check dimension
@@ -58,36 +87,40 @@ public class HiveRequirements {
             return false;
 
         // Check Adjacent Blocks --- could probably be done smarter
-        IBlockState[] adjacentStates = getAdjacentBlockStates(world, pos);
-        for(BlockInfo info : adjacentBlocks.keySet()){
-            int req = adjacentBlocks.get(info);
-            for(IBlockState state : adjacentStates){
-                if(info.equals(state)){
-                    req -= 1;
+        if(adjacentBlocks != null){
+            IBlockState[] adjacentStates = getAdjacentBlockStates(world, pos);
+            for(Ingredient ingredient : adjacentBlocks.keySet()){
+                int req = adjacentBlocks.get(ingredient);
+                for(IBlockState state : adjacentStates){
+                    if(ingredient.test(new BlockInfo(state).getItemStack())){
+                        req -= 1;
+                    }
                 }
-            }
-            if(req > 0){
-                return false;
+                if(req > 0){
+                    return false;
+                }
             }
         }
         // Check Nearby Blocks
-        List<IBlockState> nearby = getNearbyStates(world, pos);
-        for(BlockInfo info : nearbyBlocks.keySet()){
-            int req = nearbyBlocks.get(info);
-            // If the same req is in the adjacent block set bump up the req due to double checking
-            if(adjacentBlocks.containsKey(info))
-                req += adjacentBlocks.get(info);
-            for(IBlockState state : nearby){
-                if(info.equals(state)){
-                    req -= 1;
+        if(nearbyBlocks != null){
+            List<IBlockState> nearby = getNearbyStates(world, pos);
+            for(Ingredient ingredient : nearbyBlocks.keySet()){
+                int req = nearbyBlocks.get(ingredient);
+                // If the same req is in the adjacent block set bump up the req due to double checking
+                if(adjacentBlocks != null && adjacentBlocks.containsKey(ingredient))
+                    req += adjacentBlocks.get(ingredient);
+                for(IBlockState state : nearby){
+                    if(ingredient.test(new BlockInfo(state).getItemStack())){
+                        req -= 1;
+                    }
                 }
-            }
-            if(req > 0){
-                return false;
+                if(req > 0){
+                    return false;
+                }
             }
         }
 
-        return false;
+        return true;
     }
 
     private static boolean rangeCheck(Number toTest, Number min, Number max){

@@ -119,11 +119,8 @@ public class ModConfig {
         }
 
         public static class ForestryCompat {
-            @Config.Comment({"Attempt to transform if rand(0,value) == 0, during and random block tick.",
-                    "Should result in an average wait time of [68.27 * ln(0.5) / ln(1-1/x)] seconds,",
-                    "Assuming vanilla random tickspeed and no lag: 16 -> ~12.2 minutes."
-            })
-            public int hiveTransformChance = 16;
+            @Config.Comment({"How many random hives to check each time a scented hive gets a random tick. Setting this high may cause lag."})
+            public int hiveTransformTrys = 1;
 
         }
     }

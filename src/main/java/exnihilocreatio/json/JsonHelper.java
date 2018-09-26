@@ -54,6 +54,16 @@ public class JsonHelper {
         return ret;
     }
 
+
+    public float getNullableFloat(String object, float def) {
+        float ret = def;
+
+        if (json.getAsJsonObject().get(object) != null)
+            ret = json.getAsJsonObject().get(object).getAsFloat();
+
+        return ret;
+    }
+
     public String getString(String object) {
         return json.getAsJsonObject().get(object).getAsString();
     }

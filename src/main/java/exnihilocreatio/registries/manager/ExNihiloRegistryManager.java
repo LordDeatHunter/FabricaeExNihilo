@@ -39,7 +39,6 @@ public final class ExNihiloRegistryManager {
     public static final CrucibleRegistry CRUCIBLE_WOOD_REGISTRY = new CrucibleRegistry(CRUCIBLE_WOOD_DEFAULT_REGISTRY_PROVIDERS);
     public static final MilkEntityRegistry MILK_ENTITY_REGISTRY = new MilkEntityRegistry();
 
-
     //region >>>> DEFAULT RECIPE REGISTERS
 
     public static void registerSieveDefaultRecipeHandler(ISieveDefaultRegistryProvider provider) {

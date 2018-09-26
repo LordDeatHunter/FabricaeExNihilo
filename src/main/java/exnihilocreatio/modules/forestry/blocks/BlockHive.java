@@ -2,6 +2,8 @@ package exnihilocreatio.modules.forestry.blocks;
 
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.config.ModConfig;
+import exnihilocreatio.modules.Forestry;
+import exnihilocreatio.modules.forestry.registry.HiveRequirements;
 import exnihilocreatio.util.IHasModel;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
@@ -75,21 +77,22 @@ public class BlockHive extends Block implements IHasModel {
     }
 
     @Override
-    public void randomTick(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull Random rand) {
+    public void updateTick(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull Random rand) {
         //TODO Transformation logic
         if(world.isRemote) // Maybe add some random particles?
             return;
+
         if(state.getValue(VARIANT) == EnumType.ARTIFICIAL)
             return;
-        if(rand.nextInt(ModConfig.compatibility.forestry_compat.hiveTransformChance) != 0)
-            return;
 
-        //for(HiveRequirements req : HiveRequirementRegistry){
-        //  if(req.check(world, pos)){
-        //      do transform
-        //      return;
-        //  }
-        //}
+        // Check a random hive
+        for(int i=0; i < ModConfig.compatibility.forestry_compat.hiveTransformTrys; i++){
+            HiveRequirements req = Forestry.HIVE_REQUIREMENTS_REGISTRY.getRegistry().get(rand.nextInt(Forestry.HIVE_REQUIREMENTS_REGISTRY.getRegistry().size()));
+            if(req.check(world, pos)){
+                world.setBlockState(pos, req.getHive().getBlockState());
+                return;
+            }
+        }
     }
 
     public static enum EnumType implements IStringSerializable {
