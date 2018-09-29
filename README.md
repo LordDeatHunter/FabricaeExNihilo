@@ -1,6 +1,7 @@
 # Ex Nihilo Creatio
 
-Releases are available on [Curseforge](https://minecraft.curseforge.com/projects/ex-nihilo-creatio). Issues should be reported to the Github [issue tracker](https://github.com/BloodWorkXGaming/ExNihiloCreatio/issues).
+Releases are available on [![Curseforge](http://cf.way2muchnoise.eu/274456.svg "ExNihilo Creatio") ExNihilo Creatio](https://minecraft.curseforge.com/projects/ex-nihilo-creatio).
+Issues should be reported to the Github [issue tracker](https://github.com/BloodWorkXGaming/ExNihiloCreatio/issues).
 
 Do you love Skyblocks? Do you hate having one block that takes you from minute 5 to year 5? Then this is the mod for you!
 
