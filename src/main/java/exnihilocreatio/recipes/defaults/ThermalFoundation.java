@@ -63,7 +63,7 @@ public class ThermalFoundation implements IRecipeDefaults {
             if (!registry.isRegistered("lead"))
                 registry.register("lead", new Color("444f53"), new ItemInfo(THERMAL_MATERIAL, 131));
 
-            if (!registry.isRegistered("aluminum"))
+            if (!registry.isRegistered("aluminum" ) && !registry.isRegistered("aluminium" ))
                 registry.register("aluminum", new Color("CDCDCF"), new ItemInfo(THERMAL_MATERIAL, 132));
 
             if (!registry.isRegistered("nickel"))
