@@ -47,11 +47,6 @@ public class TileCrucibleWood extends TileCrucibleBase {
 
                     solidAmount = crucibleRegistry.getMeltable(currentItem).getAmount();
                 } else {
-                    if (currentItem.isValid()) {
-                        currentItem = ItemInfo.EMPTY;
-
-                        markDirtyClient();
-                    }
 
                     return;
                 }
@@ -78,10 +73,6 @@ public class TileCrucibleWood extends TileCrucibleBase {
                 FluidStack toFill = new FluidStack(FluidRegistry.getFluid(crucibleRegistry.getMeltable(currentItem).getFluid()), heatRate);
                 int filled = tank.fillInternal(toFill, true);
                 solidAmount -= filled;
-
-                if (filled > 0) {
-                    markDirtyClient();
-                }
             }
         }
     }

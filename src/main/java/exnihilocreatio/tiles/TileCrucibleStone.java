@@ -46,12 +46,7 @@ public class TileCrucibleStone extends TileCrucibleBase {
 
                     solidAmount = crucibleRegistry.getMeltable(currentItem).getAmount();
                 } else {
-                    if (currentItem.isValid()) {
-                        currentItem = ItemInfo.EMPTY;
-
-                        PacketHandler.sendNBTUpdate(this);
-                    }
-
+//                  onBlockActivated in TileCrucibleBase already updates the client item/fluid is removed
                     return;
                 }
             }
@@ -78,9 +73,7 @@ public class TileCrucibleStone extends TileCrucibleBase {
                 int filled = tank.fillInternal(toFill, true);
                 solidAmount -= filled;
 
-                if (filled > 0) {
-                    PacketHandler.sendNBTUpdate(this);
-                }
+                // already done two lines above in fillinternal
             }
         }
     }
