@@ -12,27 +12,27 @@ import javax.annotation.Nonnull;
 import java.util.*;
 
 public class HiveRequirements {
-    private BlockInfo hive = BlockInfo.EMPTY;
+    public BlockInfo hive = BlockInfo.EMPTY;
     @Getter
-    private Integer dimension = null;
+    public Integer dimension = null;
     @Getter
-    private Set<Integer> allowedBiomes = null;
+    public Set<Integer> allowedBiomes = null;
     @Getter
-    private Float minTemperature = null;
+    public Float minTemperature = null;
     @Getter
-    private Float maxTemperature = null;
+    public Float maxTemperature = null;
     @Getter
-    private Integer minLight = null;
+    public Integer minLight = null;
     @Getter
-    private Integer maxLight = null;
+    public Integer maxLight = null;
     @Getter
-    private Integer minElevation = null;
+    public Integer minElevation = null;
     @Getter
-    private Integer maxElevation = null;
+    public Integer maxElevation = null;
     @Getter
-    private Map<Ingredient, Integer> adjacentBlocks = new HashMap<>();
+    public Map<Ingredient, Integer> adjacentBlocks = new HashMap<>();
     @Getter
-    private Map<Ingredient, Integer> nearbyBlocks = new HashMap<>();
+    public Map<Ingredient, Integer> nearbyBlocks = new HashMap<>();
 
     // Kotlin doesn't like Lombok @AllArgsConstructor
     public HiveRequirements(BlockInfo hive, Integer dim, Set<Integer> biomes,

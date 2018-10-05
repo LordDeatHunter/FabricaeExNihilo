@@ -82,6 +82,10 @@ tile.block_grinder.name=Grinder [WIP! Does nothing yet!]
 tile.block_waterwheel.name=Waterwheel
 
 tile.block_end_cake.name=End Cake
+tile.exnihilocreatio.hive.artifical_hive.name=Artificial Hive
+tile.exnihilocreatio.hive.artifical_hive.desc=Artificiosum Alvarium
+tile.exnihilocreatio.hive.scented_hive.name=Scented Hive
+tile.exnihilocreatio.hive.scented_hive.desc=Odoratum Alvarium
 
 tile.block_sieve.name=Sieve
 item.item_mesh.1.name=String Mesh

@@ -15,6 +15,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -52,7 +53,8 @@ public class Forestry implements IExNihiloCreatioModule {
     }
 
     @Override
-    public void postInit(FMLPostInitializationEvent event){
+    public void init(FMLInitializationEvent event){
+        // Why are all of our configs loaded in init?
         // Forest Hive
         HIVE_REQUIREMENTS_REGISTRY.register(new HiveRequirements(new BlockInfo("forestry:beehives:0"), 0,null, getDefaultForestAdjacent(), null));
         // Meadows Hive

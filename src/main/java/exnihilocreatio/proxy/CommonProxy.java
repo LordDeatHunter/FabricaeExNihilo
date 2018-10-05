@@ -2,6 +2,7 @@ package exnihilocreatio.proxy;
 
 import exnihilocreatio.*;
 import exnihilocreatio.compatibility.CompatTOP;
+import exnihilocreatio.modules.Forestry;
 import exnihilocreatio.modules.IExNihiloCreatioModule;
 import exnihilocreatio.util.Data;
 import net.minecraft.block.Block;
@@ -17,6 +18,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.io.File;
 
 import static exnihilocreatio.util.Data.RECIPES;
 
@@ -65,9 +68,14 @@ public abstract class CommonProxy {
     }
 
     public void init(FMLInitializationEvent event) {
+        // TODO split config loading, ores/item/block creating to preInit or the relavent register event, regisitry initialization here, recipe initialization in post
         ExNihiloCreatio.loadConfigs(); // Moved here to allow Forestry to register Bee templates.
         for(IExNihiloCreatioModule module : ExNihiloCreatio.loadedModules)
             module.init(event);
+        if(Loader.isModLoaded("forestry")){
+            // This needs to come after the modules
+            Forestry.HIVE_REQUIREMENTS_REGISTRY.loadJson(new File(ExNihiloCreatio.configDirectory, "ScentedHiveRegistry.json"));
+        }
     }
 
     public void postInit(FMLPostInitializationEvent event) {
