@@ -23,6 +23,7 @@ public class Forestry implements IRecipeDefaults {
 
         // Compost Drones
         registry.register(new ItemInfo("forestry:bee_drone_ge"), 0.0625f, dirtState, new Color("C45631"));
+        registry.register(new ItemInfo("forestry:bee_princess_ge"), 0.25f, dirtState, new Color("C45631"));
         registry.register(new ItemInfo("forestry:bee_larvae_ge"), 0.0625f, dirtState, new Color("C45631"));
         registry.register(new ItemInfo("forestry:cocoon_ge"), 0.0625f, dirtState, new Color("C45631"));
         registry.register(new ItemInfo("forestry:caterpillar_ge"), 0.0625f, dirtState, new Color("C45631"));

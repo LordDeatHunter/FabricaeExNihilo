@@ -15,6 +15,7 @@ public class BinniesBotany implements IRecipeDefaults {
     public void registerCompost(CompostRegistry registry) {
         BlockInfo dirtState = new BlockInfo(Blocks.DIRT);
         // Compost Pollens
-        registry.register(new ItemInfo("botany:pollen:0"), 0.125f, dirtState, new Color("FFFA66"));
+        // TODO investigate why this crashes JEI when viewed
+        // registry.register(new ItemInfo("botany:pollen:0"), 0.125f, dirtState, new Color("FFFA66"));
     }
 }

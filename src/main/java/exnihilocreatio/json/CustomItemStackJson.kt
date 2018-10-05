@@ -5,6 +5,9 @@ import exnihilocreatio.util.LogUtil
 import net.minecraft.init.Items
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.nbt.JsonToNBT
+import net.minecraft.nbt.NBTException
+import net.minecraft.nbt.NBTTagCompound
 
 import java.lang.reflect.Type
 
@@ -25,8 +28,20 @@ object CustomItemStackJson : JsonDeserializer<ItemStack>, JsonSerializer<ItemSta
 
             item = Items.AIR
         }
+        var stack : ItemStack = ItemStack(item!!, amount, meta)
 
-        return ItemStack(item!!, amount, meta)
+        var nbt : NBTTagCompound? = null
+        if(json.asJsonObject.has("nbt")) {
+            try {
+                nbt = JsonToNBT.getTagFromJson(json.asJsonObject.get("nbt").asString)
+                stack.tagCompound = nbt
+            } catch (e: NBTException) {
+                LogUtil.error("Could not convert JSON to NBT: " + json.asJsonObject.get("nbt").toString(), e)
+                e.printStackTrace()
+            }
+        }
+
+        return stack
     }
 
     override fun serialize(src: ItemStack, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
@@ -35,6 +50,11 @@ object CustomItemStackJson : JsonDeserializer<ItemStack>, JsonSerializer<ItemSta
         jsonObject.addProperty("name", if (src.item.registryName == null) "" else src.item.registryName!!.toString())
         jsonObject.addProperty("amount", src.count)
         jsonObject.addProperty("meta", src.itemDamage)
+
+        val nbt = src.tagCompound
+        if (nbt != null && !nbt.isEmpty){
+            jsonObject.addProperty("nbt", nbt.toString())
+        }
 
         return jsonObject
     }
