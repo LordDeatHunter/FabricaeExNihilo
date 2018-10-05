@@ -24,7 +24,8 @@ public class TiCrook extends AoeToolCore implements ICrook {
     public TiCrook() {
         this(PartMaterialType.handle(TinkerTools.toolRod),
                 PartMaterialType.head(TinkerTools.toolRod),
-                PartMaterialType.extra(TinkerTools.binding));
+                PartMaterialType.extra(TinkerTools.toolRod),
+                PartMaterialType.handle(TinkerTools.toolRod));
 
     }
 

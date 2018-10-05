@@ -80,9 +80,10 @@ public class TinkersConstruct implements IExNihiloCreatioModule {
         if(ModConfig.compatibility.tinkers_construct_compat.addExNihiloCrook){
             // Crook Crafting
             info = new ToolBuildGuiInfo(TINKERS_CROOK);
-            info.addSlotPosition(33 - 11, 42 + 11); // handle
-            info.addSlotPosition(33 - 2, 42 - 20); // head
-            info.addSlotPosition(33 + 18, 42 - 8); // binding
+            info.addSlotPosition(33 - 20, 42 + 18); // handle
+            info.addSlotPosition(33 - 2, 42 - 22);  // head
+            info.addSlotPosition(33 + 16, 42 - 10); // extra
+            info.addSlotPosition(33 - 2, 42 + 2); // handle2
             TinkerRegistryClient.addToolBuilding(info);
         }
     }
