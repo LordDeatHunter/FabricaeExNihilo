@@ -113,6 +113,11 @@ public class ModConfig {
 
             @Config.Comment("Add a Ex Nihilo style hammer to the tool station.")
             public boolean addExNihiloHammer = true;
+            @Config.Comment({
+                    "Tinkers Complement added a sledge hammer first, so by default Ex Nihilo Creatio",
+                    "respects its existance (it also has more of the graphics defined)."
+            })
+            public boolean respectTinkersComplement = true;
             @Config.Comment("Add a Ex Nihilo style crook to the tool station.")
             public boolean addExNihiloCrook = true;
 

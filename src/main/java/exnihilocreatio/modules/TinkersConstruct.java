@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -38,7 +39,8 @@ public class TinkersConstruct implements IExNihiloCreatioModule {
         SLEDGE_HAMMER = new SledgeHammer();
         TINKERS_CROOK = new TiCrook();
         ToolBuildGuiInfo info;
-        if(ModConfig.compatibility.tinkers_construct_compat.addExNihiloHammer){
+        if(ModConfig.compatibility.tinkers_construct_compat.addExNihiloHammer &&
+                !(Loader.isModLoaded("tcomplement") && ModConfig.compatibility.tinkers_construct_compat.respectTinkersComplement)){
             // Register Sledge Hammer
             registry.register(SLEDGE_HAMMER);
             TinkerRegistry.registerToolCrafting(SLEDGE_HAMMER);
@@ -69,7 +71,8 @@ public class TinkersConstruct implements IExNihiloCreatioModule {
     @Override
     public void initClient(FMLInitializationEvent event) {
         ToolBuildGuiInfo info;
-        if(ModConfig.compatibility.tinkers_construct_compat.addExNihiloHammer){
+        if(ModConfig.compatibility.tinkers_construct_compat.addExNihiloHammer &&
+                !(Loader.isModLoaded("tcomplement") && ModConfig.compatibility.tinkers_construct_compat.respectTinkersComplement)){
             // Sledge Hammer Crafting
             info = new ToolBuildGuiInfo(SLEDGE_HAMMER);
             info.addSlotPosition(33 - 18, 42 + 18); // Handle
