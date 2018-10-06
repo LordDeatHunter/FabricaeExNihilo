@@ -1,7 +1,6 @@
 package exnihilocreatio.modules.forestry.registry;
 
 import com.google.gson.*
-import com.google.gson.reflect.TypeToken
 import exnihilocreatio.json.JsonHelper
 import exnihilocreatio.util.BlockInfo
 import net.minecraft.item.crafting.Ingredient

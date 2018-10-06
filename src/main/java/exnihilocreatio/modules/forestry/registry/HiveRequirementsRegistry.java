@@ -3,21 +3,17 @@ package exnihilocreatio.modules.forestry.registry;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.json.CustomBlockInfoJson;
 import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.modules.Forestry;
 import exnihilocreatio.registries.ingredient.OreIngredientStoring;
 import exnihilocreatio.registries.manager.IDefaultRecipeProvider;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryList;
-import exnihilocreatio.registries.types.Compostable;
 import exnihilocreatio.util.BlockInfo;
 import net.minecraft.item.crafting.Ingredient;
 
-import java.io.File;
 import java.io.FileReader;
 import java.util.List;
-import java.util.Map;
 
 public class HiveRequirementsRegistry extends BaseRegistryList<HiveRequirements> {
 

@@ -1,0 +1,20 @@
+{
+  "result": {
+    "item": "exnihilocreatio:hive",
+    "data":0
+  },
+  "pattern": [
+    "xxx",
+    "xyx",
+    "xxx"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "x": {
+      "item": "minecraft:string"
+    },
+    "y": {
+      "item": "minecraft:hay_block"
+    }
+  }
+}

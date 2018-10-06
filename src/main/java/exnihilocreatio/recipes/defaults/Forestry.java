@@ -2,10 +2,7 @@ package exnihilocreatio.recipes.defaults;
 
 import exnihilocreatio.blocks.BlockSieve;
 import exnihilocreatio.modules.forestry.ForestryHelper;
-import exnihilocreatio.registries.registries.CompostRegistry;
-import exnihilocreatio.registries.registries.CrookRegistry;
-import exnihilocreatio.registries.registries.CrucibleRegistry;
-import exnihilocreatio.registries.registries.SieveRegistry;
+import exnihilocreatio.registries.registries.*;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
@@ -108,5 +105,14 @@ public class Forestry implements IRecipeDefaults {
     public void registerCrucibleStone(CrucibleRegistry registry) {
         // Melt down honey drops
         registry.register("dropHoney", FluidRegistry.getFluid("for.honey"), 10);
+    }
+
+    @Override
+    public void registerFluidBlockTransform(FluidBlockTransformerRegistry registry) {
+        // Why are TE and Forestry seed oils different ;_;
+        if(FluidRegistry.isFluidRegistered("seed.oil"))
+            registry.register(FluidRegistry.getFluid("seed.oil"), new ItemInfo("exnihilocreatio:hive:0"), new ItemInfo("exnihilocreatio:hive:1"));
+        if(FluidRegistry.isFluidRegistered("seed_oil"))
+            registry.register(FluidRegistry.getFluid("seed_oil"), new ItemInfo("exnihilocreatio:hive:0"), new ItemInfo("exnihilocreatio:hive:1"));
     }
 }

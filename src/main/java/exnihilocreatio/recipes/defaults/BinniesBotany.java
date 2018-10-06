@@ -1,9 +1,7 @@
 package exnihilocreatio.recipes.defaults;
 
 import exnihilocreatio.registries.registries.CompostRegistry;
-import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.BlockInfo;
-import exnihilocreatio.util.ItemInfo;
 import lombok.Getter;
 import net.minecraft.init.Blocks;
 

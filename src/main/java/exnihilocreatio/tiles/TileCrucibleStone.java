@@ -1,7 +1,6 @@
 package exnihilocreatio.tiles;
 
 import exnihilocreatio.capabilities.CapabilityHeatManager;
-import exnihilocreatio.networking.PacketHandler;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;

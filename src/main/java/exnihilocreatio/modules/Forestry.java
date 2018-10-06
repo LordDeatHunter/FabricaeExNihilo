@@ -16,7 +16,6 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -79,6 +78,7 @@ public class Forestry implements IExNihiloCreatioModule {
 
         }
     }
+
     private static Map<Ingredient, Integer> getDefaultForestAdjacent(){
         Map<Ingredient, Integer> adj = new HashMap<>();
         adj.put(new OreIngredientStoring("logWood"), 1);
