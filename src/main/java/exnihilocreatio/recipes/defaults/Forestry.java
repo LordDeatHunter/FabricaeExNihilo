@@ -104,17 +104,20 @@ public class Forestry implements IRecipeDefaults {
     @Override
     public void registerCrucibleStone(CrucibleRegistry registry) {
         // Melt down honey drops
-        registry.register("dropHoney", FluidRegistry.getFluid("for.honey"), 10);
+        registry.register("dropHoney", FluidRegistry.getFluid("for.honey"), 10, new BlockInfo("forestry:bee_combs_0:0"));
+
+        // Melt Down seeds into seed oil, fall back to Thermal's seed oil if forestry's does not exist for some reason.
+        // There are no good textures for seeds :/
         if(FluidRegistry.isFluidRegistered("seed.oil"))
-            registry.register("listAllSeeds", FluidRegistry.getFluid("seed.oil"), 10);
+            registry.register("listAllseed", FluidRegistry.getFluid("seed.oil"), 10, new BlockInfo(Blocks.SPONGE));
         else if(FluidRegistry.isFluidRegistered("seed_oil"))
-            registry.register("listAllSeeds", FluidRegistry.getFluid("seed_oil"), 10);
+            registry.register("listAllseed", FluidRegistry.getFluid("seed_oil"), 10, new BlockInfo(Blocks.SPONGE));
+
     }
 
     @Override
     public void registerFluidBlockTransform(FluidBlockTransformerRegistry registry) {
         // Why are TE and Forestry seed oils different ;_;
-
         if(FluidRegistry.isFluidRegistered("seed.oil"))
             registry.register(FluidRegistry.getFluid("seed.oil"), new ItemInfo("exnihilocreatio:hive:0"), new ItemInfo("exnihilocreatio:hive:1"));
         if(FluidRegistry.isFluidRegistered("seed_oil"))
