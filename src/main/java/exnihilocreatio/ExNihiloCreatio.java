@@ -1,6 +1,7 @@
 package exnihilocreatio;
 
 import exnihilocreatio.capabilities.ENCapabilities;
+import exnihilocreatio.command.CommandHandNBT;
 import exnihilocreatio.command.CommandReloadConfig;
 import exnihilocreatio.compatibility.crafttweaker.CrTIntegration;
 import exnihilocreatio.config.ModConfig;
@@ -141,6 +142,7 @@ public class ExNihiloCreatio {
     @EventHandler
     public static void serverStart(FMLServerStartingEvent event) {
         event.registerServerCommand(new CommandReloadConfig());
+        event.registerServerCommand(new CommandHandNBT());
     }
 
     @EventHandler
