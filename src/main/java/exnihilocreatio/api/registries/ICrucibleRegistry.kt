@@ -9,7 +9,7 @@ import net.minecraft.item.crafting.Ingredient
 import net.minecraftforge.fluids.Fluid
 
 interface ICrucibleRegistry : IRegistryMap<Ingredient, Meltable> {
-    fun register(item: StackInfo, fluid: Fluid, amount: Int, block: BlockInfo)
+    fun register(name: String, fluid: Fluid, amount: Int, block: BlockInfo)
     fun register(item: StackInfo, fluid: Fluid, amount: Int)
     fun register(item: StackInfo, meltable: Meltable)
     fun register(stack: ItemStack, fluid: Fluid, amount: Int)

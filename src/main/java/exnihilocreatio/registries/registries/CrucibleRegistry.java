@@ -60,8 +60,8 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> impl
 
 
     @Override
-    public void register(@NotNull StackInfo item, @NotNull Fluid fluid, int amount, @NotNull BlockInfo block) {
-        register(item, new Meltable(fluid.getName(), amount, block));
+    public void register(@NotNull String name, @NotNull Fluid fluid, int amount, @NotNull BlockInfo block) {
+        register(name, new Meltable(fluid.getName(), amount, block));
     }
     public void register(ItemStack stack, Fluid fluid, int amount) {
         register(stack, new Meltable(fluid.getName(), amount));
