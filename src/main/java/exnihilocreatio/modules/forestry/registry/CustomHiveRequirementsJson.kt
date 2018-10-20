@@ -1,4 +1,4 @@
-package exnihilocreatio.modules.forestry.registry;
+package exnihilocreatio.modules.forestry.registry
 
 import com.google.gson.*
 import exnihilocreatio.json.JsonHelper
@@ -7,25 +7,27 @@ import net.minecraft.item.crafting.Ingredient
 import java.lang.reflect.Type
 
 object CustomHiveRequirementsJson : JsonDeserializer<HiveRequirements>, JsonSerializer<HiveRequirements> {
-    override fun serialize(src: HiveRequirements, typeOfSrc: Type, context: JsonSerializationContext) : JsonElement {
-        var obj = JsonObject()
-        obj.add("hive", context.serialize(src.hive))
-        obj.addProperty("dim", src.dimension)
-        obj.addProperty("minTemperature", src.minTemperature)
-        obj.addProperty("maxTemperature", src.maxTemperature)
-        obj.addProperty("minLight", src.minLight)
-        obj.addProperty("maxLight", src.maxLight)
-        obj.addProperty("minElevation", src.minElevation)
-        obj.addProperty("maxElevation", src.maxElevation)
-        if(src.allowedBiomes != null)
-            obj.add("allowedBiomes", context.serialize(src.allowedBiomes))
-        if(src.adjacentBlocks != null){
-            obj.add("adjacentBlocks", context.serialize(src.adjacentBlocks))
-        }
-        if(src.nearbyBlocks != null)
-            obj.add("nearbyBlocks", context.serialize(src.nearbyBlocks))
+    override fun serialize(src: HiveRequirements, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
+        return JsonObject().apply {
+            add("hive", context.serialize(src.hive))
+            addProperty("dim", src.dimension)
+            addProperty("minTemperature", src.minTemperature)
+            addProperty("maxTemperature", src.maxTemperature)
+            addProperty("minLight", src.minLight)
+            addProperty("maxLight", src.maxLight)
+            addProperty("minElevation", src.minElevation)
+            addProperty("maxElevation", src.maxElevation)
 
-        return obj
+            if (src.allowedBiomes != null)
+                add("allowedBiomes", context.serialize(src.allowedBiomes))
+
+            if (!src.adjacentBlocks.isEmpty()) {
+                add("adjacentBlocks", context.serialize(src.adjacentBlocks))
+            }
+
+            if (!src.nearbyBlocks.isEmpty())
+                add("nearbyBlocks", context.serialize(src.nearbyBlocks))
+        }
     }
 
     @Throws(JsonParseException::class)
@@ -35,8 +37,8 @@ object CustomHiveRequirementsJson : JsonDeserializer<HiveRequirements>, JsonSeri
         val hive = BlockInfo(helper.getString("hive"))
         val dimension = helper.getInteger("dim")
 
-        val minT = helper.getDouble("minTemperature") as Float
-        val maxT = helper.getDouble("maxTemperature") as Float
+        val minT = helper.getNullableFloat("minTemperature", 0f)
+        val maxT = helper.getNullableFloat("maxTemperature", 1000f)
 
 
         val minL = helper.getNullableInteger("minLight", 0)
@@ -45,18 +47,18 @@ object CustomHiveRequirementsJson : JsonDeserializer<HiveRequirements>, JsonSeri
         val minY = helper.getNullableInteger("minElevation", 0)
         val maxY = helper.getNullableInteger("maxElevation", 255)
 
-        var allowedBiomes : Set<Int> = HashSet<Int>();
-        if(json.asJsonObject.has("allowedBiomes")){
+        var allowedBiomes: Set<Int> = HashSet()
+        if (json.asJsonObject.has("allowedBiomes")) {
             allowedBiomes = context.deserialize<Set<Int>>(json.asJsonObject.get("allowedBiomes"), Set::class.java)
         }
 
-        var adjBlocks : Map<Ingredient, Int> = HashMap<Ingredient, Int>()
-        if(json.asJsonObject.has("adjBlocks")){
+        var adjBlocks: Map<Ingredient, Int> = HashMap()
+        if (json.asJsonObject.has("adjBlocks")) {
             adjBlocks = context.deserialize<Map<Ingredient, Int>>(json.asJsonObject.get("adjBlocks"), Map::class.java)
         }
 
-        var nearBlocks : Map<Ingredient, Int>  = HashMap<Ingredient, Int>()
-        if(json.asJsonObject.has("nearBlocks")){
+        var nearBlocks: Map<Ingredient, Int> = HashMap()
+        if (json.asJsonObject.has("nearBlocks")) {
             nearBlocks = context.deserialize<Map<Ingredient, Int>>(json.asJsonObject.get("nearBlocks"), Map::class.java)
         }
 

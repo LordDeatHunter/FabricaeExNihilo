@@ -40,9 +40,9 @@ object CustomItemInfoJson : JsonDeserializer<ItemInfo>, JsonSerializer<ItemInfo>
             var nbt: NBTTagCompound? = null
             if (json.asJsonObject.has("nbt")) {
                 try {
-                    nbt = JsonToNBT.getTagFromJson(json.asJsonObject.get("nbt").toString())
+                    nbt = JsonToNBT.getTagFromJson(json.asJsonObject.get("nbt").asString)
                 } catch (e: NBTException) {
-                    LogUtil.error("Could not convert JSON to NBT: " + json.asJsonObject.get("nbt").toString(), e)
+                    LogUtil.error("Could not convert JSON to NBT: " + json.asJsonObject.get("nbt").asString, e)
                     e.printStackTrace()
                 }
             }

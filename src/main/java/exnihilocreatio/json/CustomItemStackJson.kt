@@ -2,13 +2,12 @@ package exnihilocreatio.json
 
 import com.google.gson.*
 import exnihilocreatio.util.LogUtil
+import exnihilocreatio.util.doInline
 import net.minecraft.init.Items
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.JsonToNBT
 import net.minecraft.nbt.NBTException
-import net.minecraft.nbt.NBTTagCompound
-
 import java.lang.reflect.Type
 
 object CustomItemStackJson : JsonDeserializer<ItemStack>, JsonSerializer<ItemStack> {
@@ -20,23 +19,20 @@ object CustomItemStackJson : JsonDeserializer<ItemStack>, JsonSerializer<ItemSta
         val amount = helper.getNullableInteger("amount", 1)
         val meta = helper.getNullableInteger("meta", 0)
 
-        var item = Item.getByNameOrId(name)
-
-        if (item == null) {
+        val item: Item = Item.getByNameOrId(name) ?: doInline {
             LogUtil.error("Error parsing JSON: Invalid Item: " + json.toString())
             LogUtil.error("This may result in crashing or other undefined behavior")
 
-            item = Items.AIR
+            return@doInline Items.AIR
         }
-        var stack : ItemStack = ItemStack(item!!, amount, meta)
 
-        var nbt : NBTTagCompound? = null
-        if(json.asJsonObject.has("nbt")) {
+        val stack = ItemStack(item, amount, meta)
+
+        if (json.asJsonObject.has("nbt")) {
             try {
-                nbt = JsonToNBT.getTagFromJson(json.asJsonObject.get("nbt").asString)
-                stack.tagCompound = nbt
+                stack.tagCompound = JsonToNBT.getTagFromJson(json.asJsonObject.get("nbt").asString)
             } catch (e: NBTException) {
-                LogUtil.error("Could not convert JSON to NBT: " + json.asJsonObject.get("nbt").toString(), e)
+                LogUtil.error("Could not convert JSON to NBT: " + json.asJsonObject.get("nbt").asString, e)
                 e.printStackTrace()
             }
         }
@@ -52,7 +48,7 @@ object CustomItemStackJson : JsonDeserializer<ItemStack>, JsonSerializer<ItemSta
         jsonObject.addProperty("meta", src.itemDamage)
 
         val nbt = src.tagCompound
-        if (nbt != null && !nbt.isEmpty){
+        if (nbt != null && !nbt.isEmpty) {
             jsonObject.addProperty("nbt", nbt.toString())
         }
 

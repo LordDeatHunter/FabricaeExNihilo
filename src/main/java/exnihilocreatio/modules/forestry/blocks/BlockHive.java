@@ -44,7 +44,7 @@ public class BlockHive extends Block implements IHasModel {
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, new IProperty[] {VARIANT});
+        return new BlockStateContainer(this, VARIANT);
     }
 
     @Override
@@ -79,23 +79,32 @@ public class BlockHive extends Block implements IHasModel {
     @Override
     public void updateTick(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull Random rand) {
         //TODO Transformation logic
-        if(world.isRemote) // Maybe add some random particles?
+        if (world.isRemote) // Maybe add some random particles?
             return;
 
-        if(state.getValue(VARIANT) == EnumType.ARTIFICIAL)
+        if (state.getValue(VARIANT) == EnumType.ARTIFICIAL)
             return;
 
         // Check a random hive
-        for(int i=0; i < ModConfig.compatibility.forestry_compat.hiveTransformTrys; i++){
+        for (int i = 0; i < ModConfig.compatibility.forestry_compat.hiveTransformTrys; i++) {
             HiveRequirements req = Forestry.HIVE_REQUIREMENTS_REGISTRY.getRegistry().get(rand.nextInt(Forestry.HIVE_REQUIREMENTS_REGISTRY.getRegistry().size()));
-            if(req.check(world, pos)){
+            if (req.check(world, pos)) {
                 world.setBlockState(pos, req.getHive().getBlockState());
                 return;
             }
         }
     }
 
-    public static enum EnumType implements IStringSerializable {
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void initModel(ModelRegistryEvent e) {
+        for (int i = 0; i < EnumType.values().length; i++) {
+            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock((Block) this), i,
+                    new ModelResourceLocation(((IForgeRegistryEntry<?>) this).getRegistryName(), "variant=" + BlockHive.EnumType.values()[i].getName()));
+        }
+    }
+
+    public enum EnumType implements IStringSerializable {
         ARTIFICIAL(0, "artificial_hive", MapColor.YELLOW),
         SCENTED(1, "scented_hive", MapColor.BROWN);
 
@@ -104,37 +113,28 @@ public class BlockHive extends Block implements IHasModel {
         private final String translationKey;
         private final MapColor mapColor;
 
-        EnumType(int meta, String name, MapColor color){
-            this.metadata=meta;
-            this.name=name;
-            this.translationKey="tile.exnihilocreatio.hive."+name;
+        EnumType(int meta, String name, MapColor color) {
+            this.metadata = meta;
+            this.name = name;
+            this.translationKey = "tile.exnihilocreatio.hive." + name;
             this.mapColor = color;
         }
 
-        public int getMetadata()
-        {
+        public int getMetadata() {
             return this.metadata;
         }
-        public MapColor getMapColor(){
+
+        public MapColor getMapColor() {
             return this.mapColor;
         }
-        public String toString()
-        {
+
+        public String toString() {
             return this.name;
         }
 
         @Override
         public String getName() {
             return this.name;
-        }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void initModel(ModelRegistryEvent e){
-        for (int i = 0; i < EnumType.values().length; i++) {
-            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock((Block) this), i,
-                    new ModelResourceLocation(((IForgeRegistryEntry<?>) this).getRegistryName(), "variant=" + BlockHive.EnumType.values()[i].getName()));
         }
     }
 }
