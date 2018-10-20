@@ -57,7 +57,7 @@ public class ExNihiloCreatio {
     public static boolean crtActionsLoaded = false;
 
     // List of loaded modules
-    public static List<IExNihiloCreatioModule> loadedModules = new ArrayList<>();
+    public static final List<IExNihiloCreatioModule> loadedModules = new ArrayList<>();
 
     static {
         FluidRegistry.enableUniversalBucket();

@@ -20,5 +20,6 @@ public interface IRecipeDefaults {
     default void registerCrucibleStone(CrucibleRegistry registry) {}
     default void registerCrucibleWood(CrucibleRegistry registry) {}
     default void registerMilk(MilkEntityRegistry registry) {}
-
 }
+
+

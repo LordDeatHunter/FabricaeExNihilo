@@ -12,32 +12,30 @@ import java.util.Map;
 
 public class HandlerAnvil {
     @SubscribeEvent(priority = EventPriority.HIGH)
-    public void AnvilUpdate(AnvilUpdateEvent event){
+    public void anvilUpdate(AnvilUpdateEvent event) {
         final ItemStack right = event.getRight();
         final ItemStack left = event.getLeft();
-        if(!left.isEmpty() && left.getCount() == 1 &&
+        if (!left.isEmpty() && left.getCount() == 1 &&
                 !right.isEmpty() && right.getCount() == 1 &&
-                left.getItem() == ModItems.mesh && left.isItemEqual(right)){
+                left.getItem() == ModItems.mesh && left.isItemEqual(right)) {
             ItemStack output = left.copy();
             Map<Enchantment, Integer> outputEnchs = EnchantmentHelper.getEnchantments(output);
             int cost = event.getCost();
             final Map<Enchantment, Integer> leftEnchs = EnchantmentHelper.getEnchantments(left);
             final Map<Enchantment, Integer> rightEnchs = EnchantmentHelper.getEnchantments(right);
-            for(Enchantment ench : rightEnchs.keySet()){
-                if(leftEnchs.containsKey(ench)){
-                    int level = leftEnchs.get(ench);
-                    if(level == rightEnchs.get(ench)){
+            for (Map.Entry<Enchantment, Integer> ench : rightEnchs.entrySet()) {
+                if (leftEnchs.containsKey(ench.getKey())) {
+                    int level = leftEnchs.get(ench.getKey());
+                    if (level == ench.getValue()) {
                         level += 1;
+                    } else if (level < ench.getValue()) {
+                        level = ench.getValue();
                     }
-                    else if(level < rightEnchs.get(ench)){
-                        level = rightEnchs.get(ench);
-                    }
-                    outputEnchs.put(ench, level);
+                    outputEnchs.put(ench.getKey(), level);
                     cost += 1 << level;
-                }
-                else {
-                    outputEnchs.put(ench, rightEnchs.get(ench));
-                    cost += 1 << rightEnchs.get(ench);
+                } else {
+                    outputEnchs.put(ench.getKey(), ench.getValue());
+                    cost += 1 << ench.getValue();
                 }
             }
             EnchantmentHelper.setEnchantments(outputEnchs, output);

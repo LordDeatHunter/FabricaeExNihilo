@@ -29,82 +29,10 @@ import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.tools.TinkerModifiers;
 
 public class TinkersConstruct implements IExNihiloCreatioModule {
+    public static SledgeHammer SLEDGE_HAMMER;
+    public static TiCrook TINKERS_CROOK;
     @Getter
     private final String MODID = "tconstruct";
-
-    public SledgeHammer SLEDGE_HAMMER;
-    public TiCrook TINKERS_CROOK;
-
-    public void registerItems(IForgeRegistry<Item> registry) {
-        SLEDGE_HAMMER = new SledgeHammer();
-        TINKERS_CROOK = new TiCrook();
-        ToolBuildGuiInfo info;
-        if(ModConfig.compatibility.tinkers_construct_compat.addExNihiloHammer &&
-                !(Loader.isModLoaded("tcomplement") && ModConfig.compatibility.tinkers_construct_compat.respectTinkersComplement)){
-            // Register Sledge Hammer
-            registry.register(SLEDGE_HAMMER);
-            TinkerRegistry.registerToolCrafting(SLEDGE_HAMMER);
-            ModelRegisterUtil.registerToolModel(SLEDGE_HAMMER);
-        }
-        if(ModConfig.compatibility.tinkers_construct_compat.addExNihiloCrook){
-            // Register Crook
-            registry.register(TINKERS_CROOK);
-            TinkerRegistry.registerToolCrafting(TINKERS_CROOK);
-            ModelRegisterUtil.registerToolModel(TINKERS_CROOK);
-        }
-        // Register Modifiers
-        for (IModifier modifier: new IModifier[] {
-                TinkerModifiers.modDiamond,
-                TinkerModifiers.modEmerald,
-                TinkerModifiers.modGlowing,
-                TinkerModifiers.modHaste,
-                TinkerModifiers.modKnockback,
-                TinkerModifiers.modLuck,
-                TinkerModifiers.modMendingMoss,
-                TinkerModifiers.modReinforced,
-                TinkerModifiers.modSoulbound,
-        }) {
-            ModelRegisterUtil.registerModifierModel(modifier, new ResourceLocation(ExNihiloCreatio.MODID, "models/item/tools/modifiers/"+modifier.getIdentifier()));
-        }
-    }
-
-    @Override
-    public void initClient(FMLInitializationEvent event) {
-        ToolBuildGuiInfo info;
-        if(ModConfig.compatibility.tinkers_construct_compat.addExNihiloHammer &&
-                !(Loader.isModLoaded("tcomplement") && ModConfig.compatibility.tinkers_construct_compat.respectTinkersComplement)){
-            // Sledge Hammer Crafting
-            info = new ToolBuildGuiInfo(SLEDGE_HAMMER);
-            info.addSlotPosition(33 - 18, 42 + 18); // Handle
-            info.addSlotPosition(33 + 20, 42 - 20); // Head
-            info.addSlotPosition(33, 42); // Binding
-            TinkerRegistryClient.addToolBuilding(info);
-        }
-        if(ModConfig.compatibility.tinkers_construct_compat.addExNihiloCrook){
-            // Crook Crafting
-            info = new ToolBuildGuiInfo(TINKERS_CROOK);
-            info.addSlotPosition(33 - 20, 42 + 18); // handle
-            info.addSlotPosition(33 - 2, 42 - 22);  // head
-            info.addSlotPosition(33 + 16, 42 - 10); // extra
-            info.addSlotPosition(33 - 2, 42 + 2); // handle2
-            TinkerRegistryClient.addToolBuilding(info);
-        }
-    }
-
-    @Override
-    public void postInit(FMLPostInitializationEvent event){
-        if (ModConfig.compatibility.tinkers_construct_compat.addModifer) {
-            Modifier smashingModifier = new ModifierSmashing();
-            smashingModifier.addItem(ModItems.hammerDiamond);
-        }
-
-        if (ModConfig.compatibility.tinkers_construct_compat.addMeltingOfChunks) {
-            registerMeltingChunks();
-        }
-        if (ModConfig.compatibility.tinkers_construct_compat.addMeltingOfDust) {
-            registerMeltingDust();
-        }
-    }
 
     private static void registerMeltingChunks() {
         for (ItemOre ore : ExNihiloRegistryManager.ORE_REGISTRY.getItemOreRegistry()) {
@@ -131,6 +59,77 @@ public class TinkersConstruct implements IExNihiloCreatioModule {
                 TinkerRegistry.registerMelting(new ItemStack(ore, 1, EnumOreSubtype.DUST.getMeta()), fluid,
                         (int) (ModConfig.compatibility.tinkers_construct_compat.ingotsPerDustWhenMelting * Material.VALUE_Ingot));
             }
+        }
+    }
+
+    public void registerItems(IForgeRegistry<Item> registry) {
+        SLEDGE_HAMMER = new SledgeHammer();
+        TINKERS_CROOK = new TiCrook();
+        ToolBuildGuiInfo info;
+        if (ModConfig.compatibility.tinkers_construct_compat.addExNihiloHammer &&
+                !(Loader.isModLoaded("tcomplement") && ModConfig.compatibility.tinkers_construct_compat.respectTinkersComplement)) {
+            // Register Sledge Hammer
+            registry.register(SLEDGE_HAMMER);
+            TinkerRegistry.registerToolCrafting(SLEDGE_HAMMER);
+            ModelRegisterUtil.registerToolModel(SLEDGE_HAMMER);
+        }
+        if (ModConfig.compatibility.tinkers_construct_compat.addExNihiloCrook) {
+            // Register Crook
+            registry.register(TINKERS_CROOK);
+            TinkerRegistry.registerToolCrafting(TINKERS_CROOK);
+            ModelRegisterUtil.registerToolModel(TINKERS_CROOK);
+        }
+        // Register Modifiers
+        for (IModifier modifier : new IModifier[]{
+                TinkerModifiers.modDiamond,
+                TinkerModifiers.modEmerald,
+                TinkerModifiers.modGlowing,
+                TinkerModifiers.modHaste,
+                TinkerModifiers.modKnockback,
+                TinkerModifiers.modLuck,
+                TinkerModifiers.modMendingMoss,
+                TinkerModifiers.modReinforced,
+                TinkerModifiers.modSoulbound,
+        }) {
+            ModelRegisterUtil.registerModifierModel(modifier, new ResourceLocation(ExNihiloCreatio.MODID, "models/item/tools/modifiers/" + modifier.getIdentifier()));
+        }
+    }
+
+    @Override
+    public void initClient(FMLInitializationEvent event) {
+        ToolBuildGuiInfo info;
+        if (ModConfig.compatibility.tinkers_construct_compat.addExNihiloHammer &&
+                !(Loader.isModLoaded("tcomplement") && ModConfig.compatibility.tinkers_construct_compat.respectTinkersComplement)) {
+            // Sledge Hammer Crafting
+            info = new ToolBuildGuiInfo(SLEDGE_HAMMER);
+            info.addSlotPosition(33 - 18, 42 + 18); // Handle
+            info.addSlotPosition(33 + 20, 42 - 20); // Head
+            info.addSlotPosition(33, 42); // Binding
+            TinkerRegistryClient.addToolBuilding(info);
+        }
+        if (ModConfig.compatibility.tinkers_construct_compat.addExNihiloCrook) {
+            // Crook Crafting
+            info = new ToolBuildGuiInfo(TINKERS_CROOK);
+            info.addSlotPosition(33 - 20, 42 + 18); // handle
+            info.addSlotPosition(33 - 2, 42 - 22);  // head
+            info.addSlotPosition(33 + 16, 42 - 10); // extra
+            info.addSlotPosition(33 - 2, 42 + 2); // handle2
+            TinkerRegistryClient.addToolBuilding(info);
+        }
+    }
+
+    @Override
+    public void postInit(FMLPostInitializationEvent event) {
+        if (ModConfig.compatibility.tinkers_construct_compat.addModifer) {
+            Modifier smashingModifier = new ModifierSmashing();
+            smashingModifier.addItem(ModItems.hammerDiamond);
+        }
+
+        if (ModConfig.compatibility.tinkers_construct_compat.addMeltingOfChunks) {
+            registerMeltingChunks();
+        }
+        if (ModConfig.compatibility.tinkers_construct_compat.addMeltingOfDust) {
+            registerMeltingDust();
         }
     }
 }
