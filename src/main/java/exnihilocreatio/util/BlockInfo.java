@@ -86,12 +86,13 @@ public class BlockInfo implements StackInfo {
                 try {
                     meta = split[2].equals("*") ? -1 : Integer.parseInt(split[2]);
                     block = Block.getBlockFromName(split[0] + ":" + split[1]);
+                    this.state = getStateFromMeta(block, meta);
+                    this.isWildcard = (meta == -1);
                 } catch (NumberFormatException | NullPointerException e) {
                     this.state = Blocks.AIR.getDefaultState();
                     this.isWildcard = true;
-                    return;
                 }
-                break;
+                return; // Meta is defined, no need to checkWildcard
             default:
                 this.state = Blocks.AIR.getDefaultState();
                 this.isWildcard = true;
@@ -139,10 +140,8 @@ public class BlockInfo implements StackInfo {
         // This checks if the block has sub items or not.
         // If not, accept any block that matches this, otherwise
         // Only accept blocks with meta 0
-        NonNullList<ItemStack> subItems = NonNullList.create();
-        state.getBlock().getSubBlocks(state.getBlock().getCreativeTab(), subItems);
-        if (subItems.size() <= 1)
-            this.isWildcard = true;
+
+        this.isWildcard = !Item.getItemFromBlock(state.getBlock()).getHasSubtypes();
     }
 
     //StackInfo
