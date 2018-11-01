@@ -1,12 +1,11 @@
 package exnihilocreatio.handlers;
 
 import exnihilocreatio.config.ModConfig;
-import exnihilocreatio.items.tools.ICrook;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.CrookReward;
+import exnihilocreatio.util.ItemUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -28,7 +27,7 @@ public class HandlerCrook {
             return;
 
         ItemStack held = event.getHarvester().getHeldItemMainhand();
-        if (!isCrook(held))
+        if (!ItemUtil.isCrook(held))
             return;
 
         List<CrookReward> rewards = ExNihiloRegistryManager.CROOK_REGISTRY.getRewards(event.getState());
@@ -61,20 +60,5 @@ public class HandlerCrook {
     }
 
 
-    public boolean isCrook(ItemStack stack) {
-        if (stack == null)
-            return false;
 
-        if (stack.getItem() == Items.AIR)
-            return false;
-
-        if (stack.getItem() instanceof ICrook)
-            return ((ICrook) stack.getItem()).isCrook(stack);
-
-        // Inspirations compatibility
-        if (stack.getItem().getToolClasses(stack).contains("crook"))
-            return true;
-
-        return false;
-    }
 }
