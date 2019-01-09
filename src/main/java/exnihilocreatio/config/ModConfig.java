@@ -65,6 +65,10 @@ public class ModConfig {
     }
 
     public static class Misc {
+        @Config.Comment({"Barrel light up if their contents do,",
+                "disabling this makes `B:enableBarrelTransformLighting` do nothing"})
+        public boolean enableBarrelLighting = true;
+        @Config.Comment("Barrel lighting can change during transformations")
         public boolean enableBarrelTransformLighting = true; // maybe move to client?
 
         @Config.RequiresMcRestart
@@ -90,6 +94,7 @@ public class ModConfig {
     public static class Compatibility {
         @Config.RequiresMcRestart
         public TinkersConstructCompat tinkers_construct_compat = new TinkersConstructCompat();
+        public ForestryCompat forestry_compat = new ForestryCompat();
 
         @Config.Comment("Prevents unidict from merging the ore chunks into normal ore.")
         public boolean preventUnidict = true;
@@ -105,6 +110,22 @@ public class ModConfig {
 
             public boolean addMeltingOfDust = true;
             public double ingotsPerDustWhenMelting = 1.0;
+
+            @Config.Comment("Add a Ex Nihilo style hammer to the tool station.")
+            public boolean addExNihiloHammer = true;
+            @Config.Comment({
+                    "Tinkers Complement added a sledge hammer first, so by default Ex Nihilo Creatio",
+                    "respects its existance (it also has more of the graphics defined)."
+            })
+            public boolean respectTinkersComplement = true;
+            @Config.Comment("Add a Ex Nihilo style crook to the tool station.")
+            public boolean addExNihiloCrook = true;
+
+        }
+
+        public static class ForestryCompat {
+            @Config.Comment({"How many random hives to check each time a scented hive gets a random tick. Setting this high may cause lag."})
+            public int hiveTransformTrys = 1;
 
         }
     }

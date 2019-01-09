@@ -60,7 +60,7 @@ public class EntityInfo {
         return false;
     }
 
-    public static EntityInfo EMPTY = new EntityInfo(null);
+    public static final EntityInfo EMPTY = new EntityInfo(null);
 
     public String getName() {
         return name;

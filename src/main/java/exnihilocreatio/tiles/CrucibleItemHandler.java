@@ -29,7 +29,6 @@ public class CrucibleItemHandler extends ItemStackHandler {
 
             if (totalSolidAmount <= allowedSolidAmount) {
                 te.currentItem = new ItemInfo(stack);
-                te.markDirtyClient();
 
                 return super.insertItem(slot, stack, simulate);
             }
@@ -47,5 +46,10 @@ public class CrucibleItemHandler extends ItemStackHandler {
     @Override
     protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
         return te.solidAmount > 0 ? TileCrucibleBase.MAX_ITEMS - 1 : TileCrucibleBase.MAX_ITEMS;
+    }
+
+    @Override
+    protected void onContentsChanged(int slot) {
+        te.markDirtyClient();
     }
 }

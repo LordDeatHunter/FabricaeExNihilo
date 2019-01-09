@@ -2,7 +2,7 @@ package exnihilocreatio.recipes.defaults;
 
 import exnihilocreatio.ModBlocks;
 import exnihilocreatio.blocks.BlockSieve;
-import exnihilocreatio.compatibility.ForestryHelper;
+import exnihilocreatio.modules.forestry.ForestryHelper;
 import exnihilocreatio.registries.registries.SieveRegistry;
 import exnihilocreatio.util.BlockInfo;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import net.minecraft.init.Blocks;
 
 public class ExtraBees implements IRecipeDefaults {
     @Getter
-    public String MODID = "extrabees";
+    private final String MODID = "extrabees";
 
     @Override
     public void registerSieve(SieveRegistry registry) {

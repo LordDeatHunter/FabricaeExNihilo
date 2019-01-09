@@ -1,6 +1,7 @@
 package exnihilocreatio.api.registries
 
 import exnihilocreatio.registries.types.Meltable
+import exnihilocreatio.util.BlockInfo
 import exnihilocreatio.util.StackInfo
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -8,6 +9,7 @@ import net.minecraft.item.crafting.Ingredient
 import net.minecraftforge.fluids.Fluid
 
 interface ICrucibleRegistry : IRegistryMap<Ingredient, Meltable> {
+    fun register(name: String, fluid: Fluid, amount: Int, block: BlockInfo)
     fun register(item: StackInfo, fluid: Fluid, amount: Int)
     fun register(item: StackInfo, meltable: Meltable)
     fun register(stack: ItemStack, fluid: Fluid, amount: Int)

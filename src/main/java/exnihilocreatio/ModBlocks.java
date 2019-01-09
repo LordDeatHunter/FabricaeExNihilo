@@ -8,7 +8,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -19,7 +18,6 @@ public class ModBlocks {
     public static final BlockBaseFalling dust = (BlockBaseFalling) new BlockBaseFalling(SoundType.CLOTH, "block_dust").setHardness(0.7F);
     public static final BlockBaseFalling netherrackCrushed = (BlockBaseFalling) new BlockBaseFalling(SoundType.GROUND, "block_netherrack_crushed").setHardness(0.7F);
     public static final BlockBaseFalling endstoneCrushed = (BlockBaseFalling) new BlockBaseFalling(SoundType.GROUND, "block_endstone_crushed").setHardness(0.7F);
-    public static final BlockBaseFalling skystoneCrushed = Loader.isModLoaded("appliedenergistics2") ? (BlockBaseFalling) new BlockBaseFalling(SoundType.GROUND, "block_skystone_crushed").setHardness(0.7F) : null;
 
     public static final BlockBaseFalling crushedAndesite = (BlockBaseFalling) new BlockBaseFalling(SoundType.GROUND, "block_andesite_crushed").setHardness(0.7F);
     public static final BlockBaseFalling crushedDiorite = (BlockBaseFalling) new BlockBaseFalling(SoundType.GROUND, "block_diorite_crushed").setHardness(0.7F);

@@ -19,7 +19,7 @@ import static net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 @ObjectHolder("thermalfoundation")
 public class ThermalFoundation implements IRecipeDefaults {
     @Getter
-    public String MODID = "thermalfoundation";
+    private final String MODID = "thermalfoundation";
 
     @ObjectHolder("material")
     public static final Item THERMAL_MATERIAL = null;
@@ -63,7 +63,7 @@ public class ThermalFoundation implements IRecipeDefaults {
             if (!registry.isRegistered("lead"))
                 registry.register("lead", new Color("444f53"), new ItemInfo(THERMAL_MATERIAL, 131));
 
-            if (!registry.isRegistered("aluminum"))
+            if (!registry.isRegistered("aluminum" ) && !registry.isRegistered("aluminium" ))
                 registry.register("aluminum", new Color("CDCDCF"), new ItemInfo(THERMAL_MATERIAL, 132));
 
             if (!registry.isRegistered("nickel"))

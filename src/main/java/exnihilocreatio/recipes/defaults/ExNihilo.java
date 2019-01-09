@@ -22,6 +22,7 @@ import net.minecraft.block.BlockLeaves;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -30,8 +31,7 @@ import java.util.Map;
 
 public class ExNihilo implements IRecipeDefaults {
     @Getter
-    public String MODID = ExNihiloCreatio.MODID;
-
+    private final String MODID = ExNihiloCreatio.MODID;
 
     @Override
     public void registerCompost(CompostRegistry registry) {
@@ -136,6 +136,8 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register("sand", new ItemInfo(Items.DYE, 3), getDropChance(0.03f), MeshType.STRING.getID());
         registry.register("sand", new ItemInfo(Items.PRISMARINE_SHARD), getDropChance(0.02f), MeshType.DIAMOND.getID());
 
+        // There needs to be a way to get flint without a flint mesh
+        registry.register("gravel", new ItemInfo(Items.FLINT), getDropChance(0.25f), MeshType.STRING.getID());
         registry.register("gravel", new ItemInfo(Items.FLINT), getDropChance(0.25f), MeshType.FLINT.getID());
         registry.register("gravel", new ItemInfo(Items.COAL), getDropChance(0.125f), MeshType.FLINT.getID());
         registry.register("gravel", new ItemInfo(Items.DYE, 4), getDropChance(0.05f), MeshType.FLINT.getID());
@@ -261,6 +263,23 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register(new BlockInfo(Blocks.LAVA), 3);
         registry.register(new BlockInfo(Blocks.FIRE), 4);
         registry.register(new BlockInfo(Blocks.TORCH), 1);
+        registry.register(new BlockInfo(Blocks.MAGMA), 2);
+        registry.register(new BlockInfo(Blocks.GLOWSTONE), 2);
+
+        // Hot Fluids
+        for(Fluid fluid : FluidRegistry.getRegisteredFluids().values()) {
+            if(fluid != FluidRegistry.LAVA) {
+                final int T = fluid.getTemperature() / 350; // Value arbitrarily chosen to make it line up with lava's heat value
+                if(T > 0 && fluid.getBlock() != null) {
+                    registry.register(new BlockInfo(fluid.getBlock()), T);
+                }
+            }
+        }
+
+        // TODO Move HeatRegistry to Ingredient
+        // registry.register(new OreStoringIngredient("blockUranium", 20);
+        // registry.register(new OreStoringIngredient("blockBlaze", 10);
+        // registry.register(new OreStoringIngredient("torch", 1); // Torch OreDict
     }
 
     @Override

@@ -1,13 +1,18 @@
 package exnihilocreatio;
 
 import exnihilocreatio.capabilities.ENCapabilities;
+import exnihilocreatio.command.CommandHandNBT;
 import exnihilocreatio.command.CommandReloadConfig;
 import exnihilocreatio.compatibility.crafttweaker.CrTIntegration;
-import exnihilocreatio.compatibility.tconstruct.CompatTConstruct;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.entities.ENEntities;
+import exnihilocreatio.handlers.HandlerAnvil;
 import exnihilocreatio.handlers.HandlerCrook;
 import exnihilocreatio.handlers.HandlerHammer;
+import exnihilocreatio.modules.AppliedEnergistics2;
+import exnihilocreatio.modules.Forestry;
+import exnihilocreatio.modules.IExNihiloCreatioModule;
+import exnihilocreatio.modules.TinkersConstruct;
 import exnihilocreatio.networking.PacketHandler;
 import exnihilocreatio.proxy.CommonProxy;
 import exnihilocreatio.registries.RegistryReloadedEvent;
@@ -28,13 +33,15 @@ import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 @Mod(
         modid = ExNihiloCreatio.MODID,
         name = "Ex Nihilo Creatio",
         version = ExNihiloCreatio.VERSION,
         acceptedMinecraftVersions = "[1.12, 1.13)",
-        dependencies = "after:forestry;after:extrabees;after:morebees;after:magicbees;required-after:forgelin")
+        dependencies = "after:forestry;after:extrabees;after:morebees;after:magicbees;after:tconstruct;required-after:forgelin")
 @Mod.EventBusSubscriber
 public class ExNihiloCreatio {
 
@@ -49,6 +56,9 @@ public class ExNihiloCreatio {
     public static boolean configsLoaded = false;
     public static boolean crtActionsLoaded = false;
 
+    // List of loaded modules
+    public static final List<IExNihiloCreatioModule> loadedModules = new ArrayList<>();
+
     static {
         FluidRegistry.enableUniversalBucket();
         // registers itself to the needed registries
@@ -56,6 +66,14 @@ public class ExNihiloCreatio {
 
     @EventHandler
     public static void preInit(FMLPreInitializationEvent event) {
+        // Initialize the modules.
+        if(Loader.isModLoaded("appliedenergistics2"))
+            ExNihiloCreatio.loadedModules.add(new AppliedEnergistics2());
+        if(Loader.isModLoaded("forestry"))
+            ExNihiloCreatio.loadedModules.add(new Forestry());
+        if(Loader.isModLoaded("tconstruct"))
+            ExNihiloCreatio.loadedModules.add(new TinkersConstruct());
+
         proxy.preInit(event);
 
         LogUtil.setup();
@@ -70,6 +88,7 @@ public class ExNihiloCreatio {
 
         MinecraftForge.EVENT_BUS.register(new HandlerHammer());
         MinecraftForge.EVENT_BUS.register(new HandlerCrook());
+        MinecraftForge.EVENT_BUS.register(new HandlerAnvil());
 
         if (ModConfig.mechanics.enableBarrels) {
             BarrelModeRegistry.registerDefaults();
@@ -87,10 +106,6 @@ public class ExNihiloCreatio {
     @EventHandler
     public static void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
-
-        if (Loader.isModLoaded("tconstruct") && ModConfig.compatibility.tinkers_construct_compat.doTinkersConstructCompat) {
-            CompatTConstruct.postInit();
-        }
 
         if (Loader.isModLoaded("crafttweaker")) {
             System.out.println("Loading crt");
@@ -127,6 +142,7 @@ public class ExNihiloCreatio {
     @EventHandler
     public static void serverStart(FMLServerStartingEvent event) {
         event.registerServerCommand(new CommandReloadConfig());
+        event.registerServerCommand(new CommandHandNBT());
     }
 
     @EventHandler

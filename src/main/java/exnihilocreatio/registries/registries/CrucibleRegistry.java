@@ -24,6 +24,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.io.FileReader;
@@ -57,6 +58,11 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> impl
         register(item.getItemStack(), meltable);
     }
 
+
+    @Override
+    public void register(@NotNull String name, @NotNull Fluid fluid, int amount, @NotNull BlockInfo block) {
+        register(name, new Meltable(fluid.getName(), amount, block));
+    }
     public void register(ItemStack stack, Fluid fluid, int amount) {
         register(stack, new Meltable(fluid.getName(), amount));
     }

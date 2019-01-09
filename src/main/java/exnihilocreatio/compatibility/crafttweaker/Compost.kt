@@ -14,7 +14,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.Ingredient
 import stanhebben.zenscript.annotations.ZenClass
 import stanhebben.zenscript.annotations.ZenMethod
-import java.util.*
 
 @ZenClass("mods.exnihilocreatio.Compost")
 @ZenRegister

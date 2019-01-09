@@ -1,12 +1,12 @@
 package exnihilocreatio.tiles;
 
 import exnihilocreatio.capabilities.CapabilityHeatManager;
-import exnihilocreatio.networking.PacketHandler;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -46,12 +46,7 @@ public class TileCrucibleStone extends TileCrucibleBase {
 
                     solidAmount = crucibleRegistry.getMeltable(currentItem).getAmount();
                 } else {
-                    if (currentItem.isValid()) {
-                        currentItem = ItemInfo.EMPTY;
-
-                        PacketHandler.sendNBTUpdate(this);
-                    }
-
+//                  onBlockActivated in TileCrucibleBase already updates the client item/fluid is removed
                     return;
                 }
             }
@@ -78,9 +73,7 @@ public class TileCrucibleStone extends TileCrucibleBase {
                 int filled = tank.fillInternal(toFill, true);
                 solidAmount -= filled;
 
-                if (filled > 0) {
-                    PacketHandler.sendNBTUpdate(this);
-                }
+                // already done two lines above in fillinternal
             }
         }
     }
@@ -97,7 +90,7 @@ public class TileCrucibleStone extends TileCrucibleBase {
         int heat = ExNihiloRegistryManager.HEAT_REGISTRY.getHeatAmount(new BlockInfo(stateBelow));
 
         // Try to match without metadata
-        if (heat == 0)
+        if (heat == 0 && !Item.getItemFromBlock(stateBelow.getBlock()).getHasSubtypes())
             heat = ExNihiloRegistryManager.HEAT_REGISTRY.getHeatAmount(new BlockInfo(stateBelow.getBlock()));
 
         if (heat != 0)

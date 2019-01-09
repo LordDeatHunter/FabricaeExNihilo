@@ -3,14 +3,10 @@ package exnihilocreatio.blocks;
 import exnihilocreatio.ModBlocks;
 import exnihilocreatio.compatibility.ITOPInfoProvider;
 import exnihilocreatio.config.ModConfig;
-import exnihilocreatio.items.tools.ICrook;
 import exnihilocreatio.tiles.BaseTileEntity;
 import exnihilocreatio.tiles.ITileLeafBlock;
 import exnihilocreatio.tiles.TileInfestingLeaves;
-import exnihilocreatio.util.Data;
-import exnihilocreatio.util.IHasModel;
-import exnihilocreatio.util.LogUtil;
-import exnihilocreatio.util.Util;
+import exnihilocreatio.util.*;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
@@ -259,7 +255,7 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
                     TileInfestingLeaves leaves = (TileInfestingLeaves) tile;
 
                     if (!player.getHeldItemMainhand().isEmpty()
-                            && player.getHeldItemMainhand().getItem() instanceof ICrook) {
+                            && ItemUtil.isCrook(player.getHeldItemMainhand())) {
                         if (world.rand.nextFloat() < leaves.getProgress() * ModConfig.crooking.stringChance) {
                             Util.dropItemInWorld(leaves, player, new ItemStack(Items.STRING, 1, 0), 0.02f);
                         }

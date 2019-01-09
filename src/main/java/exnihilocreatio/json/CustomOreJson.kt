@@ -5,9 +5,8 @@ import com.google.gson.reflect.TypeToken
 import exnihilocreatio.items.ore.Ore
 import exnihilocreatio.texturing.Color
 import exnihilocreatio.util.ItemInfo
-
 import java.lang.reflect.Type
-import java.util.HashMap
+import java.util.*
 
 object CustomOreJson : JsonDeserializer<Ore>, JsonSerializer<Ore> {
     override fun serialize(src: Ore, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {

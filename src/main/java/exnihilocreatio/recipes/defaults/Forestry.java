@@ -1,11 +1,8 @@
 package exnihilocreatio.recipes.defaults;
 
 import exnihilocreatio.blocks.BlockSieve;
-import exnihilocreatio.compatibility.ForestryHelper;
-import exnihilocreatio.registries.registries.CompostRegistry;
-import exnihilocreatio.registries.registries.CrookRegistry;
-import exnihilocreatio.registries.registries.CrucibleRegistry;
-import exnihilocreatio.registries.registries.SieveRegistry;
+import exnihilocreatio.modules.forestry.ForestryHelper;
+import exnihilocreatio.registries.registries.*;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
@@ -15,7 +12,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 
 public class Forestry implements IRecipeDefaults {
     @Getter
-    public String MODID = "forestry";
+    private final String MODID = "forestry";
 
     @Override
     public void registerCompost(CompostRegistry registry) {
@@ -23,6 +20,7 @@ public class Forestry implements IRecipeDefaults {
 
         // Compost Drones
         registry.register(new ItemInfo("forestry:bee_drone_ge"), 0.0625f, dirtState, new Color("C45631"));
+        registry.register(new ItemInfo("forestry:bee_princess_ge"), 0.25f, dirtState, new Color("C45631"));
         registry.register(new ItemInfo("forestry:bee_larvae_ge"), 0.0625f, dirtState, new Color("C45631"));
         registry.register(new ItemInfo("forestry:cocoon_ge"), 0.0625f, dirtState, new Color("C45631"));
         registry.register(new ItemInfo("forestry:caterpillar_ge"), 0.0625f, dirtState, new Color("C45631"));
@@ -51,12 +49,12 @@ public class Forestry implements IRecipeDefaults {
     public void registerCrook(CrookRegistry registry) {
         // All Leaves for Forest Bees
         registry.register("treeLeaves", ForestryHelper.getDroneInfo("forestry.speciesForest").getItemStack(), 0.02f, 0.2f);
-        registry.register("treeLeaves", ForestryHelper.getIgnobleInfo("forestry.speciesForest").getItemStack(), 0.01f, 0.01f);
-        registry.register("treeLeaves", ForestryHelper.getPristineInfo("forestry.speciesForest").getItemStack(), 0.005f, 0.5f);
+        registry.register("treeLeaves", ForestryHelper.getIgnobleInfo("forestry.speciesForest").getItemStack(), 0.01f, 0.02f);
+        registry.register("treeLeaves", ForestryHelper.getPristineInfo("forestry.speciesForest").getItemStack(), 0.001f, 0.01f);
         // Jungle Leaves for Tropical
         registry.register("treeLeaves", ForestryHelper.getDroneInfo("forestry.speciesTropical").getItemStack(), 0.02f, 0.2f);
-        registry.register("treeLeaves", ForestryHelper.getIgnobleInfo("forestry.speciesTropical").getItemStack(), 0.01f, 0.01f);
-        registry.register("treeLeaves", ForestryHelper.getPristineInfo("forestry.speciesTropical").getItemStack(), 0.005f, 0.5f);
+        registry.register("treeLeaves", ForestryHelper.getIgnobleInfo("forestry.speciesTropical").getItemStack(), 0.01f, 0.02f);
+        registry.register("treeLeaves", ForestryHelper.getPristineInfo("forestry.speciesTropical").getItemStack(), 0.001f, 0.01f);
     }
 
     @Override
@@ -106,6 +104,23 @@ public class Forestry implements IRecipeDefaults {
     @Override
     public void registerCrucibleStone(CrucibleRegistry registry) {
         // Melt down honey drops
-        registry.register("dropHoney", FluidRegistry.getFluid("for.honey"), 10);
+        registry.register("dropHoney", FluidRegistry.getFluid("for.honey"), 10, new BlockInfo("forestry:bee_combs_0:0"));
+
+        // Melt Down seeds into seed oil, fall back to Thermal's seed oil if forestry's does not exist for some reason.
+        // There are no good textures for seeds :/
+        if(FluidRegistry.isFluidRegistered("seed.oil"))
+            registry.register("listAllseed", FluidRegistry.getFluid("seed.oil"), 10, new BlockInfo(Blocks.SPONGE));
+        else if(FluidRegistry.isFluidRegistered("seed_oil"))
+            registry.register("listAllseed", FluidRegistry.getFluid("seed_oil"), 10, new BlockInfo(Blocks.SPONGE));
+
+    }
+
+    @Override
+    public void registerFluidBlockTransform(FluidBlockTransformerRegistry registry) {
+        // Why are TE and Forestry seed oils different ;_;
+        if(FluidRegistry.isFluidRegistered("seed.oil"))
+            registry.register(FluidRegistry.getFluid("seed.oil"), new ItemInfo("exnihilocreatio:hive:0"), new ItemInfo("exnihilocreatio:hive:1"));
+        if(FluidRegistry.isFluidRegistered("seed_oil"))
+            registry.register(FluidRegistry.getFluid("seed_oil"), new ItemInfo("exnihilocreatio:hive:0"), new ItemInfo("exnihilocreatio:hive:1"));
     }
 }

@@ -2,7 +2,7 @@ package exnihilocreatio.recipes.defaults;
 
 import exnihilocreatio.ModBlocks;
 import exnihilocreatio.blocks.BlockSieve;
-import exnihilocreatio.compatibility.ForestryHelper;
+import exnihilocreatio.modules.forestry.ForestryHelper;
 import exnihilocreatio.registries.registries.CompostRegistry;
 import exnihilocreatio.registries.registries.SieveRegistry;
 import exnihilocreatio.texturing.Color;
@@ -13,7 +13,7 @@ import net.minecraft.init.Blocks;
 
 public class MagicBees implements IRecipeDefaults {
     @Getter
-    public String MODID = "magicbees";
+    private final String MODID = "magicbees";
 
     @Override
     public void registerCompost(CompostRegistry registry) {

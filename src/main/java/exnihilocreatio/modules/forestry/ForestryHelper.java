@@ -1,4 +1,4 @@
-package exnihilocreatio.compatibility;
+package exnihilocreatio.modules.forestry;
 
 import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.LogUtil;

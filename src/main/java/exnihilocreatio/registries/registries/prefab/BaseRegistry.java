@@ -5,7 +5,6 @@ import exnihilocreatio.api.registries.IRegistry;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.registries.manager.IDefaultRecipeProvider;
 import lombok.Getter;
-import org.apache.commons.io.IOUtils;
 
 import javax.annotation.Nonnull;
 import java.io.File;

@@ -17,7 +17,7 @@ public class DraconicEvolution implements IRecipeDefaults {
     public static final Item DRACO_DUST = null;
 
     @Getter
-    public String MODID = "draconicevolution";
+    private final String MODID = "draconicevolution";
 
     public void registerSieve(SieveRegistry registry) {
         registry.register(ModBlocks.endstoneCrushed, 0, new ItemInfo(DRACO_DUST, 0), 0.04f, BlockSieve.MeshType.IRON.getID());

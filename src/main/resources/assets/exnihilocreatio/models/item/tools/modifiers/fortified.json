@@ -1,0 +1,6 @@
+{
+	"textures": {
+		"hammer_tconstruct": "exnihilocreatio:items/tools/hammer/tconstruct/mod_fortified",
+		"crook_tconstruct": "exnihilocreatio:items/tools/crook/tconstruct/mod_fortified"
+	}
+}

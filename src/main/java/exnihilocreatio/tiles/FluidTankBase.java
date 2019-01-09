@@ -29,14 +29,20 @@ public class FluidTankBase extends FluidTank {
     @Override
     public FluidStack drainInternal(int maxDrain, boolean doDrain) {
         FluidStack stack = super.drainInternal(maxDrain, doDrain);
-        tileEntity.markDirtyClient();
+        //tileEntity.markDirtyClient();
         return stack;
     }
 
     @Override
     public int fillInternal(FluidStack resource, boolean doFill) {
         int i = super.fillInternal(resource, doFill);
-        tileEntity.markDirtyClient();
+        //tileEntity.markDirtyClient();
         return i;
+    }
+
+    @Override
+    protected void onContentsChanged() {
+        // updates the tile entity for the sake of things that detect when contents change (such as comparators)
+        tileEntity.markDirtyClient();
     }
 }

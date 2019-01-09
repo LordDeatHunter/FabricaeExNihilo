@@ -6,7 +6,6 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
-import javax.annotation.meta.When;
 
 public class ItemBlockMeta extends ItemBlock implements IHasModel {
 

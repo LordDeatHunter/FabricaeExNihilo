@@ -45,7 +45,7 @@ public class SieveRecipe implements IRecipeWrapper {
             boolean alreadyExists = false;
 
             for (ItemStack outputStack : outputs) {
-                if (ItemStack.areItemsEqual(stack, outputStack)) {
+                if (ItemStack.areItemsEqual(stack, outputStack) && ItemStack.areItemStackTagsEqual(stack, outputStack)) {
                     outputStack.grow(stack.getCount());
                     alreadyExists = true;
                     break;

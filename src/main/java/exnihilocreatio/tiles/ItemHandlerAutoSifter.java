@@ -19,7 +19,6 @@ public class ItemHandlerAutoSifter extends ItemStackHandler {
     @Nonnull
     public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
         if (ExNihiloRegistryManager.SIEVE_REGISTRY.canBeSifted(stack)) {
-            te.markDirtyClient();
             return super.insertItem(slot, stack, simulate);
         } else {
             return stack;
@@ -35,5 +34,10 @@ public class ItemHandlerAutoSifter extends ItemStackHandler {
     @Override
     public int getSlotLimit(int slot) {
         return 32;
+    }
+
+    @Override
+    protected void onContentsChanged(int slot) {
+        te.markDirtyClient();
     }
 }

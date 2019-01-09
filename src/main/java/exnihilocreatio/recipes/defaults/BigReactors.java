@@ -22,7 +22,7 @@ public class BigReactors implements IRecipeDefaults {
     If extreme reactors ever stops updating, I bet someone will fork it and use the same modid
      */
     @Getter
-    public String MODID = "bigreactors"; // Extreme Reactors is a fork of Big Reactors and still uses the same MOD ID
+    private final String MODID = "bigreactors"; // Extreme Reactors is a fork of Big Reactors and still uses the same MOD ID
 
     public void registerSieve(SieveRegistry registry) {
         ItemOre ore = ExNihiloRegistryManager.ORE_REGISTRY.getOreItem("yellorium");

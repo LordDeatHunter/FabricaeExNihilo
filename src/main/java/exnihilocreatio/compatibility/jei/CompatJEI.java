@@ -19,12 +19,14 @@ import exnihilocreatio.compatibility.jei.hammer.HammerRecipe;
 import exnihilocreatio.compatibility.jei.hammer.HammerRecipeCategory;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipe;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipeCategory;
+import exnihilocreatio.modules.TinkersConstruct;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.util.LogUtil;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -44,16 +46,16 @@ public class CompatJEI implements IModPlugin {
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
-        registry.addRecipeCategories(new SieveRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
-        registry.addRecipeCategories(new HammerRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
-        registry.addRecipeCategories(new FluidOnTopRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
-        registry.addRecipeCategories(new FluidTransformRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
-        registry.addRecipeCategories(new FluidBlockTransformRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
-        registry.addRecipeCategories(new CompostRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
-        registry.addRecipeCategories(new CrucibleRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        IGuiHelper guiHelper = registry.getJeiHelpers().getGuiHelper();
 
-
-        registry.addRecipeCategories(new CrucibleHeatSourceRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        registry.addRecipeCategories(new SieveRecipeCategory(guiHelper));
+        registry.addRecipeCategories(new HammerRecipeCategory(guiHelper));
+        registry.addRecipeCategories(new FluidOnTopRecipeCategory(guiHelper));
+        registry.addRecipeCategories(new FluidTransformRecipeCategory(guiHelper));
+        registry.addRecipeCategories(new FluidBlockTransformRecipeCategory(guiHelper));
+        registry.addRecipeCategories(new CompostRecipeCategory(guiHelper));
+        registry.addRecipeCategories(new CrucibleRecipeCategory(guiHelper));
+        registry.addRecipeCategories(new CrucibleHeatSourceRecipeCategory(guiHelper));
     }
 
     @Override
@@ -121,6 +123,10 @@ public class CompatJEI implements IModPlugin {
         registry.addRecipeCatalyst(new ItemStack(ModItems.hammerStone), HammerRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(ModItems.hammerIron), HammerRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(ModItems.hammerDiamond), HammerRecipeCategory.UID);
+
+        if (Loader.isModLoaded("tconstruct")) {
+            registry.addRecipeCatalyst(new ItemStack(TinkersConstruct.SLEDGE_HAMMER), HammerRecipeCategory.UID);
+        }
         LogUtil.info("JEI: Hammer Recipes Loaded:             " + hammerRecipes.size());
     }
 

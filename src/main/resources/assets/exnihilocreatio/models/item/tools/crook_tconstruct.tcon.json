@@ -1,0 +1,9 @@
+{
+  "textures": {
+    "layer0": "exnihilocreatio:items/tools/crook/tconstruct/handle",
+    "layer1": "exnihilocreatio:items/tools/crook/tconstruct/head",
+    "layer2": "exnihilocreatio:items/tools/crook/tconstruct/binding",
+    "broken1": "exnihilocreatio:items/tools/crook/tconstruct/head_broken",
+    "broken2": "exnihilocreatio:items/tools/crook/tconstruct/binding_broken"
+  }
+}

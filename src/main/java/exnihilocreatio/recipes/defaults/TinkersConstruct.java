@@ -15,7 +15,7 @@ import net.minecraft.item.Item;
 
 public class TinkersConstruct implements IRecipeDefaults {
     @Getter
-    public String MODID = "tconstruct";
+    private final String MODID = "tconstruct";
 
     public void registerSieve(SieveRegistry registry) {
         OreRegistry oreRegistry = ExNihiloRegistryManager.ORE_REGISTRY;

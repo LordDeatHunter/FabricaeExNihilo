@@ -10,6 +10,7 @@ import exnihilocreatio.client.models.event.RenderEvent;
 import exnihilocreatio.client.renderers.*;
 import exnihilocreatio.entities.ProjectileStone;
 import exnihilocreatio.items.ore.ItemOre;
+import exnihilocreatio.modules.IExNihiloCreatioModule;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.tiles.*;
 import net.minecraft.block.state.IBlockState;
@@ -65,6 +66,10 @@ public class ClientProxy extends CommonProxy {
         ModBlocks.initModels(event);
         ModItems.initModels(event);
         ModFluids.initModels();
+        for(IExNihiloCreatioModule module : ExNihiloCreatio.loadedModules) {
+            module.initBlockModels(event);
+            module.initItemModels(event);
+        }
 
         registerRenderers();
     }
@@ -75,6 +80,8 @@ public class ClientProxy extends CommonProxy {
 
         MinecraftForge.EVENT_BUS.register(new RenderEvent());
         OBJLoader.INSTANCE.addDomain(ExNihiloCreatio.MODID);
+        for(IExNihiloCreatioModule module : ExNihiloCreatio.loadedModules)
+            module.preInitClient(event);
     }
 
     @Override
@@ -84,11 +91,16 @@ public class ClientProxy extends CommonProxy {
         ExNihiloRegistryManager.ORE_REGISTRY.initModels();
         Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new RenderOrePiece(), ExNihiloRegistryManager.ORE_REGISTRY.getItemOreRegistry().toArray(new ItemOre[0]));
         ModColorManager.registerColorHandlers();
+
+        for(IExNihiloCreatioModule module : ExNihiloCreatio.loadedModules)
+            module.initClient(event);
     }
 
     @Override
     public void postInit(FMLPostInitializationEvent event) {
         super.postInit(event);
+        for(IExNihiloCreatioModule module : ExNihiloCreatio.loadedModules)
+            module.postInitClient(event);
     }
 
     @Override

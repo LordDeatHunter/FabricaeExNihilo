@@ -1,0 +1,6 @@
+{
+	"textures": {
+		"hammer_tconstruct": "exnihilocreatio:items/tools/hammer/tconstruct/mod_mending_moss",
+		"crook_tconstruct": "exnihilocreatio:items/tools/crook/tconstruct/mod_mending_moss"
+	}
+}
