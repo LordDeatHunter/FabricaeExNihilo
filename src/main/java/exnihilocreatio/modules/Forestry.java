@@ -69,13 +69,32 @@ public class Forestry implements IExNihiloCreatioModule {
         // Marshy Hive
         HIVE_REQUIREMENTS_REGISTRY.register(new HiveRequirements(new BlockInfo("forestry:beehives:6"), 0, null, getDefaultMarshyAdjacent(), null));
         if(Loader.isModLoaded("extrabees")){
-
+            // Water hive
+            HIVE_REQUIREMENTS_REGISTRY.register(new HiveRequirements(new BlockInfo("extrabees:hive:0"), 0, null, getDefaultWaterAdjacent(), null));
+            // Rock hive
+            HIVE_REQUIREMENTS_REGISTRY.register(new HiveRequirements(new BlockInfo("extrabees:hive:1"), 0, null, getDefaultRockAdjacent(), null));
+            // Nether hive
+            HIVE_REQUIREMENTS_REGISTRY.register(new HiveRequirements(new BlockInfo("extrabees:hive:2"), -1, null, getDefaultNetherAdjacent(), null));
+            // Marble hive
+            // HIVE_REQUIREMENTS_REGISTRY.register(new HiveRequirements(new BlockInfo("extrabees:hive:3"), 0, null, getDefaultMarbleAdjacent(), null));
         }
         if(Loader.isModLoaded("magicbees")){
-
+            // Curious hive
+            HIVE_REQUIREMENTS_REGISTRY.register(new HiveRequirements(new BlockInfo("magicbees:hiveblock:0"), 0, null, getDefaultCuriousAdjacent(), null));
+            // Unusual hive
+            HIVE_REQUIREMENTS_REGISTRY.register(new HiveRequirements(new BlockInfo("magicbees:hiveblock:1"), 0, null, getDefaultUnusualAdjacent(), null));
+            // Resonating hive
+            HIVE_REQUIREMENTS_REGISTRY.register(new HiveRequirements(new BlockInfo("magicbees:hiveblock:2"), 0, null, getDefaultResonatingAdjacent(), null));
+            // Deep hive
+            HIVE_REQUIREMENTS_REGISTRY.register(new HiveRequirements(new BlockInfo("magicbees:hiveblock:3"), 0, null, getDefaultDeepAdjacent(), null));
+            // Infernal hive
+            HIVE_REQUIREMENTS_REGISTRY.register(new HiveRequirements(new BlockInfo("magicbees:hiveblock:4"), -1, null, getDefaultInfernalAdjacent(), null));
+            // Oblivion hive
+            HIVE_REQUIREMENTS_REGISTRY.register(new HiveRequirements(new BlockInfo("magicbees:hiveblock:5"), 1, null, getDefaultOblivionAdjacent(), null));
         }
         if(Loader.isModLoaded("morebees") && !Loader.isModLoaded("extrabees")){
-
+            // Rock hive
+            HIVE_REQUIREMENTS_REGISTRY.register(new HiveRequirements(new BlockInfo("morebees:hive:0"), 0, null, getDefaultRockAdjacent(), null));
         }
     }
 
@@ -115,7 +134,60 @@ public class Forestry implements IExNihiloCreatioModule {
     private static Map<Ingredient, Integer> getDefaultMarshyAdjacent(){
         Map<Ingredient, Integer> adj = new HashMap<>();
         adj.put(new OreIngredientStoring("dirt"), 1);
-        adj.put(IngredientUtil.parseFromString("minecraft:water"), 1);
+        return adj;
+    }
+
+    // Addon Hives
+    private static Map<Ingredient, Integer> getDefaultWaterAdjacent(){
+        Map<Ingredient, Integer> adj = new HashMap<>();
+        adj.put(new OreIngredientStoring("water"), 1);
+        return adj;
+    }
+    private static Map<Ingredient, Integer> getDefaultRockAdjacent(){
+        Map<Ingredient, Integer> adj = new HashMap<>();
+        adj.put(new OreIngredientStoring("stone"), 4);
+        return adj;
+    }
+    private static Map<Ingredient, Integer> getDefaultNetherAdjacent(){
+        Map<Ingredient, Integer> adj = new HashMap<>();
+        adj.put(new OreIngredientStoring("minecraft:netherrack"), 3);
+        return adj;
+    }
+    private static Map<Ingredient, Integer> getDefaultMarbleAdjacent(){
+        Map<Ingredient, Integer> adj = new HashMap<>();
+        adj.put(new OreIngredientStoring("diorite"), 2);
+        return adj;
+    }
+    private static Map<Ingredient, Integer> getDefaultCuriousAdjacent(){
+        Map<Ingredient, Integer> adj = new HashMap<>();
+        adj.put(new OreIngredientStoring("grass"), 1);
+        return adj;
+    }
+    private static Map<Ingredient, Integer> getDefaultUnusualAdjacent(){
+        Map<Ingredient, Integer> adj = new HashMap<>();
+        adj.put(new OreIngredientStoring("grass"), 1);
+        return adj;
+    }
+    private static Map<Ingredient, Integer> getDefaultResonatingAdjacent(){
+        Map<Ingredient, Integer> adj = new HashMap<>();
+        adj.put(new OreIngredientStoring("stone"), 2);
+        return adj;
+    }
+    private static Map<Ingredient, Integer> getDefaultDeepAdjacent(){
+        Map<Ingredient, Integer> adj = new HashMap<>();
+        adj.put(new OreIngredientStoring("minecraft:redstone_block"), 3);
+        return adj;
+    }
+    private static Map<Ingredient, Integer> getDefaultInfernalAdjacent(){
+        Map<Ingredient, Integer> adj = new HashMap<>();
+        adj.put(new OreIngredientStoring("minecraft:netherrack"), 1);
+        adj.put(new OreIngredientStoring("minecraft:glowstone"), 2);
+        return adj;
+    }
+    private static Map<Ingredient, Integer> getDefaultOblivionAdjacent(){
+        Map<Ingredient, Integer> adj = new HashMap<>();
+        adj.put(new OreIngredientStoring("minecraft:end_stone"), 1);
+        adj.put(new OreIngredientStoring("minecraft:obsidian"), 2);
         return adj;
     }
 }

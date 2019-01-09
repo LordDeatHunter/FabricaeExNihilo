@@ -1,8 +1,8 @@
 package exnihilocreatio.api.registries
 
 import exnihilocreatio.registries.types.Meltable
-import exnihilocreatio.util.StackInfo
 import exnihilocreatio.util.BlockInfo
+import exnihilocreatio.util.StackInfo
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.Ingredient
