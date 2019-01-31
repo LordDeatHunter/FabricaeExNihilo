@@ -1,6 +1,8 @@
 package exnihilocreatio.blocks;
 
 import exnihilocreatio.ExNihiloCreatio;
+import exnihilocreatio.rotationalPower.IRotationalPowerConsumer;
+import exnihilocreatio.rotationalPower.IRotationalPowerMember;
 import exnihilocreatio.tiles.TileAutoSifter;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -64,8 +66,18 @@ public class BlockAutoSifter extends BlockBase implements ITileEntityProvider {
 
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        TileAutoSifter te = getTe(worldIn, pos);
-        te.facing = placer.getHorizontalFacing();
+        TileAutoSifter teAutoSifter = getTe(worldIn, pos);
+        teAutoSifter.facing = placer.getHorizontalFacing();
+        for (EnumFacing face : EnumFacing.HORIZONTALS) {
+            TileEntity adjacentTileEntity = worldIn.getTileEntity(pos.offset(face));
+            if ((adjacentTileEntity instanceof IRotationalPowerMember)
+            && !(adjacentTileEntity instanceof IRotationalPowerConsumer)) {
+                teAutoSifter.facing = face.getOpposite();
+                if (face == placer.getHorizontalFacing().getOpposite()) {
+                    break;
+                }
+            }
+        }
     }
 
     //region >>>> RENDERING OPTIONS
