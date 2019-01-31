@@ -12,7 +12,7 @@ import java.util.List;
 
 public class HandlerHammer {
 
-    @SubscribeEvent(priority = EventPriority.LOWEST)
+    @SubscribeEvent(priority = EventPriority.LOW)
     public void hammer(BlockEvent.HarvestDropsEvent event) {
         if (event.getWorld().isRemote || event.getHarvester() == null || event.isSilkTouching())
             return;
