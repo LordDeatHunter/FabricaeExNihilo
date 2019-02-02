@@ -3,6 +3,8 @@ package exnihilocreatio.modules.tconstruct;
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.modules.TinkersConstruct;
+import exnihilocreatio.modules.tconstruct.tools.SledgeHammer;
+import exnihilocreatio.modules.tconstruct.tools.TiCrook;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
@@ -22,6 +24,8 @@ public class Helper {
     public static class Proxy {
         @Optional.Method(modid="tconstruct")
         public void registerItems(IForgeRegistry<Item> registry) {
+            TinkersConstruct.SLEDGE_HAMMER = new SledgeHammer();
+            TinkersConstruct.TINKERS_CROOK = new TiCrook();
             if (ModConfig.compatibility.tinkers_construct_compat.addExNihiloHammer &&
                     !(Loader.isModLoaded("tcomplement") && ModConfig.compatibility.tinkers_construct_compat.respectTinkersComplement)) {
                 // Register Sledge Hammer
