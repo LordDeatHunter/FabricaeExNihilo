@@ -55,6 +55,9 @@ public class RenderCrucible extends FastTESR<TileCrucibleBase> {
         TextureAtlasSprite icon = sprite.getSprite();
         Color color = sprite.getColor();
 
+        if(icon == null)
+            return;
+
         // Draw
         for (final ModelVertex vert : model) {
             for (final VertexFormatElement e : buffer.getVertexFormat().getElements()) {

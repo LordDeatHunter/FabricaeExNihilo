@@ -27,6 +27,7 @@ import mezz.jei.api.ingredients.IModIngredientRegistration;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -125,9 +126,14 @@ public class CompatJEI implements IModPlugin {
         registry.addRecipeCatalyst(new ItemStack(ModItems.hammerDiamond), HammerRecipeCategory.UID);
 
         if (Loader.isModLoaded("tconstruct")) {
-            registry.addRecipeCatalyst(new ItemStack(TinkersConstruct.SLEDGE_HAMMER), HammerRecipeCategory.UID);
+            registerTinkersSledgeHammerCatalyst(registry);
         }
         LogUtil.info("JEI: Hammer Recipes Loaded:             " + hammerRecipes.size());
+    }
+
+    @Optional.Method(modid="tconstruct")
+    private void registerTinkersSledgeHammerCatalyst(@Nonnull IModRegistry registry){
+        registry.addRecipeCatalyst(new ItemStack(TinkersConstruct.SLEDGE_HAMMER), HammerRecipeCategory.UID);
     }
 
     private void registerHeat(@Nonnull IModRegistry registry) {

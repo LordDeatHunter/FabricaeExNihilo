@@ -21,6 +21,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -202,6 +203,12 @@ public class ExNihilo implements IRecipeDefaults {
         // Seeds
         for (ItemSeedBase seed : ModItems.itemSeeds) {
             registry.register("dirt", new ItemInfo(seed), getDropChance(0.05f), MeshType.STRING.getID());
+        }
+
+        if(Item.REGISTRY.containsKey(ModItems.rubberSeed.getRegistryName())){
+            registry.register("dirt", new ItemInfo(ModItems.rubberSeed), getDropChance(0.05f), MeshType.FLINT.getID());
+            registry.register("dirt", new ItemInfo(ModItems.rubberSeed), getDropChance(0.05f), MeshType.IRON.getID());
+            registry.register("dirt", new ItemInfo(ModItems.rubberSeed), getDropChance(0.05f), MeshType.DIAMOND.getID());
         }
 
         getLeavesSapling().forEach((leaves, sapling) -> {

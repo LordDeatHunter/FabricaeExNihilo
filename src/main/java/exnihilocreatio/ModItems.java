@@ -5,6 +5,7 @@ import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.*;
 import exnihilocreatio.items.ore.EnumOreSubtype;
 import exnihilocreatio.items.ore.ItemOre;
+import exnihilocreatio.items.seeds.ItemRubberSeed;
 import exnihilocreatio.items.seeds.ItemSeedBase;
 import exnihilocreatio.items.tools.CrookBase;
 import exnihilocreatio.items.tools.HammerBase;
@@ -64,6 +65,8 @@ public class ModItems {
             new ItemSeedBase("potato", Blocks.POTATOES.getDefaultState()).setPlantType(EnumPlantType.Crop)
     ));
 
+    public static ItemRubberSeed rubberSeed;
+
     public static void registerItems(IForgeRegistry<Item> registry) {
         for (Item item : Data.ITEMS) {
             if (!(item instanceof IHasSpecialRegistry)) {
@@ -120,6 +123,8 @@ public class ModItems {
             for(ItemSeedBase seed : itemSeeds){
                 OreDictionary.registerOre("listAllseed", seed);
             }
+            if(Item.REGISTRY.containsKey(ModItems.rubberSeed.getRegistryName()))
+                OreDictionary.registerOre("listAllseed", rubberSeed);
             // Grass Seeds
             OreDictionary.registerOre("listAllseed", new ItemStack((Item) resources, 1, 4));
         }

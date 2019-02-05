@@ -2,6 +2,7 @@ package exnihilocreatio.proxy;
 
 import exnihilocreatio.*;
 import exnihilocreatio.compatibility.CompatTOP;
+import exnihilocreatio.items.seeds.ItemRubberSeed;
 import exnihilocreatio.modules.Forestry;
 import exnihilocreatio.modules.IExNihiloCreatioModule;
 import exnihilocreatio.util.Data;
@@ -31,10 +32,14 @@ public abstract class CommonProxy {
         ModBlocks.registerBlocks(event.getRegistry());
         for(IExNihiloCreatioModule module : ExNihiloCreatio.loadedModules)
             module.registerBlocks(event.getRegistry());
+
     }
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
+        // Create the rubber seed item, it needs to be created after other mods have had a chance to register blocks.
+        ModItems.rubberSeed = new ItemRubberSeed();
+
         ModItems.registerItems(event.getRegistry());
         for(IExNihiloCreatioModule module : ExNihiloCreatio.loadedModules)
             module.registerItems(event.getRegistry());
