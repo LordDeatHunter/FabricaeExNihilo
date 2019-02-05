@@ -55,6 +55,11 @@
         "textures": {
           "layer0": "exnihilocreatio:items/seeddarkoak"
         }
+      },
+      "rubber": {
+        "textures": {
+          "layer0": "exnihilocreatio:items/seedrubber"
+        }
       }
     }
   }

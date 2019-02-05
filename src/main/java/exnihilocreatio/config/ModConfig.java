@@ -95,6 +95,7 @@ public class ModConfig {
         @Config.RequiresMcRestart
         public TinkersConstructCompat tinkers_construct_compat = new TinkersConstructCompat();
         public ForestryCompat forestry_compat = new ForestryCompat();
+        public RubberCompat rubber_compat = new RubberCompat();
 
         @Config.Comment("Prevents unidict from merging the ore chunks into normal ore.")
         public boolean preventUnidict = true;
@@ -126,6 +127,12 @@ public class ModConfig {
         public static class ForestryCompat {
             @Config.Comment({"How many random hives to check each time a scented hive gets a random tick. Setting this high may cause lag."})
             public int hiveTransformTrys = 1;
+
+        }
+
+        public static class RubberCompat {
+            @Config.Comment({"Possible Results of using a rubber seed."})
+            public String[] rubberSeed = {"techreborn:rubber_sapling", "ic2:sapling"};
 
         }
     }
