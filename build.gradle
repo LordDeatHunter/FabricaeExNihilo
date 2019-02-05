@@ -33,7 +33,7 @@ plugins {
 apply plugin: "net.minecraftforge.gradle.forge"
 apply plugin: "maven"
 
-version = "1.12-0.3.5.1" + (System.getenv("BUILD_NUMBER") != null ? "." + System.getenv("BUILD_NUMBER") : "")
+version = "1.12-0.3.5.2" + (System.getenv("BUILD_NUMBER") != null ? "." + System.getenv("BUILD_NUMBER") : "")
 def mod_version = version
 group= "exnihilocreatio" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "exnihilocreatio"
@@ -95,7 +95,7 @@ repositories
 
 dependencies
 {
-    deobfCompile "mezz.jei:jei_1.12.2:4.11.0.206"
+    deobfCompile "mezz.jei:jei_1.12.2:4.14.4.264"
 
     deobfCompile "slimeknights.mantle:Mantle:1.12-1.3.3.39"
     deobfCompile "slimeknights:TConstruct:1.12.2-2.12.0.115"
