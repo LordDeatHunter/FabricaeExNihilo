@@ -89,7 +89,8 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
                     TileInfestedLeaves leaves = (TileInfestedLeaves) tile;
 
                     if (!player.getHeldItemMainhand().isEmpty()
-                            && ItemUtil.isCrook(player.getHeldItemMainhand())) {
+                            && ItemUtil.isCrook(player.getHeldItemMainhand())
+                            && world.rand.nextFloat() < ModConfig.crooking.stringChance) {
                         Util.dropItemInWorld(leaves, player, new ItemStack(Items.STRING, 1, 0), 0.02f);
                     } else if (world.rand.nextFloat() < ModConfig.crooking.stringChance / 4.0d) {
                         Util.dropItemInWorld(leaves, player, new ItemStack(Items.STRING, 1, 0), 0.02f);
