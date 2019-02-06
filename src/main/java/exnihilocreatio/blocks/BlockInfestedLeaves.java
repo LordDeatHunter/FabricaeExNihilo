@@ -4,7 +4,6 @@ import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.tiles.TileInfestedLeaves;
 import exnihilocreatio.util.Data;
-import exnihilocreatio.util.ItemUtil;
 import exnihilocreatio.util.Util;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
@@ -12,8 +11,6 @@ import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.NonNullList;
@@ -64,43 +61,9 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
     }
 
-    public void destroy(World worldIn, @Nonnull BlockPos pos) {
-        if (worldIn.rand.nextInt(3) == 0) {
-            if (worldIn.rand.nextFloat() < ModConfig.crooking.stringChance / 4.0d) {
-                spawnAsEntity(worldIn, pos, new ItemStack(Items.STRING));
-            }
-        }
-        super.destroy(worldIn, pos);
-    }
-
     @Override
     public TileEntity createNewTileEntity(@Nonnull World worldIn, int meta) {
         return new TileInfestedLeaves();
-    }
-
-
-    @Override
-    public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
-        if (!world.isRemote && !player.isCreative()) {
-            TileEntity tile = world.getTileEntity(pos);
-
-            if (tile != null) {
-                if (tile instanceof TileInfestedLeaves) {
-                    TileInfestedLeaves leaves = (TileInfestedLeaves) tile;
-
-                    if (!player.getHeldItemMainhand().isEmpty()
-                            && ItemUtil.isCrook(player.getHeldItemMainhand())
-                            && world.rand.nextFloat() < ModConfig.crooking.stringChance) {
-                        Util.dropItemInWorld(leaves, player, new ItemStack(Items.STRING, 1, 0), 0.02f);
-                    } else if (world.rand.nextFloat() < ModConfig.crooking.stringChance / 4.0d) {
-                        Util.dropItemInWorld(leaves, player, new ItemStack(Items.STRING, 1, 0), 0.02f);
-
-                    }
-                }
-
-                world.removeTileEntity(pos);
-            }
-        }
     }
 
     @Override

@@ -43,24 +43,34 @@ public class ModConfig {
     }
 
     public static class Composting {
+        @Config.RangeInt(min = 1)
         public int ticksToFormDirt = 600;
     }
 
     public static class InfestedLeaves {
+        @Config.RangeInt(min = 1)
         public int ticksToTransform = 600;
         @Config.Comment("How many ticks to wait before getting ticked again, already fully infested leaves spread much slower due to waiting for world ticks.")
+        @Config.RangeInt(min = 0)
         public int leavesUpdateFrequency = 5;
         @Config.Comment("Minimum percentage to spread")
+        @Config.RangeInt(min = 0, max=100)
         public int leavesSpreadPercent = 15;
         @Config.Comment("Chance to spread if it got ticked")
+        @Config.RangeDouble(min=0.0, max=1.0)
         public float leavesSpreadChanceFloat = 0.5f;
     }
 
     public static class Crooking {
+        @Config.RangeDouble(min=0.0, max=1.0)
         public double stringChance = 1.0;
+        @Config.RangeInt(min = 0)
+        public int maxStringDrop = 2;
+        @Config.RangeDouble(min=0.0, max=1.0)
         public double stringFortuneChance = 1.0;
+        @Config.RangeInt(min = 0)
         public int numberOfTimesToTestVanillaDrops = 3;
-        @Config.Comment("Disable the ExNihilo Crooks, useful if another mod adds compatible crooks")
+        @Config.Comment("Disable the ExNihilo Crooks, useful if another mod adds compatible crooks.")
         public boolean disableCrookCrafting = Loader.isModLoaded("inspirations");
     }
 
@@ -79,15 +89,18 @@ public class ModConfig {
         public boolean enableJSONLoading = false;
 
         public boolean oredictVanillaItems = true;
-
+        @Config.Comment("Add Ex Nihilo seeds to the listAllSeeds oredict")
         public boolean oredictExNihiloSeeds = true;
 
     }
 
     public static class Sieve {
+        @Config.RangeInt(min = 0)
         public int sieveSimilarRadius = 2;
+        @Config.RangeInt(min = 0)
         public int autoSieveRadius = 2;
         public boolean setFireToMacroUsers = false;
+        @Config.RangeInt(min = 1, max = 64)
         public int meshMaxStackSize = 16;
     }
 
@@ -126,18 +139,20 @@ public class ModConfig {
 
         public static class ForestryCompat {
             @Config.Comment({"How many random hives to check each time a scented hive gets a random tick. Setting this high may cause lag."})
+            @Config.RangeInt(min = 1)
             public int hiveTransformTrys = 1;
 
         }
 
         public static class RubberCompat {
-            @Config.Comment({"Possible Results of using a rubber seed."})
+            @Config.Comment({"Possible results of using a rubber seed."})
             public String[] rubberSeed = {"techreborn:rubber_sapling", "ic2:sapling"};
 
         }
     }
 
     public static class Crucible {
+        @Config.RangeInt(min = 1)
         public int woodenCrucibleSpeed = 4;
     }
 

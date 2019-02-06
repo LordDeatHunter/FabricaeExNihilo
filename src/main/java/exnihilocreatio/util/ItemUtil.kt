@@ -7,7 +7,7 @@ import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
 
 fun isCrook(stack: ItemStack?): Boolean {
-    if (stack == null)
+    if (stack == null || stack.isEmpty)
         return false
 
     if (stack.item === Items.AIR)

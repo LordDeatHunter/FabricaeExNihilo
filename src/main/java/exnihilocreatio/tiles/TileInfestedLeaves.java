@@ -29,6 +29,11 @@ public class TileInfestedLeaves extends BaseTileEntity implements ITileLeafBlock
     }
 
     @Override
+    public int getProgress() {
+        return 100;
+    }
+
+    @Override
     @Nonnull
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
         tag = super.writeToNBT(tag);
