@@ -3,6 +3,7 @@ package exnihilocreatio.compatibility.jei.sieve;
 import com.google.common.collect.Lists;
 import exnihilocreatio.ModItems;
 import exnihilocreatio.blocks.BlockSieve.MeshType;
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.Siftable;
 import mezz.jei.api.ingredients.IIngredients;
@@ -21,6 +22,12 @@ public class SieveRecipe implements IRecipeWrapper {
     private ItemStack mesh;
     private List<ItemStack> inputs = new ArrayList<>();
     private List<ItemStack> outputs = new ArrayList<>();
+
+    public SieveRecipe(MeshType mesh, List<ItemStack> inputs, List<ItemStack> outputs){
+        this.mesh = new ItemStack(ModItems.mesh, 1, mesh.getID());
+        this.inputs = inputs;
+        this.outputs = outputs;
+    }
 
     public SieveRecipe(Ingredient ingredient, MeshType mesh) {
         List<Siftable> rewards = ExNihiloRegistryManager.SIEVE_REGISTRY.getDrops(ingredient);

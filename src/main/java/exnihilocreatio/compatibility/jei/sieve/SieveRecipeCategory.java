@@ -24,6 +24,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import java.util.List;
 
+import static com.rwtema.extrautils2.crafting.jei.XUJEIPlugin.guiHelper;
+
 public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
 
     public static final String UID = "exnihilocreatio:sieve";
@@ -35,9 +37,9 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
     private int highlightX;
     private int highlightY;
 
-    public SieveRecipeCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(texture, 0, 0, 166, 128);
-        this.slotHighlight = helper.createDrawable(texture, 166, 0, 18, 18);
+    public SieveRecipeCategory(IGuiHelper guiHelper) {
+        this.background = guiHelper.drawableBuilder(texture, 0, 0, 166, 22).build();
+        this.slotHighlight = guiHelper.createDrawable(texture, 166, 0, 18, 18);
     }
 
     @Override
@@ -73,11 +75,11 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
 
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull SieveRecipe recipeWrapper, @Nonnull IIngredients ingredients) {
         //Mesh
-        recipeLayout.getItemStacks().init(0, true, 61, 9);
+        recipeLayout.getItemStacks().init(0, true, 28, 2);
         recipeLayout.getItemStacks().set(0, recipeWrapper.getMesh());
 
         //Input
-        recipeLayout.getItemStacks().init(1, true, 87, 9);
+        recipeLayout.getItemStacks().init(1, true, 2, 2);
         recipeLayout.getItemStacks().set(1, ingredients.getInputs(ItemStack.class).get(0));
 
         IFocus<?> focus = recipeLayout.getFocus();
@@ -89,9 +91,9 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
 
 
         int slotIndex = 2;
+        final int slotY = 2;
         for (int i = 0; i < recipeWrapper.getOutputs().size(); i++) {
-            final int slotX = 2 + (i % 9 * 18);
-            final int slotY = 36 + (i / 9 * 18);
+            final int slotX = 56 + (i % 9 * 18);
             ItemStack outputStack = (ItemStack) recipeWrapper.getOutputs().get(i);
             recipeLayout.getItemStacks().init(slotIndex + i, false, slotX, slotY);
             recipeLayout.getItemStacks().set(slotIndex + i, outputStack);

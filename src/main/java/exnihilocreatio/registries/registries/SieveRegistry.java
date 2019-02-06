@@ -1,5 +1,6 @@
 package exnihilocreatio.registries.registries;
 
+import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.api.registries.ISieveRegistry;
@@ -22,11 +23,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.io.FileReader;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class SieveRegistry extends BaseRegistryMap<Ingredient, List<Siftable>> implements ISieveRegistry {
@@ -178,13 +181,37 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, List<Siftable>> i
     public List<SieveRecipe> getRecipeList() {
         List<SieveRecipe> sieveRecipes = new ArrayList<>();
 
-        getRegistry().keySet().forEach(ingredient -> Stream.of(BlockSieve.MeshType.values()).forEach(meshType -> {
-            if (meshType.getID() != 0 && ingredient != null) {
-                SieveRecipe recipe = new SieveRecipe(ingredient, meshType);
-                if (recipe.isValid() && !sieveRecipes.contains(recipe))
-                    sieveRecipes.add(recipe);
+        for(Ingredient ingredient : getRegistry().keySet()){
+            if(ingredient != null){
+                final List<ItemStack> inputs = Arrays.asList(ingredient.getMatchingStacks());
+                for(BlockSieve.MeshType meshType : BlockSieve.MeshType.values()){
+                    if (meshType.getID() != 0){
+                        final List<ItemStack> rawOutputs = getRegistry().get(ingredient).stream()
+                                .filter(reward -> reward.getMeshLevel() == meshType.getID())
+                                .map(reward -> reward.getDrop().getItemStack())
+                                .collect(Collectors.toList());
+                        final List<ItemStack> allOutputs = Lists.newArrayList();
+                        for(ItemStack raw : rawOutputs){
+                            boolean alreadyExists = false;
+                            for(ItemStack all : allOutputs){
+                                if (ItemStack.areItemsEqual(raw, all) && ItemStack.areItemStackTagsEqual(raw, all)) {
+                                    all.grow(raw.getCount());
+                                    alreadyExists = true;
+                                    break;
+                                }
+                            }
+                            if(!alreadyExists){
+                                allOutputs.add(raw);
+                            }
+                        }
+                        for(int i = 0; i < allOutputs.size(); i+=6){
+                            List<ItemStack> outputs = allOutputs.subList(i, Math.min(i+6, allOutputs.size()));
+                            sieveRecipes.add(new SieveRecipe(meshType, inputs, outputs));
+                        }
+                    }
+                }
             }
-        }));
+        }
 
         return sieveRecipes;
     }
