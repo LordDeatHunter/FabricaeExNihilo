@@ -1,68 +1,21 @@
 package exnihilocreatio.compatibility.jei.sieve;
 
-import com.google.common.collect.Lists;
-import exnihilocreatio.ModItems;
-import exnihilocreatio.blocks.BlockSieve.MeshType;
-import exnihilocreatio.config.ModConfig;
-import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
-import exnihilocreatio.registries.types.Siftable;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SieveRecipe implements IRecipeWrapper {
-    private ItemStack mesh;
-    private List<ItemStack> inputs = new ArrayList<>();
+    private List<List<ItemStack>> inputs = new ArrayList<>();
     private List<ItemStack> outputs = new ArrayList<>();
 
-    public SieveRecipe(MeshType mesh, List<ItemStack> inputs, List<ItemStack> outputs){
-        this.mesh = new ItemStack(ModItems.mesh, 1, mesh.getID());
+    public SieveRecipe(List<List<ItemStack>> inputs, List<ItemStack> outputs){
         this.inputs = inputs;
         this.outputs = outputs;
-    }
-
-    public SieveRecipe(Ingredient ingredient, MeshType mesh) {
-        List<Siftable> rewards = ExNihiloRegistryManager.SIEVE_REGISTRY.getDrops(ingredient);
-        // Filter reward list into item stack list, keeping only those of the correct mesh level
-
-        if (rewards.isEmpty())
-            return;
-
-        List<ItemStack> allOutputs = rewards.stream()
-                .filter(reward -> reward.getMeshLevel() == mesh.getID())
-                .map(reward -> reward.getDrop().getItemStack())
-                .collect(Collectors.toList());
-
-        // Make sure no null rewards, Item or ItemStack
-        //allOutputs.removeIf(stack -> stack == ItemStack.EMPTY);
-
-        this.mesh = new ItemStack(ModItems.mesh, 1, mesh.getID());
-        inputs = Arrays.asList(ingredient.getMatchingStacks());
-        outputs = Lists.newArrayList();
-
-        for (ItemStack stack : allOutputs) {
-            boolean alreadyExists = false;
-
-            for (ItemStack outputStack : outputs) {
-                if (ItemStack.areItemsEqual(stack, outputStack) && ItemStack.areItemStackTagsEqual(stack, outputStack)) {
-                    outputStack.grow(stack.getCount());
-                    alreadyExists = true;
-                    break;
-                }
-            }
-
-            if (!alreadyExists) {
-                outputs.add(stack);
-            }
-        }
     }
 
     @Override
@@ -72,7 +25,11 @@ public class SieveRecipe implements IRecipeWrapper {
     }
 
     public ItemStack getMesh() {
-        return mesh;
+        return inputs.get(0).get(0);
+    }
+
+    public List<ItemStack> getSievables() {
+        return inputs.get(1);
     }
 
     public List getInputs() {

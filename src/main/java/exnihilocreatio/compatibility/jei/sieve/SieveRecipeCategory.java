@@ -24,8 +24,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-import static com.rwtema.extrautils2.crafting.jei.XUJEIPlugin.guiHelper;
-
 public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
 
     public static final String UID = "exnihilocreatio:sieve";
@@ -80,7 +78,7 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
 
         //Input
         recipeLayout.getItemStacks().init(1, true, 2, 2);
-        recipeLayout.getItemStacks().set(1, ingredients.getInputs(ItemStack.class).get(0));
+        recipeLayout.getItemStacks().set(1, recipeWrapper.getSievables());
 
         IFocus<?> focus = recipeLayout.getFocus();
 

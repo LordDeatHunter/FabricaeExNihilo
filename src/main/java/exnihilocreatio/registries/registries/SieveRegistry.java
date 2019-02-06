@@ -3,6 +3,7 @@ package exnihilocreatio.registries.registries;
 import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import exnihilocreatio.ModItems;
 import exnihilocreatio.api.registries.ISieveRegistry;
 import exnihilocreatio.blocks.BlockSieve;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipe;
@@ -23,14 +24,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.io.FileReader;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class SieveRegistry extends BaseRegistryMap<Ingredient, List<Siftable>> implements ISieveRegistry {
 
@@ -183,8 +182,10 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, List<Siftable>> i
 
         for(Ingredient ingredient : getRegistry().keySet()){
             if(ingredient != null){
-                final List<ItemStack> inputs = Arrays.asList(ingredient.getMatchingStacks());
                 for(BlockSieve.MeshType meshType : BlockSieve.MeshType.values()){
+                    final List<List<ItemStack>> inputs = new ArrayList<>();
+                    inputs.add(Arrays.asList(new ItemStack(ModItems.mesh, 1, meshType.getID())));
+                    inputs.add(Arrays.asList(ingredient.getMatchingStacks()));
                     if (meshType.getID() != 0){
                         final List<ItemStack> rawOutputs = getRegistry().get(ingredient).stream()
                                 .filter(reward -> reward.getMeshLevel() == meshType.getID())
@@ -206,7 +207,7 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, List<Siftable>> i
                         }
                         for(int i = 0; i < allOutputs.size(); i+=6){
                             List<ItemStack> outputs = allOutputs.subList(i, Math.min(i+6, allOutputs.size()));
-                            sieveRecipes.add(new SieveRecipe(meshType, inputs, outputs));
+                            sieveRecipes.add(new SieveRecipe(inputs, outputs));
                         }
                     }
                 }
