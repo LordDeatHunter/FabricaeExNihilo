@@ -14,7 +14,6 @@ import mezz.jei.api.gui.ITooltipCallback;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IFocus;
 import mezz.jei.api.recipe.IRecipeCategory;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -31,9 +30,6 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
 
     private final IDrawableStatic background;
     private final IDrawableStatic slotHighlight;
-    private boolean hasHighlight;
-    private int highlightX;
-    private int highlightY;
 
     public SieveRecipeCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.drawableBuilder(texture, 0, 0, 166, 22).build();
@@ -64,13 +60,6 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
         return background;
     }
 
-    @Override
-    public void drawExtras(@Nonnull Minecraft minecraft) {
-        if (hasHighlight) {
-            slotHighlight.draw(minecraft, highlightX, highlightY);
-        }
-    }
-
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull SieveRecipe recipeWrapper, @Nonnull IIngredients ingredients) {
         //Mesh
         recipeLayout.getItemStacks().init(0, true, 28, 2);
@@ -82,12 +71,6 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
 
         IFocus<?> focus = recipeLayout.getFocus();
 
-
-        if (focus != null) {
-            hasHighlight = focus.getMode() == IFocus.Mode.OUTPUT;
-        }
-
-
         int slotIndex = 2;
         final int slotY = 2;
         for (int i = 0; i < recipeWrapper.getOutputs().size(); i++) {
@@ -98,11 +81,11 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
 
             if (focus != null) {
                 ItemStack focusStack = (ItemStack) focus.getValue();
-                if (focus.getMode() == IFocus.Mode.OUTPUT && !focusStack.isEmpty()
+                if (focus.getMode() == IFocus.Mode.OUTPUT
+                        && !focusStack.isEmpty()
                         && focusStack.getItem() == outputStack.getItem()
                         && focusStack.getItemDamage() == outputStack.getItemDamage()) {
-                    highlightX = slotX;
-                    highlightY = slotY;
+                    recipeLayout.getItemStacks().setBackground(i+2,slotHighlight);
                 }
             }
         }
@@ -114,7 +97,7 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
                 if (!input) {
                     ItemStack mesh = recipeWrapper.getMesh();
                     Multiset<String> condensedTooltips = HashMultiset.create();
-                    for (Siftable siftable : ExNihiloRegistryManager.SIEVE_REGISTRY.getDrops((ItemStack) recipeWrapper.getInputs().get(0))) {
+                    for (Siftable siftable : ExNihiloRegistryManager.SIEVE_REGISTRY.getDrops(recipeWrapper.getSievables().get(0))) {
                         if (siftable.getMeshLevel() != mesh.getItemDamage())
                             continue;
                         StackInfo info = siftable.getDrop();
