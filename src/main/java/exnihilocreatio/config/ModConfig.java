@@ -109,6 +109,7 @@ public class ModConfig {
         public TinkersConstructCompat tinkers_construct_compat = new TinkersConstructCompat();
         public ForestryCompat forestry_compat = new ForestryCompat();
         public RubberCompat rubber_compat = new RubberCompat();
+        public MooFluidsCompat moofluids_compat = new MooFluidsCompat();
 
         @Config.Comment("Prevents unidict from merging the ore chunks into normal ore.")
         public boolean preventUnidict = true;
@@ -147,6 +148,22 @@ public class ModConfig {
         public static class RubberCompat {
             @Config.Comment({"Possible results of using a rubber seed."})
             public String[] rubberSeed = {"techreborn:rubber_sapling", "ic2:sapling"};
+
+        }
+
+        public static class MooFluidsCompat {
+            @Config.Comment({"Enable barrel automation of MooFluid Cows"})
+            public boolean enableMooFluids = true;
+            public boolean fluidListIsBlackList = true;
+            @Config.Comment({
+                    "Which fluids should not be automatable with barrels;",
+                    "or which \"should\", if fluidListIsBlackList is false."})
+            public String[] fluidList = {};
+            @Config.Comment({
+                    "How much (mB) should be drained from a fluid cow at once.",
+                    "FluidCow's cooldown is reset a prorated amount based on this and its max cooldown."})
+            @Config.RangeInt(min = 1, max=1000)
+            public int fillAmount = 10;
 
         }
     }

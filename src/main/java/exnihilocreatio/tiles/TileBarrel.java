@@ -1,11 +1,13 @@
 package exnihilocreatio.tiles;
 
+import com.robrit.moofluids.common.entity.EntityFluidCow;
 import exnihilocreatio.ModBlocks;
 import exnihilocreatio.barrel.BarrelFluidHandler;
 import exnihilocreatio.barrel.BarrelItemHandler;
 import exnihilocreatio.barrel.IBarrelMode;
 import exnihilocreatio.blocks.BlockBarrel;
 import exnihilocreatio.config.ModConfig;
+import exnihilocreatio.modules.MooFluids;
 import exnihilocreatio.networking.MessageBarrelModeUpdate;
 import exnihilocreatio.networking.MessageCheckLight;
 import exnihilocreatio.networking.PacketHandler;
@@ -32,6 +34,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nonnull;
@@ -252,10 +256,14 @@ public class TileBarrel extends BaseTileEntity implements ITickable {
                 super.hasCapability(capability, facing);
     }
 
-    //TODO: Add Moo Fluids support if it ever updates
     public void entityOnTop(World world, Entity entityIn) {
         long currentTime = world.getTotalWorldTime(); //Get the current time, shouldn't be affected by in-game /time command
         if (currentTime < this.entityWalkCooldown) return; // Cooldown hasn't elapsed, do nothing
+
+        if(Loader.isModLoaded("moofluids") && ModConfig.compatibility.moofluids_compat.enableMooFluids){
+            this.moofluidsEntityWalk(world, entityIn);
+            return;
+        }
 
         Milkable milk = ExNihiloRegistryManager.MILK_ENTITY_REGISTRY.getMilkable(entityIn);
         if (milk == null) return; // Not a valid recipe
@@ -267,6 +275,36 @@ public class TileBarrel extends BaseTileEntity implements ITickable {
 
         //Set the new cooldown time
         this.entityWalkCooldown = currentTime + milk.getCoolDown();
+    }
+
+    @Optional.Method(modid="moofluids")
+    private void moofluidsEntityWalk(World world, Entity entityIn) {
+        if(!(entityIn instanceof EntityFluidCow))
+            return;
+        EntityFluidCow cow = (EntityFluidCow) entityIn;
+        Fluid result = cow.getEntityFluid();
+
+        if(result == null || !MooFluids.fluidIsAllowed(result))
+            return;
+
+        // Calculate a prorated cooldown worth
+        int amount = Math.min(tank.getCapacity() - tank.getFluidAmount(), ModConfig.compatibility.moofluids_compat.fillAmount);
+        int cooldown = cow.getEntityTypeData().getMaxUseCooldown() * amount / Fluid.BUCKET_VOLUME;
+
+        // Cow needs to cool down
+        if(cow.getNextUseCooldown() + cooldown > cow.getEntityTypeData().getMaxUseCooldown())
+            return;
+
+        // Do fill
+        int filled = 0;
+        if (result != null)
+            filled = this.tank.fill(new FluidStack(result, amount), true);
+
+        // Reset everyone's timers
+        if(filled != 0){
+            this.entityWalkCooldown = world.getTotalWorldTime() + cooldown;
+            cow.setNextUseCooldown(cow.getNextUseCooldown() + cooldown);
+        }
     }
 
     @Override
