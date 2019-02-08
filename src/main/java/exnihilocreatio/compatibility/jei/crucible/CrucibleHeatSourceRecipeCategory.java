@@ -8,7 +8,7 @@ import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
-import mezz.jei.config.Constants;
+import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
@@ -17,7 +17,8 @@ public class CrucibleHeatSourceRecipeCategory implements IRecipeCategory<HeatSou
     private final IDrawableStatic background;
 
     public CrucibleHeatSourceRecipeCategory(IGuiHelper guiHelper) {
-        background = guiHelper.createDrawable(Constants.RECIPE_GUI_VANILLA, 0, 134, 18, 34, 0, 0, 0, 80);
+        background = guiHelper.drawableBuilder(new ResourceLocation("jei","textures/gui/gui_vanilla.png"),
+                0, 134, 18, 34).addPadding(0,0,0,80).build();
     }
 
 

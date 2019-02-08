@@ -9,10 +9,7 @@ import exnihilocreatio.entities.ENEntities;
 import exnihilocreatio.handlers.HandlerAnvil;
 import exnihilocreatio.handlers.HandlerCrook;
 import exnihilocreatio.handlers.HandlerHammer;
-import exnihilocreatio.modules.AppliedEnergistics2;
-import exnihilocreatio.modules.Forestry;
-import exnihilocreatio.modules.IExNihiloCreatioModule;
-import exnihilocreatio.modules.TinkersConstruct;
+import exnihilocreatio.modules.*;
 import exnihilocreatio.networking.PacketHandler;
 import exnihilocreatio.proxy.CommonProxy;
 import exnihilocreatio.registries.RegistryReloadedEvent;
@@ -73,6 +70,8 @@ public class ExNihiloCreatio {
             ExNihiloCreatio.loadedModules.add(new Forestry());
         if(Loader.isModLoaded("tconstruct"))
             ExNihiloCreatio.loadedModules.add(new TinkersConstruct());
+        if(Loader.isModLoaded("moofluids"))
+            ExNihiloCreatio.loadedModules.add(new MooFluids());
 
         proxy.preInit(event);
 

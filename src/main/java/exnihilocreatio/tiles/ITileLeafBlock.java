@@ -9,4 +9,5 @@ public interface ITileLeafBlock {
     IBlockState getLeafBlock();
 
     void setLeafBlock(IBlockState block);
+    int getProgress();
 }

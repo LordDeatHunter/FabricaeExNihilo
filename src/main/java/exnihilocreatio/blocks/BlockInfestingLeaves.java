@@ -251,16 +251,17 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
             TileEntity tile = world.getTileEntity(pos);
 
             if (tile != null) {
-                if (tile instanceof TileInfestingLeaves) {
-                    TileInfestingLeaves leaves = (TileInfestingLeaves) tile;
+                if (tile instanceof ITileLeafBlock) {
+                    ITileLeafBlock leaves = (ITileLeafBlock) tile;
 
-                    if (!player.getHeldItemMainhand().isEmpty()
-                            && ItemUtil.isCrook(player.getHeldItemMainhand())) {
-                        if (world.rand.nextFloat() < leaves.getProgress() * ModConfig.crooking.stringChance) {
-                            Util.dropItemInWorld(leaves, player, new ItemStack(Items.STRING, 1, 0), 0.02f);
+                    if (ItemUtil.isCrook(player.getHeldItemMainhand())) {
+                        if (world.rand.nextFloat() < leaves.getProgress() * ModConfig.crooking.stringChance / 100.0) {
+                            Util.dropItemInWorld(tile, player,
+                                    new ItemStack(Items.STRING, world.rand.nextInt(ModConfig.crooking.maxStringDrop)+1, 0), 0.02f);
                         }
-                    } else if (world.rand.nextFloat() < leaves.getProgress() * ModConfig.crooking.stringChance / 4.0d) {
-                        Util.dropItemInWorld(leaves, player, new ItemStack(Items.STRING, 1, 0), 0.02f);
+                    }
+                    else if (world.rand.nextFloat() * 100.0 < leaves.getProgress() * ModConfig.crooking.stringChance / 4.0d / 100.0) {
+                        Util.dropItemInWorld(tile, player, new ItemStack(Items.STRING, 1, 0), 0.02f);
 
                     }
                 }

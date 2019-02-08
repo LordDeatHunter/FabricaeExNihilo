@@ -1,7 +1,6 @@
 package exnihilocreatio.client.color;
 
 import exnihilocreatio.util.ItemInfo;
-import mezz.jei.util.MathUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -16,6 +15,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 
 import javax.annotation.Nullable;
 import java.awt.*;
@@ -127,9 +127,9 @@ public final class ColorGetter {
                 int red = (int) ((colorInt[0] - 1) * (float) (renderColor >> 16 & 255) / 255.0F);
                 int green = (int) ((colorInt[1] - 1) * (float) (renderColor >> 8 & 255) / 255.0F);
                 int blue = (int) ((colorInt[2] - 1) * (float) (renderColor & 255) / 255.0F);
-                red = MathUtil.clamp(red, 0, 255);
-                green = MathUtil.clamp(green, 0, 255);
-                blue = MathUtil.clamp(blue, 0, 255);
+                red = MathHelper.clamp(red, 0, 255);
+                green = MathHelper.clamp(green, 0, 255);
+                blue = MathHelper.clamp(blue, 0, 255);
                 Color color = new Color(red, green, blue);
                 colors.add(color);
             }
