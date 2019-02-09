@@ -1,6 +1,8 @@
-package exnihilocreatio.modules;
+package exnihilocreatio.modules.MooFluids;
 
 import exnihilocreatio.config.ModConfig;
+import exnihilocreatio.modules.IExNihiloCreatioModule;
+import lombok.Getter;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -10,10 +12,16 @@ import java.util.Set;
 
 public class MooFluids implements IExNihiloCreatioModule {
     private static Set<Fluid> fluidSet = new HashSet<>();
+    @Getter
+    private static boolean loaded = false;
+
+    public MooFluids(){
+        loaded = true;
+    }
 
     @Override
     public String getMODID() {
-        return "moofluids";
+        return "minimoofluidcow";
     }
 
     @Override
