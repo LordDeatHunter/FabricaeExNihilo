@@ -1,15 +1,14 @@
 package exnihilocreatio.tiles;
 
-import com.robrit.moofluids.common.entity.EntityFluidCow;
 import exnihilocreatio.ModBlocks;
 import exnihilocreatio.barrel.BarrelFluidHandler;
 import exnihilocreatio.barrel.BarrelItemHandler;
 import exnihilocreatio.barrel.IBarrelMode;
 import exnihilocreatio.blocks.BlockBarrel;
 import exnihilocreatio.config.ModConfig;
-import exnihilocreatio.modules.MooFluids.AbstractCowFactory;
-import exnihilocreatio.modules.MooFluids.IAbstractCow;
-import exnihilocreatio.modules.MooFluids.MooFluids;
+import exnihilocreatio.modules.MooFluidsEtc;
+import exnihilocreatio.modules.moofluidsetc.AbstractCowFactory;
+import exnihilocreatio.modules.moofluidsetc.IAbstractCow;
 import exnihilocreatio.networking.MessageBarrelModeUpdate;
 import exnihilocreatio.networking.MessageCheckLight;
 import exnihilocreatio.networking.PacketHandler;
@@ -36,8 +35,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nonnull;
@@ -262,7 +259,7 @@ public class TileBarrel extends BaseTileEntity implements ITickable {
         long currentTime = world.getTotalWorldTime(); //Get the current time, shouldn't be affected by in-game /time command
         if (currentTime < this.entityWalkCooldown) return; // Cooldown hasn't elapsed, do nothing
 
-        if(MooFluids.isLoaded() && ModConfig.compatibility.moofluids_compat.enableMooFluids){
+        if(MooFluidsEtc.isLoaded() && ModConfig.compatibility.moofluids_compat.enableMooFluids){
             IAbstractCow cow = AbstractCowFactory.getCow(entityIn);
             if(cow != null){
                 this.moofluidsEntityWalk(world, cow);
@@ -284,7 +281,7 @@ public class TileBarrel extends BaseTileEntity implements ITickable {
 
     private void moofluidsEntityWalk(World world, IAbstractCow cow) {
         Fluid result = cow.getFluid();
-        if(result == null || !MooFluids.fluidIsAllowed(result))
+        if(result == null || !MooFluidsEtc.fluidIsAllowed(result))
             return;
 
         // Amount to fill

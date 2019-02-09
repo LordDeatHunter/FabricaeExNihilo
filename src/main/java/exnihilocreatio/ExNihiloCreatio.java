@@ -10,7 +10,6 @@ import exnihilocreatio.handlers.HandlerAnvil;
 import exnihilocreatio.handlers.HandlerCrook;
 import exnihilocreatio.handlers.HandlerHammer;
 import exnihilocreatio.modules.*;
-import exnihilocreatio.modules.MooFluids.MooFluids;
 import exnihilocreatio.networking.PacketHandler;
 import exnihilocreatio.proxy.CommonProxy;
 import exnihilocreatio.registries.RegistryReloadedEvent;
@@ -74,7 +73,7 @@ public class ExNihiloCreatio {
         if(Loader.isModLoaded("moofluids") ||
                 Loader.isModLoaded("minimoos") ||
                 Loader.isModLoaded("fluidcows"))
-            ExNihiloCreatio.loadedModules.add(new MooFluids());
+            ExNihiloCreatio.loadedModules.add(new MooFluidsEtc());
 
         proxy.preInit(event);
 

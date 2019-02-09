@@ -152,7 +152,9 @@ public class ModConfig {
         }
 
         public static class MooFluidsCompat {
-            @Config.Comment({"Enable barrel automation of MooFluid Cows"})
+            @Config.Comment({
+                    "Enable barrel automation of MooFluid/FluidCows/MiniMoos Cows.",
+                    "These configs apply to all of the supported cow mods."})
             public boolean enableMooFluids = true;
             public boolean fluidListIsBlackList = true;
             @Config.Comment({
@@ -161,7 +163,7 @@ public class ModConfig {
             public String[] fluidList = {};
             @Config.Comment({
                     "How much (mB) should be drained from a fluid cow at once.",
-                    "FluidCow's cooldown is reset a prorated amount based on this and its max cooldown."})
+                    "Cow's cooldown is reset a prorated amount based on this and its max cooldown."})
             @Config.RangeInt(min = 1, max=1000)
             public int fillAmount = 10;
 

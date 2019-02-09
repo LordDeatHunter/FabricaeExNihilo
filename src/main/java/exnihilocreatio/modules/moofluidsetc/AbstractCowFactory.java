@@ -1,8 +1,11 @@
-package exnihilocreatio.modules.MooFluids;
+package exnihilocreatio.modules.moofluidsetc;
 
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.common.Loader;
 
+/**
+ * Create an IAbstractCow from any one of the MooFluid-Cow-like entities.
+ */
 public class AbstractCowFactory {
     public static IAbstractCow getCow(Entity entity){
         if(Loader.isModLoaded("moofluids") && entity instanceof com.robrit.moofluids.common.entity.EntityFluidCow){

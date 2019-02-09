@@ -1,9 +1,14 @@
-package exnihilocreatio.modules.MooFluids;
+package exnihilocreatio.modules.moofluidsetc;
 
 import com.ricardothecoder.minimoos.common.configurations.Configs;
 import com.ricardothecoder.minimoos.library.entities.EntityFluidMoo;
 import net.minecraftforge.fluids.Fluid;
 
+/**
+ * This class wraps the cows from the MiniMoos mod with a standard interface.
+ *
+ * https://github.com/RicardoTheCoder/MiniMoos
+ */
 public class AbstractMiniMoo implements IAbstractCow {
     private EntityFluidMoo cow;
 

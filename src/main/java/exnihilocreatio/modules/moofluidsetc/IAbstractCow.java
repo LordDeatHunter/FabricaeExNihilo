@@ -1,4 +1,4 @@
-package exnihilocreatio.modules.MooFluids;
+package exnihilocreatio.modules.moofluidsetc;
 
 import net.minecraftforge.fluids.Fluid;
 

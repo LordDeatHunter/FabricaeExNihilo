@@ -1,9 +1,14 @@
-package exnihilocreatio.modules.MooFluids;
+package exnihilocreatio.modules.moofluidsetc;
 
 import ftblag.fluidcows.entity.EntityFluidCow;
 import ftblag.fluidcows.gson.FCConfig;
 import net.minecraftforge.fluids.Fluid;
 
+/**
+ * This class wraps the cows from the FluidCows mod with a standard interface.
+ *
+ * https://github.com/DoctorFTB/FluidCows
+ */
 public class AbstractFluidCow implements IAbstractCow {
     private EntityFluidCow cow;
     private int maxCooldown;
