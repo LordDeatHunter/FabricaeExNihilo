@@ -22,7 +22,7 @@ fun isCrook(stack: ItemStack?): Boolean {
     return (stack.item.getToolClasses(stack).contains("crook"))
 }
 
-fun isCrook(item: Item?): Boolean {
+fun isCrook(item: Item): Boolean {
     return isCrook(ItemStack(item))
 }
 
@@ -40,6 +40,6 @@ fun isHammer(stack: ItemStack?): Boolean {
 
 }
 
-fun isHammer(item: Item?): Boolean {
+fun isHammer(item: Item): Boolean {
     return isHammer(ItemStack(item))
 }

@@ -12,7 +12,7 @@ object CustomHammerRewardJson : JsonDeserializer<HammerReward>, JsonSerializer<H
     override fun serialize(src: HammerReward, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
         val obj = JsonObject()
 
-        obj.addProperty("item", src.stack!!.item.registryName!!.toString() + ":" + src.stack.metadata)
+        obj.addProperty("item", src.stack.item.registryName!!.toString() + ":" + src.stack.metadata)
         obj.addProperty("amount", src.stack.count)
         obj.addProperty("miningLevel", src.miningLevel)
         obj.addProperty("chance", src.chance)

@@ -1,12 +1,11 @@
 package exnihilocreatio.blocks;
 
-import com.rwtema.extrautils2.itemhandler.SingleStackHandlerBase;
-import com.rwtema.extrautils2.items.ItemBagOfHolding;
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.compatibility.ITOPInfoProvider;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.ItemMesh;
 import exnihilocreatio.tiles.TileSieve;
+import exnihilocreatio.util.ItemStackItemHandler;
 import exnihilocreatio.util.Util;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
@@ -29,18 +28,14 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import p455w0rd.danknull.init.ModItems;
-import p455w0rd.danknull.inventory.InventoryDankNull;
 import p455w0rd.danknull.util.DankNullUtils;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-
-import static exnihilocreatio.registries.manager.ExNihiloRegistryManager.SIEVE_REGISTRY;
 
 public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPInfoProvider {
 
@@ -62,123 +57,87 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPIn
         if (player instanceof FakePlayer && !ModConfig.mechanics.fakePlayersCanSieve) {
             return false;
         }
-
-        ItemStack heldItem = player.getHeldItem(hand);
         TileSieve te = (TileSieve) world.getTileEntity(pos);
 
-        if (te != null) {
-            if (!heldItem.isEmpty() && heldItem.getItem() instanceof ItemMesh) {
-                //Adding a mesh.
-                ItemStack meshStack = heldItem.copy();
-                meshStack.setCount(1);
-                boolean done = te.setMesh(meshStack, false);
+        if(te == null)
+            return true;
 
-                if (done) {
-                    if (!player.isCreative())
-                        heldItem.shrink(1);
-                    return true;
-                }
-            }
-            if (heldItem.isEmpty() && !te.getMeshStack().isEmpty() && player.isSneaking() && te.setMesh(ItemStack.EMPTY, true)) {
-                //Removing a mesh.
-                Util.dropItemInWorld(te, player, te.getMeshStack(), 0.02f);
-                te.setMesh(ItemStack.EMPTY, false);
-                return true;
-            }
+        ItemStack heldItem = player.getHeldItem(hand);
 
-            //region >>>>>> Checks whether the sieve is clicked with a inventory, if yes, then it takes a stack out of there
-            InventoryDankNull dank = null;
-            IItemHandler cap = null;
-            int slotNumber = -1;
-
-            if (!SIEVE_REGISTRY.canBeSifted(heldItem) && heldItem.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
-                if (ModConfig.compatibility.dankNullIntegration && Loader.isModLoaded("danknull") && heldItem.getItem() == ModItems.DANK_NULL) {
-                    dank = DankNullUtils.getNewDankNullInventory(heldItem);
-                    ItemStack dankStack = DankNullUtils.getSelectedStack(dank);
-                    if (SIEVE_REGISTRY.canBeSifted(dankStack)) {
-                        heldItem = dankStack;
-                    }
-                } else if (ModConfig.compatibility.generalItemHandlerCompat){
-                    cap = heldItem.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-                    if (cap != null){
-                        int slots = cap.getSlots();
-                        for (int i = 0; i < slots; i++) {
-                            ItemStack capStack = cap.getStackInSlot(i);
-                            if (capStack.isEmpty())
-                                continue;
-
-                            if (SIEVE_REGISTRY.canBeSifted(capStack)){
-                                heldItem = capStack;
-                                slotNumber = i;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            //endregion
-
-
-            if (te.addBlock(heldItem)) {
-                if (!player.isCreative())
-                    heldItem.shrink(1);
-
-                for (int xOffset = -1 * ModConfig.sieve.sieveSimilarRadius; xOffset <= ModConfig.sieve.sieveSimilarRadius; xOffset++) {
-                    for (int zOffset = -1 * ModConfig.sieve.sieveSimilarRadius; zOffset <= ModConfig.sieve.sieveSimilarRadius; zOffset++) {
-                        TileEntity entity = world.getTileEntity(pos.add(xOffset, 0, zOffset));
-                        if (entity != null && entity instanceof TileSieve) {
-                            TileSieve sieve = (TileSieve) entity;
-
-                            if (!heldItem.isEmpty() && te.isSieveSimilarToInput(sieve)) {
-                                if (sieve.addBlock(heldItem) && !player.isCreative()) {
-
-                                    heldItem.shrink(1);
-
-                                    // dank/null needing this to show the correct amount
-                                    if (dank != null){
-                                        DankNullUtils.reArrangeStacks(dank);
-                                    } else if (cap != null && slotNumber != -1) {
-
-                                        // Extra Utils being special again....
-                                        if (cap instanceof ItemBagOfHolding.BagHoldingItemHandler) {
-                                            IItemHandler slotHandler = ((ItemBagOfHolding.BagHoldingItemHandler) cap).getSlotHandler(slotNumber);
-                                            if (slotHandler instanceof SingleStackHandlerBase) {
-                                                ((SingleStackHandlerBase) slotHandler).setStack(heldItem);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                return true;
-            }
-
-            ArrayList<BlockPos> toSift = new ArrayList<>();
-            for (int xOffset = -1 * ModConfig.sieve.sieveSimilarRadius; xOffset <= ModConfig.sieve.sieveSimilarRadius; xOffset++) {
-                for (int zOffset = -1 * ModConfig.sieve.sieveSimilarRadius; zOffset <= ModConfig.sieve.sieveSimilarRadius; zOffset++) {
-                    TileEntity entity = world.getTileEntity(pos.add(xOffset, 0, zOffset));
-                    if (entity != null && entity instanceof TileSieve) {
-                        TileSieve sieve = (TileSieve) entity;
-
-                        if (te.isSieveSimilar(sieve))
-                            toSift.add(pos.add(xOffset, 0, zOffset));
-                    }
-                }
-            }
-            for (BlockPos posIter : toSift) {
-                if (posIter != null) {
-                    TileSieve sieve = (TileSieve) world.getTileEntity(posIter);
-
-                    if (sieve != null) {
-                        sieve.doSieving(player, false);
-                    }
-                }
-            }
+        // Removing a mesh
+        if (heldItem.isEmpty() && !te.getMeshStack().isEmpty() && player.isSneaking() && te.setMesh(ItemStack.EMPTY, true)) {
+            //Removing a mesh.
+            Util.dropItemInWorld(te, player, te.getMeshStack(), 0.02f);
+            te.setMesh(ItemStack.EMPTY, false);
             return true;
         }
 
+        // Inserting blocks
+        IItemHandler cap = null;
+        if(ModConfig.compatibility.generalItemHandlerCompat)
+            cap = heldItem.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+        if(cap == null)
+            cap = new ItemStackItemHandler(heldItem);
+
+        int slot = 0;
+        if(ModConfig.compatibility.dankNullIntegration && DankNullUtils.isDankNull(heldItem)){
+            slot = DankNullUtils.getSelectedStackIndex(DankNullUtils.getInventoryFromHeld(player));
+        }
+        while(slot < cap.getSlots() + 1){
+            ItemStack stack = cap.getStackInSlot(slot);
+            if(!stack.isEmpty() && stack.getItem() instanceof ItemMesh){
+                // Adding a mesh
+                boolean added = te.setMesh(cap.extractItem(slot,1,true));
+                if(added){
+                    cap.extractItem(slot, 1, player.isCreative());
+                    return true;
+                }
+            }
+            if(te.addBlock(cap.extractItem(slot,1,true))){
+                // Adding a block
+                cap.extractItem(slot, 1, player.isCreative());
+                for(int dx = -ModConfig.sieve.sieveSimilarRadius; dx <= ModConfig.sieve.sieveSimilarRadius; dx++){
+                    for(int dz = -ModConfig.sieve.sieveSimilarRadius; dz <= ModConfig.sieve.sieveSimilarRadius; dz++){
+                        if(cap.getStackInSlot(slot).isEmpty())
+                            continue; // No more items
+                        TileEntity otherTE = world.getTileEntity(pos.add(dx, 0, dz));
+                        if(otherTE == null || !(otherTE instanceof TileSieve))
+                            continue; // Not a sieve
+                        TileSieve sieve = (TileSieve) otherTE;
+                        if(!te.isSieveSimilarToInput(sieve))
+                            continue; // Not a similar sieve
+                        if(sieve.addBlock(cap.extractItem(slot,1,true))){
+                            cap.extractItem(slot, 1, player.isCreative());
+                        }
+                    }
+                }
+                return true;
+            }
+            if(ModConfig.compatibility.dankNullIntegration && DankNullUtils.isDankNull(heldItem)){
+                break; // Dank Nulls should only operate on their single stack
+            }
+            slot++;
+        }
+
+        List<BlockPos> toSift = new ArrayList<>();
+        for (int xOffset = -1 * ModConfig.sieve.sieveSimilarRadius; xOffset <= ModConfig.sieve.sieveSimilarRadius; xOffset++) {
+            for (int zOffset = -1 * ModConfig.sieve.sieveSimilarRadius; zOffset <= ModConfig.sieve.sieveSimilarRadius; zOffset++) {
+                TileEntity entity = world.getTileEntity(pos.add(xOffset, 0, zOffset));
+                if (entity != null && entity instanceof TileSieve) {
+                    TileSieve sieve = (TileSieve) entity;
+
+                    if (te.isSieveSimilar(sieve))
+                        toSift.add(pos.add(xOffset, 0, zOffset));
+                }
+            }
+        }
+        for (BlockPos posIter : toSift) {
+            if (posIter != null) {
+                TileSieve sieve = (TileSieve) world.getTileEntity(posIter);
+                if (sieve != null)
+                    sieve.doSieving(player, false);
+            }
+        }
         return true;
     }
 
