@@ -24,6 +24,7 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 
 import java.io.FileReader;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class HammerRegistry extends BaseRegistryMap<Ingredient, List<HammerReward>> implements IHammerRegistry {
 
@@ -177,11 +178,16 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, List<HammerRewar
     @Override
     public List<HammerRecipe> getRecipeList() {
         List<HammerRecipe> hammerRecipes = Lists.newLinkedList();
-        getRegistry().keySet().forEach(ingredient -> {
-            HammerRecipe recipe = new HammerRecipe(ingredient);
-            if (recipe.isValid())
-                hammerRecipes.add(recipe);
-        });
+        for(Ingredient ingredient : getRegistry().keySet()){
+            if(ingredient == null)
+                continue;
+            List<ItemStack> allOutputs = getRewards(ingredient).stream().map(reward -> reward.getStack()).collect(Collectors.toList());
+            List<ItemStack> inputs = Arrays.asList(ingredient.getMatchingStacks());
+            for(int i = 0; i < allOutputs.size(); i+=7){
+                List<ItemStack> outputs = allOutputs.subList(i, Math.min(i+7, allOutputs.size()));
+                hammerRecipes.add(new HammerRecipe(inputs, outputs));
+            }
+        }
         return hammerRecipes;
     }
 }

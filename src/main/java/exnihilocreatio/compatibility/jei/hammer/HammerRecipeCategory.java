@@ -15,7 +15,6 @@ import mezz.jei.api.recipe.IFocus;
 import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -28,18 +27,16 @@ import java.util.Map;
 
 public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
     public static final String UID = "exnihilocreatio:hammer";
-    private static final ResourceLocation texture = new ResourceLocation(ExNihiloCreatio.MODID, "textures/gui/jei_hammer.png");
+    private static final ResourceLocation texture = new ResourceLocation(ExNihiloCreatio.MODID, "textures/gui/jei_mini.png");
 
     private final IDrawableStatic background;
     private final IDrawableStatic slotHighlight;
 
     private boolean hasHighlight;
-    private int highlightX;
-    private int highlightY;
 
-    public HammerRecipeCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(texture, 0, 0, 166, 128);
-        this.slotHighlight = helper.createDrawable(texture, 166, 0, 18, 18);
+    public HammerRecipeCategory(IGuiHelper guiHelper) {
+        this.background = guiHelper.drawableBuilder(texture, 0, 20, 166, 22).build();
+        this.slotHighlight = guiHelper.createDrawable(texture, 166, 0, 18, 18);
     }
 
     @Override
@@ -67,39 +64,28 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
     }
 
     @Override
-    public void drawExtras(@Nonnull Minecraft minecraft) {
-        if (hasHighlight) {
-            slotHighlight.draw(minecraft, highlightX, highlightY);
-        }
-    }
-
-    @Override
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull HammerRecipe recipeWrapper, @Nonnull IIngredients ingredients) {
-        recipeLayout.getItemStacks().init(0, true, 74, 9);
-        recipeLayout.getItemStacks().set(0, ingredients.getInputs(ItemStack.class).get(0));
+        recipeLayout.getItemStacks().init(0, true, 2, 2);
+        recipeLayout.getItemStacks().set(0, recipeWrapper.getInputs());
 
         IFocus<?> focus = recipeLayout.getFocus();
 
-        if (focus != null) {
-            hasHighlight = focus.getMode() == IFocus.Mode.OUTPUT;
-        }
         int slotIndex = 1;
-
         for (int i = 0; i < recipeWrapper.getOutputs().size(); i++) {
-            final int slotX = 2 + (i % 9 * 18);
-            final int slotY = 36 + (i / 9 * 18);
+            final int slotX = 38 + (i * 18);
 
             ItemStack outputStack = recipeWrapper.getOutputs().get(i);
 
-            recipeLayout.getItemStacks().init(slotIndex + i, false, slotX, slotY);
+            recipeLayout.getItemStacks().init(slotIndex + i, false, slotX, 2);
             recipeLayout.getItemStacks().set(slotIndex + i, outputStack);
 
             if (focus != null) {
                 ItemStack focusStack = (ItemStack) focus.getValue();
-
-                if (focus.getMode() == IFocus.Mode.OUTPUT && !focusStack.isEmpty() && focusStack.getItem() == outputStack.getItem() && focusStack.getItemDamage() == outputStack.getItemDamage()) {
-                    highlightX = slotX;
-                    highlightY = slotY;
+                if (focus.getMode() == IFocus.Mode.OUTPUT
+                        && !focusStack.isEmpty()
+                        && focusStack.getItem() == outputStack.getItem()
+                        && focusStack.getItemDamage() == outputStack.getItemDamage()) {
+                    recipeLayout.getItemStacks().setBackground(i+slotIndex,slotHighlight);
                 }
             }
         }

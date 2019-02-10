@@ -1,47 +1,21 @@
 package exnihilocreatio.compatibility.jei.hammer;
 
 import com.google.common.collect.Lists;
-import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
-import exnihilocreatio.registries.types.HammerReward;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
 
 import javax.annotation.Nonnull;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class HammerRecipe implements IRecipeWrapper {
     private List<ItemStack> inputs;
     private List<ItemStack> outputs;
 
-    public HammerRecipe(Ingredient ingredient) {
-        List<HammerReward> rewards = ExNihiloRegistryManager.HAMMER_REGISTRY.getRewards(ingredient);
-        if (rewards.isEmpty())
-            return;
-
-        List<ItemStack> allOutputs = rewards.stream().map(HammerReward::getStack).collect(Collectors.toList());
-        inputs = Arrays.asList(ingredient.getMatchingStacks());
-        outputs = Lists.newArrayList();
-
-        for (ItemStack stack : allOutputs) {
-            boolean alreadyExists = false;
-
-            for (ItemStack outputStack : outputs) {
-                if (ItemStack.areItemsEqual(stack, outputStack) && ItemStack.areItemStackTagsEqual(stack, outputStack)) {
-                    outputStack.grow(stack.getCount());
-                    alreadyExists = true;
-                    break;
-                }
-            }
-
-            if (!alreadyExists) {
-                outputs.add(stack);
-            }
-        }
+    public HammerRecipe(List<ItemStack> inputs, List<ItemStack> outputs){
+        this.inputs = inputs;
+        this.outputs = outputs;
     }
 
     @Override

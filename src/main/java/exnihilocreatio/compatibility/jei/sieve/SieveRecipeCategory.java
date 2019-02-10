@@ -26,7 +26,7 @@ import java.util.List;
 public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
 
     public static final String UID = "exnihilocreatio:sieve";
-    private static final ResourceLocation texture = new ResourceLocation(ExNihiloCreatio.MODID, "textures/gui/jei_sieve.png");
+    private static final ResourceLocation texture = new ResourceLocation(ExNihiloCreatio.MODID, "textures/gui/jei_mini.png");
 
     private final IDrawableStatic background;
     private final IDrawableStatic slotHighlight;
@@ -72,11 +72,10 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
         IFocus<?> focus = recipeLayout.getFocus();
 
         int slotIndex = 2;
-        final int slotY = 2;
         for (int i = 0; i < recipeWrapper.getOutputs().size(); i++) {
-            final int slotX = 56 + (i % 9 * 18);
+            final int slotX = 56 + (i * 18);
             ItemStack outputStack = (ItemStack) recipeWrapper.getOutputs().get(i);
-            recipeLayout.getItemStacks().init(slotIndex + i, false, slotX, slotY);
+            recipeLayout.getItemStacks().init(slotIndex + i, false, slotX, 2);
             recipeLayout.getItemStacks().set(slotIndex + i, outputStack);
 
             if (focus != null) {
@@ -85,7 +84,7 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
                         && !focusStack.isEmpty()
                         && focusStack.getItem() == outputStack.getItem()
                         && focusStack.getItemDamage() == outputStack.getItemDamage()) {
-                    recipeLayout.getItemStacks().setBackground(i+2,slotHighlight);
+                    recipeLayout.getItemStacks().setBackground(slotIndex + i,slotHighlight);
                 }
             }
         }
