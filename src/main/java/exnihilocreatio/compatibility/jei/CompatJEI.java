@@ -56,7 +56,8 @@ public class CompatJEI implements IModPlugin {
         registry.addRecipeCategories(new FluidTransformRecipeCategory(guiHelper));
         registry.addRecipeCategories(new FluidBlockTransformRecipeCategory(guiHelper));
         registry.addRecipeCategories(new CompostRecipeCategory(guiHelper));
-        registry.addRecipeCategories(new CrucibleRecipeCategory(guiHelper));
+        registry.addRecipeCategories(new CrucibleRecipeCategory(guiHelper, "exnihilocreatio:crucible_wood"));
+        registry.addRecipeCategories(new CrucibleRecipeCategory(guiHelper, "exnihilocreatio:crucible_stone"));
         registry.addRecipeCategories(new CrucibleHeatSourceRecipeCategory(guiHelper));
     }
 
@@ -78,6 +79,7 @@ public class CompatJEI implements IModPlugin {
         registerHeat(registry);
         registerSieve(registry);
         registerStoneCrucible(registry);
+        registerWoodCrucible(registry);
 
         // Register Crook and Hammer catalysts
         for(Item item : Item.REGISTRY){
@@ -157,9 +159,17 @@ public class CompatJEI implements IModPlugin {
     private void registerStoneCrucible(@Nonnull IModRegistry registry) {
         List<CrucibleRecipe> crucibleRecipes = ExNihiloRegistryManager.CRUCIBLE_STONE_REGISTRY.getRecipeList();
 
-        registry.addRecipes(crucibleRecipes, CrucibleRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModBlocks.crucibleStone, 1, 1), CrucibleRecipeCategory.UID);
+        registry.addRecipes(crucibleRecipes, "exnihilocreatio:crucible_stone");
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.crucibleStone, 1, 1), "exnihilocreatio:crucible_stone");
         LogUtil.info("JEI: Stone Crucible Recipes Loaded:       " + crucibleRecipes.size());
+    }
+
+    private void registerWoodCrucible(@Nonnull IModRegistry registry) {
+        List<CrucibleRecipe> crucibleRecipes = ExNihiloRegistryManager.CRUCIBLE_WOOD_REGISTRY.getRecipeList();
+
+        registry.addRecipes(crucibleRecipes, "exnihilocreatio:crucible_wood");
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.crucibleWood, 1, 0), "exnihilocreatio:crucible_wood");
+        LogUtil.info("JEI: Wood Crucible Recipes Loaded:        " + crucibleRecipes.size());
     }
 
     @Override

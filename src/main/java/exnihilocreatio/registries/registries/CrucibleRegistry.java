@@ -22,16 +22,11 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.io.FileReader;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
+import java.util.*;
 
 public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> implements ICrucibleRegistry {
     public CrucibleRegistry(List<? extends IDefaultRecipeProvider> defaultRecipeProviders) {
@@ -139,42 +134,36 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> impl
 
     @Override
     public List<CrucibleRecipe> getRecipeList() {
-        List<CrucibleRecipe> crucibleRecipes = Lists.newLinkedList();
+        List<CrucibleRecipe> recipes = Lists.newLinkedList();
 
-        getRegistry().forEach((crucibleItem, meltable) -> {
-            Fluid fluid = FluidRegistry.getFluid(meltable.getFluid());
-            List<ItemStack> meltables = Lists.newLinkedList();
-            int crucibleCount = (int) Math.ceil(1000.0F / meltable.getAmount());
-            Stream.of(crucibleItem.getMatchingStacks()).forEach(stack -> {
-                if (meltables.stream().noneMatch(stack::isItemEqual)) {
-                    ItemStack copy = stack.copy();
-                    copy.setCount(crucibleCount);
-                    meltables.add(copy);
-                }
-            });
-            ItemStack fluidBucket = FluidUtil.getFilledBucket(new FluidStack(fluid, 1000));
-            CrucibleRecipe recipe = crucibleRecipes.stream()
-                    .filter(crucibleRecipe -> crucibleRecipe.getFluid().isItemEqual(fluidBucket)
-                            && crucibleRecipe.isNonFull())
-                    .findFirst()
-                    .orElse(null);
-            if (recipe == null) {
-                recipe = new CrucibleRecipe(fluid, Lists.newLinkedList());
-                crucibleRecipes.add(recipe);
+        Map<Fluid, List<List<ItemStack>>> outputMap = new HashMap<>();
+        for(Map.Entry<Ingredient, Meltable> entry: getRegistry().entrySet()){
+            Fluid output = FluidRegistry.getFluid(entry.getValue().getFluid());
+            Ingredient ingredient = entry.getKey();
+            if(output == null || ingredient == null)
+                continue;
+            if(!outputMap.containsKey(output)){
+                List<List<ItemStack>> inputs = new ArrayList<>();
+                outputMap.put(output, inputs);
             }
-
-            //This acts as a safety net, auto creating new recipes if the input list is larger than 45
-            for (ItemStack stack : meltables) {
-                if (recipe.isNonFull())
-                    recipe.getInputs().add(stack);
-                else {
-                    recipe = new CrucibleRecipe(fluid, Lists.newLinkedList());
-                    recipe.getInputs().add(stack);
-                    crucibleRecipes.add(recipe);
-                }
+            List<ItemStack> inputs = new ArrayList<>();
+            for(ItemStack match : ingredient.getMatchingStacks()){
+                if(match.isEmpty() || match.getItem() == null)
+                    continue;
+                ItemStack input = match.copy();
+                input.setCount((int) Math.ceil(Fluid.BUCKET_VOLUME / entry.getValue().getAmount()));
+                inputs.add(input);
             }
-        });
+            if(inputs.size() > 0)
+                outputMap.get(output).add(inputs);
+        }
+        for(Map.Entry<Fluid, List<List<ItemStack>>> entry : outputMap.entrySet()){
+            for(int i = 0; i < entry.getValue().size(); i+=7){
+                recipes.add(new CrucibleRecipe(entry.getKey(),
+                        entry.getValue().subList(i,  Math.min(i+7, entry.getValue().size()))));
+            }
+        }
 
-        return crucibleRecipes;
+        return recipes;
     }
 }
