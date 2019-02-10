@@ -4,6 +4,7 @@ package exnihilocreatio.util
 import exnihilocreatio.items.tools.ICrook
 import exnihilocreatio.items.tools.IHammer
 import net.minecraft.init.Items
+import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
 fun isCrook(stack: ItemStack?): Boolean {
@@ -21,6 +22,10 @@ fun isCrook(stack: ItemStack?): Boolean {
     return (stack.item.getToolClasses(stack).contains("crook"))
 }
 
+fun isCrook(item: Item?): Boolean {
+    return isCrook(ItemStack(item))
+}
+
 fun isHammer(stack: ItemStack?): Boolean {
     if (stack == null)
         return false
@@ -33,4 +38,8 @@ fun isHammer(stack: ItemStack?): Boolean {
 
     return false
 
+}
+
+fun isHammer(item: Item?): Boolean {
+    return isHammer(ItemStack(item))
 }

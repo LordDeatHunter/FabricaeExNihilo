@@ -2,7 +2,6 @@ package exnihilocreatio.compatibility.jei;
 
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.ModBlocks;
-import exnihilocreatio.ModItems;
 import exnihilocreatio.compatibility.jei.barrel.compost.CompostRecipe;
 import exnihilocreatio.compatibility.jei.barrel.compost.CompostRecipeCategory;
 import exnihilocreatio.compatibility.jei.barrel.fluidblocktransform.FluidBlockTransformRecipe;
@@ -11,6 +10,8 @@ import exnihilocreatio.compatibility.jei.barrel.fluidontop.FluidOnTopRecipe;
 import exnihilocreatio.compatibility.jei.barrel.fluidontop.FluidOnTopRecipeCategory;
 import exnihilocreatio.compatibility.jei.barrel.fluidtransform.FluidTransformRecipe;
 import exnihilocreatio.compatibility.jei.barrel.fluidtransform.FluidTransformRecipeCategory;
+import exnihilocreatio.compatibility.jei.crook.CrookRecipe;
+import exnihilocreatio.compatibility.jei.crook.CrookRecipeCategory;
 import exnihilocreatio.compatibility.jei.crucible.CrucibleHeatSourceRecipeCategory;
 import exnihilocreatio.compatibility.jei.crucible.CrucibleRecipe;
 import exnihilocreatio.compatibility.jei.crucible.CrucibleRecipeCategory;
@@ -19,15 +20,14 @@ import exnihilocreatio.compatibility.jei.hammer.HammerRecipe;
 import exnihilocreatio.compatibility.jei.hammer.HammerRecipeCategory;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipe;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipeCategory;
-import exnihilocreatio.modules.TinkersConstruct;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
+import exnihilocreatio.util.ItemUtil;
 import exnihilocreatio.util.LogUtil;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -51,6 +51,7 @@ public class CompatJEI implements IModPlugin {
 
         registry.addRecipeCategories(new SieveRecipeCategory(guiHelper));
         registry.addRecipeCategories(new HammerRecipeCategory(guiHelper));
+        registry.addRecipeCategories(new CrookRecipeCategory(guiHelper));
         registry.addRecipeCategories(new FluidOnTopRecipeCategory(guiHelper));
         registry.addRecipeCategories(new FluidTransformRecipeCategory(guiHelper));
         registry.addRecipeCategories(new FluidBlockTransformRecipeCategory(guiHelper));
@@ -73,9 +74,18 @@ public class CompatJEI implements IModPlugin {
         registerFluidOnTop(registry);
         registerFluidTransform(registry);
         registerHammer(registry);
+        registerCrook(registry);
         registerHeat(registry);
         registerSieve(registry);
         registerStoneCrucible(registry);
+
+        // Register Crook and Hammer catalysts
+        for(Item item : Item.REGISTRY){
+            if(ItemUtil.isHammer(item))
+                registry.addRecipeCatalyst(new ItemStack(item), HammerRecipeCategory.UID);
+            if(ItemUtil.isCrook(item))
+                registry.addRecipeCatalyst(new ItemStack(item), CrookRecipeCategory.UID);
+        }
     }
 
     private void registerCompost(@Nonnull IModRegistry registry) {
@@ -117,23 +127,14 @@ public class CompatJEI implements IModPlugin {
 
     private void registerHammer(@Nonnull IModRegistry registry) {
         List<HammerRecipe> hammerRecipes = ExNihiloRegistryManager.HAMMER_REGISTRY.getRecipeList();
-
         registry.addRecipes(hammerRecipes, HammerRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModItems.hammerWood), HammerRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModItems.hammerGold), HammerRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModItems.hammerStone), HammerRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModItems.hammerIron), HammerRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModItems.hammerDiamond), HammerRecipeCategory.UID);
-
-        if (Loader.isModLoaded("tconstruct")) {
-            registerTinkersSledgeHammerCatalyst(registry);
-        }
         LogUtil.info("JEI: Hammer Recipes Loaded:             " + hammerRecipes.size());
     }
 
-    @Optional.Method(modid="tconstruct")
-    private void registerTinkersSledgeHammerCatalyst(@Nonnull IModRegistry registry){
-        registry.addRecipeCatalyst(new ItemStack(TinkersConstruct.SLEDGE_HAMMER), HammerRecipeCategory.UID);
+    private void registerCrook(@Nonnull IModRegistry registry) {
+        List<CrookRecipe> crookRecipes = ExNihiloRegistryManager.CROOK_REGISTRY.getRecipeList();
+        registry.addRecipes(crookRecipes, CrookRecipeCategory.UID);
+        LogUtil.info("JEI: Crook Recipes Loaded:              " + crookRecipes.size());
     }
 
     private void registerHeat(@Nonnull IModRegistry registry) {
