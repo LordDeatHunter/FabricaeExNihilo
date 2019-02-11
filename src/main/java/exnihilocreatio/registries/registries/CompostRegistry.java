@@ -1,11 +1,9 @@
 package exnihilocreatio.registries.registries;
 
-import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.api.registries.ICompostRegistry;
 import exnihilocreatio.compatibility.jei.barrel.compost.CompostRecipe;
-import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.json.CustomBlockInfoJson;
 import exnihilocreatio.json.CustomColorJson;
 import exnihilocreatio.json.CustomCompostableJson;
