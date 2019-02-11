@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.api.registries.ICompostRegistry;
 import exnihilocreatio.compatibility.jei.barrel.compost.CompostRecipe;
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.json.CustomBlockInfoJson;
 import exnihilocreatio.json.CustomColorJson;
 import exnihilocreatio.json.CustomCompostableJson;
@@ -153,45 +154,40 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> im
 
     @Override
     public List<CompostRecipe> getRecipeList() {
-        List<CompostRecipe> compostRecipePages = new ArrayList<>();
+        List<CompostRecipe> recipes = new ArrayList<>();
 
-        getRegistry().forEach((key, value) -> {
-            BlockInfo compostBlock = value.getCompostBlock();
-            List<ItemStack> compostables = Lists.newLinkedList();
-            int compostCount = (int) Math.ceil(1.0F / value.getValue());
-
-            ItemStack[] stacks = key.getMatchingStacks();
-            if (stacks.length <= 0) return;
-
-            for (ItemStack stack : stacks) {
-                if (compostables.stream().noneMatch(stack::isItemEqual)) {
-                    ItemStack copy = stack.copy();
-                    copy.setCount(compostCount);
-                    compostables.add(copy);
-                }
+        Map<BlockInfo, List<List<ItemStack>>> outputMap = new HashMap<>();
+        for(Map.Entry<Ingredient, Compostable> entry : getRegistry().entrySet()){
+            BlockInfo output = entry.getValue().getCompostBlock();
+            Ingredient ingredient = entry.getKey();
+            if(output == null || ingredient == null || !output.isValid())
+                continue;
+            // Initialize new outputs
+            if(!outputMap.containsKey(output)){
+                List<List<ItemStack>> inputs = new ArrayList<>();
+                outputMap.put(output, inputs);
             }
-
-            CompostRecipe recipe = compostRecipePages.stream()
-                    .filter(compostRecipe -> compostRecipe.outputMatch(compostBlock.getItemStack())
-                            && compostRecipe.isNonFull())
-                    .findFirst()
-                    .orElse(null);
-
-            if (recipe == null) {
-                recipe = new CompostRecipe(compostBlock, new ArrayList<>());
-                compostRecipePages.add(recipe);
+            // Collect all the potential itemstacks which match this ingredient
+            List<ItemStack> inputs = new ArrayList<>();
+            for(ItemStack match : ingredient.getMatchingStacks()){
+                if(match.isEmpty() || match.getItem() == null)
+                    continue;
+                ItemStack input = match.copy();
+                input.setCount((int) Math.ceil(1.0 / entry.getValue().getValue()));
+                inputs.add(input);
             }
-
-            //This acts as a safety net, auto creating new recipes if the input list is larger than 45
-            if (recipe.isNonFull()) {
-                recipe.getInputs().add(compostables);
-            } else {
-                recipe = new CompostRecipe(compostBlock, Lists.newLinkedList());
-                recipe.getInputs().add(compostables);
-                compostRecipePages.add(recipe);
+            // Empty oredicts can result in 0 inputs.
+            if(inputs.size() > 0)
+                outputMap.get(output).add(inputs);
+        }
+        // Split the recipe up into "pages"
+        for(Map.Entry<BlockInfo, List<List<ItemStack>>> entry : outputMap.entrySet()){
+            for(int i = 0; i < entry.getValue().size(); i+=7){
+                recipes.add(new CompostRecipe(entry.getKey(),
+                        entry.getValue().subList(i, Math.min(i+7, entry.getValue().size()))));
             }
-        });
+        }
 
-        return compostRecipePages;
+        return recipes;
     }
 }

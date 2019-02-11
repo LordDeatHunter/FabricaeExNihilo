@@ -27,10 +27,6 @@ public class CrucibleRecipeCategory implements IRecipeCategory<CrucibleRecipe> {
     private final IDrawableStatic background;
     private final IDrawableStatic slotHighlight;
 
-    private boolean hasHighlight;
-    private int highlightX;
-    private int highlightY;
-
     public CrucibleRecipeCategory(IGuiHelper helper, String uid) {
         this.background = helper.createDrawable(texture, 0, 60, 166, 22);
         this.slotHighlight = helper.createDrawable(texture, 166, 0, 18, 18);

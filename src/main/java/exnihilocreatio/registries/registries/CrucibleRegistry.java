@@ -142,10 +142,12 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> impl
             Ingredient ingredient = entry.getKey();
             if(output == null || ingredient == null)
                 continue;
+            // Initialize new outputs
             if(!outputMap.containsKey(output)){
                 List<List<ItemStack>> inputs = new ArrayList<>();
                 outputMap.put(output, inputs);
             }
+            // Collect all the potential itemstacks which match this ingredient
             List<ItemStack> inputs = new ArrayList<>();
             for(ItemStack match : ingredient.getMatchingStacks()){
                 if(match.isEmpty() || match.getItem() == null)
@@ -154,9 +156,11 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> impl
                 input.setCount((int) Math.ceil(Fluid.BUCKET_VOLUME / entry.getValue().getAmount()));
                 inputs.add(input);
             }
+            // Empty oredicts can result in 0 inputs.
             if(inputs.size() > 0)
                 outputMap.get(output).add(inputs);
         }
+        // Split the recipe up into "pages"
         for(Map.Entry<Fluid, List<List<ItemStack>>> entry : outputMap.entrySet()){
             for(int i = 0; i < entry.getValue().size(); i+=7){
                 recipes.add(new CrucibleRecipe(entry.getKey(),
