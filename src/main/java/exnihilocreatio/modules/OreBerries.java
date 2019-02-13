@@ -2,6 +2,7 @@ package exnihilocreatio.modules;
 
 import exnihilocreatio.ModBlocks;
 import exnihilocreatio.blocks.BlockSieve;
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.modules.oreberries.ItemOreBerrySeed;
 import exnihilocreatio.modules.oreberries.RenderOreBerrySeed;
 import exnihilocreatio.recipes.defaults.IRecipeDefaults;
@@ -63,9 +64,9 @@ public class OreBerries implements IExNihiloCreatioModule, IRecipeDefaults {
 
     @Override
     public void registerOredicts(){
-        for(ItemOreBerrySeed seed : oreberryseeds){
-            OreDictionary.registerOre("listAllseed", new ItemStack(seed));
-        }
+        if(ModConfig.compatibility.oreberries_compat.enableOreBerryOredict)
+            for(ItemOreBerrySeed seed : oreberryseeds)
+                OreDictionary.registerOre("listAllseed", new ItemStack(seed));
     }
 
     /**
@@ -74,7 +75,7 @@ public class OreBerries implements IExNihiloCreatioModule, IRecipeDefaults {
     @Override
     public void registerSieve(SieveRegistry registry) {
         for(ItemOreBerrySeed seed : oreberryseeds){
-            float chance = 0.05f / seed.getBush().config.rarity;
+            float chance = ModConfig.compatibility.oreberries_compat.baseDropChance / seed.getBush().config.rarity;
             for(Integer dim : seed.getBush().config.dimensions){
                 ItemStack toSieve;
                 switch(dim){
@@ -85,7 +86,7 @@ public class OreBerries implements IExNihiloCreatioModule, IRecipeDefaults {
                     default: toSieve = new ItemStack(Blocks.DIRT, 1,1);
                         break;
                 }
-                registry.register(toSieve, new ItemInfo(seed), chance / 0.05f, BlockSieve.MeshType.IRON.getID());
+                registry.register(toSieve, new ItemInfo(seed), chance / 5f, BlockSieve.MeshType.IRON.getID());
                 registry.register(toSieve, new ItemInfo(seed), chance, BlockSieve.MeshType.DIAMOND.getID());
             }
         }

@@ -95,6 +95,7 @@ public class ModConfig {
     }
 
     public static class Sieve {
+        public Enchantments enchantments = new Enchantments();
         @Config.RangeInt(min = 0)
         public int sieveSimilarRadius = 2;
         @Config.RangeInt(min = 0)
@@ -102,6 +103,20 @@ public class ModConfig {
         public boolean setFireToMacroUsers = false;
         @Config.RangeInt(min = 1, max = 64)
         public int meshMaxStackSize = 16;
+        public static class Enchantments {
+            @Config.Comment("Enable the Sieve Efficiency enchantment.")
+            public boolean enableSieveEfficiency = true;
+            @Config.RangeInt(min = 1)
+            public int sieveEfficiencyMaxLevel = 5;
+            @Config.Comment("Enable the Sieve Fortune enchantment.")
+            public boolean enableSieveFortune = true;
+            @Config.RangeInt(min = 1)
+            public int sieveFortuneMaxLevel = 3;
+            @Config.Comment("Enable the Sieve Luck Of The Sea enchantment.")
+            public boolean enableSieveLuckOfTheSea = true;
+            @Config.RangeInt(min = 1)
+            public int sieveLuckOfTheSeaMaxLevel = 3;
+        }
     }
 
     public static class Compatibility {
@@ -175,6 +190,11 @@ public class ModConfig {
                     "Enable a seed for every OreBerries bush.",
                     "Default properties of the seeds are based on the oreberries config json."})
             public boolean enableOreBerrySeeds = true;
+            @Config.Comment({
+                    "Default likelihood that an oreberry seed is sieved;",
+                    "gets divided by the rarity value in the oreberries config.",
+                    "Dose nothing if JSON configs are enabled."})
+            public float baseDropChance = 0.05f;
             @Config.Comment({"OreDict the seeds as listAllseed"})
             public boolean enableOreBerryOredict = true;
 

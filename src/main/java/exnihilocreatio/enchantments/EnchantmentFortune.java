@@ -1,5 +1,6 @@
 package exnihilocreatio.enchantments;
 
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.ItemMesh;
 import exnihilocreatio.util.Data;
 import net.minecraft.enchantment.Enchantment;
@@ -13,8 +14,8 @@ public class EnchantmentFortune extends Enchantment {
         this.setName("sieve_fortune");
         this.setRegistryName("sieve_fortune");
 
-        Data.ENCHANTMENTS.add(this);
-
+        if(ModConfig.sieve.enchantments.enableSieveFortune)
+            Data.ENCHANTMENTS.add(this);
     }
 
     @Override
@@ -43,6 +44,6 @@ public class EnchantmentFortune extends Enchantment {
      */
     @Override
     public int getMaxLevel() {
-        return 3;
+        return ModConfig.sieve.enchantments.sieveFortuneMaxLevel;
     }
 }
