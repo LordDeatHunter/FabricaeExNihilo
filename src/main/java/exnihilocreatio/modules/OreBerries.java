@@ -18,6 +18,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +59,13 @@ public class OreBerries implements IExNihiloCreatioModule, IRecipeDefaults {
             Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new RenderOreBerrySeed(), colorizedBerries.toArray(new ItemOreBerrySeed[0]));
         }
 
+    }
+
+    @Override
+    public void registerOredicts(){
+        for(ItemOreBerrySeed seed : oreberryseeds){
+            OreDictionary.registerOre("listAllseed", new ItemStack(seed));
+        }
     }
 
     /**

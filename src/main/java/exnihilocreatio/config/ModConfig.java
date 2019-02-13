@@ -110,6 +110,7 @@ public class ModConfig {
         public ForestryCompat forestry_compat = new ForestryCompat();
         public RubberCompat rubber_compat = new RubberCompat();
         public MooFluidsCompat moofluids_compat = new MooFluidsCompat();
+        public OreBerriesCompat oreberries_compat = new OreBerriesCompat();
 
         @Config.Comment("Prevents unidict from merging the ore chunks into normal ore.")
         public boolean preventUnidict = true;
@@ -166,6 +167,16 @@ public class ModConfig {
                     "Cow's cooldown is reset a prorated amount based on this and its max cooldown."})
             @Config.RangeInt(min = 1, max=1000)
             public int fillAmount = 10;
+
+        }
+
+        public static class OreBerriesCompat {
+            @Config.Comment({
+                    "Enable a seed for every OreBerries bush.",
+                    "Default properties of the seeds are based on the oreberries config json."})
+            public boolean enableOreBerrySeeds = true;
+            @Config.Comment({"OreDict the seeds as listAllseed"})
+            public boolean enableOreBerryOredict = true;
 
         }
     }

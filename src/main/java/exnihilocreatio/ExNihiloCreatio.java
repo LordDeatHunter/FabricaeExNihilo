@@ -74,7 +74,7 @@ public class ExNihiloCreatio {
                 Loader.isModLoaded("minimoos") ||
                 Loader.isModLoaded("fluidcows"))
             ExNihiloCreatio.loadedModules.add(new MooFluidsEtc());
-        if(Loader.isModLoaded("oreberries"))
+        if(Loader.isModLoaded("oreberries") && ModConfig.compatibility.oreberries_compat.enableOreBerrySeeds)
             ExNihiloCreatio.loadedModules.add(new OreBerries());
 
         proxy.preInit(event);
