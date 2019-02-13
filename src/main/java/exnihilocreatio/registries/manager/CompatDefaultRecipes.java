@@ -1,5 +1,7 @@
 package exnihilocreatio.registries.manager;
 
+import exnihilocreatio.ExNihiloCreatio;
+import exnihilocreatio.modules.IExNihiloCreatioModule;
 import exnihilocreatio.recipes.defaults.*;
 import exnihilocreatio.registries.registries.*;
 import net.minecraftforge.fml.common.Loader;
@@ -27,6 +29,10 @@ public class CompatDefaultRecipes {
         MODS.add(new ExtraBees());
         MODS.add(new MagicBees());
         MODS.add(new BinniesBotany());
+        for(IExNihiloCreatioModule module : ExNihiloCreatio.loadedModules){
+            if(module instanceof IRecipeDefaults)
+                MODS.add((IRecipeDefaults) module);
+        }
 
     }
 

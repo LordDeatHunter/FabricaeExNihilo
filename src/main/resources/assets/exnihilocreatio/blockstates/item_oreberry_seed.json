@@ -1,0 +1,23 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "type": {
+      "normal": {
+        "textures": {
+          "layer0": "exnihilocreatio:items/oreberries/oreberry_seed",
+          "layer1": "exnihilocreatio:items/oreberries/oreberry_seed_overlay"
+        }
+      },
+      "essence": {
+        "textures": {
+          "layer0": "exnihilocreatio:items/oreberries/oreberry_seed",
+          "layer1": "exnihilocreatio:items/oreberries/oreberry_essence_seed"
+        }
+      }
+    }
+  }
+}

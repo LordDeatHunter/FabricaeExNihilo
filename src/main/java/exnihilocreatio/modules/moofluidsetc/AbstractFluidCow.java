@@ -11,23 +11,23 @@ import net.minecraftforge.fluids.Fluid;
  */
 public class AbstractFluidCow implements IAbstractCow {
     private EntityFluidCow cow;
-    private int maxDelay;
+    private int maxCooldown;
 
     public AbstractFluidCow(EntityFluidCow entity){
         cow = entity;
-        maxDelay = FCConfig.getWorldCD(cow.fluid.getName());
+        maxCooldown = FCConfig.getWorldCD(cow.fluid.getName());
     }
 
     @Override
     public int getAvailableFluid() {
         // Fraction of a full bucket.
-        return Fluid.BUCKET_VOLUME * (maxDelay - cow.getCD()) / maxDelay ;
+        return Fluid.BUCKET_VOLUME * (maxCooldown - cow.getCD()) / maxCooldown ;
     }
 
     @Override
     public int addCooldownEquivalent(int millibuckets) {
         // Fraction of max cooldown added.
-        int timeAdded = maxDelay * millibuckets / Fluid.BUCKET_VOLUME;
+        int timeAdded = maxCooldown * millibuckets / Fluid.BUCKET_VOLUME;
         // Set Cooldown
         cow.updateCD(cow.getCD() + timeAdded);
         return timeAdded;

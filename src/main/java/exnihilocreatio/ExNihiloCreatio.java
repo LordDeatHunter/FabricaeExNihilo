@@ -38,7 +38,7 @@ import java.util.List;
         name = "Ex Nihilo Creatio",
         version = ExNihiloCreatio.VERSION,
         acceptedMinecraftVersions = "[1.12, 1.13)",
-        dependencies = "after:forestry;after:extrabees;after:morebees;after:magicbees;after:tconstruct;required-after:forgelin")
+        dependencies = "after:forestry;after:extrabees;after:morebees;after:magicbees;after:tconstruct;after:oreberries;required-after:forgelin")
 @Mod.EventBusSubscriber
 public class ExNihiloCreatio {
 
@@ -74,6 +74,8 @@ public class ExNihiloCreatio {
                 Loader.isModLoaded("minimoos") ||
                 Loader.isModLoaded("fluidcows"))
             ExNihiloCreatio.loadedModules.add(new MooFluidsEtc());
+        if(Loader.isModLoaded("oreberries"))
+            ExNihiloCreatio.loadedModules.add(new OreBerries());
 
         proxy.preInit(event);
 
