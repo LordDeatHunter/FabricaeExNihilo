@@ -78,7 +78,7 @@ public class TileSieve extends BaseTileEntity {
             return true;
         }
 
-        if (!meshStack.isEmpty() && newMesh.isEmpty()) {
+        if (newMesh.isEmpty()) {
             //Removing
             if (!simulate) {
                 meshStack = ItemStack.EMPTY;
@@ -138,7 +138,7 @@ public class TileSieve extends BaseTileEntity {
 
             int efficiency = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.EFFICIENCY, meshStack);
             efficiency += EnchantmentHelper.getEnchantmentLevel(Enchantments.EFFICIENCY, meshStack);
-            if(ModConfig.sieve.enchantments.hasteIncreasesSpeed && player.isPotionActive(MobEffects.HASTE)){
+            if(ModConfig.sieve.enchantments.hasteIncreasesSpeed && player != null && player.isPotionActive(MobEffects.HASTE)){
                 efficiency *= 1.0F + (float)(player.getActivePotionEffect(MobEffects.HASTE).getAmplifier() + 1) * 0.2F;
             }
 
