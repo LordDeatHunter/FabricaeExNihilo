@@ -11,9 +11,9 @@ import mezz.jei.api.gui.ITooltipCallback;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IFocus;
 import mezz.jei.api.recipe.IRecipeCategory;
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -21,19 +21,16 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class CrucibleRecipeCategory implements IRecipeCategory<CrucibleRecipe> {
-    public static final String UID = "exnihilocreatio:crucible";
-    private static final ResourceLocation texture = new ResourceLocation(ExNihiloCreatio.MODID, "textures/gui/jei_crucible.png");
+    public final String UID;
+    private static final ResourceLocation texture = new ResourceLocation(ExNihiloCreatio.MODID, "textures/gui/jei_mini.png");
 
     private final IDrawableStatic background;
     private final IDrawableStatic slotHighlight;
 
-    private boolean hasHighlight;
-    private int highlightX;
-    private int highlightY;
-
-    public CrucibleRecipeCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(texture, 0, 0, 166, 128);
+    public CrucibleRecipeCategory(IGuiHelper helper, String uid) {
+        this.background = helper.createDrawable(texture, 0, 60, 166, 22);
         this.slotHighlight = helper.createDrawable(texture, 166, 0, 18, 18);
+        this.UID = uid;
     }
 
     @Override
@@ -61,49 +58,30 @@ public class CrucibleRecipeCategory implements IRecipeCategory<CrucibleRecipe> {
     }
 
     @Override
-    public void drawExtras(@Nonnull Minecraft minecraft) {
-        if (hasHighlight) {
-            slotHighlight.draw(minecraft, highlightX, highlightY);
-        }
-    }
-
-    @Override
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull CrucibleRecipe recipeWrapper, @Nonnull IIngredients ingredients) {
-        recipeLayout.getItemStacks().init(0, true, 74, 9);
+        recipeLayout.getItemStacks().init(0, true, 2, 2);
         recipeLayout.getItemStacks().set(0, recipeWrapper.getFluid());
 
         IFocus<?> focus = recipeLayout.getFocus();
 
-        boolean mightHaveHighlight = false;
-        hasHighlight = false;
+        for (int i = 1; i < recipeWrapper.getInputs().size()+1; i++) {
+            final int slotX = 38 + 18*(i-1);
 
-        if (focus != null) {
-            mightHaveHighlight = focus.getMode() == IFocus.Mode.INPUT;
-        }
+            List<ItemStack> stacks = recipeWrapper.getInputs().get(i-1);
 
+            recipeLayout.getItemStacks().init(i, true, slotX, 2);
+            recipeLayout.getItemStacks().set(i, stacks);
 
-            int slotIndex = 1;
-
-            for (int i = 0; i < recipeWrapper.getInputs().size(); i++) {
-                final int slotX = 2 + (i % 9 * 18);
-                final int slotY = 36 + (i / 9 * 18);
-
-                ItemStack inputStack = recipeWrapper.getInputs().get(i);
-
-                recipeLayout.getItemStacks().init(slotIndex + i, true, slotX, slotY);
-                recipeLayout.getItemStacks().set(slotIndex + i, inputStack);
-
-                if (mightHaveHighlight && ItemStack.areItemsEqual((ItemStack) focus.getValue(), inputStack)) {
-                    highlightX = slotX;
-                    highlightY = slotY;
-
-                    hasHighlight = true;
-                    mightHaveHighlight = false;
-                }
+            if(stacks.stream().anyMatch(stack -> ItemStack.areItemsEqual((ItemStack) focus.getValue(), stack))) {
+                recipeLayout.getItemStacks().setBackground(i,slotHighlight);
+            }
 
         }
 
-        recipeLayout.getItemStacks().addTooltipCallback(new CrucibleTooltipCallback());
+        if(UID == "exnihilocreatio:crucible_stone")
+            recipeLayout.getItemStacks().addTooltipCallback(new StoneCrucibleTooltipCallback());
+        else
+            recipeLayout.getItemStacks().addTooltipCallback(new WoodCrucibleTooltipCallback());
     }
 
     @Override
@@ -111,13 +89,23 @@ public class CrucibleRecipeCategory implements IRecipeCategory<CrucibleRecipe> {
         return null;
     }
 
-    private static class CrucibleTooltipCallback implements ITooltipCallback<ItemStack> {
+    private static class StoneCrucibleTooltipCallback implements ITooltipCallback<ItemStack> {
         @Override
         @SideOnly(Side.CLIENT)
         public void onTooltip(int slotIndex, boolean input, @Nonnull ItemStack ingredient, @Nonnull List<String> tooltip) {
             if (!input) {
                 Meltable entry = ExNihiloRegistryManager.CRUCIBLE_STONE_REGISTRY.getMeltable(ingredient);
-                tooltip.add(String.format("Value: %.1f%%", 1000.0F / entry.getAmount()));
+                tooltip.add(String.format("Value: %.1f%%", Fluid.BUCKET_VOLUME / (float) entry.getAmount()));
+            }
+        }
+    }
+    private static class WoodCrucibleTooltipCallback implements ITooltipCallback<ItemStack> {
+        @Override
+        @SideOnly(Side.CLIENT)
+        public void onTooltip(int slotIndex, boolean input, @Nonnull ItemStack ingredient, @Nonnull List<String> tooltip) {
+            if (!input) {
+                Meltable entry = ExNihiloRegistryManager.CRUCIBLE_WOOD_REGISTRY.getMeltable(ingredient);
+                tooltip.add(String.format("Value: %.1f%%", Fluid.BUCKET_VOLUME / (float) entry.getAmount()));
             }
         }
     }

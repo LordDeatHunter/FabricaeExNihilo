@@ -40,6 +40,11 @@ public class ModConfig {
         public boolean enableCrucible = true;
         public boolean shouldBarrelsFillWithRain = true;
         public boolean fakePlayersCanSieve = false;
+
+        @Config.Comment({"Default max fluid temp allowed in the barrel. Does nothing if JSON configs are used.",
+        "Set to a high number to disable any blacklisting. Water = 300, Lava = 1300"})
+        @Config.RangeInt(min=-1)
+        public int woodBarrelMaxTemp = 301;
     }
 
     public static class Composting {
@@ -95,6 +100,7 @@ public class ModConfig {
     }
 
     public static class Sieve {
+        public Enchantments enchantments = new Enchantments();
         @Config.RangeInt(min = 0)
         public int sieveSimilarRadius = 2;
         @Config.RangeInt(min = 0)
@@ -102,6 +108,28 @@ public class ModConfig {
         public boolean setFireToMacroUsers = false;
         @Config.RangeInt(min = 1, max = 64)
         public int meshMaxStackSize = 16;
+        @Config.Comment({
+                "If enabled, all meshes can obtain the results from the lower tier meshes.",
+                "Note if the same item is registered in multiple tiers, then the higher tier",
+                "will have a chance to drop multiples."
+        })
+        public boolean flattenSieveRecipes = false;
+        public static class Enchantments {
+            @Config.Comment("If enabled haste beacons will increase the speed at which sieves function.")
+            public boolean hasteIncreasesSpeed = true;
+            @Config.Comment("Enable the Sieve Efficiency enchantment.")
+            public boolean enableSieveEfficiency = true;
+            @Config.RangeInt(min = 1)
+            public int sieveEfficiencyMaxLevel = 5;
+            @Config.Comment("Enable the Sieve Fortune enchantment.")
+            public boolean enableSieveFortune = true;
+            @Config.RangeInt(min = 1)
+            public int sieveFortuneMaxLevel = 3;
+            @Config.Comment("Enable the Sieve Luck Of The Sea enchantment.")
+            public boolean enableSieveLuckOfTheSea = true;
+            @Config.RangeInt(min = 1)
+            public int sieveLuckOfTheSeaMaxLevel = 3;
+        }
     }
 
     public static class Compatibility {
@@ -110,6 +138,7 @@ public class ModConfig {
         public ForestryCompat forestry_compat = new ForestryCompat();
         public RubberCompat rubber_compat = new RubberCompat();
         public MooFluidsCompat moofluids_compat = new MooFluidsCompat();
+        public OreBerriesCompat oreberries_compat = new OreBerriesCompat();
 
         @Config.Comment("Prevents unidict from merging the ore chunks into normal ore.")
         public boolean preventUnidict = true;
@@ -136,6 +165,9 @@ public class ModConfig {
             @Config.Comment("Add a Ex Nihilo style crook to the tool station.")
             public boolean addExNihiloCrook = true;
 
+            @Config.Comment({"Let's you use the tinkers tools to look up JEI recipes, but causes",
+                    "two log errors when tinkers later tries to register their default subtype handler."})
+            public boolean JEItinkersTools = true;
         }
 
         public static class ForestryCompat {
@@ -152,7 +184,9 @@ public class ModConfig {
         }
 
         public static class MooFluidsCompat {
-            @Config.Comment({"Enable barrel automation of MooFluid Cows"})
+            @Config.Comment({
+                    "Enable barrel automation of MooFluid/FluidCows/MiniMoos Cows.",
+                    "These configs apply to all of the supported cow mods."})
             public boolean enableMooFluids = true;
             public boolean fluidListIsBlackList = true;
             @Config.Comment({
@@ -161,9 +195,24 @@ public class ModConfig {
             public String[] fluidList = {};
             @Config.Comment({
                     "How much (mB) should be drained from a fluid cow at once.",
-                    "FluidCow's cooldown is reset a prorated amount based on this and its max cooldown."})
+                    "Cow's cooldown is reset a prorated amount based on this and its max cooldown."})
             @Config.RangeInt(min = 1, max=1000)
             public int fillAmount = 10;
+
+        }
+
+        public static class OreBerriesCompat {
+            @Config.Comment({
+                    "Enable a seed for every OreBerries bush.",
+                    "Default properties of the seeds are based on the oreberries config json."})
+            public boolean enableOreBerrySeeds = true;
+            @Config.Comment({
+                    "Default likelihood that an oreberry seed is sieved;",
+                    "gets divided by the rarity value in the oreberries config.",
+                    "Dose nothing if JSON configs are enabled."})
+            public float baseDropChance = 0.05f;
+            @Config.Comment({"OreDict the seeds as listAllseed"})
+            public boolean enableOreBerryOredict = true;
 
         }
     }

@@ -81,6 +81,12 @@ public class TinkersConstruct implements IExNihiloCreatioModule {
         }
     }
 
+    public static Item getHammer(){
+        return (Item) SLEDGE_HAMMER;
+    }
+    public static Item getCrook(){
+        return (Item) TINKERS_CROOK;
+    }
 
     @Override
     public void registerItems(IForgeRegistry<Item> registry) {

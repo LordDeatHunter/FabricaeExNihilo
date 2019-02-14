@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.api.registries.ICrookRegistry;
+import exnihilocreatio.compatibility.jei.crook.CrookRecipe;
 import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.json.CustomItemStackJson;
 import exnihilocreatio.registries.ingredient.IngredientUtil;
@@ -12,6 +13,7 @@ import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.CrookReward;
 import exnihilocreatio.util.BlockInfo;
+import exnihilocreatio.util.ItemUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -21,10 +23,8 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class CrookRegistry extends BaseRegistryMap<Ingredient, List<CrookReward>> implements ICrookRegistry {
 
@@ -87,6 +87,14 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, List<CrookReward>
         }
     }
 
+
+
+    public NonNullList<CrookReward> getRewards(Ingredient ingredient) {
+        NonNullList<CrookReward> drops = NonNullList.create();
+        registry.entrySet().stream().filter(entry -> entry.getKey() == ingredient).forEach(entry -> drops.addAll(entry.getValue()));
+        return drops;
+    }
+
     public boolean isRegistered(Block block) {
         ItemStack stack = new ItemStack(block);
         return registry.keySet().stream().anyMatch(ingredient -> ingredient.test(stack));
@@ -130,7 +138,30 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, List<CrookReward>
     }
 
     @Override
-    public List<?> getRecipeList() {
-        return Lists.newLinkedList();
+    public List<CrookRecipe> getRecipeList() {
+        List<CrookRecipe> recipes = Lists.newLinkedList();
+        for(Ingredient ingredient : getRegistry().keySet()){
+            if(ingredient == null)
+                continue;
+            List<ItemStack> rawOutputs = getRewards(ingredient).stream().map(reward -> reward.getStack()).collect(Collectors.toList());
+            List<ItemStack> allOutputs = new ArrayList<>();
+            for(ItemStack raw : rawOutputs){
+                boolean alreadyexists = false;
+                for(ItemStack all : allOutputs){
+                    if(ItemUtil.areStacksEquivalent(all, raw)){
+                        alreadyexists = true;
+                        break;
+                    }
+                }
+                if(!alreadyexists)
+                    allOutputs.add(raw);
+            }
+            List<ItemStack> inputs = Arrays.asList(ingredient.getMatchingStacks());
+            for(int i = 0; i < allOutputs.size(); i+=7){
+                final List<ItemStack> outputs = allOutputs.subList(i, Math.min(i+7, allOutputs.size()));
+                recipes.add(new CrookRecipe(inputs, outputs));
+            }
+        }
+        return recipes;
     }
 }

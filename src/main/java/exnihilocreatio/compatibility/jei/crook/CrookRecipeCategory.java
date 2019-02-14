@@ -1,10 +1,8 @@
-package exnihilocreatio.compatibility.jei.hammer;
+package exnihilocreatio.compatibility.jei.crook;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
-import exnihilocreatio.registries.types.HammerReward;
+import exnihilocreatio.registries.types.CrookReward;
 import exnihilocreatio.util.ItemUtil;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
@@ -16,7 +14,6 @@ import mezz.jei.api.recipe.IFocus;
 import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -24,17 +21,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import java.util.List;
-import java.util.Map;
 
-public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
-    public static final String UID = "exnihilocreatio:hammer";
+public class CrookRecipeCategory implements IRecipeCategory<CrookRecipe> {
+    public static final String UID = "exnihilocreatio:crook";
     private static final ResourceLocation texture = new ResourceLocation(ExNihiloCreatio.MODID, "textures/gui/jei_mini.png");
 
     private final IDrawableStatic background;
     private final IDrawableStatic slotHighlight;
 
-    public HammerRecipeCategory(IGuiHelper guiHelper) {
-        this.background = guiHelper.drawableBuilder(texture, 0, 20, 166, 22).build();
+    public CrookRecipeCategory(IGuiHelper guiHelper) {
+        this.background = guiHelper.drawableBuilder(texture, 0, 40, 166, 22).build();
         this.slotHighlight = guiHelper.createDrawable(texture, 166, 0, 18, 18);
     }
 
@@ -47,7 +43,7 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
     @Override
     @Nonnull
     public String getTitle() {
-        return "Hammer";
+        return "Crook";
     }
 
     @Override
@@ -62,8 +58,7 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
         return background;
     }
 
-    @Override
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull HammerRecipe recipeWrapper, @Nonnull IIngredients ingredients) {
+    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull CrookRecipe recipeWrapper, @Nonnull IIngredients ingredients) {
         recipeLayout.getItemStacks().init(0, true, 2, 2);
         recipeLayout.getItemStacks().set(0, recipeWrapper.getInputs());
 
@@ -90,7 +85,7 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
         }
 
 
-        recipeLayout.getItemStacks().addTooltipCallback(new HammerTooltipCallback(recipeWrapper));
+        recipeLayout.getItemStacks().addTooltipCallback(new CrookTooltipCallback(recipeWrapper));
     }
 
     @Override
@@ -98,10 +93,10 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
         return null;
     }
 
-    private static class HammerTooltipCallback implements ITooltipCallback<ItemStack> {
-        private final HammerRecipe recipe;
+    private static class CrookTooltipCallback implements ITooltipCallback<ItemStack> {
+        private final CrookRecipe recipe;
 
-        private HammerTooltipCallback(HammerRecipe recipeWrapper) {
+        private CrookTooltipCallback(CrookRecipe recipeWrapper) {
             this.recipe = recipeWrapper;
         }
 
@@ -115,41 +110,16 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
                 @SuppressWarnings("deprecation")
                 IBlockState block = blockBase.getStateFromMeta(blockStack.getMetadata());
 
-                List<HammerReward> allRewards = ExNihiloRegistryManager.HAMMER_REGISTRY.getRewards(block);
+                List<CrookReward> allRewards = ExNihiloRegistryManager.CROOK_REGISTRY.getRewards(block);
 
                 allRewards.removeIf(reward -> !ItemUtil.areStacksEquivalent(reward.getStack(), ingredient));
 
-                // Level, Outputs
-                Map<Integer, List<HammerReward>> tieredOutputs = Maps.newHashMap();
+                for (CrookReward reward : allRewards) {
+                    float chance = 100.0F * reward.getChance();
 
-                for (HammerReward reward : allRewards) {
-                    List<HammerReward> stacks = tieredOutputs.get(reward.getMiningLevel());
+                    String format = chance >= 10 ? " - %3.0f%% (x%d)" : "%1.1f%% - (x%d)";
 
-                    if (stacks == null) {
-                        stacks = Lists.newArrayList(reward);
-                        tieredOutputs.put(reward.getMiningLevel(), stacks);
-                    } else {
-                        stacks.add(reward);
-                    }
-                }
-
-                tieredOutputs.forEach((level, rewards) -> rewards.sort((rewardA, rewardB) -> Float.compare(rewardB.getChance(), rewardA.getChance())));
-
-                List<Integer> levelOrder = Lists.newArrayList(tieredOutputs.keySet());
-                levelOrder.sort((levelA, levelB) -> Integer.compare(levelB, levelA));
-
-                for (int level : levelOrder) {
-                    tooltip.add(I18n.format("jei.hammer.hammerLevel." + level));
-
-                    List<HammerReward> rewards = tieredOutputs.get(level);
-
-                    for (HammerReward reward : rewards) {
-                        float chance = 100.0F * reward.getChance();
-
-                        String format = chance >= 10 ? " - %3.0f%% (x%d)" : "%1.1f%% - (x%d)";
-
-                        tooltip.add(String.format(format, chance, reward.getStack().getCount()));
-                    }
+                    tooltip.add(String.format(format, chance, reward.getStack().getCount()));
                 }
             }
         }

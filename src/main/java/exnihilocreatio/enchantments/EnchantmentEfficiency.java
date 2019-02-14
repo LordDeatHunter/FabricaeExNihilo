@@ -1,5 +1,6 @@
 package exnihilocreatio.enchantments;
 
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.ItemMesh;
 import exnihilocreatio.util.Data;
 import net.minecraft.enchantment.Enchantment;
@@ -14,7 +15,8 @@ public class EnchantmentEfficiency extends Enchantment {
         this.setName("sieve_efficiency");
         this.setRegistryName("sieve_efficiency");
 
-        Data.ENCHANTMENTS.add(this);
+        if(ModConfig.sieve.enchantments.enableSieveEfficiency)
+            Data.ENCHANTMENTS.add(this);
     }
 
     @Override
@@ -43,6 +45,6 @@ public class EnchantmentEfficiency extends Enchantment {
      */
     @Override
     public int getMaxLevel() {
-        return 5;
+        return ModConfig.sieve.enchantments.sieveEfficiencyMaxLevel;
     }
 }

@@ -38,7 +38,7 @@ import java.util.List;
         name = "Ex Nihilo Creatio",
         version = ExNihiloCreatio.VERSION,
         acceptedMinecraftVersions = "[1.12, 1.13)",
-        dependencies = "after:forestry;after:extrabees;after:morebees;after:magicbees;after:tconstruct;required-after:forgelin")
+        dependencies = "after:forestry;after:extrabees;after:morebees;after:magicbees;after:tconstruct;after:oreberries;required-after:forgelin")
 @Mod.EventBusSubscriber
 public class ExNihiloCreatio {
 
@@ -68,10 +68,14 @@ public class ExNihiloCreatio {
             ExNihiloCreatio.loadedModules.add(new AppliedEnergistics2());
         if(Loader.isModLoaded("forestry"))
             ExNihiloCreatio.loadedModules.add(new Forestry());
-        if(Loader.isModLoaded("tconstruct"))
+        if(Loader.isModLoaded("tconstruct") && ModConfig.compatibility.tinkers_construct_compat.doTinkersConstructCompat)
             ExNihiloCreatio.loadedModules.add(new TinkersConstruct());
-        if(Loader.isModLoaded("moofluids"))
-            ExNihiloCreatio.loadedModules.add(new MooFluids());
+        if(Loader.isModLoaded("moofluids") ||
+                Loader.isModLoaded("minimoos") ||
+                Loader.isModLoaded("fluidcows"))
+            ExNihiloCreatio.loadedModules.add(new MooFluidsEtc());
+        if(Loader.isModLoaded("oreberries") && ModConfig.compatibility.oreberries_compat.enableOreBerrySeeds)
+            ExNihiloCreatio.loadedModules.add(new OreBerries());
 
         proxy.preInit(event);
 

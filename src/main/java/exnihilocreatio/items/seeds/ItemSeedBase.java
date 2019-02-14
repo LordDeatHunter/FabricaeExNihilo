@@ -76,7 +76,8 @@ public class ItemSeedBase extends Item implements IPlantable, IHasModel {
                     && world.isAirBlock(pos.add(0, 1, 0))
                     && this.getPlant(world, pos) != null) {
                 world.setBlockState(pos.add(0, 1, 0), this.getPlant(world, pos));
-                stack.shrink(1);
+                if(!player.isCreative())
+                    stack.shrink(1);
 
                 return EnumActionResult.SUCCESS;
             }

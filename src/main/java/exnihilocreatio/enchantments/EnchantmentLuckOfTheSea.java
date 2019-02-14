@@ -1,5 +1,6 @@
 package exnihilocreatio.enchantments;
 
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.ItemMesh;
 import exnihilocreatio.util.Data;
 import net.minecraft.enchantment.Enchantment;
@@ -14,7 +15,8 @@ public class EnchantmentLuckOfTheSea extends Enchantment {
         this.setName("sieve_luck_of_the_sea");
         this.setRegistryName("sieve_luck_of_the_sea");
 
-        Data.ENCHANTMENTS.add(this);
+        if(ModConfig.sieve.enchantments.enableSieveLuckOfTheSea)
+            Data.ENCHANTMENTS.add(this);
     }
 
     @Override
@@ -43,6 +45,6 @@ public class EnchantmentLuckOfTheSea extends Enchantment {
      */
     @Override
     public int getMaxLevel() {
-        return 3;
+        return ModConfig.sieve.enchantments.sieveLuckOfTheSeaMaxLevel;
     }
 }

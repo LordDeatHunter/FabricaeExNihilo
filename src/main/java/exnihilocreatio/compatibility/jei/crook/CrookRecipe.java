@@ -1,4 +1,4 @@
-package exnihilocreatio.compatibility.jei.hammer;
+package exnihilocreatio.compatibility.jei.crook;
 
 import com.google.common.collect.Lists;
 import mezz.jei.api.ingredients.IIngredients;
@@ -9,11 +9,11 @@ import net.minecraft.item.ItemStack;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class HammerRecipe implements IRecipeWrapper {
+public class CrookRecipe implements IRecipeWrapper {
     private List<ItemStack> inputs;
     private List<ItemStack> outputs;
 
-    public HammerRecipe(List<ItemStack> inputs, List<ItemStack> outputs){
+    public CrookRecipe(List<ItemStack> inputs, List<ItemStack> outputs){
         this.inputs = inputs;
         this.outputs = outputs;
     }
@@ -51,4 +51,5 @@ public class HammerRecipe implements IRecipeWrapper {
     public boolean handleClick(@Nonnull Minecraft minecraft, int mouseX, int mouseY, int mouseButton) {
         return false;
     }
+
 }

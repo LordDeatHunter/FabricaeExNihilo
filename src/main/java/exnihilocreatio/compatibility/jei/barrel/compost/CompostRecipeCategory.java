@@ -11,7 +11,6 @@ import mezz.jei.api.gui.ITooltipCallback;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IFocus;
 import mezz.jei.api.recipe.IRecipeCategory;
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -20,17 +19,13 @@ import java.util.List;
 
 public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
     public static final String UID = "exnihilocreatio:compost";
-    private static final ResourceLocation texture = new ResourceLocation(ExNihiloCreatio.MODID, "textures/gui/jei_compost.png");
+    private static final ResourceLocation texture = new ResourceLocation(ExNihiloCreatio.MODID, "textures/gui/jei_mini.png");
 
     private final IDrawableStatic background;
     private final IDrawableStatic slotHighlight;
 
-    private boolean hasHighlight;
-    private int highlightX;
-    private int highlightY;
-
     public CompostRecipeCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(texture, 0, 0, 166, 128);
+        this.background = helper.createDrawable(texture, 0, 60, 166, 22);
         this.slotHighlight = helper.createDrawable(texture, 166, 0, 18, 18);
     }
 
@@ -59,52 +54,26 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
     }
 
     @Override
-    public void drawExtras(@Nonnull Minecraft minecraft) {
-        if (hasHighlight) {
-            slotHighlight.draw(minecraft, highlightX, highlightY);
-        }
-    }
+    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull CompostRecipe recipe, @Nonnull IIngredients ingredients) {
+        recipeLayout.getItemStacks().init(0, false, 2, 2);
+        recipeLayout.getItemStacks().set(0, recipe.getOutputs().get(0));
 
-    @Override
-    public void setRecipe(@Nonnull IRecipeLayout layout, @Nonnull CompostRecipe recipe, @Nonnull IIngredients ingredients) {
-        layout.getItemStacks().init(0, false, 74, 9);
-        layout.getItemStacks().set(0, recipe.getOutputs().get(0));
+        IFocus<?> focus = recipeLayout.getFocus();
 
-        IFocus<?> focus = layout.getFocus();
+        for (int i = 1; i < recipe.getInputs().size()+1; i++) {
+            final int slotX = 38 + (i - 1) * 18;
 
-        boolean mightHaveHighlight = false;
-        ItemStack focusStack = ItemStack.EMPTY;
+            List<ItemStack> stacks = recipe.getInputs().get(i-1);
 
-        if (focus != null) {
-            mightHaveHighlight = focus.getMode() == IFocus.Mode.INPUT;
-            hasHighlight = false;
+            recipeLayout.getItemStacks().init(i, true, slotX, 2);
+            recipeLayout.getItemStacks().set(i, stacks);
 
-            focusStack = (ItemStack) focus.getValue();
-        }
-        final ItemStack finalFocus = focusStack;
-
-        int slotIndex = 1;
-
-        for (int i = 0; i < recipe.getInputs().size(); i++) {
-            final int slotX = 2 + (i % 9 * 18);
-            final int slotY = 36 + (i / 9 * 18);
-
-            List<ItemStack> inputStack = recipe.getInputs().get(i);
-
-            layout.getItemStacks().init(slotIndex + i, true, slotX, slotY);
-            layout.getItemStacks().set(slotIndex + i, inputStack);
-
-            if (focus != null && mightHaveHighlight && inputStack.stream().anyMatch(item -> ItemStack.areItemsEqual(finalFocus, item))) {
-                highlightX = slotX;
-                highlightY = slotY;
-
-                hasHighlight = true;
-                mightHaveHighlight = false;
+            if(stacks.stream().anyMatch(stack -> ItemStack.areItemsEqual((ItemStack) focus.getValue(), stack))) {
+                recipeLayout.getItemStacks().setBackground(i,slotHighlight);
             }
-
         }
 
-        layout.getItemStacks().addTooltipCallback(new CompostTooltipCallback());
+        recipeLayout.getItemStacks().addTooltipCallback(new CompostTooltipCallback());
 
     }
 

@@ -16,6 +16,7 @@ public interface IExNihiloCreatioModule {
 
     default void registerBlocks(IForgeRegistry<Block> registry){}
     default void registerItems(IForgeRegistry<Item> registry){}
+    default void registerOredicts(){}
 
     // Called inside CommonProxy
     default void preInit(FMLPreInitializationEvent event){}

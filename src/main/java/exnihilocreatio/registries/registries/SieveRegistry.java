@@ -7,6 +7,7 @@ import exnihilocreatio.ModItems;
 import exnihilocreatio.api.registries.ISieveRegistry;
 import exnihilocreatio.blocks.BlockSieve;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipe;
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.json.CustomIngredientJson;
 import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.ingredient.IngredientUtil;
@@ -140,7 +141,7 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, List<Siftable>> i
         List<ItemStack> drops = new ArrayList<>();
 
         getDrops(new BlockInfo(block)).forEach(siftable -> {
-            if (meshLevel == siftable.getMeshLevel()) {
+            if (canSieve(siftable.getMeshLevel(), meshLevel)) {
                 int triesWithFortune = Math.max(random.nextInt(fortuneLevel + 2), 1);
 
                 for (int i = 0; i < triesWithFortune; i++) {
@@ -186,9 +187,9 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, List<Siftable>> i
                     final List<List<ItemStack>> inputs = new ArrayList<>();
                     inputs.add(Arrays.asList(new ItemStack(ModItems.mesh, 1, meshType.getID())));
                     inputs.add(Arrays.asList(ingredient.getMatchingStacks()));
-                    if (meshType.getID() != 0){
+                    if (meshType.isValid()){
                         final List<ItemStack> rawOutputs = getRegistry().get(ingredient).stream()
-                                .filter(reward -> reward.getMeshLevel() == meshType.getID())
+                                .filter(reward -> canSieve(reward.getMeshLevel(), meshType))
                                 .map(reward -> reward.getDrop().getItemStack())
                                 .collect(Collectors.toList());
                         final List<ItemStack> allOutputs = Lists.newArrayList();
@@ -215,5 +216,13 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, List<Siftable>> i
         }
 
         return sieveRecipes;
+    }
+
+    public static boolean canSieve(int dropLevel, BlockSieve.MeshType meshType){
+        return canSieve(dropLevel, meshType.getID());
+    }
+
+    public static boolean canSieve(int dropLevel, int meshLevel){
+        return ModConfig.sieve.flattenSieveRecipes ? meshLevel >= dropLevel : meshLevel == dropLevel;
     }
 }

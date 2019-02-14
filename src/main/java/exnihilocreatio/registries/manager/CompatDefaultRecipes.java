@@ -1,5 +1,7 @@
 package exnihilocreatio.registries.manager;
 
+import exnihilocreatio.ExNihiloCreatio;
+import exnihilocreatio.modules.IExNihiloCreatioModule;
 import exnihilocreatio.recipes.defaults.*;
 import exnihilocreatio.registries.registries.*;
 import net.minecraftforge.fml.common.Loader;
@@ -14,7 +16,6 @@ public class CompatDefaultRecipes {
         // TODO use config options to dynamically add mod support
         MODS.add(new ExNihilo()); // Not exactly a "cross" mod support ¯\_(ツ)_/¯
         MODS.add(new TinkersConstruct());
-        MODS.add(new AppliedEnergistics2());
         MODS.add(new IntegratedDynamics());
         MODS.add(new Mekanism());
         MODS.add(new BigReactors());
@@ -27,6 +28,10 @@ public class CompatDefaultRecipes {
         MODS.add(new ExtraBees());
         MODS.add(new MagicBees());
         MODS.add(new BinniesBotany());
+        for(IExNihiloCreatioModule module : ExNihiloCreatio.loadedModules){
+            if(module instanceof IRecipeDefaults)
+                MODS.add((IRecipeDefaults) module);
+        }
 
     }
 

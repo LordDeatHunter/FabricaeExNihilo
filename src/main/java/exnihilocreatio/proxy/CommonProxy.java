@@ -48,6 +48,9 @@ public abstract class CommonProxy {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void registerItemsLowest(RegistryEvent.Register<Item> event) {
         ModItems.registerItemsLowest(event.getRegistry());
+
+        for(IExNihiloCreatioModule module : ExNihiloCreatio.loadedModules)
+            module.registerOredicts();
     }
 
     @SubscribeEvent
