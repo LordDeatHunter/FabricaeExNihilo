@@ -103,6 +103,12 @@ public class ModConfig {
         public boolean setFireToMacroUsers = false;
         @Config.RangeInt(min = 1, max = 64)
         public int meshMaxStackSize = 16;
+        @Config.Comment({
+                "If enabled, all meshes can obtain the results from the lower tier meshes.",
+                "Note if the same item is registered in multiple tiers, then the higher tier",
+                "will have a chance to drop multiples."
+        })
+        public boolean flattenSieveRecipes = false;
         public static class Enchantments {
             @Config.Comment("Enable the Sieve Efficiency enchantment.")
             public boolean enableSieveEfficiency = true;
