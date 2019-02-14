@@ -20,6 +20,7 @@ import exnihilocreatio.compatibility.jei.hammer.HammerRecipe;
 import exnihilocreatio.compatibility.jei.hammer.HammerRecipeCategory;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipe;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipeCategory;
+import exnihilocreatio.modules.TinkersConstruct;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.util.ItemUtil;
 import exnihilocreatio.util.LogUtil;
@@ -28,6 +29,7 @@ import mezz.jei.api.ingredients.IModIngredientRegistration;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -36,9 +38,14 @@ import java.util.List;
 
 @JEIPlugin
 public class CompatJEI implements IModPlugin {
+    private ISubtypeRegistry.ISubtypeInterpreter interpreter = new IgnoreNBTandMetaInterpreter();
 
     @Override
     public void registerItemSubtypes(@Nonnull ISubtypeRegistry subtypeRegistry) {
+        if(Loader.isModLoaded("tconstruct")){
+            subtypeRegistry.registerSubtypeInterpreter(TinkersConstruct.SLEDGE_HAMMER, interpreter);
+            subtypeRegistry.registerSubtypeInterpreter(TinkersConstruct.TINKERS_CROOK, interpreter);
+        }
     }
 
     @Override
