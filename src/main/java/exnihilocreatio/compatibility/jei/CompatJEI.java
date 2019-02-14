@@ -45,9 +45,9 @@ public class CompatJEI implements IModPlugin {
     public void registerItemSubtypes(@Nonnull ISubtypeRegistry subtypeRegistry) {
         if(Loader.isModLoaded("tconstruct") && ModConfig.compatibility.tinkers_construct_compat.JEItinkersTools){
             if(ModConfig.compatibility.tinkers_construct_compat.addExNihiloHammer)
-                subtypeRegistry.registerSubtypeInterpreter(TinkersConstruct.SLEDGE_HAMMER, interpreter);
+                subtypeRegistry.registerSubtypeInterpreter(TinkersConstruct.getHammer(), interpreter);
             if(ModConfig.compatibility.tinkers_construct_compat.addExNihiloCrook)
-                subtypeRegistry.registerSubtypeInterpreter(TinkersConstruct.TINKERS_CROOK, interpreter);
+                subtypeRegistry.registerSubtypeInterpreter(TinkersConstruct.getCrook(), interpreter);
         }
     }
 
