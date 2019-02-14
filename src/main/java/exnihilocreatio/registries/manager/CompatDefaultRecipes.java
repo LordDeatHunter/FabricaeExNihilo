@@ -16,7 +16,6 @@ public class CompatDefaultRecipes {
         // TODO use config options to dynamically add mod support
         MODS.add(new ExNihilo()); // Not exactly a "cross" mod support ¯\_(ツ)_/¯
         MODS.add(new TinkersConstruct());
-        MODS.add(new AppliedEnergistics2());
         MODS.add(new IntegratedDynamics());
         MODS.add(new Mekanism());
         MODS.add(new BigReactors());
