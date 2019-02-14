@@ -20,6 +20,7 @@ import exnihilocreatio.compatibility.jei.hammer.HammerRecipe;
 import exnihilocreatio.compatibility.jei.hammer.HammerRecipeCategory;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipe;
 import exnihilocreatio.compatibility.jei.sieve.SieveRecipeCategory;
+import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.modules.TinkersConstruct;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.util.ItemUtil;
@@ -42,9 +43,11 @@ public class CompatJEI implements IModPlugin {
 
     @Override
     public void registerItemSubtypes(@Nonnull ISubtypeRegistry subtypeRegistry) {
-        if(Loader.isModLoaded("tconstruct")){
-            subtypeRegistry.registerSubtypeInterpreter(TinkersConstruct.SLEDGE_HAMMER, interpreter);
-            subtypeRegistry.registerSubtypeInterpreter(TinkersConstruct.TINKERS_CROOK, interpreter);
+        if(Loader.isModLoaded("tconstruct") && ModConfig.compatibility.tinkers_construct_compat.JEItinkersTools){
+            if(ModConfig.compatibility.tinkers_construct_compat.addExNihiloHammer)
+                subtypeRegistry.registerSubtypeInterpreter(TinkersConstruct.SLEDGE_HAMMER, interpreter);
+            if(ModConfig.compatibility.tinkers_construct_compat.addExNihiloCrook)
+                subtypeRegistry.registerSubtypeInterpreter(TinkersConstruct.TINKERS_CROOK, interpreter);
         }
     }
 

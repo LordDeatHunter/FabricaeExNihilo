@@ -68,7 +68,7 @@ public class ExNihiloCreatio {
             ExNihiloCreatio.loadedModules.add(new AppliedEnergistics2());
         if(Loader.isModLoaded("forestry"))
             ExNihiloCreatio.loadedModules.add(new Forestry());
-        if(Loader.isModLoaded("tconstruct"))
+        if(Loader.isModLoaded("tconstruct") && ModConfig.compatibility.tinkers_construct_compat.doTinkersConstructCompat)
             ExNihiloCreatio.loadedModules.add(new TinkersConstruct());
         if(Loader.isModLoaded("moofluids") ||
                 Loader.isModLoaded("minimoos") ||

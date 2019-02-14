@@ -291,10 +291,10 @@ public class ExNihilo implements IRecipeDefaults {
 
     @Override
     public void registerBarrelLiquidBlacklist(BarrelLiquidBlacklistRegistry registry) {
-        registry.register(ModBlocks.barrelWood.getTier(), "lava");
-        registry.register(ModBlocks.barrelWood.getTier(), "fire_water");
-        registry.register(ModBlocks.barrelWood.getTier(), "rocket_fuel");
-        registry.register(ModBlocks.barrelWood.getTier(), "pyrotheum");
+        for(Fluid fluid : FluidRegistry.getRegisteredFluids().values()){
+            if(fluid.getTemperature() >= ModConfig.mechanics.woodBarrelMaxTemp)
+                registry.register(ModBlocks.barrelWood.getTier(), fluid);
+        }
     }
 
     @Override

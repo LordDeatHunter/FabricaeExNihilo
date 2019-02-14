@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import exnihilocreatio.api.registries.IBarrelLiquidBlacklistRegistry;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
+import net.minecraftforge.fluids.Fluid;
 
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -32,6 +33,12 @@ public class BarrelLiquidBlacklistRegistry extends BaseRegistryMap<Integer, List
         List<String> list = registry.computeIfAbsent(level, k -> new ArrayList<>());
 
         list.add(fluid);
+    }
+
+    public void register(int level, Fluid fluid) {
+        List<String> list = registry.computeIfAbsent(level, k -> new ArrayList<>());
+
+        list.add(fluid.getName());
     }
 
     @Override

@@ -40,6 +40,11 @@ public class ModConfig {
         public boolean enableCrucible = true;
         public boolean shouldBarrelsFillWithRain = true;
         public boolean fakePlayersCanSieve = false;
+
+        @Config.Comment({"Default max fluid temp allowed in the barrel. Does nothing if JSON configs are used.",
+        "Set to a high number to disable any blacklisting. Water = 300, Lava = 1300"})
+        @Config.RangeInt(min=-1)
+        public int woodBarrelMaxTemp = 301;
     }
 
     public static class Composting {
@@ -160,6 +165,9 @@ public class ModConfig {
             @Config.Comment("Add a Ex Nihilo style crook to the tool station.")
             public boolean addExNihiloCrook = true;
 
+            @Config.Comment({"Let's you use the tinkers tools to look up JEI recipes, but causes",
+                    "two log errors when tinkers later tries to register their default subtype handler."})
+            public boolean JEItinkersTools = true;
         }
 
         public static class ForestryCompat {
