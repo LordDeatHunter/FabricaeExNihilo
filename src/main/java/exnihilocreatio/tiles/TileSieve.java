@@ -15,11 +15,13 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
@@ -136,6 +138,9 @@ public class TileSieve extends BaseTileEntity {
 
             int efficiency = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.EFFICIENCY, meshStack);
             efficiency += EnchantmentHelper.getEnchantmentLevel(Enchantments.EFFICIENCY, meshStack);
+            if(ModConfig.sieve.enchantments.hasteIncreasesSpeed && player.isPotionActive(MobEffects.HASTE)){
+                efficiency *= 1.0F + (float)(player.getActivePotionEffect(MobEffects.HASTE).getAmplifier() + 1) * 0.2F;
+            }
 
             int fortune = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.FORTUNE, meshStack);
             fortune += EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, meshStack);
@@ -164,8 +169,7 @@ public class TileSieve extends BaseTileEntity {
 
                 int fishToDrop = (int) Math.round(rand.nextGaussian() + (luckOfTheSea / 2.0));
 
-                fishToDrop = Math.min(fishToDrop, 0);
-                fishToDrop = Math.max(fishToDrop, luckOfTheSea);
+                fishToDrop = MathHelper.clamp(fishToDrop, 0, luckOfTheSea);
 
                 for (int i = 0; i < fishToDrop; i++) {
                     /*

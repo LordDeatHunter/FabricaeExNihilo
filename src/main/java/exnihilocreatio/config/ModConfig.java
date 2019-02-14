@@ -110,6 +110,8 @@ public class ModConfig {
         })
         public boolean flattenSieveRecipes = false;
         public static class Enchantments {
+            @Config.Comment("If enabled haste beacons will increase the speed at which sieves function.")
+            public boolean hasteIncreasesSpeed = true;
             @Config.Comment("Enable the Sieve Efficiency enchantment.")
             public boolean enableSieveEfficiency = true;
             @Config.RangeInt(min = 1)
