@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.HammerReward;
+import exnihilocreatio.util.ItemUtil;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IDrawableStatic;
@@ -116,7 +117,7 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
 
                 List<HammerReward> allRewards = ExNihiloRegistryManager.HAMMER_REGISTRY.getRewards(block);
 
-                allRewards.removeIf(reward -> !reward.getStack().getItem().equals(ingredient.getItem()) || reward.getStack().getMetadata() != ingredient.getMetadata());
+                allRewards.removeIf(reward -> !ItemUtil.areStacksEquivalent(reward.getStack(), ingredient));
 
                 // Level, Outputs
                 Map<Integer, List<HammerReward>> tieredOutputs = Maps.newHashMap();

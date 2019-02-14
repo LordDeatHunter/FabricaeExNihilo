@@ -32,7 +32,7 @@ public class ItemStackItemHandler implements IItemHandler {
         if(slot != 0)
             return stack.copy();
         ItemStack returnStack = stack.copy();
-        if(ItemStack.areItemStacksEqual(wrappedStack, returnStack) && wrappedStack.isStackable()){
+        if(ItemUtil.areStacksEquivalent(wrappedStack, returnStack) && wrappedStack.isStackable()){
             int toAdd = Math.min(returnStack.getCount(), wrappedStack.getMaxStackSize() - wrappedStack.getCount());
             if(!simulate)
                 wrappedStack.grow(toAdd);

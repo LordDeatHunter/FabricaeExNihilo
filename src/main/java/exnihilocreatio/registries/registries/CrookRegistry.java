@@ -13,6 +13,7 @@ import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.registries.types.CrookReward;
 import exnihilocreatio.util.BlockInfo;
+import exnihilocreatio.util.ItemUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -138,17 +139,29 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, List<CrookReward>
 
     @Override
     public List<CrookRecipe> getRecipeList() {
-        List<CrookRecipe> hammerRecipes = Lists.newLinkedList();
+        List<CrookRecipe> recipes = Lists.newLinkedList();
         for(Ingredient ingredient : getRegistry().keySet()){
             if(ingredient == null)
                 continue;
-            List<ItemStack> allOutputs = getRewards(ingredient).stream().map(reward -> reward.getStack()).collect(Collectors.toList());
+            List<ItemStack> rawOutputs = getRewards(ingredient).stream().map(reward -> reward.getStack()).collect(Collectors.toList());
+            List<ItemStack> allOutputs = new ArrayList<>();
+            for(ItemStack raw : rawOutputs){
+                boolean alreadyexists = false;
+                for(ItemStack all : allOutputs){
+                    if(ItemUtil.areStacksEquivalent(all, raw)){
+                        alreadyexists = true;
+                        break;
+                    }
+                }
+                if(!alreadyexists)
+                    allOutputs.add(raw);
+            }
             List<ItemStack> inputs = Arrays.asList(ingredient.getMatchingStacks());
             for(int i = 0; i < allOutputs.size(); i+=7){
-                List<ItemStack> outputs = allOutputs.subList(i, Math.min(i+7, allOutputs.size()));
-                hammerRecipes.add(new CrookRecipe(inputs, outputs));
+                final List<ItemStack> outputs = allOutputs.subList(i, Math.min(i+7, allOutputs.size()));
+                recipes.add(new CrookRecipe(inputs, outputs));
             }
         }
-        return hammerRecipes;
+        return recipes;
     }
 }

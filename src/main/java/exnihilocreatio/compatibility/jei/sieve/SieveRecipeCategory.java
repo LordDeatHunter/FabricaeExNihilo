@@ -5,6 +5,7 @@ import com.google.common.collect.Multiset;
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.Siftable;
+import exnihilocreatio.util.ItemUtil;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IDrawableStatic;
@@ -99,7 +100,7 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
                         if (!ExNihiloRegistryManager.SIEVE_REGISTRY.canSieve(siftable.getMeshLevel(), mesh.getItemDamage()))
                             continue;
                         ItemStack sifted = siftable.getDrop().getItemStack();
-                        if(!ItemStack.areItemsEqual(sifted, ingredient) || !ItemStack.areItemStackTagsEqual(sifted, ingredient))
+                        if(!ItemUtil.areStacksEquivalent(sifted, ingredient))
                             continue;
 
                         String s;

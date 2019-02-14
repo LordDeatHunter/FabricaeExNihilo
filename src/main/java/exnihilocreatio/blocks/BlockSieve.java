@@ -237,6 +237,10 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPIn
             this.name = name;
         }
 
+        public boolean isValid(){
+            return id > 0 && id < 5;
+        }
+
         public static MeshType getMeshTypeByID(int meta) {
             switch (meta) {
                 case 1:

@@ -187,7 +187,7 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, List<Siftable>> i
                     final List<List<ItemStack>> inputs = new ArrayList<>();
                     inputs.add(Arrays.asList(new ItemStack(ModItems.mesh, 1, meshType.getID())));
                     inputs.add(Arrays.asList(ingredient.getMatchingStacks()));
-                    if (meshType.getID() != 0){
+                    if (meshType.isValid()){
                         final List<ItemStack> rawOutputs = getRegistry().get(ingredient).stream()
                                 .filter(reward -> canSieve(reward.getMeshLevel(), meshType))
                                 .map(reward -> reward.getDrop().getItemStack())
