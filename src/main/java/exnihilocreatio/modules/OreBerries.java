@@ -48,10 +48,10 @@ public class OreBerries implements IExNihiloCreatioModule, IRecipeDefaults {
         proxy.init(event);
     }
 
-    @SideOnly(Side.CLIENT)
     public static class Proxy {
         public void init(FMLInitializationEvent event){}
     }
+    @SideOnly(Side.CLIENT)
     public static class ProxyClient extends Proxy{
         @Override
         public void init(FMLInitializationEvent event){
