@@ -117,14 +117,16 @@ public class MessageCompostUpdate implements IMessage {
 
                     if (entity instanceof TileBarrel) {
                         TileBarrel te = (TileBarrel) entity;
+                        if(te.getMode() == null || !(te.getMode() instanceof BarrelModeCompost))
+                            te.setMode("compost");
                         BarrelModeCompost mode = (BarrelModeCompost) te.getMode();
                         mode.setFillAmount(msg.fillAmount);
 
-                        if (msg.stack.isEmpty() && msg.compValue == 0.0f){
+                        if (msg.stack.isEmpty() && msg.compValue == 0.0f && mode.getOriginalColor() != null){
                             // Progress is being made
                             mode.setColor(Color.average(mode.getOriginalColor(), whiteColor, msg.progress));
                         } else {
-                            // A new item is getting added
+                            // A new item is getting added or the Color has been desynced.
                             Color compColor = msg.color;
                             // Dynamic color on invalid_color
                             if (compColor.equals(Color.INVALID_COLOR) && !msg.stack.isEmpty()) {

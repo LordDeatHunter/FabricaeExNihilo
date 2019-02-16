@@ -48,5 +48,5 @@ fun isHammer(item: Item): Boolean {
  * Compares Items, Damage, and NBT
  */
 fun areStacksEquivalent(left: ItemStack, right: ItemStack) : Boolean{
-    return ItemStack.areItemStacksEqual(left, right) && ItemStack.areItemStackTagsEqual(left, right)
+    return ItemStack.areItemsEqual(right, left) && ItemStack.areItemStackTagsEqual(left, right)
 }

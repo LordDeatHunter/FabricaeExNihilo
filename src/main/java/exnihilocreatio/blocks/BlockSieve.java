@@ -28,6 +28,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import p455w0rd.danknull.util.DankNullUtils;
@@ -80,10 +81,14 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPIn
             cap = new ItemStackItemHandler(heldItem);
 
         int slot = 0;
-        if(ModConfig.compatibility.dankNullIntegration && DankNullUtils.isDankNull(heldItem)){
+        int maxSlot = cap.getSlots();
+        if(Loader.isModLoaded("danknull") &&
+                ModConfig.compatibility.dankNullIntegration &&
+                DankNullUtils.isDankNull(heldItem)){
             slot = DankNullUtils.getSelectedStackIndex(DankNullUtils.getInventoryFromHeld(player));
+            maxSlot = slot + 1;
         }
-        while(slot < cap.getSlots() + 1){
+        for(;slot < maxSlot; slot++){
             ItemStack stack = cap.getStackInSlot(slot);
             if(!stack.isEmpty() && stack.getItem() instanceof ItemMesh){
                 // Adding a mesh
@@ -113,10 +118,6 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPIn
                 }
                 return true;
             }
-            if(ModConfig.compatibility.dankNullIntegration && DankNullUtils.isDankNull(heldItem)){
-                break; // Dank Nulls should only operate on their single stack
-            }
-            slot++;
         }
 
         List<BlockPos> toSift = new ArrayList<>();
