@@ -70,11 +70,12 @@ public class BarrelModeMobSpawn implements IBarrelMode {
     @Override
     @SideOnly(Side.CLIENT)
     public TextureAtlasSprite getTextureForRender(TileBarrel barrel) {
-        if (dollStack == null)
+        if (dollStack == null || dollStack.isEmpty())
             return null;
 
         ItemDoll doll = (ItemDoll) dollStack.getItem();
-        return Util.getTextureFromBlockState(doll.getSpawnFluid(dollStack).getBlock().getDefaultState());
+
+        return Util.getTextureFromFluid(doll.getSpawnFluid(dollStack));
     }
 
     @Override
