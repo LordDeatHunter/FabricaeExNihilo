@@ -105,6 +105,13 @@ public class Util {
         return Minecraft.getMinecraft().getTextureMapBlocks().getMissingSprite();
     }
 
+    @SideOnly(Side.CLIENT)
+    public static TextureAtlasSprite getTextureFromFluid(@Nonnull Fluid fluid) {
+        if (fluid.getStill() != null)
+            return Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(fluid.getStill().toString());
+        return Minecraft.getMinecraft().getTextureMapBlocks().getMissingSprite();
+    }
+
     public static boolean isSurroundingBlocksAtLeastOneOf(BlockInfo[] blocks, BlockPos pos, World world, int radius) {
         ArrayList<BlockInfo> blockList = new ArrayList<>(Arrays.asList(blocks));
         for (int xShift = -1 * radius; xShift <= radius; xShift++) {
