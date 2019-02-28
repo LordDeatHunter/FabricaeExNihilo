@@ -1,0 +1,129 @@
+item.hammer_wood.name=Деревянный молот
+item.hammer_stone.name=Каменный молот
+item.hammer_iron.name=Железный молот
+item.hammer_gold.name=Золотой молот
+item.hammer_diamond.name=Алмазный молот
+item.exnihilocreatio.hammer_tconstruct.name=Кувалда
+item.exnihilocreatio.hammer_tconstruct.desc=Дробите свои блоки, как врагов. Выполняет дробление Ex Nihilo.
+item.exnihilocreatio.crook_tconstruct.name=Крюк
+item.exnihilocreatio.crook_tconstruct.desc=Кого ты называешь мошенником? Работает как крюк Ex Nihilo.
+
+item.crook_wood.name=Деревянный крюк
+item.crook_bone.name=Костяной крюк
+
+item.item_pebble.stone.name=Каменная галька
+item.item_pebble.granite.name=Гранитная галька
+item.item_pebble.diorite.name=Диоритовая галька
+item.item_pebble.andesite.name=Андезитовая галька
+
+item.item_material.removed.name=Удалено из мода
+item.item_material.porcelain_clay.name=Фарфоровая глина
+item.item_material.silkworm.name=Шелкопряд
+item.item_material.grass_seeds.name=Травяные семена
+item.item_material.ancient_spores.name=Древние споры
+item.item_material.doll.name=Фарфоровая кукла
+item.item_material.rod_stone.name=Каменная палка
+item.item_material.gear_stone.name=Каменная шестерня
+
+item.item_doll.blaze.name=Кукла ифрита
+item.item_doll.blaze.desc=Положите в бочку с лавой, что бы создать ифрита
+item.item_doll.enderman.name=Кукла эндермена
+item.item_doll.enderman.desc=Положите в бочку с ведьминой водой, что бы создать эндермена
+item.item_doll.shulker.name=Кукла шалкера
+item.item_doll.shulker.desc=Положите в бочку с ведьминой водой, что бы создать шалкера
+item.item_doll.guardian.name=Кукла стража
+item.item_doll.guardian.desc=Положите в бочку с водой, что бы создать стража
+item.item_doll.blizz.name=Морозная кукла
+item.item_doll.blizz.desc=Положите в бочку с пиротеумом, что бы создать близза
+item.item_doll.blitz.name=Ветренная кукла
+item.item_doll.blitz.desc=Положите в бочку с пиротеумом, что бы создать блитца
+item.item_doll.basalz.name=Дробильная кукла
+item.item_doll.basalz.desc=Положите в бочку с пиротеумом, что бы создать базальца
+item.item_doll.blueslime.name=Сочащаяся кукла
+item.item_doll.blueslime.desc=Положите в бочку с молоком, что бы создать синего слизня
+
+#Это будет выглядеть как '!!!{modid} не установлен, итем не будет использоваться!!!'
+debug.mod_not_installed.desc=!!!%s не установлен, итем не будет использоваться!!!
+
+item.item_cooked_silkworm.name=Приготовленный шелкопряд
+
+item.item_seed_birch.name=Семена березы
+item.item_seed_oak.name=Семена дуба
+item.item_seed_jungle.name=Семена тропического дерева
+item.item_seed_acacia.name=Семена акации
+item.item_seed_spruce.name=Семена ели
+item.item_seed_carrot.name=Семена моркови
+item.item_seed_potato.name=Семена картофеля
+item.item_seed_sugarcane.name=Семена сахарного тростника
+item.item_seed_cactus.name=Семена кактуса
+item.item_seed_darkoak.name=Семена темного дуба
+item.item_seed_rubber.name=Семя каучукового дерева
+# Получается в сочетании с именем в JSON OreBerry
+item.exnihilocreatio.oreberry_seed.name=Семя полыни
+# Отдельные ягоды душицы могут иметь свои собственные переводы. Это значения по умолчанию.
+item.exnihilocreatio.oreberry_seed.iron.name=Семя черноплодной рябины
+item.exnihilocreatio.oreberry_seed.gold.name=Семена ягодной руды
+item.exnihilocreatio.oreberry_seed.copper.name=Медное семя
+item.exnihilocreatio.oreberry_seed.tin.name=Семя оловянного ореха
+item.exnihilocreatio.oreberry_seed.aluminum.name=Алюминиевое семя ягодной руды
+item.exnihilocreatio.oreberry_seed.aluminium.name=Алюминиевое семя ягодной руды
+
+tile.block_dust.name=Пыль
+tile.block_netherrack_crushed.name=Измельченный камень нижнего мира
+tile.block_endstone_crushed.name=Измельченный камень края
+tile.block_skystone_crushed.name=Измельченный небесный камень
+tile.block_diorite_crushed.name=Измельченный диорит
+tile.block_andesite_crushed.name=Измельченный андезит
+tile.block_granite_crushed.name=Измельченный гранит
+
+tile.block_barrel0.name=Деревянная бочка
+tile.block_barrel1.name=Каменная бочка
+
+tile.block_crucible.0.name=Необожженный тигель
+tile.block_crucible.1.name=Тигель
+tile.block_crucible_wood.name=Деревянный тигель
+
+tile.block_infested_leaves.name=Зараженные листья
+tile.block_infesting_leaves.name=Зараженные листья
+
+tile.block_auto_sifter.name=Автофильтр
+tile.block_axle_stone.name=Каменный вал
+tile.block_grinder.name=Гриндер [WIP! Ничего не делает!]
+tile.block_waterwheel.name=Водяное колесо
+
+tile.block_end_cake.name=Пирог края
+tile.exnihilocreatio.hive.artificial_hive.name=Искусственный улей
+tile.exnihilocreatio.hive.scented_hive.name=Душистый улей
+
+tile.block_sieve.name=Сито
+item.item_mesh.1.name=Тканная сетка
+item.item_mesh.2.name=Сетка усиленная кремнием
+item.item_mesh.3.name=Сетка усиленная железом
+item.item_mesh.4.name=Сетка усиленная алмазом
+
+orepiece.name=мелкий кусочек руды
+orechunk.name=кусок руды
+oredust.name=порошок руды
+oreingot.name=слиток
+
+fluid.witchwater=Ведьмина вода
+
+jei.sieve.dropChance=Шанс дропа
+
+jei.hammer.hammerLevel=Уровень молота
+jei.hammer.hammerLevel.0=Деревянный
+jei.hammer.hammerLevel.1=Каменный
+jei.hammer.hammerLevel.2=Железный
+jei.hammer.hammerLevel.3=Алмазный
+jei.hammer.hammerLevel.4=Уровень Бога
+
+commands.enreloadconfig.confirm=Ex Nihilo конфиг перезагружен
+
+itemGroup.exNihilo=Ex Nihilo Creatio
+
+modifier.exnihilo_smashing.name=Сокрушение
+modifier.exnihilo_smashing.desc=§rSmashing baby, yeaaah!\n§rРазбивает вещи на более мелкие вещи
+
+enchantment.sieve_efficiency=Эффективность сита
+enchantment.sieve_fortune=Фортуна сита
+enchantment.sieve_luck_of_the_sea=Морская удача сита
