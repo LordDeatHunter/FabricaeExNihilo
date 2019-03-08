@@ -1,6 +1,7 @@
 package exnihilocreatio.config;
 
 import exnihilocreatio.ExNihiloCreatio;
+import exnihilocreatio.items.tools.CrookBase;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -77,6 +78,29 @@ public class ModConfig {
         public int numberOfTimesToTestVanillaDrops = 3;
         @Config.Comment("Disable the ExNihilo Crooks, useful if another mod adds compatible crooks.")
         public boolean disableCrookCrafting = Loader.isModLoaded("inspirations");
+
+        @Config.Comment("Default crook durability.")
+        public int durabilityWood = 64;
+        @Config.Comment("Default crook durability.")
+        public int durabilityBone = 256;
+        @Config.Comment("Default crook durability.")
+        public int durabilityStone = 128;
+        @Config.Comment("Default crook durability.")
+        public int durabilityAndesite = 128;
+        @Config.Comment("Default crook durability.")
+        public int durabilityGranite = 128;
+        @Config.Comment("Default crook durability.")
+        public int durabilityDiorite = 128;
+        @Config.Comment("Default crook durability.")
+        public int durabilityClayUncooked = 1;
+        @Config.Comment("Default crook durability.")
+        public int durabilityClay = 256;
+        @Config.Comment("Default crook durability.")
+        public int durabilityPrismarine = 512;
+        @Config.Comment("Default crook durability.")
+        public int durabilityPurpur = 512;
+        @Config.Comment("Default crook durability.")
+        public int durabilityBlaze = 1024;
     }
 
     public static class Misc {

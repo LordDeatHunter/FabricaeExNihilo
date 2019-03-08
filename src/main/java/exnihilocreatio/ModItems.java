@@ -40,8 +40,17 @@ public class ModItems {
     public static final HammerBase hammerDiamond = new HammerBase("hammer_diamond", 4096, Item.ToolMaterial.DIAMOND);
     public static final HammerBase hammerGold = new HammerBase("hammer_gold", 64, Item.ToolMaterial.GOLD);
 
-    public static final CrookBase crookWood = new CrookBase("crook_wood", 64,0);
-    public static final CrookBase crookBone = new CrookBase("crook_bone", 256, 1);
+    public static final CrookBase crookWood = new CrookBase("crook_wood", ModConfig.crooking.durabilityWood,0);
+    public static final CrookBase crookBone = new CrookBase("crook_bone", ModConfig.crooking.durabilityBone, 1);
+    public static final CrookBase crookStone = new CrookBase("crook_stone", ModConfig.crooking.durabilityStone, 1);
+    public static final CrookBase crookAndesite = new CrookBase("crook_andesite", ModConfig.crooking.durabilityAndesite, 1);
+    public static final CrookBase crookGranite = new CrookBase("crook_granite", ModConfig.crooking.durabilityGranite, 1);
+    public static final CrookBase crookDiorite = new CrookBase("crook_diorite", ModConfig.crooking.durabilityDiorite, 1);
+    public static final CrookBase crookClayUncooked = new CrookBase("crook_clay_uncooked", ModConfig.crooking.durabilityClayUncooked, 0);
+    public static final CrookBase crookClay = new CrookBase("crook_clay", ModConfig.crooking.durabilityClay, 2);
+    public static final CrookBase crookPrismarine = new CrookBase("crook_prismarine", ModConfig.crooking.durabilityPrismarine, 2);
+    public static final CrookBase crookPurpur = new CrookBase("crook_purpur", ModConfig.crooking.durabilityPurpur, 3);
+    public static final CrookBase crookBlaze = (CrookBase) (new CrookBase("crook_blaze", ModConfig.crooking.durabilityBlaze, 3)).setMaxDamage(3);
 
     public static final ItemMesh mesh = new ItemMesh();
 

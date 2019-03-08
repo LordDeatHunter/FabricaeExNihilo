@@ -1,6 +1,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "exnihilocreatio:items/crookbone"
+    "layer0": "exnihilocreatio:items/tools/crook/crook_bone"
   }
 }
