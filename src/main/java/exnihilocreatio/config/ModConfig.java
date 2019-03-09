@@ -1,13 +1,16 @@
 package exnihilocreatio.config;
 
 import exnihilocreatio.ExNihiloCreatio;
-import exnihilocreatio.items.tools.CrookBase;
+import exnihilocreatio.items.tools.EnumCrook;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Config(modid = ExNihiloCreatio.MODID, name = "exnihilocreatio/ExNihiloCreatio", category = "exnihilocreatio")
 public class ModConfig {
@@ -68,6 +71,15 @@ public class ModConfig {
     }
 
     public static class Crooking {
+        @Config.Comment("Durability for each of the default crooks.")
+        public Map<String, Integer> durability = new HashMap<String, Integer>();
+
+        Crooking(){
+            for(EnumCrook crook : EnumCrook.values()) {
+                durability.put(crook.getRegistryName(), crook.getDefaultDurability());
+            }
+        }
+
         @Config.RangeDouble(min=0.0, max=1.0)
         public double stringChance = 1.0;
         @Config.RangeInt(min = 0)
@@ -78,29 +90,6 @@ public class ModConfig {
         public int numberOfTimesToTestVanillaDrops = 3;
         @Config.Comment("Disable the ExNihilo Crooks, useful if another mod adds compatible crooks.")
         public boolean disableCrookCrafting = Loader.isModLoaded("inspirations");
-
-        @Config.Comment("Default crook durability.")
-        public int durabilityWood = 64;
-        @Config.Comment("Default crook durability.")
-        public int durabilityBone = 256;
-        @Config.Comment("Default crook durability.")
-        public int durabilityStone = 128;
-        @Config.Comment("Default crook durability.")
-        public int durabilityAndesite = 128;
-        @Config.Comment("Default crook durability.")
-        public int durabilityGranite = 128;
-        @Config.Comment("Default crook durability.")
-        public int durabilityDiorite = 128;
-        @Config.Comment("Default crook durability.")
-        public int durabilityClayUncooked = 1;
-        @Config.Comment("Default crook durability.")
-        public int durabilityClay = 256;
-        @Config.Comment("Default crook durability.")
-        public int durabilityPrismarine = 512;
-        @Config.Comment("Default crook durability.")
-        public int durabilityPurpur = 512;
-        @Config.Comment("Default crook durability.")
-        public int durabilityBlaze = 1024;
     }
 
     public static class Misc {

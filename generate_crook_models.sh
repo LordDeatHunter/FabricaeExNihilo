@@ -8,7 +8,7 @@ for i in ${texture_dir}/crook_*.png; do
     echo $i
     asset=`basename $i .png`
     model=${models_dir}/${asset}.json
-    touch model
+    touch $model
     cat > $model << EOL
 {
   "parent": "item/handheld",

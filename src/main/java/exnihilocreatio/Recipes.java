@@ -2,6 +2,8 @@ package exnihilocreatio;
 
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.ItemResource;
+import exnihilocreatio.items.tools.EnumCrook;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 
@@ -14,9 +16,11 @@ public class Recipes {
             // TODO: see above
             FurnaceRecipes.instance().addSmeltingRecipe(new ItemStack(ModBlocks.crucibleStone, 1, 0), new ItemStack(ModBlocks.crucibleStone, 1, 1), 0.7f);
         }
-        if(!ModConfig.crooking.disableCrookCrafting)
-            FurnaceRecipes.instance().addSmeltingRecipe(new ItemStack(ModItems.crookClayUncooked, 1), new ItemStack(ModItems.crookClay, 1), 0.7f);
-
+        if(!ModConfig.crooking.disableCrookCrafting) {
+            final Item clay = Item.getByNameOrId("exnihilocreatio:"+EnumCrook.CLAY.getRegistryName());
+            final Item clay_uncooked = Item.getByNameOrId("exnihilocreatio:"+EnumCrook.CLAY_UNCOOKED.getRegistryName());
+            FurnaceRecipes.instance().addSmeltingRecipe(new ItemStack(clay_uncooked, 1), new ItemStack(clay, 1), 0.7f);
+        }
         FurnaceRecipes.instance().addSmeltingRecipe(ItemResource.getResourceStack("silkworm"), new ItemStack(ModItems.cookedSilkworm), 0.7f);
     }
 }

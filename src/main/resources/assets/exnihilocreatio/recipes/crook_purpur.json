@@ -8,5 +8,5 @@
     " x"
   ],
   "type": "minecraft:crafting_shaped",
-  "key": {"x": {"item": "minecraft:popped_chorus", "data": 0}}
+  "key": {"x": {"item": "minecraft:chorus_fruit_popped", "data": 0}}
 }

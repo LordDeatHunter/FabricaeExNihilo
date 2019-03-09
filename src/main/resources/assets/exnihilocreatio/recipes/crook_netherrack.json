@@ -1,0 +1,12 @@
+{
+  "result": {
+    "item": "exnihilocreatio:crook_netherrack"
+  },
+  "pattern": [
+    "xx",
+    " x",
+    " x"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {"x": {"item": "minecraft:netherrack", "data": 0}}
+}
