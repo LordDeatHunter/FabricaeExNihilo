@@ -40,7 +40,7 @@ public class RenderBarrel extends FastTESR<TileBarrel> {
     }
 
     private void addSpriteColor(TileBarrel te, SpriteColor sprite, BufferBuilder buffer, float fill) {
-        if (sprite == null) return;
+        if (sprite == null || fill <= 0f) return;
 
         final BlockPos pos = te.getPos();
         // Light levels
