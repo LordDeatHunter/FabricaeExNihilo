@@ -4,14 +4,12 @@ import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.compatibility.ITOPInfoProvider;
 import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.items.ItemMesh;
-import exnihilocreatio.tiles.TileAutoSifter;
 import exnihilocreatio.tiles.TileSieve;
 import exnihilocreatio.util.ItemStackItemHandler;
 import exnihilocreatio.util.Util;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
-import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -40,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("deprecation")
 public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPInfoProvider {
 
     public static final PropertyEnum<MeshType> MESH = PropertyEnum.create("mesh", MeshType.class);
@@ -108,7 +107,7 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPIn
                         if(cap.getStackInSlot(slot).isEmpty())
                             continue; // No more items
                         TileEntity otherTE = world.getTileEntity(pos.add(dx, 0, dz));
-                        if(otherTE == null || !(otherTE instanceof TileSieve))
+                        if(!(otherTE instanceof TileSieve))
                             continue; // Not a sieve
                         TileSieve sieve = (TileSieve) otherTE;
                         if(!te.isSieveSimilarToInput(sieve))
@@ -126,7 +125,7 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPIn
         for (int xOffset = -1 * ModConfig.sieve.sieveSimilarRadius; xOffset <= ModConfig.sieve.sieveSimilarRadius; xOffset++) {
             for (int zOffset = -1 * ModConfig.sieve.sieveSimilarRadius; zOffset <= ModConfig.sieve.sieveSimilarRadius; zOffset++) {
                 TileEntity entity = world.getTileEntity(pos.add(xOffset, 0, zOffset));
-                if (entity != null && entity instanceof TileSieve) {
+                if (entity instanceof TileSieve) {
                     TileSieve sieve = (TileSieve) entity;
 
                     if (te.isSieveSimilar(sieve))

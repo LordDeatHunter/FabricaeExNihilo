@@ -4,7 +4,6 @@ import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.rotationalPower.CapabilityRotationalMember;
 import exnihilocreatio.rotationalPower.IRotationalPowerConsumer;
 import exnihilocreatio.util.BlockInfo;
-import exnihilocreatio.util.LogUtil;
 import exnihilocreatio.util.Util;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.nbt.NBTTagCompound;
@@ -30,7 +29,7 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
     public final ItemHandlerAutoSifter itemHandlerAutoSifter;
     public TileSieve[][] toSift = null;
     public EnumFacing facing = EnumFacing.NORTH;
-    public int tickCounter = 0;
+    private int tickCounter = 0;
     public float rotationValue = 0;
     public float perTickRotation = 0;
     public float storedRotationalPower = 0;
@@ -80,7 +79,7 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
         }
     }
 
-    public void updateToSift() {
+    private void updateToSift() {
         BlockPos posOther = pos.up();
         TileEntity te = world.getTileEntity(posOther);
 

@@ -9,7 +9,7 @@ import exnihilocreatio.recipes.defaults.IRecipeDefaults;
 import exnihilocreatio.registries.registries.SieveRegistry;
 import exnihilocreatio.util.ItemInfo;
 import josephcsible.oreberries.BlockOreberryBush;
-import josephcsible.oreberries.OreberriesMod;
+import josephcsible.oreberries.proxy.CommonProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OreBerries implements IExNihiloCreatioModule, IRecipeDefaults {
-    public static final List<ItemOreBerrySeed> oreberryseeds = new ArrayList<>();
+    private static final List<ItemOreBerrySeed> oreberryseeds = new ArrayList<>();
 
     @SidedProxy(serverSide = "exnihilocreatio.modules.OreBerries$Proxy", clientSide = "exnihilocreatio.modules.OreBerries$ProxyClient")
     public static Proxy proxy;
@@ -39,7 +39,7 @@ public class OreBerries implements IExNihiloCreatioModule, IRecipeDefaults {
     @Override
     public void preInit(FMLPreInitializationEvent event){
         // Initialize all the seeds
-        for(BlockOreberryBush bush : OreberriesMod.proxy.oreberryBushBlocks){
+        for(BlockOreberryBush bush : CommonProxy.oreberryBushBlocks){
             oreberryseeds.add(new ItemOreBerrySeed(bush));
         }
     }
