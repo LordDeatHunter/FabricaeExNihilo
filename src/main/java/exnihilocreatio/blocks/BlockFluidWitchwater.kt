@@ -8,9 +8,7 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.entity.monster.*
-import net.minecraft.entity.passive.EntityAnimal
-import net.minecraft.entity.passive.EntitySquid
-import net.minecraft.entity.passive.EntityVillager
+import net.minecraft.entity.passive.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.MobEffects
 import net.minecraft.potion.PotionEffect
@@ -45,6 +43,10 @@ class BlockFluidWitchwater : BlockFluidClassic(ModFluids.fluidWitchwater, Materi
                 }
             }
 
+            is EntitySlime ->
+                if (entity !is EntityMagmaCube)
+                    replaceMob(world, entity, EntityMagmaCube(world))
+
             is EntitySpider ->
                 if (entity !is EntityCaveSpider)
                     replaceMob(world, entity, EntityCaveSpider(world))
@@ -65,9 +67,12 @@ class BlockFluidWitchwater : BlockFluidClassic(ModFluids.fluidWitchwater, Materi
                 replaceMob(world, entity, spawnEntity)
             }
 
+            is EntityCow ->
+                if (entity !is EntityMooshroom)
+                    replaceMob(world, entity, EntityMooshroom(world))
+
             is EntityAnimal ->
                 entity.onStruckByLightning(EntityLightningBolt(world, entity.posX, entity.posY, entity.posZ, true))
-
 
             is EntityPlayer -> {
                 entity.addPotionEffect(PotionEffect(MobEffects.BLINDNESS, 210, 0))
@@ -82,7 +87,7 @@ class BlockFluidWitchwater : BlockFluidClassic(ModFluids.fluidWitchwater, Materi
     private fun replaceMob(world: World, toKill: EntityLivingBase, toSpawn: EntityLivingBase) {
         toSpawn.setLocationAndAngles(toKill.posX, toKill.posY, toKill.posZ, toKill.rotationYaw, toKill.rotationPitch)
         toSpawn.renderYawOffset = toKill.renderYawOffset
-        toSpawn.health = toSpawn.maxHealth
+        toSpawn.health = toSpawn.maxHealth * toKill.health / toKill.maxHealth
 
         toKill.setDead()
         world.spawnEntity(toSpawn)
