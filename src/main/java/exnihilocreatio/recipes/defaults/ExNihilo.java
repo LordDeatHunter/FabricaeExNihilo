@@ -354,6 +354,11 @@ public class ExNihilo implements IRecipeDefaults {
             registry.register(FluidRegistry.getFluid("milk"), new ItemInfo(new ItemStack(Blocks.BROWN_MUSHROOM)), new ItemInfo(new ItemStack(Blocks.SLIME_BLOCK)), "Slime");
             registry.register(FluidRegistry.getFluid("milk"), new ItemInfo(new ItemStack(Blocks.RED_MUSHROOM)), new ItemInfo(new ItemStack(Blocks.SLIME_BLOCK)), "Slime");
         }
+        else {
+            // No milk, fall back to witch water
+            registry.register(ModFluids.fluidWitchwater, new ItemInfo(new ItemStack(Blocks.BROWN_MUSHROOM)), new ItemInfo(new ItemStack(Blocks.SLIME_BLOCK)), "Slime");
+            registry.register(ModFluids.fluidWitchwater, new ItemInfo(new ItemStack(Blocks.RED_MUSHROOM)), new ItemInfo(new ItemStack(Blocks.SLIME_BLOCK)), "Slime");
+        }
 
         // Vanilla Concrete
         for (int meta = 0; meta < 16; meta++)
