@@ -4,6 +4,7 @@ import exnihilocreatio.config.ModConfig;
 import exnihilocreatio.rotationalPower.CapabilityRotationalMember;
 import exnihilocreatio.rotationalPower.IRotationalPowerConsumer;
 import exnihilocreatio.util.BlockInfo;
+import exnihilocreatio.util.LogUtil;
 import exnihilocreatio.util.Util;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,7 +21,9 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import javax.annotation.Nonnull;
 import javax.vecmath.Point3f;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotationalPowerConsumer {
     public final List<Tuple<Point3f, EnumFacing.Axis>> connectionPieces = new ArrayList<>();
@@ -35,8 +38,6 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
     public float offsetY = 0;
     public float offsetZ = 0;
 
-    private int rotatationSpeed = 10;
-
     public TileAutoSifter() {
         itemHandlerAutoSifter = new ItemHandlerAutoSifter();
         itemHandlerAutoSifter.setTe(this);
@@ -46,6 +47,7 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
     public void update() {
         tickCounter++;
 
+        int rotatationSpeed = 10;
         if (world.isRemote && perTickRotation != 0) {
             offsetX = ModConfig.client.clientAutoSieveDisplacement * (float) Math.cos(tickCounter * 2f * Math.PI / rotatationSpeed);
             offsetZ = ModConfig.client.clientAutoSieveDisplacement * (float) Math.sin(tickCounter * 2f * Math.PI / rotatationSpeed);
@@ -54,14 +56,8 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
         if (tickCounter > 0 && tickCounter % rotatationSpeed == 0) {
             perTickRotation = calcEffectivePerTickRotation(world, pos, facing);
 
-            BlockPos posOther = pos.up();
-            TileEntity te = world.getTileEntity(posOther);
+            updateToSift();
 
-            if (te != null && te instanceof TileSieve) {
-                toSift = collectPossibleSieves((TileSieve) te);
-            } else {
-                toSift = null;
-            }
             tickCounter = 0;
         }
 
@@ -82,6 +78,16 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
                 calculateConnectionPieces();
             }
         }
+    }
+
+    public void updateToSift() {
+        BlockPos posOther = pos.up();
+        TileEntity te = world.getTileEntity(posOther);
+
+        if (te instanceof TileSieve)
+            toSift = collectPossibleSieves((TileSieve) te);
+        else
+            toSift = null;
     }
 
     private void calculateConnectionPieces() {
@@ -114,23 +120,43 @@ public class TileAutoSifter extends BaseTileEntity implements ITickable, IRotati
 
         TileSieve[][] sieveMap = new TileSieve[ModConfig.sieve.autoSieveRadius * 2 + 1][ModConfig.sieve.autoSieveRadius * 2 + 1];
 
-        for (int xOffset = -1 * ModConfig.sieve.autoSieveRadius; xOffset <= ModConfig.sieve.autoSieveRadius; xOffset++) {
-            for (int zOffset = -1 * ModConfig.sieve.autoSieveRadius; zOffset <= ModConfig.sieve.autoSieveRadius; zOffset++) {
-                sieveMap[xOffset + ModConfig.sieve.autoSieveRadius][zOffset + ModConfig.sieve.autoSieveRadius] = null;
+        Queue<BlockPos> toCheck = new LinkedList<>();
 
-                TileEntity entity = world.getTileEntity(sievePos.add(xOffset, 0, zOffset));
-                if (isValidPartnerSieve(thisSieve, entity)) {
-                    sieveMap[xOffset + ModConfig.sieve.autoSieveRadius][zOffset + ModConfig.sieve.autoSieveRadius] = (TileSieve) entity;
+        toCheck.add(sievePos);
+        while(!toCheck.isEmpty()) {
+            final BlockPos curPos = toCheck.poll();
+            if(curPos == null)
+                break;
+            final int iX = curPos.getX() - sievePos.getX() + ModConfig.sieve.autoSieveRadius;
+            final int iZ = curPos.getZ() - sievePos.getZ() + ModConfig.sieve.autoSieveRadius;
+            if(!validIndex(iX, iZ))
+                continue;
+            if(sieveMap[iX][iZ] == null) {
+                if(isValidPartnerSieve(world.getTileEntity(curPos))) {
+                    sieveMap[iX][iZ] = (TileSieve)world.getTileEntity(curPos);
+                    for(EnumFacing face : EnumFacing.HORIZONTALS)
+                        toCheck.add(curPos.offset(face));
                 }
-
             }
         }
 
         return sieveMap;
     }
 
-    private boolean isValidPartnerSieve(TileSieve thisSieve, TileEntity tileOther) {
-        if (tileOther != null && tileOther instanceof TileSieve) {
+    public boolean isConnected(TileSieve sieve) {
+        final int iX = sieve.getPos().getX() - pos.getX() + ModConfig.sieve.autoSieveRadius;
+        final int iZ = sieve.getPos().getZ() - pos.getZ() + ModConfig.sieve.autoSieveRadius;
+        final int dy = sieve.getPos().getY() - pos.getY();
+        return !(dy != 1 || toSift[iX][iZ] == null);
+    }
+
+    private boolean validIndex(int x, int z) {
+        return x >= 0 && x < 2*ModConfig.sieve.autoSieveRadius+1 &&
+                z >= 0 && z < 2*ModConfig.sieve.autoSieveRadius+1;
+    }
+
+    private boolean isValidPartnerSieve(TileEntity tileOther) {
+        if (tileOther instanceof TileSieve) {
 
             TileSieve sieve = (TileSieve) tileOther;
             sieve.validateAutoSieve();

@@ -26,7 +26,7 @@ public class RenderSieve extends TileEntitySpecialRenderer<TileSieve> {
         float offsetX = 0;
         float offsetY = 0;
         float offsetZ = 0;
-        if (te.autoSifter != null && te.autoSifter.toSift != null && ModConfig.client.clientFancyAutoSieveAnimations) {
+        if (te.autoSifter != null && te.autoSifter.toSift != null && te.autoSifter.isConnected(te) && ModConfig.client.clientFancyAutoSieveAnimations) {
             offsetX = te.autoSifter.offsetX;
             offsetY = te.autoSifter.offsetY;
             offsetZ = te.autoSifter.offsetZ;
