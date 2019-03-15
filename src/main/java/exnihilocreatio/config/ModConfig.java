@@ -34,7 +34,10 @@ public class ModConfig {
      * All Config Classes
      */
     public static class Client {
+        @Config.Comment("Enable/Disable the animation of autosieves.")
         public boolean clientFancyAutoSieveAnimations = true;
+        @Config.Comment("How large of a displacement should the animation of the auto sieves have.")
+        public float clientAutoSieveDisplacement = 0.03125f;
         @Config.Comment("This enables the thin Sieve model which is similar to the one in the 1.7 ex nihilo")
         public boolean thinCrucibleModel = false;
     }
