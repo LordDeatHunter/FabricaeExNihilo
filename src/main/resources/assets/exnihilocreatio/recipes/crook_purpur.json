@@ -1,0 +1,12 @@
+{
+  "result": {
+    "item": "exnihilocreatio:crook_purpur"
+  },
+  "pattern": [
+    "xx",
+    " x",
+    " x"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {"x": {"item": "minecraft:chorus_fruit_popped", "data": 0}}
+}

@@ -1,12 +1,16 @@
 package exnihilocreatio.config;
 
 import exnihilocreatio.ExNihiloCreatio;
+import exnihilocreatio.items.tools.EnumCrook;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Config(modid = ExNihiloCreatio.MODID, name = "exnihilocreatio/ExNihiloCreatio", category = "exnihilocreatio")
 public class ModConfig {
@@ -67,6 +71,15 @@ public class ModConfig {
     }
 
     public static class Crooking {
+        @Config.Comment("Durability for each of the default crooks.")
+        public Map<String, Integer> durability = new HashMap<String, Integer>();
+
+        Crooking(){
+            for(EnumCrook crook : EnumCrook.values()) {
+                durability.put(crook.getRegistryName(), crook.getDefaultDurability());
+            }
+        }
+
         @Config.RangeDouble(min=0.0, max=1.0)
         public double stringChance = 1.0;
         @Config.RangeInt(min = 0)

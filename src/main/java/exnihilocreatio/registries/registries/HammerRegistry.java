@@ -196,8 +196,8 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, List<HammerRewar
                     allOutputs.add(raw);
             }
             List<ItemStack> inputs = Arrays.asList(ingredient.getMatchingStacks());
-            for(int i = 0; i < allOutputs.size(); i+=7){
-                final List<ItemStack> outputs = allOutputs.subList(i, Math.min(i+7, allOutputs.size()));
+            for(int i = 0; i < allOutputs.size(); i+=21){
+                final List<ItemStack> outputs = allOutputs.subList(i, Math.min(i+21, allOutputs.size()));
                 hammerRecipes.add(new HammerRecipe(inputs, outputs));
             }
         }

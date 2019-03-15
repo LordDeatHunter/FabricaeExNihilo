@@ -14,6 +14,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -45,7 +46,9 @@ public class AppliedEnergistics2 implements IExNihiloCreatioModule, IRecipeDefau
         registry.register(new BlockInfo(skystoneCrushed), stack, 0.02f, BlockSieve.MeshType.DIAMOND.getID());
 
         // Pure Certus Quartz Seed
-        stack = new ItemInfo(AE_SEEDS);
+        NBTTagCompound tag = new NBTTagCompound();
+        tag.setFloat("progress", 0.0f);
+        stack = new ItemInfo(AE_SEEDS, 0, tag);
         registry.register(new BlockInfo(skystoneCrushed), stack, 0.01f, BlockSieve.MeshType.STRING.getID());
         registry.register(new BlockInfo(skystoneCrushed), stack, 0.01f, BlockSieve.MeshType.FLINT.getID());
         registry.register(new BlockInfo(skystoneCrushed), stack, 0.02f, BlockSieve.MeshType.IRON.getID());

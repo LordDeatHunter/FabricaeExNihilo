@@ -8,6 +8,7 @@ import exnihilocreatio.items.ore.ItemOre;
 import exnihilocreatio.items.seeds.ItemRubberSeed;
 import exnihilocreatio.items.seeds.ItemSeedBase;
 import exnihilocreatio.items.tools.CrookBase;
+import exnihilocreatio.items.tools.EnumCrook;
 import exnihilocreatio.items.tools.HammerBase;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.util.Data;
@@ -40,8 +41,14 @@ public class ModItems {
     public static final HammerBase hammerDiamond = new HammerBase("hammer_diamond", 4096, Item.ToolMaterial.DIAMOND);
     public static final HammerBase hammerGold = new HammerBase("hammer_gold", 64, Item.ToolMaterial.GOLD);
 
-    public static final CrookBase crookWood = new CrookBase("crook_wood", 64,0);
-    public static final CrookBase crookBone = new CrookBase("crook_bone", 256, 1);
+    static {
+        for(EnumCrook crook : EnumCrook.values()){
+            CrookBase crookItem = new CrookBase(crook.getRegistryName(), crook.getDurability(), crook.getDefaultLevel());
+            if(crook == EnumCrook.BLAZE) {
+                crookItem.setMaxDamage(3);
+            }
+        }
+    }
 
     public static final ItemMesh mesh = new ItemMesh();
 

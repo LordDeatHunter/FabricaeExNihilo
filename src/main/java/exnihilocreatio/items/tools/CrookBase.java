@@ -15,17 +15,22 @@ import javax.annotation.Nullable;
 
 public class CrookBase extends ItemTool implements ICrook, IHasModel {
 
-    public CrookBase(String name, int maxUses, int miningLevel) {
-        super(ToolMaterial.WOOD, Sets.newHashSet(new Block[]{}));
+    public CrookBase(String name, int maxUses, int miningLevel, ToolMaterial mat) {
+        super(mat, Sets.newHashSet(new Block[]{}));
 
         this.setTranslationKey(name);
         this.setRegistryName(name);
         this.setMaxDamage(maxUses);
         this.setCreativeTab(ExNihiloCreatio.tabExNihilo);
-        this.setHarvestLevel("crook", miningLevel);
+        this.setHarvestLevel("crook", mat.getHarvestLevel());
+        this.attackDamage = mat.getAttackDamage();
 
         if(!ModConfig.crooking.disableCrookCrafting)
             Data.ITEMS.add(this);
+    }
+
+    public CrookBase(String name, int maxUses, int miningLevel) {
+        this(name, maxUses, miningLevel, ToolMaterial.WOOD);
     }
 
     @Override

@@ -1,0 +1,12 @@
+{
+  "result": {
+    "item": "exnihilocreatio:crook_iron"
+  },
+  "pattern": [
+    "xx",
+    " x",
+    " x"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {"x": {"item": "minecraft:iron_nugget", "data": 0}}
+}
