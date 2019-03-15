@@ -28,13 +28,13 @@ import java.util.Map;
 
 public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
     public static final String UID = "exnihilocreatio:hammer";
-    private static final ResourceLocation texture = new ResourceLocation(ExNihiloCreatio.MODID, "textures/gui/jei_mini.png");
+    private static final ResourceLocation texture = new ResourceLocation(ExNihiloCreatio.MODID, "textures/gui/jei_mid.png");
 
     private final IDrawableStatic background;
     private final IDrawableStatic slotHighlight;
 
     public HammerRecipeCategory(IGuiHelper guiHelper) {
-        this.background = guiHelper.drawableBuilder(texture, 0, 20, 166, 22).build();
+        this.background = guiHelper.createDrawable(texture, 0, 56, 166, 58);
         this.slotHighlight = guiHelper.createDrawable(texture, 166, 0, 18, 18);
     }
 
@@ -64,18 +64,19 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
 
     @Override
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull HammerRecipe recipeWrapper, @Nonnull IIngredients ingredients) {
-        recipeLayout.getItemStacks().init(0, true, 2, 2);
+        recipeLayout.getItemStacks().init(0, true, 10, 38);
         recipeLayout.getItemStacks().set(0, recipeWrapper.getInputs());
 
         IFocus<?> focus = recipeLayout.getFocus();
 
         int slotIndex = 1;
         for (int i = 0; i < recipeWrapper.getOutputs().size(); i++) {
-            final int slotX = 38 + (i * 18);
+            final int slotX = 38 + (i%7 * 18);
+            final int slotY = 2 + i/7 * 18;
 
             ItemStack outputStack = recipeWrapper.getOutputs().get(i);
 
-            recipeLayout.getItemStacks().init(slotIndex + i, false, slotX, 2);
+            recipeLayout.getItemStacks().init(slotIndex + i, false, slotX, slotY);
             recipeLayout.getItemStacks().set(slotIndex + i, outputStack);
 
             if (focus != null) {

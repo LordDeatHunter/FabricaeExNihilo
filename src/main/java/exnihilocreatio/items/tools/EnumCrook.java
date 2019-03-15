@@ -3,9 +3,6 @@ package exnihilocreatio.items.tools;
 import exnihilocreatio.config.ModConfig;
 import lombok.Getter;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public enum EnumCrook {
     WOOD("wood", 64, 0),
 

@@ -4,6 +4,7 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
+import exnihilocreatio.registries.registries.SieveRegistry;
 import exnihilocreatio.registries.types.Siftable;
 import exnihilocreatio.util.ItemUtil;
 import mezz.jei.api.IGuiHelper;
@@ -26,13 +27,13 @@ import java.util.List;
 public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
 
     public static final String UID = "exnihilocreatio:sieve";
-    private static final ResourceLocation texture = new ResourceLocation(ExNihiloCreatio.MODID, "textures/gui/jei_mini.png");
+    private static final ResourceLocation texture = new ResourceLocation(ExNihiloCreatio.MODID, "textures/gui/jei_mid.png");
 
     private final IDrawableStatic background;
     private final IDrawableStatic slotHighlight;
 
     public SieveRecipeCategory(IGuiHelper guiHelper) {
-        this.background = guiHelper.drawableBuilder(texture, 0, 0, 166, 22).build();
+        this.background = guiHelper.createDrawable(texture, 0, 0, 166, 58);
         this.slotHighlight = guiHelper.createDrawable(texture, 166, 0, 18, 18);
     }
 
@@ -62,20 +63,21 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
 
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull SieveRecipe recipeWrapper, @Nonnull IIngredients ingredients) {
         //Mesh
-        recipeLayout.getItemStacks().init(0, true, 28, 2);
+        recipeLayout.getItemStacks().init(0, true, 10, 38);
         recipeLayout.getItemStacks().set(0, recipeWrapper.getMesh());
 
         //Input
-        recipeLayout.getItemStacks().init(1, true, 2, 2);
+        recipeLayout.getItemStacks().init(1, true, 10, 2);
         recipeLayout.getItemStacks().set(1, recipeWrapper.getSievables());
 
         IFocus<?> focus = recipeLayout.getFocus();
 
         int slotIndex = 2;
         for (int i = 0; i < recipeWrapper.getOutputs().size(); i++) {
-            final int slotX = 56 + (i * 18);
+            final int slotX = 38 + (i%7 * 18);
+            final int slotY = 2 + i/7 * 18;
             ItemStack outputStack = (ItemStack) recipeWrapper.getOutputs().get(i);
-            recipeLayout.getItemStacks().init(slotIndex + i, false, slotX, 2);
+            recipeLayout.getItemStacks().init(slotIndex + i, false, slotX, slotY);
             recipeLayout.getItemStacks().set(slotIndex + i, outputStack);
 
             if (focus != null) {
@@ -97,7 +99,7 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
                     ItemStack mesh = recipeWrapper.getMesh();
                     Multiset<String> condensedTooltips = HashMultiset.create();
                     for (Siftable siftable : ExNihiloRegistryManager.SIEVE_REGISTRY.getDrops(recipeWrapper.getSievables().get(0))) {
-                        if (!ExNihiloRegistryManager.SIEVE_REGISTRY.canSieve(siftable.getMeshLevel(), mesh.getItemDamage()))
+                        if (!SieveRegistry.canSieve(siftable.getMeshLevel(), mesh.getItemDamage()))
                             continue;
                         ItemStack sifted = siftable.getDrop().getItemStack();
                         if(!ItemUtil.areStacksEquivalent(sifted, ingredient))

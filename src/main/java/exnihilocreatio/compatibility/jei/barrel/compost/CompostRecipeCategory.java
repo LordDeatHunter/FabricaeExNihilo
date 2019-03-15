@@ -19,14 +19,14 @@ import java.util.List;
 
 public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
     public static final String UID = "exnihilocreatio:compost";
-    private static final ResourceLocation texture = new ResourceLocation(ExNihiloCreatio.MODID, "textures/gui/jei_mini.png");
+    private static final ResourceLocation texture = new ResourceLocation(ExNihiloCreatio.MODID, "textures/gui/jei_mid.png");
 
     private final IDrawableStatic background;
     private final IDrawableStatic slotHighlight;
 
-    public CompostRecipeCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(texture, 0, 60, 166, 22);
-        this.slotHighlight = helper.createDrawable(texture, 166, 0, 18, 18);
+    public CompostRecipeCategory(IGuiHelper guiHelper) {
+        this.background = guiHelper.createDrawable(texture, 0, 168, 166, 58);
+        this.slotHighlight = guiHelper.createDrawable(texture, 166, 0, 18, 18);
     }
 
     @Override
@@ -55,21 +55,25 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipe> {
 
     @Override
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull CompostRecipe recipe, @Nonnull IIngredients ingredients) {
-        recipeLayout.getItemStacks().init(0, false, 2, 2);
+        recipeLayout.getItemStacks().init(0, true, 2, 20);
         recipeLayout.getItemStacks().set(0, recipe.getOutputs().get(0));
 
         IFocus<?> focus = recipeLayout.getFocus();
 
-        for (int i = 1; i < recipe.getInputs().size()+1; i++) {
-            final int slotX = 38 + (i - 1) * 18;
+        int slotIndex = 1;
+        for (int i = 0; i < recipe.getInputs().size(); i++) {
+            final int slotX = 38 + (i%7 * 18);
+            final int slotY = 2 + i/7 * 18;
 
-            List<ItemStack> stacks = recipe.getInputs().get(i-1);
+            List<ItemStack> stacks = recipe.getInputs().get(i);
 
-            recipeLayout.getItemStacks().init(i, true, slotX, 2);
-            recipeLayout.getItemStacks().set(i, stacks);
+            recipeLayout.getItemStacks().init(i+slotIndex, true, slotX, slotY);
+            recipeLayout.getItemStacks().set(i+slotIndex, stacks);
 
-            if(stacks.stream().anyMatch(stack -> ItemStack.areItemsEqual((ItemStack) focus.getValue(), stack))) {
-                recipeLayout.getItemStacks().setBackground(i,slotHighlight);
+            if (focus != null) {
+                if(stacks.stream().anyMatch(stack -> ItemStack.areItemsEqual((ItemStack) focus.getValue(), stack))) {
+                    recipeLayout.getItemStacks().setBackground(i+slotIndex,slotHighlight);
+                }
             }
         }
 

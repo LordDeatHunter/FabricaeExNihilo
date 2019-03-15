@@ -206,8 +206,8 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, List<Siftable>> i
                                 allOutputs.add(raw);
                             }
                         }
-                        for(int i = 0; i < allOutputs.size(); i+=6){
-                            List<ItemStack> outputs = allOutputs.subList(i, Math.min(i+6, allOutputs.size()));
+                        for(int i = 0; i < allOutputs.size(); i+=21){
+                            List<ItemStack> outputs = allOutputs.subList(i, Math.min(i+21, allOutputs.size()));
                             sieveRecipes.add(new SieveRecipe(inputs, outputs));
                         }
                     }

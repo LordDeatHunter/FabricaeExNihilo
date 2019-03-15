@@ -162,9 +162,9 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> impl
         }
         // Split the recipe up into "pages"
         for(Map.Entry<Fluid, List<List<ItemStack>>> entry : outputMap.entrySet()){
-            for(int i = 0; i < entry.getValue().size(); i+=7){
+            for(int i = 0; i < entry.getValue().size(); i+=21){
                 recipes.add(new CrucibleRecipe(entry.getKey(),
-                        entry.getValue().subList(i,  Math.min(i+7, entry.getValue().size()))));
+                        entry.getValue().subList(i,  Math.min(i+21, entry.getValue().size()))));
             }
         }
 

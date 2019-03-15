@@ -180,9 +180,9 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> im
         }
         // Split the recipe up into "pages"
         for(Map.Entry<BlockInfo, List<List<ItemStack>>> entry : outputMap.entrySet()){
-            for(int i = 0; i < entry.getValue().size(); i+=7){
+            for(int i = 0; i < entry.getValue().size(); i+=21){
                 recipes.add(new CompostRecipe(entry.getKey(),
-                        entry.getValue().subList(i, Math.min(i+7, entry.getValue().size()))));
+                        entry.getValue().subList(i, Math.min(i+21, entry.getValue().size()))));
             }
         }
 
