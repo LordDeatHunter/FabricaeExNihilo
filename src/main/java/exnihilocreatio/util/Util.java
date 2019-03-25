@@ -211,4 +211,20 @@ public class Util {
         return true;
     }
 
+    /**
+     * A slow simulation of incrementing a counter until toMatch is reached. Used to avoid floating point errors.
+     *
+     * @param toMatch
+     * @param stepSize
+     * @return Number of times stepSize needs to be added to reach toMatch
+     */
+    public static int stepsRequiredToMatch(float toMatch, float stepSize) {
+        int n = 0;
+        float rem = toMatch;
+        while(rem > 0) {
+            rem -= stepSize;
+            n++;
+        }
+        return n;
+    }
 }

@@ -17,6 +17,7 @@ import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.LogUtil;
 import exnihilocreatio.util.StackInfo;
+import exnihilocreatio.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -171,7 +172,8 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> im
                 if(match.isEmpty() || match.getItem() == null)
                     continue;
                 ItemStack input = match.copy();
-                input.setCount((int) Math.ceil(1.0 / entry.getValue().getValue()));
+//                input.setCount((int) Math.ceil(1.0 / entry.getValue().getValue()));
+                input.setCount(Util.stepsRequiredToMatch(1.0f, entry.getValue().getValue()));
                 inputs.add(input);
             }
             // Empty oredicts can result in 0 inputs.
