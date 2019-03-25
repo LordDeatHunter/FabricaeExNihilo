@@ -25,7 +25,7 @@ public class ThermalFoundation implements IRecipeDefaults {
     public static final Item THERMAL_MATERIAL = null;
 
     @ObjectHolder("fluid_pyrotheum")
-    public static final Block MOTLEN_PYROTHEUM = null;
+    public static final Block MOLTEN_PYROTHEUM = null;
 
     public void registerSieve(SieveRegistry registry) {
         OreRegistry oreRegistry = ExNihiloRegistryManager.ORE_REGISTRY;
@@ -40,7 +40,7 @@ public class ThermalFoundation implements IRecipeDefaults {
 
     @Override
     public void registerHeat(HeatRegistry registry) {
-        registry.register(new BlockInfo(MOTLEN_PYROTHEUM, -1), 15);
+        registry.register(new BlockInfo(MOLTEN_PYROTHEUM, -1), 15);
     }
 
     @Override

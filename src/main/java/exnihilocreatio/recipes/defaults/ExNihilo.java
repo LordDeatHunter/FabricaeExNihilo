@@ -308,33 +308,16 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register("gold", new Color("FFFF00"), new ItemInfo(Items.GOLD_INGOT, 0));
         registry.register("iron", new Color("BF8040"), new ItemInfo(Items.IRON_INGOT, 0));
 
-        //TODO: Better way, will most likely never grab as it is just called before many mods init their oredict
-        if (!OreDictionary.getOres("oreCopper").isEmpty()) {
-            registry.register("copper", new Color("FF9933"), null);
-        }
-
-        if (!OreDictionary.getOres("oreTin").isEmpty()) {
-            registry.register("tin", new Color("E6FFF2"), null);
-        }
-
-        if (!OreDictionary.getOres("oreAluminium").isEmpty() || !OreDictionary.getOres("oreAluminum").isEmpty()) {
-            registry.register("aluminium", new Color("BFBFBF"), null);
-        }
-
-        if (!OreDictionary.getOres("oreLead").isEmpty()) {
-            registry.register("lead", new Color("330066"), null);
-        }
-
-        if (!OreDictionary.getOres("oreSilver").isEmpty()) {
-            registry.register("silver", new Color("F2F2F2"), null);
-        }
-
-        if (!OreDictionary.getOres("oreNickel").isEmpty()) {
-            registry.register("nickel", new Color("FFFFCC"), null);
-        }
-
-        if (!OreDictionary.getOres("oreUranium").isEmpty()) {
-            registry.register("uranium", new Color("4E5B43"), null);
+        for(EnumModdedMetals metal : EnumModdedMetals.values()) {
+            if(metal.getRegistryName().equals("aluminum") &&
+                    (!OreDictionary.getOres("oreAluminium").isEmpty() ||
+                            !OreDictionary.getOres("oreAluminum").isEmpty())) {
+                // Blame Humphry Davy
+                registry.register("aluminium", metal.getColor(), metal.getIngot());
+            }
+            else if(!OreDictionary.getOres(metal.getOreDictName()).isEmpty()) {
+                registry.register(metal.getRegistryName(), metal.getColor(), metal.getIngot());
+            }
         }
     }
 
