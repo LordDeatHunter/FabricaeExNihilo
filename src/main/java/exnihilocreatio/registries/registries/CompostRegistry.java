@@ -25,6 +25,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> im
         );
     }
 
-    public void register(ItemStack itemStack, float value, BlockInfo state, Color color) {
+    public void register(@NotNull ItemStack itemStack, float value, @NotNull BlockInfo state, @NotNull Color color) {
         if (itemStack.isEmpty())
             return;
 
@@ -67,23 +68,23 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> im
         register(ingredient, compostable);
     }
 
-    public void register(Item item, int meta, float value, BlockInfo state, Color color) {
+    public void register(Item item, int meta, float value, @NotNull BlockInfo state, @NotNull Color color) {
         register(new ItemStack(item, 1, meta), value, state, color);
     }
 
-    public void register(Block block, int meta, float value, BlockInfo state, Color color) {
+    public void register(@NotNull Block block, int meta, float value, @NotNull BlockInfo state, @NotNull Color color) {
         register(new ItemStack(block, 1, meta), value, state, color);
     }
 
-    public void register(StackInfo item, float value, BlockInfo state, Color color) {
+    public void register(@NotNull StackInfo item, float value, @NotNull BlockInfo state, @NotNull Color color) {
         register(item.getItemStack(), value, state, color);
     }
 
-    public void register(ResourceLocation location, int meta, float value, BlockInfo state, Color color) {
+    public void register(@NotNull ResourceLocation location, int meta, float value, @NotNull BlockInfo state, @NotNull Color color) {
         register(ForgeRegistries.ITEMS.getValue(location), meta, value, state, color);
     }
 
-    public void register(String name, float value, BlockInfo state, Color color) {
+    public void register(@NotNull String name, float value, @NotNull BlockInfo state, @NotNull Color color) {
         Ingredient ingredient = new OreIngredientStoring(name);
         Compostable compostable = new Compostable(value, color, state);
 
@@ -96,15 +97,17 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> im
     /**
      * Registers a oredict for sifting with a dynamic color based on the itemColor
      */
-    public void register(String name, float value, BlockInfo state) {
+    public void register(@NotNull String name, float value, @NotNull BlockInfo state) {
         register(name, value, state, Color.INVALID_COLOR);
     }
 
-    public Compostable getItem(Item item, int meta) {
+    @NotNull
+    public Compostable getItem(@NotNull Item item, int meta) {
         return getItem(new ItemStack(item, meta));
     }
 
-    public Compostable getItem(ItemStack stack) {
+    @NotNull
+    public Compostable getItem(@NotNull ItemStack stack) {
         Ingredient ingredient = registry.keySet().stream().filter(entry -> entry.test(stack)).findFirst().orElse(null);
         if (ingredient != null) return registry.get(ingredient);
         ingredient = oreRegistry.keySet().stream().filter(entry -> entry.test(stack)).findFirst().orElse(null);
@@ -112,19 +115,20 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> im
         else return Compostable.Companion.getEMPTY();
     }
 
-    public Compostable getItem(StackInfo info) {
+    @NotNull
+    public Compostable getItem(@NotNull StackInfo info) {
         return getItem(info.getItemStack());
     }
 
-    public boolean containsItem(Item item, int meta) {
+    public boolean containsItem(@NotNull Item item, int meta) {
         return containsItem(new ItemStack(item, meta));
     }
 
-    public boolean containsItem(ItemStack stack) {
+    public boolean containsItem(@NotNull ItemStack stack) {
         return registry.keySet().stream().anyMatch(entry -> entry.test(stack)) || oreRegistry.keySet().stream().anyMatch(entry -> entry.test(stack));
     }
 
-    public boolean containsItem(StackInfo info) {
+    public boolean containsItem(@NotNull StackInfo info) {
         return containsItem(info.getItemStack());
     }
 
@@ -159,7 +163,7 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> im
         for(Map.Entry<Ingredient, Compostable> entry : getRegistry().entrySet()){
             BlockInfo output = entry.getValue().getCompostBlock();
             Ingredient ingredient = entry.getKey();
-            if(output == null || ingredient == null || !output.isValid())
+            if(ingredient == null || !output.isValid())
                 continue;
             // Initialize new outputs
             if(!outputMap.containsKey(output)){
@@ -169,7 +173,7 @@ public class CompostRegistry extends BaseRegistryMap<Ingredient, Compostable> im
             // Collect all the potential itemstacks which match this ingredient
             List<ItemStack> inputs = new ArrayList<>();
             for(ItemStack match : ingredient.getMatchingStacks()){
-                if(match.isEmpty() || match.getItem() == null)
+                if(match.isEmpty())
                     continue;
                 ItemStack input = match.copy();
 //                input.setCount((int) Math.ceil(1.0 / entry.getValue().getValue()));
