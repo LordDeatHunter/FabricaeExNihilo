@@ -2,18 +2,18 @@ package exnihilocreatio.recipes.defaults
 
 import exnihilocreatio.texturing.Color
 import exnihilocreatio.util.ItemInfo
-import net.minecraftforge.oredict.OreDictionary
+import exnihilocreatio.util.getOreDictEntry
 
 enum class EnumModdedMetals(val color: Color) {
-    COPPER(Color("FF9933")),
-    TIN(Color("E6FFF2")),
     ALUMINUM(Color("BFBFBF")),
+    COPPER(Color("FF9933")),
     LEAD(Color("330066")),
-    SILVER(Color("F2F2F2")),
     NICKEL(Color("FFFFCC")),
+    SILVER(Color("F2F2F2")),
+    TIN(Color("E6FFF2")),
+    TUNGSTEN(Color("1C1C1C")),
     URANIUM(Color("4E5B43")),
-    ZINC(Color("A59C74")),
-    TUNGSTEN(Color("1C1C1C"));
+    ZINC(Color("A59C74"));
 
     fun getRegistryName(): String {
         return name.toLowerCase()
@@ -23,16 +23,20 @@ enum class EnumModdedMetals(val color: Color) {
         return getRegistryName().capitalize()
     }
 
-    fun getOreDictName(): String {
+    fun getOreName(): String {
         return "ore" + getConcatableName()
+    }
+
+    fun getIngotName(): String {
+        return "ingot" + getConcatableName()
     }
 
     /**
      * Attempt to grab the first ingot from the ore dictionary to be the registered ingot
      */
     fun getIngot(): ItemInfo? {
-        if(OreDictionary.getOres("ingot"+getConcatableName()).isEmpty())
-            return null
-        return ItemInfo(OreDictionary.getOres("ingot"+getConcatableName())[0])
+        return getOreDictEntry(getIngotName())
     }
+
+
 }

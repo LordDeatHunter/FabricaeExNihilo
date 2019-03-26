@@ -17,13 +17,13 @@ public class ModConfig {
     /**
      * All Config Variables
      */
+    public static final Misc misc = new Misc(); // Move this to the top so the JSON config is more visible
     @Config.Comment("These configs can be changed ClientSided without making problems with connecting to a server")
     public static final Client client = new Client();
     public static final Mechanics mechanics = new Mechanics();
     public static final Composting composting = new Composting();
     public static final InfestedLeaves infested_leaves = new InfestedLeaves();
     public static final Crooking crooking = new Crooking();
-    public static final Misc misc = new Misc();
     public static final Sieve sieve = new Sieve();
     public static final Compatibility compatibility = new Compatibility();
     public static final Crucible crucible = new Crucible();
@@ -75,7 +75,7 @@ public class ModConfig {
 
     public static class Crooking {
         @Config.Comment("Durability for each of the default crooks.")
-        public Map<String, Integer> durability = new HashMap<String, Integer>();
+        public Map<String, Integer> durability = new HashMap<>();
 
         Crooking(){
             for(EnumCrook crook : EnumCrook.values()) {
@@ -113,6 +113,8 @@ public class ModConfig {
         @Config.Comment("Add Ex Nihilo seeds to the listAllSeeds oredict")
         public boolean oredictExNihiloSeeds = true;
 
+        @Config.Comment({"When attempting to reuse an existing item from the oredict, what modids should be given preference."})
+        public String[] oreDictPreferenceOrder = {"thermalfoundation", "magneticraft", "immersiveengineering"};
     }
 
     public static class Sieve {
