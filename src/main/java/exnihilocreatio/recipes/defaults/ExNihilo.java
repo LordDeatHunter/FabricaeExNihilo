@@ -15,6 +15,7 @@ import exnihilocreatio.registries.types.Meltable;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
+import exnihilocreatio.util.OreDictUtil;
 import exnihilocreatio.util.Util;
 import lombok.Getter;
 import net.minecraft.block.Block;
@@ -333,18 +334,18 @@ public class ExNihilo implements IRecipeDefaults {
 
     @Override
     public void registerOreChunks(OreRegistry registry) {
-        registry.register("gold", new Color("FFFF00"), new ItemInfo(Items.GOLD_INGOT, 0));
-        registry.register("iron", new Color("BF8040"), new ItemInfo(Items.IRON_INGOT, 0));
+        registry.register("gold", new Color("FFFF00"), new ItemInfo(Items.GOLD_INGOT, 0), OreDictUtil.getOreDictEntry("dustGold"));
+        registry.register("iron", new Color("BF8040"), new ItemInfo(Items.IRON_INGOT, 0), OreDictUtil.getOreDictEntry("dustIron"));
 
         for(EnumModdedMetals metal : EnumModdedMetals.values()) {
             if(metal.getRegistryName().equals("aluminum") &&
                     (!OreDictionary.getOres("oreAluminium").isEmpty() ||
                             !OreDictionary.getOres("oreAluminum").isEmpty())) {
                 // Blame Humphry Davy
-                registry.register("aluminium", metal.getColor(), metal.getIngot());
+                registry.register("aluminium", metal.getColor(), metal.getIngot(), metal.getDust());
             }
             else if(!OreDictionary.getOres(metal.getOreName()).isEmpty()) {
-                registry.register(metal.getRegistryName(), metal.getColor(), metal.getIngot());
+                registry.register(metal.getRegistryName(), metal.getColor(), metal.getDust());
             }
         }
     }
