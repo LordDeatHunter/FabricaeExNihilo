@@ -82,10 +82,10 @@ public class TinkersConstruct implements IExNihiloCreatioModule {
     }
 
     public static Item getHammer(){
-        return (Item) SLEDGE_HAMMER;
+        return SLEDGE_HAMMER;
     }
     public static Item getCrook(){
-        return (Item) TINKERS_CROOK;
+        return TINKERS_CROOK;
     }
 
     @Override

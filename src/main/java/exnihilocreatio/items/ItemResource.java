@@ -9,6 +9,11 @@ import exnihilocreatio.util.Util;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntityPigZombie;
+import net.minecraft.entity.passive.EntityCow;
+import net.minecraft.entity.passive.EntityMooshroom;
+import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -110,6 +115,43 @@ public class ItemResource extends Item implements IHasModel {
         }
 
         return EnumActionResult.PASS;
+    }
+
+    @Override
+    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target, EnumHand hand) {
+        if(player.world.isRemote)
+            return false;
+
+        switch(stack.getMetadata()) {
+            case 3: return ancientSporesInteraction(stack, player, target, hand);
+            default: return false;
+        }
+    }
+
+    private boolean ancientSporesInteraction(ItemStack stack, EntityPlayer player, EntityLivingBase target, EnumHand hand) {
+        if(target.getClass() == EntityCow.class ) {
+            replaceMob(target.world, target, new EntityMooshroom(target.world));
+            if(!player.capabilities.isCreativeMode)
+                stack.shrink(1);
+            return true;
+        }
+        if(target.getClass() == EntityPig.class) {
+            replaceMob(target.world, target, new EntityPigZombie(target.world));
+            if(!player.capabilities.isCreativeMode)
+                stack.shrink(1);
+            return true;
+        }
+        return false;
+    }
+
+    private void replaceMob(World world, EntityLivingBase toKill, EntityLivingBase toSpawn) {
+        toSpawn.setLocationAndAngles(toKill.posX, toKill.posY, toKill.posZ, toKill.rotationYaw, toKill.rotationPitch);
+        toSpawn.renderYawOffset = toKill.renderYawOffset;
+        toSpawn.setHealth(toSpawn.getMaxHealth() * toKill.getHealth() / toKill.getMaxHealth());
+
+        toKill.setDead();
+        world.spawnEntity(toSpawn);
+
     }
 
     @Override

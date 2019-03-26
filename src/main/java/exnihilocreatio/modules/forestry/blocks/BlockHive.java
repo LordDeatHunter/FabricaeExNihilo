@@ -24,7 +24,6 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
@@ -98,8 +97,8 @@ public class BlockHive extends Block implements IHasModel {
     @SideOnly(Side.CLIENT)
     public void initModel(ModelRegistryEvent e) {
         for (int i = 0; i < EnumType.values().length; i++) {
-            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock((Block) this), i,
-                    new ModelResourceLocation(((IForgeRegistryEntry<?>) this).getRegistryName(), "variant=" + BlockHive.EnumType.values()[i].getName()));
+            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), i,
+                    new ModelResourceLocation(this.getRegistryName(), "variant=" + BlockHive.EnumType.values()[i].getName()));
         }
     }
 

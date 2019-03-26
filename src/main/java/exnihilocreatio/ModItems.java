@@ -98,7 +98,7 @@ public class ModItems {
         registerOredicts();
     }
 
-    public static void registerOredicts(){
+    private static void registerOredicts(){
         OreDictionary.registerOre("clayPorcelain", ItemResource.getResourceStack(ItemResource.PORCELAIN_CLAY));
         OreDictionary.registerOre("gearStone", ItemResource.getResourceStack(ItemResource.GEAR_STONE));
         OreDictionary.registerOre("stickStone", ItemResource.getResourceStack(ItemResource.ROD_STONE));
@@ -133,7 +133,7 @@ public class ModItems {
             if(Item.REGISTRY.containsKey(ModItems.rubberSeed.getRegistryName()))
                 OreDictionary.registerOre("listAllseed", rubberSeed);
             // Grass Seeds
-            OreDictionary.registerOre("listAllseed", new ItemStack((Item) resources, 1, 4));
+            OreDictionary.registerOre("listAllseed", new ItemStack(resources, 1, 4));
         }
 
         ItemOre oreYellorium = ExNihiloRegistryManager.ORE_REGISTRY.getOreItem("yellorium");

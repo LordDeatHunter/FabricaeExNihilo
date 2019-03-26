@@ -17,24 +17,28 @@ public class ModConfig {
     /**
      * All Config Variables
      */
+    public static final Misc misc = new Misc(); // Move this to the top so the JSON config is more visible
     @Config.Comment("These configs can be changed ClientSided without making problems with connecting to a server")
     public static final Client client = new Client();
     public static final Mechanics mechanics = new Mechanics();
     public static final Composting composting = new Composting();
     public static final InfestedLeaves infested_leaves = new InfestedLeaves();
     public static final Crooking crooking = new Crooking();
-    public static final Misc misc = new Misc();
     public static final Sieve sieve = new Sieve();
     public static final Compatibility compatibility = new Compatibility();
     public static final Crucible crucible = new Crucible();
     public static final World world = new World();
     public static final Ore ore = new Ore();
+    public static final WitchWater witchwater = new WitchWater();
 
     /**
      * All Config Classes
      */
     public static class Client {
+        @Config.Comment("Enable/Disable the animation of autosieves.")
         public boolean clientFancyAutoSieveAnimations = true;
+        @Config.Comment("How large of a displacement should the animation of the auto sieves have.")
+        public float clientAutoSieveDisplacement = 0.03125f;
         @Config.Comment("This enables the thin Sieve model which is similar to the one in the 1.7 ex nihilo")
         public boolean thinCrucibleModel = false;
     }
@@ -72,7 +76,7 @@ public class ModConfig {
 
     public static class Crooking {
         @Config.Comment("Durability for each of the default crooks.")
-        public Map<String, Integer> durability = new HashMap<String, Integer>();
+        public Map<String, Integer> durability = new HashMap<>();
 
         Crooking(){
             for(EnumCrook crook : EnumCrook.values()) {
@@ -110,6 +114,8 @@ public class ModConfig {
         @Config.Comment("Add Ex Nihilo seeds to the listAllSeeds oredict")
         public boolean oredictExNihiloSeeds = true;
 
+        @Config.Comment({"When attempting to reuse an existing item from the oredict, what modids should be given preference."})
+        public String[] oreDictPreferenceOrder = {"thermalfoundation", "magneticraft", "immersiveengineering"};
     }
 
     public static class Sieve {
@@ -245,6 +251,17 @@ public class ModConfig {
         public String pieceBaseOreDictName = "piece";
         public String dustBaseOreDictName  = "dust";
         public String ingotBaseOreDictName = "ingot";
+    }
+
+    public static class WitchWater {
+        @Config.Comment("Enable custom fluid mixing")
+        public boolean enableWitchWaterBlockForming = true;
+        @Config.Comment("What is the maximum temperature a liquid can have and still be considered cold for interactions.")
+        public int coldCutoff = 300;
+        @Config.Comment("What blocks can be made when witchwater interacts with a cold liquid.")
+        public String[] coldMixing = {"minecraft:dirt:0","minecraft:dirt:1","minecraft:dirt:2"};
+        @Config.Comment("What blocks can be made when witchwater interacts with a hot liquid.")
+        public String[] hotMixing = {"minecraft:cobblestone", "minecraft:stone:1", "minecraft:stone:3", "minecraft:stone:5"};
     }
 
     /**

@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("deprecation")
 public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPInfoProvider {
 
     public static final PropertyEnum<MeshType> MESH = PropertyEnum.create("mesh", MeshType.class);
@@ -106,7 +107,7 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPIn
                         if(cap.getStackInSlot(slot).isEmpty())
                             continue; // No more items
                         TileEntity otherTE = world.getTileEntity(pos.add(dx, 0, dz));
-                        if(otherTE == null || !(otherTE instanceof TileSieve))
+                        if(!(otherTE instanceof TileSieve))
                             continue; // Not a sieve
                         TileSieve sieve = (TileSieve) otherTE;
                         if(!te.isSieveSimilarToInput(sieve))
@@ -124,7 +125,7 @@ public class BlockSieve extends BlockBase implements ITileEntityProvider, ITOPIn
         for (int xOffset = -1 * ModConfig.sieve.sieveSimilarRadius; xOffset <= ModConfig.sieve.sieveSimilarRadius; xOffset++) {
             for (int zOffset = -1 * ModConfig.sieve.sieveSimilarRadius; zOffset <= ModConfig.sieve.sieveSimilarRadius; zOffset++) {
                 TileEntity entity = world.getTileEntity(pos.add(xOffset, 0, zOffset));
-                if (entity != null && entity instanceof TileSieve) {
+                if (entity instanceof TileSieve) {
                     TileSieve sieve = (TileSieve) entity;
 
                     if (te.isSieveSimilar(sieve))

@@ -104,6 +104,9 @@ public class ExNihilo implements IRecipeDefaults {
     @Override
     public void registerSieve(SieveRegistry registry) {
 
+        BlockInfo crushedNetherrack = new BlockInfo(ModBlocks.netherrackCrushed);
+        BlockInfo crushedEndStone = new BlockInfo(ModBlocks.endstoneCrushed);
+
         //Stone Pebble
         registry.register("dirt", new ItemInfo(ModItems.pebbles), getDropChance(1f), MeshType.STRING.getID());
         registry.register("dirt", new ItemInfo(ModItems.pebbles), getDropChance(1f), MeshType.STRING.getID());
@@ -174,30 +177,55 @@ public class ExNihilo implements IRecipeDefaults {
         // Gold from nether rack
         ItemOre gold = oreRegistry.getOreItem("gold");
         if (gold != null) {
-            registry.register(new BlockInfo(ModBlocks.netherrackCrushed), new ItemInfo(gold, 0), getDropChance(0.25f), MeshType.FLINT.getID());
-            registry.register(new BlockInfo(ModBlocks.netherrackCrushed), new ItemInfo(gold, 0), getDropChance(0.25f), MeshType.IRON.getID());
-            registry.register(new BlockInfo(ModBlocks.netherrackCrushed), new ItemInfo(gold, 0), getDropChance(0.4f), MeshType.DIAMOND.getID());
+            registry.register(crushedNetherrack, new ItemInfo(gold, 0), getDropChance(0.25f), MeshType.FLINT.getID());
+            registry.register(crushedNetherrack, new ItemInfo(gold, 0), getDropChance(0.25f), MeshType.IRON.getID());
+            registry.register(crushedNetherrack, new ItemInfo(gold, 0), getDropChance(0.4f), MeshType.DIAMOND.getID());
         }
-
 
         // All default Ores
         for (ItemOre ore : oreRegistry.getItemOreRegistry()) {
             if (oreRegistry.getSieveBlackList().contains(ore)) continue;
-            if(ore.getOre().getName() == "iron"){
-                registry.register("gravel", new ItemInfo(ore), getDropChance(0.1f), MeshType.FLINT.getID());
-                registry.register("gravel", new ItemInfo(ore), getDropChance(0.15f), MeshType.IRON.getID());
-                registry.register("gravel", new ItemInfo(ore), getDropChance(0.25f), MeshType.DIAMOND.getID());
-                registry.register(new BlockInfo(Blocks.SAND,1), new ItemInfo(ore), getDropChance(0.4f), MeshType.DIAMOND.getID());
-            }
-            else if (ore.getOre().getName() == "uranium") {
-                registry.register("gravel", new ItemInfo(ore), getDropChance(0.008f), MeshType.FLINT.getID());
-                registry.register("gravel", new ItemInfo(ore), getDropChance(0.009f), MeshType.IRON.getID());
-                registry.register("gravel", new ItemInfo(ore), getDropChance(0.01f), MeshType.DIAMOND.getID());
-            }
-            else{
-                registry.register("gravel", new ItemInfo(ore), getDropChance(0.05f), MeshType.FLINT.getID());
-                registry.register("gravel", new ItemInfo(ore), getDropChance(0.075f), MeshType.IRON.getID());
-                registry.register("gravel", new ItemInfo(ore), getDropChance(0.15f), MeshType.DIAMOND.getID());
+            ItemInfo info = new ItemInfo(ore);
+            switch (ore.getOre().getName()) {
+                case "iron":
+                    registry.register("gravel", info, getDropChance(0.1f), MeshType.FLINT.getID());
+                    registry.register("gravel", info, getDropChance(0.15f), MeshType.IRON.getID());
+                    registry.register("gravel", info, getDropChance(0.25f), MeshType.DIAMOND.getID());
+                    registry.register(new BlockInfo(Blocks.SAND, 1), info, getDropChance(0.5f), MeshType.DIAMOND.getID());
+                    break;
+                case "aluminum":
+                case "aluminium":
+                    registry.register("sand", info, getDropChance(0.05f), MeshType.FLINT.getID());
+                    registry.register("sand", info, getDropChance(0.075f), MeshType.IRON.getID());
+                    registry.register(crushedEndStone, info, getDropChance(0.15f), MeshType.IRON.getID());
+                    registry.register(crushedEndStone, info, getDropChance(0.25f), MeshType.DIAMOND.getID());
+                    break;
+                case "copper":
+                    registry.register("gravel", info, getDropChance(0.05f), MeshType.FLINT.getID());
+                    registry.register("gravel", info, getDropChance(0.075f), MeshType.IRON.getID());
+                    break;
+                case "silver":
+                    registry.register("sand", info, getDropChance(0.15f), MeshType.DIAMOND.getID());
+                    registry.register(crushedEndStone, info, getDropChance(0.15f), MeshType.IRON.getID());
+                    registry.register(crushedEndStone, info, getDropChance(0.25f), MeshType.DIAMOND.getID());
+                    break;
+                case "tin":
+                    registry.register("sand", info, getDropChance(0.05f), MeshType.FLINT.getID());
+                    registry.register("sand", info, getDropChance(0.075f), MeshType.IRON.getID());
+                    break;
+                case "uranium":
+                    registry.register("gravel", info, getDropChance(0.05f), MeshType.IRON.getID());
+                    registry.register("gravel", info, getDropChance(0.10f), MeshType.DIAMOND.getID());
+                    break;
+                case "zinc":
+                    registry.register("sand", info, getDropChance(0.075f), MeshType.IRON.getID());
+                    registry.register("sand", info, getDropChance(0.15f), MeshType.DIAMOND.getID());
+                    break;
+                default:
+                    registry.register("gravel", info, getDropChance(0.05f), MeshType.FLINT.getID());
+                    registry.register("gravel", info, getDropChance(0.075f), MeshType.IRON.getID());
+                    registry.register("gravel", info, getDropChance(0.15f), MeshType.DIAMOND.getID());
+                    break;
             }
         }
         // Seeds
@@ -308,33 +336,16 @@ public class ExNihilo implements IRecipeDefaults {
         registry.register("gold", new Color("FFFF00"), new ItemInfo(Items.GOLD_INGOT, 0));
         registry.register("iron", new Color("BF8040"), new ItemInfo(Items.IRON_INGOT, 0));
 
-        //TODO: Better way, will most likely never grab as it is just called before many mods init their oredict
-        if (!OreDictionary.getOres("oreCopper").isEmpty()) {
-            registry.register("copper", new Color("FF9933"), null);
-        }
-
-        if (!OreDictionary.getOres("oreTin").isEmpty()) {
-            registry.register("tin", new Color("E6FFF2"), null);
-        }
-
-        if (!OreDictionary.getOres("oreAluminium").isEmpty() || !OreDictionary.getOres("oreAluminum").isEmpty()) {
-            registry.register("aluminium", new Color("BFBFBF"), null);
-        }
-
-        if (!OreDictionary.getOres("oreLead").isEmpty()) {
-            registry.register("lead", new Color("330066"), null);
-        }
-
-        if (!OreDictionary.getOres("oreSilver").isEmpty()) {
-            registry.register("silver", new Color("F2F2F2"), null);
-        }
-
-        if (!OreDictionary.getOres("oreNickel").isEmpty()) {
-            registry.register("nickel", new Color("FFFFCC"), null);
-        }
-
-        if (!OreDictionary.getOres("oreUranium").isEmpty()) {
-            registry.register("uranium", new Color("4E5B43"), null);
+        for(EnumModdedMetals metal : EnumModdedMetals.values()) {
+            if(metal.getRegistryName().equals("aluminum") &&
+                    (!OreDictionary.getOres("oreAluminium").isEmpty() ||
+                            !OreDictionary.getOres("oreAluminum").isEmpty())) {
+                // Blame Humphry Davy
+                registry.register("aluminium", metal.getColor(), metal.getIngot());
+            }
+            else if(!OreDictionary.getOres(metal.getOreName()).isEmpty()) {
+                registry.register(metal.getRegistryName(), metal.getColor(), metal.getIngot());
+            }
         }
     }
 
@@ -353,6 +364,11 @@ public class ExNihilo implements IRecipeDefaults {
         if (FluidRegistry.isFluidRegistered("milk")){
             registry.register(FluidRegistry.getFluid("milk"), new ItemInfo(new ItemStack(Blocks.BROWN_MUSHROOM)), new ItemInfo(new ItemStack(Blocks.SLIME_BLOCK)), "Slime");
             registry.register(FluidRegistry.getFluid("milk"), new ItemInfo(new ItemStack(Blocks.RED_MUSHROOM)), new ItemInfo(new ItemStack(Blocks.SLIME_BLOCK)), "Slime");
+        }
+        else {
+            // No milk, fall back to witch water
+            registry.register(ModFluids.fluidWitchwater, new ItemInfo(new ItemStack(Blocks.BROWN_MUSHROOM)), new ItemInfo(new ItemStack(Blocks.SLIME_BLOCK)), "Slime");
+            registry.register(ModFluids.fluidWitchwater, new ItemInfo(new ItemStack(Blocks.RED_MUSHROOM)), new ItemInfo(new ItemStack(Blocks.SLIME_BLOCK)), "Slime");
         }
 
         // Vanilla Concrete
@@ -406,7 +422,7 @@ public class ExNihilo implements IRecipeDefaults {
         else return chance / 100f * (float) ModConfig.world.normalDropPercent;
     }
 
-    public static Map<BlockInfo, BlockInfo> getLeavesSapling(){
+    private static Map<BlockInfo, BlockInfo> getLeavesSapling(){
         Map<BlockInfo, BlockInfo> saplingMap = new LinkedHashMap<>();
         saplingMap.put(new BlockInfo(Blocks.LEAVES, 0), new BlockInfo(Blocks.SAPLING, 0));
         saplingMap.put(new BlockInfo(Blocks.LEAVES, 1), new BlockInfo(Blocks.SAPLING, 1));
