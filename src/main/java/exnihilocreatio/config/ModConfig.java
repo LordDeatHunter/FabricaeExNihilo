@@ -29,6 +29,7 @@ public class ModConfig {
     public static final Crucible crucible = new Crucible();
     public static final World world = new World();
     public static final Ore ore = new Ore();
+    public static final WitchWater witchwater = new WitchWater();
 
     /**
      * All Config Classes
@@ -250,6 +251,17 @@ public class ModConfig {
         public String pieceBaseOreDictName = "piece";
         public String dustBaseOreDictName  = "dust";
         public String ingotBaseOreDictName = "ingot";
+    }
+
+    public static class WitchWater {
+        @Config.Comment("Enable custom fluid mixing")
+        public boolean enableWitchWaterBlockForming = true;
+        @Config.Comment("What is the maximum temperature a liquid can have and still be considered cold for interactions.")
+        public int coldCutoff = 300;
+        @Config.Comment("What blocks can be made when witchwater interacts with a cold liquid.")
+        public String[] coldMixing = {"minecraft:dirt:0","minecraft:dirt:1","minecraft:dirt:2"};
+        @Config.Comment("What blocks can be made when witchwater interacts with a hot liquid.")
+        public String[] hotMixing = {"minecraft:cobblestone", "minecraft:stone:1", "minecraft:stone:3", "minecraft:stone:5"};
     }
 
     /**
