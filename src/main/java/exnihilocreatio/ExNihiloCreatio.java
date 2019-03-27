@@ -76,6 +76,8 @@ public class ExNihiloCreatio {
             ExNihiloCreatio.loadedModules.add(new MooFluidsEtc());
         if(Loader.isModLoaded("oreberries") && ModConfig.compatibility.oreberries_compat.enableOreBerrySeeds)
             ExNihiloCreatio.loadedModules.add(new OreBerries());
+        if(Loader.isModLoaded("magneticraft") && ModConfig.compatibility.magneticraftHammersCompat)
+            ExNihiloCreatio.loadedModules.add(Magneticraft.INSTANCE);
 
         proxy.preInit(event);
 

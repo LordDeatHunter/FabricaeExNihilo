@@ -164,6 +164,8 @@ public class ModConfig {
         public boolean addYelloriteOreDict = true;
         public boolean dankNullIntegration = true;
         public boolean generalItemHandlerCompat = true;
+        @Config.Comment("Register Ex Nihilo hammers as Magneticraft hammers.")
+        public boolean magneticraftHammersCompat = true;
 
         public static class TinkersConstructCompat {
             public boolean doTinkersConstructCompat = true;

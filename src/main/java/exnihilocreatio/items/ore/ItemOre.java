@@ -38,7 +38,7 @@ public class ItemOre extends Item implements IHasModel, IHasSpecialRegistry {
 
         this.ore = ore;
         registerIngot = ore.getResult() == null;
-        registerIngot = ore.getDustResult() == null;
+        registerDust = ore.getDustResult() == null;
         setTranslationKey(ExNihiloCreatio.MODID + ".ore." + ore.getName());
         setRegistryName("item_ore_" + StringUtils.lowerCase(ore.getName()));
         setCreativeTab(ExNihiloCreatio.tabExNihilo);
