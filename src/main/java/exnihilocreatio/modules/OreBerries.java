@@ -12,7 +12,6 @@ import josephcsible.oreberries.BlockOreberryBush;
 import josephcsible.oreberries.proxy.CommonProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -23,7 +22,6 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class OreBerries implements IExNihiloCreatioModule, IRecipeDefaults {
     private static final List<ItemOreBerrySeed> oreberryseeds = new ArrayList<>();
@@ -56,8 +54,7 @@ public class OreBerries implements IExNihiloCreatioModule, IRecipeDefaults {
         @Override
         public void init(FMLInitializationEvent event){
             super.init(event);
-            List<Item> colorizedBerries = OreBerries.oreberryseeds.stream().filter(seed -> seed.getBush().config.special == null).collect(Collectors.toList());
-            Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new RenderOreBerrySeed(), colorizedBerries.toArray(new ItemOreBerrySeed[0]));
+            Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new RenderOreBerrySeed(), OreBerries.oreberryseeds.stream().filter(seed -> seed.getBush().config.special == null).toArray(ItemOreBerrySeed[]::new));
         }
 
     }

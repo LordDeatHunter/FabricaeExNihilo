@@ -1,8 +1,8 @@
 package exnihilocreatio.blocks
 
 import exnihilocreatio.ModFluids
+import exnihilocreatio.api.ExNihiloCreatioAPI.WITCH_WATER_WORLD_REGISTRY
 import exnihilocreatio.config.ModConfig
-import exnihilocreatio.util.BlockInfo
 import exnihilocreatio.util.Data
 import net.minecraft.block.Block
 import net.minecraft.block.BlockLiquid
@@ -25,18 +25,13 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.fluids.BlockFluidBase
 import net.minecraftforge.fluids.BlockFluidClassic
+import net.minecraftforge.fluids.Fluid
 import net.minecraftforge.fluids.FluidRegistry
 
 class BlockFluidWitchwater : BlockFluidClassic(ModFluids.fluidWitchwater, Material.WATER) {
-    private val coldMixes: List<IBlockState>
-    private val hotMixes: List<IBlockState>
     init {
-
         this.setRegistryName("witchwater")
         this.translationKey = "witchwater"
-
-        coldMixes = ModConfig.witchwater.coldMixing.map { BlockInfo(it).blockState }
-        hotMixes = ModConfig.witchwater.hotMixing.map { BlockInfo(it).blockState }
 
         Data.BLOCKS.add(this)
     }
@@ -130,31 +125,24 @@ class BlockFluidWitchwater : BlockFluidClassic(ModFluids.fluidWitchwater, Materi
     private fun interactWithAdjacent(world: World, pos: BlockPos) {
         if(!ModConfig.witchwater.enableWitchWaterBlockForming)
             return
-        var shouldCreateBlock = false
-        var isCold = true
+        var otherFluid: Fluid? = null
+
         for(side in EnumFacing.VALUES) {
             if(side == EnumFacing.DOWN)
                 continue
             val offset = world.getBlockState(pos.offset(side))
             if(offset.material.isLiquid && offset.block !is BlockFluidWitchwater &&
                     (offset.block is BlockFluidBase || offset.block is BlockLiquid)) {
-                shouldCreateBlock = true
-                isCold = when(offset.block) {
-                    is BlockFluidBase -> (offset.block as BlockFluidBase).temperature
-                    else -> when(offset.material) {
-                        Material.LAVA -> FluidRegistry.LAVA.temperature
-                        else -> FluidRegistry.WATER.temperature
-                    }
-                } <= ModConfig.witchwater.coldCutoff
+                otherFluid = FluidRegistry.lookupFluidForBlock(offset.block)
                 break
             }
         }
-        if(shouldCreateBlock) {
-            val newState =
-                    if(isCold)
-                        coldMixes[world.rand.nextInt(coldMixes.size)]
-                    else
-                        hotMixes[world.rand.nextInt(hotMixes.size)]
+        if(otherFluid == null)
+            return
+        if(WITCH_WATER_WORLD_REGISTRY.contains(otherFluid)) {
+            val isCold = otherFluid?.temperature ?: 0 <= 300
+            val newState = WITCH_WATER_WORLD_REGISTRY.getResult(otherFluid, world.rand.nextFloat()).blockState
+
             world.setBlockState(pos, newState)
 
             val sound = if(isCold) SoundEvents.BLOCK_GRAVEL_BREAK else SoundEvents.BLOCK_STONE_BREAK

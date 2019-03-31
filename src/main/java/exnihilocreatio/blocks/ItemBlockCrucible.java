@@ -11,8 +11,4 @@ public class ItemBlockCrucible extends ItemBlockMeta {
         this.setHasSubtypes(true);
     }
 
-    @Override
-    public int getMetadata(int damage) {
-        return super.getMetadata(damage);
-    }
 }

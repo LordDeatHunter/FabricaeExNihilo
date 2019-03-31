@@ -22,6 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.FileReader;
 import java.util.*;
@@ -73,31 +74,31 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, List<HammerRewar
      * @param chance        Chance of drop
      * @param fortuneChance Chance of drop per level of fortune
      */
-    public void register(IBlockState state, ItemStack reward, int miningLevel, float chance, float fortuneChance) {
+    public void register(@NotNull IBlockState state, @NotNull ItemStack reward, int miningLevel, float chance, float fortuneChance) {
         register(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)), new HammerReward(reward, miningLevel, chance, fortuneChance));
     }
 
-    public void register(Block block, int meta, ItemStack reward, int miningLevel, float chance, float fortuneChance) {
+    public void register(@NotNull Block block, int meta, @NotNull ItemStack reward, int miningLevel, float chance, float fortuneChance) {
         register(new ItemStack(block, 1, meta), new HammerReward(reward, miningLevel, chance, fortuneChance));
     }
 
-    public void register(StackInfo stackInfo, ItemStack reward, int miningLevel, float chance, float fortuneChance) {
+    public void register(@NotNull StackInfo stackInfo, @NotNull ItemStack reward, int miningLevel, float chance, float fortuneChance) {
         register(stackInfo.getItemStack(), new HammerReward(reward, miningLevel, chance, fortuneChance));
     }
 
-    public void register(ItemStack stack, HammerReward reward) {
+    public void register(@NotNull ItemStack stack, @NotNull HammerReward reward) {
         if (stack.isEmpty())
             return;
         Ingredient ingredient = CraftingHelper.getIngredient(stack);
         register(ingredient, reward);
     }
 
-    public void register(String name, ItemStack reward, int miningLevel, float chance, float fortuneChance) {
+    public void register(@NotNull String name, @NotNull ItemStack reward, int miningLevel, float chance, float fortuneChance) {
         Ingredient ingredient = new OreIngredientStoring(name);
         register(ingredient, new HammerReward(reward, miningLevel, chance, fortuneChance));
     }
 
-    public void register(Ingredient ingredient, HammerReward reward) {
+    public void register(@NotNull Ingredient ingredient, @NotNull HammerReward reward) {
         Ingredient search = registry.keySet().stream().filter(entry -> IngredientUtil.ingredientEquals(ingredient, entry)).findAny().orElse(null);
 
         if (search != null) {
@@ -109,7 +110,8 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, List<HammerRewar
         }
     }
 
-    public NonNullList<ItemStack> getRewardDrops(Random random, IBlockState block, int miningLevel, int fortuneLevel) {
+    @NotNull
+    public NonNullList<ItemStack> getRewardDrops(@NotNull Random random, @NotNull IBlockState block, int miningLevel, int fortuneLevel) {
         NonNullList<ItemStack> rewards = NonNullList.create();
 
         for (HammerReward reward : getRewards(block)) {
@@ -123,32 +125,36 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, List<HammerRewar
         return rewards;
     }
 
-    public NonNullList<HammerReward> getRewards(IBlockState block) {
+    @NotNull
+    public NonNullList<HammerReward> getRewards(@NotNull IBlockState block) {
         return getRewards(new BlockInfo(block));
     }
 
-    public NonNullList<HammerReward> getRewards(Block block, int meta) {
+    @NotNull
+    public NonNullList<HammerReward> getRewards(@NotNull Block block, int meta) {
         return getRewards(new BlockInfo(block, meta));
     }
 
-    public NonNullList<HammerReward> getRewards(BlockInfo stackInfo) {
+    @NotNull
+    public NonNullList<HammerReward> getRewards(@NotNull BlockInfo stackInfo) {
         NonNullList<HammerReward> drops = NonNullList.create();
         if (stackInfo.isValid())
             registry.entrySet().stream().filter(entry -> entry.getKey().test(stackInfo.getItemStack())).forEach(entry -> drops.addAll(entry.getValue()));
         return drops;
     }
 
-    public NonNullList<HammerReward> getRewards(Ingredient ingredient) {
+    @NotNull
+    public NonNullList<HammerReward> getRewards(@NotNull Ingredient ingredient) {
         NonNullList<HammerReward> drops = NonNullList.create();
         registry.entrySet().stream().filter(entry -> entry.getKey() == ingredient).forEach(entry -> drops.addAll(entry.getValue()));
         return drops;
     }
 
-    public boolean isRegistered(IBlockState block) {
+    public boolean isRegistered(@NotNull IBlockState block) {
         return isRegistered(new BlockInfo(block));
     }
 
-    public boolean isRegistered(Block block) {
+    public boolean isRegistered(@NotNull Block block) {
         return isRegistered(new BlockInfo(block.getDefaultState()));
     }
 
@@ -160,7 +166,7 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, List<HammerRewar
         return isRegistered(new BlockInfo(block.getDefaultState()));
     }
 
-    public boolean isRegistered(BlockInfo stackInfo) {
+    public boolean isRegistered(@NotNull BlockInfo stackInfo) {
         return registry.keySet().stream().anyMatch(ingredient -> ingredient.test(stackInfo.getItemStack()));
     }
 
@@ -182,7 +188,7 @@ public class HammerRegistry extends BaseRegistryMap<Ingredient, List<HammerRewar
         for(Ingredient ingredient : getRegistry().keySet()){
             if(ingredient == null)
                 continue;
-            List<ItemStack> rawOutputs = getRewards(ingredient).stream().map(reward -> reward.getStack()).collect(Collectors.toList());
+            List<ItemStack> rawOutputs = getRewards(ingredient).stream().map(HammerReward::getStack).collect(Collectors.toList());
             List<ItemStack> allOutputs = new ArrayList<>();
             for(ItemStack raw : rawOutputs){
                 boolean alreadyexists = false;

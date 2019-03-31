@@ -31,7 +31,7 @@ public class Forestry implements IExNihiloCreatioModule {
 
     public static final List<IHiveDefaultRegistryProvider> HIVE_DEFAULT_REGISTRY_PROVIDERS = new ArrayList<>();
 
-    public static HiveRequirementsRegistry HIVE_REQUIREMENTS_REGISTRY = new HiveRequirementsRegistry();
+    public static final HiveRequirementsRegistry HIVE_REQUIREMENTS_REGISTRY = new HiveRequirementsRegistry();
 
     public static final BlockHive EXNIHILO_HIVE = new BlockHive(Material.WOOD, "hive");
 

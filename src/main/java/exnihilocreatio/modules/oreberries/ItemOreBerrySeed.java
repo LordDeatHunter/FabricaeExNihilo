@@ -24,7 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 
 public class ItemOreBerrySeed extends Item implements IHasModel {
-    private BlockOreberryBush bush;
+    private final BlockOreberryBush bush;
     public ItemOreBerrySeed(BlockOreberryBush bush){
         this.bush = bush;
         setCreativeTab(ExNihiloCreatio.tabExNihilo);

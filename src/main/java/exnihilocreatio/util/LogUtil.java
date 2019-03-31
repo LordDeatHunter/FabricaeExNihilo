@@ -17,7 +17,7 @@ public class LogUtil {
     static {
         LogManager.getFormatterLogger();
     }
-    private static File logFile;
+
     private static PrintWriter logWriter;
 
     public static void log(Level level, Object object) {
@@ -83,6 +83,7 @@ public class LogUtil {
         int i = 0;
 
         // One-liners for the win
+        File logFile;
         for (; (logFile = new File(logDirectory, baseName + "-" + i + ".log")).exists(); i++) ;
 
         try {

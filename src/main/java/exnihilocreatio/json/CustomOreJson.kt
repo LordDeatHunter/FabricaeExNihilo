@@ -13,7 +13,10 @@ object CustomOreJson : JsonDeserializer<Ore>, JsonSerializer<Ore> {
         val obj = JsonObject()
         obj.addProperty("name", src.name)
         obj.add("color", context.serialize(src.color, Color::class.java))
-        obj.add("result", context.serialize(src.result, ItemInfo::class.java))
+        if(src.result != null)
+            obj.add("result", context.serialize(src.result, ItemInfo::class.java))
+        if(src.dustResult != null)
+            obj.add("dust", context.serialize(src.dustResult, ItemInfo::class.java))
 
         if (src.oredictName != null) {
             obj.addProperty("oredictName", src.oredictName)
@@ -34,7 +37,16 @@ object CustomOreJson : JsonDeserializer<Ore>, JsonSerializer<Ore> {
 
         val name = helper.getString("name")
         val color = context.deserialize<Color>(json.asJsonObject.get("color"), Color::class.java)
-        val result = context.deserialize<ItemInfo>(json.asJsonObject.get("result"), ItemInfo::class.java)
+        val ingot =
+                if(json.asJsonObject.has("ingot"))
+                    context.deserialize<ItemInfo>(json.asJsonObject.get("ingot"), ItemInfo::class.java)
+                else
+                    null
+        val dust =
+                if(json.asJsonObject.has("dust"))
+                    context.deserialize<ItemInfo>(json.asJsonObject.get("dust"), ItemInfo::class.java)
+                else
+                    null
 
         var translations: HashMap<String, String>? = null
         if (json.isJsonObject && json.asJsonObject.has("translations")) {
@@ -48,6 +60,6 @@ object CustomOreJson : JsonDeserializer<Ore>, JsonSerializer<Ore> {
             oredictName = helper.getString("oredictName")
         }
 
-        return Ore(name, color, result, translations, oredictName)
+        return Ore(name, color, ingot, dust, translations, oredictName)
     }
 }

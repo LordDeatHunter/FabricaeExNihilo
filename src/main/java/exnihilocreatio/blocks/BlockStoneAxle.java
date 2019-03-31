@@ -47,6 +47,7 @@ public class BlockStoneAxle extends BlockBase implements ITileEntityProvider, IT
         return new TileStoneAxle();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     @Nonnull
     public IBlockState getActualState(@Nonnull IBlockState state, IBlockAccess worldIn, BlockPos pos) {
@@ -59,6 +60,7 @@ public class BlockStoneAxle extends BlockBase implements ITileEntityProvider, IT
         return new BlockStateContainer(this, IS_AXLE);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     @Nonnull
     public IBlockState getStateFromMeta(int meta) {
@@ -70,16 +72,19 @@ public class BlockStoneAxle extends BlockBase implements ITileEntityProvider, IT
         return 0;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean shouldSideBeRendered(IBlockState blockState, @Nonnull IBlockAccess blockAccess, @Nonnull BlockPos pos, EnumFacing side) {
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean isBlockNormalCube(IBlockState state) {
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean isOpaqueCube(IBlockState state) {
         return false;
@@ -95,26 +100,30 @@ public class BlockStoneAxle extends BlockBase implements ITileEntityProvider, IT
         te.facing = placer.getHorizontalFacing();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean isFullBlock(IBlockState state) {
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean isNormalCube(IBlockState state) {
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean isFullCube(IBlockState state) {
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     @Nullable
     @Override
     public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, @Nonnull IBlockAccess worldIn, @Nonnull BlockPos pos) {
         TileEntity te = worldIn.getTileEntity(pos);
-        if (te != null && te instanceof TileStoneAxle) {
+        if (te instanceof TileStoneAxle) {
             switch (((TileStoneAxle) te).facing) {
 
                 case DOWN:
@@ -130,11 +139,12 @@ public class BlockStoneAxle extends BlockBase implements ITileEntityProvider, IT
         return FULL_BLOCK_AABB;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     @Nonnull
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         TileEntity te = source.getTileEntity(pos);
-        if (te != null && te instanceof TileStoneAxle) {
+        if (te instanceof TileStoneAxle) {
             switch (((TileStoneAxle) te).facing) {
 
                 case DOWN:

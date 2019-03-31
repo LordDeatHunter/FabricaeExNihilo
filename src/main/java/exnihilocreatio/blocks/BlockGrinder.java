@@ -47,6 +47,7 @@ public class BlockGrinder extends BlockBase implements ITileEntityProvider {
         return new BlockStateContainer(this, PART_TYPE);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     @Nonnull
     public IBlockState getStateFromMeta(int meta) {
@@ -59,16 +60,19 @@ public class BlockGrinder extends BlockBase implements ITileEntityProvider {
     }
 
     //region >>>> RENDERING OPTIONS
+    @SuppressWarnings("deprecation")
     @Override
     public boolean isFullBlock(IBlockState state) {
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean isNormalCube(IBlockState state) {
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean isFullCube(IBlockState state) {
         return false;
@@ -80,16 +84,19 @@ public class BlockGrinder extends BlockBase implements ITileEntityProvider {
         return BlockRenderLayer.CUTOUT;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean shouldSideBeRendered(IBlockState blockState, @Nonnull IBlockAccess blockAccess, @Nonnull BlockPos pos, EnumFacing side) {
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean isBlockNormalCube(IBlockState state) {
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean isOpaqueCube(IBlockState state) {
         return false;

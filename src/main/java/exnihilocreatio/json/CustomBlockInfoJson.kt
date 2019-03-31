@@ -26,7 +26,7 @@ object CustomBlockInfoJson : JsonDeserializer<BlockInfo>, JsonSerializer<BlockIn
             val block = Block.getBlockFromName(name)
 
             if (block == null) {
-                LogUtil.error("Error parsing JSON: Invalid BlockStoneAxle: " + json.toString())
+                LogUtil.error("Error parsing JSON: Invalid BlockStoneAxle: $json")
                 LogUtil.error("This may result in crashing or other undefined behavior")
                 return BlockInfo.EMPTY
             }

@@ -104,4 +104,9 @@ public class CompatDefaultRecipes {
         MODS.stream().filter(mod -> Loader.isModLoaded(mod.getMODID()))
                 .forEach(mod -> mod.registerMilk(registry));
     }
+
+    public void registerWitchWaterWorld(WitchWaterWorldRegistry registry) {
+        MODS.stream().filter(mod -> Loader.isModLoaded(mod.getMODID()))
+                .forEach(mod -> mod.registerWitchWaterWorld(registry));
+    }
 }

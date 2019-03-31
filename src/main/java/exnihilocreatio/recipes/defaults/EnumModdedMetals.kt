@@ -2,7 +2,7 @@ package exnihilocreatio.recipes.defaults
 
 import exnihilocreatio.texturing.Color
 import exnihilocreatio.util.ItemInfo
-import exnihilocreatio.util.getOreDictEntry
+import exnihilocreatio.util.OreDictUtil
 
 enum class EnumModdedMetals(val color: Color) {
     ALUMINUM(Color("BFBFBF")),
@@ -27,15 +27,20 @@ enum class EnumModdedMetals(val color: Color) {
         return "ore" + getConcatableName()
     }
 
-    fun getIngotName(): String {
+    private fun getIngotName(): String {
         return "ingot" + getConcatableName()
     }
 
-    /**
-     * Attempt to grab the first ingot from the ore dictionary to be the registered ingot
-     */
+    private fun getDustName(): String {
+        return "dust" + getConcatableName()
+    }
+
     fun getIngot(): ItemInfo? {
-        return getOreDictEntry(getIngotName())
+        return OreDictUtil.getOreDictEntry(getIngotName())
+    }
+
+    fun getDust(): ItemInfo? {
+        return OreDictUtil.getOreDictEntry(getDustName())
     }
 
 

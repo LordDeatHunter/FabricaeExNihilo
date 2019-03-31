@@ -28,14 +28,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ItemRubberSeed extends Item implements IHasModel {
-    private List<IPlantable> plants = new ArrayList<>();
+    private final List<IPlantable> plants = new ArrayList<>();
     public ItemRubberSeed() {
         setRegistryName("item_seed_rubber");
         setTranslationKey("item_seed_rubber");
 
         for(String s : ModConfig.compatibility.rubber_compat.rubberSeed){
             Block block = Block.getBlockFromName(s);
-            if(block != null && block instanceof IPlantable)
+            if(block instanceof IPlantable)
                 plants.add((IPlantable) block);
         }
         if(plants.size() > 0)

@@ -22,5 +22,6 @@ interface ICrucibleStoneDefaultRegistryProvider : IDefaultRecipeProvider<Crucibl
 interface ICrookDefaultRegistryProvider : IDefaultRecipeProvider<CrookRegistry>
 interface ICompostDefaultRegistryProvider : IDefaultRecipeProvider<CompostRegistry>
 interface IBarrelLiquidBlacklistDefaultRegistryProvider : IDefaultRecipeProvider<BarrelLiquidBlacklistRegistry>
+interface IWitchWaterWorldDefaultRegistryProvider : IDefaultRecipeProvider<WitchWaterWorldRegistry>
 
 interface IHiveDefaultRegistryProvider : IDefaultRecipeProvider<HiveRequirementsRegistry>

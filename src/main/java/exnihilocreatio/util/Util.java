@@ -12,6 +12,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -94,22 +95,37 @@ public class Util {
 
     @SideOnly(Side.CLIENT)
     public static TextureAtlasSprite getTextureFromFluidStack(FluidStack stack) {
-        if (stack != null && stack.getFluid() != null) {
-            Fluid fluid = stack.getFluid();
-
-            if (fluid.getStill(stack) != null) {
-                return Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(fluid.getStill().toString());
-            }
-        }
+        if (stack != null && stack.getFluid() != null)
+            return getTextureFromFluid(stack.getFluid());
 
         return Minecraft.getMinecraft().getTextureMapBlocks().getMissingSprite();
     }
 
     @SideOnly(Side.CLIENT)
     public static TextureAtlasSprite getTextureFromFluid(@Nonnull Fluid fluid) {
+        TextureAtlasSprite tex = null;
+        // Try still
         if (fluid.getStill() != null)
-            return Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(fluid.getStill().toString());
+            tex = getTexture(fluid.getStill());
+        if(tex != null)
+            return tex;
+        // Try flowing
+        if (fluid.getFlowing() != null)
+            tex = getTexture(fluid.getFlowing());
+        if(tex != null)
+            return tex;
+        // Try grabbing the block
+        if (fluid.getBlock() != null)
+            tex = getTextureFromBlockState(fluid.getBlock().getDefaultState());
+        if(tex != null)
+            return tex;
+        // Give up
         return Minecraft.getMinecraft().getTextureMapBlocks().getMissingSprite();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static TextureAtlasSprite getTexture(ResourceLocation location) {
+        return Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(location.toString());
     }
 
     public static boolean isSurroundingBlocksAtLeastOneOf(BlockInfo[] blocks, BlockPos pos, World world, int radius) {

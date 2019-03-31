@@ -32,6 +32,7 @@ public class BlockInfestedLeaves extends BlockInfestingLeaves {
                 this.blockState.getBaseState().withProperty(CHECK_DECAY, false).withProperty(DECAYABLE, false));
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     @Nonnull
     @Deprecated

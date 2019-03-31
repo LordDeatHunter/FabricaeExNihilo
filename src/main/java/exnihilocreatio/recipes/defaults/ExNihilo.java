@@ -12,9 +12,11 @@ import exnihilocreatio.items.seeds.ItemSeedBase;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.*;
 import exnihilocreatio.registries.types.Meltable;
+import exnihilocreatio.registries.types.WitchWaterWorld;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
+import exnihilocreatio.util.OreDictUtil;
 import exnihilocreatio.util.Util;
 import lombok.Getter;
 import net.minecraft.block.Block;
@@ -27,7 +29,9 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ExNihilo implements IRecipeDefaults {
@@ -333,18 +337,18 @@ public class ExNihilo implements IRecipeDefaults {
 
     @Override
     public void registerOreChunks(OreRegistry registry) {
-        registry.register("gold", new Color("FFFF00"), new ItemInfo(Items.GOLD_INGOT, 0));
-        registry.register("iron", new Color("BF8040"), new ItemInfo(Items.IRON_INGOT, 0));
+        registry.register("gold", new Color("FFFF00"), new ItemInfo(Items.GOLD_INGOT, 0), OreDictUtil.getOreDictEntry("dustGold"));
+        registry.register("iron", new Color("BF8040"), new ItemInfo(Items.IRON_INGOT, 0), OreDictUtil.getOreDictEntry("dustIron"));
 
         for(EnumModdedMetals metal : EnumModdedMetals.values()) {
             if(metal.getRegistryName().equals("aluminum") &&
                     (!OreDictionary.getOres("oreAluminium").isEmpty() ||
                             !OreDictionary.getOres("oreAluminum").isEmpty())) {
                 // Blame Humphry Davy
-                registry.register("aluminium", metal.getColor(), metal.getIngot());
+                registry.register("aluminium", metal.getColor(), metal.getIngot(), metal.getDust());
             }
             else if(!OreDictionary.getOres(metal.getOreName()).isEmpty()) {
-                registry.register(metal.getRegistryName(), metal.getColor(), metal.getIngot());
+                registry.register(metal.getRegistryName(), metal.getColor(), metal.getDust());
             }
         }
     }
@@ -414,6 +418,22 @@ public class ExNihilo implements IRecipeDefaults {
     @Override
     public void registerMilk(MilkEntityRegistry registry) {
         registry.register("Cow", "milk", 10, 20);
+    }
+
+
+    @Override
+    public void registerWitchWaterWorld(WitchWaterWorldRegistry registry){
+        List<BlockInfo> waterResults = new ArrayList<>();
+        waterResults.add(new BlockInfo(Blocks.DIRT, 0));
+        waterResults.add(new BlockInfo(Blocks.DIRT, 1));
+        waterResults.add(new BlockInfo(Blocks.DIRT, 2));
+        registry.register(FluidRegistry.WATER, new WitchWaterWorld(waterResults));
+        List<BlockInfo> lavaResults = new ArrayList<>();
+        lavaResults.add(new BlockInfo(Blocks.COBBLESTONE));
+        lavaResults.add(new BlockInfo(Blocks.STONE, 1));
+        lavaResults.add(new BlockInfo(Blocks.STONE, 3));
+        lavaResults.add(new BlockInfo(Blocks.STONE, 5));
+        registry.register(FluidRegistry.LAVA, new WitchWaterWorld(lavaResults));
     }
 
     private float getDropChance(float chance) {

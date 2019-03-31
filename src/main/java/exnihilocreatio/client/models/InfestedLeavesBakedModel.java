@@ -50,6 +50,7 @@ public class InfestedLeavesBakedModel implements IBakedModel {
         return handleBlockState(state).getQuads(state, side, rand);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     @Nonnull
     public ItemCameraTransforms getItemCameraTransforms() {

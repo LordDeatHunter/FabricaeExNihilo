@@ -50,6 +50,7 @@ public class BlockCrucibleStone extends BlockCrucibleBase implements IHasSpecial
         return new BlockStateContainer(this, FIRED, THIN);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     @Nonnull
     @Deprecated

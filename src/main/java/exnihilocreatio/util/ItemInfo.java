@@ -25,7 +25,7 @@ public class ItemInfo implements StackInfo {
     public static final ItemInfo EMPTY = new ItemInfo(ItemStack.EMPTY);
 
     @Nonnull
-    private Item item;
+    private final Item item;
 
     private int meta = 0;
 
@@ -221,6 +221,7 @@ public class ItemInfo implements StackInfo {
         if (item == Items.AIR)
             return Blocks.AIR.getDefaultState();
         try {
+            //noinspection deprecation
             return Block.getBlockFromItem(item).getStateFromMeta(meta);
         } catch (Exception e) {
             return Block.getBlockFromItem(item).getDefaultState();

@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumDifficulty;
@@ -13,7 +14,7 @@ public class EntityInfo {
     @Getter
     private Class <? extends Entity > entityClass;
 
-    private String name;
+    private final String name;
 
     public EntityInfo(String entityName){
         this.name = entityName;
@@ -22,9 +23,9 @@ public class EntityInfo {
 
     /**
      * Attempts to spawn entity located  within `range` of `pos`
-     * @param pos
-     * @param range
-     * @param worldIn
+     * @param pos Position to spawn near
+     * @param range Distance from pos to attempt spawns at
+     * @param worldIn World to spawn in
      * @return whether it did spawn the mob
      */
     public boolean spawnEntityNear(BlockPos pos, int range, World worldIn){
@@ -35,6 +36,10 @@ public class EntityInfo {
             Entity entity = EntityList.newEntity(entityClass, worldIn);
             if(entity instanceof EntityLiving){
                 EntityLiving entityLiving = (EntityLiving) entity;
+
+                if(entityLiving instanceof EntitySlime){
+                    ((EntitySlime) entityLiving).setSlimeSize(1, true);
+                }
 
                 double dx = (worldIn.rand.nextDouble() - worldIn.rand.nextDouble())*range + 0.5;
                 double dy = (worldIn.rand.nextDouble() - worldIn.rand.nextDouble())*range;

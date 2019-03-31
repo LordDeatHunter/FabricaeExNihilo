@@ -23,5 +23,6 @@ object ExNihiloCreatioAPI {
     val CRUCIBLE_STONE_REGISTRY: ICrucibleRegistry = ExNihiloRegistryManager.CRUCIBLE_STONE_REGISTRY
     val CRUCIBLE_WOOD_REGISTRY: ICrucibleRegistry = ExNihiloRegistryManager.CRUCIBLE_WOOD_REGISTRY
     val MILK_ENTITY_REGISTRY: IMilkEntityRegistry = ExNihiloRegistryManager.MILK_ENTITY_REGISTRY
+    val WITCH_WATER_WORLD_REGISTRY: IWitchWaterWorldRegistry = ExNihiloRegistryManager.WITCH_WATER_WORLD_REGISTRY
 
 }

@@ -27,6 +27,8 @@ public class ItemOre extends Item implements IHasModel, IHasSpecialRegistry {
 
     @Getter
     private boolean registerIngot;
+    @Getter
+    private boolean registerDust;
 
     @Getter
     private Ore ore;
@@ -36,6 +38,7 @@ public class ItemOre extends Item implements IHasModel, IHasSpecialRegistry {
 
         this.ore = ore;
         registerIngot = ore.getResult() == null;
+        registerDust = ore.getDustResult() == null;
         setTranslationKey(ExNihiloCreatio.MODID + ".ore." + ore.getName());
         setRegistryName("item_ore_" + StringUtils.lowerCase(ore.getName()));
         setCreativeTab(ExNihiloCreatio.tabExNihilo);
@@ -50,7 +53,8 @@ public class ItemOre extends Item implements IHasModel, IHasSpecialRegistry {
         if (this.isInCreativeTab(tab)) {
             list.add(new ItemStack(this, 1, 0)); //Piece
             list.add(new ItemStack(this, 1, 1)); //Chunk
-            list.add(new ItemStack(this, 1, 2)); //Dust
+            if (registerDust)
+                list.add(new ItemStack(this, 1, 2)); //Dust
             if (registerIngot)
                 list.add(new ItemStack(this, 1, 3)); //Ingot
         }
@@ -61,7 +65,8 @@ public class ItemOre extends Item implements IHasModel, IHasSpecialRegistry {
     public void initModel(ModelRegistryEvent e) {
         ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation("exnihilocreatio:item_ore", "type=piece"));
         ModelLoader.setCustomModelResourceLocation(this, 1, new ModelResourceLocation("exnihilocreatio:item_ore", "type=chunk"));
-        ModelLoader.setCustomModelResourceLocation(this, 2, new ModelResourceLocation("exnihilocreatio:item_ore", "type=dust"));
+        if (registerDust)
+            ModelLoader.setCustomModelResourceLocation(this, 2, new ModelResourceLocation("exnihilocreatio:item_ore", "type=dust"));
         if (registerIngot)
             ModelLoader.setCustomModelResourceLocation(this, 3, new ModelResourceLocation("exnihilocreatio:item_ore", "type=ingot"));
     }

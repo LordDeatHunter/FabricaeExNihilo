@@ -3,12 +3,13 @@ package exnihilocreatio.modules.oreberries;
 import josephcsible.oreberries.BlockOreberryBush;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
 public class RenderOreBerrySeed implements IItemColor {
     @Override
-    public int colorMultiplier(ItemStack stack, int tintIndex) {
+    public int colorMultiplier(@NotNull ItemStack stack, int tintIndex) {
         if (stack.isEmpty())
             return 0;
 

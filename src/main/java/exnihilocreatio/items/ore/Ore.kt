@@ -7,6 +7,7 @@ data class Ore(
         val name: String,
         val color: Color,
         val result: ItemInfo? = null,
+        val dustResult: ItemInfo? = null,
         val translations: Map<String, String>? = null,
         val oredictName: String? = null
 )

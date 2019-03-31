@@ -1,6 +1,7 @@
 package exnihilocreatio.compatibility.jei.sieve;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -20,8 +21,8 @@ public class SieveRecipe implements IRecipeWrapper {
 
     @Override
     public void getIngredients(@Nonnull IIngredients ingredients) {
-        ingredients.setInput(ItemStack.class, inputs);
-        ingredients.setOutputs(ItemStack.class, outputs);
+        ingredients.setInputLists(VanillaTypes.ITEM, inputs);
+        ingredients.setOutputs(VanillaTypes.ITEM, outputs);
     }
 
     public ItemStack getMesh() {

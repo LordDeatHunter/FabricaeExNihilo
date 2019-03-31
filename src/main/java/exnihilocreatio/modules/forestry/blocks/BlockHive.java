@@ -24,6 +24,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
@@ -40,6 +41,7 @@ public class BlockHive extends Block implements IHasModel {
         this.setTickRandomly(true);
     }
 
+    @NotNull
     @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, VARIANT);
@@ -57,6 +59,7 @@ public class BlockHive extends Block implements IHasModel {
         }
     }
 
+    @NotNull
     @SuppressWarnings("deprecation")
     @Override
     public IBlockState getStateFromMeta(int meta) {
@@ -68,6 +71,7 @@ public class BlockHive extends Block implements IHasModel {
         return state.getValue(VARIANT).getMetadata();
     }
 
+    @NotNull
     @SuppressWarnings("deprecation")
     @Override
     public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
@@ -130,6 +134,7 @@ public class BlockHive extends Block implements IHasModel {
             return this.name;
         }
 
+        @NotNull
         @Override
         public String getName() {
             return this.name;

@@ -45,11 +45,11 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> impl
         );
     }
 
-    public void register(StackInfo item, Fluid fluid, int amount) {
+    public void register(@NotNull StackInfo item, @NotNull Fluid fluid, int amount) {
         register(item.getItemStack(), fluid, amount);
     }
 
-    public void register(StackInfo item, Meltable meltable) {
+    public void register(@NotNull StackInfo item, @NotNull Meltable meltable) {
         register(item.getItemStack(), meltable);
     }
 
@@ -58,22 +58,22 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> impl
     public void register(@NotNull String name, @NotNull Fluid fluid, int amount, @NotNull BlockInfo block) {
         register(name, new Meltable(fluid.getName(), amount, block));
     }
-    public void register(ItemStack stack, Fluid fluid, int amount) {
+    public void register(@NotNull ItemStack stack, @NotNull Fluid fluid, int amount) {
         register(stack, new Meltable(fluid.getName(), amount));
     }
 
-    public void register(ItemStack stack, Meltable meltable) {
+    public void register(@NotNull ItemStack stack, @NotNull Meltable meltable) {
         if (stack.isEmpty() || !FluidRegistry.isFluidRegistered(meltable.getFluid())) return;
         if (registry.keySet().stream().anyMatch(ingredient -> ingredient.test(stack)))
             LogUtil.warn("Crucible entry for " + stack.getDisplayName() + " with meta " + stack.getMetadata() + " already exists, skipping.");
         else register(CraftingHelper.getIngredient(stack), meltable);
     }
 
-    public void register(String name, Fluid fluid, int amount) {
+    public void register(@NotNull String name, @NotNull Fluid fluid, int amount) {
         register(name, new Meltable(fluid.getName(), amount));
     }
 
-    public void register(String name, Meltable meltable) {
+    public void register(@NotNull String name, @NotNull Meltable meltable) {
         Ingredient ingredient = new OreIngredientStoring(name);
         if (!FluidRegistry.isFluidRegistered(meltable.getFluid()))
             return;
@@ -83,16 +83,16 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> impl
         else registry.put(ingredient, meltable);
     }
 
-    public boolean canBeMelted(ItemStack stack) {
+    public boolean canBeMelted(@NotNull ItemStack stack) {
         return registry.keySet().stream().anyMatch(entry -> entry.test(stack));
     }
 
-    public boolean canBeMelted(StackInfo info) {
+    public boolean canBeMelted(@NotNull StackInfo info) {
         return canBeMelted(info.getItemStack());
     }
 
     @Nonnull
-    public Meltable getMeltable(ItemStack stack) {
+    public Meltable getMeltable(@NotNull ItemStack stack) {
         Ingredient ingredient = registry.keySet().stream().filter(entry -> entry.test(stack)).findFirst().orElse(null);
 
         if (ingredient != null) {
@@ -103,12 +103,12 @@ public class CrucibleRegistry extends BaseRegistryMap<Ingredient, Meltable> impl
     }
 
     @Nonnull
-    public Meltable getMeltable(StackInfo info) {
+    public Meltable getMeltable(@NotNull StackInfo info) {
         return getMeltable(info.getItemStack());
     }
 
     @Nonnull
-    public Meltable getMeltable(Item item, int meta) {
+    public Meltable getMeltable(@NotNull Item item, int meta) {
         return getMeltable(new ItemStack(item, meta));
     }
 

@@ -146,7 +146,7 @@ public class BarrelModeFluidTransform implements IBarrelMode {
                                         testPos.add(0, 1, 0))) {
                                     BlockInfo[] toSpawn = transformer
                                             .getBlocksToSpawn();
-                                    if (toSpawn != null && toSpawn.length > 0) {
+                                    if (toSpawn.length > 0) {
                                         barrel.getWorld()
                                                 .setBlockState(
                                                         testPos.add(0, 1, 0),

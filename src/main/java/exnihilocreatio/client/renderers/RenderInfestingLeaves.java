@@ -108,7 +108,7 @@ public class RenderInfestingLeaves extends FastTESR<TileInfestingLeaves> {
                     dot = (view.x - (pos.getX() + 1));
                     break;
             }
-            if (dot > 0 && block.shouldSideBeRendered(state, getWorld(), pos, vert.face)) {
+            if (dot > 0 && state.shouldSideBeRendered(getWorld(), pos, vert.face)) {
                 for (final VertexFormatElement e : buffer.getVertexFormat().getElements()) {
                     switch (e.getUsage()) {
                         case COLOR:

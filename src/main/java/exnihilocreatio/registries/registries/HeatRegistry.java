@@ -10,6 +10,7 @@ import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import exnihilocreatio.util.BlockInfo;
 import net.minecraft.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.FileReader;
 import java.util.HashMap;
@@ -33,15 +34,15 @@ public class HeatRegistry extends BaseRegistryMap<BlockInfo, Integer> implements
         registry.put(info, heatAmount);
     }
 
-    public void register(ItemStack stack, int heatAmount) {
+    public void register(@NotNull ItemStack stack, int heatAmount) {
         register(new BlockInfo(stack), heatAmount);
     }
 
-    public int getHeatAmount(ItemStack stack) {
+    public int getHeatAmount(@NotNull ItemStack stack) {
         return registry.get(new BlockInfo(stack));
     }
 
-    public int getHeatAmount(BlockInfo info) {
+    public int getHeatAmount(@NotNull BlockInfo info) {
         return registry.getOrDefault(info, 0);
     }
 

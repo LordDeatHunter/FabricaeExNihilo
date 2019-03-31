@@ -6,6 +6,7 @@ import exnihilocreatio.registries.types.FluidTransformer;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.Util;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -19,7 +20,6 @@ public class FluidTransformRecipe implements IRecipeWrapper {
     private final FluidStack inputFluid;
     private final FluidStack outputFluid;
 
-    private final ItemStack inputBucket;
     private final ItemStack outputBucket;
 
     private final List<ItemStack> inputStacks;
@@ -28,7 +28,7 @@ public class FluidTransformRecipe implements IRecipeWrapper {
         inputFluid = new FluidStack(FluidRegistry.getFluid(recipe.getInputFluid()), 1000);
         outputFluid = new FluidStack(FluidRegistry.getFluid(recipe.getOutputFluid()), 1000);
 
-        inputBucket = Util.getBucketStack(inputFluid.getFluid());
+        ItemStack inputBucket = Util.getBucketStack(inputFluid.getFluid());
         outputBucket = Util.getBucketStack(outputFluid.getFluid());
 
         inputStacks = Lists.newArrayList(inputBucket);
@@ -40,11 +40,11 @@ public class FluidTransformRecipe implements IRecipeWrapper {
 
     @Override
     public void getIngredients(@Nonnull IIngredients ingredients) {
-        ingredients.setInputs(ItemStack.class, inputStacks);
-        ingredients.setInput(FluidStack.class, inputFluid);
+        ingredients.setInputs(VanillaTypes.ITEM, inputStacks);
+        ingredients.setInput(VanillaTypes.FLUID, inputFluid);
 
-        ingredients.setOutput(ItemStack.class, outputBucket);
-        ingredients.setOutput(FluidStack.class, outputFluid);
+        ingredients.setOutput(VanillaTypes.ITEM, outputBucket);
+        ingredients.setOutput(VanillaTypes.FLUID, outputFluid);
     }
 
     public List<ItemStack> getInputs() {

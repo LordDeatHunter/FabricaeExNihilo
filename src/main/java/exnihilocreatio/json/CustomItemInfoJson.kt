@@ -48,7 +48,7 @@ object CustomItemInfoJson : JsonDeserializer<ItemInfo>, JsonSerializer<ItemInfo>
             }
 
             if (item == null) {
-                LogUtil.error("Error parsing JSON: Invalid Item: " + json.toString())
+                LogUtil.error("Error parsing JSON: Invalid Item: $json")
                 LogUtil.error("This may result in crashing or other undefined behavior")
                 return ItemInfo.EMPTY
             }

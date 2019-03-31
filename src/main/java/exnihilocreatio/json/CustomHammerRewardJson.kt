@@ -32,7 +32,7 @@ object CustomHammerRewardJson : JsonDeserializer<HammerReward>, JsonSerializer<H
         stack = if (obj.has("item")) {
             val info = ItemInfo(helper.getString("item"))
             if (!info.isValid) {
-                LogUtil.error("Error parsing JSON: Invalid Item: " + json.toString())
+                LogUtil.error("Error parsing JSON: Invalid Item: $json")
                 return HammerReward(ItemStack.EMPTY, 0, 0f, 0f)
             }
 

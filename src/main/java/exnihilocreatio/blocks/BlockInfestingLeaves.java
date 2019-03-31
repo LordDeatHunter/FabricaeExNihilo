@@ -156,6 +156,7 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
         return ModConfig.infested_leaves.leavesUpdateFrequency;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
         if (!worldIn.isRemote && Util.isLeaves(worldIn.getBlockState(fromPos)))
@@ -163,6 +164,7 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     @Nonnull
     @Deprecated
@@ -197,6 +199,7 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
         return new ExtendedBlockState(this, listedProperties, unlistedProperties);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     @Nonnull
     @Deprecated
@@ -220,6 +223,7 @@ public class BlockInfestingLeaves extends BlockLeaves implements ITileEntityProv
         return checkDecay << 2 | decayable << 1 | nearbyLeaves;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     @Nonnull
     public List<ItemStack> getDrops(@Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull IBlockState state, int fortune) {

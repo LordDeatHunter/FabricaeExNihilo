@@ -26,7 +26,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.File;
@@ -76,6 +79,8 @@ public class ExNihiloCreatio {
             ExNihiloCreatio.loadedModules.add(new MooFluidsEtc());
         if(Loader.isModLoaded("oreberries") && ModConfig.compatibility.oreberries_compat.enableOreBerrySeeds)
             ExNihiloCreatio.loadedModules.add(new OreBerries());
+        if(Loader.isModLoaded("magneticraft") && ModConfig.compatibility.magneticraftHammersCompat)
+            ExNihiloCreatio.loadedModules.add(Magneticraft.INSTANCE);
 
         proxy.preInit(event);
 
@@ -138,6 +143,7 @@ public class ExNihiloCreatio {
         ExNihiloRegistryManager.CRUCIBLE_STONE_REGISTRY.loadJson(new File(configDirectory, "CrucibleRegistryStone.json"));
         ExNihiloRegistryManager.CRUCIBLE_WOOD_REGISTRY.loadJson(new File(configDirectory, "CrucibleRegistryWood.json"));
         ExNihiloRegistryManager.MILK_ENTITY_REGISTRY.loadJson(new File(configDirectory, "MilkEntityRegistry.json"));
+        ExNihiloRegistryManager.WITCH_WATER_WORLD_REGISTRY.loadJson(new File(configDirectory, "WitchWaterWorldRegistry.json"));
 
         MinecraftForge.EVENT_BUS.post(new RegistryReloadedEvent());
     }
@@ -146,11 +152,6 @@ public class ExNihiloCreatio {
     public static void serverStart(FMLServerStartingEvent event) {
         event.registerServerCommand(new CommandReloadConfig());
         event.registerServerCommand(new CommandHandNBT());
-    }
-
-    @EventHandler
-    public static void modMapping(FMLModIdMappingEvent event) {
-
     }
 
 }

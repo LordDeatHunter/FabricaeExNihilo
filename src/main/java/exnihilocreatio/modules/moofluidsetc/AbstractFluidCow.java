@@ -10,8 +10,8 @@ import net.minecraftforge.fluids.Fluid;
  * https://github.com/DoctorFTB/FluidCows
  */
 public class AbstractFluidCow implements IAbstractCow {
-    private EntityFluidCow cow;
-    private int maxCooldown;
+    private final EntityFluidCow cow;
+    private final int maxCooldown;
 
     public AbstractFluidCow(EntityFluidCow entity){
         cow = entity;

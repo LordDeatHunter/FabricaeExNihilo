@@ -14,7 +14,7 @@ object CustomColorJson : JsonDeserializer<Color>, JsonSerializer<Color> {
             when {
                 prim.isString -> return Color(prim.asString)
                 prim.isNumber -> return Color(prim.asInt)
-                else -> LogUtil.warn("Invalid Color primitive for " + json.toString())
+                else -> LogUtil.warn("Invalid Color primitive for $json")
             }
         } else {
             val helper = JsonHelper(json)

@@ -39,7 +39,7 @@ import java.util.List;
 public class BlockBarrel extends BlockBase implements ITileEntityProvider, ITOPInfoProvider {
 
     private final AxisAlignedBB boundingBox = new AxisAlignedBB(0.0625f, 0, 0.0625f, 0.9375f, 1f, 0.9375f);
-    private int tier;
+    private final int tier;
 
     public BlockBarrel(int tier, Material material) {
         super(material, "block_barrel" + tier);
@@ -51,7 +51,7 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider, ITOPI
     @Override
     public void breakBlock(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
         TileEntity te = worldIn.getTileEntity(pos);
-        if (te != null && te instanceof TileBarrel) {
+        if (te instanceof TileBarrel) {
             TileBarrel barrel = (TileBarrel) te;
 
             if (barrel.getMode() != null && barrel.getMode().getName().equals("block")) {
@@ -72,7 +72,7 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider, ITOPI
     public int getLightValue(@Nonnull IBlockState state, IBlockAccess world, @Nonnull BlockPos pos) {
         TileEntity te = world.getTileEntity(pos);
 
-        if (te != null && te instanceof TileBarrel && ModConfig.misc.enableBarrelLighting) {
+        if (te instanceof TileBarrel && ModConfig.misc.enableBarrelLighting) {
             TileBarrel tile = (TileBarrel) te;
             if (tile.getMode() instanceof BarrelModeBlock) {
                 BarrelModeBlock mode = (BarrelModeBlock) tile.getMode();
@@ -115,12 +115,14 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider, ITOPI
 
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     @Deprecated
     public boolean isFullBlock(IBlockState state) {
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     @Deprecated
     public boolean isOpaqueCube(IBlockState state) {
@@ -132,6 +134,7 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider, ITOPI
         return new TileBarrel(this);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     @Nonnull
     @Deprecated
@@ -139,11 +142,13 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider, ITOPI
         return boundingBox;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean isTopSolid(IBlockState state) {
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     @Deprecated
     public boolean isFullCube(IBlockState state) {
@@ -173,7 +178,7 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider, ITOPI
     @Override
     public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn) {
         TileEntity te = worldIn.getTileEntity(pos);
-        if (te != null && te instanceof TileBarrel) {
+        if (te instanceof TileBarrel) {
             ((TileBarrel) te).entityOnTop(worldIn, entityIn);
         }
     }
