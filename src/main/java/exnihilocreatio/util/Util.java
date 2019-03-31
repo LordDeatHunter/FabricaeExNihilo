@@ -95,7 +95,6 @@ public class Util {
 
     @SideOnly(Side.CLIENT)
     public static TextureAtlasSprite getTextureFromFluidStack(FluidStack stack) {
-        TextureAtlasSprite tex;
         if (stack != null && stack.getFluid() != null)
             return getTextureFromFluid(stack.getFluid());
 
@@ -113,6 +112,11 @@ public class Util {
         // Try flowing
         if (fluid.getFlowing() != null)
             tex = getTexture(fluid.getFlowing());
+        if(tex != null)
+            return tex;
+        // Try grabbing the block
+        if (fluid.getBlock() != null)
+            tex = getTextureFromBlockState(fluid.getBlock().getDefaultState());
         if(tex != null)
             return tex;
         // Give up
