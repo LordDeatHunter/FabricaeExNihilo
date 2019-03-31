@@ -1,0 +1,142 @@
+item.hammer_wood.name=Martello di Legno
+item.hammer_stone.name=Martello di Pietra
+item.hammer_iron.name=Martello di Ferro
+item.hammer_gold.name=Martello d'Oro
+item.hammer_diamond.name=Martello di Diamante
+item.exnihilocreatio.hammer_tconstruct.name=Martello
+item.exnihilocreatio.hammer_tconstruct.desc=Frantuma i tuoi blocchi come frantumi i tuoi nemici. Permette di frantumare come i Martelli della Ex Nihilo.
+item.exnihilocreatio.crook_tconstruct.name=Vincastro
+item.exnihilocreatio.crook_tconstruct.desc=Permette di rompere i blocchi come con il Vincastro della Ex Nihilo.
+
+item.crook_wood.name=Vincastro di Legno
+item.crook_bone.name=Vincastro d'Ossa
+item.crook_stone.name=Vincastro di Pietra
+item.crook_andesite.name=Vincastro di Andesite
+item.crook_granite.name=Vincastro di Granito
+item.crook_diorite.name=Vincastro di Diorite
+item.crook_clay_uncooked.name=Vincastro Crudo di Argilla
+item.crook_clay.name=Vincastro di Argilla
+item.crook_prismarine.name=Vincastro di Prismarino
+item.crook_purpur.name=Vincastro di Purpur
+item.crook_blaze.name=Vincastro di Fiamme
+item.crook_diamond.name=Vincastro a Punta di Diamante
+item.crook_gold.name=Vincastro d'Oro
+item.crook_iron.name=Vincastro di Ferro
+item.crook_netherrack.name=Vincastro in Netherrack
+
+item.item_pebble.stone.name=Sassolino di Roccia
+item.item_pebble.granite.name=Sassolino di Granito
+item.item_pebble.diorite.name=Sassolino di Diorite
+item.item_pebble.andesite.name=Sassolino di Andesite
+
+item.item_material.removed.name=Rimossa dalla Mod
+item.item_material.porcelain_clay.name=Argilla di Porcellana
+item.item_material.silkworm.name=Verme della Seta
+item.item_material.grass_seeds.name=Semi d'Erba
+item.item_material.ancient_spores.name=Spore Antiche
+item.item_material.doll.name=Bambola di Porcellana
+item.item_material.rod_stone.name=Bastone di Pietra
+item.item_material.gear_stone.name=Ingranaggio di Pietra
+
+item.item_doll.blaze.name=Bambola in Fiamme
+item.item_doll.blaze.desc=Buttala in una Botte contenente Lava per evocare un Blaze
+item.item_doll.enderman.name=Bambola Spaventosa
+item.item_doll.enderman.desc=Buttala in una Botte contenente Acqua Stregata per evocare Enderman
+item.item_doll.shulker.name=Bambola Fluttuante
+item.item_doll.shulker.desc=Buttala in una Botte contenente Acqua Stregata per evocare Shulker
+item.item_doll.guardian.name=Bambola Protettrice
+item.item_doll.guardian.desc=Buttala in una Botte contenente Acqua per evocare un Guardiano
+item.item_doll.blizz.name=Bambola Gelante
+item.item_doll.blizz.desc=Buttala in una Botte contenente Piroteo Fiammeggiante per evocare Blizz
+item.item_doll.blitz.name=Bambola della Brezza
+item.item_doll.blitz.desc=Buttala in una Botte contenente Piroteo Fiammeggiante per evocare Blitz
+item.item_doll.basalz.name=Bambola Frantumante
+item.item_doll.basalz.desc=Buttala in una Botte contenente Piroteo Fiammeggiante per evocare Basalz
+item.item_doll.blueslime.name=Bambola Grondante
+item.item_doll.blueslime.desc=Buttala in una Botte contenente Latte per evocare Slime Blu
+
+#This will look like '!!!{modid} is not installed, Item has no use!!!'
+debug.mod_not_installed.desc=!!!%s non è installata, questo oggetto non ha utilizzo!!!
+
+item.item_cooked_silkworm.name=Verme della Seta al Forno
+
+item.item_seed_birch.name=Semi di Betulla
+item.item_seed_oak.name=Semi di Quercia
+item.item_seed_jungle.name=Semi di Giungla
+item.item_seed_acacia.name=Semi di Acacia
+item.item_seed_spruce.name=Semi di Abete
+item.item_seed_carrot.name=Semi di Carota
+item.item_seed_potato.name=Semi di Patata
+item.item_seed_sugarcane.name=Semi di Canne da Zucchero
+item.item_seed_cactus.name=Semi di Cactus
+item.item_seed_darkoak.name=Semi di Quercia Scura
+item.item_seed_rubber.name=Semi di Albero della Gomma
+# Gets combined with the name in the OreBerry JSON
+item.exnihilocreatio.oreberry_seed.name=Semi di Bacca Mineraria
+# Individual oreberries can have their own translations defined. These are the defaults.
+item.exnihilocreatio.oreberry_seed.iron.name=Semi di Bacca Mineraria Ferrosa
+item.exnihilocreatio.oreberry_seed.gold.name=Semi di Bacca Mineraria Aurifera
+item.exnihilocreatio.oreberry_seed.copper.name=Semi di Bacca Mineraria Cuprica
+item.exnihilocreatio.oreberry_seed.tin.name=Semi di Bacca Mineraria Stannica
+item.exnihilocreatio.oreberry_seed.aluminum.name=Semi di Bacca Mineraria d'Alluminio
+item.exnihilocreatio.oreberry_seed.aluminium.name=Semi di Bacca Mineraria d'Alluminio
+
+tile.block_dust.name=Polvere
+tile.block_netherrack_crushed.name=Netherrack Frantumata
+tile.block_endstone_crushed.name=Pietra dell'End Frantumata
+tile.block_skystone_crushed.name=Pietra del Cielo Frantumata
+tile.block_diorite_crushed.name=Diorite Frantumata
+tile.block_andesite_crushed.name=Andesite Frantumata
+tile.block_granite_crushed.name=Granito Frantumato
+
+tile.block_barrel0.name=Botte di Legno
+tile.block_barrel1.name=Botte di Pietra
+
+tile.block_crucible.0.name=Crogiuolo Crudo
+tile.block_crucible.1.name=Crogiuolo
+tile.block_crucible_wood.name=Crogiuolo di Legno
+
+tile.block_infested_leaves.name=Foglie Infestate
+tile.block_infesting_leaves.name=Foglie Infestate
+
+tile.block_auto_sifter.name=Setacciatore Automatico
+tile.block_axle_stone.name=Asse di Pietra
+tile.block_grinder.name=Macina [WIP! Non fa ancora nulla!]
+tile.block_waterwheel.name=Ruota Idraulica
+
+tile.block_end_cake.name=Torta dell'End
+tile.exnihilocreatio.hive.artificial_hive.name=Alveare Artificiale
+tile.exnihilocreatio.hive.scented_hive.name=Alveare Profumato
+
+tile.block_sieve.name=Setaccio
+item.item_mesh.1.name=Maglia di Cordicella
+item.item_mesh.2.name=Maglia Irrigidita di Selce
+item.item_mesh.3.name=Maglia Irrigidita di Ferro
+item.item_mesh.4.name=Maglia Irrigidita di Diamante
+
+orepiece.name=Frammento di Minerale
+orechunk.name=Pezzo di Minerale
+oredust.name=Polvere di Minerale
+oreingot.name=Lingotto
+
+fluid.witchwater=Acqua Stregata
+
+jei.sieve.dropChance=Possibilità di Rilascio
+
+jei.hammer.hammerLevel=Livello del Martello
+jei.hammer.hammerLevel.0=Legno
+jei.hammer.hammerLevel.1=Pietra
+jei.hammer.hammerLevel.2=Ferro
+jei.hammer.hammerLevel.3=Diamante
+jei.hammer.hammerLevel.4=Tier Onnipotente
+
+commands.enreloadconfig.confirm=Configurazioni delal Ex Nihilo Ricaricate
+
+itemGroup.exNihilo=Ex Nihilo Creatio
+
+modifier.exnihilo_smashing.name=Frantumante
+modifier.exnihilo_smashing.desc=§rFrantuma oggetti in oggetti più piccoli
+
+enchantment.sieve_efficiency=Efficienza del Setaccio
+enchantment.sieve_fortune=Fortuna del Setaccio
+enchantment.sieve_luck_of_the_sea=Fortuna del Mare del Setaccio
