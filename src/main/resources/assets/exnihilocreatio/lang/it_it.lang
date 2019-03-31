@@ -135,7 +135,7 @@ commands.enreloadconfig.confirm=Configurazioni delal Ex Nihilo Ricaricate
 itemGroup.exNihilo=Ex Nihilo Creatio
 
 modifier.exnihilo_smashing.name=Frantumante
-modifier.exnihilo_smashing.desc=§rRompe cose in cose più piccole
+modifier.exnihilo_smashing.desc=§rFrantuma oggetti in oggetti più piccoli
 
 enchantment.sieve_efficiency=Efficienza del Setaccio
 enchantment.sieve_fortune=Fortuna del Setaccio
