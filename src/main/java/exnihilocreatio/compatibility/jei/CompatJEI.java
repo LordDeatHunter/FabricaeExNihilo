@@ -39,7 +39,7 @@ import java.util.List;
 
 @JEIPlugin
 public class CompatJEI implements IModPlugin {
-    private ISubtypeRegistry.ISubtypeInterpreter interpreter = new IgnoreNBTandMetaInterpreter();
+    private final ISubtypeRegistry.ISubtypeInterpreter interpreter = new IgnoreNBTandMetaInterpreter();
 
     @Override
     public void registerItemSubtypes(@Nonnull ISubtypeRegistry subtypeRegistry) {

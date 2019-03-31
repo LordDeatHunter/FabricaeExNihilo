@@ -1,8 +1,8 @@
 package exnihilocreatio.blocks
 
 import exnihilocreatio.ModFluids
+import exnihilocreatio.api.ExNihiloCreatioAPI.WITCH_WATER_WORLD_REGISTRY
 import exnihilocreatio.config.ModConfig
-import exnihilocreatio.registries.manager.ExNihiloRegistryManager.WITCH_WATER_WORLD_REGISTRY
 import exnihilocreatio.util.Data
 import net.minecraft.block.Block
 import net.minecraft.block.BlockLiquid
@@ -137,6 +137,8 @@ class BlockFluidWitchwater : BlockFluidClassic(ModFluids.fluidWitchwater, Materi
                 break
             }
         }
+        if(otherFluid == null)
+            return
         if(WITCH_WATER_WORLD_REGISTRY.contains(otherFluid)) {
             val isCold = otherFluid?.temperature ?: 0 <= 300
             val newState = WITCH_WATER_WORLD_REGISTRY.getResult(otherFluid, world.rand.nextFloat()).blockState

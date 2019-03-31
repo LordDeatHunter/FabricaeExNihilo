@@ -7,6 +7,7 @@ import exnihilocreatio.api.registries.IBarrelLiquidBlacklistRegistry;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.prefab.BaseRegistryMap;
 import net.minecraftforge.fluids.Fluid;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -25,11 +26,11 @@ public class BarrelLiquidBlacklistRegistry extends BaseRegistryMap<Integer, List
     }
 
     @SuppressWarnings("unchecked")
-    public boolean isBlacklisted(int level, String fluid) {
+    public boolean isBlacklisted(int level, @NotNull String fluid) {
         return level < 0 || registry.getOrDefault(level, Collections.EMPTY_LIST).contains(fluid);
     }
 
-    public void register(int level, String fluid) {
+    public void register(int level, @NotNull String fluid) {
         List<String> list = registry.computeIfAbsent(level, k -> new ArrayList<>());
 
         list.add(fluid);

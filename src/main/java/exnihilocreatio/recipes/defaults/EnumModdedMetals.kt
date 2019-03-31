@@ -27,11 +27,11 @@ enum class EnumModdedMetals(val color: Color) {
         return "ore" + getConcatableName()
     }
 
-    fun getIngotName(): String {
+    private fun getIngotName(): String {
         return "ingot" + getConcatableName()
     }
 
-    fun getDustName(): String {
+    private fun getDustName(): String {
         return "dust" + getConcatableName()
     }
 

@@ -7,20 +7,23 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextComponentString;
+import org.jetbrains.annotations.NotNull;
 
 public class CommandHandNBT extends CommandBase {
+    @NotNull
     @Override
     public String getName() {
         return "enhandnbt";
     }
 
+    @NotNull
     @Override
-    public String getUsage(ICommandSender iCommandSender) {
+    public String getUsage(@NotNull ICommandSender iCommandSender) {
         return "enhandnbt";
     }
 
     @Override
-    public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
+    public void execute(@NotNull MinecraftServer server, @NotNull ICommandSender sender, @NotNull String[] args) {
         if(args.length > 0)
             return;
         if(sender instanceof EntityPlayer){

@@ -14,6 +14,7 @@ import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.io.FileReader;
@@ -31,11 +32,11 @@ public class FluidOnTopRegistry extends BaseRegistryList<FluidFluidBlock> implem
         );
     }
 
-    public void register(Fluid fluidInBarrel, Fluid fluidOnTop, BlockInfo result) {
+    public void register(@NotNull Fluid fluidInBarrel, @NotNull Fluid fluidOnTop, @NotNull BlockInfo result) {
         registry.add(new FluidFluidBlock(fluidInBarrel.getName(), fluidOnTop.getName(), result));
     }
 
-    public void register(Fluid fluidInBarrel, Fluid fluidOnTop, ItemInfo result) {
+    public void register(@NotNull Fluid fluidInBarrel, @NotNull Fluid fluidOnTop, @NotNull ItemInfo result) {
         if (result.hasBlock())
             registry.add(new FluidFluidBlock(fluidInBarrel.getName(), fluidOnTop.getName(), new BlockInfo(result.getItemStack())));
     }
@@ -53,7 +54,7 @@ public class FluidOnTopRegistry extends BaseRegistryList<FluidFluidBlock> implem
     }
 
     @Nonnull
-    public BlockInfo getTransformedBlock(Fluid fluidInBarrel, Fluid fluidOnTop) {
+    public BlockInfo getTransformedBlock(@NotNull Fluid fluidInBarrel, @NotNull Fluid fluidOnTop) {
         for (FluidFluidBlock fBlock : registry) {
             if (fBlock.getFluidInBarrel().equals(fluidInBarrel.getName()) &&
                     fBlock.getFluidOnTop().equals(fluidOnTop.getName()))

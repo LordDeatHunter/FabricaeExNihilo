@@ -71,18 +71,21 @@ public abstract class BlockCrucibleBase extends Block implements ITOPInfoProvide
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     @Deprecated
     public boolean isFullBlock(IBlockState state) {
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     @Deprecated
     public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     @Deprecated
     public boolean isFullCube(IBlockState state) {

@@ -10,8 +10,8 @@ import net.minecraftforge.fluids.Fluid;
  * https://github.com/RicardoTheCoder/MiniMoos
  */
 public class AbstractMiniMoo implements IAbstractCow {
-    private EntityFluidMoo cow;
-    private int maxDelay;
+    private final EntityFluidMoo cow;
+    private final int maxDelay;
 
     public AbstractMiniMoo(EntityFluidMoo entity){
         cow = entity;

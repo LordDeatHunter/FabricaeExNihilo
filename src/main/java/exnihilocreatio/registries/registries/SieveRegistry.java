@@ -27,6 +27,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.FileReader;
 import java.util.*;
@@ -49,7 +50,7 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, List<Siftable>> i
     }
 
 
-    public void register(ItemStack itemStack, StackInfo drop, float chance, int meshLevel) {
+    public void register(@NotNull ItemStack itemStack, @NotNull StackInfo drop, float chance, int meshLevel) {
         if (itemStack.isEmpty()) {
             return;
         }
@@ -59,34 +60,34 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, List<Siftable>> i
             register(CraftingHelper.getIngredient(itemStack), new Siftable(new ItemInfo(drop.getItemStack()), chance, meshLevel));
     }
 
-    public void register(Item item, int meta, StackInfo drop, float chance, int meshLevel) {
+    public void register(@NotNull Item item, int meta, @NotNull StackInfo drop, float chance, int meshLevel) {
         register(new ItemStack(item, 1, meta), drop, chance, meshLevel);
     }
 
-    public void register(StackInfo item, StackInfo drop, float chance, int meshLevel) {
+    public void register(@NotNull StackInfo item, @NotNull StackInfo drop, float chance, int meshLevel) {
         register(item.getItemStack(), drop, chance, meshLevel);
     }
 
-    public void register(Block block, int meta, StackInfo drop, float chance, int meshLevel) {
+    public void register(@NotNull Block block, int meta, @NotNull StackInfo drop, float chance, int meshLevel) {
         register(new ItemStack(block, 1, meta), drop, chance, meshLevel);
     }
 
-    public void register(IBlockState state, StackInfo drop, float chance, int meshLevel) {
+    public void register(@NotNull IBlockState state, @NotNull StackInfo drop, float chance, int meshLevel) {
         register(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)), drop, chance, meshLevel);
     }
 
-    public void register(ResourceLocation location, int meta, StackInfo drop, float chance, int meshLevel) {
+    public void register(@NotNull ResourceLocation location, int meta, @NotNull StackInfo drop, float chance, int meshLevel) {
         register(new ItemStack(ForgeRegistries.ITEMS.getValue(location), 1, meta), drop, chance, meshLevel);
     }
 
-    public void register(String name, StackInfo drop, float chance, int meshLevel) {
+    public void register(@NotNull String name, @NotNull StackInfo drop, float chance, int meshLevel) {
         if (drop instanceof ItemInfo)
             register(new OreIngredientStoring(name), new Siftable((ItemInfo)drop, chance, meshLevel));
         else
             register(new OreIngredientStoring(name), new Siftable(new ItemInfo(drop.getItemStack()), chance, meshLevel));
     }
 
-    public void register(Ingredient ingredient, Siftable drop) {
+    public void register(@NotNull Ingredient ingredient, @NotNull Siftable drop) {
         if (ingredient == null)
             return;
 
@@ -108,7 +109,8 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, List<Siftable>> i
      * @return ArrayList of {@linkplain Siftable}
      * that could *potentially* be dropped.
      */
-    public List<Siftable> getDrops(StackInfo stack) {
+    @NotNull
+    public List<Siftable> getDrops(@NotNull StackInfo stack) {
         return getDrops(stack.getItemStack());
     }
 
@@ -120,20 +122,23 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, List<Siftable>> i
      * @return ArrayList of {@linkplain Siftable}
      * that could *potentially* be dropped.
      */
-    public List<Siftable> getDrops(ItemStack stack) {
+    @NotNull
+    public List<Siftable> getDrops(@NotNull ItemStack stack) {
         List<Siftable> drops = new ArrayList<>();
         if (!stack.isEmpty())
             registry.entrySet().stream().filter(entry -> entry.getKey().test(stack)).forEach(entry -> drops.addAll(entry.getValue()));
         return drops;
     }
 
-    public List<Siftable> getDrops(Ingredient ingredient) {
+    @NotNull
+    public List<Siftable> getDrops(@NotNull Ingredient ingredient) {
         List<Siftable> drops = new ArrayList<>();
         registry.entrySet().stream().filter(entry -> entry.getKey() == ingredient).forEach(entry -> drops.addAll(entry.getValue()));
         return drops;
     }
 
-    public List<ItemStack> getRewardDrops(Random random, IBlockState block, int meshLevel, int fortuneLevel) {
+    @NotNull
+    public List<ItemStack> getRewardDrops(@NotNull Random random, @NotNull IBlockState block, int meshLevel, int fortuneLevel) {
         if (block == null) {
             return null;
         }
@@ -155,7 +160,7 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, List<Siftable>> i
         return drops;
     }
 
-    public boolean canBeSifted(ItemStack stack) {
+    public boolean canBeSifted(@NotNull ItemStack stack) {
         return !stack.isEmpty() && registry.keySet().stream().anyMatch(entry -> entry.test(stack));
     }
 
@@ -185,7 +190,7 @@ public class SieveRegistry extends BaseRegistryMap<Ingredient, List<Siftable>> i
             if(ingredient != null){
                 for(BlockSieve.MeshType meshType : BlockSieve.MeshType.values()){
                     final List<List<ItemStack>> inputs = new ArrayList<>();
-                    inputs.add(Arrays.asList(new ItemStack(ModItems.mesh, 1, meshType.getID())));
+                    inputs.add(Collections.singletonList(new ItemStack(ModItems.mesh, 1, meshType.getID())));
                     inputs.add(Arrays.asList(ingredient.getMatchingStacks()));
                     if (meshType.isValid()){
                         final List<ItemStack> rawOutputs = getRegistry().get(ingredient).stream()

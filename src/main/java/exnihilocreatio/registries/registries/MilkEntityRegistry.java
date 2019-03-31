@@ -13,6 +13,7 @@ import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fluids.Fluid;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.FileReader;
 import java.util.List;
@@ -29,11 +30,11 @@ public class MilkEntityRegistry extends BaseRegistryList<Milkable> implements IM
         );
     }
 
-    public void register(Entity entityOnTop, Fluid result, int amount, int coolDown) {
+    public void register(@NotNull Entity entityOnTop, @NotNull Fluid result, int amount, int coolDown) {
         registry.add(new Milkable(entityOnTop.getName(), result.getName(), amount, coolDown));
     }
 
-    public void register(String entityOnTop, String result, int amount, int coolDown) {
+    public void register(@NotNull String entityOnTop, @NotNull String result, int amount, int coolDown) {
         registry.add(new Milkable(entityOnTop, result, amount, coolDown));
     }
 
@@ -66,7 +67,7 @@ public class MilkEntityRegistry extends BaseRegistryList<Milkable> implements IM
         return null;
     }
 
-    public String getResult(Entity entityOnTop) {
+    public String getResult(@NotNull Entity entityOnTop) {
         for (Milkable milk : registry) {
             if (milk.getEntityOnTop().equals(entityOnTop.getName())) {
                 return milk.getResult();
@@ -75,7 +76,7 @@ public class MilkEntityRegistry extends BaseRegistryList<Milkable> implements IM
         return null;
     }
 
-    public int getAmount(Entity entityOnTop) {
+    public int getAmount(@NotNull Entity entityOnTop) {
         for (Milkable milk : registry) {
             if (milk.getEntityOnTop().equals(entityOnTop.getName())) {
                 return milk.getAmount();
@@ -84,7 +85,7 @@ public class MilkEntityRegistry extends BaseRegistryList<Milkable> implements IM
         return 0;
     }
 
-    public int getCoolDown(Entity entityOnTop) {
+    public int getCoolDown(@NotNull Entity entityOnTop) {
         for (Milkable milk : registry) {
             if (milk.getEntityOnTop().equals(entityOnTop.getName())) {
                 return milk.getCoolDown();

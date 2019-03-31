@@ -14,6 +14,7 @@ import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import net.minecraftforge.fluids.FluidRegistry;
 import org.apache.commons.io.IOUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileReader;
@@ -33,11 +34,11 @@ public class FluidTransformRegistry extends BaseRegistryMap<String, List<FluidTr
                 ExNihiloRegistryManager.FLUID_TRANSFORM_DEFAULT_REGISTRY_PROVIDERS);
     }
 
-    public void register(String inputFluid, String outputFluid, int duration, BlockInfo[] transformingBlocks, BlockInfo[] blocksToSpawn) {
+    public void register(@NotNull String inputFluid, @NotNull String outputFluid, int duration, @NotNull BlockInfo[] transformingBlocks, @NotNull BlockInfo[] blocksToSpawn) {
         register(new FluidTransformer(inputFluid, outputFluid, duration, transformingBlocks, blocksToSpawn));
     }
 
-    public void register(FluidTransformer transformer) {
+    public void register(@NotNull FluidTransformer transformer) {
         List<FluidTransformer> list = registry.get(transformer.getInputFluid());
 
         if (list == null) {
@@ -48,11 +49,11 @@ public class FluidTransformRegistry extends BaseRegistryMap<String, List<FluidTr
         registry.put(transformer.getInputFluid(), list);
     }
 
-    public boolean containsKey(String inputFluid) {
+    public boolean containsKey(@NotNull String inputFluid) {
         return registry.containsKey(inputFluid);
     }
 
-    public FluidTransformer getFluidTransformer(String inputFluid, String outputFluid) {
+    public FluidTransformer getFluidTransformer(@NotNull String inputFluid, @NotNull String outputFluid) {
         if (registry.containsKey(inputFluid)) {
             for (FluidTransformer transformer : registry.get(inputFluid)) {
                 if (transformer.getInputFluid().equals(inputFluid) && transformer.getOutputFluid().equals(outputFluid))
@@ -62,7 +63,8 @@ public class FluidTransformRegistry extends BaseRegistryMap<String, List<FluidTr
         return null;
     }
 
-    public List<FluidTransformer> getFluidTransformers(String inputFluid) {
+    @NotNull
+    public List<FluidTransformer> getFluidTransformers(@NotNull String inputFluid) {
         return registry.get(inputFluid);
     }
 

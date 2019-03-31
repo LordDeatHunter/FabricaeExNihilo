@@ -10,14 +10,15 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class CrookRecipe implements IRecipeWrapper {
-    private List<ItemStack> inputs;
-    private List<ItemStack> outputs;
+    private final List<ItemStack> inputs;
+    private final List<ItemStack> outputs;
 
     public CrookRecipe(List<ItemStack> inputs, List<ItemStack> outputs){
         this.inputs = inputs;
         this.outputs = outputs;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void getIngredients(@Nonnull IIngredients ingredients) {
         ingredients.setInputs(ItemStack.class, inputs);

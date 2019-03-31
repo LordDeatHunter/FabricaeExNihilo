@@ -9,7 +9,7 @@ import java.lang.reflect.Type
 
 object CustomFluidJson : JsonDeserializer<Fluid>, JsonSerializer<Fluid> {
     override fun serialize(src: Fluid, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
-        LogUtil.debug("Serialized fluid ${src} as ${src.name}")
+        LogUtil.debug("Serialized fluid $src as ${src.name}")
         return JsonPrimitive(src.name)
     }
 

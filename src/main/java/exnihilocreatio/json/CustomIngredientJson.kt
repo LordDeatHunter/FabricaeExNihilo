@@ -16,7 +16,7 @@ object CustomIngredientJson : JsonDeserializer<Ingredient>, JsonSerializer<Ingre
             val s = json.getAsString()
             return IngredientUtil.parseFromString(s)
         } else {
-            LogUtil.error("Error parsing JSON: No Primitive String: " + json.toString())
+            LogUtil.error("Error parsing JSON: No Primitive String: $json")
         }
 
         return Ingredient.EMPTY

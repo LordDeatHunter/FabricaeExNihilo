@@ -20,7 +20,7 @@ object CustomItemStackJson : JsonDeserializer<ItemStack>, JsonSerializer<ItemSta
         val meta = helper.getNullableInteger("meta", 0)
 
         val item: Item = Item.getByNameOrId(name) ?: doInline {
-            LogUtil.error("Error parsing JSON: Invalid Item: " + json.toString())
+            LogUtil.error("Error parsing JSON: Invalid Item: $json")
             LogUtil.error("This may result in crashing or other undefined behavior")
 
             return@doInline Items.AIR

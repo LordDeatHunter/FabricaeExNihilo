@@ -42,8 +42,8 @@ import java.util.*;
 
 public class OreRegistry extends BaseRegistryList<Ore> implements IOreRegistry {
 
-    private List<ItemOre> itemOreRegistry = new ArrayList<>();
-    private Set<ItemOre> sieveBlackList = new HashSet<>(); // A black list of ores to not register
+    private final List<ItemOre> itemOreRegistry = new ArrayList<>();
+    private final Set<ItemOre> sieveBlackList = new HashSet<>(); // A black list of ores to not register
 
     public OreRegistry() {
         super(
@@ -97,7 +97,8 @@ public class OreRegistry extends BaseRegistryList<Ore> implements IOreRegistry {
      *              Otherwise, the hunk will be smelted into this.
      * @return Ore, containing the base Ore object.
      */
-    public Ore register(String name, Color color, ItemInfo info, Map<String, String> translations, String oredictName) {
+    @NotNull
+    public Ore register(@NotNull String name, @NotNull Color color, ItemInfo info, Map<String, String> translations, String oredictName) {
         Ore ore = new Ore(name, color, info, null, translations, oredictName);
         register(ore);
 
@@ -216,7 +217,7 @@ public class OreRegistry extends BaseRegistryList<Ore> implements IOreRegistry {
         }
     }
 
-    public ItemOre getOreItem(String name) {
+    public ItemOre getOreItem(@NotNull String name) {
         for (ItemOre itemOre : itemOreRegistry) {
             if (itemOre.getOre().getName().equals(name)) {
                 return itemOre;
@@ -226,7 +227,7 @@ public class OreRegistry extends BaseRegistryList<Ore> implements IOreRegistry {
         return null;
     }
 
-    public boolean isRegistered(String name) {
+    public boolean isRegistered(@NotNull String name) {
         for (Ore ore : registry) {
             if (ore.getName().equals(name)) {
                 return true;

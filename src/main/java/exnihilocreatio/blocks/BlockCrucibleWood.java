@@ -38,6 +38,7 @@ public class BlockCrucibleWood extends BlockCrucibleBase {
         return new BlockStateContainer(this, THIN);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     @Nonnull
     public IBlockState getActualState(@Nonnull IBlockState state, IBlockAccess worldIn, BlockPos pos) {
@@ -49,6 +50,7 @@ public class BlockCrucibleWood extends BlockCrucibleBase {
         return 0;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     @Nonnull
     public IBlockState getStateFromMeta(int meta) {

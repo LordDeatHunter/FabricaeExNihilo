@@ -49,6 +49,7 @@ public class HandlerCrook {
             for (int i = 0; i < ModConfig.crooking.numberOfTimesToTestVanillaDrops + 1; i++) {
                 Block block = event.getState().getBlock();
                 int fortune = event.getFortuneLevel();
+                @SuppressWarnings("deprecation")
                 java.util.List<ItemStack> items = block.getDrops(event.getWorld(), event.getPos(), event.getState(), fortune);
                 for (ItemStack item : items) {
                     if (event.getWorld().rand.nextFloat() <= event.getDropChance()) {

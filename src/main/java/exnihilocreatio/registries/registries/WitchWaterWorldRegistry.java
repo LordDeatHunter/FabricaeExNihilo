@@ -11,6 +11,7 @@ import exnihilocreatio.registries.types.WitchWaterWorld;
 import exnihilocreatio.util.BlockInfo;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileReader;
@@ -47,7 +48,9 @@ public class WitchWaterWorldRegistry extends BaseRegistryMap<Fluid, WitchWaterWo
         return registry.containsKey(fluid);
     }
 
-    public BlockInfo getResult(Fluid fluid, Float chance) {
+    @NotNull
+    @Override
+    public BlockInfo getResult(@NotNull Fluid fluid, float chance) {
         if(registry.containsKey(fluid))
             return registry.get(fluid).getResult(chance);
         return BlockInfo.EMPTY;

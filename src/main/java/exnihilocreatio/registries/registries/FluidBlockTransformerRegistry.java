@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -43,7 +44,7 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
         register(fluid, inputBlock, outputBlock, null);
     }
 
-    public void register(Fluid fluid, StackInfo inputBlock, StackInfo outputBlock, String entityName) {
+    public void register(Fluid fluid, @NotNull StackInfo inputBlock, @NotNull StackInfo outputBlock, String entityName) {
         if (fluid == null){
             LogUtil.error("Fluid is null, this may not happen!");
             for (StackTraceElement stackTraceElement : Thread.currentThread().getStackTrace()) {
@@ -61,7 +62,7 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
         register(fluid, oredict, outputBlock, null);
     }
 
-    public void register(Fluid fluid, String oredict, StackInfo outputBlock, String entityName) {
+    public void register(@NotNull Fluid fluid, @NotNull String oredict, @NotNull StackInfo outputBlock, String entityName) {
         register(fluid.getName(), new OreIngredientStoring(oredict), outputBlock, entityName, entityName == null ? 0 : 4, entityName == null ? 0 : 4);
     }
 
@@ -77,7 +78,7 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
     }
 
 
-    public boolean canBlockBeTransformedWithThisFluid(Fluid fluid, ItemStack stack) {
+    public boolean canBlockBeTransformedWithThisFluid(@NotNull Fluid fluid, @NotNull ItemStack stack) {
         for (FluidBlockTransformer transformer : registry) {
             if (fluid.getName().equals(transformer.getFluidName()) && transformer.getInput().apply(stack))
                 return true;
@@ -87,7 +88,7 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
     }
 
     @Nonnull
-    public BlockInfo getBlockForTransformation(Fluid fluid, ItemStack stack) {
+    public BlockInfo getBlockForTransformation(@NotNull Fluid fluid, @NotNull ItemStack stack) {
         for (FluidBlockTransformer transformer : registry) {
             if (fluid.getName().equals(transformer.getFluidName()) && transformer.getInput().apply(stack)) {
                 return transformer.getOutput();
@@ -97,7 +98,7 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
         return BlockInfo.EMPTY;
     }
 
-    public int getSpawnCountForTransformation(Fluid fluid, ItemStack stack) {
+    public int getSpawnCountForTransformation(@NotNull Fluid fluid, @NotNull ItemStack stack) {
         for (FluidBlockTransformer transformer : registry) {
             if (fluid.getName().equals(transformer.getFluidName()) && transformer.getInput().apply(stack)) {
                 return transformer.getSpawnCount();
@@ -107,7 +108,7 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
         return 0;
     }
 
-    public int getSpawnRangeForTransformation(Fluid fluid, ItemStack stack) {
+    public int getSpawnRangeForTransformation(@NotNull Fluid fluid, @NotNull ItemStack stack) {
         for (FluidBlockTransformer transformer : registry) {
             if (fluid.getName().equals(transformer.getFluidName()) && transformer.getInput().apply(stack)) {
                 return transformer.getSpawnRange();
@@ -117,7 +118,7 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
         return 0;
     }
 
-    public FluidBlockTransformer getTransformation(Fluid fluid, ItemStack stack) {
+    public FluidBlockTransformer getTransformation(@NotNull Fluid fluid, @NotNull ItemStack stack) {
         for (FluidBlockTransformer transformer : registry) {
             if (fluid.getName().equals(transformer.getFluidName()) && transformer.getInput().apply(stack)) {
                 return transformer;
@@ -127,7 +128,7 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
         return null;
     }
 
-    public EntityInfo getSpawnForTransformation(Fluid fluid, ItemStack stack) {
+    public EntityInfo getSpawnForTransformation(@NotNull Fluid fluid, @NotNull ItemStack stack) {
         for (FluidBlockTransformer transformer : registry) {
             if (fluid.getName().equals(transformer.getFluidName()) && transformer.getInput().apply(stack)) {
                 return transformer.getToSpawn();

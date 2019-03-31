@@ -16,6 +16,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.awt.*;
@@ -97,6 +98,7 @@ public final class ColorGetter {
         return getColors(textureAtlasSprite, renderColor, colorCount);
     }
 
+    @SuppressWarnings("deprecation")
     private static List<Color> getBlockColors(ItemStack itemStack, Block block, int colorCount) {
         final int meta = itemStack.getMetadata();
         IBlockState blockState;
@@ -168,7 +170,7 @@ public final class ColorGetter {
         return textureAtlasSprite;
     }
 
-    @Nullable
+    @NotNull
     private static TextureAtlasSprite getTextureAtlasSprite(ItemStack itemStack) {
         RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
         ItemModelMesher itemModelMesher = renderItem.getItemModelMesher();

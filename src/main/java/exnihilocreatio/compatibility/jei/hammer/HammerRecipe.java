@@ -2,6 +2,7 @@ package exnihilocreatio.compatibility.jei.hammer;
 
 import com.google.common.collect.Lists;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -10,8 +11,8 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class HammerRecipe implements IRecipeWrapper {
-    private List<ItemStack> inputs;
-    private List<ItemStack> outputs;
+    private final List<ItemStack> inputs;
+    private final List<ItemStack> outputs;
 
     public HammerRecipe(List<ItemStack> inputs, List<ItemStack> outputs){
         this.inputs = inputs;
@@ -20,8 +21,8 @@ public class HammerRecipe implements IRecipeWrapper {
 
     @Override
     public void getIngredients(@Nonnull IIngredients ingredients) {
-        ingredients.setInputs(ItemStack.class, inputs);
-        ingredients.setOutputs(ItemStack.class, outputs);
+        ingredients.setInputs(VanillaTypes.ITEM, inputs);
+        ingredients.setOutputs(VanillaTypes.ITEM, outputs);
     }
 
     public List<ItemStack> getInputs() {

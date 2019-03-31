@@ -15,7 +15,7 @@ object CustomWitchWaterWorld : JsonDeserializer<WitchWaterWorld>, JsonSerializer
 
     @Throws(JsonParseException::class)
     override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): WitchWaterWorld {
-        val www = WitchWaterWorld(ArrayList<BlockInfo>(), ArrayList<Int>())
+        val www = WitchWaterWorld(ArrayList(), ArrayList())
         val entries = json.asJsonObject.entrySet()
         for(entry in entries)
             www.add(BlockInfo(entry.key),entry.value.asInt)

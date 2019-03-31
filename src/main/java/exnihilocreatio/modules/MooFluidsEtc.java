@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class MooFluidsEtc implements IExNihiloCreatioModule {
-    private static Set<Fluid> fluidSet = new HashSet<>();
+    private static final Set<Fluid> fluidSet = new HashSet<>();
     @Getter
     private static boolean loaded = false;
 

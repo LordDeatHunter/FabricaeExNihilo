@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import exnihilocreatio.registries.types.FluidBlockTransformer;
 import exnihilocreatio.util.Util;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -38,10 +39,10 @@ public class FluidBlockTransformRecipe implements IRecipeWrapper {
 
     @Override
     public void getIngredients(@Nonnull IIngredients ingredients) {
-        ingredients.setInputLists(ItemStack.class, getInputs());
-        ingredients.setInputs(FluidStack.class, getFluidInputs());
+        ingredients.setInputLists(VanillaTypes.ITEM, getInputs());
+        ingredients.setInputs(VanillaTypes.FLUID, getFluidInputs());
 
-        ingredients.setOutput(ItemStack.class, outputStack);
+        ingredients.setOutput(VanillaTypes.ITEM, outputStack);
     }
 
     public List<List<ItemStack>> getInputs() {

@@ -4,6 +4,7 @@ import exnihilocreatio.modules.forestry.blocks.BlockHive;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 public class ItemBlockHive extends ItemBlock {
     public ItemBlockHive(Block block){
@@ -15,6 +16,7 @@ public class ItemBlockHive extends ItemBlock {
     public int getMetadata(int metadata){
         return metadata;
     }
+    @NotNull
     @Override
     public String getTranslationKey(ItemStack stack){
         BlockHive.EnumType type = BlockHive.EnumType.values()[stack.getMetadata()];

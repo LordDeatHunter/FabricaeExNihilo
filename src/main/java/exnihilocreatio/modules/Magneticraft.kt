@@ -16,7 +16,7 @@ object Magneticraft: IExNihiloCreatioModule {
         registerExNihiloHammers()
     }
 
-    fun registerExNihiloHammers() {
+    private fun registerExNihiloHammers() {
         for(item in Data.ITEMS){
             if(!isHammer(item))
                 continue

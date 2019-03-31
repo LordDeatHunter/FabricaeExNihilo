@@ -41,6 +41,7 @@ public class ModBlocks {
 
     public static final BlockEndCake endCake = new BlockEndCake();
 
+    @SuppressWarnings("deprecation")
     public static void registerBlocks(IForgeRegistry<Block> registry) {
         for (Block block : Data.BLOCKS) {
             registry.register(block);

@@ -14,6 +14,7 @@ import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.StackInfo;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.FileReader;
 import java.util.List;
@@ -32,15 +33,15 @@ public class FluidItemFluidRegistry extends BaseRegistryList<FluidItemFluid> imp
         );
     }
 
-    public void register(String inputFluid, StackInfo reactant, String outputFluid) {
+    public void register(@NotNull String inputFluid, @NotNull StackInfo reactant, @NotNull String outputFluid) {
         registry.add(new FluidItemFluid(inputFluid, reactant, outputFluid));
     }
 
-    public void register(Fluid inputFluid, StackInfo reactant, Fluid outputFluid) {
+    public void register(@NotNull Fluid inputFluid, @NotNull StackInfo reactant, @NotNull Fluid outputFluid) {
         registry.add(new FluidItemFluid(inputFluid.getName(), reactant, outputFluid.getName()));
     }
 
-    public String getFLuidForTransformation(Fluid fluid, ItemStack stack) {
+    public String getFLuidForTransformation(@NotNull Fluid fluid, @NotNull ItemStack stack) {
         ItemInfo info = new ItemInfo(stack);
 
         for (FluidItemFluid transformer : registry) {

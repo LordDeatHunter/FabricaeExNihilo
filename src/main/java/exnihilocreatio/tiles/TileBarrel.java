@@ -12,7 +12,6 @@ import exnihilocreatio.modules.moofluidsetc.IAbstractCow;
 import exnihilocreatio.networking.MessageBarrelModeUpdate;
 import exnihilocreatio.networking.MessageCheckLight;
 import exnihilocreatio.networking.PacketHandler;
-import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.BarrelModeRegistry;
 import exnihilocreatio.registries.registries.BarrelModeRegistry.TriggerType;
 import exnihilocreatio.registries.types.Milkable;
@@ -39,6 +38,8 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+
+import static exnihilocreatio.registries.manager.ExNihiloRegistryManager.MILK_ENTITY_REGISTRY;
 
 public class TileBarrel extends BaseTileEntity implements ITickable {
 
@@ -267,7 +268,7 @@ public class TileBarrel extends BaseTileEntity implements ITickable {
             }
         }
 
-        Milkable milk = ExNihiloRegistryManager.MILK_ENTITY_REGISTRY.getMilkable(entityIn);
+        Milkable milk = MILK_ENTITY_REGISTRY.getMilkable(entityIn);
         if (milk == null) return; // Not a valid recipe
 
         // Attempt to add the fluid if it is a valid fluid

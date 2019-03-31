@@ -43,15 +43,15 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, List<CrookReward>
         );
     }
 
-    public void register(Block block, int meta, ItemStack reward, float chance, float fortuneChance) {
+    public void register(@NotNull Block block, int meta, @NotNull ItemStack reward, float chance, float fortuneChance) {
         register(new BlockInfo(block, meta), reward, chance, fortuneChance);
     }
 
-    public void register(IBlockState state, ItemStack reward, float chance, float fortuneChance) {
+    public void register(@NotNull IBlockState state, @NotNull ItemStack reward, float chance, float fortuneChance) {
         register(new BlockInfo(state), reward, chance, fortuneChance);
     }
 
-    public void register(BlockInfo info, ItemStack reward, float chance, float fortuneChance) {
+    public void register(@NotNull BlockInfo info, @NotNull ItemStack reward, float chance, float fortuneChance) {
         Ingredient ingredient = registry.keySet().stream().filter(entry -> entry.test(info.getItemStack())).findFirst().orElse(null);
 
         if (ingredient != null) {
@@ -63,14 +63,14 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, List<CrookReward>
         }
     }
 
-    public void register(String name, ItemStack reward, float chance, float fortuneChance) {
+    public void register(@NotNull String name, @NotNull ItemStack reward, float chance, float fortuneChance) {
         Ingredient ingredient = new OreIngredientStoring(name);
         CrookReward crookReward = new CrookReward(reward, chance, fortuneChance);
 
         register(ingredient, crookReward);
     }
 
-    public void register(Ingredient ingredient, CrookReward reward) {
+    public void register(@NotNull Ingredient ingredient, @NotNull CrookReward reward) {
         Ingredient search = registry.keySet()
                 .stream()
                 .filter(entry -> IngredientUtil.ingredientEquals(entry, ingredient))
@@ -95,7 +95,7 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, List<CrookReward>
         return drops;
     }
 
-    public boolean isRegistered(Block block) {
+    public boolean isRegistered(@NotNull Block block) {
         ItemStack stack = new ItemStack(block);
         return registry.keySet().stream().anyMatch(ingredient -> ingredient.test(stack));
     }
@@ -143,7 +143,7 @@ public class CrookRegistry extends BaseRegistryMap<Ingredient, List<CrookReward>
         for(Ingredient ingredient : getRegistry().keySet()){
             if(ingredient == null)
                 continue;
-            List<ItemStack> rawOutputs = getRewards(ingredient).stream().map(reward -> reward.getStack()).collect(Collectors.toList());
+            List<ItemStack> rawOutputs = getRewards(ingredient).stream().map(CrookReward::getStack).collect(Collectors.toList());
             List<ItemStack> allOutputs = new ArrayList<>();
             for(ItemStack raw : rawOutputs){
                 boolean alreadyexists = false;

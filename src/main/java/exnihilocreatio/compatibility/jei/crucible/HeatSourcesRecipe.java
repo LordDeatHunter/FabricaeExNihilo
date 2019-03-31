@@ -5,6 +5,7 @@ import exnihilocreatio.blocks.BlockCrucibleStone;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.RenderTickCounter;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -76,7 +77,7 @@ public class HeatSourcesRecipe implements IRecipeWrapper {
 
     @Override
     public void getIngredients(@Nonnull IIngredients ingredients) {
-        ingredients.setInputs(ItemStack.class, inputs);
+        ingredients.setInputs(VanillaTypes.ITEM, inputs);
     }
 
     @Override

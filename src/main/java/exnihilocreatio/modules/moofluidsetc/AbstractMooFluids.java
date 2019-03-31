@@ -9,7 +9,7 @@ import net.minecraftforge.fluids.Fluid;
  * https://github.com/TheRoBrit/Moo-Fluids
  */
 public class AbstractMooFluids implements IAbstractCow  {
-    private EntityFluidCow cow;
+    private final EntityFluidCow cow;
 
     public AbstractMooFluids(EntityFluidCow entity){
         cow = entity;

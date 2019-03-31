@@ -14,6 +14,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 
@@ -46,7 +47,7 @@ public class ItemMesh extends Item implements IHasModel {
     }
 
     @Override
-    public boolean isEnchantable(ItemStack stack){
+    public boolean isEnchantable(@NotNull ItemStack stack){
         return true;
     }
 
