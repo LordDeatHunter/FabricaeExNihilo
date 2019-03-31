@@ -140,6 +140,7 @@ public class ExNihiloCreatio {
         ExNihiloRegistryManager.CRUCIBLE_STONE_REGISTRY.loadJson(new File(configDirectory, "CrucibleRegistryStone.json"));
         ExNihiloRegistryManager.CRUCIBLE_WOOD_REGISTRY.loadJson(new File(configDirectory, "CrucibleRegistryWood.json"));
         ExNihiloRegistryManager.MILK_ENTITY_REGISTRY.loadJson(new File(configDirectory, "MilkEntityRegistry.json"));
+        ExNihiloRegistryManager.WITCH_WATER_WORLD_REGISTRY.loadJson(new File(configDirectory, "WitchWaterWorldRegistry.json"));
 
         MinecraftForge.EVENT_BUS.post(new RegistryReloadedEvent());
     }

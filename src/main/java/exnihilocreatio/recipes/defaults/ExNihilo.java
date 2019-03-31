@@ -12,6 +12,7 @@ import exnihilocreatio.items.seeds.ItemSeedBase;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.*;
 import exnihilocreatio.registries.types.Meltable;
+import exnihilocreatio.registries.types.WitchWaterWorld;
 import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
@@ -28,7 +29,9 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ExNihilo implements IRecipeDefaults {
@@ -415,6 +418,22 @@ public class ExNihilo implements IRecipeDefaults {
     @Override
     public void registerMilk(MilkEntityRegistry registry) {
         registry.register("Cow", "milk", 10, 20);
+    }
+
+
+    @Override
+    public void registerWitchWaterWorld(WitchWaterWorldRegistry registry){
+        List<BlockInfo> waterResults = new ArrayList<>();
+        waterResults.add(new BlockInfo(Blocks.DIRT, 0));
+        waterResults.add(new BlockInfo(Blocks.DIRT, 1));
+        waterResults.add(new BlockInfo(Blocks.DIRT, 2));
+        registry.register(FluidRegistry.WATER, new WitchWaterWorld(waterResults));
+        List<BlockInfo> lavaResults = new ArrayList<>();
+        lavaResults.add(new BlockInfo(Blocks.COBBLESTONE));
+        lavaResults.add(new BlockInfo(Blocks.STONE, 1));
+        lavaResults.add(new BlockInfo(Blocks.STONE, 3));
+        lavaResults.add(new BlockInfo(Blocks.STONE, 5));
+        registry.register(FluidRegistry.LAVA, new WitchWaterWorld(lavaResults));
     }
 
     private float getDropChance(float chance) {
