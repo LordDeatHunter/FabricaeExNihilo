@@ -54,8 +54,11 @@ class BlockFluidWitchwater : BlockFluidClassic(ModFluids.fluidWitchwater, Materi
             }
 
             is EntitySlime ->
-                if (entity !is EntityMagmaCube)
-                    replaceMob(world, entity, EntityMagmaCube(world))
+                if (entity !is EntityMagmaCube) {
+                    val newEntity = EntityMagmaCube(world)
+                    newEntity.setSlimeSize(entity.slimeSize, true)
+                    replaceMob(world, entity, newEntity)
+                }
 
             is EntitySpider ->
                 if (entity !is EntityCaveSpider)

@@ -6,6 +6,8 @@ import exnihilocreatio.util.OreDictUtil
 
 enum class EnumModdedMetals(val color: Color) {
     ALUMINUM(Color("BFBFBF")),
+    ARDITE(Color("FF751A")),
+    COBALT(Color("3333FF")),
     COPPER(Color("FF9933")),
     LEAD(Color("330066")),
     NICKEL(Color("FFFFCC")),

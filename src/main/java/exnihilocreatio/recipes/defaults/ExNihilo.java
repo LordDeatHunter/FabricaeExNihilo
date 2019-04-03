@@ -348,7 +348,7 @@ public class ExNihilo implements IRecipeDefaults {
                 registry.register("aluminium", metal.getColor(), metal.getIngot(), metal.getDust());
             }
             else if(!OreDictionary.getOres(metal.getOreName()).isEmpty()) {
-                registry.register(metal.getRegistryName(), metal.getColor(), metal.getDust());
+                registry.register(metal.getRegistryName(), metal.getColor(), metal.getIngot(), metal.getDust());
             }
         }
     }
