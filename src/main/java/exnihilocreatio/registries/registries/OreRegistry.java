@@ -209,9 +209,10 @@ public class OreRegistry extends BaseRegistryList<Ore> implements IOreRegistry {
             String oreName = itemOre.getOre().getOredictName() != null ? itemOre.getOre().getOredictName() : StringUtils.capitalize(itemOre.getOre().getName());
 
             OreDictionary.registerOre(bChunk + oreName, new ItemStack(itemOre, 1, EnumOreSubtype.CHUNK.getMeta()));
-            OreDictionary.registerOre(bDust + oreName, new ItemStack(itemOre, 1, EnumOreSubtype.DUST.getMeta()));
             OreDictionary.registerOre(bPiece + oreName, new ItemStack(itemOre, 1, EnumOreSubtype.PIECE.getMeta()));
 
+            if (itemOre.isRegisterDust())
+                OreDictionary.registerOre(bDust + oreName, new ItemStack(itemOre, 1, EnumOreSubtype.DUST.getMeta()));
             if (itemOre.isRegisterIngot())
                 OreDictionary.registerOre(bIngot + oreName, new ItemStack(itemOre, 1, EnumOreSubtype.INGOT.getMeta()));
         }

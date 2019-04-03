@@ -44,7 +44,7 @@ public class WitchWaterWorldRegistry extends BaseRegistryMap<Fluid, WitchWaterWo
         register(key, WitchWaterWorld.fromMap(entries));
     }
 
-    public boolean contains(Fluid fluid) {
+    public boolean contains(@NotNull Fluid fluid) {
         return registry.containsKey(fluid);
     }
 

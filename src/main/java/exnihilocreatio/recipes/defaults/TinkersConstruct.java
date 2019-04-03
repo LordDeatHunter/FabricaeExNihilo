@@ -6,7 +6,6 @@ import exnihilocreatio.items.ore.ItemOre;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.OreRegistry;
 import exnihilocreatio.registries.registries.SieveRegistry;
-import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import lombok.Getter;
@@ -38,9 +37,7 @@ public class TinkersConstruct implements IRecipeDefaults {
     public void registerOreChunks(OreRegistry registry) {
         Item tconstructIngots = Item.getByNameOrId("tconstruct:ingots");
         if (tconstructIngots != null) {
-            registry.register("ardite", new Color("FF751A"), new ItemInfo(tconstructIngots, 1));
             registry.getSieveBlackList().add(ExNihiloRegistryManager.ORE_REGISTRY.getOreItem("ardite")); //Disables the default sieve recipes
-            registry.register("cobalt", new Color("3333FF"), new ItemInfo(tconstructIngots));
             registry.getSieveBlackList().add(ExNihiloRegistryManager.ORE_REGISTRY.getOreItem("cobalt")); //Disables the default sieve recipes
         }
     }
