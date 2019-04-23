@@ -155,7 +155,7 @@ public class TileSieve extends BaseTileEntity {
                 luckOfTheSea += player.getLuck();
             }
 
-            progress += 10 + 5 * efficiency;
+            progress += 10 + ModConfig.sieve.enchantments.efficiencyScaleFactor * efficiency;
             markDirtyClient();
 
             if (progress >= 100) {

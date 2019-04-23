@@ -138,6 +138,9 @@ public class ModConfig {
             public boolean hasteIncreasesSpeed = true;
             @Config.Comment("Enable the Sieve Efficiency enchantment.")
             public boolean enableSieveEfficiency = true;
+            @Config.Comment("Additional progress per level of efficiency.")
+            @Config.RangeDouble(min = 0)
+            public double efficiencyScaleFactor = 5.0d;
             @Config.RangeInt(min = 1)
             public int sieveEfficiencyMaxLevel = 5;
             @Config.Comment("Enable the Sieve Fortune enchantment.")
