@@ -143,7 +143,7 @@ class BlockFluidWitchwater : BlockFluidClassic(ModFluids.fluidWitchwater, Materi
         if(otherFluid == null)
             return
         if(WITCH_WATER_WORLD_REGISTRY.contains(otherFluid)) {
-            val isCold = otherFluid?.temperature ?: 0 <= 300
+            val isCold = otherFluid.temperature <= 300
             val newState = WITCH_WATER_WORLD_REGISTRY.getResult(otherFluid, world.rand.nextFloat()).blockState
 
             world.setBlockState(pos, newState)

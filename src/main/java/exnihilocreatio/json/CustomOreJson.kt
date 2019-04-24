@@ -38,12 +38,12 @@ object CustomOreJson : JsonDeserializer<Ore>, JsonSerializer<Ore> {
         val name = helper.getString("name")
         val color = context.deserialize<Color>(json.asJsonObject.get("color"), Color::class.java)
         val ingot =
-                if(json.asJsonObject.has("result")) //Backwards compat
-                    context.deserialize<ItemInfo>(json.asJsonObject.get("result"), ItemInfo::class.java)
-                else if(json.asJsonObject.has("ingot"))
-                    context.deserialize<ItemInfo>(json.asJsonObject.get("ingot"), ItemInfo::class.java)
-                else
-                    null
+                when {
+                    json.asJsonObject.has("result") //Backwards compat
+                    -> context.deserialize<ItemInfo>(json.asJsonObject.get("result"), ItemInfo::class.java)
+                    json.asJsonObject.has("ingot") -> context.deserialize<ItemInfo>(json.asJsonObject.get("ingot"), ItemInfo::class.java)
+                    else -> null
+                }
         val dust =
                 if(json.asJsonObject.has("dust"))
                     context.deserialize<ItemInfo>(json.asJsonObject.get("dust"), ItemInfo::class.java)

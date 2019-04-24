@@ -32,7 +32,6 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -45,7 +44,7 @@ public class TileSieve extends BaseTileEntity {
     @Nonnull
     private BlockInfo currentStack = BlockInfo.EMPTY;
     @Getter
-    private byte progress = 0;
+    private float progress = 0;
     @Getter
     @Nonnull
     private ItemStack meshStack = ItemStack.EMPTY;
@@ -136,10 +135,12 @@ public class TileSieve extends BaseTileEntity {
                 lastPlayer = player.getUniqueID();
             }
 
-            int efficiency = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.EFFICIENCY, meshStack);
-            efficiency += EnchantmentHelper.getEnchantmentLevel(Enchantments.EFFICIENCY, meshStack);
+            float efficiency = (float) EnchantmentHelper.getEnchantmentLevel(ModEnchantments.EFFICIENCY, meshStack);
+            efficiency += (float) EnchantmentHelper.getEnchantmentLevel(Enchantments.EFFICIENCY, meshStack);
+
+            float haste = 0f;
             if(ModConfig.sieve.enchantments.hasteIncreasesSpeed && player != null && player.isPotionActive(MobEffects.HASTE)){
-                efficiency *= 1.0F + (float)(player.getActivePotionEffect(MobEffects.HASTE).getAmplifier() + 1) * 0.2F;
+                haste = (player.getActivePotionEffect(MobEffects.HASTE).getAmplifier() + 1);
             }
 
             int fortune = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.FORTUNE, meshStack);
@@ -155,15 +156,13 @@ public class TileSieve extends BaseTileEntity {
                 luckOfTheSea += player.getLuck();
             }
 
-            progress += 10 + ModConfig.sieve.enchantments.efficiencyScaleFactor * efficiency;
+            progress += ModConfig.sieve.baseProgress
+                    + ModConfig.sieve.enchantments.efficiencyScaleFactor * efficiency
+                    + ModConfig.sieve.enchantments.hasteScaleFactor * haste;
             markDirtyClient();
 
-            if (progress >= 100) {
+            if (progress >= 1) {
                 List<ItemStack> drops = ExNihiloRegistryManager.SIEVE_REGISTRY.getRewardDrops(rand, currentStack.getBlockState(), meshStack.getMetadata(), fortune);
-
-                if (drops == null) {
-                    drops = new ArrayList<>();
-                }
 
                 // Fancy math to make the average fish dropped ~ luckOfTheSea / 2 fish, which is what it was before
 
@@ -223,9 +222,6 @@ public class TileSieve extends BaseTileEntity {
                 } else {
                     drops.forEach(stack -> Util.dropItemInWorld(this, player, stack, 1));
                 }
-
-
-
                 resetSieve();
             }
         }
@@ -277,7 +273,7 @@ public class TileSieve extends BaseTileEntity {
             tag.setTag("mesh", meshTag);
         }
 
-        tag.setByte("progress", progress);
+        tag.setFloat("progress", progress);
 
         return super.writeToNBT(tag);
     }
@@ -297,7 +293,7 @@ public class TileSieve extends BaseTileEntity {
             meshType = BlockSieve.MeshType.NONE;
         }
 
-        progress = tag.getByte("progress");
+        progress = tag.getFloat("progress");
         super.readFromNBT(tag);
     }
 
