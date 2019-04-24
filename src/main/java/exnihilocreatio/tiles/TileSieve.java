@@ -158,7 +158,7 @@ public class TileSieve extends BaseTileEntity {
 
             progress += ModConfig.sieve.baseProgress
                     + ModConfig.sieve.enchantments.efficiencyScaleFactor * efficiency
-                    + ModConfig.sieve.enchantments.hasteScaleFactor * haste;
+                    * (1f + ModConfig.sieve.enchantments.hasteScaleFactor * haste);
             markDirtyClient();
 
             if (progress >= 1) {

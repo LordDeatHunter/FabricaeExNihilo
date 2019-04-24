@@ -144,9 +144,9 @@ public class ModConfig {
             @Config.Comment("Additional progress per level of efficiency.")
             @Config.RangeDouble(min = 0)
             public double efficiencyScaleFactor = .05;
-            @Config.Comment("Additional progress per level of haste.")
+            @Config.Comment("Scaling factor for Haste sieving.")
             @Config.RangeDouble(min = 0)
-            public float hasteScaleFactor = .33f;
+            public double hasteScaleFactor = 1.5;
             @Config.RangeInt(min = 1)
             public int sieveEfficiencyMaxLevel = 5;
             @Config.Comment("Enable the Sieve Fortune enchantment.")
