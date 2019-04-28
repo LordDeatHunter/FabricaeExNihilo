@@ -127,6 +127,9 @@ public class ModConfig {
         public boolean setFireToMacroUsers = false;
         @Config.RangeInt(min = 1, max = 64)
         public int meshMaxStackSize = 16;
+        @Config.Comment({"Base progress per click. Modified by haste and efficiency."})
+        @Config.RangeDouble(min=0.01f, max=1.0f)
+        public float baseProgress = 0.10f;
         @Config.Comment({
                 "If enabled, all meshes can obtain the results from the lower tier meshes.",
                 "Note if the same item is registered in multiple tiers, then the higher tier",
@@ -138,6 +141,12 @@ public class ModConfig {
             public boolean hasteIncreasesSpeed = true;
             @Config.Comment("Enable the Sieve Efficiency enchantment.")
             public boolean enableSieveEfficiency = true;
+            @Config.Comment("Additional progress per level of efficiency.")
+            @Config.RangeDouble(min = 0)
+            public double efficiencyScaleFactor = .05;
+            @Config.Comment("Scaling factor for Haste sieving.")
+            @Config.RangeDouble(min = 0)
+            public double hasteScaleFactor = 1.0;
             @Config.RangeInt(min = 1)
             public int sieveEfficiencyMaxLevel = 5;
             @Config.Comment("Enable the Sieve Fortune enchantment.")

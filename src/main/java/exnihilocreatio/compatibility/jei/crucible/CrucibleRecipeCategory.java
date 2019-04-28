@@ -82,7 +82,7 @@ public class CrucibleRecipeCategory implements IRecipeCategory<CrucibleRecipe> {
 
         }
 
-        if(UID == "exnihilocreatio:crucible_stone")
+        if(UID.equals("exnihilocreatio:crucible_stone"))
             recipeLayout.getItemStacks().addTooltipCallback(new StoneCrucibleTooltipCallback());
         else
             recipeLayout.getItemStacks().addTooltipCallback(new WoodCrucibleTooltipCallback());

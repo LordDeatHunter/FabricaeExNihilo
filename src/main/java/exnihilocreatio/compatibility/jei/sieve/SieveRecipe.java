@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SieveRecipe implements IRecipeWrapper {
-    private List<List<ItemStack>> inputs = new ArrayList<>();
-    private List<ItemStack> outputs = new ArrayList<>();
+    private List<List<ItemStack>> inputs;
+    private List<ItemStack> outputs;
 
     public SieveRecipe(List<List<ItemStack>> inputs, List<ItemStack> outputs){
         this.inputs = inputs;

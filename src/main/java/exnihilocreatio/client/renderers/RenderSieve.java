@@ -52,7 +52,7 @@ public class RenderSieve extends TileEntitySpecialRenderer<TileSieve> {
             this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 
             worldRendererBuffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_NORMAL);
-            double height = (100.0 - te.getProgress()) / 100;
+            double height = 1.0f - te.getProgress();
             float fillAmount = (float) (0.15625 * height + 0.84375);
 
             worldRendererBuffer.pos(0.0625f, fillAmount, 0.0625f).tex(minU, minV).normal(0, 1, 0).endVertex();
