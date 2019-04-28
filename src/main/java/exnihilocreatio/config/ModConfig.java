@@ -146,7 +146,7 @@ public class ModConfig {
             public double efficiencyScaleFactor = .05;
             @Config.Comment("Scaling factor for Haste sieving.")
             @Config.RangeDouble(min = 0)
-            public double hasteScaleFactor = 1.5;
+            public double hasteScaleFactor = 1.0;
             @Config.RangeInt(min = 1)
             public int sieveEfficiencyMaxLevel = 5;
             @Config.Comment("Enable the Sieve Fortune enchantment.")
