@@ -88,13 +88,22 @@ class BlockFluidWitchwater : BlockFluidClassic(ModFluids.fluidWitchwater, Materi
                 entity.onStruckByLightning(EntityLightningBolt(world, entity.posX, entity.posY, entity.posZ, true))
 
             is EntityPlayer -> {
-                entity.addPotionEffect(PotionEffect(MobEffects.BLINDNESS, 210, 0))
-                entity.addPotionEffect(PotionEffect(MobEffects.WEAKNESS, 210, 2))
-                entity.addPotionEffect(PotionEffect(MobEffects.WITHER, 210, 0))
-                entity.addPotionEffect(PotionEffect(MobEffects.SLOWNESS, 210, 0))
+                applyPotion(entity, PotionEffect(MobEffects.BLINDNESS, 210, 0))
+                applyPotion(entity, PotionEffect(MobEffects.WEAKNESS, 210, 2))
+                applyPotion(entity, PotionEffect(MobEffects.WITHER, 210, 0))
+                applyPotion(entity, PotionEffect(MobEffects.SLOWNESS, 210, 0))
             }
 
         }
+    }
+
+    /**
+     * Renew's a potion effect if the time would be increased by more than 20 ticks
+     */
+    private fun applyPotion(player: EntityPlayer, potionEffect: PotionEffect) {
+        // Grab the potion effect on the player (null if not active) compare its duration (defaulting to 0) to the new duration
+        if(player.getActivePotionEffect(potionEffect.potion)?.duration ?: 0 <= potionEffect.duration-20)
+            player.addPotionEffect(potionEffect)
     }
 
     private fun replaceMob(world: World, toKill: EntityLivingBase, toSpawn: EntityLivingBase) {
