@@ -12,6 +12,7 @@ import exnihilocreatio.registries.types.Milkable;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraftforge.fluids.Fluid;
 import org.jetbrains.annotations.NotNull;
 
@@ -31,11 +32,11 @@ public class MilkEntityRegistry extends BaseRegistryList<Milkable> implements IM
     }
 
     public void register(@NotNull Entity entityOnTop, @NotNull Fluid result, int amount, int coolDown) {
-        registry.add(new Milkable(entityOnTop.getName(), result.getName(), amount, coolDown));
+        registry.add(new Milkable(EntityList.getKey(entityOnTop).toString(), result.getName(), amount, coolDown));
     }
 
     public void register(@NotNull String entityOnTop, @NotNull String result, int amount, int coolDown) {
-        registry.add(new Milkable(entityOnTop, result, amount, coolDown));
+        registry.add(new Milkable(entityOnTop.toLowerCase(), result, amount, coolDown));
     }
 
     public boolean isValidRecipe(Entity entityOnTop) {
@@ -56,11 +57,16 @@ public class MilkEntityRegistry extends BaseRegistryList<Milkable> implements IM
 
     public Milkable getMilkable(Entity entityOnTop) {
         // Returns the entire milkable object instead of having use multiple functions
-        if (entityOnTop == null) {
+        if (entityOnTop == null || EntityList.getKey(entityOnTop) == null) {
             return null;
         }
+        // Convoluted comparison to maintain backwards compatibility with existing registries.
+        String entityKey = EntityList.getKey(entityOnTop).toString();
         for (Milkable milk : registry) {
-            if (milk.getEntityOnTop().equals(entityOnTop.getName())) {
+            if (entityKey.equals(milk.getEntityOnTop().toLowerCase())) {
+                return milk;
+            }
+            else if (!milk.getEntityOnTop().contains(":") && entityKey.equals("minecraft:"+milk.getEntityOnTop().toLowerCase())){
                 return milk;
             }
         }
@@ -68,29 +74,23 @@ public class MilkEntityRegistry extends BaseRegistryList<Milkable> implements IM
     }
 
     public String getResult(@NotNull Entity entityOnTop) {
-        for (Milkable milk : registry) {
-            if (milk.getEntityOnTop().equals(entityOnTop.getName())) {
-                return milk.getResult();
-            }
-        }
+        Milkable milk = getMilkable(entityOnTop);
+        if(milk != null)
+            return milk.getResult();
         return null;
     }
 
     public int getAmount(@NotNull Entity entityOnTop) {
-        for (Milkable milk : registry) {
-            if (milk.getEntityOnTop().equals(entityOnTop.getName())) {
-                return milk.getAmount();
-            }
-        }
+        Milkable milk = getMilkable(entityOnTop);
+        if(milk != null)
+            return milk.getAmount();
         return 0;
     }
 
     public int getCoolDown(@NotNull Entity entityOnTop) {
-        for (Milkable milk : registry) {
-            if (milk.getEntityOnTop().equals(entityOnTop.getName())) {
-                return milk.getCoolDown();
-            }
-        }
+        Milkable milk = getMilkable(entityOnTop);
+        if(milk != null)
+            return milk.getCoolDown();
         return 0;
     }
 

@@ -56,7 +56,11 @@ public class BlockEndCake extends BlockCake implements IHasModel {
     }
 
 
-    public boolean eatCake(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player) {
+    private boolean eatCake(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player) {
+        if (!worldIn.isRemote && !player.isRiding() && player.isCreative()) {
+            player.changeDimension(1);
+        }
+
         if (!player.canEat(false) || player.dimension == 1) {
             return false;
         } else {

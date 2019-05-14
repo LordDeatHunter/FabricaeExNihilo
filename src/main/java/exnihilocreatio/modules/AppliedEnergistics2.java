@@ -35,35 +35,39 @@ public class AppliedEnergistics2 implements IExNihiloCreatioModule, IRecipeDefau
     private static final Block SKY_STONE = null;
 
     public void registerSieve(SieveRegistry registry) {
-        // Sky Stone Dust
-        registry.register(new BlockInfo(ModBlocks.dust), new ItemInfo(AE_MATERIAL, 45), 0.1f, BlockSieve.MeshType.FLINT.getID());
-        registry.register(new BlockInfo(ModBlocks.dust), new ItemInfo(AE_MATERIAL, 45), 0.2f, BlockSieve.MeshType.IRON.getID());
-        registry.register(new BlockInfo(ModBlocks.dust), new ItemInfo(AE_MATERIAL, 45), 0.3f, BlockSieve.MeshType.DIAMOND.getID());
+        if(AE_MATERIAL != null) {
+            // Sky Stone Dust
+            registry.register(new BlockInfo(ModBlocks.dust), new ItemInfo(AE_MATERIAL, 45), 0.1f, BlockSieve.MeshType.FLINT.getID());
+            registry.register(new BlockInfo(ModBlocks.dust), new ItemInfo(AE_MATERIAL, 45), 0.2f, BlockSieve.MeshType.IRON.getID());
+            registry.register(new BlockInfo(ModBlocks.dust), new ItemInfo(AE_MATERIAL, 45), 0.3f, BlockSieve.MeshType.DIAMOND.getID());
 
-        // Certus Quartz
-        ItemInfo stack = new ItemInfo(AE_MATERIAL);
-        registry.register(new BlockInfo(skystoneCrushed), stack, 0.01f, BlockSieve.MeshType.IRON.getID());
-        registry.register(new BlockInfo(skystoneCrushed), stack, 0.02f, BlockSieve.MeshType.DIAMOND.getID());
+            // Certus Quartz
+            registry.register(new BlockInfo(skystoneCrushed), new ItemInfo(AE_MATERIAL), 0.01f, BlockSieve.MeshType.IRON.getID());
+            registry.register(new BlockInfo(skystoneCrushed), new ItemInfo(AE_MATERIAL), 0.02f, BlockSieve.MeshType.DIAMOND.getID());
+
+            // Charged Certus Quartz
+            registry.register(new BlockInfo(skystoneCrushed), new ItemInfo(AE_MATERIAL, 1), 0.001f, BlockSieve.MeshType.DIAMOND.getID());
+        }
 
         // Pure Certus Quartz Seed
-        NBTTagCompound tag = new NBTTagCompound();
-        tag.setFloat("progress", 0.0f);
-        stack = new ItemInfo(AE_SEEDS, 0, tag);
-        registry.register(new BlockInfo(skystoneCrushed), stack, 0.01f, BlockSieve.MeshType.STRING.getID());
-        registry.register(new BlockInfo(skystoneCrushed), stack, 0.01f, BlockSieve.MeshType.FLINT.getID());
-        registry.register(new BlockInfo(skystoneCrushed), stack, 0.02f, BlockSieve.MeshType.IRON.getID());
-        registry.register(new BlockInfo(skystoneCrushed), stack, 0.02f, BlockSieve.MeshType.DIAMOND.getID());
-
-        // Charged Certus Quartz
-        stack = new ItemInfo(AE_MATERIAL, 1);
-        registry.register(new BlockInfo(skystoneCrushed), stack, 0.001f, BlockSieve.MeshType.DIAMOND.getID());
+        if(AE_SEEDS != null) {
+            NBTTagCompound tag = new NBTTagCompound();
+            tag.setFloat("progress", 0.0f);
+            ItemInfo stack = new ItemInfo(AE_SEEDS, 0, tag);
+            registry.register(new BlockInfo(skystoneCrushed), stack, 0.01f, BlockSieve.MeshType.STRING.getID());
+            registry.register(new BlockInfo(skystoneCrushed), stack, 0.01f, BlockSieve.MeshType.FLINT.getID());
+            registry.register(new BlockInfo(skystoneCrushed), stack, 0.02f, BlockSieve.MeshType.IRON.getID());
+            registry.register(new BlockInfo(skystoneCrushed), stack, 0.02f, BlockSieve.MeshType.DIAMOND.getID());
+        }
     }
 
     public void registerHammer(HammerRegistry registry) {
-        registry.register(new BlockInfo(SKY_STONE), new ItemStack(skystoneCrushed, 1), 3, 1.0F, 0.0F);
+        if(SKY_STONE != null)
+            registry.register(new BlockInfo(SKY_STONE), new ItemStack(skystoneCrushed, 1), 3, 1.0F, 0.0F);
     }
 
     public void registerFluidBlockTransform(FluidBlockTransformerRegistry registry) {
-        registry.register(FluidRegistry.LAVA, new ItemInfo(AE_MATERIAL, 45), new BlockInfo(SKY_STONE.getDefaultState()));
+        if(AE_MATERIAL != null && SKY_STONE != null)
+            registry.register(FluidRegistry.LAVA, new ItemInfo(AE_MATERIAL, 45), new BlockInfo(SKY_STONE.getDefaultState()));
     }
 }

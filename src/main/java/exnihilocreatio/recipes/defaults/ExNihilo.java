@@ -417,7 +417,7 @@ public class ExNihilo implements IRecipeDefaults {
 
     @Override
     public void registerMilk(MilkEntityRegistry registry) {
-        registry.register("Cow", "milk", 10, 20);
+        registry.register("minecraft:cow", "milk", 10, 20);
     }
 
 
