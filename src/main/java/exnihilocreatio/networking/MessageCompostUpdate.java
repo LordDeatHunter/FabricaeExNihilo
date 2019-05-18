@@ -137,7 +137,7 @@ public class MessageCompostUpdate implements IMessage {
                                 mode.setColor(compColor);
                                 mode.setOriginalColor(compColor);
                             } else {
-                                Color col = Color.average(mode.getColorForRender(), compColor, msg.compValue);
+                                Color col = Color.average(mode.getColorForRender(te), compColor, msg.compValue);
                                 mode.setColor(col);
                                 mode.setOriginalColor(col);
                             }

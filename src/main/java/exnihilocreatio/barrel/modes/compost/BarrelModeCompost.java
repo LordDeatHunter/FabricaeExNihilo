@@ -236,7 +236,7 @@ public class BarrelModeCompost implements IBarrelMode {
     }
 
     @Override
-    public Color getColorForRender() {
+    public Color getColorForRender(TileBarrel barrel) {
         return color;
     }
 

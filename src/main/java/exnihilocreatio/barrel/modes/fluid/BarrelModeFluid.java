@@ -111,7 +111,9 @@ public class BarrelModeFluid implements IBarrelMode {
     }
 
     @Override
-    public Color getColorForRender() {
+    public Color getColorForRender(TileBarrel barrel) {
+        if(barrel.getTank().getFluid() != null)
+            return new Color(barrel.getTank().getFluid().getFluid().getColor());
         return Util.whiteColor;
     }
 

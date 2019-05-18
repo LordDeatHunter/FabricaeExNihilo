@@ -103,9 +103,13 @@ public class BarrelModeFluidTransform implements IBarrelMode {
     }
 
     @Override
-    public Color getColorForRender() {
-        return Color.average(Util.blackColor, Util.whiteColor,
-                2 * Math.abs(progress - 0.5F));
+    public Color getColorForRender(TileBarrel barrel) {
+        Color oldColor = inputStack.getFluid() != null ? new Color(inputStack.getFluid().getColor()) : Util.whiteColor;
+        Color newColor = outputStack.getFluid() != null ? new Color(outputStack.getFluid().getColor()) : Util.whiteColor;
+        if(progress < .5f)
+            return Color.average(oldColor, Util.blackColor, 2*progress);
+        else
+            return Color.average(Util.blackColor, newColor, 2*progress - 1.0f);
     }
 
     @Override

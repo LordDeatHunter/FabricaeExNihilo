@@ -37,10 +37,10 @@ public interface IBarrelMode {
     @SideOnly(Side.CLIENT)
     TextureAtlasSprite getTextureForRender(TileBarrel barrel);
 
-    Color getColorForRender();
+    Color getColorForRender(TileBarrel barrel);
 
     default SpriteColor getSpriteColor(TileBarrel barrel) {
-        return new SpriteColor(getTextureForRender(barrel), getColorForRender());
+        return new SpriteColor(getTextureForRender(barrel), getColorForRender(barrel));
     }
 
     float getFilledLevelForRender(TileBarrel barrel);
