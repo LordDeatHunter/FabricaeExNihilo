@@ -79,8 +79,12 @@ public class BarrelModeMobSpawn implements IBarrelMode {
     }
 
     @Override
-    public Color getColorForRender() {
-        return Util.whiteColor;
+    public Color getColorForRender(TileBarrel barrel) {
+        if (dollStack == null || dollStack.isEmpty())
+            return Util.whiteColor;
+
+        ItemDoll doll = (ItemDoll) dollStack.getItem();
+        return new Color(doll.getSpawnFluid(dollStack).getColor());
     }
 
     @Override
