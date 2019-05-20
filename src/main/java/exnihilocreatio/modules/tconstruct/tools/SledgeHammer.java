@@ -82,14 +82,15 @@ public class SledgeHammer extends AoeToolCore implements IHammer {
     }
 
     @Override
-    public boolean isHammer(ItemStack stack) {
-        return true;
-    }
-
-    @Override
     public int getMiningLevel(ItemStack stack) {
         if(ToolHelper.isBroken(stack))
             return -1;
         return ToolHelper.getHarvestLevelStat(stack);
+    }
+
+    @Override
+    public boolean isHammer(ItemStack stack) {
+        // Don't consider a broken tool a valid hammer.
+        return (stack.getItem() instanceof SledgeHammer) && !ToolHelper.isBroken(stack);
     }
 }
