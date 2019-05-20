@@ -6,6 +6,7 @@ import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.types.HammerReward;
 import exnihilocreatio.util.ItemUtil;
+import exnihilocreatio.util.StringUtils;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IDrawableStatic;
@@ -141,16 +142,8 @@ public class HammerRecipeCategory implements IRecipeCategory<HammerRecipe> {
 
                 for (int level : levelOrder) {
                     tooltip.add(I18n.format("jei.hammer.hammerLevel." + level));
-
-                    List<HammerReward> rewards = tieredOutputs.get(level);
-
-                    for (HammerReward reward : rewards) {
-                        float chance = 100.0F * reward.getChance();
-
-                        String format = chance >= 10 ? " - %3.0f%% (x%d)" : "%1.1f%% - (x%d)";
-
-                        tooltip.add(String.format(format, chance, reward.getStack().getCount()));
-                    }
+                    tieredOutputs.get(level).forEach(reward ->
+                            tooltip.add(String.format("%s (x%d)", StringUtils.formatPercent(reward.getChance()), reward.getStack().getCount())));
                 }
             }
         }
