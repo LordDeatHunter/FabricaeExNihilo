@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
@@ -27,6 +28,8 @@ public class FluidItemTransformRecipe implements IRecipeWrapper {
     @Nonnull
     private final List<ItemStack> inputStacks;
 
+    @Nullable
+    private final FluidStack outputFluid;
     @Nonnull
     private final ItemStack outputStack;
 
@@ -37,6 +40,7 @@ public class FluidItemTransformRecipe implements IRecipeWrapper {
 
         inputStacks = Arrays.asList(recipe.getInput().getMatchingStacks());
         outputStack = recipe.getOutput().getItemStack();
+        outputFluid = null;
     }
 
     public FluidItemTransformRecipe(FluidItemFluid recipe) {
@@ -44,7 +48,8 @@ public class FluidItemTransformRecipe implements IRecipeWrapper {
         inputBucket = Util.getBucketStack(inputFluid.getFluid());
         inputStacks = Collections.singletonList(recipe.getReactant().getItemStack());
 
-        outputStack = Util.getBucketStack(FluidRegistry.getFluid(recipe.getOutput()));
+        outputFluid = new FluidStack(FluidRegistry.getFluid(recipe.getOutput()), 1000);
+        outputStack = Util.getBucketStack(outputFluid.getFluid());
     }
 
     @Override
@@ -53,6 +58,8 @@ public class FluidItemTransformRecipe implements IRecipeWrapper {
         ingredients.setInputs(VanillaTypes.FLUID, getFluidInputs());
 
         ingredients.setOutput(VanillaTypes.ITEM, outputStack);
+        if(outputFluid != null)
+            ingredients.setOutput(VanillaTypes.FLUID, outputFluid);
     }
 
     public List<List<ItemStack>> getInputs() {
