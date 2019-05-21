@@ -4,8 +4,8 @@ import exnihilocreatio.ExNihiloCreatio;
 import exnihilocreatio.ModBlocks;
 import exnihilocreatio.compatibility.jei.barrel.compost.CompostRecipe;
 import exnihilocreatio.compatibility.jei.barrel.compost.CompostRecipeCategory;
-import exnihilocreatio.compatibility.jei.barrel.fluidblocktransform.FluidBlockTransformRecipe;
-import exnihilocreatio.compatibility.jei.barrel.fluidblocktransform.FluidBlockTransformRecipeCategory;
+import exnihilocreatio.compatibility.jei.barrel.fluiditemtransform.FluidItemTransformRecipe;
+import exnihilocreatio.compatibility.jei.barrel.fluiditemtransform.FluidItemTransformRecipeCategory;
 import exnihilocreatio.compatibility.jei.barrel.fluidontop.FluidOnTopRecipe;
 import exnihilocreatio.compatibility.jei.barrel.fluidontop.FluidOnTopRecipeCategory;
 import exnihilocreatio.compatibility.jei.barrel.fluidtransform.FluidTransformRecipe;
@@ -64,7 +64,7 @@ public class CompatJEI implements IModPlugin {
         registry.addRecipeCategories(new CrookRecipeCategory(guiHelper));
         registry.addRecipeCategories(new FluidOnTopRecipeCategory(guiHelper));
         registry.addRecipeCategories(new FluidTransformRecipeCategory(guiHelper));
-        registry.addRecipeCategories(new FluidBlockTransformRecipeCategory(guiHelper));
+        registry.addRecipeCategories(new FluidItemTransformRecipeCategory(guiHelper));
         registry.addRecipeCategories(new CompostRecipeCategory(guiHelper));
         registry.addRecipeCategories(new CrucibleRecipeCategory(guiHelper, "exnihilocreatio:crucible_wood"));
         registry.addRecipeCategories(new CrucibleRecipeCategory(guiHelper, "exnihilocreatio:crucible_stone"));
@@ -111,12 +111,13 @@ public class CompatJEI implements IModPlugin {
 
 
     private void registerFluidBlockTransform(@Nonnull IModRegistry registry) {
-        List<FluidBlockTransformRecipe> fluidBlockTransformRecipes = ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.getRecipeList();
+        List<FluidItemTransformRecipe> fluidItemTransformRecipes = ExNihiloRegistryManager.FLUID_BLOCK_TRANSFORMER_REGISTRY.getRecipeList();
+        fluidItemTransformRecipes.addAll(ExNihiloRegistryManager.FLUID_ITEM_FLUID_REGISTRY.getRecipeList());
 
-        registry.addRecipes(fluidBlockTransformRecipes, FluidBlockTransformRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelWood), FluidBlockTransformRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelStone), FluidBlockTransformRecipeCategory.UID);
-        LogUtil.info("JEI: Fluid Block Transform Recipes Loaded:       " + fluidBlockTransformRecipes.size());
+        registry.addRecipes(fluidItemTransformRecipes, FluidItemTransformRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelWood), FluidItemTransformRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.barrelStone), FluidItemTransformRecipeCategory.UID);
+        LogUtil.info("JEI: Fluid Item Transform Recipes Loaded:       " + fluidItemTransformRecipes.size());
     }
 
     private void registerFluidOnTop(@Nonnull IModRegistry registry) {

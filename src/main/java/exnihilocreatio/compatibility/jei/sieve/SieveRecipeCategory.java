@@ -7,6 +7,7 @@ import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
 import exnihilocreatio.registries.registries.SieveRegistry;
 import exnihilocreatio.registries.types.Siftable;
 import exnihilocreatio.util.ItemUtil;
+import exnihilocreatio.util.StringUtils;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IDrawableStatic;
@@ -105,14 +106,7 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
                         if(!ItemUtil.areStacksEquivalent(sifted, ingredient))
                             continue;
 
-                        String s;
-                        int iChance = (int) (siftable.getChance() * 100f);
-                        if (iChance > 0) {
-                            s = String.format("%3d%%", (int) (siftable.getChance() * 100f));
-                        } else {
-                            s = String.format("%1.1f%%", siftable.getChance() * 100f);
-                        }
-                        condensedTooltips.add(s);
+                        condensedTooltips.add(StringUtils.formatPercent(siftable.getChance()));
                     }
                     tooltip.add(I18n.format("jei.sieve.dropChance"));
                     for (String line : condensedTooltips.elementSet()) {

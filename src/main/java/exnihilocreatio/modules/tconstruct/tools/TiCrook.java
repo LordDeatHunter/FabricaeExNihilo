@@ -79,6 +79,7 @@ public class TiCrook extends AoeToolCore implements ICrook {
 
     @Override
     public boolean isCrook(ItemStack stack) {
-        return true;
+        // Don't consider a broken tool a valid crook.
+        return (stack.getItem() instanceof TiCrook) && !ToolHelper.isBroken(stack);
     }
 }

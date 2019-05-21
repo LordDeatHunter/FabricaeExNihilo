@@ -1,9 +1,9 @@
 package exnihilocreatio.registries.registries;
 
-import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.api.registries.IFluidItemFluidRegistry;
+import exnihilocreatio.compatibility.jei.barrel.fluiditemtransform.FluidItemTransformRecipe;
 import exnihilocreatio.json.CustomBlockInfoJson;
 import exnihilocreatio.json.CustomItemInfoJson;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
@@ -14,10 +14,12 @@ import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.StackInfo;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.FileReader;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FluidItemFluidRegistry extends BaseRegistryList<FluidItemFluid> implements IFluidItemFluidRegistry {
 
@@ -61,7 +63,10 @@ public class FluidItemFluidRegistry extends BaseRegistryList<FluidItemFluid> imp
     }
 
     @Override
-    public List<?> getRecipeList() {
-        return Lists.newLinkedList();
+    public List<FluidItemTransformRecipe> getRecipeList() {
+        return registry.stream()
+                .filter(it -> FluidRegistry.isFluidRegistered(it.getInputFluid()))
+                .filter(it -> FluidRegistry.isFluidRegistered(it.getOutput()))
+                .map(FluidItemTransformRecipe::new).collect(Collectors.toList());
     }
 }
