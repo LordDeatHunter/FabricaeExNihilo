@@ -1,8 +1,9 @@
-package exnihilocreatio.compatibility.jei.barrel.fluidblocktransform;
+package exnihilocreatio.compatibility.jei.barrel.fluiditemtransform;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import exnihilocreatio.registries.types.FluidBlockTransformer;
+import exnihilocreatio.registries.types.FluidItemFluid;
 import exnihilocreatio.util.Util;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
@@ -17,7 +18,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class FluidBlockTransformRecipe implements IRecipeWrapper {
+public class FluidItemTransformRecipe implements IRecipeWrapper {
 
     @Nonnull
     private final FluidStack inputFluid;
@@ -25,16 +26,25 @@ public class FluidBlockTransformRecipe implements IRecipeWrapper {
     private final ItemStack inputBucket;
     @Nonnull
     private final List<ItemStack> inputStacks;
+
     @Nonnull
     private final ItemStack outputStack;
 
-    public FluidBlockTransformRecipe(FluidBlockTransformer recipe) {
+    public FluidItemTransformRecipe(FluidBlockTransformer recipe) {
         inputFluid = new FluidStack(FluidRegistry.getFluid(recipe.getFluidName()), 1000);
 
         inputBucket = Util.getBucketStack(inputFluid.getFluid());
 
         inputStacks = Arrays.asList(recipe.getInput().getMatchingStacks());
         outputStack = recipe.getOutput().getItemStack();
+    }
+
+    public FluidItemTransformRecipe(FluidItemFluid recipe) {
+        inputFluid = new FluidStack(FluidRegistry.getFluid(recipe.getInputFluid()), 1000);
+        inputBucket = Util.getBucketStack(inputFluid.getFluid());
+        inputStacks = Collections.singletonList(recipe.getReactant().getItemStack());
+
+        outputStack = Util.getBucketStack(FluidRegistry.getFluid(recipe.getOutput()));
     }
 
     @Override

@@ -3,7 +3,7 @@ package exnihilocreatio.registries.registries;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import exnihilocreatio.api.registries.IFluidBlockTransformerRegistry;
-import exnihilocreatio.compatibility.jei.barrel.fluidblocktransform.FluidBlockTransformRecipe;
+import exnihilocreatio.compatibility.jei.barrel.fluiditemtransform.FluidItemTransformRecipe;
 import exnihilocreatio.json.*;
 import exnihilocreatio.registries.ingredient.OreIngredientStoring;
 import exnihilocreatio.registries.manager.ExNihiloRegistryManager;
@@ -146,21 +146,21 @@ public class FluidBlockTransformerRegistry extends BaseRegistryList<FluidBlockTr
     }
 
     @Override
-    public List<FluidBlockTransformRecipe> getRecipeList() {
-        List<FluidBlockTransformRecipe> fluidBlockTransformRecipes = new ArrayList<>();
+    public List<FluidItemTransformRecipe> getRecipeList() {
+        List<FluidItemTransformRecipe> fluidItemTransformRecipes = new ArrayList<>();
 
         for (FluidBlockTransformer transformer : registry) {
             // Make sure everything's registered
             if (FluidRegistry.isFluidRegistered(transformer.getFluidName())
                     && transformer.getInput().getMatchingStacks().length > 0
                     && transformer.getOutput().isValid()) {
-                FluidBlockTransformRecipe recipe = new FluidBlockTransformRecipe(transformer);
+                FluidItemTransformRecipe recipe = new FluidItemTransformRecipe(transformer);
                 if (recipe.isValid()) {
-                    fluidBlockTransformRecipes.add(recipe);
+                    fluidItemTransformRecipes.add(recipe);
                 }
             }
         }
 
-        return fluidBlockTransformRecipes;
+        return fluidItemTransformRecipes;
     }
 }
