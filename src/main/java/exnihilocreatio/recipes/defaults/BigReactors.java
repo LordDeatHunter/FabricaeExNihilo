@@ -11,7 +11,6 @@ import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import lombok.Getter;
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 
 public class BigReactors implements IRecipeDefaults {
@@ -32,24 +31,26 @@ public class BigReactors implements IRecipeDefaults {
     }
 
     public void registerOreChunks(OreRegistry registry) {
-        // 0 = Yellorium
-        Item yellorium = Item.getByNameOrId("bigreactors:ingotmetals");
-        if (yellorium != null) {
-            registry.register("yellorium", new Color("DCF400"), new ItemInfo(yellorium, 0));
+        Item ingot = Item.getByNameOrId("bigreactors:ingotyellorium");
+        Item dust = Item.getByNameOrId("bigreactors:dustyellorium");
+        if (ingot != null) {
+            ItemInfo ingotInfo = new ItemInfo(ingot, -1);
+            ItemInfo dustInfo = new ItemInfo(dust, -1);
+            registry.register("yellorium", new Color("DCF400"), ingotInfo, dustInfo);
             ItemOre ore = ExNihiloRegistryManager.ORE_REGISTRY.getOreItem("yellorium");
             registry.getSieveBlackList().add(ore); //Disables the default sieve recipes
         }
     }
 
     public void registerHeat(HeatRegistry registry) {
-        // 0 = Yellorium
-        // 1 = Cyanite
-        // 3 = Blutonium
-        Block brBlocks = Block.getBlockFromName("bigreactors:blockmetals");
-        if (brBlocks != null) {
-            registry.register(new BlockInfo(brBlocks), 10);
-            registry.register(new BlockInfo(brBlocks, 1), 15);
-            registry.register(new BlockInfo(brBlocks, 3), 20);
+        BlockInfo blockYellorium = new BlockInfo("bigreactors:blockyellorium:-1");
+        BlockInfo blockCyanite = new BlockInfo("bigreactors:blockcyanite:-1");
+        BlockInfo blockBlutonium = new BlockInfo("bigreactors:blockblutonium:-1");
+
+        if (blockYellorium.isValid()) {
+            registry.register(blockYellorium, 10);
+            registry.register(blockCyanite, 15);
+            registry.register(blockBlutonium, 20);
         }
     }
 }
