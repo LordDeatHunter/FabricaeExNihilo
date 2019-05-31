@@ -1,0 +1,4 @@
+{
+  "parent": "exnihilofabrico:block/crucible",
+  "textures": {"all": "exnihilofabrico:block/crucible_stone_unfired"}
+}

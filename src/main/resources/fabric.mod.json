@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "exnihilofabrico",
+  "name": "ExNihiloFabrico",
+  "description": "I construct from nothingness.",
+  "authors": ["SirLyle"],
+  "version": "${version}",
+  "environment": "*",
+  "entrypoints": {
+    "main": [{
+        "adapter": "kotlin",
+        "value": "exnihilofabrico.ExNihiloFabrico"}],
+    "client": [{
+      "adapter": "kotlin",
+      "value": "exnihilofabrico.ExNihiloFabrico"}]
+  },
+  "requires": {
+    "fabric": ">=0.4.0",
+    "fabric-language-kotlin": {
+      "version": ">=1.3.30"
+    }
+  }
+}

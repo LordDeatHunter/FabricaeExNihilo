@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "exnihilofabrico:item/ore/pieces/fine_redsand",
+    "layer1": "exnihilofabrico:item/ore/pieces/fine_overlay"
+  }
+}

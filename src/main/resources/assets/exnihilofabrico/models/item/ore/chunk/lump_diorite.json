@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "exnihilofabrico:item/ore/chunks/lump_diorite",
+    "layer1": "exnihilofabrico:item/ore/chunks/lump_overlay"
+  }
+}

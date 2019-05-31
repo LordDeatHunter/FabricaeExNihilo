@@ -1,16 +1,15 @@
-# Ex Nihilo Creatio [![Curseforge](http://cf.way2muchnoise.eu/274456.svg "ExNihilo Creatio")](https://minecraft.curseforge.com/projects/ex-nihilo-creatio) [![Discord](https://img.shields.io/discord/495546952834875392.svg?style=flat&label=Discord&colorB=blue&logo=discord)](https://discord.gg/fPZhsZ8)
+# Ex Nihilo Fabrico [![Discord](https://img.shields.io/discord/495546952834875392.svg?style=flat&label=Discord&colorB=blue&logo=discord)](https://discord.gg/fPZhsZ8)
 
-Releases are available on [Curseforge](https://minecraft.curseforge.com/projects/ex-nihilo-creatio).  
-Issues should be reported to the Github [issue tracker](https://github.com/BloodWorkXGaming/ExNihiloCreatio/issues).
+An Alpha fork/re-implementation of Ex Nihilo Creatio for the Fabric modloader.
 
 Do you love Skyblocks? Do you hate having one block that takes you from minute 5 to year 5? Then this is the mod for you!
 
-Ex Nihilo Creatio is a fork of Ex Nihilo Adscensio for 1.12. Ex Nihilo Adscensio was a continuation of the Ex Nihilo mod from 1.7.10, rewritten from the ground up.
+Ex Nihilo Fabrico is a fork of Ex Nihilo Creatio for the Fabric modloader on 1.14. Ex Nihilo Creatio was a fork of Ex Nihilo Adscensio for 1.12, which was itself a continuation of the Ex Nihilo mod from 1.7.10, rewritten from the ground up.
 
 The core concepts remain the same, but with a few key additions to give a little extra progression.
 
-* Sieve blocks in the sieve for resources, just as before, but the sieve now takes different meshes.
-* Each mesh gives potentially different results, so check carefully.
+* Sieve blocks for resources, but now the sieve can take different meshes and be "water"logged.
+* Each mesh and "water"logging fluid gives potentially different results, so check carefully.
 * Sieve meshes can also be enchanted in a vanilla crafting table to give an extra boost to your efficiency (or fortune).
 * Hammers now respect a mining level. No more using a wooden hammer for everything!
 * Witchwater is back!
@@ -19,8 +18,6 @@ The core concepts remain the same, but with a few key additions to give a little
 * Silk Worms are back! (And easier to see)
 * Crucibles are back! And can potentially melt down to things that aren't lava...
 * The Broken/Crushed/Powdered Ore system has been replaced with a simple "Piece / Chunk" system. I felt like the old system served as nothing more than a nuisance, and ended up with something like this anyway.
-
-Most importantly, from a developers perspective, the entire backend is powered by JSON. This means almost everything is configurable, allowing you to set up the mod as you see fit. This means no more reliance on MineTweaker/ModTweaker.
 
 ## License
 Ex Nihilo Creatio is licensed under the MIT license (see the license file)

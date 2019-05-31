@@ -1,0 +1,4 @@
+{
+  "parent": "exnihilofabrico:block/barrel",
+  "textures": {"all": "minecraft:block/spruce_planks"}
+}

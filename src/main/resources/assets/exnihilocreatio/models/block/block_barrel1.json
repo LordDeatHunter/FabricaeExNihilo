@@ -1,8 +1,0 @@
-{
-  "parent": "exnihilocreatio:block/block_barrel0",
-  "textures": {
-    "particle": "minecraft:blocks/stone",
-    "texture": "minecraft:blocks/stone"
-  },
-  "name": "block_barrel1"
-}

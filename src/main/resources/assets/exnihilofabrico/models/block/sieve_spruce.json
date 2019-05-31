@@ -1,0 +1,4 @@
+{
+  "parent": "exnihilofabrico:block/sieve",
+  "textures": {"all": "minecraft:block/spruce_planks"}
+}

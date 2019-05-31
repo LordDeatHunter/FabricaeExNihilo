@@ -1,0 +1,5 @@
+{
+  "parent": "exnihilofabrico:item/mesh",
+  "textures": {"all": "minecraft:block/gray_wool"}
+}
+

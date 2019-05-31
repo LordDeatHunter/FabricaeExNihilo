@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "exnihilocreatio:item/ore/chunks/flint_endstone",
+    "layer1": "exnihilocreatio:item/ore/chunks/flint_overlay"
+  }
+}

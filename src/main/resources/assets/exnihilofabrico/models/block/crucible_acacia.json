@@ -1,0 +1,4 @@
+{
+  "parent": "exnihilofabrico:block/crucible",
+  "textures": {"all": "minecraft:block/acacia_log"}
+}

@@ -1,8 +1,0 @@
-{
-  "textures": {
-    "layer0": "exnihilocreatio:items/tools/hammer/tconstruct/handle",
-    "layer1": "exnihilocreatio:items/tools/hammer/tconstruct/head",
-    "layer2": "exnihilocreatio:items/tools/hammer/tconstruct/binding",
-    "broken1": "exnihilocreatio:items/tools/hammer/tconstruct/head_broken"
-  }
-}
