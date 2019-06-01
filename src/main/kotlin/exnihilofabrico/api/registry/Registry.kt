@@ -1,9 +1,6 @@
 package exnihilofabrico.api.registry
 
-import exnihilofabrico.registry.SieveRegistry
-import exnihilofabrico.registry.ToolRegistry
-import exnihilofabrico.registry.WitchWaterEntityRegistry
-import exnihilofabrico.registry.WitchWaterFluidRegistry
+import exnihilofabrico.registry.*
 
 object Registry {
     val WITCHWATER_ENTITY: IWitchWaterEntityRegistry = WitchWaterEntityRegistry()
@@ -13,4 +10,6 @@ object Registry {
     val CROOK: IToolRegistry = ToolRegistry()
 
     val SIEVE: ISieveRegistry = SieveRegistry()
+
+    val CRUCIBLE_HEAT: ICrucibleHeatRegistry = CrucibleHeatRegistry()
 }

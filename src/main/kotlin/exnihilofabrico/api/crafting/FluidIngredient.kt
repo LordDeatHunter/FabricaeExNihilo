@@ -3,6 +3,7 @@ package exnihilofabrico.api.crafting
 import net.minecraft.block.FluidBlock
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.FluidState
+import net.minecraft.item.Item
 import net.minecraft.tag.Tag
 
 class FluidIngredient(val matches: Collection<Fluid>, val tag: Tag<Fluid>?) {
@@ -17,4 +18,5 @@ class FluidIngredient(val matches: Collection<Fluid>, val tag: Tag<Fluid>?) {
             return false
         return tag?.contains(fluid) ?: matches.any { it.matchesType(fluid) }
     }
+    fun test(item: Item) = if(tag != null) tag.values().any { it.bucketItem == item } else matches.any { it.bucketItem == item }
 }
