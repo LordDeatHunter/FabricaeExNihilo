@@ -11,19 +11,26 @@ import net.minecraft.item.ItemStack
 import java.util.*
 import kotlin.collections.ArrayList
 
-data class SieveRegistry(val registry: MutableList<SieveRecipe> = ArrayList()): ISieveRegistry {
+data class SieveRegistry(val registry: MutableList<SieveRecipe> = mutableListOf()): ISieveRegistry {
 
     override fun clear() = registry.clear()
 
     override fun getResult(mesh: ItemStack, fluid: Fluid?, sievable: ItemStack, player: PlayerEntity?, rand: Random): List<ItemStack> {
         val allResults = getAllResults(mesh, fluid, sievable)
-        val trys = 1 +
+        val tries = 1 +
                 (EnchantmentHelper.getEnchantments(mesh)[Enchantments.FORTUNE] ?: 0) + // Fortune tries
                 (player?.luck?.toInt() ?: 0) // Player's luck
 
         val results: MutableList<ItemStack> = ArrayList()
-        for(i in 0 until trys)
-            results.addAll(allResults.filter { loot -> loot.chance.any { rand.nextDouble() < it } }.map { it.stack })
+        for(i in 0 until tries)
+            allResults.forEach { loot ->
+                val num = loot.chance.count { rand.nextDouble() < it }
+                if(num > 0) {
+                    val stack = loot.stack.copy()
+                    stack.amount = num
+                    results.add(stack)
+                }
+            }
         return results
     }
 
@@ -38,6 +45,8 @@ data class SieveRegistry(val registry: MutableList<SieveRecipe> = ArrayList()): 
             recipe.mesh.test(mesh) && (recipe.fluid?.test(fluid) ?: true) && recipe.sievable.test(sievable)
         }
     }
+
+    override fun isValidMesh(mesh: ItemStack) = registry.any { recipe -> recipe.mesh.test(mesh)}
 
     override fun register(sieveRecipe: SieveRecipe) {
         registry.forEach {

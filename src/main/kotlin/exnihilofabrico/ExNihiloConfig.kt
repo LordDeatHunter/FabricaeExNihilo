@@ -37,6 +37,7 @@ object ExNihiloConfig {
         }
         object Crucibles {
             var enabled = true
+            var tickRate = 20
 
             object Enchantments {
                 var efficiency = true

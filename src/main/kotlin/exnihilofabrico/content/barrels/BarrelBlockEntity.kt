@@ -8,7 +8,9 @@ import net.minecraft.block.entity.BlockEntityType
 class BarrelBlockEntity: BlockEntity(TYPE) {
 
     companion object {
-        val TYPE: BlockEntityType<BarrelBlockEntity> = BlockEntityType.Builder.create({BarrelBlockEntity()}, ModBlocks.BARRELS_WOOD.values.toTypedArray()).build(null)
+        val TYPE: BlockEntityType<BarrelBlockEntity> =
+            BlockEntityType.Builder.create({BarrelBlockEntity()},
+                ModBlocks.BARRELS.values.toTypedArray()).build(null)
         val BLOCK_ENTITY_ID = id("barrel")
     }
 }

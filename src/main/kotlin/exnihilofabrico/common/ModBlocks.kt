@@ -9,7 +9,9 @@ import exnihilofabrico.content.crucibles.CrucibleBlockEntity
 import exnihilofabrico.content.sieves.SieveBlock
 import exnihilofabrico.content.sieves.SieveBlockEntity
 import exnihilofabrico.util.EnumVanillaWoodTypes
+import net.fabricmc.fabric.api.block.FabricBlockSettings
 import net.minecraft.block.Block
+import net.minecraft.block.Material
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.item.BlockItem
@@ -19,18 +21,22 @@ import net.minecraft.util.registry.Registry
 object ModBlocks {
     private val itemSettings = Item.Settings().itemGroup(ExNihiloFabrico.ITEM_GROUP).stackSize(64)
 
-    val SIEVES: Map<String, Block> = EnumVanillaWoodTypes.values().map {"sieve_${it.text}" to SieveBlock(it.getTexturePlanks()) }.toMap()
-    val CRUCIBLES_WOOD: Map<String, Block> = EnumVanillaWoodTypes.values().map {"crucible_${it.text}" to CrucibleBlock(it.getTextureLog()) }.toMap()
-    val BARRELS_WOOD: Map<String, Block> = EnumVanillaWoodTypes.values().map {"barrel_${it.text}" to BarrelBlock(it.getTexturePlanks()) }.toMap()
+    val SIEVES: MutableMap<String, Block> = EnumVanillaWoodTypes.values().map {"sieve_${it.text}" to SieveBlock(it.getTexturePlanks()) }.toMap().toMutableMap()
+    val CRUCIBLES: MutableMap<String, Block> = EnumVanillaWoodTypes.values().map {"crucible_${it.text}" to CrucibleBlock(it.getTextureLog()) }.toMap().toMutableMap()
+    val BARRELS: MutableMap<String, Block> = EnumVanillaWoodTypes.values().map {"barrel_${it.text}" to BarrelBlock(it.getTexturePlanks()) }.toMap().toMutableMap()
+
+    init {
+        CRUCIBLES["crucible_stone"] = CrucibleBlock(id("textures/block/crucible_stone"), FabricBlockSettings.of(Material.STONE))
+    }
 
     fun registerBlocks(registry: Registry<Block>) {
         for((name, block) in SIEVES.entries) {
             Registry.register(registry, id(name), block)
         }
-        for((name, block) in CRUCIBLES_WOOD.entries) {
+        for((name, block) in CRUCIBLES.entries) {
             Registry.register(registry, id(name), block)
         }
-        for((name, block) in BARRELS_WOOD.entries) {
+        for((name, block) in BARRELS.entries) {
             Registry.register(registry, id(name), block)
         }
     }
@@ -39,10 +45,10 @@ object ModBlocks {
         for((name, block) in SIEVES.entries) {
             Registry.register(registry, id(name), BlockItem(block, itemSettings))
         }
-        for((name, block) in CRUCIBLES_WOOD.entries) {
+        for((name, block) in CRUCIBLES.entries) {
             Registry.register(registry, id(name), BlockItem(block, itemSettings))
         }
-        for((name, block) in BARRELS_WOOD.entries) {
+        for((name, block) in BARRELS.entries) {
             Registry.register(registry, id(name), BlockItem(block, itemSettings))
         }
     }

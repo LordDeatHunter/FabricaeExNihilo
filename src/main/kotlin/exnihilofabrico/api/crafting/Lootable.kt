@@ -7,4 +7,6 @@ import net.minecraft.recipe.Ingredient
 data class Lootable(
         val stack: ItemStack,
         val chance: List<Double>
-)
+) {
+        constructor(stack: ItemStack, chance: Double): this(stack, listOf(chance))
+}

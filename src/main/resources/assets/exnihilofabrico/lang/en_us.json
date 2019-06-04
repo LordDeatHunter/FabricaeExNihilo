@@ -1,3 +1,48 @@
 {
-  "itemGroup.exnihilofabrico": "Ex Nihilo Fabrico"
+  "itemGroup.exnihilofabrico.general": "Ex Nihilo Fabrico",
+
+  "block.exnihilofabrico.barrel_acacia": "Acacia Barrel",
+  "block.exnihilofabrico.barrel_birch": "Birch Barrel",
+  "block.exnihilofabrico.barrel_dark_oak": "Dark Oak Barrel",
+  "block.exnihilofabrico.barrel_jungle": "Jungle Barrel",
+  "block.exnihilofabrico.barrel_oak": "Oak Barrel",
+  "block.exnihilofabrico.barrel_spruce": "Spruce Barrel",
+  "block.exnihilofabrico.stone_spruce": "Stone Barrel",
+
+  "block.exnihilofabrico.crucible_acacia": "Acacia Crucible",
+  "block.exnihilofabrico.crucible_birch": "Birch Crucible",
+  "block.exnihilofabrico.crucible_dark_oak": "Dark Oak Crucible",
+  "block.exnihilofabrico.crucible_jungle": "Jungle Crucible",
+  "block.exnihilofabrico.crucible_oak": "Oak Crucible",
+  "block.exnihilofabrico.crucible_spruce": "Spruce Crucible",
+  "block.exnihilofabrico.crucible_stone": "Stone Crucible",
+
+  "block.exnihilofabrico.sieve_acacia": "Acacia Sieve",
+  "block.exnihilofabrico.sieve_birch": "Birch Sieve",
+  "block.exnihilofabrico.sieve_dark_oak": "Dark Oak Sieve",
+  "block.exnihilofabrico.sieve_jungle": "Jungle Sieve",
+  "block.exnihilofabrico.sieve_oak": "Oak Sieve",
+  "block.exnihilofabrico.sieve_spruce": "Spruce Sieve",
+
+  "item.exnihilofabrico.seed_acacia": "Acacia Seed",
+  "item.exnihilofabrico.seed_birch": "Birch Seed",
+  "item.exnihilofabrico.seed_cactus": "Cactus Seed",
+  "item.exnihilofabrico.seed_chorus": "Chorus Seed",
+  "item.exnihilofabrico.seed_carrot": "Carrot Seed",
+  "item.exnihilofabrico.seed_dark_oak": "Dark Oak Seed",
+  "item.exnihilofabrico.seed_grass": "Grass Seed",
+  "item.exnihilofabrico.seed_jungle": "Jungle Seed",
+  "item.exnihilofabrico.seed_kelp": "Kelp Sporophyte",
+  "item.exnihilofabrico.seed_mycelium": "Mycelium Seed",
+  "item.exnihilofabrico.seed_oak": "Oak Seed",
+  "item.exnihilofabrico.seed_potato": "Potato Seed",
+  "item.exnihilofabrico.seed_rubber": "Rubber Seed",
+  "item.exnihilofabrico.seed_sea_pickle": "Sea Pickle \"Seed\"",
+  "item.exnihilofabrico.seed_spruce": "Spruce Seed",
+  "item.exnihilofabrico.seed_sugarcane": "Sugarcane Seed",
+
+  "item.exnihilofabrico.mesh_string": "String Mesh",
+  "item.exnihilofabrico.mesh_flint": "Flint Mesh",
+  "item.exnihilofabrico.mesh_iron": "Iron Mesh",
+  "item.exnihilofabrico.mesh_diamond": "Diamond Mesh"
 }

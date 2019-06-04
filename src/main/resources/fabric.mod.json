@@ -21,6 +21,7 @@
     "fabricloader": ">=0.4.6",
     "fabric-language-kotlin": ">=1.3.30",
     "towelette": ">=1.5.2",
-    "cotton": ">=0.7.3"
+    "cotton": ">=0.7.3",
+    "silk": "*"
   }
 }

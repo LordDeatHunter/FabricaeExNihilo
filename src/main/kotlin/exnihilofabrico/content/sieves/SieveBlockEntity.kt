@@ -2,10 +2,14 @@ package exnihilofabrico.content.sieves
 
 import exnihilofabrico.ExNihiloConfig
 import exnihilofabrico.ExNihiloFabrico
+import exnihilofabrico.api.crafting.Lootable
+import exnihilofabrico.api.recipes.SieveRecipe
+import exnihilofabrico.api.registry.ExNihiloRegistries.SIEVE
 import exnihilofabrico.common.ModBlocks
 import exnihilofabrico.id
 import exnihilofabrico.util.ofSize
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable
+import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
@@ -13,12 +17,23 @@ import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.fluid.Fluid
+import net.minecraft.item.BlockItem
+import net.minecraft.item.BucketItem
 import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.network.chat.TextComponent
+import net.minecraft.particle.DustParticleEffect
+import net.minecraft.particle.ParticleEffect
+import net.minecraft.particle.ParticleTypes
+import net.minecraft.sound.SoundEvents
 import net.minecraft.util.DefaultedList
 import net.minecraft.util.Hand
 import net.minecraft.util.ItemScatterer
 import net.minecraft.util.hit.BlockHitResult
+import virtuoel.towelette.api.FluidProperty
+import virtuoel.towelette.api.Fluidloggable
 
 class SieveBlockEntity: BlockEntity(TYPE), BlockEntityClientSerializable {
 
@@ -41,18 +56,21 @@ class SieveBlockEntity: BlockEntity(TYPE), BlockEntityClientSerializable {
 
         val held = player.getStackInHand(hand ?: player.activeHand) ?: ItemStack.EMPTY
 
+        if(held.item is BucketItem)
+            return false // Done for fluid logging
+
         // Remove/Swap a mesh
-        if(player.isSneaking) {
+        if(player.isSneaking || SIEVE.isValidMesh(held)) {
             // Removing  mesh
             if(!mesh.isEmpty) {
-                if(!player.inventory.insertStack(mesh.ofSize(1)))
-                    dropMesh()
+                player.giveItemStack(mesh.copy())
                 mesh = ItemStack.EMPTY
             }
             // Add mesh
-            if(held.item is MeshItem) { // TODO use sieve registry to determine if something is a mesh
+            if(SIEVE.isValidMesh(held)) {
                 mesh = held.ofSize(1)
-                held.amount -= 1
+                if(!player.isCreative)
+                    held.subtractAmount(1)
             }
             markDirty()
             return true
@@ -64,13 +82,20 @@ class SieveBlockEntity: BlockEntity(TYPE), BlockEntityClientSerializable {
             return true
         }
         // Add a block
-        if(!held.isEmpty) { // TODO use sieve registry to determine if something is sievable
+        if(!held.isEmpty && SIEVE.isValidRecipe(mesh, getFluid(), held)) { // TODO use sieve registry to determine if something is sievable
             contents = held.ofSize(1)
-            held.amount -= 1
+            if(!player.isCreative)
+                held.subtractAmount(1)
             markDirty()
             return true
         }
         return true
+    }
+
+    fun getFluid(): Fluid? {
+        val state = world?.getBlockState(pos) ?: return null
+        if(state.block !is Fluidloggable) return null
+        return state.fluidState.fluid
     }
 
     fun doProgress(player: PlayerEntity) {
@@ -81,10 +106,13 @@ class SieveBlockEntity: BlockEntity(TYPE), BlockEntityClientSerializable {
                 + ExNihiloConfig.Modules.Sieve.Progress.efficiencyScaleFactor * efficiency
                 + ExNihiloConfig.Modules.Sieve.Progress.hasteScaleFactor * haste
 
+        // TODO spawn some particles
+
         if(progress > 1.0) {
-            // TODO sieve drops
-            contents = ItemStack.EMPTY
+            SIEVE.getResult(mesh, getFluid(), contents, player, world?.random ?: return)
+                .forEach {player.giveItemStack(it)}
             progress = 0.0
+            contents = ItemStack.EMPTY
         }
     }
 
