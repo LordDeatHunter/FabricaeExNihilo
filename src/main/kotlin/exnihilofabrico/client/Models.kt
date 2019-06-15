@@ -1,7 +1,7 @@
 package exnihilofabrico.client
 
 import exnihilofabrico.MODID
-import exnihilofabrico.content.base.IHasModel
+import exnihilofabrico.common.base.IHasModel
 import net.fabricmc.fabric.api.client.model.ModelProviderContext
 import net.fabricmc.fabric.api.client.model.ModelVariantProvider
 import net.minecraft.client.render.model.UnbakedModel

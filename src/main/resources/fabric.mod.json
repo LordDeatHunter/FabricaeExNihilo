@@ -8,6 +8,9 @@
   "license": "MIT",
   "icon": "icon.png",
   "environment": "*",
+  "mixins": [
+    "exnihilofabrico.common.json"
+  ],
   "entrypoints": {
     "main": [{
         "adapter": "kotlin",

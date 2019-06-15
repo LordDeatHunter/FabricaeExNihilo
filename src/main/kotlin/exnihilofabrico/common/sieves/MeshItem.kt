@@ -1,7 +1,7 @@
-package exnihilofabrico.content.sieves
+package exnihilofabrico.common.sieves
 
-import exnihilofabrico.content.base.BaseItem
-import exnihilofabrico.content.base.IHasModel
+import exnihilofabrico.common.base.BaseItem
+import exnihilofabrico.common.base.IHasModel
 import exnihilofabrico.util.Color
 import net.minecraft.client.render.model.UnbakedModel
 

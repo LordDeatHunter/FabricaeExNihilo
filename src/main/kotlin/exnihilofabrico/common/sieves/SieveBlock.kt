@@ -1,7 +1,7 @@
-package exnihilofabrico.content.sieves
+package exnihilofabrico.common.sieves
 
-import exnihilofabrico.content.base.BaseBlock
-import exnihilofabrico.content.base.IHasModel
+import exnihilofabrico.common.base.BaseBlock
+import exnihilofabrico.common.base.IHasModel
 import exnihilofabrico.util.VoxelShapeHelper
 import net.fabricmc.fabric.api.block.FabricBlockSettings
 import net.minecraft.block.*

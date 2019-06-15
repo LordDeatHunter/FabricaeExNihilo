@@ -1,8 +1,7 @@
-package exnihilofabrico.content.crucibles
+package exnihilofabrico.common.crucibles
 
-import exnihilofabrico.content.base.BaseBlock
-import exnihilofabrico.content.base.IHasModel
-import exnihilofabrico.content.sieves.SieveBlockEntity
+import exnihilofabrico.common.base.BaseBlock
+import exnihilofabrico.common.base.IHasModel
 import exnihilofabrico.util.VoxelShapeHelper
 import net.fabricmc.fabric.api.block.FabricBlockSettings
 import net.minecraft.block.*

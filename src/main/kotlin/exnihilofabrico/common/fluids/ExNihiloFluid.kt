@@ -1,4 +1,4 @@
-package exnihilofabrico.content.fluids
+package exnihilofabrico.common.fluids
 
 import exnihilofabrico.ExNihiloFabrico
 import net.minecraft.block.*

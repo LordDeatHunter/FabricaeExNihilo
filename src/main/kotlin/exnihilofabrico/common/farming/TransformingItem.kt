@@ -1,6 +1,6 @@
-package exnihilofabrico.content.farming
+package exnihilofabrico.common.farming
 
-import exnihilofabrico.content.base.BaseItem
+import exnihilofabrico.common.base.BaseItem
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.item.ItemUsageContext

@@ -1,15 +1,12 @@
 package exnihilofabrico.client.renderers
 
 import com.mojang.blaze3d.platform.GlStateManager
-import exnihilofabrico.content.crucibles.CrucibleBlockEntity
-import exnihilofabrico.content.sieves.SieveBlockEntity
+import exnihilofabrico.common.crucibles.CrucibleBlockEntity
 import io.github.prospector.silk.fluid.FluidInstance
 import net.minecraft.client.MinecraftClient
-import net.minecraft.client.render.block.FluidRenderer
 import net.minecraft.client.render.block.entity.BlockEntityRenderer
 import net.minecraft.client.render.model.json.ModelTransformation
 import net.minecraft.item.ItemStack
-import virtuoel.towelette.util.FluidUtils
 
 class CrucibleBlockEntityRenderer: BlockEntityRenderer<CrucibleBlockEntity>() {
     private val xzScale = 0.875

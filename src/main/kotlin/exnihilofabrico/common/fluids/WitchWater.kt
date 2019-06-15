@@ -1,4 +1,4 @@
-package exnihilofabrico.content.fluids
+package exnihilofabrico.common.fluids
 
 import exnihilofabrico.util.PlayerHelper
 import net.minecraft.block.Block

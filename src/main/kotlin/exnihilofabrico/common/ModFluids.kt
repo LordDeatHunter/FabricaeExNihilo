@@ -1,7 +1,7 @@
 package exnihilofabrico.common
 
-import exnihilofabrico.content.fluids.ExNihiloFluid
-import exnihilofabrico.content.fluids.WitchWater
+import exnihilofabrico.common.fluids.ExNihiloFluid
+import exnihilofabrico.common.fluids.WitchWater
 
 object ModFluids {
     val WITCHWATER = WitchWater

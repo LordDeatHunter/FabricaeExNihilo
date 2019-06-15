@@ -1,4 +1,4 @@
-package exnihilofabrico.content.barrels
+package exnihilofabrico.common.barrels
 
 import exnihilofabrico.common.ModBlocks
 import exnihilofabrico.id

@@ -1,7 +1,7 @@
-package exnihilofabrico.content.barrels
+package exnihilofabrico.common.barrels
 
-import exnihilofabrico.content.base.BaseBlock
-import exnihilofabrico.content.base.IHasModel
+import exnihilofabrico.common.base.BaseBlock
+import exnihilofabrico.common.base.IHasModel
 import net.fabricmc.fabric.api.block.FabricBlockSettings
 import net.minecraft.block.*
 import net.minecraft.client.render.model.UnbakedModel

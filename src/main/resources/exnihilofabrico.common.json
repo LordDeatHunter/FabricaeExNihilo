@@ -1,0 +1,13 @@
+
+{
+  "required": true,
+  "package": "exnihilofabrico.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "mixins.exnihilofabrico.refmap.json",
+  "mixins": [
+    "BlockHarvestMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

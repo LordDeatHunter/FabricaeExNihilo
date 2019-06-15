@@ -1,4 +1,4 @@
-package exnihilofabrico.content.crucibles
+package exnihilofabrico.common.crucibles
 
 import exnihilofabrico.ExNihiloConfig
 import exnihilofabrico.ExNihiloFabrico

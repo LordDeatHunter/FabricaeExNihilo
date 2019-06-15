@@ -12,9 +12,12 @@ import exnihilofabrico.client.renderers.CrucibleBlockEntityRenderer
 import exnihilofabrico.client.renderers.SieveBlockEntityRenderer
 import exnihilofabrico.common.ModBlocks
 import exnihilofabrico.common.ModItems
-import exnihilofabrico.content.crucibles.CrucibleBlockEntity
-import exnihilofabrico.content.sieves.SieveBlockEntity
+import exnihilofabrico.common.ModTools
+import exnihilofabrico.common.crucibles.CrucibleBlockEntity
+import exnihilofabrico.common.sieves.SieveBlockEntity
+import exnihilofabrico.common.tools.CrookLootCondition
 import exnihilofabrico.modules.MetaModule
+import exnihilofabrico.util.ExNihiloItemStack
 import io.github.cottonmc.cotton.logging.ModLogger
 import net.fabricmc.api.*
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder
@@ -23,6 +26,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
+import net.minecraft.world.loot.condition.LootConditions
 
 val MODID: String = "exnihilofabrico"
 val VERSION: String = "0.0a"
@@ -32,7 +36,7 @@ fun id(name: String) = Identifier(MODID, name)
 
 @EnvironmentInterface(itf=ClientModInitializer::class, value=EnvType.CLIENT)
 object ExNihiloFabrico: ModInitializer, ClientModInitializer {
-    val ITEM_GROUP = FabricItemGroupBuilder.build(Identifier(MODID, "general")) { ItemStack(Items.WOODEN_PICKAXE) }
+    val ITEM_GROUP = FabricItemGroupBuilder.build(Identifier(MODID, "general")) { ExNihiloItemStack("crook_wood") }
     val LOGGER = ModLogger(MODID, "ExNihiloFabrico")
 
     override fun onInitialize() {
@@ -46,6 +50,7 @@ object ExNihiloFabrico: ModInitializer, ClientModInitializer {
         LOGGER.info("Registering Items")
         ModBlocks.registerBlockItems(Registry.ITEM)
         ModItems.registerItems(Registry.ITEM)
+        ModTools.registerItems(Registry.ITEM)
         LOGGER.info("Registered Items")
 
         /* Register Block Entities */

@@ -1,4 +1,4 @@
-package exnihilofabrico.content.base
+package exnihilofabrico.common.base
 
 import net.minecraft.client.render.model.UnbakedModel
 
