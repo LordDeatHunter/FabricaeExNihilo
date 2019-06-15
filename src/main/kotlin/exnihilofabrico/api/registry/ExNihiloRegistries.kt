@@ -1,8 +1,6 @@
 package exnihilofabrico.api.registry
 
-import exnihilofabrico.api.recipes.CrucibleRecipe
 import exnihilofabrico.registry.*
-import net.minecraft.util.registry.Registry
 
 object ExNihiloRegistries {
     @JvmField

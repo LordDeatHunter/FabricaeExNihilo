@@ -1,7 +1,7 @@
 package exnihilofabrico.api.recipes
 
-import exnihilofabrico.api.crafting.Lootable
 import exnihilofabrico.api.crafting.FluidIngredient
+import exnihilofabrico.api.crafting.Lootable
 import net.minecraft.recipe.Ingredient
 
 data class SieveRecipe(

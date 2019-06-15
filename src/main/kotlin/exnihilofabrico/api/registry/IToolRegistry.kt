@@ -2,9 +2,6 @@ package exnihilofabrico.api.registry
 
 import exnihilofabrico.api.crafting.Lootable
 import exnihilofabrico.api.crafting.TagIngredient
-import exnihilofabrico.util.IngredientfromBlockTag
-import net.minecraft.block.Block
-import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.Ingredient

@@ -1,6 +1,7 @@
 package exnihilofabrico.common
 
 import exnihilofabrico.ExNihiloFabrico
+import exnihilofabrico.common.materials.ModToolMaterials
 import exnihilofabrico.common.tools.CrookTool
 import exnihilofabrico.common.tools.HammerTool
 import exnihilofabrico.id
@@ -12,14 +13,9 @@ import net.minecraft.util.registry.Registry
 object ModTools {
     val tool_settings: Item.Settings = Item.Settings().itemGroup(ExNihiloFabrico.ITEM_GROUP).stackSize(1)
 
-    val CROOKS = mapOf<Identifier, Item>(
-        id("crook_wood") to CrookTool(ToolMaterials.WOOD, tool_settings),
-        id("crook_andesite") to CrookTool(ToolMaterials.STONE, tool_settings),
-        id("crook_granite") to CrookTool(ToolMaterials.STONE, tool_settings),
-        id("crook_diorite") to CrookTool(ToolMaterials.STONE, tool_settings),
-        id("crook_bone") to CrookTool(ToolMaterials.STONE, tool_settings),
-        id("crook_stone") to CrookTool(ToolMaterials.STONE, tool_settings)
-    )
+    val CROOKS = ModToolMaterials.values().map {
+        id("crook_${it.name.toLowerCase()}") to CrookTool(it, tool_settings)
+    }.toMap()
 
     val HAMMERS = mapOf<Identifier, Item>(
         id("hammer_wood") to HammerTool(ToolMaterials.WOOD, tool_settings),

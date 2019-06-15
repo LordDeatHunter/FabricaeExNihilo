@@ -1,7 +1,6 @@
 package exnihilofabrico.common.farming
 
 import exnihilofabrico.common.base.BaseItem
-import net.minecraft.item.Item
 import net.minecraft.item.ItemUsageContext
 import net.minecraft.util.ActionResult
 

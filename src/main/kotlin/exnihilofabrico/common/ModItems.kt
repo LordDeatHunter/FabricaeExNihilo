@@ -13,7 +13,6 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.block.KelpBlock
 import net.minecraft.fluid.Fluids
-import net.minecraft.item.FoodItemSetting
 import net.minecraft.item.FoodItemSettings
 import net.minecraft.item.Item
 import net.minecraft.item.ItemUsageContext

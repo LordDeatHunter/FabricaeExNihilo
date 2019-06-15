@@ -15,18 +15,14 @@ import exnihilofabrico.common.ModItems
 import exnihilofabrico.common.ModTools
 import exnihilofabrico.common.crucibles.CrucibleBlockEntity
 import exnihilofabrico.common.sieves.SieveBlockEntity
-import exnihilofabrico.common.tools.CrookLootCondition
 import exnihilofabrico.modules.MetaModule
 import exnihilofabrico.util.ExNihiloItemStack
 import io.github.cottonmc.cotton.logging.ModLogger
 import net.fabricmc.api.*
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder
 import net.fabricmc.fabric.api.client.render.BlockEntityRendererRegistry
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
-import net.minecraft.world.loot.condition.LootConditions
 
 val MODID: String = "exnihilofabrico"
 val VERSION: String = "0.0a"

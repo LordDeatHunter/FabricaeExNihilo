@@ -1,11 +1,10 @@
 package exnihilofabrico.api.registry
 
-import exnihilofabrico.api.crafting.Lootable
 import exnihilofabrico.api.crafting.FluidIngredient
+import exnihilofabrico.api.crafting.Lootable
 import exnihilofabrico.api.recipes.SieveRecipe
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.fluid.Fluid
-import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.Ingredient
@@ -23,14 +22,14 @@ interface ISieveRegistry {
     fun register(mesh: Ingredient, fluid: FluidIngredient?, sievable: Ingredient, loot: Collection<Lootable>) =
         register(SieveRecipe(mesh, fluid, sievable, loot.toMutableList()))
     fun register(mesh: Ingredient, fluid: FluidIngredient?, sievable: Ingredient, vararg loot: Lootable) =
-        register(SieveRecipe(mesh, fluid, sievable, loot.toMutableList()))
+        register(mesh, fluid, sievable, loot.toMutableList())
     fun register(mesh: Ingredient, sievable: Ingredient, vararg loot: Lootable) =
-        register(SieveRecipe(mesh, null, sievable, loot.toMutableList()))
+        register(mesh, null, sievable, loot.toMutableList())
     fun register(mesh: ItemStack, fluid: Fluid, sievable: ItemStack, vararg loot: Lootable) =
-        register(SieveRecipe(Ingredient.ofStacks(mesh), FluidIngredient(fluid), Ingredient.ofStacks(sievable), loot.toMutableList()))
+        register(Ingredient.ofStacks(mesh), FluidIngredient(fluid), Ingredient.ofStacks(sievable), loot.toMutableList())
     fun register(mesh: ItemConvertible, fluid: Fluid, sievable: ItemConvertible, vararg loot: Lootable) =
-        register(ItemStack(mesh), fluid, ItemStack(sievable), *loot)
+        register(Ingredient.ofItems(mesh), FluidIngredient(fluid), Ingredient.ofItems(sievable), *loot)
     fun register(mesh: ItemConvertible, sievable: ItemConvertible, vararg loot: Lootable) =
-        register(SieveRecipe(Ingredient.ofItems(mesh), null, Ingredient.ofItems(sievable), loot.toMutableList()))
+        register(Ingredient.ofItems(mesh), null, Ingredient.ofItems(sievable), loot.toMutableList())
 }
 

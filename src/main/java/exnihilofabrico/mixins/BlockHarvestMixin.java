@@ -1,6 +1,5 @@
 package exnihilofabrico.mixins;
 
-import exnihilofabrico.ExNihiloFabrico;
 import exnihilofabrico.api.registry.ExNihiloRegistries;
 import exnihilofabrico.common.tools.CrookTool;
 import exnihilofabrico.common.tools.HammerTool;
@@ -25,9 +24,9 @@ public abstract class BlockHarvestMixin {
     @Inject(at = @At("RETURN"), method = "getDroppedStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/loot/context/LootContext$Builder;)Ljava/util/List;", cancellable = true)
     public void getDroppedStacks(BlockState state, LootContext.Builder builder, CallbackInfoReturnable<List<ItemStack>> info) {
         ItemStack tool = builder.get(LootContextParameters.TOOL);
-        if(CrookTool.isCrook(tool))
+        if(CrookTool.isCrook(tool) && ExNihiloRegistries.CROOK.isRegistered(state.getBlock()))
             info.setReturnValue(ExNihiloRegistries.CROOK.getResult(state.getBlock(), builder.getWorld().random));
-        else if (HammerTool.isHammer(tool))
+        else if (HammerTool.isHammer(tool) && ExNihiloRegistries.HAMMER.isRegistered(state.getBlock()))
             info.setReturnValue(ExNihiloRegistries.HAMMER.getResult(state.getBlock(), builder.getWorld().random));
 
     }

@@ -6,7 +6,6 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.FluidBlock
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.FluidState
-import net.minecraft.item.BucketItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.Ingredient

@@ -1,6 +1,5 @@
 package exnihilofabrico.util
 
-import net.minecraft.item.Items
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 

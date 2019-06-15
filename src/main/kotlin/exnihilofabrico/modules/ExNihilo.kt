@@ -4,7 +4,9 @@ import exnihilofabrico.api.crafting.Lootable
 import exnihilofabrico.api.registry.*
 import exnihilofabrico.common.ModItems
 import exnihilofabrico.id
-import exnihilofabrico.util.*
+import exnihilofabrico.util.EnumVanillaColors
+import exnihilofabrico.util.EnumVanillaWoodTypes
+import exnihilofabrico.util.asStack
 import net.minecraft.block.Blocks
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.Items
@@ -45,6 +47,9 @@ object ExNihilo: ICompatModule {
         registry.register(ModItems.MESH_FLINT, Fluids.WATER, Blocks.SAND, Lootable(id("seed_sea_pickle"), listOf(.1)))
         registry.register(ModItems.MESH_FLINT, Fluids.WATER, Blocks.DIRT, Lootable(Items.TROPICAL_FISH, listOf(.4)))
         registry.register(ModItems.MESH_FLINT, Fluids.WATER, Blocks.MYCELIUM, Lootable(Items.PUFFERFISH, listOf(.5)))
+
+        registry.register(ModItems.MESH_IRON, Blocks.GRAVEL, Lootable(Items.DIAMOND, .01))
+        registry.register(ModItems.MESH_DIAMOND, Blocks.GRAVEL, Lootable(Items.DIAMOND, .02))
     }
 
     override fun registerCrook(registry: IToolRegistry) {

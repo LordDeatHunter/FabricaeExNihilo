@@ -1,13 +1,9 @@
 package exnihilofabrico.api.crafting
 
-import exnihilofabrico.api.crafting.FluidIngredient
 import exnihilofabrico.util.asStack
-import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
-import net.minecraft.recipe.Ingredient
 import net.minecraft.util.Identifier
-import java.rmi.registry.Registry
 
 data class Lootable(
         val stack: ItemStack,
