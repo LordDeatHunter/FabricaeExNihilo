@@ -17,12 +17,12 @@ import exnihilofabrico.common.crucibles.CrucibleBlockEntity
 import exnihilofabrico.common.sieves.SieveBlockEntity
 import exnihilofabrico.modules.MetaModule
 import exnihilofabrico.util.ExNihiloItemStack
-import io.github.cottonmc.cotton.logging.ModLogger
 import net.fabricmc.api.*
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder
 import net.fabricmc.fabric.api.client.render.BlockEntityRendererRegistry
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
+import org.apache.logging.log4j.LogManager
 
 val MODID: String = "exnihilofabrico"
 val VERSION: String = "0.0a"
@@ -33,7 +33,8 @@ fun id(name: String) = Identifier(MODID, name)
 @EnvironmentInterface(itf=ClientModInitializer::class, value=EnvType.CLIENT)
 object ExNihiloFabrico: ModInitializer, ClientModInitializer {
     val ITEM_GROUP = FabricItemGroupBuilder.build(Identifier(MODID, "general")) { ExNihiloItemStack("crook_wood") }
-    val LOGGER = ModLogger(MODID, "ExNihiloFabrico")
+//    val LOGGER = ModLogger(MODID, "ExNihiloFabrico")
+    val LOGGER = LogManager.getLogger(MODID)
 
     override fun onInitialize() {
         loadConfigs()

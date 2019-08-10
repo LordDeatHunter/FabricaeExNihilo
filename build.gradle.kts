@@ -80,12 +80,13 @@ dependencies {
 	// Fabric
 	modCompile("net.fabricmc:fabric-loader:" + v("fabric-loader"))
 	modCompile("net.fabricmc.fabric-api:fabric-api:" + v("fabric-api"))
+	modCompile("net.fabricmc.fabric-api:fabric-rendering-fluids-v1:" + v("fabric-api-rendering-fluids-v1"))
 	modCompile("net.fabricmc:fabric-language-kotlin:" + v("fabric-kotlin"))
 	compileOnly("net.fabricmc:fabric-language-kotlin:" + v("fabric-kotlin"))
 
 	// Other mods
-	modCompileAndInclude("towelette:Towelette:" + v("towelette"))
-	modCompileAndInclude("io.github.cottonmc:cotton:" + v("cotton")) { exclude(module = "fabric") }
+//	modCompileAndInclude("towelette:Towelette:" + v("towelette"))
+//	modCompileAndInclude("io.github.cottonmc:cotton:" + v("cotton")) { exclude(module = "fabric") }
 	modCompileAndInclude("io.github.prospector.silk:SilkAPI:+")
 
 	// Other libraries

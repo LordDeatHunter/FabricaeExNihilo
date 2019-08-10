@@ -22,7 +22,7 @@ import net.minecraft.util.DefaultedList
 import net.minecraft.util.Hand
 import net.minecraft.util.ItemScatterer
 import net.minecraft.util.hit.BlockHitResult
-import virtuoel.towelette.api.Fluidloggable
+//import virtuoel.towelette.api.Fluidloggable
 
 class SieveBlockEntity: BlockEntity(TYPE), BlockEntityClientSerializable {
 
@@ -59,7 +59,7 @@ class SieveBlockEntity: BlockEntity(TYPE), BlockEntityClientSerializable {
             if(SIEVE.isValidMesh(held)) {
                 mesh = held.ofSize(1)
                 if(!player.isCreative)
-                    held.subtractAmount(1)
+                    held.decrement(1)
             }
             markDirty()
             return true
@@ -74,7 +74,7 @@ class SieveBlockEntity: BlockEntity(TYPE), BlockEntityClientSerializable {
         if(!held.isEmpty && SIEVE.isValidRecipe(mesh, getFluid(), held)) { // TODO use sieve registry to determine if something is sievable
             contents = held.ofSize(1)
             if(!player.isCreative)
-                held.subtractAmount(1)
+                held.decrement(1)
             markDirty()
             return true
         }
@@ -83,7 +83,7 @@ class SieveBlockEntity: BlockEntity(TYPE), BlockEntityClientSerializable {
 
     fun getFluid(): Fluid? {
         val state = world?.getBlockState(pos) ?: return null
-        if(state.block !is Fluidloggable) return null
+//        if(state.block !is Fluidloggable) return null
         return state.fluidState.fluid
     }
 
@@ -106,19 +106,19 @@ class SieveBlockEntity: BlockEntity(TYPE), BlockEntityClientSerializable {
     }
 
     fun dropInventory() {
-        ItemScatterer.spawn(world, pos.up(), DefaultedList.create(mesh, contents))
+        ItemScatterer.spawn(world, pos.up(), DefaultedList.copyOf(mesh, contents))
         mesh = ItemStack.EMPTY
         contents = ItemStack.EMPTY
     }
 
     fun dropMesh() {
-        ItemScatterer.spawn(world, pos.up(), DefaultedList.create(mesh))
+        ItemScatterer.spawn(world, pos.up(), DefaultedList.copyOf(mesh))
         mesh = ItemStack.EMPTY
     }
 
 
     fun dropContents() {
-        ItemScatterer.spawn(world, pos.up(), DefaultedList.create(contents))
+        ItemScatterer.spawn(world, pos.up(), DefaultedList.copyOf(contents))
         contents = ItemStack.EMPTY
     }
 

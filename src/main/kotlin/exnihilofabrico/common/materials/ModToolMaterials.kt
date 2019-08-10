@@ -8,7 +8,7 @@ import net.minecraft.recipe.Ingredient
 enum class ModToolMaterials(
     private val miningLevel: Int,
     private val durability: Int,
-    private val blockBreakingSpeed: Float,
+    private val miningSpeed: Float,
     private val attackDamage: Float,
     private val enchantability: Int,
     private val repairIngredient: Ingredient
@@ -29,13 +29,13 @@ enum class ModToolMaterials(
     override fun getEnchantability() = enchantability
     override fun getAttackDamage() = attackDamage
     override fun getDurability() = durability
-    override fun getBlockBreakingSpeed() = blockBreakingSpeed
+    override fun getMiningSpeed(): Float = miningSpeed
     override fun getRepairIngredient() = repairIngredient
 
     constructor(material: ToolMaterial):
             this(material.miningLevel,
                 material.durability,
-                material.blockBreakingSpeed,
+                material.miningSpeed,
                 material.attackDamage,
                 material.enchantability,
                 material.repairIngredient)

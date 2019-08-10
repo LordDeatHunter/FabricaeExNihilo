@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
 object ModTools {
-    val tool_settings: Item.Settings = Item.Settings().itemGroup(ExNihiloFabrico.ITEM_GROUP).stackSize(1)
+    val tool_settings: Item.Settings = Item.Settings().group(ExNihiloFabrico.ITEM_GROUP).maxCount(1)
 
     val CROOKS = ModToolMaterials.values().map {
         id("crook_${it.name.toLowerCase()}") to CrookTool(it, tool_settings)

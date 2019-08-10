@@ -22,7 +22,7 @@ open class ExNihiloFluid(): BaseFluid() {
         override fun getLevel(fluidState: FluidState?) = fluidState?.get(LEVEL) ?: 0
         override fun isStill(fluidState: FluidState?) = false
     }
-    open val bucket: Item = BucketItem(this, Item.Settings().itemGroup(ExNihiloFabrico.ITEM_GROUP))
+    open val bucket: Item = BucketItem(this, Item.Settings().group(ExNihiloFabrico.ITEM_GROUP))
     open val block: Block = BaseFluidBlock(this, Block.Settings.of(Material.WATER).noCollision())
 
     override fun method_15777(fluidState: FluidState?, view: BlockView?, pos: BlockPos?, fluid: Fluid?, direction: Direction?): Boolean {

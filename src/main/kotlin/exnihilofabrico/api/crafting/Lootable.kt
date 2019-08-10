@@ -12,6 +12,6 @@ data class Lootable(
         constructor(stack: ItemStack, chance: Double): this(stack, listOf(chance))
         constructor(result: ItemConvertible, chance: Double): this(result.asStack(), listOf(chance))
         constructor(result: ItemConvertible, chances: List<Double>): this(result.asStack(), chances)
-        constructor(result: Identifier, chances: List<Double>): this(net.minecraft.util.registry.Registry.ITEM[result].defaultStack, chances)
+        constructor(result: Identifier, chances: List<Double>): this(net.minecraft.util.registry.Registry.ITEM[result].asStack(), chances)
         constructor(result: Identifier, chance: Double): this(result, listOf(chance))
 }

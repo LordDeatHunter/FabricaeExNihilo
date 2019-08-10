@@ -27,7 +27,7 @@ data class SieveRegistry(val registry: MutableList<SieveRecipe> = mutableListOf(
                 val num = loot.chance.count { rand.nextDouble() < it }
                 if(num > 0) {
                     val stack = loot.stack.copy()
-                    stack.amount = num
+                    stack.count = num
                     results.add(stack)
                 }
             }

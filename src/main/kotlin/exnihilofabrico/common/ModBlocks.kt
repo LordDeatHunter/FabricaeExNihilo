@@ -23,7 +23,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
 object ModBlocks {
-    private val itemSettings = Item.Settings().itemGroup(ExNihiloFabrico.ITEM_GROUP).stackSize(64)
+    private val itemSettings = Item.Settings().group(ExNihiloFabrico.ITEM_GROUP).maxCount(64)
 
     private val woodSettings = FabricBlockSettings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD).breakByHand(true)
     private val stoneSettings = FabricBlockSettings.of(Material.STONE).strength(2.0f, 6.0f).sounds(BlockSoundGroup.STONE)

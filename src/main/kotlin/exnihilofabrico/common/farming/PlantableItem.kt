@@ -14,7 +14,7 @@ open class PlantableItem(val plants: List<BlockState>, settings: Settings): Base
     override fun useOnBlock(context: ItemUsageContext): ActionResult {
         if(context.world.isClient)
             return ActionResult.SUCCESS
-        val plantPos = context.blockPos.offset(context.facing)
+        val plantPos = context.blockPos.offset(context.side)
         for (plant in plants.shuffled()) {
             if(placementCheck(context) && plant.canPlaceAt(context.world, plantPos)){
                 context.world.setBlockState(plantPos, plant)

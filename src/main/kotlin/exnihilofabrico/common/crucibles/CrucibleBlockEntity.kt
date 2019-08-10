@@ -70,7 +70,7 @@ class CrucibleBlockEntity : BlockEntity(TYPE), FluidContainer, Tickable, BlockEn
             if(contents.amount > DropletValues.BUCKET) {
                 val bucket = ItemStack(contents.fluid.bucketItem)
                 if(!player.isCreative) {
-                    held.subtractAmount(1)
+                    held.decrement(1)
                     contents.subtractAmount(DropletValues.BUCKET)
                 }
                 player.giveItemStack(bucket)
@@ -87,7 +87,7 @@ class CrucibleBlockEntity : BlockEntity(TYPE), FluidContainer, Tickable, BlockEn
             queued.amount + contents.amount + result.amount < maxCapacity) {
             render = held.copy()
             if(!player.isCreative)
-                held.subtractAmount(1)
+                held.decrement(1)
             if(queued.isEmpty)
                 queued = result.copy()
             else

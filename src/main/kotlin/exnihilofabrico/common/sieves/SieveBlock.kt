@@ -15,11 +15,11 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
-import virtuoel.towelette.api.Fluidloggable
+//import virtuoel.towelette.api.Fluidloggable
 
 class SieveBlock(val texture: Identifier,
                  settings: FabricBlockSettings = FabricBlockSettings.of(Material.WOOD)):
-        BaseBlock(settings), BlockEntityProvider, IHasModel, Fluidloggable {
+        BaseBlock(settings), BlockEntityProvider, IHasModel/*, Fluidloggable*/ {
     override fun getModel(): UnbakedModel {
 
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

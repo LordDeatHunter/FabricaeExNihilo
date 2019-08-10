@@ -9,13 +9,13 @@ import net.minecraft.util.registry.Registry
 fun ItemStack.ofSize(num: Int = 1):ItemStack {
     if(num <= 0) return ItemStack.EMPTY
     val stack = this.copy()
-    stack.amount = num
+    stack.count = num
     return stack
 }
 
-fun ItemConvertible.asStack(num: Int = 1) = this.asItem().defaultStack.ofSize(num)
+fun ItemConvertible.asStack(num: Int = 1) = ItemStack(this.asItem(), num)
 
-fun StackFromId(identifier: Identifier) = Registry.ITEM[identifier].defaultStack
+fun StackFromId(identifier: Identifier) = Registry.ITEM[identifier].asStack()
 fun ExNihiloItemStack(str: String) = StackFromId(id(str))
 fun ExNihiloBlock(str: String) = Registry.BLOCK[id(str)]
 fun ExNihiloItem(str: String) = Registry.ITEM[id(str)]

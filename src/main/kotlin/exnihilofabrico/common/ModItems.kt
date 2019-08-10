@@ -13,15 +13,15 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.block.KelpBlock
 import net.minecraft.fluid.Fluids
-import net.minecraft.item.FoodItemSettings
+import net.minecraft.item.FoodComponents
 import net.minecraft.item.Item
 import net.minecraft.item.ItemUsageContext
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
 object ModItems {
-    val seed_settings: Item.Settings = Item.Settings().itemGroup(ExNihiloFabrico.ITEM_GROUP).stackSize(64)
-    val mesh_settings: Item.Settings = Item.Settings().itemGroup(ExNihiloFabrico.ITEM_GROUP).stackSize(ExNihiloConfig.Modules.Sieve.meshStackSize)
+    val seed_settings: Item.Settings = Item.Settings().group(ExNihiloFabrico.ITEM_GROUP).maxCount(64)
+    val mesh_settings: Item.Settings = Item.Settings().group(ExNihiloFabrico.ITEM_GROUP).maxCount(ExNihiloConfig.Modules.Sieve.meshStackSize)
 
     val TREE_SEEDS = mutableMapOf<Identifier, Item>(
         id("seed_oak") to PlantableItem(Blocks.OAK_SAPLING, seed_settings),
@@ -67,8 +67,8 @@ object ModItems {
     )
 
     val RESOURCES = mutableMapOf<Identifier, Item>(
-        id("silkworm_raw") to SilkWormItem(Item.Settings().stackSize(64).food(FoodItemSettings.COD)),
-        id("silkworm_cooked") to BaseItem(Item.Settings().stackSize(64).food(FoodItemSettings.COOKED_COD))
+        id("silkworm_raw") to SilkWormItem(Item.Settings().maxCount(64).food(FoodComponents.COD)),
+        id("silkworm_cooked") to BaseItem(Item.Settings().maxCount(64).food(FoodComponents.COOKED_COD))
     )
 
     init {
@@ -78,7 +78,7 @@ object ModItems {
         }
         CROP_SEEDS[id("seed_kelp")] = object: PlantableItem(kelpStates, seed_settings) {
             override fun placementCheck(context: ItemUsageContext): Boolean {
-                return context.world.getFluidState(context.blockPos.offset(context.facing)).fluid == Fluids.WATER
+                return context.world.getFluidState(context.blockPos.offset(context.side)).fluid == Fluids.WATER
             }
         }
     }
