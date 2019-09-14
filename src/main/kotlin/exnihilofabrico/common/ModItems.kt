@@ -2,10 +2,12 @@ package exnihilofabrico.common
 
 import exnihilofabrico.ExNihiloConfig
 import exnihilofabrico.ExNihiloFabrico
+import exnihilofabrico.api.registry.ExNihiloRegistries
 import exnihilofabrico.common.base.BaseItem
 import exnihilofabrico.common.farming.PlantableItem
 import exnihilofabrico.common.farming.SilkWormItem
 import exnihilofabrico.common.farming.TransformingItem
+import exnihilofabrico.common.fluids.WitchWaterFluid
 import exnihilofabrico.common.sieves.MeshItem
 import exnihilofabrico.id
 import exnihilofabrico.util.Color
@@ -95,5 +97,13 @@ object ModItems {
 
         // Register Others
         RESOURCES.forEach { k, v -> Registry.register(registry, k, v) }
+
+        // Register Ores
+        ExNihiloRegistries.ORES.registerPieceItems(registry)
+        ExNihiloRegistries.ORES.registerChunkItems(registry)
+        ExNihiloRegistries.ORES.registerItemTags()
+
+        // Register Buckets
+        Registry.register(registry, id("witchwater"), WitchWaterFluid.Bucket)
     }
 }

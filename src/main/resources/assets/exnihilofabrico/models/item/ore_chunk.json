@@ -1,0 +1,38 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "exnihilofabrico:item/ore/chunks/unknown_chunk"
+  },
+  "overrides": [
+    { "predicate": { "exnihilofabrico:base_material": 0, "exnihilofabrico:shape": 0 }, "model": "exnihilofabrico:item/ore/chunk/chunk_andesite" },
+    { "predicate": { "exnihilofabrico:base_material": 0, "exnihilofabrico:shape": 1 }, "model": "exnihilofabrico:item/ore/chunk/flint_andesite" },
+    { "predicate": { "exnihilofabrico:base_material": 0, "exnihilofabrico:shape": 2 }, "model": "exnihilofabrico:item/ore/chunk/lump_andesite" },
+    { "predicate": { "exnihilofabrico:base_material": 1, "exnihilofabrico:shape": 0 }, "model": "exnihilofabrico:item/ore/chunk/chunk_diorite" },
+    { "predicate": { "exnihilofabrico:base_material": 1, "exnihilofabrico:shape": 1 }, "model": "exnihilofabrico:item/ore/chunk/flint_diorite" },
+    { "predicate": { "exnihilofabrico:base_material": 1, "exnihilofabrico:shape": 2 }, "model": "exnihilofabrico:item/ore/chunk/lump_diorite" },
+    { "predicate": { "exnihilofabrico:base_material": 2, "exnihilofabrico:shape": 0 }, "model": "exnihilofabrico:item/ore/chunk/chunk_endstone" },
+    { "predicate": { "exnihilofabrico:base_material": 2, "exnihilofabrico:shape": 1 }, "model": "exnihilofabrico:item/ore/chunk/flint_endstone" },
+    { "predicate": { "exnihilofabrico:base_material": 2, "exnihilofabrico:shape": 2 }, "model": "exnihilofabrico:item/ore/chunk/lump_endstone" },
+    { "predicate": { "exnihilofabrico:base_material": 3, "exnihilofabrico:shape": 0 }, "model": "exnihilofabrico:item/ore/chunk/chunk_granite" },
+    { "predicate": { "exnihilofabrico:base_material": 3, "exnihilofabrico:shape": 1 }, "model": "exnihilofabrico:item/ore/chunk/flint_granite" },
+    { "predicate": { "exnihilofabrico:base_material": 3, "exnihilofabrico:shape": 2 }, "model": "exnihilofabrico:item/ore/chunk/lump_granite" },
+    { "predicate": { "exnihilofabrico:base_material": 4, "exnihilofabrico:shape": 0 }, "model": "exnihilofabrico:item/ore/chunk/chunk_netherrack" },
+    { "predicate": { "exnihilofabrico:base_material": 4, "exnihilofabrico:shape": 1 }, "model": "exnihilofabrico:item/ore/chunk/flint_netherrack" },
+    { "predicate": { "exnihilofabrico:base_material": 4, "exnihilofabrico:shape": 2 }, "model": "exnihilofabrico:item/ore/chunk/lump_netherrack" },
+    { "predicate": { "exnihilofabrico:base_material": 5, "exnihilofabrico:shape": 0 }, "model": "exnihilofabrico:item/ore/chunk/chunk_prismarine" },
+    { "predicate": { "exnihilofabrico:base_material": 5, "exnihilofabrico:shape": 1 }, "model": "exnihilofabrico:item/ore/chunk/flint_prismarine" },
+    { "predicate": { "exnihilofabrico:base_material": 5, "exnihilofabrico:shape": 2 }, "model": "exnihilofabrico:item/ore/chunk/lump_prismarine" },
+    { "predicate": { "exnihilofabrico:base_material": 6, "exnihilofabrico:shape": 0 }, "model": "exnihilofabrico:item/ore/chunk/chunk_redsand" },
+    { "predicate": { "exnihilofabrico:base_material": 6, "exnihilofabrico:shape": 1 }, "model": "exnihilofabrico:item/ore/chunk/flint_redsand" },
+    { "predicate": { "exnihilofabrico:base_material": 6, "exnihilofabrico:shape": 2 }, "model": "exnihilofabrico:item/ore/chunk/lump_redsand" },
+    { "predicate": { "exnihilofabrico:base_material": 7, "exnihilofabrico:shape": 0 }, "model": "exnihilofabrico:item/ore/chunk/chunk_sand" },
+    { "predicate": { "exnihilofabrico:base_material": 7, "exnihilofabrico:shape": 1 }, "model": "exnihilofabrico:item/ore/chunk/flint_sand" },
+    { "predicate": { "exnihilofabrico:base_material": 7, "exnihilofabrico:shape": 2 }, "model": "exnihilofabrico:item/ore/chunk/lump_sand" },
+    { "predicate": { "exnihilofabrico:base_material": 8, "exnihilofabrico:shape": 0 }, "model": "exnihilofabrico:item/ore/chunk/chunk_soulsand" },
+    { "predicate": { "exnihilofabrico:base_material": 8, "exnihilofabrico:shape": 1 }, "model": "exnihilofabrico:item/ore/chunk/flint_soulsand" },
+    { "predicate": { "exnihilofabrico:base_material": 8, "exnihilofabrico:shape": 2 }, "model": "exnihilofabrico:item/ore/chunk/lump_soulsand" },
+    { "predicate": { "exnihilofabrico:base_material": 9, "exnihilofabrico:shape": 0 }, "model": "exnihilofabrico:item/ore/chunk/chunk_stone" },
+    { "predicate": { "exnihilofabrico:base_material": 9, "exnihilofabrico:shape": 1 }, "model": "exnihilofabrico:item/ore/chunk/flint_stone" },
+    { "predicate": { "exnihilofabrico:base_material": 9, "exnihilofabrico:shape": 2 }, "model": "exnihilofabrico:item/ore/chunk/lump_stone" }
+  ]
+}

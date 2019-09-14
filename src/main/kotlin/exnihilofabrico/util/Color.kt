@@ -66,3 +66,27 @@ data class Color(val r: Float, val g: Float, val b: Float, val a: Float) {
         val BLACK = Color("000000")
     }
 }
+
+object MetalColors {
+    val IRON = Color("BF8040")
+    val GOLD = Color("FFFF00")
+
+    val ALUMINUM = Color("BFBFBF")
+    val ARDITE = Color("FF751A")
+    val BERYLLIUM = Color("E5ECDD")
+    val BORON = Color("939393")
+    val COBALT = Color("3333FF")
+    val COPPER = Color("FF9933")
+    val LEAD = Color("330066")
+    val LITHIUM = Color("EDEDED")
+    val MAGNESIUM = Color("F8DEF8")
+    val NICKEL = Color("FFFFCC")
+    val SILVER = Color("F2F2F2")
+    val TIN = Color("E6FFF2")
+    val TITANIUM = Color("BD87CA")
+    val THORIUM = Color("333333")
+    val TUNGSTEN = Color("1C1C1C")
+    val URANIUM = Color("4E5B43")
+    val ZINC = Color("A59C74")
+    val ZIRCONIUM = Color("E6E8C7")
+}

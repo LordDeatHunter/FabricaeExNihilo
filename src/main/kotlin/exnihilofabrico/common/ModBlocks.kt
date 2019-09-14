@@ -1,11 +1,13 @@
 package exnihilofabrico.common
 
+import exnihilofabrico.ExNihiloConfig
 import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.common.barrels.BarrelBlock
 import exnihilofabrico.common.barrels.BarrelBlockEntity
 import exnihilofabrico.common.base.BaseFallingBlock
 import exnihilofabrico.common.crucibles.CrucibleBlock
 import exnihilofabrico.common.crucibles.CrucibleBlockEntity
+import exnihilofabrico.common.fluids.WitchWaterFluid
 import exnihilofabrico.common.sieves.SieveBlock
 import exnihilofabrico.common.sieves.SieveBlockEntity
 import exnihilofabrico.id
@@ -56,6 +58,9 @@ object ModBlocks {
         CRUCIBLES.forEach { (k, v) -> Registry.register(registry, k, v) }
         BARRELS.forEach { (k, v) -> Registry.register(registry, k, v) }
         CRUSHED.forEach { (k, v) -> Registry.register(registry, k, v) }
+
+        // Fluid Blocks
+        Registry.register(registry, id("witchwater"), WitchWaterFluid.Block)
     }
 
     fun registerBlockItems(registry: Registry<Item>) {

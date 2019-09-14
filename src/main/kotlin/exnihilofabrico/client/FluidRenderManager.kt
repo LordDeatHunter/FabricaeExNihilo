@@ -1,0 +1,35 @@
+package exnihilofabrico.client
+
+import exnihilofabrico.common.fluids.AbstractFluid
+import exnihilofabrico.common.fluids.WitchWaterFluid
+import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler
+import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
+import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback
+import net.minecraft.client.MinecraftClient
+import net.minecraft.client.texture.SpriteAtlasTexture
+
+class FluidRenderManager: ClientSpriteRegistryCallback {
+    override fun registerSprites(atlas: SpriteAtlasTexture?, registry: ClientSpriteRegistryCallback.Registry?) {
+        registry?.register(WitchWaterFluid.fluidSettings.flowingTexture)
+        registry?.register(WitchWaterFluid.fluidSettings.stillTexture)
+    }
+    companion object {
+        fun setupClient() {
+            val renderManager = FluidRenderManager()
+            ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEX).register(renderManager)
+            setupFluidRenderer(WitchWaterFluid.Still)
+            setupFluidRenderer(WitchWaterFluid.Flowing)
+        }
+        private fun setupFluidRenderer(fluid: AbstractFluid) {
+            val sprites = lazy {
+                val atlas = MinecraftClient.getInstance().spriteAtlas
+                arrayOf(
+                    atlas.getSprite(fluid.fluidSettings.stillTexture),
+                    atlas.getSprite(fluid.fluidSettings.flowingTexture)
+                )
+            }
+
+            FluidRenderHandlerRegistry.INSTANCE.register(fluid, FluidRenderHandler { _, _, _ -> sprites.value })
+        }
+    }
+}

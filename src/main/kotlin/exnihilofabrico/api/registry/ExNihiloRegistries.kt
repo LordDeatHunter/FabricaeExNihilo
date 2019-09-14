@@ -22,4 +22,7 @@ object ExNihiloRegistries {
     val CRUCIBLE_STONE: ICrucibleRegistry = CrucibleRegistry()
     @JvmField
     val CRUCIBLE_WOOD: ICrucibleRegistry = CrucibleRegistry()
+
+    @JvmField
+    val ORES: IOreRegistry = OreRegistry()
 }

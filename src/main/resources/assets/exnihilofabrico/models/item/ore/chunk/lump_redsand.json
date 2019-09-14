@@ -2,6 +2,7 @@
   "parent": "item/generated",
   "textures": {
     "layer0": "exnihilofabrico:item/ore/chunks/lump_redsand",
-    "layer1": "exnihilocreatio:item/ore/chunks/lump_overlay"
+    "layer1": "exnihilofabrico:item/ore/chunks/lump_overlay"
   }
 }
+
