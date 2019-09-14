@@ -7,7 +7,6 @@ import exnihilofabrico.common.ore.OreProperties
 import exnihilofabrico.util.Color
 import net.minecraft.client.util.ModelIdentifier
 import net.minecraft.item.Item
-import net.minecraft.recipe.CraftingRecipe
 import net.minecraft.util.registry.Registry
 
 interface IOreRegistry {

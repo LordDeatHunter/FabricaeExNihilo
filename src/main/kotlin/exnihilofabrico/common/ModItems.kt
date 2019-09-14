@@ -104,6 +104,6 @@ object ModItems {
         ExNihiloRegistries.ORES.registerItemTags()
 
         // Register Buckets
-        Registry.register(registry, id("witchwater"), WitchWaterFluid.Bucket)
+        Registry.register(registry, id("witchwater_bucket"), WitchWaterFluid.Bucket)
     }
 }

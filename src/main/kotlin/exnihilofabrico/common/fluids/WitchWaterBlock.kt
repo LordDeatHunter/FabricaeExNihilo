@@ -1,17 +1,18 @@
 package exnihilofabrico.common.fluids
 
 import net.minecraft.block.BlockState
-import net.minecraft.entity.*
-import net.minecraft.entity.effect.StatusEffect
+import net.minecraft.entity.Entity
+import net.minecraft.entity.EntityType
+import net.minecraft.entity.LightningEntity
+import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
-import net.minecraft.entity.mob.*
+import net.minecraft.entity.mob.CreeperEntity
+import net.minecraft.entity.mob.MagmaCubeEntity
+import net.minecraft.entity.mob.SlimeEntity
 import net.minecraft.entity.passive.RabbitEntity
 import net.minecraft.entity.passive.VillagerEntity
-import net.minecraft.entity.projectile.ArrowEntity
 import net.minecraft.fluid.BaseFluid
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.tag.EntityTypeTags
 import net.minecraft.util.math.BlockPos
 import net.minecraft.village.VillagerProfession
 import net.minecraft.world.World
@@ -21,7 +22,7 @@ class WitchWaterBlock(fluid: BaseFluid, settings: Settings): BaseFluidBlock(flui
     override fun onEntityCollision(state: BlockState?, world: World?, pos: BlockPos?, entity: Entity?) {
         if(world == null || entity == null || !entity.isAlive || entity.removed)
             return
-        if(entity is LivingEntity)
+        if(entity is LivingEntity){
             when(entity.type) {
                 EntityType.SKELETON -> replaceMob(world, entity, EntityType.WITHER_SKELETON)
                 EntityType.CREEPER -> {
@@ -76,6 +77,7 @@ class WitchWaterBlock(fluid: BaseFluid, settings: Settings): BaseFluidBlock(flui
                     applyPotion(entity, StatusEffectInstance(StatusEffects.SLOWNESS, 210, 0))
                 }
             }
+        }
         else
             when(entity.type) {
                 EntityType.ARROW -> {

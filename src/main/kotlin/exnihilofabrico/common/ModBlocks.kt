@@ -1,6 +1,5 @@
 package exnihilofabrico.common
 
-import exnihilofabrico.ExNihiloConfig
 import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.common.barrels.BarrelBlock
 import exnihilofabrico.common.barrels.BarrelBlockEntity

@@ -8,17 +8,10 @@ import exnihilofabrico.common.ore.OreProperties
 import exnihilofabrico.util.asStack
 import io.github.cottonmc.cotton.datapack.tags.TagEntryManager
 import io.github.cottonmc.cotton.datapack.tags.TagType
-import io.github.cottonmc.libcd.tweaker.RecipeTweaker
-import net.fabricmc.fabric.api.resource.ResourceManagerHelper
-import net.fabricmc.loader.game.MinecraftGameProvider
-import net.fabricmc.loom.providers.MinecraftProvider
 import net.minecraft.client.util.ModelIdentifier
 import net.minecraft.item.Item
-import net.minecraft.recipe.CraftingRecipe
 import net.minecraft.recipe.Ingredient
-import net.minecraft.recipe.RecipeManager
 import net.minecraft.recipe.ShapedRecipe
-import net.minecraft.server.MinecraftServer
 import net.minecraft.util.DefaultedList
 import net.minecraft.util.registry.Registry
 

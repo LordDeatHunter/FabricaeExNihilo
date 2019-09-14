@@ -1,6 +1,5 @@
 package exnihilofabrico.mixins;
 
-import io.github.cottonmc.libcd.impl.RecipeMapAccessor;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.recipe.RecipeType;
