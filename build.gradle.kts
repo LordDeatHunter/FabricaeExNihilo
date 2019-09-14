@@ -86,7 +86,7 @@ dependencies {
 
 	// Other mods
 //	modCompileAndInclude("towelette:Towelette:" + v("towelette"))
-//	modCompileAndInclude("io.github.cottonmc:cotton:" + v("cotton")) { exclude(module = "fabric") }
+	modCompileAndInclude("io.github.cottonmc:cotton:" + v("cotton"))
 	modCompileAndInclude("io.github.prospector.silk:SilkAPI:+")
 
 	// Other libraries
