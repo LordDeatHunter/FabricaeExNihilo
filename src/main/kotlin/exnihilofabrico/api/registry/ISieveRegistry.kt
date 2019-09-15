@@ -8,6 +8,8 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.Ingredient
+import net.minecraft.util.Identifier
+import net.minecraft.util.registry.Registry
 import java.util.*
 
 interface ISieveRegistry {
@@ -31,5 +33,14 @@ interface ISieveRegistry {
         register(Ingredient.ofItems(mesh), FluidIngredient(fluid), Ingredient.ofItems(sievable), *loot)
     fun register(mesh: ItemConvertible, sievable: ItemConvertible, vararg loot: Lootable) =
         register(Ingredient.ofItems(mesh), null, Ingredient.ofItems(sievable), loot.toMutableList())
+
+    fun register(mesh: Identifier, fluid: FluidIngredient?, sievable: Ingredient, loot: Collection<Lootable>) =
+        register(SieveRecipe(Ingredient.ofItems(Registry.ITEM[mesh]), fluid, sievable, loot.toMutableList()))
+    fun register(mesh: Identifier, fluid: FluidIngredient?, sievable: Ingredient, vararg loot: Lootable) =
+        register(Ingredient.ofItems(Registry.ITEM[mesh]), fluid, sievable, loot.toMutableList())
+    fun register(mesh: Identifier, sievable: Ingredient, vararg loot: Lootable) =
+        register(mesh, null, sievable, *loot)
+    fun register(mesh: Identifier, sievable: ItemConvertible, vararg loot: Lootable) =
+        register(mesh, Ingredient.ofItems(sievable), *loot)
 }
 

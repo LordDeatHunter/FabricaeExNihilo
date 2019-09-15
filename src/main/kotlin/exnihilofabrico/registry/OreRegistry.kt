@@ -20,6 +20,7 @@ data class OreRegistry(val registry: MutableList<OreProperties> = mutableListOf(
     val item_settings: Item.Settings = Item.Settings().group(ExNihiloFabrico.ITEM_GROUP).maxCount(64)
 
     override fun clear() = registry.clear()
+    override fun getAll() = registry
     override fun register(vararg properties: OreProperties) = registry.addAll(properties)
 
     override fun registerPieceItems(itemRegistry: Registry<Item>) =

@@ -1,8 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "exnihilofabrico:item/ore/pieces/normal_endstone",
-    "layer1": "exnihilofabrico:item/ore/pieces/normal_overlay"
-  }
-}
-

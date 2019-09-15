@@ -6,15 +6,16 @@ import exnihilofabrico.common.ModItems
 import exnihilofabrico.common.ore.EnumChunkMaterial
 import exnihilofabrico.common.ore.EnumChunkShape
 import exnihilofabrico.common.ore.EnumPieceShape
+import exnihilofabrico.common.sieves.MeshItem
+import exnihilofabrico.common.sieves.MeshProperties
 import exnihilofabrico.id
-import exnihilofabrico.util.EnumVanillaColors
-import exnihilofabrico.util.EnumVanillaWoodTypes
-import exnihilofabrico.util.MetalColors
-import exnihilofabrico.util.asStack
+import exnihilofabrico.util.*
 import net.minecraft.block.Blocks
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.Items
+import net.minecraft.recipe.Ingredient
 import net.minecraft.tag.BlockTags
+import net.minecraft.util.registry.Registry
 
 object ExNihilo: ICompatModule {
 
@@ -39,81 +40,64 @@ object ExNihilo: ICompatModule {
     }
 
     override fun registerOres(registry: IOreRegistry) {
-//        // TODO("Implement tag checking to prevent creation of unnecessary ores")
-//        // Vanilla Metals
-//        registry.register("iron", MetalColors.IRON, EnumPieceShape.NORMAL, EnumChunkShape.CHUNK, EnumChunkMaterial.GRANITE)
-//        registry.register("gold", MetalColors.GOLD, EnumPieceShape.FINE, EnumChunkShape.CHUNK, EnumChunkMaterial.STONE)
-//
-//        // Modded Metals
-//        registry.register("aluminum",  MetalColors.ALUMINUM,  EnumPieceShape.FINE,   EnumChunkShape.CHUNK, EnumChunkMaterial.SAND)
-//        registry.register("ardite",    MetalColors.ARDITE,    EnumPieceShape.COARSE, EnumChunkShape.CHUNK, EnumChunkMaterial.NETHERRACK)
-//        registry.register("beryllium", MetalColors.BERYLLIUM, EnumPieceShape.NORMAL, EnumChunkShape.FLINT, EnumChunkMaterial.STONE)
-//        registry.register("boron",     MetalColors.BORON,     EnumPieceShape.COARSE, EnumChunkShape.CHUNK, EnumChunkMaterial.SAND)
-//        registry.register("cobalt",    MetalColors.COBALT,    EnumPieceShape.COARSE, EnumChunkShape.LUMP, EnumChunkMaterial.NETHERRACK)
-//        registry.register("copper",    MetalColors.COPPER,    EnumPieceShape.NORMAL, EnumChunkShape.CHUNK, EnumChunkMaterial.STONE)
-//        registry.register("lead",      MetalColors.LEAD,      EnumPieceShape.COARSE, EnumChunkShape.LUMP, EnumChunkMaterial.STONE)
-//        registry.register("lithium",   MetalColors.LITHIUM,   EnumPieceShape.FINE,   EnumChunkShape.FLINT, EnumChunkMaterial.SAND)
-//        registry.register("magnesium", MetalColors.MAGNESIUM, EnumPieceShape.COARSE, EnumChunkShape.LUMP, EnumChunkMaterial.STONE)
-//        registry.register("nickel",    MetalColors.NICKEL,    EnumPieceShape.COARSE, EnumChunkShape.LUMP, EnumChunkMaterial.STONE)
-//        registry.register("silver",    MetalColors.SILVER,    EnumPieceShape.NORMAL, EnumChunkShape.CHUNK, EnumChunkMaterial.STONE)
-//        registry.register("tin",       MetalColors.TIN,       EnumPieceShape.NORMAL, EnumChunkShape.LUMP, EnumChunkMaterial.DIORITE)
-//        registry.register("titanium",  MetalColors.TITANIUM,  EnumPieceShape.COARSE, EnumChunkShape.CHUNK, EnumChunkMaterial.STONE)
-//        registry.register("thorium",   MetalColors.THORIUM,   EnumPieceShape.COARSE, EnumChunkShape.LUMP, EnumChunkMaterial.STONE)
-//        registry.register("tungsten",  MetalColors.TUNGSTEN,  EnumPieceShape.COARSE, EnumChunkShape.CHUNK, EnumChunkMaterial.ANDESITE)
-//        registry.register("uranium",   MetalColors.URANIUM,   EnumPieceShape.COARSE, EnumChunkShape.LUMP, EnumChunkMaterial.STONE)
-//        registry.register("zinc",      MetalColors.ZINC,      EnumPieceShape.FINE,   EnumChunkShape.FLINT, EnumChunkMaterial.ANDESITE)
-//        registry.register("zirconium", MetalColors.ZIRCONIUM, EnumPieceShape.NORMAL, EnumChunkShape.FLINT, EnumChunkMaterial.ANDESITE)
+        // TODO("Implement tag checking to prevent creation of unnecessary ores")
+        // Vanilla Metals
+        registry.register("iron", MetalColors.IRON, EnumPieceShape.NORMAL, EnumChunkShape.CHUNK, EnumChunkMaterial.GRANITE)
+        registry.register("gold", MetalColors.GOLD, EnumPieceShape.FINE, EnumChunkShape.CHUNK, EnumChunkMaterial.STONE)
 
-        // Test Materials
-        registry.register("00",  MetalColors.ALUMINUM,  EnumPieceShape.COARSE,   EnumChunkShape.CHUNK, EnumChunkMaterial.ANDESITE)
-        registry.register("01",  MetalColors.ALUMINUM,  EnumPieceShape.NORMAL,   EnumChunkShape.FLINT, EnumChunkMaterial.ANDESITE)
-        registry.register("02",  MetalColors.ALUMINUM,  EnumPieceShape.FINE,     EnumChunkShape.LUMP,  EnumChunkMaterial.ANDESITE)
-        registry.register("10",  MetalColors.ALUMINUM,  EnumPieceShape.COARSE,   EnumChunkShape.CHUNK, EnumChunkMaterial.DIORITE)
-        registry.register("11",  MetalColors.ALUMINUM,  EnumPieceShape.NORMAL,   EnumChunkShape.FLINT, EnumChunkMaterial.DIORITE)
-        registry.register("12",  MetalColors.ALUMINUM,  EnumPieceShape.FINE,     EnumChunkShape.LUMP,  EnumChunkMaterial.DIORITE)
-        registry.register("20",  MetalColors.ALUMINUM,  EnumPieceShape.COARSE,   EnumChunkShape.CHUNK, EnumChunkMaterial.ENDSTONE)
-        registry.register("21",  MetalColors.ALUMINUM,  EnumPieceShape.NORMAL,   EnumChunkShape.FLINT, EnumChunkMaterial.ENDSTONE)
-        registry.register("22",  MetalColors.ALUMINUM,  EnumPieceShape.FINE,     EnumChunkShape.LUMP,  EnumChunkMaterial.ENDSTONE)
-        registry.register("30",  MetalColors.ALUMINUM,  EnumPieceShape.COARSE,   EnumChunkShape.CHUNK, EnumChunkMaterial.GRANITE)
-        registry.register("31",  MetalColors.ALUMINUM,  EnumPieceShape.NORMAL,   EnumChunkShape.FLINT, EnumChunkMaterial.GRANITE)
-        registry.register("32",  MetalColors.ALUMINUM,  EnumPieceShape.FINE,     EnumChunkShape.LUMP,  EnumChunkMaterial.GRANITE)
-        registry.register("40",  MetalColors.ALUMINUM,  EnumPieceShape.COARSE,   EnumChunkShape.CHUNK, EnumChunkMaterial.NETHERRACK)
-        registry.register("41",  MetalColors.ALUMINUM,  EnumPieceShape.NORMAL,   EnumChunkShape.FLINT, EnumChunkMaterial.NETHERRACK)
-        registry.register("42",  MetalColors.ALUMINUM,  EnumPieceShape.FINE,     EnumChunkShape.LUMP,  EnumChunkMaterial.NETHERRACK)
-        registry.register("50",  MetalColors.ALUMINUM,  EnumPieceShape.COARSE,   EnumChunkShape.CHUNK, EnumChunkMaterial.PRISMARINE)
-        registry.register("51",  MetalColors.ALUMINUM,  EnumPieceShape.NORMAL,   EnumChunkShape.FLINT, EnumChunkMaterial.PRISMARINE)
-        registry.register("52",  MetalColors.ALUMINUM,  EnumPieceShape.FINE,     EnumChunkShape.LUMP,  EnumChunkMaterial.PRISMARINE)
-        registry.register("60",  MetalColors.ALUMINUM,  EnumPieceShape.COARSE,   EnumChunkShape.CHUNK, EnumChunkMaterial.REDSAND)
-        registry.register("61",  MetalColors.ALUMINUM,  EnumPieceShape.NORMAL,   EnumChunkShape.FLINT, EnumChunkMaterial.REDSAND)
-        registry.register("62",  MetalColors.ALUMINUM,  EnumPieceShape.FINE,     EnumChunkShape.LUMP,  EnumChunkMaterial.REDSAND)
-        registry.register("70",  MetalColors.ALUMINUM,  EnumPieceShape.COARSE,   EnumChunkShape.CHUNK, EnumChunkMaterial.SAND)
-        registry.register("71",  MetalColors.ALUMINUM,  EnumPieceShape.NORMAL,   EnumChunkShape.FLINT, EnumChunkMaterial.SAND)
-        registry.register("72",  MetalColors.ALUMINUM,  EnumPieceShape.FINE,     EnumChunkShape.LUMP,  EnumChunkMaterial.SAND)
-        registry.register("80",  MetalColors.ALUMINUM,  EnumPieceShape.COARSE,   EnumChunkShape.CHUNK, EnumChunkMaterial.SOULSAND)
-        registry.register("81",  MetalColors.ALUMINUM,  EnumPieceShape.NORMAL,   EnumChunkShape.FLINT, EnumChunkMaterial.SOULSAND)
-        registry.register("82",  MetalColors.ALUMINUM,  EnumPieceShape.FINE,     EnumChunkShape.LUMP,  EnumChunkMaterial.SOULSAND)
-        registry.register("90",  MetalColors.ALUMINUM,  EnumPieceShape.COARSE,   EnumChunkShape.CHUNK, EnumChunkMaterial.STONE)
-        registry.register("91",  MetalColors.ALUMINUM,  EnumPieceShape.NORMAL,   EnumChunkShape.FLINT, EnumChunkMaterial.STONE)
-        registry.register("92",  MetalColors.ALUMINUM,  EnumPieceShape.FINE,     EnumChunkShape.LUMP,  EnumChunkMaterial.STONE)
+        // Modded Metals
+        registry.register("aluminum",  MetalColors.ALUMINUM,  EnumPieceShape.FINE,   EnumChunkShape.CHUNK, EnumChunkMaterial.SAND)
+        registry.register("ardite",    MetalColors.ARDITE,    EnumPieceShape.COARSE, EnumChunkShape.CHUNK, EnumChunkMaterial.NETHERRACK)
+        registry.register("beryllium", MetalColors.BERYLLIUM, EnumPieceShape.NORMAL, EnumChunkShape.FLINT, EnumChunkMaterial.STONE)
+        registry.register("boron",     MetalColors.BORON,     EnumPieceShape.COARSE, EnumChunkShape.CHUNK, EnumChunkMaterial.SAND)
+        registry.register("cobalt",    MetalColors.COBALT,    EnumPieceShape.COARSE, EnumChunkShape.LUMP, EnumChunkMaterial.NETHERRACK)
+        registry.register("copper",    MetalColors.COPPER,    EnumPieceShape.NORMAL, EnumChunkShape.CHUNK, EnumChunkMaterial.STONE)
+        registry.register("lead",      MetalColors.LEAD,      EnumPieceShape.COARSE, EnumChunkShape.LUMP, EnumChunkMaterial.STONE)
+        registry.register("lithium",   MetalColors.LITHIUM,   EnumPieceShape.FINE,   EnumChunkShape.FLINT, EnumChunkMaterial.SAND)
+        registry.register("magnesium", MetalColors.MAGNESIUM, EnumPieceShape.COARSE, EnumChunkShape.LUMP, EnumChunkMaterial.STONE)
+        registry.register("nickel",    MetalColors.NICKEL,    EnumPieceShape.COARSE, EnumChunkShape.LUMP, EnumChunkMaterial.STONE)
+        registry.register("silver",    MetalColors.SILVER,    EnumPieceShape.NORMAL, EnumChunkShape.CHUNK, EnumChunkMaterial.STONE)
+        registry.register("tin",       MetalColors.TIN,       EnumPieceShape.NORMAL, EnumChunkShape.LUMP, EnumChunkMaterial.DIORITE)
+        registry.register("titanium",  MetalColors.TITANIUM,  EnumPieceShape.COARSE, EnumChunkShape.CHUNK, EnumChunkMaterial.STONE)
+        registry.register("thorium",   MetalColors.THORIUM,   EnumPieceShape.COARSE, EnumChunkShape.LUMP, EnumChunkMaterial.STONE)
+        registry.register("tungsten",  MetalColors.TUNGSTEN,  EnumPieceShape.COARSE, EnumChunkShape.CHUNK, EnumChunkMaterial.NETHERRACK)
+        registry.register("uranium",   MetalColors.URANIUM,   EnumPieceShape.COARSE, EnumChunkShape.LUMP, EnumChunkMaterial.STONE)
+        registry.register("zinc",      MetalColors.ZINC,      EnumPieceShape.FINE,   EnumChunkShape.FLINT, EnumChunkMaterial.ANDESITE)
+        registry.register("zirconium", MetalColors.ZIRCONIUM, EnumPieceShape.NORMAL, EnumChunkShape.FLINT, EnumChunkMaterial.ANDESITE)
+    }
+
+    override fun registerMesh(registry: IMeshRegistry) {
+        registry.register(id("mesh_string"), "item.minecraft.string", Color.WHITE, Ingredient.ofItems(Items.STRING))
+        registry.register(id("mesh_flint"), "item.minecraft.flint", Color.DARK_GRAY, Ingredient.ofItems(Items.FLINT))
+        registry.register(id("mesh_iron"), "Iron", Color("777777"), Ingredient.ofItems(Items.IRON_INGOT))
+        registry.register(id("mesh_gold"), "Gold", Color.GOLD, Ingredient.ofItems(Items.GOLD_INGOT))
+        registry.register(id("mesh_diamond"), "item.minecraft.diamond", Color.DARK_AQUA, Ingredient.ofItems(Items.DIAMOND))
     }
 
     override fun registerSieve(registry: ISieveRegistry) {
-        registry.register(ModItems.MESH_STRING, Blocks.GRAVEL, Lootable(Items.FLINT, .5))
-        registry.register(ModItems.MESH_FLINT, Blocks.GRAVEL, Lootable(Items.FLINT, .3))
+        val MESH_STRING = Registry.ITEM[id("mesh_string")]
+        val MESH_FLINT = Registry.ITEM[id("mesh_flint")]
+        val MESH_IRON = Registry.ITEM[id("mesh_iron")]
+        val MESH_GOLD = Registry.ITEM[id("mesh_gold")]
+        val MESH_DIAMOND = Registry.ITEM[id("mesh_diamond")]
 
-        registry.register(ModItems.MESH_STRING, Fluids.WATER, Blocks.SAND, Lootable(id("seed_sugarcane"), listOf(.5)))
-        registry.register(ModItems.MESH_STRING, Fluids.WATER, Blocks.SAND, Lootable(id("seed_kelp"), listOf(.3, .2)))
-        registry.register(ModItems.MESH_STRING, Fluids.WATER, Blocks.DIRT, Lootable(Items.TROPICAL_FISH, listOf(.1, .2, .3)))
-        registry.register(ModItems.MESH_STRING, Fluids.WATER, Blocks.MYCELIUM, Lootable(Items.PUFFERFISH, listOf(.1, .2, .3)))
+        registry.register(MESH_STRING, Blocks.GRAVEL, Lootable(Items.FLINT, .5))
+        registry.register(MESH_FLINT, Blocks.GRAVEL, Lootable(Items.FLINT, .3))
 
-        registry.register(ModItems.MESH_FLINT, Fluids.WATER, Blocks.SAND, Lootable(id("seed_sugarcane"), listOf(.3)))
-        registry.register(ModItems.MESH_FLINT, Fluids.WATER, Blocks.SAND, Lootable(id("seed_kelp"), listOf(.5, .5)))
-        registry.register(ModItems.MESH_FLINT, Fluids.WATER, Blocks.SAND, Lootable(id("seed_sea_pickle"), listOf(.1)))
-        registry.register(ModItems.MESH_FLINT, Fluids.WATER, Blocks.DIRT, Lootable(Items.TROPICAL_FISH, listOf(.4)))
-        registry.register(ModItems.MESH_FLINT, Fluids.WATER, Blocks.MYCELIUM, Lootable(Items.PUFFERFISH, listOf(.5)))
+        registry.register(MESH_STRING, Fluids.WATER, Blocks.SAND, Lootable(id("seed_sugarcane"), listOf(.5)))
+        registry.register(MESH_STRING, Fluids.WATER, Blocks.SAND, Lootable(id("seed_kelp"), listOf(.3, .2)))
+        registry.register(MESH_STRING, Fluids.WATER, Blocks.DIRT, Lootable(Items.TROPICAL_FISH, listOf(.1, .2, .3)))
+        registry.register(MESH_STRING, Fluids.WATER, Blocks.MYCELIUM, Lootable(Items.PUFFERFISH, listOf(.1, .2, .3)))
 
-        registry.register(ModItems.MESH_IRON, Blocks.GRAVEL, Lootable(Items.DIAMOND, .01))
-        registry.register(ModItems.MESH_DIAMOND, Blocks.GRAVEL, Lootable(Items.DIAMOND, .02))
+        registry.register(MESH_FLINT, Fluids.WATER, Blocks.SAND, Lootable(id("seed_sugarcane"), listOf(.3)))
+        registry.register(MESH_FLINT, Fluids.WATER, Blocks.SAND, Lootable(id("seed_kelp"), listOf(.5, .5)))
+        registry.register(MESH_FLINT, Fluids.WATER, Blocks.SAND, Lootable(id("seed_sea_pickle"), listOf(.1)))
+        registry.register(MESH_FLINT, Fluids.WATER, Blocks.DIRT, Lootable(Items.TROPICAL_FISH, listOf(.4)))
+        registry.register(MESH_FLINT, Fluids.WATER, Blocks.MYCELIUM, Lootable(Items.PUFFERFISH, listOf(.5)))
+
+        registry.register(MESH_IRON, Blocks.GRAVEL, Lootable(Items.DIAMOND, .01))
+        registry.register(MESH_GOLD, Blocks.GRAVEL, Lootable(Items.DIAMOND, .02))
+        registry.register(MESH_DIAMOND, Blocks.GRAVEL, Lootable(Items.DIAMOND, .03))
     }
 
     override fun registerCrook(registry: IToolRegistry) {

@@ -1,11 +1,9 @@
 package exnihilofabrico.common.crucibles
 
 import exnihilofabrico.common.base.BaseBlock
-import exnihilofabrico.common.base.IHasModel
 import exnihilofabrico.util.VoxelShapeHelper
 import net.fabricmc.fabric.api.block.FabricBlockSettings
 import net.minecraft.block.*
-import net.minecraft.client.render.model.UnbakedModel
 import net.minecraft.entity.EntityContext
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.Hand
@@ -18,10 +16,7 @@ import net.minecraft.world.World
 
 class CrucibleBlock(val texture: Identifier,
                     settings: FabricBlockSettings = FabricBlockSettings.of(Material.WOOD)):
-        BaseBlock(settings), BlockEntityProvider, IHasModel {
-    override fun getModel(): UnbakedModel {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+        BaseBlock(settings), BlockEntityProvider {
 
     override fun activate(state: BlockState?, world: World?, pos: BlockPos?, player: PlayerEntity?, hand: Hand?, hitResult: BlockHitResult?): Boolean {
         if(world?.isClient != false || pos == null)

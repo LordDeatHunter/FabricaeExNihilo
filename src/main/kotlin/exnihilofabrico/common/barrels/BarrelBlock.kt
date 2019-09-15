@@ -1,10 +1,8 @@
 package exnihilofabrico.common.barrels
 
 import exnihilofabrico.common.base.BaseBlock
-import exnihilofabrico.common.base.IHasModel
 import net.fabricmc.fabric.api.block.FabricBlockSettings
 import net.minecraft.block.*
-import net.minecraft.client.render.model.UnbakedModel
 import net.minecraft.entity.EntityContext
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
@@ -12,10 +10,7 @@ import net.minecraft.world.BlockView
 
 class BarrelBlock(val texture: Identifier,
                   settings: FabricBlockSettings = FabricBlockSettings.of(Material.WOOD)):
-        BaseBlock(settings), BlockEntityProvider, IHasModel {
-    override fun getModel(): UnbakedModel {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+        BaseBlock(settings), BlockEntityProvider {
 
     override fun getOutlineShape(state: BlockState?, view: BlockView?, pos: BlockPos?, entityContext: EntityContext?) = SHAPE
     override fun getRenderLayer() = BlockRenderLayer.CUTOUT

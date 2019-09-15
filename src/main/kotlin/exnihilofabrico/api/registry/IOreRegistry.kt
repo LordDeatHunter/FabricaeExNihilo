@@ -11,6 +11,8 @@ import net.minecraft.util.registry.Registry
 
 interface IOreRegistry {
     fun clear()
+    fun getAll(): List<OreProperties>
+
     fun register(vararg properties: OreProperties): Boolean
     fun register(material: String, color: Color, pieceShape: EnumPieceShape, chunkShape: EnumChunkShape, chunkMaterial: EnumChunkMaterial): Boolean =
         register(OreProperties(material, color, pieceShape, chunkShape, chunkMaterial))
@@ -19,6 +21,7 @@ interface IOreRegistry {
     fun registerChunkItems(itemRegistry: Registry<Item>)
     fun registerCraftingRecipes()
     fun registerItemTags()
+
 
     fun getPropertiesForModel(identifier: ModelIdentifier): OreProperties?
 }

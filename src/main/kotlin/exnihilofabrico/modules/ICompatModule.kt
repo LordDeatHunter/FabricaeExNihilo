@@ -14,6 +14,7 @@ interface ICompatModule {
     fun registerCrucibleWood(registry: ICrucibleRegistry)
 
     // Sieve Registries
+    fun registerMesh(registry: IMeshRegistry)
     fun registerSieve(registry: ISieveRegistry)
 
     // Tool Registries

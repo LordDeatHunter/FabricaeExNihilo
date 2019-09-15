@@ -9,14 +9,14 @@ data class Color(val r: Float, val g: Float, val b: Float, val a: Float) {
         (color and 255) / 255f,
         if(ignoreAlpha) 1.0f else (color shr 24 and 255) / 255f
     )
-    constructor(hex: String): this(hex.toInt(16))
+    constructor(hex: String): this(hex.toInt(16), hex.length <= 6)
 
     fun toInt(): Int {
-        return toIntIgnoreAlpha() or (a*255).toInt() shl 24
+        return toIntIgnoreAlpha() or ((a*255).toInt() shl 24)
     }
 
     fun toIntIgnoreAlpha(): Int {
-        return ((r*255).toInt() shl 16) or ((b*255).toInt() shl 8) or ((g*255).toInt())
+        return ((r*255).toInt() shl 16) or ((g*255).toInt() shl 8) or ((b*255).toInt())
     }
 
     fun toHexNoAlpha(): String {

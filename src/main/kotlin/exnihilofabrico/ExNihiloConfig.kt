@@ -101,7 +101,8 @@ object ExNihiloConfig {
             object Debuffs {
                 var blindness = true
                 var hunger = true
-                var poison = true
+                var slowness = true
+                var weakness = true
                 var wither = true
             }
         }

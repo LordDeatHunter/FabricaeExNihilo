@@ -3,7 +3,6 @@ package exnihilofabrico.modules
 import exnihilofabrico.api.registry.*
 
 object MetaModule: ICompatModule {
-
     private val modules: MutableList<ICompatModule> = mutableListOf()
 
     init {
@@ -18,6 +17,7 @@ object MetaModule: ICompatModule {
     override fun registerCrucibleWood(registry: ICrucibleRegistry) = modules.forEach { it.registerCrucibleWood(registry) }
     override fun registerOres(registry: IOreRegistry) = modules.forEach { it.registerOres(registry) }
     override fun registerSieve(registry: ISieveRegistry) = modules.forEach { it.registerSieve(registry) }
+    override fun registerMesh(registry: IMeshRegistry) = modules.forEach { it.registerMesh(registry) }
     override fun registerCrook(registry: IToolRegistry) = modules.forEach { it.registerCrook(registry) }
     override fun registerHammer(registry: IToolRegistry) = modules.forEach { it.registerHammer(registry) }
     override fun registerWitchWaterEntity(registry: IWitchWaterEntityRegistry) = modules.forEach { it.registerWitchWaterEntity(registry) }

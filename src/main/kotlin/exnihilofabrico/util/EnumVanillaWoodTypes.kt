@@ -12,9 +12,9 @@ enum class EnumVanillaWoodTypes(val text: String) {
     ACACIA("acacia"),
     DARK_OAK("dark_oak");
 
-    fun getTexturePlanks() = Identifier("minecraft", "textures/block/${text}_planks")
-    fun getTextureLog() = Identifier("minecraft", "textures/block/${text}_log")
-    fun getTextureLogTop() = Identifier("minecraft", "textures/block/${text}_log_top")
+    fun getTexturePlanks() = Identifier("minecraft", "block/${text}_planks")
+    fun getTextureLog() = Identifier("minecraft", "block/${text}_log")
+    fun getTextureLogTop() = Identifier("minecraft", "block/${text}_log_top")
 
     fun getLeafBlock() = Registry.BLOCK[Identifier("minecraft", "${text}_leaves")]
     fun getLogBlock() = Registry.BLOCK[Identifier("minecraft", "${text}_log")]

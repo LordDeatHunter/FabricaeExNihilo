@@ -30,9 +30,9 @@ object ModBlocks {
     private val stoneSettings = FabricBlockSettings.of(Material.STONE).strength(2.0f, 6.0f).sounds(BlockSoundGroup.STONE)
     private val crushedSettings = FabricBlockSettings.of(Material.SAND).strength(0.6f).sounds(BlockSoundGroup.GRAVEL).breakByHand(true)
 
-    val SIEVES: MutableMap<Identifier, Block> = EnumVanillaWoodTypes.values().map { id("sieve_${it.text}") to SieveBlock(it.getTexturePlanks(), woodSettings) }.toMap().toMutableMap()
-    val CRUCIBLES: MutableMap<Identifier, Block> = EnumVanillaWoodTypes.values().map { id("crucible_${it.text}") to CrucibleBlock(it.getTextureLog(), woodSettings) }.toMap().toMutableMap()
-    val BARRELS: MutableMap<Identifier, Block> = EnumVanillaWoodTypes.values().map { id("barrel_${it.text}") to BarrelBlock(it.getTexturePlanks(), woodSettings) }.toMap().toMutableMap()
+    val SIEVES: MutableMap<Identifier, SieveBlock> = EnumVanillaWoodTypes.values().map { id("sieve_${it.text}") to SieveBlock(it.getTexturePlanks(), woodSettings) }.toMap().toMutableMap()
+    val CRUCIBLES: MutableMap<Identifier, CrucibleBlock> = EnumVanillaWoodTypes.values().map { id("crucible_${it.text}") to CrucibleBlock(it.getTextureLog(), woodSettings) }.toMap().toMutableMap()
+    val BARRELS: MutableMap<Identifier, BarrelBlock> = EnumVanillaWoodTypes.values().map { id("barrel_${it.text}") to BarrelBlock(it.getTexturePlanks(), woodSettings) }.toMap().toMutableMap()
 
 
     val CRUSHED = mutableMapOf<Identifier, Block>(
@@ -48,8 +48,8 @@ object ModBlocks {
     )
 
     init {
-        CRUCIBLES[id("crucible_stone")] = CrucibleBlock(id("textures/block/crucible_stone"), stoneSettings)
-        BARRELS[id("barrel_stone")] = BarrelBlock(Identifier("textures/block/stone"), stoneSettings)
+        CRUCIBLES[id("crucible_stone")] = CrucibleBlock(id("block/crucible_stone"), stoneSettings)
+        BARRELS[id("barrel_stone")] = BarrelBlock(Identifier("block/stone"), stoneSettings)
     }
 
     fun registerBlocks(registry: Registry<Block>) {

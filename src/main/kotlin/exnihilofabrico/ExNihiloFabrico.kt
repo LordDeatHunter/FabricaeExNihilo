@@ -1,17 +1,22 @@
 package exnihilofabrico
 
+import com.swordglowsblue.artifice.api.Artifice
+import com.swordglowsblue.artifice.api.ArtificeResourcePack
+import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder
+import com.swordglowsblue.artifice.api.util.Processor
+import exnihilofabrico.api.registry.ExNihiloRegistries
 import exnihilofabrico.api.registry.ExNihiloRegistries.CROOK
 import exnihilofabrico.api.registry.ExNihiloRegistries.CRUCIBLE_HEAT
 import exnihilofabrico.api.registry.ExNihiloRegistries.CRUCIBLE_STONE
 import exnihilofabrico.api.registry.ExNihiloRegistries.CRUCIBLE_WOOD
 import exnihilofabrico.api.registry.ExNihiloRegistries.HAMMER
+import exnihilofabrico.api.registry.ExNihiloRegistries.MESH
 import exnihilofabrico.api.registry.ExNihiloRegistries.ORES
 import exnihilofabrico.api.registry.ExNihiloRegistries.SIEVE
 import exnihilofabrico.api.registry.ExNihiloRegistries.WITCHWATER_ENTITY
 import exnihilofabrico.api.registry.ExNihiloRegistries.WITCHWATER_WORLD
 import exnihilofabrico.client.FluidRenderManager
-import exnihilofabrico.client.OreChunkUnbakedModel
-import exnihilofabrico.client.OrePieceUnbakedModel
+import exnihilofabrico.client.ExNihiloItemColorProvider
 import exnihilofabrico.client.renderers.CrucibleBlockEntityRenderer
 import exnihilofabrico.client.renderers.SieveBlockEntityRenderer
 import exnihilofabrico.common.ModBlocks
@@ -25,12 +30,8 @@ import exnihilofabrico.util.ExNihiloItemStack
 import io.github.cottonmc.cotton.logging.ModLogger
 import net.fabricmc.api.*
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder
-import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry
-import net.fabricmc.fabric.api.client.model.ModelProviderContext
-import net.fabricmc.fabric.api.client.model.ModelVariantProvider
 import net.fabricmc.fabric.api.client.render.BlockEntityRendererRegistry
-import net.minecraft.client.render.model.UnbakedModel
-import net.minecraft.client.util.ModelIdentifier
+import net.fabricmc.fabric.api.client.render.ColorProviderRegistry
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
@@ -49,8 +50,9 @@ object ExNihiloFabrico: ModInitializer, ClientModInitializer {
     override fun onInitialize() {
         loadConfigs()
 
-        /* OreRegistry is used to create items so must be first */
+        /* OreRegistry and MeshRegistry is used to create items so must be first */
         MetaModule.registerOres(ORES)
+        MetaModule.registerMesh(MESH)
         /* Register Fluids*/
         LOGGER.info("Registering Fluids")
         ModFluids.registerFluids(Registry.FLUID)
@@ -85,26 +87,76 @@ object ExNihiloFabrico: ModInitializer, ClientModInitializer {
         BlockEntityRendererRegistry.INSTANCE.register(CrucibleBlockEntity::class.java, CrucibleBlockEntityRenderer())
         LOGGER.info("Registered BESR for Sieve")
 
-        // Register Ore Chunk/Piece Renderer
-        // Base Models
-        ModelLoadingRegistry.INSTANCE.registerAppender { _, out ->
-            LOGGER.info("Registering Base Ore Chunk/Piece models")
-            out.accept(ModelIdentifier(id("ore_chunk"), "inventory"))
-            out.accept(ModelIdentifier(id("ore_piece"), "inventory"))
+        // Item Colors
+        ExNihiloRegistries.ORES.getAll().forEach {
+            ColorProviderRegistry.ITEM.register(ExNihiloItemColorProvider, it.getChunkItem())
+            ColorProviderRegistry.ITEM.register(ExNihiloItemColorProvider, it.getPieceItem())
         }
-        ModelLoadingRegistry.INSTANCE.registerVariantProvider {
-            object: ModelVariantProvider{
-                override fun loadModelVariant(identifier: ModelIdentifier, context: ModelProviderContext): UnbakedModel? {
-                    if(identifier.namespace == MODID) {
-                        if(identifier.path.contains("_chunk_"))
-                            return OreChunkUnbakedModel
-                        else if(identifier.path.contains("_piece_"))
-                            return OrePieceUnbakedModel
-                    }
-                    return null
+        ExNihiloRegistries.MESH.getAll().forEach {
+            ColorProviderRegistry.ITEM.register(ExNihiloItemColorProvider, it.item)
+        }
+        LOGGER.info("Registered ItemColorProviders")
+
+        // Artifice Resource Pack
+        val resourcePack: ArtificeResourcePack = Artifice.registerAssets(MODID) { pack ->
+            pack.setDisplayName("Ex Nihilo Fabrico Generated Resources")
+            pack.setDescription("Generated Resources for Ex Nihilo Fabrico")
+
+            // Barrel models
+            ModBlocks.BARRELS.forEach { (k, v) ->
+                pack.addBlockModel(k) {model ->
+                    model.parent(id("block/barrel"))
+                        .texture("all", v.texture)
+                }
+                pack.addItemModel(k) { model -> model.parent(id("block/${k.path}")) }
+            }
+            // Crucible models
+            ModBlocks.CRUCIBLES.forEach { (k, v) ->
+                pack.addBlockModel(k) {model ->
+                    model.parent(id("block/crucible"))
+                        .texture("all", v.texture)
+                }
+                pack.addItemModel(k) { model -> model.parent(id("block/${k.path}")) }
+            }
+            // Sieve models
+            ModBlocks.SIEVES.forEach { (k, v) ->
+                pack.addBlockModel(k) {model ->
+                    model.parent(id("block/sieve"))
+                        .texture("all", v.texture)
+                }
+                pack.addItemModel(k) { model -> model.parent(id("block/${k.path}")) }
+            }
+
+            // Mesh models
+            for(mesh in ExNihiloRegistries.MESH.getAll()) {
+                pack.addItemModel(mesh.identifier) { model ->
+                    model.parent(id("item/mesh"))
                 }
             }
+
+            // Ore Chunks/Pieces
+            for(ore in ExNihiloRegistries.ORES.getAll()) {
+                // Ore Chunk Model
+                pack.addItemModel(ore.getChunkID()) { model: ModelBuilder ->
+                    val chunkShape = ore.chunk.name.toLowerCase()
+                    val material = ore.matrix.name.toLowerCase()
+                    model
+                        .parent(Identifier("item/generated"))
+                        .texture("layer0", id("item/ore/chunks/${chunkShape}_${material}"))
+                        .texture("layer1", id("item/ore/chunks/${chunkShape}_overlay"))
+                }
+                // Ore Piece Model
+                pack.addItemModel(ore.getPieceID(), Processor { model: ModelBuilder ->
+                    val pieceShape = ore.piece.name.toLowerCase()
+                    val material = ore.matrix.name.toLowerCase()
+                    model
+                        .parent(Identifier("item/generated"))
+                        .texture("layer0", id("item/ore/pieces/${pieceShape}_${material}"))
+                        .texture("layer1", id("item/ore/pieces/${pieceShape}_overlay"))
+                })
+            }
         }
+        LOGGER.info("Created Resources")
     }
 
     private fun loadConfigs() {

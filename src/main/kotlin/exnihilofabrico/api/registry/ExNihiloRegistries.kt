@@ -14,6 +14,8 @@ object ExNihiloRegistries {
     val CROOK: IToolRegistry = ToolRegistry()
 
     @JvmField
+    val MESH: IMeshRegistry = MeshRegistry()
+    @JvmField
     val SIEVE: ISieveRegistry = SieveRegistry()
 
     @JvmField

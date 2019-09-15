@@ -1,5 +1,6 @@
 package exnihilofabrico.common.fluids
 
+import exnihilofabrico.ExNihiloConfig
 import net.minecraft.block.BlockState
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
@@ -71,10 +72,16 @@ class WitchWaterBlock(fluid: BaseFluid, settings: Settings): BaseFluidBlock(flui
                     }
                 }
                 EntityType.PLAYER -> {
-                    applyPotion(entity, StatusEffectInstance(StatusEffects.BLINDNESS, 210, 0))
-                    applyPotion(entity, StatusEffectInstance(StatusEffects.WEAKNESS, 210, 2))
-                    applyPotion(entity, StatusEffectInstance(StatusEffects.WITHER, 210, 0))
+                    if(ExNihiloConfig.Modules.WitchWater.Debuffs.blindness)
+                        applyPotion(entity, StatusEffectInstance(StatusEffects.BLINDNESS, 210, 0))
+                    if(ExNihiloConfig.Modules.WitchWater.Debuffs.hunger)
+                        applyPotion(entity, StatusEffectInstance(StatusEffects.HUNGER, 210, 2))
+                    if(ExNihiloConfig.Modules.WitchWater.Debuffs.slowness)
                     applyPotion(entity, StatusEffectInstance(StatusEffects.SLOWNESS, 210, 0))
+                    if(ExNihiloConfig.Modules.WitchWater.Debuffs.weakness)
+                        applyPotion(entity, StatusEffectInstance(StatusEffects.WEAKNESS, 210, 2))
+                    if(ExNihiloConfig.Modules.WitchWater.Debuffs.wither)
+                        applyPotion(entity, StatusEffectInstance(StatusEffects.WITHER, 210, 0))
                 }
             }
         }

@@ -2,9 +2,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
 	java
-	kotlin("jvm") version "1.3.30"
+	kotlin("jvm") version "1.3.40"
 	idea
-	id("fabric-loom") version "0.2.2-SNAPSHOT"
+	id("fabric-loom") version "0.2.5-SNAPSHOT"
 }
 
 base {
@@ -42,6 +42,8 @@ allprojects {
 		maven(url = "https://minecraft.curseforge.com/api/maven") {
 			name = "CurseForge"
 		}
+		// For Artifice
+		maven (url = "https://maven.swordglowsblue.com" )
 	}
 
 	tasks.withType<KotlinCompile> {
@@ -68,6 +70,16 @@ inline fun DependencyHandler.modCompileAndInclude(str: String, block: ExternalMo
 	include(str, block)
 }
 
+inline fun DependencyHandler.includedMod(str: String, block: ExternalModuleDependency.() -> Unit = {}) {
+    modImplementation(str, block)
+    include(str, block)
+}
+
+inline fun DependencyHandler.includedMod(group: String, name: String, version: String, block: ExternalModuleDependency.() -> Unit = {}) {
+    modImplementation(group, name, version, dependencyConfiguration = block)
+    include(group, name, version, dependencyConfiguration = block)
+}
+
 dependencies {
 	/**
 	 * Gets a version string with the [key].
@@ -88,6 +100,10 @@ dependencies {
 //	modCompileAndInclude("towelette:Towelette:" + v("towelette"))
 	modCompileAndInclude("io.github.cottonmc:cotton:" + v("cotton"))
 	modCompileAndInclude("io.github.prospector.silk:SilkAPI:+")
+
+    // Artifice
+    modImplementation("artificemc:artifice:" + v("artifice"))
+    include("artificemc:artifice:" + v("artifice"))
 
 	// Other libraries
 	compileOnly("org.apiguardian:apiguardian-api:1.0.0")
