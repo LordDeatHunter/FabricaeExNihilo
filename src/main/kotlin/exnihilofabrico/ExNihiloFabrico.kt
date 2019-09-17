@@ -104,20 +104,29 @@ object ExNihiloFabrico: ModInitializer {
     private fun generateRecipes() {
         val dataPack = Artifice.registerData(MODID) {builder ->
             // Ore Chunk Crafting
-            for(ore in ExNihiloRegistries.ORES.getAll())
+            ExNihiloRegistries.ORES.getAll().forEach { ore ->
                 builder.addShapedRecipe(ore.getChunkID()) { ore.generateRecipe(it) }
+                builder.addBlastingRecipe(id("${ore.getPieceID().path}_blasting")) { ore.generateNuggetCookingRecipe(it) }
+                builder.addBlastingRecipe(id("${ore.getChunkID().path}_blasting")) { ore.generateIngotCookingRecipe(it) }
+                builder.addSmeltingRecipe(ore.getPieceID()) { ore.generateNuggetCookingRecipe(it) }
+                builder.addSmeltingRecipe(ore.getChunkID()) { ore.generateIngotCookingRecipe(it) } }
+
             // Mesh Crafting
-            for(mesh in ExNihiloRegistries.MESH.getAll())
-                builder.addShapedRecipe(mesh.identifier) { mesh.generateRecipe(it) }
+            ExNihiloRegistries.MESH.getAll().forEach { mesh ->
+                builder.addShapedRecipe(mesh.identifier) { mesh.generateRecipe(it) } }
+
             // Mesh Crafting
-            for((k, sieve) in ModBlocks.SIEVES)
-                builder.addShapedRecipe(k) { sieve.generateRecipe(it) }
+            ModBlocks.SIEVES.forEach { k, sieve ->
+                builder.addShapedRecipe(k) { sieve.generateRecipe(it) } }
+
             // Crucible Crafting
-            for((k, crucible) in ModBlocks.CRUCIBLES)
-                builder.addShapedRecipe(k) { crucible.generateRecipe(it) }
+            ModBlocks.CRUCIBLES.forEach { k, crucible ->
+                builder.addShapedRecipe(k) { crucible.generateRecipe(it) } }
+
             // Barrel Crafting
-            for((k, barrel) in ModBlocks.BARRELS)
-                builder.addShapedRecipe(k) { barrel.generateRecipe(it) }
+            ModBlocks.BARRELS.forEach { k, barrel ->
+                builder.addShapedRecipe(k) { barrel.generateRecipe(it) } }
+
         }
 
     }

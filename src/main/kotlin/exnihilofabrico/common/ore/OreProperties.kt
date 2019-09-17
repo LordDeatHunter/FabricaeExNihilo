@@ -1,8 +1,11 @@
 package exnihilofabrico.common.ore
 
+import com.swordglowsblue.artifice.api.builder.data.recipe.CookingRecipeBuilder
 import com.swordglowsblue.artifice.api.builder.data.recipe.ShapedRecipeBuilder
 import exnihilofabrico.id
 import exnihilofabrico.util.Color
+import io.github.cottonmc.cotton.registry.CommonItems
+import net.minecraft.item.Items
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
@@ -43,6 +46,26 @@ data class OreProperties(
         builder.pattern("xx", "xx")
             .ingredientItem('x', getPieceID())
             .result(getChunkID(), 1)
+    }
+    fun generateNuggetCookingRecipe(builder: CookingRecipeBuilder) {
+        builder.ingredientItem(getPieceID())
+            .result(
+                when(material) {
+                    "iron" ->Registry.ITEM.getId(Items.IRON_NUGGET)
+                    "gold" -> Registry.ITEM.getId(Items.GOLD_NUGGET)
+                    else -> Registry.ITEM.getId(CommonItems.getItem("${material}_nugget"))
+                }
+            )
+    }
+    fun generateIngotCookingRecipe(builder: CookingRecipeBuilder) {
+        builder.ingredientItem(getChunkID())
+            .result(
+                when(material) {
+                    "iron" ->Registry.ITEM.getId(Items.IRON_INGOT)
+                    "gold" -> Registry.ITEM.getId(Items.GOLD_INGOT)
+                    else -> Registry.ITEM.getId(CommonItems.getItem("${material}_ingot"))
+                }
+            )
     }
 }
 
