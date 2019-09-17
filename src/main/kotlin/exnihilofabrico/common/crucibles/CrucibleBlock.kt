@@ -1,5 +1,6 @@
 package exnihilofabrico.common.crucibles
 
+import com.swordglowsblue.artifice.api.builder.data.recipe.ShapedRecipeBuilder
 import exnihilofabrico.common.base.BaseBlock
 import exnihilofabrico.util.VoxelShapeHelper
 import net.fabricmc.fabric.api.block.FabricBlockSettings
@@ -10,11 +11,12 @@ import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.registry.Registry
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
 
-class CrucibleBlock(val texture: Identifier,
+class CrucibleBlock(val texture: Identifier, val craftIngredient: Identifier,
                     settings: FabricBlockSettings = FabricBlockSettings.of(Material.WOOD)):
         BaseBlock(settings), BlockEntityProvider {
 
@@ -45,6 +47,13 @@ class CrucibleBlock(val texture: Identifier,
      */
     override fun hasBlockEntity() = true
     override fun createBlockEntity(world: BlockView?) = CrucibleBlockEntity()
+
+
+    fun generateRecipe(builder: ShapedRecipeBuilder) {
+        builder.pattern("x x", "x x", "xxx")
+            .ingredientItem('x', craftIngredient)
+            .result(Registry.ITEM.getId(asItem()), 1)
+    }
 
     companion object {
         val SUB_SHAPE = arrayOf<VoxelShape>(

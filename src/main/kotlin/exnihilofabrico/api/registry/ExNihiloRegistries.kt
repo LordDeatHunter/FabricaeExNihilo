@@ -4,8 +4,6 @@ import exnihilofabrico.registry.*
 
 object ExNihiloRegistries {
     @JvmField
-    val WITCHWATER_ENTITY: IWitchWaterEntityRegistry = WitchWaterEntityRegistry()
-    @JvmField
     val WITCHWATER_WORLD: IWitchWaterFluidRegistry = WitchWaterFluidRegistry()
 
     @JvmField

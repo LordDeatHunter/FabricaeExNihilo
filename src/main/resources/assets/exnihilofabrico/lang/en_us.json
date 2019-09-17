@@ -73,6 +73,8 @@
   "item.exnihilofabrico.hammer_gold": "Gold Hammer",
   "item.exnihilofabrico.hammer_diamond": "Diamond Hammer",
 
-  "item.exnihilofabrico.silkworm_cooked": "Raw Silkworm",
-  "item.exnihilofabrico.silkworm_raw": "Silkworm"
+  "item.exnihilofabrico.silkworm_cooked": "Silkworm",
+  "item.exnihilofabrico.silkworm_raw": "Raw Silkworm",
+
+  "item.exnihilofabrico.witchwater_bucket": "Witch Water Bucket"
 }

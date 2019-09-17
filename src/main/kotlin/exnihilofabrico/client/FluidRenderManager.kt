@@ -1,7 +1,7 @@
 package exnihilofabrico.client
 
-import exnihilofabrico.common.fluids.AbstractFluid
-import exnihilofabrico.common.fluids.WitchWaterFluid
+import exnihilofabrico.common.base.AbstractFluid
+import exnihilofabrico.common.witchwater.WitchWaterFluid
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback

@@ -19,6 +19,7 @@ enum class EnumVanillaWoodTypes(val text: String) {
     fun getLeafBlock() = Registry.BLOCK[Identifier("minecraft", "${text}_leaves")]
     fun getLogBlock() = Registry.BLOCK[Identifier("minecraft", "${text}_log")]
     fun getPlanksBlock() = Registry.BLOCK[Identifier("minecraft", "${text}_planks")]
+    fun getSlabBlock() = Registry.BLOCK[Identifier("minecraft", "${text}_slab")]
     fun getSaplingBlock() = Registry.BLOCK[Identifier("minecraft", "${text}_sapling")]
     fun getSeedItem() = Registry.ITEM[id("seed_$text")]
 

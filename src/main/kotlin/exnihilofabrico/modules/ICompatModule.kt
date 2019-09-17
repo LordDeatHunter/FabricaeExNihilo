@@ -22,7 +22,6 @@ interface ICompatModule {
     fun registerHammer(registry: IToolRegistry)
 
     // Witch Water Registries
-    fun registerWitchWaterEntity(registry: IWitchWaterEntityRegistry)
     fun registerWitchWaterFluid(registry: IWitchWaterFluidRegistry)
 
     // Ore Registry

@@ -67,6 +67,7 @@ object ExNihiloConfig {
             var fishDropFromWaterLoggedSieves = true
             var meshDurability = false
             var meshStackSize = 16
+            var sieveRadius = 2
 
             object Progress {
                 val baseProgress = 0.1

@@ -97,7 +97,7 @@ dependencies {
 	compileOnly("net.fabricmc:fabric-language-kotlin:" + v("fabric-kotlin"))
 
 	// Other mods
-//	modCompileAndInclude("towelette:Towelette:" + v("towelette"))
+	modCompileAndInclude("towelette:Towelette:" + v("towelette"))
 	modCompileAndInclude("io.github.cottonmc:cotton:" + v("cotton"))
 	modCompileAndInclude("io.github.prospector.silk:SilkAPI:+")
 

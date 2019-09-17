@@ -1,7 +1,7 @@
 package exnihilofabrico.common
 
 import exnihilofabrico.ExNihiloFabrico
-import exnihilofabrico.common.fluids.WitchWaterFluid
+import exnihilofabrico.common.witchwater.WitchWaterFluid
 import exnihilofabrico.id
 import net.fabricmc.fabric.api.block.FabricBlockSettings
 import net.minecraft.block.Material

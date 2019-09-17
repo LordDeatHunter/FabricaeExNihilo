@@ -1,4 +1,4 @@
-package exnihilofabrico.common.fluids
+package exnihilofabrico.common.base
 
 import net.minecraft.block.BlockRenderLayer
 import net.minecraft.block.BlockState

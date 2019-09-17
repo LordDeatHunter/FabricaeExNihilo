@@ -17,13 +17,13 @@
         "value": "exnihilofabrico.ExNihiloFabrico"}],
     "client": [{
       "adapter": "kotlin",
-      "value": "exnihilofabrico.ExNihiloFabrico"}]
+      "value": "exnihilofabrico.ExNihiloFabricoClient"}]
   },
   "depends": {
     "fabric": "*",
     "fabricloader": ">=0.4.6",
     "fabric-language-kotlin": ">=1.3.40",
-//    "towelette": ">=1.8.0",
+    "towelette": "*",
     "silk": "*",
     "artifice": "*"
   }

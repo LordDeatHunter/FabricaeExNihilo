@@ -31,6 +31,8 @@ interface ISieveRegistry {
         register(Ingredient.ofStacks(mesh), FluidIngredient(fluid), Ingredient.ofStacks(sievable), loot.toMutableList())
     fun register(mesh: ItemConvertible, fluid: Fluid, sievable: ItemConvertible, vararg loot: Lootable) =
         register(Ingredient.ofItems(mesh), FluidIngredient(fluid), Ingredient.ofItems(sievable), *loot)
+    fun register(mesh: ItemConvertible, fluid: Fluid, sievable: Identifier, vararg loot: Lootable) =
+        register(Ingredient.ofItems(mesh), FluidIngredient(fluid), Ingredient.ofItems(Registry.ITEM.get(sievable)), *loot)
     fun register(mesh: ItemConvertible, sievable: ItemConvertible, vararg loot: Lootable) =
         register(Ingredient.ofItems(mesh), null, Ingredient.ofItems(sievable), loot.toMutableList())
 
@@ -42,5 +44,7 @@ interface ISieveRegistry {
         register(mesh, null, sievable, *loot)
     fun register(mesh: Identifier, sievable: ItemConvertible, vararg loot: Lootable) =
         register(mesh, Ingredient.ofItems(sievable), *loot)
+    fun register(mesh: ItemConvertible, sievable: Identifier, vararg loot: Lootable) =
+        register(mesh, Registry.ITEM.get(sievable), *loot)
 }
 

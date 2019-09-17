@@ -1,5 +1,6 @@
 package exnihilofabrico.common.ore
 
+import com.swordglowsblue.artifice.api.builder.data.recipe.ShapedRecipeBuilder
 import exnihilofabrico.id
 import exnihilofabrico.util.Color
 import net.minecraft.util.Identifier
@@ -12,8 +13,8 @@ data class OreProperties(
     val chunk: EnumChunkShape = EnumChunkShape.CHUNK,
     val matrix: EnumChunkMaterial = EnumChunkMaterial.STONE
 ) {
-    fun getChunkID() = id("${matrix}_chunk_${material}".toLowerCase())
-    fun getPieceID() = id("${matrix}_piece_${material}".toLowerCase())
+    fun getChunkID() = id("${material}_chunk".toLowerCase())
+    fun getPieceID() = id("${material}_piece".toLowerCase())
 
     fun getChunkItem() = Registry.ITEM.get(getChunkID())
     fun getPieceItem() = Registry.ITEM.get(getPieceID())
@@ -36,6 +37,12 @@ data class OreProperties(
         // TODO add compatible tags here
 
         return tags
+    }
+
+    fun generateRecipe(builder: ShapedRecipeBuilder) {
+        builder.pattern("xx", "xx")
+            .ingredientItem('x', getPieceID())
+            .result(getChunkID(), 1)
     }
 }
 

@@ -1,6 +1,9 @@
-package exnihilofabrico.common.fluids
+package exnihilofabrico.common.witchwater
 
 import exnihilofabrico.ExNihiloConfig
+import exnihilofabrico.api.registry.ExNihiloRegistries
+import exnihilofabrico.common.base.BaseFluidBlock
+import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
@@ -14,7 +17,11 @@ import net.minecraft.entity.mob.SlimeEntity
 import net.minecraft.entity.passive.RabbitEntity
 import net.minecraft.entity.passive.VillagerEntity
 import net.minecraft.fluid.BaseFluid
+import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvent
+import net.minecraft.sound.SoundEvents
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import net.minecraft.village.VillagerProfession
 import net.minecraft.world.World
 
@@ -98,7 +105,28 @@ class WitchWaterBlock(fluid: BaseFluid, settings: Settings): BaseFluidBlock(flui
             }
     }
 
+    override fun receiveNeighborFluids(world: World?, pos: BlockPos?, state: BlockState?): Boolean {
+        if(world == null || pos == null || state == null)
+            return true
+        for(direction in Direction.values()) {
+            val fluidState = world.getFluidState(pos.offset(direction))
+            if(fluidState.isEmpty) continue
+            if(fluidInteraction(world, pos, pos.offset(direction)) && direction != Direction.DOWN)
+                return true
+        }
+        return true
+    }
+
     companion object {
+        fun fluidInteraction(world: World, witchPos: BlockPos, otherPos: BlockPos): Boolean {
+            val fluidState = world.getFluidState(otherPos)
+            if(fluidState.isEmpty) return false
+            val block = ExNihiloRegistries.WITCHWATER_WORLD.getResult(fluidState.fluid, world.random) ?: return false
+            val changePos = if(witchPos.offset(Direction.DOWN) == otherPos) otherPos else witchPos
+            world.setBlockState(changePos, block.defaultState)
+            world.playSound(null, changePos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 0.7f,0.8f + world.random.nextFloat() * 0.2f)
+            return true
+        }
         fun <T: LivingEntity> replaceMob(world: World, toKill: LivingEntity, spawnType: EntityType<T>) {
             val toSpawn = spawnType.create(world)
             if(toSpawn != null) {

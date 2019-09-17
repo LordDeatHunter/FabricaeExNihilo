@@ -1,18 +1,13 @@
 package exnihilofabrico.common
 
-import exnihilofabrico.ExNihiloConfig
 import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.api.registry.ExNihiloRegistries
 import exnihilofabrico.common.base.BaseItem
 import exnihilofabrico.common.farming.PlantableItem
 import exnihilofabrico.common.farming.SilkWormItem
 import exnihilofabrico.common.farming.TransformingItem
-import exnihilofabrico.common.fluids.WitchWaterFluid
-import exnihilofabrico.common.sieves.MeshItem
-import exnihilofabrico.common.sieves.MeshProperties
+import exnihilofabrico.common.witchwater.WitchWaterFluid
 import exnihilofabrico.id
-import exnihilofabrico.registry.MeshRegistry
-import exnihilofabrico.util.Color
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.block.KelpBlock
@@ -20,8 +15,6 @@ import net.minecraft.fluid.Fluids
 import net.minecraft.item.FoodComponents
 import net.minecraft.item.Item
 import net.minecraft.item.ItemUsageContext
-import net.minecraft.item.Items
-import net.minecraft.recipe.Ingredient
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 

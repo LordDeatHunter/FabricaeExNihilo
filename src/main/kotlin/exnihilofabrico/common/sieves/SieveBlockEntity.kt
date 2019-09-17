@@ -15,14 +15,23 @@ import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.fluid.Fluid
+import net.minecraft.fluid.Fluids
 import net.minecraft.item.BucketItem
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.text.TranslatableText
 import net.minecraft.util.DefaultedList
 import net.minecraft.util.Hand
 import net.minecraft.util.ItemScatterer
 import net.minecraft.util.hit.BlockHitResult
-//import virtuoel.towelette.api.Fluidloggable
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
+import net.minecraft.world.World
+import virtuoel.towelette.api.Fluidloggable
+import java.awt.TextComponent
+import java.util.*
+import kotlin.collections.HashSet
+import kotlin.math.abs
 
 class SieveBlockEntity: BlockEntity(TYPE), BlockEntityClientSerializable {
 
@@ -48,8 +57,9 @@ class SieveBlockEntity: BlockEntity(TYPE), BlockEntityClientSerializable {
         if(held.item is BucketItem)
             return false // Done for fluid logging
 
+
         // Remove/Swap a mesh
-        if(player.isSneaking || SIEVE.isValidMesh(held)) {
+        if(SIEVE.isValidMesh(held)) {
             // Removing  mesh
             if(!mesh.isEmpty) {
                 player.giveItemStack(mesh.copy())
@@ -64,26 +74,33 @@ class SieveBlockEntity: BlockEntity(TYPE), BlockEntityClientSerializable {
             markDirty()
             return true
         }
+        val sieves = getConnectedSieves()
         // Make Progress
         if(!contents.isEmpty) {
-            doProgress(player)
-            markDirty()
+            sieves.forEach { it.doProgress(player) }
             return true
         }
+
         // Add a block
-        if(!held.isEmpty && SIEVE.isValidRecipe(mesh, getFluid(), held)) { // TODO use sieve registry to determine if something is sievable
-            contents = held.ofSize(1)
-            if(!player.isCreative)
-                held.decrement(1)
-            markDirty()
+        if(!held.isEmpty && SIEVE.isValidRecipe(mesh, getFluid(), held)) {
+            sieves.forEach { it.setContents(held, !player.isCreative) }
             return true
         }
-        return true
+        return false
+    }
+
+    fun setContents(stack: ItemStack, doDrain: Boolean) {
+        if(stack.isEmpty || !contents.isEmpty) return
+        contents = stack.ofSize(1)
+        if(doDrain)
+            stack.decrement(1)
+        progress = 0.0
+        markDirty()
     }
 
     fun getFluid(): Fluid? {
         val state = world?.getBlockState(pos) ?: return null
-//        if(state.block !is Fluidloggable) return null
+        if(state.block !is Fluidloggable) return Fluids.EMPTY
         return state.fluidState.fluid
     }
 
@@ -103,6 +120,7 @@ class SieveBlockEntity: BlockEntity(TYPE), BlockEntityClientSerializable {
             progress = 0.0
             contents = ItemStack.EMPTY
         }
+        markDirty()
     }
 
     fun dropInventory() {
@@ -120,6 +138,44 @@ class SieveBlockEntity: BlockEntity(TYPE), BlockEntityClientSerializable {
     fun dropContents() {
         ItemScatterer.spawn(world, pos.up(), DefaultedList.copyOf(contents))
         contents = ItemStack.EMPTY
+    }
+
+    fun getConnectedSieves(): Collection<SieveBlockEntity> {
+        val sieves = mutableListOf<SieveBlockEntity>()
+
+        val tested = HashSet<BlockPos>()
+        val stack = Stack<BlockPos>()
+        stack.add(this.pos)
+        while(!stack.empty()) {
+            val popped = stack.pop()
+            // Record that this one has been tested
+            tested.add(popped)
+            if(matchingSieveAt(world?: continue, popped)) {
+                sieves.add(this.world?.getBlockEntity(popped) as? SieveBlockEntity ?: continue)
+                // Add adjacent locations to test to the stack
+                Direction.values()
+                    // Horizontals
+                    .filter{
+                        it.offsetY == 0 }
+                    // to BlockPos
+                    .map { popped.offset(it) }
+                    // Remove already tested positions
+                    .filter { !tested.contains(it) && !stack.contains(it) }
+                    // Remove positions too far away
+                    .filter {
+                        abs(this.pos.x - it.x) <= ExNihiloConfig.Modules.Sieve.sieveRadius &&
+                            abs(this.pos.z - it.z) <= ExNihiloConfig.Modules.Sieve.sieveRadius }
+                    // Add to the stack to be processed
+                    .forEach { stack.add(it) }
+            }
+        }
+
+        return sieves
+    }
+
+    private fun matchingSieveAt(world: World, pos: BlockPos): Boolean {
+        val other = world.getBlockEntity(pos) as? SieveBlockEntity ?: return false
+        return ItemStack.areItemsEqual(mesh, other.mesh)
     }
 
     /**

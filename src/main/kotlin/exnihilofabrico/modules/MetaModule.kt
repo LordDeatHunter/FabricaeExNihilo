@@ -20,6 +20,5 @@ object MetaModule: ICompatModule {
     override fun registerMesh(registry: IMeshRegistry) = modules.forEach { it.registerMesh(registry) }
     override fun registerCrook(registry: IToolRegistry) = modules.forEach { it.registerCrook(registry) }
     override fun registerHammer(registry: IToolRegistry) = modules.forEach { it.registerHammer(registry) }
-    override fun registerWitchWaterEntity(registry: IWitchWaterEntityRegistry) = modules.forEach { it.registerWitchWaterEntity(registry) }
     override fun registerWitchWaterFluid(registry: IWitchWaterFluidRegistry) = modules.forEach { it.registerWitchWaterFluid(registry) }
 }

@@ -1,5 +1,6 @@
 package exnihilofabrico.registry
 
+import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.api.crafting.Lootable
 import exnihilofabrico.api.recipes.SieveRecipe
 import exnihilofabrico.api.registry.ISieveRegistry
@@ -34,25 +35,17 @@ data class SieveRegistry(val registry: MutableList<SieveRecipe> = mutableListOf(
         return results
     }
 
-    override fun getAllResults(mesh: ItemStack, fluid: Fluid?, sievable: ItemStack): List<Lootable> {
-        return registry.filter { recipe ->
-            recipe.mesh.test(mesh) && (recipe.fluid?.test(fluid) ?: true) && recipe.sievable.test(sievable)
-        }.map { it.loot }.flatten()
-    }
+    override fun getAllResults(mesh: ItemStack, fluid: Fluid?, sievable: ItemStack) =
+        registry.filter { it.test(mesh, fluid, sievable) }.map { it.loot }.flatten()
 
-    override fun isValidRecipe(mesh: ItemStack, fluid: Fluid?, sievable: ItemStack): Boolean {
-        return registry.any {recipe ->
-            recipe.mesh.test(mesh) && (recipe.fluid?.test(fluid) ?: true) && recipe.sievable.test(sievable)
-        }
-    }
+    override fun isValidRecipe(mesh: ItemStack, fluid: Fluid?, sievable: ItemStack) =
+        registry.any {it.test(mesh, fluid, sievable)}
 
-    override fun isValidMesh(mesh: ItemStack) = registry.any { recipe -> recipe.mesh.test(mesh)}
+    override fun isValidMesh(mesh: ItemStack) = registry.any { it.mesh.test(mesh)}
 
     override fun register(sieveRecipe: SieveRecipe) {
         registry.forEach {
-            if(it.mesh == sieveRecipe.mesh &&
-                    it.fluid == sieveRecipe.fluid &&
-                    it.sievable == sieveRecipe.sievable){
+            if(it.test(sieveRecipe)){
                 it.loot.addAll(sieveRecipe.loot)
                 return
             }
