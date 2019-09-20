@@ -5,14 +5,18 @@ import kotlin.math.sqrt
 data class Color(val r: Float, val g: Float, val b: Float, val a: Float) {
     constructor(color: Int, ignoreAlpha: Boolean=true): this(
         (color shr 16 and 255).toFloat() / 255f,
-        (color shr 8 and 255) / 255f,
-        (color and 255) / 255f,
+        (color shr 8 and 255).toFloat() / 255f,
+        (color and 255).toFloat() / 255f,
         if(ignoreAlpha) 1.0f else (color shr 24 and 255) / 255f
     )
     constructor(hex: String): this(hex.toInt(16), hex.length <= 6)
 
     fun toInt(): Int {
         return toIntIgnoreAlpha() or ((a*255).toInt() shl 24)
+    }
+
+    fun toIntAlphaOne(): Int {
+        return toIntIgnoreAlpha() or -16777216
     }
 
     fun toIntIgnoreAlpha(): Int {

@@ -1,11 +1,8 @@
 package exnihilofabrico.api.registry
 
-import exnihilofabrico.common.ore.OreProperties
 import exnihilofabrico.common.sieves.MeshProperties
 import exnihilofabrico.util.Color
 import net.minecraft.item.Item
-import net.minecraft.recipe.Ingredient
-import net.minecraft.tag.Tag
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 

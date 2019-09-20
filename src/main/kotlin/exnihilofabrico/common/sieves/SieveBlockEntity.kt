@@ -19,7 +19,6 @@ import net.minecraft.fluid.Fluids
 import net.minecraft.item.BucketItem
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.text.TranslatableText
 import net.minecraft.util.DefaultedList
 import net.minecraft.util.Hand
 import net.minecraft.util.ItemScatterer
@@ -28,7 +27,6 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 import virtuoel.towelette.api.Fluidloggable
-import java.awt.TextComponent
 import java.util.*
 import kotlin.collections.HashSet
 import kotlin.math.abs
@@ -42,9 +40,7 @@ class SieveBlockEntity: BlockEntity(TYPE), BlockEntityClientSerializable {
     override fun markDirty() {
         super.markDirty()
 
-        world?.apply {
-            updateListeners(pos, getBlockState(pos), getBlockState(pos), 3)
-        }
+        //world?.apply { updateListeners(pos, getBlockState(pos), getBlockState(pos), 4) }
     }
 
     fun activate(state: BlockState?, player: PlayerEntity?, hand: Hand?, hitResult: BlockHitResult?): Boolean {
@@ -212,7 +208,7 @@ class SieveBlockEntity: BlockEntity(TYPE), BlockEntityClientSerializable {
     companion object {
         @JvmStatic
         val TYPE: BlockEntityType<SieveBlockEntity> =
-                BlockEntityType.Builder.create({SieveBlockEntity()}, ModBlocks.SIEVES.values.toTypedArray()).build(null)
+            BlockEntityType.Builder.create({SieveBlockEntity()}, ModBlocks.SIEVES.values.toTypedArray()).build(null)
         val BLOCK_ENTITY_ID = id("sieve")
     }
 }

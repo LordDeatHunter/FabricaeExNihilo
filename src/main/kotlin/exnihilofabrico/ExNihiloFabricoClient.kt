@@ -4,12 +4,15 @@ import com.swordglowsblue.artifice.api.Artifice
 import com.swordglowsblue.artifice.api.ArtificeResourcePack
 import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder
 import exnihilofabrico.api.registry.ExNihiloRegistries
+import exnihilofabrico.client.ExNihiloBlockColorProvider
 import exnihilofabrico.client.ExNihiloItemColorProvider
 import exnihilofabrico.client.FluidRenderManager
 import exnihilofabrico.client.renderers.CrucibleBlockEntityRenderer
+import exnihilofabrico.client.renderers.InfestingLeavesBlockEntityRenderer
 import exnihilofabrico.client.renderers.SieveBlockEntityRenderer
 import exnihilofabrico.common.ModBlocks
 import exnihilofabrico.common.crucibles.CrucibleBlockEntity
+import exnihilofabrico.common.farming.InfestingLeavesBlockEntity
 import exnihilofabrico.common.sieves.SieveBlockEntity
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.EnvType
@@ -18,6 +21,7 @@ import net.fabricmc.api.EnvironmentInterface
 import net.fabricmc.fabric.api.client.render.BlockEntityRendererRegistry
 import net.fabricmc.fabric.api.client.render.ColorProviderRegistry
 import net.minecraft.util.Identifier
+import net.minecraft.util.registry.Registry
 
 @EnvironmentInterface(itf= ClientModInitializer::class, value= EnvType.CLIENT)
 object ExNihiloFabricoClient: ClientModInitializer {
@@ -28,6 +32,7 @@ object ExNihiloFabricoClient: ClientModInitializer {
         // Register "BE"SRs
         BlockEntityRendererRegistry.INSTANCE.register(SieveBlockEntity::class.java, SieveBlockEntityRenderer())
         BlockEntityRendererRegistry.INSTANCE.register(CrucibleBlockEntity::class.java, CrucibleBlockEntityRenderer())
+        BlockEntityRendererRegistry.INSTANCE.register(InfestingLeavesBlockEntity::class.java, InfestingLeavesBlockEntityRenderer())
         ExNihiloFabrico.LOGGER.info("Registered BESR for Sieve")
 
         // Item Colors
@@ -38,7 +43,11 @@ object ExNihiloFabricoClient: ClientModInitializer {
         ExNihiloRegistries.MESH.getAll().forEach {
             ColorProviderRegistry.ITEM.register(ExNihiloItemColorProvider, it.item)
         }
-        ExNihiloFabrico.LOGGER.info("Registered ItemColorProviders")
+        ModBlocks.INFESTED_LEAVES.forEach { k, v ->
+            ColorProviderRegistry.ITEM.register(ExNihiloItemColorProvider, v.asItem())
+            ColorProviderRegistry.BLOCK.register(ExNihiloBlockColorProvider, v)
+        }
+        ExNihiloFabrico.LOGGER.info("Registered ItemColorProviders and BlockColorProviders")
 
         // Artifice Resource Pack
         val resourcePack: ArtificeResourcePack = Artifice.registerAssets(MODID) { pack ->
@@ -75,6 +84,19 @@ object ExNihiloFabricoClient: ClientModInitializer {
                 pack.addItemModel(mesh.identifier) { model ->
                     model.parent(id("item/mesh"))
                 }
+            }
+
+            // Infested Leaves models
+            ModBlocks.INFESTED_LEAVES.forEach {k, leaves ->
+                pack.addBlockModel(k) {model ->
+                    model.parent(Identifier("item/"+ Registry.BLOCK.getId(leaves.leafBlock).path))
+                }
+                pack.addBlockState(k) {state ->
+                    state.variant("") {variant ->
+                        variant.model(id("block/${k.path}"))
+                    }
+                }
+                pack.addItemModel(k) { model -> model.parent(id("block/${k.path}")) }
             }
 
             // Ore Chunks/Pieces

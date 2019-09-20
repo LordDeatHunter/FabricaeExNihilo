@@ -1,7 +1,5 @@
 package exnihilofabrico.registry
 
-import exnihilofabrico.ExNihiloFabrico
-import exnihilofabrico.api.crafting.Lootable
 import exnihilofabrico.api.recipes.SieveRecipe
 import exnihilofabrico.api.registry.ISieveRegistry
 import net.minecraft.enchantment.EnchantmentHelper

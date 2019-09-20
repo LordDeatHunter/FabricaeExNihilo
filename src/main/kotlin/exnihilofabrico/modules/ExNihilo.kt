@@ -3,29 +3,18 @@ package exnihilofabrico.modules
 import exnihilofabrico.api.crafting.FluidIngredient
 import exnihilofabrico.api.crafting.Lootable
 import exnihilofabrico.api.registry.*
-import exnihilofabrico.common.ModBlocks
-import exnihilofabrico.common.ModFluids
-import exnihilofabrico.common.ModItems
 import exnihilofabrico.common.ore.EnumChunkMaterial
 import exnihilofabrico.common.ore.EnumChunkShape
 import exnihilofabrico.common.ore.EnumPieceShape
-import exnihilofabrico.common.ore.OreProperties
-import exnihilofabrico.common.sieves.MeshItem
-import exnihilofabrico.common.sieves.MeshProperties
 import exnihilofabrico.common.witchwater.WitchWaterFluid
 import exnihilofabrico.id
 import exnihilofabrico.util.*
-import io.github.cottonmc.cotton.Cotton
-import io.github.cottonmc.cotton.datapack.recipe.CottonRecipes
-import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback
 import net.minecraft.block.Blocks
 import net.minecraft.fluid.Fluids
-import net.minecraft.item.Item
 import net.minecraft.item.Items
-import net.minecraft.recipe.Ingredient
-import net.minecraft.tag.*
+import net.minecraft.tag.BlockTags
+import net.minecraft.tag.FluidTags
 import net.minecraft.util.Identifier
-import net.minecraft.util.TagHelper
 import net.minecraft.util.registry.Registry
 
 object ExNihilo: ICompatModule {

@@ -47,10 +47,12 @@ object ExNihiloConfig {
         object Farming {
             var enabled = true
             object InfestedLeaves {
-                var progressPerUpdate = 0.015
+                var progressPerUpdate = 0.015f
                 var updateFrequency = 10
-                var minimumSpreadPercent = 15
+                var minimumSpreadPercent = 0.15f
                 var spreadChance = 0.5
+                var infestingSpreadAttempts = 1
+                var infestedSpreadAttempts = 4
             }
             object Seeds {
                 var carrot = true

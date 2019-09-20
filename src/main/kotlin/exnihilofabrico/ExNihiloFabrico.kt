@@ -1,9 +1,6 @@
 package exnihilofabrico
 
 import com.swordglowsblue.artifice.api.Artifice
-import com.swordglowsblue.artifice.api.ArtificeResourcePack
-import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder
-import com.swordglowsblue.artifice.api.util.Processor
 import exnihilofabrico.api.registry.ExNihiloRegistries
 import exnihilofabrico.api.registry.ExNihiloRegistries.CROOK
 import exnihilofabrico.api.registry.ExNihiloRegistries.CRUCIBLE_HEAT
@@ -14,25 +11,15 @@ import exnihilofabrico.api.registry.ExNihiloRegistries.MESH
 import exnihilofabrico.api.registry.ExNihiloRegistries.ORES
 import exnihilofabrico.api.registry.ExNihiloRegistries.SIEVE
 import exnihilofabrico.api.registry.ExNihiloRegistries.WITCHWATER_WORLD
-import exnihilofabrico.client.FluidRenderManager
-import exnihilofabrico.client.ExNihiloItemColorProvider
-import exnihilofabrico.client.renderers.CrucibleBlockEntityRenderer
-import exnihilofabrico.client.renderers.SieveBlockEntityRenderer
 import exnihilofabrico.common.ModBlocks
 import exnihilofabrico.common.ModFluids
 import exnihilofabrico.common.ModItems
 import exnihilofabrico.common.ModTools
-import exnihilofabrico.common.crucibles.CrucibleBlockEntity
-import exnihilofabrico.common.sieves.SieveBlockEntity
 import exnihilofabrico.modules.MetaModule
 import exnihilofabrico.util.ExNihiloItemStack
 import io.github.cottonmc.cotton.logging.ModLogger
-import net.fabricmc.api.*
+import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder
-import net.fabricmc.fabric.api.client.render.BlockEntityRendererRegistry
-import net.fabricmc.fabric.api.client.render.ColorProviderRegistry
-import net.minecraft.item.Items
-import net.minecraft.tag.ItemTags
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
@@ -126,8 +113,17 @@ object ExNihiloFabrico: ModInitializer {
             // Barrel Crafting
             ModBlocks.BARRELS.forEach { k, barrel ->
                 builder.addShapedRecipe(k) { barrel.generateRecipe(it) } }
-
         }
-
+    }
+    private fun generateTags() {
+        val dataPack = Artifice.registerData(MODID) { builder ->
+            // exnihilofabrico:infested_leaves tag
+            builder.addBlockTag(id("infested_leaves")) {tag ->
+                tag.values(*ModBlocks.INFESTED_LEAVES.keys.toTypedArray())
+            }
+            builder.addItemTag(id("infested_leaves")) {tag ->
+                tag.values(*ModBlocks.INFESTED_LEAVES.keys.toTypedArray())
+            }
+        }
     }
 }
