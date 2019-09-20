@@ -1,4 +1,4 @@
-package exnihilofabrico.common.farming
+package exnihilofabrico.common.infested
 
 import exnihilofabrico.common.base.IHasColor
 import exnihilofabrico.util.Color

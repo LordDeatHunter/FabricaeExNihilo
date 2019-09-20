@@ -4,8 +4,8 @@ import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.api.registry.ExNihiloRegistries
 import exnihilofabrico.common.base.BaseItem
 import exnihilofabrico.common.farming.PlantableItem
-import exnihilofabrico.common.farming.SilkWormItem
 import exnihilofabrico.common.farming.TransformingItem
+import exnihilofabrico.common.infested.SilkWormItem
 import exnihilofabrico.common.witchwater.WitchWaterFluid
 import exnihilofabrico.id
 import net.minecraft.block.BlockState
@@ -53,7 +53,11 @@ object ModItems {
     )
 
     val RESOURCES = mutableMapOf<Identifier, Item>(
-        id("silkworm_raw") to SilkWormItem(Item.Settings().maxCount(64).food(FoodComponents.COD)),
+        id("silkworm_raw") to SilkWormItem(
+            Item.Settings().maxCount(64).food(
+                FoodComponents.COD
+            )
+        ),
         id("silkworm_cooked") to BaseItem(Item.Settings().maxCount(64).food(FoodComponents.COOKED_COD))
     )
 

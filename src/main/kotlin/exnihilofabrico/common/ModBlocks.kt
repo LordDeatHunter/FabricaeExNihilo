@@ -1,15 +1,16 @@
 package exnihilofabrico.common
 
 import exnihilofabrico.ExNihiloFabrico
+import exnihilofabrico.api.ExNihiloFabricoAPI.BLOCK_GENERATOR
 import exnihilofabrico.common.barrels.BarrelBlock
 import exnihilofabrico.common.barrels.BarrelBlockEntity
 import exnihilofabrico.common.base.BaseFallingBlock
 import exnihilofabrico.common.crucibles.CrucibleBlock
 import exnihilofabrico.common.crucibles.CrucibleBlockEntity
-import exnihilofabrico.common.farming.InfestedLeavesBlock
-import exnihilofabrico.common.farming.InfestedLeavesItem
-import exnihilofabrico.common.farming.InfestingLeavesBlock
-import exnihilofabrico.common.farming.InfestingLeavesBlockEntity
+import exnihilofabrico.common.infested.InfestedLeavesBlock
+import exnihilofabrico.common.infested.InfestedLeavesItem
+import exnihilofabrico.common.infested.InfestingLeavesBlock
+import exnihilofabrico.common.infested.InfestingLeavesBlockEntity
 import exnihilofabrico.common.sieves.SieveBlock
 import exnihilofabrico.common.sieves.SieveBlockEntity
 import exnihilofabrico.common.witchwater.WitchWaterFluid
@@ -31,21 +32,14 @@ import net.minecraft.util.registry.Registry
 object ModBlocks {
     private val itemSettings = Item.Settings().group(ExNihiloFabrico.ITEM_GROUP).maxCount(64)
 
-    private val woodSettings = FabricBlockSettings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD).breakByHand(true)
-    private val stoneSettings = FabricBlockSettings.of(Material.STONE).strength(2.0f, 6.0f).sounds(BlockSoundGroup.STONE)
-    private val crushedSettings = FabricBlockSettings.of(Material.SAND).strength(0.6f).sounds(BlockSoundGroup.GRAVEL).breakByHand(true)
-    private val infestedLeavesSettings = FabricBlockSettings.of(Material.LEAVES).strength(0.2F).ticksRandomly().sounds(BlockSoundGroup.GRASS)
+    val woodSettings = FabricBlockSettings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD).breakByHand(true)
+    val stoneSettings = FabricBlockSettings.of(Material.STONE).strength(2.0f, 6.0f).sounds(BlockSoundGroup.STONE)
+    val crushedSettings = FabricBlockSettings.of(Material.SAND).strength(0.6f).sounds(BlockSoundGroup.GRAVEL).breakByHand(true)
+    val infestedLeavesSettings = FabricBlockSettings.of(Material.LEAVES).strength(0.2F).ticksRandomly().sounds(BlockSoundGroup.GRASS)
 
-    val SIEVES: MutableMap<Identifier, SieveBlock> = EnumVanillaWoodTypes.values().map {
-        id("sieve_${it.text}") to SieveBlock(it.getTexturePlanks(), Registry.ITEM.getId(it.getPlanksBlock().asItem()), Registry.ITEM.getId(it.getSlabBlock().asItem()), woodSettings)
-    }.toMap().toMutableMap()
-    val CRUCIBLES: MutableMap<Identifier, CrucibleBlock> = EnumVanillaWoodTypes.values().map {
-        id("crucible_${it.text}") to CrucibleBlock(it.getTextureLog(), Registry.ITEM.getId(it.getLogBlock().asItem()), woodSettings)
-    }.toMap().toMutableMap()
-    val BARRELS: MutableMap<Identifier, BarrelBlock> = EnumVanillaWoodTypes.values().map {
-        id("barrel_${it.text}") to BarrelBlock(it.getTexturePlanks(), Registry.ITEM.getId(it.getPlanksBlock().asItem()), Registry.ITEM.getId(it.getSlabBlock().asItem()), woodSettings)
-    }.toMap().toMutableMap()
-
+    val SIEVES: MutableMap<Identifier, SieveBlock> = mutableMapOf()
+    val CRUCIBLES: MutableMap<Identifier, CrucibleBlock> = mutableMapOf()
+    val BARRELS: MutableMap<Identifier, BarrelBlock> = mutableMapOf()
 
     val CRUSHED = mutableMapOf<Identifier, Block>(
         id("dust") to BaseFallingBlock(FabricBlockSettings.of(Material.SAND).strength(0.4f).breakByHand(true)),
@@ -60,13 +54,11 @@ object ModBlocks {
     )
 
     val INFESTING_LEAVES = InfestingLeavesBlock(infestedLeavesSettings)
-    val INFESTED_LEAVES = EnumVanillaWoodTypes.values().map { w ->
-        id("infested_${w.text}_leaves") to InfestedLeavesBlock(w.getLeafBlock() as LeavesBlock, infestedLeavesSettings)
-    }.toMap().toMutableMap()
+    val INFESTED_LEAVES: MutableMap<Identifier, InfestedLeavesBlock> = mutableMapOf()
 
     init {
-        CRUCIBLES[id("crucible_stone")] = CrucibleBlock(id("block/crucible_stone"), Identifier("stone"), stoneSettings)
-        BARRELS[id("barrel_stone")] = BarrelBlock(Identifier("block/stone"), Identifier("stone"), Identifier("stone_slab"), stoneSettings)
+        CRUCIBLES[id("stone_crucible")] = CrucibleBlock(id("block/stone_crucible"), id("porcelain"), stoneSettings)
+        BARRELS[id("stone_barrel")] = BarrelBlock(Identifier("block/stone"), Identifier("stone"), Identifier("stone_slab"), stoneSettings)
     }
 
     fun registerBlocks(registry: Registry<Block>) {
@@ -87,7 +79,9 @@ object ModBlocks {
         CRUCIBLES.forEach { (k, v) -> Registry.register(registry, k, BlockItem(v, itemSettings)) }
         BARRELS.forEach { (k, v) -> Registry.register(registry, k, BlockItem(v, itemSettings)) }
         CRUSHED.forEach { (k, v) -> Registry.register(registry, k, BlockItem(v, itemSettings)) }
-        INFESTED_LEAVES.forEach { (k, v) -> Registry.register(registry, k, InfestedLeavesItem(v, itemSettings)) }
+        INFESTED_LEAVES.forEach { (k, v) -> Registry.register(registry, k,
+            InfestedLeavesItem(v, itemSettings)
+        ) }
     }
 
     fun registerBlockEntities(registry: Registry<BlockEntityType<out BlockEntity>>) {
@@ -95,5 +89,19 @@ object ModBlocks {
         Registry.register(registry, CrucibleBlockEntity.BLOCK_ENTITY_ID, CrucibleBlockEntity.TYPE)
         Registry.register(registry, BarrelBlockEntity.BLOCK_ENTITY_ID, BarrelBlockEntity.TYPE)
         Registry.register(registry, InfestingLeavesBlockEntity.BLOCK_ENTITY_ID, InfestingLeavesBlockEntity.TYPE)
+    }
+
+    fun generateDerivedBlocks() {
+        EnumVanillaWoodTypes.values().forEach { wood ->
+            val planksID = wood.getPlanksID()
+            val slabID = wood.getSlabID()
+            val logID = wood.getLogID()
+            val leafBlock = wood.getLeafBlock() as LeavesBlock
+
+            BLOCK_GENERATOR.createInfestedLeavesBlock(leafBlock)
+            BLOCK_GENERATOR.createSieveBlock(planksID, slabID)
+            BLOCK_GENERATOR.createWoodBarrelBlock(planksID, slabID)
+            BLOCK_GENERATOR.createWoodCrucibleBlock(logID)
+        }
     }
 }

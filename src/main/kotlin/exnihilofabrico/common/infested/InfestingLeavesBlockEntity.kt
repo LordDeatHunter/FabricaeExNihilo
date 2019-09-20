@@ -1,4 +1,4 @@
-package exnihilofabrico.common.farming
+package exnihilofabrico.common.infested
 
 import exnihilofabrico.ExNihiloConfig
 import exnihilofabrico.ExNihiloFabrico
@@ -14,7 +14,6 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.util.Identifier
 import net.minecraft.util.Tickable
-import net.minecraft.util.math.Vec3i
 import net.minecraft.util.registry.Registry
 
 class InfestingLeavesBlockEntity: BlockEntity(TYPE), BlockEntityClientSerializable, Tickable, IHasColor {
@@ -37,7 +36,11 @@ class InfestingLeavesBlockEntity: BlockEntity(TYPE), BlockEntityClientSerializab
             markDirty()
             //world?.apply { updateListeners(pos, getBlockState(pos), getBlockState(pos), 3) }
             if(progress > ExNihiloConfig.Modules.Farming.InfestedLeaves.minimumSpreadPercent)
-                InfestedHelper.tryToSpreadFrom(world?: return, pos, ExNihiloConfig.Modules.Farming.InfestedLeaves.infestingSpreadAttempts)
+                InfestedHelper.tryToSpreadFrom(
+                    world ?: return,
+                    pos,
+                    ExNihiloConfig.Modules.Farming.InfestedLeaves.infestingSpreadAttempts
+                )
             return
         }
 
@@ -72,7 +75,8 @@ class InfestingLeavesBlockEntity: BlockEntity(TYPE), BlockEntityClientSerializab
     }
 
     fun fromTagWithoutWorldInfo(tag: CompoundTag) {
-        infestedBlock = Registry.BLOCK[Identifier(tag.getString("block"))] as? InfestedLeavesBlock ?:
+        infestedBlock = Registry.BLOCK[Identifier(tag.getString("block"))] as? InfestedLeavesBlock
+            ?:
                 ModBlocks.INFESTED_LEAVES.values.first()
         progress = tag.getFloat("progress")
     }
@@ -84,7 +88,7 @@ class InfestingLeavesBlockEntity: BlockEntity(TYPE), BlockEntityClientSerializab
 
     companion object {
         val TYPE: BlockEntityType<InfestingLeavesBlockEntity> =
-            BlockEntityType.Builder.create({InfestingLeavesBlockEntity()}, arrayOf(ModBlocks.INFESTING_LEAVES)).build(null)
+            BlockEntityType.Builder.create({ InfestingLeavesBlockEntity() }, arrayOf(ModBlocks.INFESTING_LEAVES)).build(null)
         val BLOCK_ENTITY_ID = id("infesting")
     }
 }

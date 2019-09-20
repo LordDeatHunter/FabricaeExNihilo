@@ -1,8 +1,7 @@
 package exnihilofabrico.client.renderers
 
 import com.mojang.blaze3d.platform.GlStateManager
-import exnihilofabrico.common.farming.InfestingLeavesBlockEntity
-import exnihilofabrico.util.Color
+import exnihilofabrico.common.infested.InfestingLeavesBlockEntity
 import exnihilofabrico.util.asStack
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.render.BufferBuilder

@@ -1,10 +1,9 @@
-package exnihilofabrico.common.farming
+package exnihilofabrico.common.infested
 
 import exnihilofabrico.ExNihiloConfig
 import exnihilofabrico.common.ModBlocks
 import net.minecraft.block.Block
 import net.minecraft.block.LeavesBlock
-import net.minecraft.item.ItemStack
 import net.minecraft.util.ActionResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3i

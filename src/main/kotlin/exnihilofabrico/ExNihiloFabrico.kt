@@ -37,9 +37,11 @@ object ExNihiloFabrico: ModInitializer {
     override fun onInitialize() {
         loadConfigs()
 
-        /* OreRegistry and MeshRegistry is used to create items so must be first */
+        /* Progmatically generate blocks and items */
+        ModBlocks.generateDerivedBlocks()
         MetaModule.registerOres(ORES)
         MetaModule.registerMesh(MESH)
+
         /* Register Fluids*/
         LOGGER.info("Registering Fluids")
         ModFluids.registerFluids(Registry.FLUID)

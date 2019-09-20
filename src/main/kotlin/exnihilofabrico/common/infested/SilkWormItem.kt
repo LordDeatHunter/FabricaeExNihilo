@@ -1,8 +1,6 @@
-package exnihilofabrico.common.farming
+package exnihilofabrico.common.infested
 
-import exnihilofabrico.common.ModBlocks
 import exnihilofabrico.common.base.BaseItem
-import net.minecraft.block.LeavesBlock
 import net.minecraft.item.ItemUsageContext
 import net.minecraft.util.ActionResult
 

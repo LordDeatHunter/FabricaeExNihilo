@@ -12,7 +12,7 @@ import exnihilofabrico.client.renderers.InfestingLeavesBlockEntityRenderer
 import exnihilofabrico.client.renderers.SieveBlockEntityRenderer
 import exnihilofabrico.common.ModBlocks
 import exnihilofabrico.common.crucibles.CrucibleBlockEntity
-import exnihilofabrico.common.farming.InfestingLeavesBlockEntity
+import exnihilofabrico.common.infested.InfestingLeavesBlockEntity
 import exnihilofabrico.common.sieves.SieveBlockEntity
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.EnvType
@@ -43,7 +43,7 @@ object ExNihiloFabricoClient: ClientModInitializer {
         ExNihiloRegistries.MESH.getAll().forEach {
             ColorProviderRegistry.ITEM.register(ExNihiloItemColorProvider, it.item)
         }
-        ModBlocks.INFESTED_LEAVES.forEach { k, v ->
+        ModBlocks.INFESTED_LEAVES.forEach { _, v ->
             ColorProviderRegistry.ITEM.register(ExNihiloItemColorProvider, v.asItem())
             ColorProviderRegistry.BLOCK.register(ExNihiloBlockColorProvider, v)
         }
@@ -60,6 +60,9 @@ object ExNihiloFabricoClient: ClientModInitializer {
                     model.parent(id("block/barrel"))
                         .texture("all", v.texture)
                 }
+                pack.addBlockState(k) {state ->
+                    state.variant("") {it.model(id("block/${k.path}")) }
+                }
                 pack.addItemModel(k) { model -> model.parent(id("block/${k.path}")) }
             }
             // Crucible models
@@ -68,6 +71,9 @@ object ExNihiloFabricoClient: ClientModInitializer {
                     model.parent(id("block/crucible"))
                         .texture("all", v.texture)
                 }
+                pack.addBlockState(k) {state ->
+                    state.variant("") {it.model(id("block/${k.path}")) }
+                }
                 pack.addItemModel(k) { model -> model.parent(id("block/${k.path}")) }
             }
             // Sieve models
@@ -75,6 +81,9 @@ object ExNihiloFabricoClient: ClientModInitializer {
                 pack.addBlockModel(k) {model ->
                     model.parent(id("block/sieve"))
                         .texture("all", v.texture)
+                }
+                pack.addBlockState(k) {state ->
+                    state.variant("") {it.model(id("block/${k.path}")) }
                 }
                 pack.addItemModel(k) { model -> model.parent(id("block/${k.path}")) }
             }
@@ -92,9 +101,7 @@ object ExNihiloFabricoClient: ClientModInitializer {
                     model.parent(Identifier("item/"+ Registry.BLOCK.getId(leaves.leafBlock).path))
                 }
                 pack.addBlockState(k) {state ->
-                    state.variant("") {variant ->
-                        variant.model(id("block/${k.path}"))
-                    }
+                    state.variant("") {it.model(id("block/${k.path}")) }
                 }
                 pack.addItemModel(k) { model -> model.parent(id("block/${k.path}")) }
             }
