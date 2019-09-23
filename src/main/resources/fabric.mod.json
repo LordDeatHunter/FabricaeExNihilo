@@ -17,14 +17,14 @@
         "value": "exnihilofabrico.ExNihiloFabrico"}],
     "client": [{
       "adapter": "kotlin",
-      "value": "exnihilofabrico.ExNihiloFabricoClient"}]
+      "value": "exnihilofabrico.ExNihiloFabricoClient"}],
+    "rei_plugins_v0": ["exnihilofabrico.compatibility.rei.PluginEntry"]
   },
   "depends": {
     "fabric": "*",
     "fabricloader": ">=0.4.6",
     "fabric-language-kotlin": ">=1.3.40",
     "towelette": "*",
-    "silk": "*",
     "artifice": "*"
   }
 }

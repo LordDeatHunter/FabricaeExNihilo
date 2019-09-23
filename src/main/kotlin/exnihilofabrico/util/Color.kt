@@ -36,6 +36,9 @@ data class Color(val r: Float, val g: Float, val b: Float, val a: Float) {
             val a = left.a*leftWeight + right.a*rightWeight
             return Color(r,g,b,a)
         }
+        fun average(left: Color, right: Color, leftWeight: Double = 0.5): Color {
+            return average(left, right, leftWeight.toFloat())
+        }
         @JvmStatic
         val DARK_RED = Color("AA0000")
         @JvmStatic

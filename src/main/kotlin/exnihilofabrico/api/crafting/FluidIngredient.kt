@@ -1,5 +1,6 @@
 package exnihilofabrico.api.crafting
 
+import exnihilofabrico.util.asStack
 import net.minecraft.block.FluidBlock
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.FluidState
@@ -20,6 +21,8 @@ class FluidIngredient(val matches: Collection<Fluid>, val tag: Tag<Fluid>? = nul
         return matches.any { it.matchesType(fluid) }
     }
     fun test(item: Item) = if(tag != null) tag.values().any { it.bucketItem == item } else matches.any { it.bucketItem == item }
+
+    fun toItemStacks() = matches.map { it.bucketItem.asStack() }
 
     override fun toString(): String {
         return tag?.toString() ?: Registry.FLUID.getId(matches.first()).toString()

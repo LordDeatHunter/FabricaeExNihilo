@@ -12,6 +12,20 @@ base {
 }
 
 val minecraft: String by ext
+
+
+val minecraft_version: String by project
+val yarn_mappings: String by project
+val loader_version: String by project
+val fabric_version: String by project
+val fabric_api: String by project
+val fabric_kotlin: String by project
+
+val towelette_version: String by project
+val cotton_version: String by project
+val artifice_version: String by project
+val rei_version: String by project
+
 val modVersion = ext["mod-version"] ?: error("Version was null")
 val localBuild = ext["local-build"].toString().toBoolean()
 version = "$modVersion+$minecraft" + if (localBuild) "-local" else ""
@@ -34,16 +48,20 @@ allprojects {
 			mavenLocal()
 		}
 
+        maven (url = "https://maven.fabricmc.net/")
+        maven(url = "https://minecraft.curseforge.com/api/maven") {
+            name = "CurseForge"
+        }
+
 		// For cotton, polyester and json-factory
 		maven(url = "http://server.bbkr.space:8081/artifactory/libs-release")
 		maven(url = "http://server.bbkr.space:8081/artifactory/libs-snapshot")
 
-		// For towelette
-		maven(url = "https://minecraft.curseforge.com/api/maven") {
-			name = "CurseForge"
-		}
 		// For Artifice
 		maven (url = "https://maven.swordglowsblue.com" )
+
+        maven (url = "http://maven.sargunv.s3-website-us-west-2.amazonaws.com/")
+        jcenter()
 	}
 
 	tasks.withType<KotlinCompile> {
@@ -87,23 +105,24 @@ dependencies {
 	fun v(key: String) = ext[key].toString()
 
 	minecraft("com.mojang:minecraft:$minecraft")
-	mappings("net.fabricmc:yarn:" + v("minecraft") + '+' + v("mappings"))
+	mappings("net.fabricmc:yarn:$yarn_mappings")
 
 	// Fabric
-	modCompile("net.fabricmc:fabric-loader:" + v("fabric-loader"))
-	modCompile("net.fabricmc.fabric-api:fabric-api:" + v("fabric-api"))
-	modCompile("net.fabricmc.fabric-api:fabric-rendering-fluids-v1:" + v("fabric-api-rendering-fluids-v1"))
-	modCompile("net.fabricmc:fabric-language-kotlin:" + v("fabric-kotlin"))
-	compileOnly("net.fabricmc:fabric-language-kotlin:" + v("fabric-kotlin"))
+    modCompile("net.fabricmc:fabric-loader:$loader_version")
+    modCompile("net.fabricmc.fabric-api:fabric-api:$fabric_api")
+	modCompile("net.fabricmc:fabric-language-kotlin:$fabric_kotlin")
+	compileOnly("net.fabricmc:fabric-language-kotlin:$fabric_kotlin")
 
 	// Other mods
-	modCompileAndInclude("towelette:Towelette:" + v("towelette"))
-	modCompileAndInclude("io.github.cottonmc:cotton:" + v("cotton"))
-	modCompileAndInclude("io.github.prospector.silk:SilkAPI:+")
+	modCompileAndInclude("towelette:Towelette:$towelette_version")
+	modCompileAndInclude("io.github.cottonmc:cotton:$cotton_version")
 
     // Artifice
-    modImplementation("artificemc:artifice:" + v("artifice"))
-    include("artificemc:artifice:" + v("artifice"))
+    modImplementation("artificemc:artifice:$artifice_version")
+    include("artificemc:artifice:$artifice_version")
+
+	// Roughly Enough Items
+	modCompile("me.shedaniel:RoughlyEnoughItems:$rei_version")
 
 	// Other libraries
 	compileOnly("org.apiguardian:apiguardian-api:1.0.0")

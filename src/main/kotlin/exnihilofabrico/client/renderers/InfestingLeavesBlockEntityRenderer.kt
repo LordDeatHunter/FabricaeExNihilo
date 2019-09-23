@@ -1,18 +1,15 @@
 package exnihilofabrico.client.renderers
 
 import com.mojang.blaze3d.platform.GlStateManager
-import exnihilofabrico.common.infested.InfestingLeavesBlockEntity
+import exnihilofabrico.client.renderers.RenderHelper.renderBakedModelColored
+import exnihilofabrico.modules.infested.InfestingLeavesBlockEntity
 import exnihilofabrico.util.asStack
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.render.BufferBuilder
-import net.minecraft.client.render.Tessellator
-import net.minecraft.client.render.VertexFormats
 import net.minecraft.client.render.block.entity.BlockEntityRenderer
 import net.minecraft.client.render.model.BakedQuad
 import net.minecraft.client.render.model.json.ModelTransformation
 import net.minecraft.client.texture.SpriteAtlasTexture
-import net.minecraft.util.math.Direction
-import java.util.*
 
 
 class InfestingLeavesBlockEntityRenderer: BlockEntityRenderer<InfestingLeavesBlockEntity>() {
@@ -30,20 +27,8 @@ class InfestingLeavesBlockEntityRenderer: BlockEntityRenderer<InfestingLeavesBlo
         ModelTransformation.applyGl(bakedModel.transformation.getTransformation(ModelTransformation.Type.NONE), false)
         GlStateManager.translated(x,y, z)
 
-        val tessellator = Tessellator.getInstance()
-        val bufferBuilder = tessellator.bufferBuilder
-        bufferBuilder.begin(7, VertexFormats.POSITION_COLOR_UV_NORMAL)
-
         // Render Quads
-        val random = Random()
-        Direction.values().forEach {
-            random.setSeed(42L)
-            bakedModel.getQuads(null, it, random).forEach { this.renderQuad(bufferBuilder, it, color) }
-        }
-        random.setSeed(42L)
-        bakedModel.getQuads(null, null, random).forEach { this.renderQuad(bufferBuilder, it, color) }
-
-        tessellator.draw()
+        renderBakedModelColored(bakedModel, color)
 
         // Clean Up
         GlStateManager.cullFace(GlStateManager.FaceSides.BACK)

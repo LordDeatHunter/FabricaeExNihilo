@@ -10,10 +10,10 @@ import exnihilofabrico.client.FluidRenderManager
 import exnihilofabrico.client.renderers.CrucibleBlockEntityRenderer
 import exnihilofabrico.client.renderers.InfestingLeavesBlockEntityRenderer
 import exnihilofabrico.client.renderers.SieveBlockEntityRenderer
-import exnihilofabrico.common.ModBlocks
-import exnihilofabrico.common.crucibles.CrucibleBlockEntity
-import exnihilofabrico.common.infested.InfestingLeavesBlockEntity
-import exnihilofabrico.common.sieves.SieveBlockEntity
+import exnihilofabrico.modules.ModBlocks
+import exnihilofabrico.modules.crucibles.CrucibleBlockEntity
+import exnihilofabrico.modules.infested.InfestingLeavesBlockEntity
+import exnihilofabrico.modules.sieves.SieveBlockEntity
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
@@ -27,6 +27,7 @@ import net.minecraft.util.registry.Registry
 object ExNihiloFabricoClient: ClientModInitializer {
     @Environment(EnvType.CLIENT)
     override fun onInitializeClient() {
+
         // Fluid Rendering
         FluidRenderManager.setupClient()
         // Register "BE"SRs
@@ -50,7 +51,7 @@ object ExNihiloFabricoClient: ClientModInitializer {
         ExNihiloFabrico.LOGGER.info("Registered ItemColorProviders and BlockColorProviders")
 
         // Artifice Resource Pack
-        val resourcePack: ArtificeResourcePack = Artifice.registerAssets(MODID) { pack ->
+        val resourcePack: ArtificeResourcePack = Artifice.registerAssets(id(MODID)) { pack ->
             pack.setDisplayName("Ex Nihilo Fabrico Generated Resources")
             pack.setDescription("Generated Resources for Ex Nihilo Fabrico")
 

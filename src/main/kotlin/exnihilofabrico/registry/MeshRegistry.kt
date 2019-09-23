@@ -1,7 +1,7 @@
 package exnihilofabrico.registry
 
 import exnihilofabrico.api.registry.IMeshRegistry
-import exnihilofabrico.common.sieves.MeshProperties
+import exnihilofabrico.modules.sieves.MeshProperties
 import net.minecraft.item.Item
 import net.minecraft.util.registry.Registry
 

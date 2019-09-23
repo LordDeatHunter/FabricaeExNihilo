@@ -1,9 +1,9 @@
 package exnihilofabrico.api.registry
 
-import exnihilofabrico.common.ore.EnumChunkMaterial
-import exnihilofabrico.common.ore.EnumChunkShape
-import exnihilofabrico.common.ore.EnumPieceShape
-import exnihilofabrico.common.ore.OreProperties
+import exnihilofabrico.modules.ore.EnumChunkMaterial
+import exnihilofabrico.modules.ore.EnumChunkShape
+import exnihilofabrico.modules.ore.EnumPieceShape
+import exnihilofabrico.modules.ore.OreProperties
 import exnihilofabrico.util.Color
 import net.minecraft.client.util.ModelIdentifier
 import net.minecraft.item.Item
@@ -19,8 +19,6 @@ interface IOreRegistry {
 
     fun registerPieceItems(itemRegistry: Registry<Item>)
     fun registerChunkItems(itemRegistry: Registry<Item>)
-    fun registerCraftingRecipes()
-    fun registerItemTags()
 
 
     fun getPropertiesForModel(identifier: ModelIdentifier): OreProperties?

@@ -1,28 +1,28 @@
 {
   "itemGroup.exnihilofabrico.general": "Ex Nihilo Fabrico",
 
-  "block.exnihilofabrico.barrel_acacia": "Acacia Barrel",
-  "block.exnihilofabrico.barrel_birch": "Birch Barrel",
-  "block.exnihilofabrico.barrel_dark_oak": "Dark Oak Barrel",
-  "block.exnihilofabrico.barrel_jungle": "Jungle Barrel",
-  "block.exnihilofabrico.barrel_oak": "Oak Barrel",
-  "block.exnihilofabrico.barrel_spruce": "Spruce Barrel",
-  "block.exnihilofabrico.barrel_stone": "Stone Barrel",
+  "block.exnihilofabrico.acacia_barrel": "Acacia Barrel",
+  "block.exnihilofabrico.birch_barrel": "Birch Barrel",
+  "block.exnihilofabrico.dark_oak_barrel": "Dark Oak Barrel",
+  "block.exnihilofabrico.jungle_barrel": "Jungle Barrel",
+  "block.exnihilofabrico.oak_barrel": "Oak Barrel",
+  "block.exnihilofabrico.spruce_barrel": "Spruce Barrel",
+  "block.exnihilofabrico.stone_barrel": "Stone Barrel",
 
-  "block.exnihilofabrico.crucible_acacia": "Acacia Crucible",
-  "block.exnihilofabrico.crucible_birch": "Birch Crucible",
-  "block.exnihilofabrico.crucible_dark_oak": "Dark Oak Crucible",
-  "block.exnihilofabrico.crucible_jungle": "Jungle Crucible",
-  "block.exnihilofabrico.crucible_oak": "Oak Crucible",
-  "block.exnihilofabrico.crucible_spruce": "Spruce Crucible",
-  "block.exnihilofabrico.crucible_stone": "Stone Crucible",
+  "block.exnihilofabrico.acacia_crucible": "Acacia Crucible",
+  "block.exnihilofabrico.birch_crucible": "Birch Crucible",
+  "block.exnihilofabrico.dark_oak_crucible": "Dark Oak Crucible",
+  "block.exnihilofabrico.jungle_crucible": "Jungle Crucible",
+  "block.exnihilofabrico.oak_crucible": "Oak Crucible",
+  "block.exnihilofabrico.spruce_crucible": "Spruce Crucible",
+  "block.exnihilofabrico.stone_crucible": "Stone Crucible",
 
-  "block.exnihilofabrico.sieve_acacia": "Acacia Sieve",
-  "block.exnihilofabrico.sieve_birch": "Birch Sieve",
-  "block.exnihilofabrico.sieve_dark_oak": "Dark Oak Sieve",
-  "block.exnihilofabrico.sieve_jungle": "Jungle Sieve",
-  "block.exnihilofabrico.sieve_oak": "Oak Sieve",
-  "block.exnihilofabrico.sieve_spruce": "Spruce Sieve",
+  "block.exnihilofabrico.acacia_sieve": "Acacia Sieve",
+  "block.exnihilofabrico.birch_sieve": "Birch Sieve",
+  "block.exnihilofabrico.dark_oak_sieve": "Dark Oak Sieve",
+  "block.exnihilofabrico.jungle_sieve": "Jungle Sieve",
+  "block.exnihilofabrico.oak_sieve": "Oak Sieve",
+  "block.exnihilofabrico.spruce_sieve": "Spruce Sieve",
 
   "block.exnihilofabrico.dust": "Dust",
   "block.exnihilofabrico.silt": "Silt",
@@ -51,9 +51,6 @@
   "item.exnihilofabrico.seed_spruce": "Spruce Seed",
   "item.exnihilofabrico.seed_sugarcane": "Sugarcane Seed",
 
-  "item.exnihilofabrico.mesh": "%s Mesh",
-  "item.exnihilofabrico.chunk": "%s Chunk",
-  "item.exnihilofabrico.piece": "%s Piece",
 
   "item.exnihilofabrico.crook_wood": "Wood Crook",
   "item.exnihilofabrico.crook_bone": "Bone Crook",
@@ -73,10 +70,20 @@
   "item.exnihilofabrico.hammer_gold": "Gold Hammer",
   "item.exnihilofabrico.hammer_diamond": "Diamond Hammer",
 
+  "item.exnihilofabrico.mesh": "%s Mesh",
+  "item.exnihilofabrico.chunk": "%s Chunk",
+  "item.exnihilofabrico.piece": "%s Piece",
+  "block.exnihilofabrico.crucible": "%s Crucible",
   "block.exnihilofabrico.infested": "Infested %s",
 
   "item.exnihilofabrico.silkworm_cooked": "Silkworm",
   "item.exnihilofabrico.silkworm_raw": "Raw Silkworm",
 
-  "item.exnihilofabrico.witchwater_bucket": "Witch Water Bucket"
+  "item.exnihilofabrico.witchwater_bucket": "Witch Water Bucket",
+
+  "text.autoconfig.exnihilofabrico.title": "Ex Nihilo Fabrico Config",
+  "text.autoconfig.exnihilofabrico.category.client": "Client",
+  "text.autoconfig.exnihilofabrico.category.misc": "Misc.",
+  "text.autoconfig.exnihilofabrico.category.compat": "Compatibility",
+  "text.autoconfig.exnihilofabrico.category.modules": "Modules"
 }

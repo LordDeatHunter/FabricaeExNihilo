@@ -1,8 +1,7 @@
 package exnihilofabrico.client
 
-import exnihilofabrico.common.base.AbstractFluid
-import exnihilofabrico.common.witchwater.WitchWaterFluid
-import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler
+import exnihilofabrico.modules.base.AbstractFluid
+import exnihilofabrico.modules.witchwater.WitchWaterFluid
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback
 import net.minecraft.client.MinecraftClient
@@ -29,7 +28,7 @@ class FluidRenderManager: ClientSpriteRegistryCallback {
                 )
             }
 
-            FluidRenderHandlerRegistry.INSTANCE.register(fluid, FluidRenderHandler { _, _, _ -> sprites.value })
+            FluidRenderHandlerRegistry.INSTANCE.register(fluid, { _, _, _ -> sprites.value })
         }
     }
 }

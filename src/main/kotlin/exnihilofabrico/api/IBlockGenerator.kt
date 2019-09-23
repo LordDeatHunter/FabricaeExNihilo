@@ -11,6 +11,11 @@ import net.minecraft.util.Identifier
  */
 interface IBlockGenerator {
     /**
+     * Black list a mod from auto generation
+     */
+    fun blacklistMod(modid: String)
+
+    /**
      * Generated Identifier = exnihilofabric:infested_<blockID.namespace>_<blockID.path>
      */
     fun createInfestedLeavesBlock(block: LeavesBlock)

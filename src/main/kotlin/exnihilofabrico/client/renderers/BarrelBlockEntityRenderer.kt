@@ -1,6 +1,6 @@
 package exnihilofabrico.client.renderers
 
-import exnihilofabrico.common.barrels.BarrelBlockEntity
+import exnihilofabrico.modules.barrels.BarrelBlockEntity
 import net.minecraft.client.render.block.entity.BlockEntityRenderer
 
 class BarrelBlockEntityRenderer: BlockEntityRenderer<BarrelBlockEntity>() {

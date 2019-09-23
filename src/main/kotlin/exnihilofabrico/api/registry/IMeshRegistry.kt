@@ -1,6 +1,6 @@
 package exnihilofabrico.api.registry
 
-import exnihilofabrico.common.sieves.MeshProperties
+import exnihilofabrico.modules.sieves.MeshProperties
 import exnihilofabrico.util.Color
 import net.minecraft.item.Item
 import net.minecraft.util.Identifier

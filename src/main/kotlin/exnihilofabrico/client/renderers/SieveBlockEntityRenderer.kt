@@ -1,7 +1,7 @@
 package exnihilofabrico.client.renderers
 
 import com.mojang.blaze3d.platform.GlStateManager
-import exnihilofabrico.common.sieves.SieveBlockEntity
+import exnihilofabrico.modules.sieves.SieveBlockEntity
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.render.block.entity.BlockEntityRenderer
 import net.minecraft.client.render.model.json.ModelTransformation

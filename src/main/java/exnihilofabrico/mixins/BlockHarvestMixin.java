@@ -1,8 +1,8 @@
 package exnihilofabrico.mixins;
 
 import exnihilofabrico.api.registry.ExNihiloRegistries;
-import exnihilofabrico.common.tools.CrookTool;
-import exnihilofabrico.common.tools.HammerTool;
+import exnihilofabrico.modules.tools.CrookTool;
+import exnihilofabrico.modules.tools.HammerTool;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;

@@ -1,6 +1,6 @@
 package exnihilofabrico.client
 
-import exnihilofabrico.common.base.IHasColor
+import exnihilofabrico.modules.base.IHasColor
 import exnihilofabrico.util.Color
 import net.minecraft.client.color.item.ItemColorProvider
 import net.minecraft.item.ItemStack
