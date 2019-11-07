@@ -2,6 +2,7 @@ package exnihilofabrico.api.crafting
 
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
+import net.minecraft.recipe.Ingredient
 import net.minecraft.tag.Tag
 import java.util.function.Predicate
 

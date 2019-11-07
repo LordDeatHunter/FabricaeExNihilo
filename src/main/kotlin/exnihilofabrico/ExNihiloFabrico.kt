@@ -3,20 +3,10 @@ package exnihilofabrico
 import com.swordglowsblue.artifice.api.Artifice
 import com.swordglowsblue.artifice.api.ArtificeResourcePack
 import exnihilofabrico.api.registry.ExNihiloRegistries
-import exnihilofabrico.api.registry.ExNihiloRegistries.CROOK
-import exnihilofabrico.api.registry.ExNihiloRegistries.CRUCIBLE_HEAT
-import exnihilofabrico.api.registry.ExNihiloRegistries.CRUCIBLE_STONE
-import exnihilofabrico.api.registry.ExNihiloRegistries.CRUCIBLE_WOOD
-import exnihilofabrico.api.registry.ExNihiloRegistries.HAMMER
-import exnihilofabrico.api.registry.ExNihiloRegistries.MESH
-import exnihilofabrico.api.registry.ExNihiloRegistries.ORES
-import exnihilofabrico.api.registry.ExNihiloRegistries.SIEVE
-import exnihilofabrico.api.registry.ExNihiloRegistries.WITCHWATER_WORLD
 import exnihilofabrico.modules.ModBlocks
 import exnihilofabrico.modules.ModFluids
 import exnihilofabrico.modules.ModItems
 import exnihilofabrico.modules.ModTools
-import exnihilofabrico.registry.compat.MetaCompat
 import exnihilofabrico.util.BlockGenerator
 import exnihilofabrico.util.ExNihiloItemStack
 import io.github.cottonmc.cotton.config.ConfigManager
@@ -25,6 +15,8 @@ import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
+import java.io.File
+import java.nio.file.Files
 
 
 const val MODID: String = "exnihilofabrico"
@@ -42,8 +34,9 @@ object ExNihiloFabrico: ModInitializer {
         // Progmatically generate blocks and items
         LOGGER.info("Generating Blocks/Items")
         BlockGenerator.initRegistryCallBack()
-        MetaCompat.registerOres(ORES)
-        MetaCompat.registerMesh(MESH)
+
+        // Load the early registries that create items/blocks
+        ExNihiloRegistries.loadEarlyRegistries()
 
         /* Register Fluids*/
         LOGGER.info("Registering Fluids")
@@ -62,40 +55,32 @@ object ExNihiloFabrico: ModInitializer {
         ModBlocks.registerBlockEntities(Registry.BLOCK_ENTITY)
 
         /* Load the rest of the Ex Nihilo Fabrico registries */
-        LOGGER.info("Creating Recipes")
-        val dataPack = Artifice.registerData(id(MODID)) {builder ->
+        LOGGER.info("Loading Ex Nihilo Fabrico Registries")
+        ExNihiloRegistries.loadRecipeRegistries()
+
+        val dataPack = Artifice.registerData(id("data")) {builder ->
+            builder.setDisplayName("Ex Nihilo Fabrico")
+            builder.setDescription("Crafting recipes")
+            LOGGER.info("Creating Tags")
             generateTags(builder)
+            LOGGER.info("Creating Recipes")
             generateRecipes(builder)
         }
-        LOGGER.info("Loading Ex Nihilo Fabrico Registries")
-        loadRegistries()
-    }
-
-    private fun loadRegistries() {
-        // Barrel Recipes
-        // MetaModule.registerBarrelAlchemy(BARREL_ALCHEMY)
-        // MetaModule.registerBarrelMilking(BARREL_MILKING)
-        // Crucible Recipes
-        MetaCompat.registerCrucibleHeat(CRUCIBLE_HEAT)
-        MetaCompat.registerCrucibleStone(CRUCIBLE_STONE)
-        MetaCompat.registerCrucibleWood(CRUCIBLE_WOOD)
-        // Sieve Recipes
-        MetaCompat.registerSieve(SIEVE)
-        // Tool Recipes
-        MetaCompat.registerHammer(HAMMER)
-        MetaCompat.registerCrook(CROOK)
-        // Witch Water Recipes
-        MetaCompat.registerWitchWaterFluid(WITCHWATER_WORLD)
     }
 
     private fun generateRecipes(builder: ArtificeResourcePack.ServerResourcePackBuilder) {
         // Ore Chunk Crafting
         ExNihiloRegistries.ORES.getAll().forEach { ore ->
-            builder.addShapedRecipe(ore.getChunkID()) { ore.generateRecipe(it) }
-            builder.addBlastingRecipe(id("${ore.getPieceID().path}_blasting")) { ore.generateNuggetCookingRecipe(it) }
-            builder.addBlastingRecipe(id("${ore.getChunkID().path}_blasting")) { ore.generateIngotCookingRecipe(it) }
-            builder.addSmeltingRecipe(id("${ore.getPieceID().path}_smelting")) { ore.generateNuggetCookingRecipe(it) }
-            builder.addSmeltingRecipe(id("${ore.getChunkID().path}_smelting")) { ore.generateIngotCookingRecipe(it) } }
+            builder.addShapedRecipe(id("${ore.getChunkID().path}_crafting")) { ore.generateRecipe(it) }
+            if(Registry.ITEM.containsId(ore.getNuggetID())) {
+                builder.addSmeltingRecipe(id("${ore.getPieceID().path}_smelting")) { ore.generateNuggetCookingRecipe(it) }
+                builder.addBlastingRecipe(id("${ore.getPieceID().path}_blasting")) { ore.generateNuggetCookingRecipe(it) }
+            }
+            if(Registry.ITEM.containsId(ore.getIngotID())) {
+                builder.addSmeltingRecipe(id("${ore.getChunkID().path}_smelting")) { ore.generateIngotCookingRecipe(it) }
+                builder.addBlastingRecipe(id("${ore.getChunkID().path}_blasting")) { ore.generateIngotCookingRecipe(it) }
+            }
+        }
         // Mesh Crafting
         ExNihiloRegistries.MESH.getAll().forEach { mesh -> builder.addShapedRecipe(mesh.identifier) { mesh.generateRecipe(it) } }
         // Mesh Crafting

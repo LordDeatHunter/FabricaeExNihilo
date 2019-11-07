@@ -65,8 +65,6 @@ class CrucibleBlockEntity : BaseBlockEntity(TYPE), Tickable, BlockEntityClientSe
         if(world?.isClient != false || player == null)
             return true
 
-        ExNihiloFabrico.LOGGER.info("${render} ${contents} ${queued} ${heat}")
-
         val held = player.getStackInHand(hand ?: player.activeHand) ?: ItemStack.EMPTY
 
         if(held.isEmpty)
@@ -80,6 +78,7 @@ class CrucibleBlockEntity : BaseBlockEntity(TYPE), Tickable, BlockEntityClientSe
             }
             player.giveItemStack(bucket)
             contents.amount -= FluidInstance.BUCKET_AMOUNT
+            markDirtyClient()
             return true
         }
         // Adding a meltable item
@@ -89,7 +88,6 @@ class CrucibleBlockEntity : BaseBlockEntity(TYPE), Tickable, BlockEntityClientSe
             (contents.isEmpty() || result.fluid == contents.fluid) && // And contents doesn't clash
             (queued.isEmpty() || result.fluid == queued.fluid) && // And queued doesn't clash
             queued.amount + contents.amount + result.amount <= getMaxCapacity()) {
-            ExNihiloFabrico.LOGGER.info("Adding ${held}")
             render = held.copy()
             if(!player.isCreative)
                 held.decrement(1)

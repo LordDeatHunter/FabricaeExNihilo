@@ -5,10 +5,7 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier
 
-data class Lootable(
-        val stack: ItemStack,
-        val chance: List<Double>
-) {
+data class Lootable(val stack: ItemStack, val chance: List<Double>) {
         constructor(stack: ItemStack, vararg chances: Double): this(stack, chances.toList())
         constructor(result: ItemConvertible, vararg chances: Double): this(result.asStack(), chances.toList())
         constructor(result: ItemConvertible, chances: List<Double>): this(result.asStack(), chances)

@@ -9,7 +9,7 @@ import net.minecraft.recipe.Ingredient
 
 interface ICrucibleRegistry {
     fun clear()
-    fun register(recipe: CrucibleRecipe)
+    fun register(recipe: CrucibleRecipe): Boolean
     fun register(input: Ingredient, output: FluidInstance) = register(CrucibleRecipe(input, output))
     fun register(input: Ingredient, fluid: Fluid, amount: Int) = register(input, FluidInstance(getFluidID(fluid), amount))
     fun getResult(item: Item): FluidInstance?

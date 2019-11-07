@@ -46,5 +46,7 @@ interface ISieveRegistry {
         register(mesh, Ingredient.ofItems(sievable), *loot)
     fun register(mesh: ItemConvertible, sievable: Identifier, vararg loot: Lootable) =
         register(mesh, Registry.ITEM.get(sievable), *loot)
+
+    fun getAllRecipes(): Collection<SieveRecipe>
 }
 

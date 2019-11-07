@@ -1,6 +1,7 @@
 package exnihilofabrico.util
 
 import exnihilofabrico.id
+import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier
@@ -19,3 +20,5 @@ fun StackFromId(identifier: Identifier) = Registry.ITEM[identifier].asStack()
 fun ExNihiloItemStack(str: String) = StackFromId(id(str))
 fun ExNihiloBlock(str: String) = Registry.BLOCK[id(str)]
 fun ExNihiloItem(str: String) = Registry.ITEM[id(str)]
+
+fun Item.getID() = Registry.ITEM.getId(this)

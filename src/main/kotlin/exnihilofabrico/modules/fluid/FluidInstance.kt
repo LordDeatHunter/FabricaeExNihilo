@@ -1,10 +1,15 @@
 package exnihilofabrico.modules.fluid
 
 import exnihilofabrico.modules.base.NBTSerializable
+import net.fabricmc.api.EnvType
+import net.fabricmc.api.Environment
+import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
 import net.minecraft.fluid.Fluids
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.util.Identifier
+import net.minecraft.util.math.BlockPos
 import net.minecraft.util.registry.Registry
+import net.minecraft.world.ExtendedBlockView
 
 /**
  * This is a "temporary" fluid implementation while the Fabric Fluid API debate rages.
@@ -32,6 +37,16 @@ class FluidInstance(var fluid: Identifier, var amount: Int, var data: CompoundTa
     override fun toString(): String {
         return "${amount}x${fluid}@${data}"
     }
+
+    fun asFluid() = Registry.FLUID[fluid]
+
+    @Environment(EnvType.CLIENT)
+    fun getSprite(view: ExtendedBlockView, pos: BlockPos) =
+        FluidRenderHandlerRegistry.INSTANCE.get(asFluid()).getFluidSprites(view, pos, asFluid().defaultState)
+
+    @Environment(EnvType.CLIENT)
+    fun getColor(view: ExtendedBlockView, pos: BlockPos) =
+        FluidRenderHandlerRegistry.INSTANCE.get(asFluid()).getFluidColor(view, pos, asFluid().defaultState)
 
     companion object {
         val EMPTY = FluidInstance(Registry.FLUID.getId(Fluids.EMPTY),0)

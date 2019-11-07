@@ -51,7 +51,7 @@ object ExNihiloFabricoClient: ClientModInitializer {
         ExNihiloFabrico.LOGGER.info("Registered ItemColorProviders and BlockColorProviders")
 
         // Artifice Resource Pack
-        val resourcePack: ArtificeResourcePack = Artifice.registerAssets(id(MODID)) { pack ->
+        val resourcePack: ArtificeResourcePack = Artifice.registerAssets(id("resources")) { pack ->
             pack.setDisplayName("Ex Nihilo Fabrico Generated Resources")
             pack.setDescription("Generated Resources for Ex Nihilo Fabrico")
 

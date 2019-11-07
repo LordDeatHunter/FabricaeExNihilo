@@ -1,8 +1,8 @@
-package exnihilofabrico.registry.compat
+package exnihilofabrico.api.compatibility
 
 import exnihilofabrico.api.registry.*
 
-interface ICompatModule {
+interface IExNihiloFabricoModule {
 
     // Barrel Registries
     fun registerBarrelAlchemy(registry: IBarrelAlchemyRegistry)

@@ -1,11 +1,16 @@
 package exnihilofabrico.api.crafting
 
+import com.google.gson.Gson
+import com.google.gson.JsonArray
+import com.google.gson.JsonElement
+import com.google.gson.JsonPrimitive
 import exnihilofabrico.util.asStack
 import net.minecraft.block.FluidBlock
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.FluidState
 import net.minecraft.item.Item
 import net.minecraft.tag.Tag
+import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
 class FluidIngredient(val matches: Collection<Fluid>, val tag: Tag<Fluid>? = null) {
@@ -24,6 +29,17 @@ class FluidIngredient(val matches: Collection<Fluid>, val tag: Tag<Fluid>? = nul
 
     fun toItemStacks() = matches.map { it.bucketItem.asStack() }
 
+    fun toJson(): JsonElement {
+        return if(tag != null) {
+            return JsonPrimitive("#${tag.id}")
+        }
+        else {
+            val array = JsonArray()
+            matches.forEach { array.add(Registry.FLUID.getId(it).toString()) }
+            array
+        }
+    }
+
     override fun toString(): String {
         return tag?.toString() ?: Registry.FLUID.getId(matches.first()).toString()
     }
@@ -40,5 +56,16 @@ class FluidIngredient(val matches: Collection<Fluid>, val tag: Tag<Fluid>? = nul
         var result = matches.hashCode()
         result = 31 * result + (tag?.hashCode() ?: 0)
         return result
+    }
+
+    companion object {
+        fun fromJson(json: JsonElement): FluidIngredient {
+            return if(json.isJsonPrimitive && json.asJsonPrimitive.isString) {
+                FluidIngredient(Tag(Identifier(json.asJsonPrimitive.asString)))
+            }
+            else {
+                FluidIngredient(json.asJsonArray.map { Identifier(it.asString) }.map { Registry.FLUID.get(it) })
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ class ExNihiloFabricoConfig {
 }
 
 class ModuleConfig {
+    var general = GeneralConfig()
     var crucibles = CrucibleConfig()
     var silkworms = InfestedConfig()
     var seeds = SeedConfig()
@@ -19,6 +20,11 @@ class ModuleConfig {
     var hammer = HammerConfig()
     var wrench = WrenchConfig()
     var witchwater = WitchWaterConfig()
+}
+
+class GeneralConfig {
+    @Comment("Load json files from <config>/exnihilofabrico/*.json")
+    var useJsonRecipes: Boolean = true
 }
 
 class CrucibleConfig {

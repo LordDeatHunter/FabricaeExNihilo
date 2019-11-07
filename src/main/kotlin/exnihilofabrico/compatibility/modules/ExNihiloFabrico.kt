@@ -1,5 +1,6 @@
-package exnihilofabrico.registry.compat
+package exnihilofabrico.compatibility.modules
 
+import exnihilofabrico.api.compatibility.IExNihiloFabricoModule
 import exnihilofabrico.api.crafting.FluidIngredient
 import exnihilofabrico.api.crafting.Lootable
 import exnihilofabrico.api.recipes.CrucibleRecipe
@@ -21,7 +22,7 @@ import net.minecraft.tag.ItemTags
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
-object ExNihilo: ICompatModule {
+object ExNihiloFabrico: IExNihiloFabricoModule {
 
     override fun registerBarrelAlchemy(registry: IBarrelAlchemyRegistry) {
 
@@ -43,7 +44,9 @@ object ExNihilo: ICompatModule {
     }
 
     override fun registerCrucibleWood(registry: ICrucibleRegistry) {
-        registry.register(CrucibleRecipe(Ingredient.fromTag(ItemTags.LEAVES), FluidInstance(getFluidID(Fluids.WATER), FluidInstance.BUCKET_AMOUNT/4), false))
+        VanillaWoodDefinitions.values().map { it.getLeafBlock() }.forEach {
+            CrucibleRecipe(Ingredient.ofItems(it), FluidInstance(getFluidID(Fluids.WATER), FluidInstance.BUCKET_AMOUNT/4), false)
+        }
     }
 
     override fun registerOres(registry: IOreRegistry) {
@@ -76,8 +79,8 @@ object ExNihilo: ICompatModule {
     override fun registerMesh(registry: IMeshRegistry) {
         registry.register(id("mesh_string"), "item.minecraft.string", Color.WHITE, Identifier("string"))
         registry.register(id("mesh_flint"), "item.minecraft.flint", Color.DARK_GRAY, Identifier("flint"))
-        registry.register(id("mesh_iron"), "Iron", Color("777777"), Identifier("cotton", "iron_ingot"))
-        registry.register(id("mesh_gold"), "Gold", Color.GOLD, Identifier("cotton", "gold_ingot"))
+        registry.register(id("mesh_iron"), "Iron", Color("777777"), Identifier("iron_ingot"))
+        registry.register(id("mesh_gold"), "Gold", Color.GOLD, Identifier("gold_ingot"))
         registry.register(id("mesh_diamond"), "item.minecraft.diamond", Color.DARK_AQUA, Identifier("diamond"))
     }
 
@@ -206,11 +209,10 @@ object ExNihilo: ICompatModule {
     }
 
     override fun registerCrook(registry: IToolRegistry) {
-        registry.registerTag(BlockTags.LEAVES, Lootable(Items.APPLE, 0.05))
-        registry.registerTag(BlockTags.LEAVES, Lootable(Items.STICK, 0.01))
-        registry.registerTag(BlockTags.LEAVES, Lootable(id("silkworm_raw"), 0.1, 0.2, 0.2))
         for(w in VanillaWoodDefinitions.values()) {
             registry.registerDrops(w.getLeafBlock(), Lootable(w.getSeedItem(), 0.25))
+            registry.registerDrops(w.getLeafBlock(), Lootable(Items.STICK, 0.01))
+            registry.registerDrops(w.getLeafBlock(), Lootable(id("silkworm_raw"), 0.1, 0.2, 0.2))
         }
     }
 
@@ -219,7 +221,7 @@ object ExNihilo: ICompatModule {
         registry.registerDrops(Blocks.STONE, Lootable(Blocks.COBBLESTONE, 1.0))
         registry.registerDrops(Blocks.COBBLESTONE, Lootable(Blocks.GRAVEL, 1.0))
         registry.registerDrops(Blocks.GRAVEL, Lootable(Blocks.SAND, 1.0))
-        registry.registerTag(BlockTags.SAND, Lootable(id("silt"), 1.0))
+        registry.registerDrops(Blocks.SAND, Lootable(id("silt"), 1.0))
         registry.registerDrops(id("silt"), Lootable(id("dust"), 1.0))
 
         // Andesite
@@ -266,14 +268,15 @@ object ExNihilo: ICompatModule {
     }
 
     override fun registerWitchWaterFluid(registry: IWitchWaterFluidRegistry) {
-        registry.register(FluidIngredient(Fluids.WATER, Fluids.FLOWING_WATER), WeightedList(mutableListOf(
+        registry.register(FluidIngredient(Fluids.WATER, Fluids.FLOWING_WATER), WeightedList(mutableMapOf(
             Blocks.DIRT to 51,
             Blocks.GRASS_BLOCK to 12,
             Blocks.COARSE_DIRT to 12,
             Blocks.MYCELIUM to 12,
             Blocks.PODZOL to 12,
-            Blocks.PRISMARINE to 1)))
-        registry.register(FluidIngredient(FluidTags.LAVA), WeightedList(mutableListOf(
+            Blocks.PRISMARINE to 1)
+        ))
+        registry.register(FluidIngredient(FluidTags.LAVA), WeightedList(mutableMapOf(
             Blocks.COBBLESTONE to 3,
             Blocks.ANDESITE to 1,
             Blocks.DIORITE to 1,

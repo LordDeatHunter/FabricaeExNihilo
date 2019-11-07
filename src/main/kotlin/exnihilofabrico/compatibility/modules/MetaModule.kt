@@ -1,12 +1,13 @@
-package exnihilofabrico.registry.compat
+package exnihilofabrico.compatibility.modules
 
+import exnihilofabrico.api.compatibility.IExNihiloFabricoModule
 import exnihilofabrico.api.registry.*
 
-object MetaCompat: ICompatModule {
-    private val modules: MutableList<ICompatModule> = mutableListOf()
+object MetaModule: IExNihiloFabricoModule {
+    val modules: MutableList<IExNihiloFabricoModule> = mutableListOf()
 
     init {
-        modules.add(ExNihilo)
+        modules.add(ExNihiloFabrico)
         // Check if an mod with a specific module is installed, then add its module to the list
     }
 

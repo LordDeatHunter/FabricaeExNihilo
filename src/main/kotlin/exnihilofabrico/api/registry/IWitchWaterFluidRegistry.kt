@@ -7,8 +7,8 @@ import java.util.*
 
 interface IWitchWaterFluidRegistry {
     fun clear()
-    fun register(ingredient: FluidIngredient, result: WeightedList<Block>)
+    fun register(ingredient: FluidIngredient, result: WeightedList)
     fun isRegistered(fluid: Fluid): Boolean
     fun getResult(fluid: Fluid, rand: Random): Block?
-    fun getAllResults(fluid: Fluid): WeightedList<Block>?
+    fun getAllResults(fluid: Fluid): WeightedList?
 }

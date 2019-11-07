@@ -1,20 +1,24 @@
 package exnihilofabrico.api.registry
 
+import net.minecraft.block.Block
 import java.util.*
 
-class WeightedList<V>(val values: MutableList<Pair<V, Int>>){
-    private var totalWeight: Int = values.map { it.second }.sum()
-    fun choose(rand: Random): V {
+data class WeightedList(val values: MutableMap<Block, Int> = mutableMapOf()){
+    private var totalWeight: Int = values.values.sum()
+
+    constructor(keys: Iterable<Block>, weights: Iterable<Int>) : this(keys.zip(weights).toMap().toMutableMap())
+
+    fun choose(rand: Random): Block {
         var rem = rand.nextInt(totalWeight)
-        values.forEach { rem -= it.second; if(rem <= 0) return it.first }
-        return values.last().first
+        values.forEach { rem -= it.value; if(rem <= 0) return it.key }
+        return values.entries.last().key
     }
 
     /**
      * Takes another weighted list and adds all its entries to this WeightedList.
      */
-    fun amend(other: WeightedList<V>) {
+    fun amend(other: WeightedList) {
         totalWeight += other.totalWeight
-        values.addAll(other.values)
+        other.values.forEach { t, u -> values[t] = u + (values[t] ?: 0) }
     }
 }

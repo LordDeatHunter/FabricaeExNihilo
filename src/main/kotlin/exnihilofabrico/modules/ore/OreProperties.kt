@@ -9,10 +9,11 @@ import net.minecraft.util.registry.Registry
 
 data class OreProperties(
     val material: String,
-    val color: Color,
+    val color: Color = Color.WHITE,
     val piece: EnumPieceShape = EnumPieceShape.NORMAL,
     val chunk: EnumChunkShape = EnumChunkShape.CHUNK,
-    val matrix: EnumChunkMaterial = EnumChunkMaterial.STONE
+    val matrix: EnumChunkMaterial = EnumChunkMaterial.STONE,
+    val displayName: String = "item.exnihilofabrico.${material}"
 ) {
     fun getChunkID() = id("${material}_chunk".toLowerCase())
     fun getPieceID() = id("${material}_piece".toLowerCase())
@@ -20,17 +21,17 @@ data class OreProperties(
     fun getIngotID() =
         when(material) {
             "iron", "gold" -> Identifier("${material}_ingot")
-            else -> Identifier("cotton", "${material}_ingot")
+            else -> Identifier("c", "${material}_ingot")
         }
     fun getNuggetID() =
         when(material) {
             "iron", "gold" -> Identifier("${material}_nugget")
-            else -> Identifier("cotton", "${material}_nugget")
+            else -> Identifier("c", "${material}_nugget")
         }
     fun getOreID() =
         when(material) {
             "iron", "gold" -> Identifier("${material}_ore")
-            else -> Identifier("cotton", "${material}_ore")
+            else -> Identifier("c", "${material}_ore")
         }
 
     fun getChunkItem() = Registry.ITEM.get(getChunkID())

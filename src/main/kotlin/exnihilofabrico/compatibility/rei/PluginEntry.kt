@@ -2,6 +2,8 @@ package exnihilofabrico.compatibility.rei
 
 import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.MODID
+import exnihilofabrico.api.ExNihiloFabricoAPI
+import exnihilofabrico.api.registry.ExNihiloRegistries
 import exnihilofabrico.id
 import me.shedaniel.rei.api.RecipeHelper
 import me.shedaniel.rei.api.plugins.REIPluginV0
@@ -17,11 +19,14 @@ class PluginEntry: REIPluginV0 {
         return SemanticVersion.parse("3.0-pre")
     }
 
-    override fun registerPluginCategories(recipeHelper: RecipeHelper) {
+    override fun registerPluginCategories(helper: RecipeHelper) {
         ExNihiloFabrico.LOGGER.info("Registering REI Categories")
+        helper.registerCategory(SieveCategory())
     }
 
-    override fun registerRecipeDisplays(recipeHelper: RecipeHelper) {
+    override fun registerRecipeDisplays(helper: RecipeHelper) {
         ExNihiloFabrico.LOGGER.info("Registering REI Displays")
+        ExNihiloRegistries.SIEVE.getAllRecipes().forEach { helper.registerDisplay(id("sieve"), SieveDisplay(it)) }
+
     }
 }
