@@ -3,7 +3,7 @@
   "required": true,
   "package": "exnihilofabrico.mixins",
   "compatibilityLevel": "JAVA_8",
-  "refmap": "mixins.exnihilofabrico.refmap.json",
+  "refmap": "exnihilofabrico-refmap.json",
   "mixins": [
     "BlockHarvestMixin",
     "RecipeManagerMixin"
