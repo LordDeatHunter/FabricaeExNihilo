@@ -1,7 +1,7 @@
 package exnihilofabrico.modules.barrels
 
 import exnihilofabrico.api.crafting.EntityStack
-import exnihilofabrico.modules.fluid.FluidInstance
+import exnihilofabrico.api.crafting.FluidStack
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundTag
 
@@ -24,14 +24,14 @@ data class ItemMode(val stack: ItemStack): BarrelMode {
     }
 }
 
-data class FluidMode(val fluid: FluidInstance): BarrelMode{
+data class FluidMode(val fluid: FluidStack): BarrelMode{
     override fun toTag(): CompoundTag {
         val tag = CompoundTag()
         tag.put("fluid", fluid.toTag())
         return tag
     }
     companion object {
-        fun fromTag(tag: CompoundTag) = FluidMode(FluidInstance.create(tag.getCompound("fluid")))
+        fun fromTag(tag: CompoundTag) = FluidMode(FluidStack.create(tag.getCompound("fluid")))
     }
 }
 

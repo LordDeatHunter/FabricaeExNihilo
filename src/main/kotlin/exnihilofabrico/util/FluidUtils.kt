@@ -1,13 +1,13 @@
 package exnihilofabrico.util
 
+import exnihilofabrico.api.crafting.FluidStack
 import exnihilofabrico.impl.BucketFluidAccessor
-import exnihilofabrico.modules.fluid.FluidInstance
 import net.minecraft.block.FluidBlock
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.util.registry.Registry
 
-fun getID(fluidInstance: FluidInstance) = fluidInstance.fluid
+fun getID(fluidStack: FluidStack) = fluidStack.fluid
 fun Fluid.getID() = Registry.FLUID.getId(this)
 fun FluidBlock.getDefaultFluidState() = this.getFluidState(this.defaultState)
 fun FluidBlock.getFluid() = this.getDefaultFluidState().fluid

@@ -12,4 +12,10 @@ data class Lootable(val stack: ItemStack, val chance: List<Double>) {
         constructor(result: ItemConvertible, chances: List<Double>): this(result.asStack(), chances)
         constructor(result: Identifier, chances: List<Double>): this(Registry.ITEM[result].asStack(), chances)
         constructor(result: Identifier, vararg chances: Double): this(result, chances.toList())
+
+        fun isEmpty() = stack.isEmpty || chance.size == 0 || chance.contains(0.0)
+
+        companion object {
+                val EMPTY = Lootable(ItemStack.EMPTY, 0.0)
+        }
 }

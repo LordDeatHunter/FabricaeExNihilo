@@ -3,7 +3,6 @@ package exnihilofabrico.api.crafting
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.json.*
-import exnihilofabrico.modules.fluid.FluidInstance
 import exnihilofabrico.util.getFluid
 import exnihilofabrico.util.getID
 import net.minecraft.block.Block
@@ -101,7 +100,7 @@ data class TagIngredient<T>(val tags: MutableSet<Tag<T>> = mutableSetOf(), val m
 fun TagIngredient<Item>.test(stack: ItemStack) = !stack.isEmpty && test(stack.item)
 fun TagIngredient<Item>.test(item: ItemConvertible) = test(item.asItem())
 
-fun TagIngredient<Fluid>.test(stack: FluidInstance) = !stack.isEmpty() && test(stack.asFluid())
+fun TagIngredient<Fluid>.test(stack: FluidStack) = !stack.isEmpty() && test(stack.asFluid())
 fun TagIngredient<Fluid>.test(block: FluidBlock) = test(block.getFluid())
 fun TagIngredient<Fluid>.test(state: FluidState) = test(state.fluid)
 

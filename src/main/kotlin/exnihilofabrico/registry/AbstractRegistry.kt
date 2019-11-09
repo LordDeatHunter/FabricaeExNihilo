@@ -4,7 +4,6 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.ExNihiloFabrico
-import exnihilofabrico.api.crafting.FluidIngredient
 import exnihilofabrico.api.recipes.CrucibleHeatRecipe
 import exnihilofabrico.api.recipes.SieveRecipe
 import exnihilofabrico.api.recipes.ToolRecipe
@@ -30,7 +29,6 @@ abstract class AbstractRegistry<T>(
         .registerTypeAdapter(Block::class.java, BlockJson)
         .registerTypeAdapter(EntityType::class.java, EntityTypeJson)
         .registerTypeAdapter(Identifier::class.java, IdentifierJson)
-        .registerTypeAdapter(FluidIngredient::class.java, FluidIngredientJson)
         .registerTypeAdapter(Ingredient::class.java, IngredientJson)
         .registerTypeAdapter(ItemStack::class.java, ItemStackJson)
         .registerTypeAdapter(MeshProperties::class.java, MeshPropertiesJson)

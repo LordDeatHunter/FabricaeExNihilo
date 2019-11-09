@@ -1,4 +1,4 @@
-package exnihilofabrico.modules.fluid
+package exnihilofabrico.api.crafting
 
 import exnihilofabrico.modules.base.NBTSerializable
 import net.fabricmc.api.EnvType
@@ -14,9 +14,9 @@ import net.minecraft.world.ExtendedBlockView
 /**
  * This is a "temporary" fluid implementation while the Fabric Fluid API debate rages.
  */
-class FluidInstance(var fluid: Identifier, var amount: Int, var data: CompoundTag = CompoundTag()): NBTSerializable {
+class FluidStack(var fluid: Identifier, var amount: Int, var data: CompoundTag = CompoundTag()): NBTSerializable {
 
-    fun copy() = FluidInstance(fluid, amount, data)
+    fun copy() = FluidStack(fluid, amount, data)
     fun isEmpty() = this == EMPTY || amount <= 0
 
     override fun toTag(): CompoundTag {
@@ -49,10 +49,10 @@ class FluidInstance(var fluid: Identifier, var amount: Int, var data: CompoundTa
         FluidRenderHandlerRegistry.INSTANCE.get(asFluid()).getFluidColor(view, pos, asFluid().defaultState)
 
     companion object {
-        val EMPTY = FluidInstance(Registry.FLUID.getId(Fluids.EMPTY),0)
+        val EMPTY = FluidStack(Registry.FLUID.getId(Fluids.EMPTY), 0)
         val BUCKET_AMOUNT = 1000
 
-        fun create(tag: CompoundTag?): FluidInstance {
+        fun create(tag: CompoundTag?): FluidStack {
             val instance = create()
             if(tag != null) {
                 instance.fromTag(tag)
@@ -60,6 +60,6 @@ class FluidInstance(var fluid: Identifier, var amount: Int, var data: CompoundTa
             return instance
         }
 
-        fun create() = FluidInstance(Registry.FLUID.getId(Fluids.EMPTY),0)
+        fun create() = FluidStack(Registry.FLUID.getId(Fluids.EMPTY), 0)
     }
 }

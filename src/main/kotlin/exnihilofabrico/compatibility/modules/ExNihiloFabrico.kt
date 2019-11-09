@@ -1,12 +1,12 @@
 package exnihilofabrico.compatibility.modules
 
 import exnihilofabrico.api.compatibility.IExNihiloFabricoModule
-import exnihilofabrico.api.crafting.FluidIngredient
+import exnihilofabrico.api.crafting.FluidStack
 import exnihilofabrico.api.crafting.Lootable
+import exnihilofabrico.api.crafting.TagIngredient
 import exnihilofabrico.api.recipes.CrucibleRecipe
 import exnihilofabrico.api.registry.*
 import exnihilofabrico.id
-import exnihilofabrico.modules.fluid.FluidInstance
 import exnihilofabrico.modules.ore.EnumChunkMaterial
 import exnihilofabrico.modules.ore.EnumChunkShape
 import exnihilofabrico.modules.ore.EnumPieceShape
@@ -39,12 +39,20 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
     }
 
     override fun registerCrucibleStone(registry: ICrucibleRegistry) {
-        registry.register(CrucibleRecipe(Ingredient.ofItems(Blocks.COBBLESTONE), FluidInstance(Fluids.LAVA.getID(), FluidInstance.BUCKET_AMOUNT/4), true))
+        registry.register(CrucibleRecipe(Ingredient.ofItems(Blocks.COBBLESTONE),
+            FluidStack(
+                Fluids.LAVA.getID(),
+                FluidStack.BUCKET_AMOUNT / 4
+            ), true))
     }
 
     override fun registerCrucibleWood(registry: ICrucibleRegistry) {
         VanillaWoodDefinitions.values().map { it.getLeafBlock() }.forEach {
-            CrucibleRecipe(Ingredient.ofItems(it), FluidInstance(Fluids.WATER.getID(), FluidInstance.BUCKET_AMOUNT/4), false)
+            CrucibleRecipe(Ingredient.ofItems(it),
+                FluidStack(
+                    Fluids.WATER.getID(),
+                    FluidStack.BUCKET_AMOUNT / 4
+                ), false)
         }
     }
 
@@ -267,7 +275,8 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
     }
 
     override fun registerWitchWaterFluid(registry: IWitchWaterFluidRegistry) {
-        registry.register(FluidIngredient(Fluids.WATER, Fluids.FLOWING_WATER), WeightedList(mutableMapOf(
+        registry.register(
+            TagIngredient.fromTags(FluidTags.WATER), WeightedList(mutableMapOf(
             Blocks.DIRT to 51,
             Blocks.GRASS_BLOCK to 12,
             Blocks.COARSE_DIRT to 12,
@@ -275,7 +284,7 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
             Blocks.PODZOL to 12,
             Blocks.PRISMARINE to 1)
         ))
-        registry.register(FluidIngredient(FluidTags.LAVA), WeightedList(mutableMapOf(
+        registry.register(TagIngredient.fromTags(FluidTags.LAVA), WeightedList(mutableMapOf(
             Blocks.COBBLESTONE to 3,
             Blocks.ANDESITE to 1,
             Blocks.DIORITE to 1,
