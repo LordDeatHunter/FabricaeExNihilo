@@ -14,7 +14,7 @@ object ItemStackJson: JsonDeserializer<ItemStack>, JsonSerializer<ItemStack> {
             if(json.asString.length == 0)
                 ItemStack.EMPTY
             else{
-                val splits = json.asString.split("x", ignoreCase = true, limit = 2)
+                val splits = json.asString.split(" x ", ignoreCase = true, limit = 2)
                 ItemStack(Registry.ITEM[Identifier(splits[1])], splits[0].toInt())
             }
         }
@@ -32,7 +32,7 @@ object ItemStackJson: JsonDeserializer<ItemStack>, JsonSerializer<ItemStack> {
         return if(src.isEmpty)
             JsonPrimitive("")
         else if(!src.hasTag())
-            JsonPrimitive("${src.count}x${src.item.getID()}")
+            JsonPrimitive("${src.count} x ${src.item.getID()}")
         else {
             val obj = JsonObject()
             obj.add("item", JsonPrimitive(src.item.getID().toString()))

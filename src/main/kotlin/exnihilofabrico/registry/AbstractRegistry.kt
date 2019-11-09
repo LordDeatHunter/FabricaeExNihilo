@@ -5,6 +5,8 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.api.crafting.FluidIngredient
+import exnihilofabrico.api.recipes.CrucibleHeatRecipe
+import exnihilofabrico.api.recipes.SieveRecipe
 import exnihilofabrico.api.recipes.ToolRecipe
 import exnihilofabrico.json.*
 import exnihilofabrico.modules.sieves.MeshProperties
@@ -34,6 +36,8 @@ abstract class AbstractRegistry<T>(
         .registerTypeAdapter(MeshProperties::class.java, MeshPropertiesJson)
         .registerTypeAdapter(WeightedList::class.java, WeightedListJson())
         .registerTypeAdapter(ToolRecipe::class.java, ToolRecipeJson)
+        .registerTypeAdapter(CrucibleHeatRecipe::class.java, CrucibleHeatRecipeJson)
+        .registerTypeAdapter(SieveRecipe::class.java, SieveRecipeJson)
         .enableComplexMapKeySerialization()
         .create()
 ) {

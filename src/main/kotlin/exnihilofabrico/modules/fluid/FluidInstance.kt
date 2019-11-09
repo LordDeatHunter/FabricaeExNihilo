@@ -35,7 +35,7 @@ class FluidInstance(var fluid: Identifier, var amount: Int, var data: CompoundTa
     }
 
     override fun toString(): String {
-        return "${amount}x${fluid}@${data}"
+        return "${amount} x ${fluid}@${data}"
     }
 
     fun asFluid() = Registry.FLUID[fluid]

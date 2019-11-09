@@ -1,7 +1,6 @@
 package exnihilofabrico.registry
 
 import com.google.gson.reflect.TypeToken
-import exnihilofabrico.api.crafting.FluidIngredient
 import exnihilofabrico.api.recipes.CrucibleHeatRecipe
 import exnihilofabrico.api.registry.ICrucibleHeatRegistry
 import exnihilofabrico.compatibility.modules.MetaModule
@@ -9,7 +8,6 @@ import net.minecraft.block.Block
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraft.recipe.Ingredient
 import java.io.File
 import java.io.FileReader
 
@@ -18,11 +16,6 @@ data class CrucibleHeatRegistry(val registry: MutableList<CrucibleHeatRecipe> = 
     override fun clear() = registry.clear()
 
     override fun register(recipe: CrucibleHeatRecipe)  = registry.add(recipe)
-    override fun register(block: Ingredient, heat: Int) = registry.add(CrucibleHeatRecipe(block, null, heat))
-    override fun register(fluid: FluidIngredient, heat: Int) = registry.add(CrucibleHeatRecipe(null, fluid, heat))
-
-    override fun register(block: Block, heat: Int) = register(Ingredient.ofItems(block), heat)
-    override fun register(fluid: Fluid, heat: Int) = register(FluidIngredient(fluid), heat)
 
     override fun getHeat(block: Block) = registry.firstOrNull { it.test(block) }?.value ?: 0
     override fun getHeat(fluid: Fluid) = registry.firstOrNull { it.test(fluid) }?.value ?: 0

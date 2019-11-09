@@ -33,7 +33,7 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
 
     override fun registerCrucibleHeat(registry: ICrucibleHeatRegistry) {
         registry.register(Blocks.TORCH, 1)
-        registry.register(Fluids.LAVA, 3)
+        registry.registerFluidTag(FluidTags.LAVA, 3)
         registry.register(Blocks.MAGMA_BLOCK, 4)
         registry.register(Blocks.GLOWSTONE, 2)
     }
@@ -250,13 +250,13 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
         registry.registerDrops(id("crushed_prismarine"), Lootable(Blocks.CYAN_CONCRETE_POWDER, 1.0))
 
         // Misc.
+        registry.registerDrops(ItemTags.WOOL, Lootable(Items.STRING.asStack(4), 1.0))
         EnumVanillaColors.values().forEach { c ->
             // Concrete Hammering
             registry.registerDrops(c.getConcrete(), Lootable(c.getConcretePowder(), 1.0))
             registry.registerDrops(c.getConcretePowder(), Lootable(id("silt"), 1.0))
             registry.registerDrops(c.getConcretePowder(), Lootable(c.getDye(), 0.0625))
             // Wool Hammering
-            registry.registerDrops(c.getWool(), Lootable(Items.STRING.asStack(4), 1.0))
             registry.registerDrops(c.getWool(), Lootable(c.getDye(), 0.5))
             // Glass Hammering
             registry.registerDrops(c.getGlass(), Lootable(Blocks.SAND, 1.0))

@@ -1,6 +1,7 @@
 package exnihilofabrico.registry
 
 import com.google.gson.reflect.TypeToken
+import exnihilofabrico.api.crafting.test
 import exnihilofabrico.api.recipes.SieveRecipe
 import exnihilofabrico.api.registry.ISieveRegistry
 import exnihilofabrico.compatibility.modules.MetaModule
@@ -45,14 +46,14 @@ data class SieveRegistry(val registry: MutableList<SieveRecipe> = mutableListOf(
 
     override fun isValidMesh(mesh: ItemStack) = registry.any { it.mesh.test(mesh)}
 
-    override fun register(sieveRecipe: SieveRecipe) {
+    override fun register(sieveRecipe: SieveRecipe): Boolean {
         registry.forEach {
             if(it.test(sieveRecipe)){
                 it.loot.addAll(sieveRecipe.loot)
-                return
+                return true
             }
         }
-        registry.add(sieveRecipe)
+        return registry.add(sieveRecipe)
     }
 
     override fun getAllRecipes() = registry

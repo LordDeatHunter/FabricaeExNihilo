@@ -5,7 +5,8 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "exnihilofabrico-refmap.json",
   "mixins": [
-    "BlockHarvestMixin"
+    "BlockHarvestMixin",
+    "BucketItemMixin"
   ],
   "injectors": {
     "defaultRequire": 1
