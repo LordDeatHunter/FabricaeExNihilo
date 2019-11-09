@@ -5,8 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "exnihilofabrico-refmap.json",
   "mixins": [
-    "BlockHarvestMixin",
-    "RecipeManagerMixin"
+    "BlockHarvestMixin"
   ],
   "injectors": {
     "defaultRequire": 1

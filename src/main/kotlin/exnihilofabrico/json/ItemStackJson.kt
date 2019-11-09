@@ -1,15 +1,10 @@
 package exnihilofabrico.json
 
 import com.google.gson.*
-import com.mojang.datafixers.types.JsonOps
-import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.util.getID
-import net.minecraft.datafixers.NbtOps
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.StringNbtReader
 import net.minecraft.util.Identifier
-import net.minecraft.util.JsonHelper
 import net.minecraft.util.registry.Registry
 import java.lang.reflect.Type
 

@@ -1,10 +1,10 @@
 package exnihilofabrico.api.crafting
 
-import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonPrimitive
 import exnihilofabrico.util.asStack
+import exnihilofabrico.util.getID
 import net.minecraft.block.FluidBlock
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.FluidState
@@ -19,7 +19,7 @@ class FluidIngredient(val matches: Collection<Fluid>, val tag: Tag<Fluid>? = nul
     constructor(fluid: Fluid): this(listOf(fluid))
 
     fun test(fluid: FluidState) = test(fluid.fluid)
-    fun test(fluid: FluidBlock) = test(fluid.getFluidState(fluid.defaultState).fluid)
+    fun test(block: FluidBlock) = test(block.getFluidState(block.defaultState).fluid)
     fun test(fluid: Fluid?): Boolean {
         if(fluid == null)
             return false
@@ -40,9 +40,7 @@ class FluidIngredient(val matches: Collection<Fluid>, val tag: Tag<Fluid>? = nul
         }
     }
 
-    override fun toString(): String {
-        return tag?.toString() ?: Registry.FLUID.getId(matches.first()).toString()
-    }
+    override fun toString() = tag?.toString() ?: matches.first().getID().toString()
 
     override fun equals(other: Any?): Boolean {
         return when(other) {

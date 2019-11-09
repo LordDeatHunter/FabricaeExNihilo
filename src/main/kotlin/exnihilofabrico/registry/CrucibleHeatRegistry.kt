@@ -1,8 +1,6 @@
 package exnihilofabrico.registry
 
-import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.api.crafting.FluidIngredient
 import exnihilofabrico.api.recipes.CrucibleHeatRecipe
 import exnihilofabrico.api.registry.ICrucibleHeatRegistry
@@ -14,7 +12,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.recipe.Ingredient
 import java.io.File
 import java.io.FileReader
-import java.io.FileWriter
 
 data class CrucibleHeatRegistry(val registry: MutableList<CrucibleHeatRecipe> = ArrayList()): AbstractRegistry<MutableList<CrucibleHeatRecipe>>(), ICrucibleHeatRegistry {
 

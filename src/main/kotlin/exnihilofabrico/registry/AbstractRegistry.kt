@@ -9,6 +9,9 @@ import exnihilofabrico.api.recipes.ToolRecipe
 import exnihilofabrico.json.*
 import exnihilofabrico.modules.sieves.MeshProperties
 import net.minecraft.block.Block
+import net.minecraft.entity.EntityType
+import net.minecraft.fluid.Fluid
+import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.Ingredient
 import net.minecraft.util.Identifier
@@ -20,14 +23,17 @@ abstract class AbstractRegistry<T>(
     val gson: Gson = GsonBuilder()
         .setPrettyPrinting()
         .setLenient()
+        .registerTypeAdapter(Item::class.java, ItemJson)
+        .registerTypeAdapter(Fluid::class.java, FluidJson)
+        .registerTypeAdapter(Block::class.java, BlockJson)
+        .registerTypeAdapter(EntityType::class.java, EntityTypeJson)
         .registerTypeAdapter(Identifier::class.java, IdentifierJson)
         .registerTypeAdapter(FluidIngredient::class.java, FluidIngredientJson)
         .registerTypeAdapter(Ingredient::class.java, IngredientJson)
         .registerTypeAdapter(ItemStack::class.java, ItemStackJson)
-        .registerTypeAdapter(Block::class.java, BlockJson)
         .registerTypeAdapter(MeshProperties::class.java, MeshPropertiesJson)
         .registerTypeAdapter(WeightedList::class.java, WeightedListJson())
-        //.registerTypeAdapter(ToolRecipe::class.java, ToolRecipeJson)
+        .registerTypeAdapter(ToolRecipe::class.java, ToolRecipeJson)
         .enableComplexMapKeySerialization()
         .create()
 ) {

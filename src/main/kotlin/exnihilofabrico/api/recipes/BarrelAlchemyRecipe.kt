@@ -3,8 +3,6 @@ package exnihilofabrico.api.recipes
 import exnihilofabrico.api.crafting.EntityStack
 import exnihilofabrico.api.crafting.Lootable
 import exnihilofabrico.modules.barrels.BarrelMode
-import exnihilofabrico.modules.base.NBTSerializable
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.recipe.Ingredient
 
 data class BarrelAlchemyRecipe(

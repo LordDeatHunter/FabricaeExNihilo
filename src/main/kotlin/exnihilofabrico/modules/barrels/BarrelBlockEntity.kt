@@ -5,13 +5,7 @@ import exnihilofabrico.id
 import exnihilofabrico.modules.ModBlocks
 import exnihilofabrico.modules.base.BaseBlockEntity
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable
-import net.minecraft.block.InventoryProvider
-import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
-import net.minecraft.container.Container
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.inventory.Inventory
-import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundTag
 
 class BarrelBlockEntity: BaseBlockEntity(TYPE), BlockEntityClientSerializable {

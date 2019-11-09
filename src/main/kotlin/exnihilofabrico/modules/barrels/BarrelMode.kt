@@ -1,8 +1,6 @@
 package exnihilofabrico.modules.barrels
 
 import exnihilofabrico.api.crafting.EntityStack
-import exnihilofabrico.api.recipes.BarrelAlchemyRecipe
-import exnihilofabrico.modules.base.NBTSerializable
 import exnihilofabrico.modules.fluid.FluidInstance
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundTag

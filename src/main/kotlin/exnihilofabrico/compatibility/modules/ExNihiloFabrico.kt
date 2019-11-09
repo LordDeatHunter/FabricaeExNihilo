@@ -16,7 +16,6 @@ import net.minecraft.block.Blocks
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.Items
 import net.minecraft.recipe.Ingredient
-import net.minecraft.tag.BlockTags
 import net.minecraft.tag.FluidTags
 import net.minecraft.tag.ItemTags
 import net.minecraft.util.Identifier
@@ -40,12 +39,12 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
     }
 
     override fun registerCrucibleStone(registry: ICrucibleRegistry) {
-        registry.register(CrucibleRecipe(Ingredient.ofItems(Blocks.COBBLESTONE), FluidInstance(getFluidID(Fluids.LAVA), FluidInstance.BUCKET_AMOUNT/4), true))
+        registry.register(CrucibleRecipe(Ingredient.ofItems(Blocks.COBBLESTONE), FluidInstance(Fluids.LAVA.getID(), FluidInstance.BUCKET_AMOUNT/4), true))
     }
 
     override fun registerCrucibleWood(registry: ICrucibleRegistry) {
         VanillaWoodDefinitions.values().map { it.getLeafBlock() }.forEach {
-            CrucibleRecipe(Ingredient.ofItems(it), FluidInstance(getFluidID(Fluids.WATER), FluidInstance.BUCKET_AMOUNT/4), false)
+            CrucibleRecipe(Ingredient.ofItems(it), FluidInstance(Fluids.WATER.getID(), FluidInstance.BUCKET_AMOUNT/4), false)
         }
     }
 
@@ -209,10 +208,10 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
     }
 
     override fun registerCrook(registry: IToolRegistry) {
+        registry.registerDrops(ItemTags.LEAVES, Lootable(Items.STICK, 0.01))
+        registry.registerDrops(ItemTags.LEAVES, Lootable(id("silkworm_raw"), 0.1, 0.2, 0.2))
         for(w in VanillaWoodDefinitions.values()) {
             registry.registerDrops(w.getLeafBlock(), Lootable(w.getSeedItem(), 0.25))
-            registry.registerDrops(w.getLeafBlock(), Lootable(Items.STICK, 0.01))
-            registry.registerDrops(w.getLeafBlock(), Lootable(id("silkworm_raw"), 0.1, 0.2, 0.2))
         }
     }
 

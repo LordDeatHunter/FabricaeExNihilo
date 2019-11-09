@@ -2,7 +2,6 @@ package exnihilofabrico.compatibility.rei
 
 import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.MODID
-import exnihilofabrico.api.ExNihiloFabricoAPI
 import exnihilofabrico.api.registry.ExNihiloRegistries
 import exnihilofabrico.id
 import me.shedaniel.rei.api.RecipeHelper

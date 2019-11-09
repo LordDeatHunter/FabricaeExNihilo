@@ -21,13 +21,17 @@ public abstract class BlockHarvestMixin {
     /**
      * Injects calls to the Hammer and Crook registries if the tool used is identified as a Hammer or Crook
      */
-    @Inject(at = @At("RETURN"), method = "getDroppedStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/loot/context/LootContext$Builder;)Ljava/util/List;", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "getDroppedStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/loot/context/LootContext$Builder;)Ljava/util/List;", cancellable = true)
     public void getDroppedStacks(BlockState state, LootContext.Builder builder, CallbackInfoReturnable<List<ItemStack>> info) {
         ItemStack tool = builder.get(LootContextParameters.TOOL);
-        if(CrookTool.isCrook(tool) && ExNihiloRegistries.CROOK.isRegistered(state.getBlock()))
+        if(CrookTool.isCrook(tool) && ExNihiloRegistries.CROOK.isRegistered(state.getBlock())){
             info.setReturnValue(ExNihiloRegistries.CROOK.getResult(state.getBlock(), builder.getWorld().random));
-        else if (HammerTool.isHammer(tool) && ExNihiloRegistries.HAMMER.isRegistered(state.getBlock()))
+            info.cancel();
+        }
+        else if (HammerTool.isHammer(tool) && ExNihiloRegistries.HAMMER.isRegistered(state.getBlock())) {
             info.setReturnValue(ExNihiloRegistries.HAMMER.getResult(state.getBlock(), builder.getWorld().random));
+            info.cancel();
+        }
 
     }
 }

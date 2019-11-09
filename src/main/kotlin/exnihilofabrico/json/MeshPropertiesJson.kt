@@ -4,7 +4,6 @@ import com.google.gson.*
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.modules.sieves.MeshProperties
 import exnihilofabrico.util.Color
-import net.minecraft.recipe.Ingredient
 import net.minecraft.util.Identifier
 import java.lang.reflect.Type
 

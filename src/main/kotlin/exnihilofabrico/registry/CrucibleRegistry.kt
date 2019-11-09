@@ -3,7 +3,6 @@ package exnihilofabrico.registry
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.api.recipes.CrucibleRecipe
 import exnihilofabrico.api.registry.ICrucibleRegistry
-import exnihilofabrico.compatibility.modules.MetaModule
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import java.io.File

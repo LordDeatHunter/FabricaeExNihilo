@@ -15,8 +15,6 @@ import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
-import java.io.File
-import java.nio.file.Files
 
 
 const val MODID: String = "exnihilofabrico"

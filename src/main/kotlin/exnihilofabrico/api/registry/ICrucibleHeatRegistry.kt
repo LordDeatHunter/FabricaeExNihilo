@@ -2,7 +2,6 @@ package exnihilofabrico.api.registry
 
 import exnihilofabrico.api.crafting.FluidIngredient
 import exnihilofabrico.api.recipes.CrucibleHeatRecipe
-import exnihilofabrico.registry.CrucibleHeatRegistry
 import net.minecraft.block.Block
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item

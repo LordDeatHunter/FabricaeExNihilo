@@ -1,8 +1,5 @@
 package exnihilofabrico.registry
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.api.registry.IOreRegistry
@@ -15,7 +12,6 @@ import net.minecraft.item.Item
 import net.minecraft.util.registry.Registry
 import java.io.File
 import java.io.FileReader
-import java.io.FileWriter
 
 data class OreRegistry(val registry: MutableList<OreProperties> = mutableListOf()): AbstractRegistry<MutableList<OreProperties>>(), IOreRegistry {
 

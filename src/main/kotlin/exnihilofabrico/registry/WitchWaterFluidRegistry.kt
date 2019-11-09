@@ -6,7 +6,6 @@ import exnihilofabrico.api.recipes.WitchWaterWorldRecipe
 import exnihilofabrico.api.registry.IWitchWaterFluidRegistry
 import exnihilofabrico.api.registry.WeightedList
 import exnihilofabrico.compatibility.modules.MetaModule
-import net.minecraft.block.Block
 import net.minecraft.fluid.Fluid
 import java.io.File
 import java.io.FileReader

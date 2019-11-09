@@ -1,8 +1,6 @@
 package exnihilofabrico.registry
 
-import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.api.recipes.SieveRecipe
 import exnihilofabrico.api.registry.ISieveRegistry
 import exnihilofabrico.compatibility.modules.MetaModule
@@ -13,7 +11,6 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
 import java.io.File
 import java.io.FileReader
-import java.io.FileWriter
 import java.util.*
 import kotlin.collections.ArrayList
 
