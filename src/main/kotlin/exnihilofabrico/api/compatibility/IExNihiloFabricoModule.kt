@@ -22,7 +22,8 @@ interface IExNihiloFabricoModule {
     fun registerHammer(registry: IToolRegistry)
 
     // Witch Water Registries
-    fun registerWitchWaterFluid(registry: IWitchWaterFluidRegistry)
+    fun registerWitchWaterWorld(registry: IWitchWaterWorldRegistry)
+    fun registerWitchWaterEntity(registry: IWitchWaterEntityRegistry)
 
     // Ore Registry
     fun registerOres(registry: IOreRegistry)

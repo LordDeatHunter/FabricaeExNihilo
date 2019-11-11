@@ -21,4 +21,3 @@ fun ExNihiloItemStack(str: String) = StackFromId(id(str))
 fun ExNihiloBlock(str: String) = Registry.BLOCK[id(str)]
 fun ExNihiloItem(str: String) = Registry.ITEM[id(str)]
 
-fun Item.getID() = Registry.ITEM.getId(this)

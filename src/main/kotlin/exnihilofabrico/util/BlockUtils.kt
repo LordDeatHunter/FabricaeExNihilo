@@ -7,4 +7,3 @@ import net.minecraft.util.registry.Registry
 // Vanilla Block$Settings style single member strength function
 fun FabricBlockSettings.strength(f: Float) = this.strength(f, f)
 
-fun Block.getID() = Registry.BLOCK.getId(this)

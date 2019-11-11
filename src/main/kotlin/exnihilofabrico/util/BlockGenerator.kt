@@ -61,7 +61,7 @@ object BlockGenerator: IBlockGenerator {
             processBlock(Registry.BLOCK.getId(it), it)
         }
         RegistryEntryAddedCallback.event(Registry.BLOCK).register(
-            RegistryEntryAddedCallback<Block>{i, identifier, block -> processBlock(identifier, block)})
+            RegistryEntryAddedCallback<Block>{ _, identifier, block -> processBlock(identifier, block)})
     }
 
     fun processBlock(identifier: Identifier, block: Block) {

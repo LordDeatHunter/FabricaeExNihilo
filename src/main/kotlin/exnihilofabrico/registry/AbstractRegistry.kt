@@ -4,9 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.ExNihiloFabrico
-import exnihilofabrico.api.recipes.CrucibleHeatRecipe
-import exnihilofabrico.api.recipes.SieveRecipe
-import exnihilofabrico.api.recipes.ToolRecipe
+import exnihilofabrico.api.recipes.*
 import exnihilofabrico.json.*
 import exnihilofabrico.modules.sieves.MeshProperties
 import net.minecraft.block.Block
@@ -17,6 +15,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.recipe.Ingredient
 import net.minecraft.util.Identifier
 import net.minecraft.util.WeightedList
+import net.minecraft.village.VillagerProfession
 import java.io.File
 import java.io.FileWriter
 
@@ -36,6 +35,9 @@ abstract class AbstractRegistry<T>(
         .registerTypeAdapter(ToolRecipe::class.java, ToolRecipeJson)
         .registerTypeAdapter(CrucibleHeatRecipe::class.java, CrucibleHeatRecipeJson)
         .registerTypeAdapter(SieveRecipe::class.java, SieveRecipeJson)
+        .registerTypeAdapter(WitchWaterWorldRecipe::class.java, WitchWaterWorldRecipeJson)
+        .registerTypeAdapter(WitchWaterEntityRecipe::class.java, WitchWaterEntityRecipeJson)
+        .registerTypeAdapter(VillagerProfession::class.java, VillagerProfessionJson)
         .enableComplexMapKeySerialization()
         .create()
 ) {

@@ -13,6 +13,7 @@ import exnihilofabrico.modules.ore.EnumPieceShape
 import exnihilofabrico.modules.witchwater.WitchWaterFluid
 import exnihilofabrico.util.*
 import net.minecraft.block.Blocks
+import net.minecraft.entity.EntityType
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.Items
 import net.minecraft.recipe.Ingredient
@@ -20,6 +21,7 @@ import net.minecraft.tag.FluidTags
 import net.minecraft.tag.ItemTags
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
+import net.minecraft.village.VillagerProfession
 
 object ExNihiloFabrico: IExNihiloFabricoModule {
 
@@ -41,7 +43,7 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
     override fun registerCrucibleStone(registry: ICrucibleRegistry) {
         registry.register(CrucibleRecipe(Ingredient.ofItems(Blocks.COBBLESTONE),
             FluidStack(
-                Fluids.LAVA.getID(),
+                Fluids.LAVA.getId(),
                 FluidStack.BUCKET_AMOUNT / 4
             ), true))
     }
@@ -50,7 +52,7 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
         VanillaWoodDefinitions.values().map { it.getLeafBlock() }.forEach {
             CrucibleRecipe(Ingredient.ofItems(it),
                 FluidStack(
-                    Fluids.WATER.getID(),
+                    Fluids.WATER.getId(),
                     FluidStack.BUCKET_AMOUNT / 4
                 ), false)
         }
@@ -274,9 +276,9 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
         //
     }
 
-    override fun registerWitchWaterFluid(registry: IWitchWaterFluidRegistry) {
+    override fun registerWitchWaterWorld(registry: IWitchWaterWorldRegistry) {
         registry.register(
-            TagIngredient.fromTags(FluidTags.WATER), WeightedList(mutableMapOf(
+            TagIngredient.of(Fluids.WATER, Fluids.FLOWING_WATER), WeightedList(mutableMapOf(
             Blocks.DIRT to 51,
             Blocks.GRASS_BLOCK to 12,
             Blocks.COARSE_DIRT to 12,
@@ -292,4 +294,48 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
 
     }
 
+    override fun registerWitchWaterEntity(registry: IWitchWaterEntityRegistry) {
+        registry.register(EntityType.SKELETON, EntityType.WITHER_SKELETON)
+        registry.register(EntityType.SLIME, EntityType.MAGMA_CUBE)
+        registry.register(EntityType.SPIDER, EntityType.CAVE_SPIDER)
+
+        registry.register(EntityType.COW, EntityType.MOOSHROOM)
+        registry.register(EntityType.PIG, EntityType.ZOMBIE_PIGMAN)
+        registry.register(EntityType.CHICKEN, EntityType.VEX)
+        registry.register(EntityType.SQUID, EntityType.GHAST)
+        registry.register(EntityType.PANDA, EntityType.RAVAGER)
+        registry.register(EntityType.POLAR_BEAR, EntityType.RAVAGER)
+        registry.register(EntityType.HORSE, EntityType.SKELETON_HORSE)
+        registry.register(EntityType.DONKEY, EntityType.ZOMBIE_HORSE)
+        registry.register(EntityType.MULE, EntityType.ZOMBIE_HORSE)
+        registry.register(EntityType.BAT, EntityType.PHANTOM)
+        registry.register(EntityType.PARROT, EntityType.PHANTOM)
+        registry.register(EntityType.TURTLE, EntityType.SHULKER)
+
+        registry.register(EntityType.PUFFERFISH, EntityType.GUARDIAN)
+        registry.register(EntityType.SALMON, EntityType.SILVERFISH)
+        registry.register(EntityType.TROPICAL_FISH, EntityType.SILVERFISH)
+        registry.register(EntityType.COD, EntityType.SILVERFISH)
+
+        /**
+         * Villagers
+         */
+        registry.register(EntityType.VILLAGER, VillagerProfession.ARMORER, EntityType.PILLAGER)
+        registry.register(EntityType.VILLAGER, VillagerProfession.BUTCHER, EntityType.ZOMBIE_VILLAGER)
+        registry.register(EntityType.VILLAGER, VillagerProfession.CARTOGRAPHER, EntityType.VINDICATOR)
+        registry.register(EntityType.VILLAGER, VillagerProfession.CLERIC, EntityType.EVOKER)
+        registry.register(EntityType.VILLAGER, VillagerProfession.FARMER, EntityType.HUSK)
+        registry.register(EntityType.VILLAGER, VillagerProfession.FISHERMAN, EntityType.DROWNED)
+        registry.register(EntityType.VILLAGER, VillagerProfession.FLETCHER, EntityType.STRAY)
+        registry.register(EntityType.VILLAGER, VillagerProfession.LEATHERWORKER, EntityType.PILLAGER)
+        registry.register(EntityType.VILLAGER, VillagerProfession.LIBRARIAN, EntityType.ILLUSIONER)
+        registry.register(EntityType.VILLAGER, VillagerProfession.MASON, EntityType.PILLAGER)
+        //registry.register(EntityType.VILLAGER, VillagerProfession.NITWIT, EntityType.)
+        registry.register(EntityType.VILLAGER, VillagerProfession.SHEPHERD, EntityType.PILLAGER)
+        registry.register(EntityType.VILLAGER, VillagerProfession.TOOLSMITH, EntityType.PILLAGER)
+        registry.register(EntityType.VILLAGER, VillagerProfession.WEAPONSMITH, EntityType.PILLAGER)
+        // Do generic last.
+        registry.register(EntityType.VILLAGER, VillagerProfession.NONE, EntityType.ZOMBIE_VILLAGER)
+
+    }
 }

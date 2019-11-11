@@ -2,7 +2,7 @@ package exnihilofabrico.json
 
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
-import exnihilofabrico.util.getID
+import exnihilofabrico.util.getId
 import net.fabricmc.fabric.api.tag.TagRegistry
 import net.minecraft.block.Block
 import net.minecraft.entity.EntityType
@@ -11,6 +11,7 @@ import net.minecraft.item.Item
 import net.minecraft.tag.Tag
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
+import net.minecraft.village.VillagerProfession
 import java.lang.reflect.Type
 
 object ItemJson: JsonDeserializer<Item>, JsonSerializer<Item> {
@@ -18,7 +19,7 @@ object ItemJson: JsonDeserializer<Item>, JsonSerializer<Item> {
         Registry.ITEM[context.deserialize<Identifier>(json, IdentifierJson.TYPE_TOKEN)]
 
     override fun serialize(src: Item, typeOfSrc: Type, context: JsonSerializationContext) =
-            context.serialize(src.getID())
+            context.serialize(src.getId())
 }
 
 object BlockJson: JsonDeserializer<Block>, JsonSerializer<Block> {
@@ -26,7 +27,7 @@ object BlockJson: JsonDeserializer<Block>, JsonSerializer<Block> {
         Registry.BLOCK[context.deserialize<Identifier>(json, IdentifierJson.TYPE_TOKEN)]
 
     override fun serialize(src: Block, typeOfSrc: Type, context: JsonSerializationContext) =
-        context.serialize(src.getID())
+        context.serialize(src.getId())
 
 }
 
@@ -35,7 +36,7 @@ object FluidJson: JsonDeserializer<Fluid>, JsonSerializer<Fluid> {
         Registry.FLUID[context.deserialize<Identifier>(json, IdentifierJson.TYPE_TOKEN)]
 
     override fun serialize(src: Fluid, typeOfSrc: Type, context: JsonSerializationContext) =
-        context.serialize(src.getID())
+        context.serialize(src.getId())
 }
 
 object EntityTypeJson: JsonDeserializer<EntityType<*>>, JsonSerializer<EntityType<*>> {
@@ -43,7 +44,7 @@ object EntityTypeJson: JsonDeserializer<EntityType<*>>, JsonSerializer<EntityTyp
         Registry.ENTITY_TYPE[context.deserialize<Identifier>(json, IdentifierJson.TYPE_TOKEN)]
 
     override fun serialize(src: EntityType<*>, typeOfSrc: Type, context: JsonSerializationContext) =
-        context.serialize(src.getID())
+        context.serialize(src.getId())
 }
 
 object ItemTagJson: JsonDeserializer<Tag<Item>>, JsonSerializer<Tag<Item>> {
@@ -79,6 +80,16 @@ object EntityTypeTagJson: JsonDeserializer<Tag<EntityType<*>>>, JsonSerializer<T
 
     override fun serialize(src: Tag<EntityType<*>>, typeOfSrc: Type, context: JsonSerializationContext) =
         JsonPrimitive("entity#" + context.serialize(src.id).asString)
+
+}
+
+object VillagerProfessionJson: JsonDeserializer<VillagerProfession>, JsonSerializer<VillagerProfession> {
+    val TYPE_TOKEN = object: TypeToken<VillagerProfession>(){}.type
+    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext) =
+        Registry.VILLAGER_PROFESSION[context.deserialize<Identifier>(json, IdentifierJson.TYPE_TOKEN)]
+
+    override fun serialize(src: VillagerProfession, typeOfSrc: Type, context: JsonSerializationContext) =
+        JsonPrimitive(context.serialize(src.getId()).asString)
 
 }
 

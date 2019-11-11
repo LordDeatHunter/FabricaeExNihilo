@@ -1,7 +1,7 @@
 package exnihilofabrico.json
 
 import com.google.gson.*
-import exnihilofabrico.util.getID
+import exnihilofabrico.util.getId
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.StringNbtReader
 import net.minecraft.util.Identifier
@@ -32,10 +32,10 @@ object ItemStackJson: JsonDeserializer<ItemStack>, JsonSerializer<ItemStack> {
         return if(src.isEmpty)
             JsonPrimitive("")
         else if(!src.hasTag())
-            JsonPrimitive("${src.count} x ${src.item.getID()}")
+            JsonPrimitive("${src.count} x ${src.item.getId()}")
         else {
             val obj = JsonObject()
-            obj.add("item", JsonPrimitive(src.item.getID().toString()))
+            obj.add("item", JsonPrimitive(src.item.getId().toString()))
             obj.add("count", JsonPrimitive(src.count))
             obj.add("tag", JsonPrimitive(src.tag.toString()))
             obj

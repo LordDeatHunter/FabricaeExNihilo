@@ -5,7 +5,7 @@ import net.minecraft.block.Block
 import net.minecraft.fluid.Fluid
 import java.util.*
 
-interface IWitchWaterFluidRegistry {
+interface IWitchWaterWorldRegistry {
     fun clear()
     fun register(fluid: TagIngredient<Fluid>, result: WeightedList)
     fun isRegistered(fluid: Fluid): Boolean

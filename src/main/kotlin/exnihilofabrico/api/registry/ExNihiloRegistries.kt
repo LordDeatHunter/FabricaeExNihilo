@@ -9,7 +9,9 @@ import java.io.File
 object ExNihiloRegistries {
 
     @JvmField
-    var WITCHWATER_WORLD: IWitchWaterFluidRegistry = WitchWaterFluidRegistry()
+    var WITCHWATER_WORLD: IWitchWaterWorldRegistry = WitchWaterWorldRegistry()
+    @JvmField
+    var WITCHWATER_ENTITY: IWitchWaterEntityRegistry = WitchWaterEntityRegistry()
 
     @JvmField
     var HAMMER: IToolRegistry = ToolRegistry()
@@ -46,7 +48,7 @@ object ExNihiloRegistries {
         if(ExNihiloFabrico.config.modules.sieves.enabled)
             loadSieveRegistry()
         if(ExNihiloFabrico.config.modules.witchwater.enabled)
-            loadWitchWaterRegistry()
+            loadWitchWaterRegistries()
     }
 
     fun loadEarlyRegistries() {
@@ -57,20 +59,14 @@ object ExNihiloRegistries {
 
     fun loadOreRegistry() {
         ORES = OreRegistry.fromJson(
-            File(
-                configDir,
-                "ore.json"
-            )
+            File(configDir,"ore.json")
         )
         ExNihiloFabrico.LOGGER.info("Loaded Ore Registry.")
     }
 
     fun loadMeshRegistry() {
         MESH = MeshRegistry.fromJson(
-            File(
-                configDir,
-                "sieve_mesh.json"
-            )
+            File(configDir,"sieve_mesh.json")
         )
         ExNihiloFabrico.LOGGER.info("Loaded Mesh Registry.")
     }
@@ -85,20 +81,16 @@ object ExNihiloRegistries {
 
     fun loadHammerRegistry() {
         HAMMER = ToolRegistry.fromJson(
-            File(
-                configDir,
-                "tool_hammer.json"
-            ), MetaModule::registerHammer
+            File(configDir,"tool_hammer.json"),
+            MetaModule::registerHammer
         )
         ExNihiloFabrico.LOGGER.info("Loaded Hammer Registry.")
     }
 
     fun loadCrookRegistry() {
         CROOK = ToolRegistry.fromJson(
-            File(
-                configDir,
-                "tool_crook.json"
-            ), MetaModule::registerCrook
+            File(configDir,"tool_crook.json"),
+            MetaModule::registerCrook
         )
         ExNihiloFabrico.LOGGER.info("Loaded Crook Registry.")
     }
@@ -112,10 +104,7 @@ object ExNihiloRegistries {
     fun loadCrucibleHeatRegistry() {
         CRUCIBLE_HEAT =
             CrucibleHeatRegistry.fromJson(
-                File(
-                    configDir,
-                    "crucible_heat.json"
-                )
+                File(configDir,"crucible_heat.json")
             )
         ExNihiloFabrico.LOGGER.info("Loaded Heat Registry.")
     }
@@ -123,10 +112,8 @@ object ExNihiloRegistries {
     fun loadCrucibleStoneRegistry() {
         CRUCIBLE_STONE =
             CrucibleRegistry.fromJson(
-                File(
-                    configDir,
-                    "crucible_stone.json"
-                ), MetaModule::registerCrucibleStone
+                File(configDir,"crucible_stone.json"),
+                MetaModule::registerCrucibleStone
             )
         ExNihiloFabrico.LOGGER.info("Loaded Stone Crucible Registry.")
     }
@@ -134,32 +121,29 @@ object ExNihiloRegistries {
     fun loadCrucibleWoodRegistry() {
         CRUCIBLE_WOOD =
             CrucibleRegistry.fromJson(
-                File(
-                    configDir,
-                    "crucible_wood.json"
-                ), MetaModule::registerCrucibleWood
+                File(configDir,"crucible_wood.json"),
+                MetaModule::registerCrucibleWood
             )
         ExNihiloFabrico.LOGGER.info("Loaded Wood Crucible Registry.")
     }
 
     fun loadSieveRegistry() {
         SIEVE = SieveRegistry.fromJson(
-            File(
-                configDir,
-                "sieve_drops.json"
-            )
+            File(configDir,"sieve_drops.json")
         )
         ExNihiloFabrico.LOGGER.info("Loaded Sieve Registry.")
     }
 
-    fun loadWitchWaterRegistry() {
+    fun loadWitchWaterRegistries() {
         WITCHWATER_WORLD =
-            WitchWaterFluidRegistry.fromJson(
-                File(
-                    configDir,
-                    "witchwater_fluid.json"
-                )
+            WitchWaterWorldRegistry.fromJson(
+                File(configDir,"witchwater_world.json")
             )
-        ExNihiloFabrico.LOGGER.info("Loaded Witch Water Fluid Registry.")
+        ExNihiloFabrico.LOGGER.info("Loaded Witch Water World Registry.")
+        WITCHWATER_ENTITY =
+            WitchWaterEntityRegistry.fromJson(
+                File(configDir,"witchwater_entity.json")
+            )
+        ExNihiloFabrico.LOGGER.info("Loaded Witch Water Entity Registry.")
     }
 }

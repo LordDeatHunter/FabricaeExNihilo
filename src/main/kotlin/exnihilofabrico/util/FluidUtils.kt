@@ -7,8 +7,8 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.util.registry.Registry
 
-fun getID(fluidStack: FluidStack) = fluidStack.fluid
-fun Fluid.getID() = Registry.FLUID.getId(this)
+fun getId(fluidStack: FluidStack) = fluidStack.fluid
+
 fun FluidBlock.getDefaultFluidState() = this.getFluidState(this.defaultState)
 fun FluidBlock.getFluid() = this.getDefaultFluidState().fluid
 

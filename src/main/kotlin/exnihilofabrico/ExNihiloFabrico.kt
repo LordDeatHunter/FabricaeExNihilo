@@ -3,10 +3,7 @@ package exnihilofabrico
 import com.swordglowsblue.artifice.api.Artifice
 import com.swordglowsblue.artifice.api.ArtificeResourcePack
 import exnihilofabrico.api.registry.ExNihiloRegistries
-import exnihilofabrico.modules.ModBlocks
-import exnihilofabrico.modules.ModFluids
-import exnihilofabrico.modules.ModItems
-import exnihilofabrico.modules.ModTools
+import exnihilofabrico.modules.*
 import exnihilofabrico.util.BlockGenerator
 import exnihilofabrico.util.ExNihiloItemStack
 import io.github.cottonmc.cotton.config.ConfigManager
@@ -36,6 +33,9 @@ object ExNihiloFabrico: ModInitializer {
         // Load the early registries that create items/blocks
         ExNihiloRegistries.loadEarlyRegistries()
 
+        /* Register Status Effects */
+        LOGGER.info("Registering Status Effects")
+        ModEffects.registerEffects(Registry.STATUS_EFFECT)
         /* Register Fluids*/
         LOGGER.info("Registering Fluids")
         ModFluids.registerFluids(Registry.FLUID)

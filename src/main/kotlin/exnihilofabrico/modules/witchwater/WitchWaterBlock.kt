@@ -2,7 +2,10 @@ package exnihilofabrico.modules.witchwater
 
 import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.api.registry.ExNihiloRegistries
+import exnihilofabrico.api.registry.ExNihiloRegistries.WITCHWATER_ENTITY
+import exnihilofabrico.modules.ModEffects
 import exnihilofabrico.modules.base.BaseFluidBlock
+import exnihilofabrico.util.getId
 import net.minecraft.block.BlockState
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
@@ -13,14 +16,12 @@ import net.minecraft.entity.mob.CreeperEntity
 import net.minecraft.entity.mob.MagmaCubeEntity
 import net.minecraft.entity.mob.SlimeEntity
 import net.minecraft.entity.passive.RabbitEntity
-import net.minecraft.entity.passive.VillagerEntity
 import net.minecraft.fluid.BaseFluid
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.registry.Registry
-import net.minecraft.village.VillagerProfession
 import net.minecraft.world.World
 
 class WitchWaterBlock(fluid: BaseFluid, settings: Settings): BaseFluidBlock(fluid, settings) {
@@ -28,53 +29,21 @@ class WitchWaterBlock(fluid: BaseFluid, settings: Settings): BaseFluidBlock(flui
     override fun onEntityCollision(state: BlockState?, world: World?, pos: BlockPos?, entity: Entity?) {
         if(world == null || entity == null || !entity.isAlive || entity.removed)
             return
-        if(entity is LivingEntity){
+        if(entity is LivingEntity && !isMarked(entity)) {
             when(entity.type) {
-                EntityType.SKELETON -> replaceMob(world, entity, EntityType.WITHER_SKELETON)
                 EntityType.CREEPER -> {
+                    markEntity(entity)
                     if(!(entity as CreeperEntity).isCharged)
                         entity.onStruckByLightning(LightningEntity(world, entity.pos.x, entity.pos.y, entity.pos.z, true))
                     entity.health = entity.healthMaximum
+                    return
                 }
-                EntityType.SLIME -> replaceMob(world, entity, EntityType.MAGMA_CUBE)
-                EntityType.SPIDER -> replaceMob(world, entity, EntityType.CAVE_SPIDER)
-
-                EntityType.COW -> replaceMob(world, entity, EntityType.MOOSHROOM)
-                EntityType.PIG -> replaceMob(world, entity, EntityType.ZOMBIE_PIGMAN)
-                EntityType.CHICKEN -> replaceMob(world, entity, EntityType.VEX)
-                EntityType.SQUID -> replaceMob(world, entity, EntityType.GHAST)
-                EntityType.PANDA, EntityType.POLAR_BEAR -> replaceMob(world, entity, EntityType.RAVAGER)
-                EntityType.HORSE -> replaceMob(world, entity, EntityType.SKELETON_HORSE)
-                EntityType.DONKEY, EntityType.MULE -> replaceMob(world, entity, EntityType.ZOMBIE_HORSE)
-                EntityType.BAT, EntityType.PARROT -> replaceMob(world, entity, EntityType.PHANTOM)
                 EntityType.RABBIT -> {
+                    markEntity(entity)
                     // Killer Rabbit.
                     if((entity as RabbitEntity).rabbitType != 99)
                         entity.rabbitType = 99
-                }
-                EntityType.TURTLE -> replaceMob(world, entity, EntityType.SHULKER)
-
-                EntityType.PUFFERFISH -> replaceMob(world, entity, EntityType.GUARDIAN)
-                EntityType.SALMON, EntityType.TROPICAL_FISH, EntityType.COD -> replaceMob(world, entity, EntityType.SILVERFISH)
-
-                EntityType.VILLAGER -> {
-                    when((entity as VillagerEntity).villagerData.profession) {
-                        VillagerProfession.ARMORER -> replaceMob(world, entity,EntityType.PILLAGER)
-                        VillagerProfession.BUTCHER -> replaceMob(world, entity,EntityType.VINDICATOR)
-                        VillagerProfession.CARTOGRAPHER -> replaceMob(world, entity,EntityType.EVOKER)
-                        VillagerProfession.CLERIC -> replaceMob(world, entity,EntityType.WITCH)
-                        VillagerProfession.FARMER -> replaceMob(world, entity,EntityType.HUSK)
-                        VillagerProfession.FISHERMAN -> replaceMob(world, entity,EntityType.DROWNED)
-                        VillagerProfession.FLETCHER -> replaceMob(world, entity,EntityType.STRAY)
-                        VillagerProfession.LEATHERWORKER -> replaceMob(world, entity,EntityType.PILLAGER)
-                        VillagerProfession.LIBRARIAN -> replaceMob(world, entity,EntityType.ILLUSIONER)
-                        VillagerProfession.MASON -> replaceMob(world, entity,EntityType.PILLAGER)
-                        //VillagerProfession.NITWIT -> replaceMob(world, entity,EntityType.)
-                        VillagerProfession.SHEPHERD -> replaceMob(world, entity,EntityType.PILLAGER)
-                        VillagerProfession.TOOLSMITH -> replaceMob(world, entity,EntityType.PILLAGER)
-                        VillagerProfession.WEAPONSMITH -> replaceMob(world, entity,EntityType.PILLAGER)
-                        else -> replaceMob(world, entity, EntityType.ZOMBIE_VILLAGER)
-                    }
+                    return
                 }
                 EntityType.PLAYER -> {
                     ExNihiloFabrico.config.modules.witchwater.effects.forEach { effect, durationLevel ->
@@ -85,8 +54,16 @@ class WitchWaterBlock(fluid: BaseFluid, settings: Settings): BaseFluidBlock(flui
                             )
                         )
                     }
+                    return
                 }
             }
+            val toSpawn = WITCHWATER_ENTITY.getSpawn(entity)
+            if(toSpawn != null) {
+                replaceMob(world, entity, toSpawn)
+                return
+            }
+            markEntity(entity)
+            return
         }
         else
             when(entity.type) {
@@ -114,6 +91,13 @@ class WitchWaterBlock(fluid: BaseFluid, settings: Settings): BaseFluidBlock(flui
     }
 
     companion object {
+        /**
+         * A status effect is used to mark entities that have been processed so that they are no longer processed.
+         */
+        fun markEntity(entity: LivingEntity) = applyStatusEffect(entity, WitchWaterStatusEffect.getInstance())
+        fun isMarked(entity: LivingEntity) =  entity.hasStatusEffect(ModEffects.WITCHWATERED)
+
+
         fun fluidInteraction(world: World, witchPos: BlockPos, otherPos: BlockPos): Boolean {
             val fluidState = world.getFluidState(otherPos)
             if(fluidState.isEmpty) return false
@@ -123,9 +107,9 @@ class WitchWaterBlock(fluid: BaseFluid, settings: Settings): BaseFluidBlock(flui
             world.playSound(null, changePos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 0.7f,0.8f + world.random.nextFloat() * 0.2f)
             return true
         }
-        fun <T: LivingEntity> replaceMob(world: World, toKill: LivingEntity, spawnType: EntityType<T>) {
+        fun replaceMob(world: World, toKill: LivingEntity, spawnType: EntityType<*>) {
             val toSpawn = spawnType.create(world)
-            if(toSpawn != null) {
+            if(toSpawn is LivingEntity) {
                 // Set postion and angles
                 toSpawn.setPositionAndAngles(toKill.blockPos, toKill.yaw, toKill.pitch)
                 toSpawn.velocity = toKill.velocity
@@ -143,12 +127,15 @@ class WitchWaterBlock(fluid: BaseFluid, settings: Settings): BaseFluidBlock(flui
         }
         fun replaceMob(world: World, toKill: Entity, toSpawn: Entity?) {
             toKill.remove()
-            if(toSpawn != null)
+            if(toSpawn != null) {
+                if(toSpawn is LivingEntity)
+                    markEntity(toSpawn)
                 world.spawnEntity(toSpawn)
+            }
         }
         fun applyStatusEffect(entity: LivingEntity, statusEffect: StatusEffectInstance) {
             // Grab the potion effect on the entity (null if not active) compare its duration (defaulting to 0) to the new duration
-            if(entity.activeStatusEffects[statusEffect.effectType]?.duration ?: 0 <= statusEffect.duration-20)
+            if(entity.activeStatusEffects[statusEffect.effectType]?.duration ?: Int.MIN_VALUE <= statusEffect.duration-20)
                 entity.addPotionEffect(statusEffect)
         }
     }
