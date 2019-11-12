@@ -15,7 +15,7 @@ class HammerTool(material: ToolMaterial, settings: Item.Settings):
     companion object {
         @JvmStatic
         fun isHammer(stack: ItemStack): Boolean {
-            if(stack.item is HammerTool || HAMMER_TAG.contains(stack.item))
+            if(stack.item is HammerTool ||  stack.item.isIn(HAMMER_TAG))
                 return true
             return false
         }

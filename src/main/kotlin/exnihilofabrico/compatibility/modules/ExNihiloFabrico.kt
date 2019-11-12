@@ -1,12 +1,13 @@
 package exnihilofabrico.compatibility.modules
 
 import exnihilofabrico.api.compatibility.IExNihiloFabricoModule
+import exnihilofabrico.api.crafting.FluidIngredient
 import exnihilofabrico.api.crafting.FluidStack
 import exnihilofabrico.api.crafting.Lootable
-import exnihilofabrico.api.crafting.TagIngredient
 import exnihilofabrico.api.recipes.CrucibleRecipe
 import exnihilofabrico.api.registry.*
 import exnihilofabrico.id
+import exnihilofabrico.modules.ModTags
 import exnihilofabrico.modules.ore.EnumChunkMaterial
 import exnihilofabrico.modules.ore.EnumChunkShape
 import exnihilofabrico.modules.ore.EnumPieceShape
@@ -220,6 +221,7 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
     override fun registerCrook(registry: IToolRegistry) {
         registry.registerDrops(ItemTags.LEAVES, Lootable(Items.STICK, 0.01))
         registry.registerDrops(ItemTags.LEAVES, Lootable(id("silkworm_raw"), 0.1, 0.2, 0.2))
+        registry.registerDrops(ModTags.INFESTED_LEAVES, Lootable(Items.STRING.asStack(1), 0.5, 0.2, 0.1))
         for(w in VanillaWoodDefinitions.values()) {
             registry.registerDrops(w.getLeafBlock(), Lootable(w.getSeedItem(), 0.25))
         }
@@ -278,7 +280,7 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
 
     override fun registerWitchWaterWorld(registry: IWitchWaterWorldRegistry) {
         registry.register(
-            TagIngredient.of(Fluids.WATER, Fluids.FLOWING_WATER), WeightedList(mutableMapOf(
+            FluidIngredient(Fluids.WATER, Fluids.FLOWING_WATER), WeightedList(mutableMapOf(
             Blocks.DIRT to 51,
             Blocks.GRASS_BLOCK to 12,
             Blocks.COARSE_DIRT to 12,
@@ -286,7 +288,7 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
             Blocks.PODZOL to 12,
             Blocks.PRISMARINE to 1)
         ))
-        registry.register(TagIngredient.fromTags(FluidTags.LAVA), WeightedList(mutableMapOf(
+        registry.register(FluidIngredient(FluidTags.LAVA), WeightedList(mutableMapOf(
             Blocks.COBBLESTONE to 3,
             Blocks.ANDESITE to 1,
             Blocks.DIORITE to 1,

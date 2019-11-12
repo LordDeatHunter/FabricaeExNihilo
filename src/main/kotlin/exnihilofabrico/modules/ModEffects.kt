@@ -2,9 +2,7 @@ package exnihilofabrico.modules
 
 import exnihilofabrico.id
 import exnihilofabrico.modules.witchwater.WitchWaterStatusEffect
-import exnihilofabrico.util.Color
 import net.minecraft.entity.effect.StatusEffect
-import net.minecraft.entity.effect.StatusEffectType
 import net.minecraft.util.registry.Registry
 
 object ModEffects {

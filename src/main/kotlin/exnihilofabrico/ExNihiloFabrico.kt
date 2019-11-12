@@ -90,11 +90,17 @@ object ExNihiloFabrico: ModInitializer {
     }
     private fun generateTags(builder: ArtificeResourcePack.ServerResourcePackBuilder) {
         // exnihilofabrico:infested_leaves tag
-        builder.addBlockTag(id("infested_leaves")) {tag ->
+        builder.addBlockTag(ModTags.INFESTED_LEAVES_BLOCK.id) {tag ->
             tag.values(*ModBlocks.INFESTED_LEAVES.keys.toTypedArray())
         }
-        builder.addItemTag(id("infested_leaves")) {tag ->
+        builder.addItemTag(ModTags.INFESTED_LEAVES.id) {tag ->
             tag.values(*ModBlocks.INFESTED_LEAVES.keys.toTypedArray())
+        }
+        builder.addItemTag(ModTags.HAMMER_TAG.id) {tag ->
+            tag.values(*ModTools.HAMMERS.keys.toTypedArray())
+        }
+        builder.addItemTag(ModTags.CROOK_TAG.id) {tag ->
+            tag.values(*ModTools.CROOKS.keys.toTypedArray())
         }
         ExNihiloRegistries.ORES.getAll().forEach { property ->
             builder.addItemTag(property.getOreID()) {tag ->

@@ -1,7 +1,6 @@
 package exnihilofabrico.registry
 
 import com.google.gson.reflect.TypeToken
-import exnihilofabrico.api.crafting.test
 import exnihilofabrico.api.recipes.SieveRecipe
 import exnihilofabrico.api.registry.ISieveRegistry
 import exnihilofabrico.compatibility.modules.MetaModule

@@ -1,6 +1,7 @@
 package exnihilofabrico.api.registry
 
-import exnihilofabrico.api.crafting.TagIngredient
+import exnihilofabrico.api.crafting.FluidIngredient
+import exnihilofabrico.api.crafting.ItemIngredient
 import exnihilofabrico.api.recipes.CrucibleHeatRecipe
 import net.minecraft.block.Block
 import net.minecraft.fluid.Fluid
@@ -12,12 +13,12 @@ interface ICrucibleHeatRegistry {
     fun clear()
     fun register(recipe: CrucibleHeatRecipe): Boolean
 
-    fun register(blocks: TagIngredient<Item>, fluids: TagIngredient<Fluid>, heat: Int) = register(CrucibleHeatRecipe(blocks, fluids, heat))
+    fun register(blocks: ItemIngredient, fluids: FluidIngredient, heat: Int) = register(CrucibleHeatRecipe(blocks, fluids, heat))
 
-    fun registerFluidTag(tag: Tag<Fluid>, heat: Int) = register(TagIngredient(), TagIngredient(tag), heat)
+    fun registerFluidTag(tag: Tag<Fluid>, heat: Int) = register(ItemIngredient.EMPTY, FluidIngredient(tag), heat)
 
-    fun register(block: Block, heat: Int) = register(TagIngredient.of(block), TagIngredient(), heat)
-    fun register(fluid: Fluid, heat: Int) = register(TagIngredient(), TagIngredient.of(fluid), heat)
+    fun register(block: Block, heat: Int) = register(ItemIngredient(block), FluidIngredient.EMPTY, heat)
+    fun register(fluid: Fluid, heat: Int) = register(ItemIngredient.EMPTY, FluidIngredient(fluid), heat)
 
     fun getHeat(block: Block): Int
     fun getHeat(fluid: Fluid): Int

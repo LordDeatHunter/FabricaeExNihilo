@@ -1,7 +1,7 @@
 package exnihilofabrico.api.recipes
 
-import exnihilofabrico.api.crafting.TagIngredient
-import exnihilofabrico.api.crafting.test
+import exnihilofabrico.api.crafting.FluidIngredient
+import exnihilofabrico.api.crafting.ItemIngredient
 import exnihilofabrico.util.maybeGetFluid
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -12,17 +12,17 @@ import net.minecraft.fluid.Fluids
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
-data class CrucibleHeatRecipe(val ingredient: TagIngredient<Item>?, val fluid: TagIngredient<Fluid>?, val value: Int) {
+data class CrucibleHeatRecipe(val ingredient: ItemIngredient, val fluid: FluidIngredient, val value: Int) {
     fun test(block: Block): Boolean {
         return if(block is FluidBlock)
             test(block)
         else
-            ingredient?.test(block) ?: false
+            ingredient.test(block)
     }
     fun test(state: BlockState) = test(state.block)
-    fun test(fluid: Fluid) = this.fluid?.test(fluid) ?: false
-    fun test(fluid: FluidBlock) = this.fluid?.test(fluid) ?: false
-    fun test(fluid: FluidState) = this.fluid?.test(fluid) ?: false
-    fun test(item: Item) = ingredient?.test(item) == true || fluid?.test(item.maybeGetFluid() ?: Fluids.EMPTY) == true
+    fun test(fluid: Fluid) = this.fluid.test(fluid)
+    fun test(fluid: FluidBlock) = this.fluid.test(fluid)
+    fun test(fluid: FluidState) = this.fluid.test(fluid)
+    fun test(item: Item) = ingredient.test(item) || fluid.test(item.maybeGetFluid() ?: Fluids.EMPTY)
     fun test(stack: ItemStack) = test(stack.item)
 }

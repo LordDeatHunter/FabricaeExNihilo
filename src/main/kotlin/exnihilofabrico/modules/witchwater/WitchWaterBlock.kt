@@ -5,7 +5,6 @@ import exnihilofabrico.api.registry.ExNihiloRegistries
 import exnihilofabrico.api.registry.ExNihiloRegistries.WITCHWATER_ENTITY
 import exnihilofabrico.modules.ModEffects
 import exnihilofabrico.modules.base.BaseFluidBlock
-import exnihilofabrico.util.getId
 import net.minecraft.block.BlockState
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType

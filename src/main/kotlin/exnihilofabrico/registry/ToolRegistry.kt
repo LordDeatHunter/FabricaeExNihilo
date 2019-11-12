@@ -1,11 +1,10 @@
 package exnihilofabrico.registry
 
 import com.google.gson.reflect.TypeToken
+import exnihilofabrico.api.crafting.ItemIngredient
 import exnihilofabrico.api.crafting.Lootable
-import exnihilofabrico.api.crafting.TagIngredient
 import exnihilofabrico.api.recipes.ToolRecipe
 import exnihilofabrico.api.registry.IToolRegistry
-import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import java.io.File
@@ -15,7 +14,7 @@ import java.util.*
 data class ToolRegistry(val registry: MutableList<ToolRecipe> = mutableListOf()):
     AbstractRegistry<MutableList<ToolRecipe>>(), IToolRegistry {
 
-    override fun registerDrops(target: TagIngredient<Item>, loot: Collection<Lootable>) {
+    override fun registerDrops(target: ItemIngredient, loot: Collection<Lootable>) {
         val match = registry.firstOrNull { target == it.ingredient }
         if(match == null)
             registry.add(ToolRecipe(target, loot.toMutableList()))

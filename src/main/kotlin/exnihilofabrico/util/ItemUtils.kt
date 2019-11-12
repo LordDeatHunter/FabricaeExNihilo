@@ -1,7 +1,6 @@
 package exnihilofabrico.util
 
 import exnihilofabrico.id
-import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier

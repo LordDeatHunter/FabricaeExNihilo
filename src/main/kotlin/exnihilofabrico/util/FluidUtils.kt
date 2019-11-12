@@ -5,7 +5,6 @@ import exnihilofabrico.impl.BucketFluidAccessor
 import net.minecraft.block.FluidBlock
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
-import net.minecraft.util.registry.Registry
 
 fun getId(fluidStack: FluidStack) = fluidStack.fluid
 

@@ -1,7 +1,7 @@
 package exnihilofabrico.registry
 
 import com.google.gson.reflect.TypeToken
-import exnihilofabrico.api.crafting.TagIngredient
+import exnihilofabrico.api.crafting.EntityTypeIngredient
 import exnihilofabrico.api.recipes.WitchWaterEntityRecipe
 import exnihilofabrico.api.registry.IWitchWaterEntityRegistry
 import exnihilofabrico.compatibility.modules.MetaModule
@@ -14,7 +14,7 @@ import java.io.FileReader
 data class WitchWaterEntityRegistry(val registry: MutableList<WitchWaterEntityRecipe> = mutableListOf()):
     AbstractRegistry<MutableList<WitchWaterEntityRecipe>>(), IWitchWaterEntityRegistry {
 
-    override fun register(target: TagIngredient<EntityType<*>>, profession: VillagerProfession?, spawn: EntityType<*>) =
+    override fun register(target: EntityTypeIngredient, profession: VillagerProfession?, spawn: EntityType<*>) =
         registry.add(WitchWaterEntityRecipe(target, profession, spawn))
     override fun clear() = registry.clear()
     override fun getAll() = registry

@@ -1,11 +1,11 @@
 package exnihilofabrico.api.registry
 
+import exnihilofabrico.api.crafting.FluidIngredient
+import exnihilofabrico.api.crafting.ItemIngredient
 import exnihilofabrico.api.crafting.Lootable
-import exnihilofabrico.api.crafting.TagIngredient
 import exnihilofabrico.api.recipes.SieveRecipe
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.fluid.Fluid
-import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier
@@ -21,29 +21,29 @@ interface ISieveRegistry {
     fun isValidMesh(mesh: ItemStack): Boolean
 
     fun register(sieveRecipe: SieveRecipe): Boolean
-    fun register(mesh: TagIngredient<Item>, fluid: TagIngredient<Fluid>?, sievable: TagIngredient<Item>, loot: Collection<Lootable>) =
+    fun register(mesh: ItemIngredient, fluid: FluidIngredient, sievable: ItemIngredient, loot: Collection<Lootable>) =
         register(SieveRecipe(mesh, fluid, sievable, loot.toMutableList()))
-    fun register(mesh: TagIngredient<Item>, fluid: TagIngredient<Fluid>?, sievable: TagIngredient<Item>, vararg loot: Lootable) =
+    fun register(mesh: ItemIngredient, fluid: FluidIngredient, sievable: ItemIngredient, vararg loot: Lootable) =
         register(mesh, fluid, sievable, loot.toMutableList())
-    fun register(mesh: TagIngredient<Item>, sievable: TagIngredient<Item>, vararg loot: Lootable) =
-        register(mesh, null, sievable, loot.toMutableList())
+    fun register(mesh: ItemIngredient, sievable: ItemIngredient, vararg loot: Lootable) =
+        register(mesh, FluidIngredient.EMPTY, sievable, loot.toMutableList())
     fun register(mesh: ItemStack, fluid: Fluid, sievable: ItemStack, vararg loot: Lootable) =
-        register(TagIngredient.of(mesh), TagIngredient.of(fluid), TagIngredient.of(sievable), loot.toMutableList())
+        register(ItemIngredient(mesh), FluidIngredient(fluid), ItemIngredient(sievable), loot.toMutableList())
     fun register(mesh: ItemConvertible, fluid: Fluid, sievable: ItemConvertible, vararg loot: Lootable) =
-        register(TagIngredient.of(mesh), TagIngredient.of(fluid), TagIngredient.of(sievable), *loot)
+        register(ItemIngredient(mesh), FluidIngredient(fluid), ItemIngredient(sievable), *loot)
     fun register(mesh: ItemConvertible, fluid: Fluid, sievable: Identifier, vararg loot: Lootable) =
-        register(TagIngredient.of(mesh), TagIngredient.of(fluid), TagIngredient.of(Registry.ITEM.get(sievable)), *loot)
+        register(ItemIngredient(mesh),FluidIngredient(fluid),ItemIngredient(Registry.ITEM.get(sievable)), *loot)
     fun register(mesh: ItemConvertible, sievable: ItemConvertible, vararg loot: Lootable) =
-        register(TagIngredient.of(mesh), null, TagIngredient.of(sievable), loot.toMutableList())
+        register(ItemIngredient(mesh), FluidIngredient.EMPTY, ItemIngredient(sievable), loot.toMutableList())
 
-    fun register(mesh: Identifier, fluid: TagIngredient<Fluid>?, sievable: TagIngredient<Item>, loot: Collection<Lootable>) =
-        register(SieveRecipe(TagIngredient.of(Registry.ITEM[mesh]), fluid, sievable, loot.toMutableList()))
-    fun register(mesh: Identifier, fluid: TagIngredient<Fluid>?, sievable: TagIngredient<Item>, vararg loot: Lootable) =
-        register(TagIngredient.of(Registry.ITEM[mesh]), fluid, sievable, loot.toMutableList())
-    fun register(mesh: Identifier, sievable: TagIngredient<Item>, vararg loot: Lootable) =
-        register(mesh, null, sievable, *loot)
+    fun register(mesh: Identifier, fluid: FluidIngredient, sievable: ItemIngredient, loot: Collection<Lootable>) =
+        register(SieveRecipe(ItemIngredient(Registry.ITEM[mesh]), fluid, sievable, loot.toMutableList()))
+    fun register(mesh: Identifier, fluid: FluidIngredient, sievable: ItemIngredient, vararg loot: Lootable) =
+        register(ItemIngredient(Registry.ITEM[mesh]), fluid, sievable, loot.toMutableList())
+    fun register(mesh: Identifier, sievable: ItemIngredient, vararg loot: Lootable) =
+        register(mesh, FluidIngredient.EMPTY, sievable, *loot)
     fun register(mesh: Identifier, sievable: ItemConvertible, vararg loot: Lootable) =
-        register(mesh, TagIngredient.of(sievable), *loot)
+        register(mesh, ItemIngredient(sievable), *loot)
     fun register(mesh: ItemConvertible, sievable: Identifier, vararg loot: Lootable) =
         register(mesh, Registry.ITEM.get(sievable), *loot)
 
