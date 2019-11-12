@@ -9,6 +9,11 @@ class SilkWormItem(settings: Settings): BaseItem(settings) {
         if(context==null || context.world.isClient)
             return super.useOnBlock(context)
 
-        return InfestedHelper.tryToInfest(context.world, context.blockPos)
+        val result = InfestedHelper.tryToInfest(context.world, context.blockPos)
+
+        if(result == ActionResult.SUCCESS && context.player?.isCreative != true)
+            context.stack.decrement(1)
+
+        return result
     }
 }
