@@ -1,4 +1,4 @@
 {
   "parent": "item/generated",
-  "textures": {"layer0": "exnihilofabrico:item/pebble_andesite"}
+  "textures": {"layer0": "exnihilofabrico:item/pebbles/pebble_andesite"}
 }
