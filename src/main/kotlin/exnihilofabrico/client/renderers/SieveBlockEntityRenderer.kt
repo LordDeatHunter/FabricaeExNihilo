@@ -7,7 +7,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer
 import net.minecraft.client.render.model.json.ModelTransformation
 import net.minecraft.item.ItemStack
 
-class SieveBlockEntityRenderer(): BlockEntityRenderer<SieveBlockEntity>() {
+class SieveBlockEntityRenderer : BlockEntityRenderer<SieveBlockEntity>() {
     private val xzScale = 0.875
     private val yMin = 0.0625
     private val yMax = 0.3750

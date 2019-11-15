@@ -10,6 +10,7 @@ import exnihilofabrico.registry.AbstractRegistry
 import net.minecraft.entity.Entity
 import java.io.File
 import java.io.FileReader
+import java.lang.reflect.Type
 
 
 data class MilkingRegistry(val registry: MutableList<MilkingRecipe> = mutableListOf()):
@@ -20,7 +21,7 @@ data class MilkingRegistry(val registry: MutableList<MilkingRecipe> = mutableLis
 
     override fun register(recipe: MilkingRecipe): Boolean {
         if(registry.any { it.entity == recipe.entity }) {
-            ExNihiloFabrico.LOGGER.warn("Conflicting Milking Recipe not registered: ${recipe}")
+            ExNihiloFabrico.LOGGER.warn("Conflicting Milking Recipe not registered: $recipe")
             return false
         }
         return registry.add(recipe)
@@ -44,7 +45,7 @@ data class MilkingRegistry(val registry: MutableList<MilkingRecipe> = mutableLis
     }
 
     companion object {
-        val SERIALIZATION_TYPE = object : TypeToken<MutableList<MilkingRecipe>>() {}.type
+        val SERIALIZATION_TYPE: Type? = object : TypeToken<MutableList<MilkingRecipe>>() {}.type
         fun fromJson(file: File) = fromJson(
             file,
             { MilkingRegistry() },

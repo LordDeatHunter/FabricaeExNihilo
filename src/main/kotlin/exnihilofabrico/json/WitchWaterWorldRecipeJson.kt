@@ -3,8 +3,8 @@ package exnihilofabrico.json
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.api.crafting.FluidIngredient
+import exnihilofabrico.api.crafting.WeightedList
 import exnihilofabrico.api.recipes.WitchWaterWorldRecipe
-import exnihilofabrico.api.registry.WeightedList
 import java.lang.reflect.Type
 
 object WitchWaterWorldRecipeJson: JsonDeserializer<WitchWaterWorldRecipe>, JsonSerializer<WitchWaterWorldRecipe> {

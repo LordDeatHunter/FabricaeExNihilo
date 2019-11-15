@@ -38,7 +38,7 @@ class EntityTypeIngredient(tags: MutableCollection<Tag<EntityType<*>>> = mutable
                     )
                 })
 
-        fun deserializeTag(json: JsonElement, context: JsonDeserializationContext) =
+        fun deserializeTag(json: JsonElement, context: JsonDeserializationContext): Tag<EntityType<*>> =
             TagRegistry.entityType(Identifier(json.asString.split("#").last()))
         fun deserializeMatch(json: JsonElement, context: JsonDeserializationContext) =
             Registry.ENTITY_TYPE[(Identifier(json.asString))]

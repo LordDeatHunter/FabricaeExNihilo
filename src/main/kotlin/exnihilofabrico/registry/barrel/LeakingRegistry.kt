@@ -10,6 +10,7 @@ import exnihilofabrico.registry.AbstractRegistry
 import net.minecraft.block.Block
 import java.io.File
 import java.io.FileReader
+import java.lang.reflect.Type
 
 data class LeakingRegistry(val registry: MutableList<LeakingRecipe> = mutableListOf()):
     AbstractRegistry<MutableList<LeakingRecipe>>(), ILeakingRegistry {
@@ -19,7 +20,7 @@ data class LeakingRegistry(val registry: MutableList<LeakingRecipe> = mutableLis
 
     override fun register(recipe: LeakingRecipe): Boolean {
         if(registry.any { it.fluid == recipe.fluid && it.target == recipe.target}) {
-            ExNihiloFabrico.LOGGER.warn("Conflicting Leaking Recipe not registered: ${recipe}")
+            ExNihiloFabrico.LOGGER.warn("Conflicting Leaking Recipe not registered: $recipe")
             return false
         }
         return registry.add(recipe)
@@ -42,7 +43,7 @@ data class LeakingRegistry(val registry: MutableList<LeakingRecipe> = mutableLis
     }
 
     companion object {
-        val SERIALIZATION_TYPE = object : TypeToken<MutableList<LeakingRecipe>>() {}.type
+        val SERIALIZATION_TYPE: Type? = object : TypeToken<MutableList<LeakingRecipe>>() {}.type
         fun fromJson(file: File) = fromJson(
             file,
             { LeakingRegistry() },

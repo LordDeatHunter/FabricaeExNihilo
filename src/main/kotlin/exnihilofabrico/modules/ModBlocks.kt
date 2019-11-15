@@ -32,10 +32,10 @@ import net.minecraft.util.registry.Registry
 object ModBlocks {
     private val itemSettings = Item.Settings().group(ExNihiloFabrico.ITEM_GROUP).maxCount(64)
 
-    val woodSettings = FabricBlockSettings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD).breakByHand(true)
-    val stoneSettings = FabricBlockSettings.of(Material.STONE).strength(2.0f, 6.0f).sounds(BlockSoundGroup.STONE)
-    val crushedSettings = FabricBlockSettings.of(Material.SAND).strength(0.6f).sounds(BlockSoundGroup.GRAVEL).breakByHand(true)
-    val infestedLeavesSettings = FabricBlockSettings.of(Material.LEAVES).strength(0.2F).ticksRandomly().sounds(BlockSoundGroup.GRASS)
+    val woodSettings: FabricBlockSettings = FabricBlockSettings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD).breakByHand(true)
+    val stoneSettings: FabricBlockSettings = FabricBlockSettings.of(Material.STONE).strength(2.0f, 6.0f).sounds(BlockSoundGroup.STONE)
+    val crushedSettings: FabricBlockSettings = FabricBlockSettings.of(Material.SAND).strength(0.6f).sounds(BlockSoundGroup.GRAVEL).breakByHand(true)
+    val infestedLeavesSettings: FabricBlockSettings = FabricBlockSettings.of(Material.LEAVES).strength(0.2F).ticksRandomly().sounds(BlockSoundGroup.GRASS)
 
     val SIEVES: MutableMap<Identifier, SieveBlock> = mutableMapOf()
     val CRUCIBLES: MutableMap<Identifier, CrucibleBlock> = mutableMapOf()
@@ -62,11 +62,11 @@ object ModBlocks {
     }
 
     fun registerBlocks(registry: Registry<Block>) {
-        SIEVES.forEach { k, v -> Registry.register(registry, k, v) }
-        CRUCIBLES.forEach { k, v -> Registry.register(registry, k, v) }
-        BARRELS.forEach { k, v -> Registry.register(registry, k, v) }
-        CRUSHED.forEach { k, v -> Registry.register(registry, k, v) }
-        INFESTED_LEAVES.forEach { k, v -> Registry.register(registry, k, v) }
+        SIEVES.forEach { (k, v) -> Registry.register(registry, k, v) }
+        CRUCIBLES.forEach { (k, v) -> Registry.register(registry, k, v) }
+        BARRELS.forEach { (k, v) -> Registry.register(registry, k, v) }
+        CRUSHED.forEach { (k, v) -> Registry.register(registry, k, v) }
+        INFESTED_LEAVES.forEach { (k, v) -> Registry.register(registry, k, v) }
 
         Registry.register(registry, id("infesting_leaves"), INFESTING_LEAVES)
 

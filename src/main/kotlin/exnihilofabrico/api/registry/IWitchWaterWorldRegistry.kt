@@ -1,6 +1,7 @@
 package exnihilofabrico.api.registry
 
 import exnihilofabrico.api.crafting.FluidIngredient
+import exnihilofabrico.api.crafting.WeightedList
 import net.minecraft.block.Block
 import net.minecraft.fluid.Fluid
 import java.util.*

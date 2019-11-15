@@ -28,7 +28,7 @@ class FluidRenderManager: ClientSpriteRegistryCallback {
                 )
             }
 
-            FluidRenderHandlerRegistry.INSTANCE.register(fluid, { _, _, _ -> sprites.value })
+            FluidRenderHandlerRegistry.INSTANCE.register(fluid) { _, _, _ -> sprites.value }
         }
     }
 }

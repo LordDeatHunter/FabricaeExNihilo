@@ -92,7 +92,7 @@ object ModItems {
         ExNihiloRegistries.MESH.registerItems(registry)
 
         // Register Others
-        RESOURCES.forEach { k, v -> Registry.register(registry, k, v) }
+        RESOURCES.forEach { (k, v) -> Registry.register(registry, k, v) }
 
         // Register Ores
         ExNihiloRegistries.ORES.registerPieceItems(registry)

@@ -16,7 +16,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
 object BlockGenerator: IBlockGenerator {
-    val MOD_BLACKLIST = mutableSetOf<String>(MODID)
+    val MOD_BLACKLIST = mutableSetOf(MODID)
 
     override fun blacklistMod(modid: String) {
         MOD_BLACKLIST.add(modid)
@@ -67,10 +67,9 @@ object BlockGenerator: IBlockGenerator {
     fun processBlock(identifier: Identifier, block: Block) {
         if(MOD_BLACKLIST.contains(identifier.namespace)) return
         if(block.defaultState.material == Material.WOOD && identifier.path.contains("planks")) {
-            val planksID = identifier
-            val slabID = Identifier(planksID.namespace, planksID.path.replace("planks", "slab"))
-            createSieveBlock(planksID, slabID)
-            createWoodBarrelBlock(planksID, slabID)
+            val slabID = Identifier(identifier.namespace, identifier.path.replace("planks", "slab"))
+            createSieveBlock(identifier, slabID)
+            createWoodBarrelBlock(identifier, slabID)
         }
         if(block.defaultState.material == Material.WOOD && identifier.path.contains("log") && !identifier.path.contains("stripped")) {
             createWoodCrucibleBlock(identifier)

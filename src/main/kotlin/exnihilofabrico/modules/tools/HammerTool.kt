@@ -3,11 +3,10 @@ package exnihilofabrico.modules.tools
 import exnihilofabrico.api.registry.ExNihiloRegistries
 import exnihilofabrico.modules.ModTags.HAMMER_TAG
 import net.minecraft.block.BlockState
-import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ToolMaterial
 
-class HammerTool(material: ToolMaterial, settings: Item.Settings):
+class HammerTool(material: ToolMaterial, settings: Settings):
     ToolItemWithRegistry(material, ExNihiloRegistries.HAMMER, settings) {
 
     override fun isEffectiveOn(state: BlockState) = ExNihiloRegistries.HAMMER.isRegistered(state.block)

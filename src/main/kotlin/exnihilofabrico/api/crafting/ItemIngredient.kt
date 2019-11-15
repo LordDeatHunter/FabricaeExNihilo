@@ -42,7 +42,7 @@ class ItemIngredient(tags: MutableCollection<Tag<Item>> = mutableListOf(), match
                     )
                 })
 
-        fun deserializeTag(json: JsonElement, context: JsonDeserializationContext) =
+        fun deserializeTag(json: JsonElement, context: JsonDeserializationContext): Tag<Item> =
             TagRegistry.item(Identifier(json.asString.split("#").last()))
         fun deserializeMatch(json: JsonElement, context: JsonDeserializationContext) =
             Registry.ITEM[(Identifier(json.asString))]

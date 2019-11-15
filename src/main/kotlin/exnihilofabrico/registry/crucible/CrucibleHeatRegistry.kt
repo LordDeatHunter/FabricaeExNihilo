@@ -11,6 +11,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import java.io.File
 import java.io.FileReader
+import java.lang.reflect.Type
 
 data class CrucibleHeatRegistry(val registry: MutableList<CrucibleHeatRecipe> = ArrayList()): AbstractRegistry<MutableList<CrucibleHeatRecipe>>(), ICrucibleHeatRegistry {
 
@@ -34,7 +35,7 @@ data class CrucibleHeatRegistry(val registry: MutableList<CrucibleHeatRecipe> = 
     }
 
     companion object {
-        val SERIALIZATION_TYPE = object: TypeToken<MutableList<CrucibleHeatRecipe>>(){}.type
+        val SERIALIZATION_TYPE: Type = object: TypeToken<MutableList<CrucibleHeatRecipe>>(){}.type
         fun fromJson(file: File) = fromJson(
             file,
             { CrucibleHeatRegistry() },

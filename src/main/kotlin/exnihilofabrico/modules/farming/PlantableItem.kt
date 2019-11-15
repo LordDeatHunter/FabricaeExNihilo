@@ -8,7 +8,6 @@ import net.minecraft.util.ActionResult
 
 open class PlantableItem(val plants: List<BlockState>, settings: Settings): BaseItem(settings) {
 
-    constructor(plant: BlockState, settings: Settings): this(listOf(plant), settings)
     constructor(plant: Block, settings: Settings): this(listOf(plant.defaultState), settings)
 
     override fun useOnBlock(context: ItemUsageContext): ActionResult {

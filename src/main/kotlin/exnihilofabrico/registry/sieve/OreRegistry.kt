@@ -13,20 +13,21 @@ import net.minecraft.item.Item
 import net.minecraft.util.registry.Registry
 import java.io.File
 import java.io.FileReader
+import java.lang.reflect.Type
 
 data class OreRegistry(val registry: MutableList<OreProperties> = mutableListOf()): AbstractRegistry<MutableList<OreProperties>>(), IOreRegistry {
 
-    val item_settings: Item.Settings = Item.Settings().group(ExNihiloFabrico.ITEM_GROUP).maxCount(64)
+    val itemSettings: Item.Settings = Item.Settings().group(ExNihiloFabrico.ITEM_GROUP).maxCount(64)
 
     override fun clear() = registry.clear()
     override fun getAll() = registry
     override fun register(vararg properties: OreProperties) = registry.addAll(properties)
 
     override fun registerPieceItems(itemRegistry: Registry<Item>) =
-        registry.forEach { Registry.register(itemRegistry, it.getPieceID(), OrePieceItem(it, item_settings)) }
+        registry.forEach { Registry.register(itemRegistry, it.getPieceID(), OrePieceItem(it, itemSettings)) }
 
     override fun registerChunkItems(itemRegistry: Registry<Item>) =
-        registry.forEach { Registry.register(itemRegistry, it.getChunkID(), OreChunkItem(it, item_settings)) }
+        registry.forEach { Registry.register(itemRegistry, it.getChunkID(), OreChunkItem(it, itemSettings)) }
 
     override fun getPropertiesForModel(identifier: ModelIdentifier): OreProperties? =
         registry.firstOrNull { it.getChunkID().path == identifier.path || it.getPieceID().path == identifier.path }
@@ -42,7 +43,7 @@ data class OreRegistry(val registry: MutableList<OreProperties> = mutableListOf(
     }
 
     companion object {
-        val SERIALIZATION_TYPE = object : TypeToken<MutableList<OreProperties>>() {}.type
+        val SERIALIZATION_TYPE: Type? = object : TypeToken<MutableList<OreProperties>>() {}.type
         fun fromJson(file: File) = fromJson(
             file,
             { OreRegistry() },

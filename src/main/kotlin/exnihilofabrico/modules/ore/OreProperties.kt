@@ -13,7 +13,7 @@ data class OreProperties(
     val piece: EnumPieceShape = EnumPieceShape.NORMAL,
     val chunk: EnumChunkShape = EnumChunkShape.CHUNK,
     val matrix: EnumChunkMaterial = EnumChunkMaterial.STONE,
-    val displayName: String = "item.exnihilofabrico.${material}"
+    val displayName: String = "item.exnihilofabrico.$material"
 ) {
     fun getChunkID() = id("${material}_chunk".toLowerCase())
     fun getPieceID() = id("${material}_piece".toLowerCase())

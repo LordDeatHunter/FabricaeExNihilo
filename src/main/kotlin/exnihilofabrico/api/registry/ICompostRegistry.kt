@@ -21,4 +21,7 @@ interface ICompostRegistry {
         register(ItemIngredient(ingredient), result.asStack(), amount, color)
     fun register(ingredient: Tag<Item>, result: ItemConvertible, amount: Double, color: Color) =
         register(ItemIngredient(ingredient), result.asStack(), amount, color)
+
+    fun getRecipe(stack: ItemStack): CompostRecipe?
+    fun hasRecipe(stack: ItemStack) = getRecipe(stack) != null
 }

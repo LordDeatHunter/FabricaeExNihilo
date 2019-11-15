@@ -15,8 +15,8 @@ fun ItemStack.ofSize(num: Int = 1):ItemStack {
 
 fun ItemConvertible.asStack(num: Int = 1) = ItemStack(this.asItem(), num)
 
-fun StackFromId(identifier: Identifier) = Registry.ITEM[identifier].asStack()
-fun ExNihiloItemStack(str: String) = StackFromId(id(str))
-fun ExNihiloBlock(str: String) = Registry.BLOCK[id(str)]
-fun ExNihiloItem(str: String) = Registry.ITEM[id(str)]
+fun getItemStack(identifier: Identifier) = Registry.ITEM[identifier].asStack()
+fun getExNihiloItemStack(str: String) = getItemStack(id(str))
+fun getExNihiloBlock(str: String) = Registry.BLOCK[id(str)]
+fun getExNihiloItem(str: String) = Registry.ITEM[id(str)]
 

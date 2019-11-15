@@ -1,4 +1,4 @@
-package exnihilofabrico.api.registry
+package exnihilofabrico.api.crafting
 
 import net.minecraft.block.Block
 import java.util.*
@@ -19,6 +19,6 @@ data class WeightedList(val values: MutableMap<Block, Int> = mutableMapOf()){
      */
     fun amend(other: WeightedList) {
         totalWeight += other.totalWeight
-        other.values.forEach { t, u -> values[t] = u + (values[t] ?: 0) }
+        other.values.forEach { (t, u) -> values[t] = u + (values[t] ?: 0) }
     }
 }

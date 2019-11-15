@@ -1,9 +1,12 @@
 package exnihilofabrico.modules.barrels.modes
 
+import exnihilofabrico.util.Color
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundTag
 
-data class CompostMode(val result: ItemStack = ItemStack.EMPTY, var amount: Double = 0.0): BarrelMode {
+data class CompostMode(val result: ItemStack = ItemStack.EMPTY, var amount: Double = 0.0, val color: Color = Color.WHITE): BarrelMode {
+
+    var progress = 0.0
 
     override fun tagKey() = "compost_mode"
 

@@ -9,6 +9,7 @@ import exnihilofabrico.util.getId
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
+import net.minecraft.client.texture.Sprite
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.Fluids
 import net.minecraft.nbt.CompoundTag
@@ -44,13 +45,13 @@ data class FluidStack(var fluid: Identifier, var amount: Int, var data: Compound
     }
 
     override fun toString(): String {
-        return "${amount} x ${fluid}@${data}"
+        return "$amount x $fluid@$data"
     }
 
     fun asFluid() = Registry.FLUID[fluid]
 
     @Environment(EnvType.CLIENT)
-    fun getSprite(view: ExtendedBlockView, pos: BlockPos) =
+    fun getSprite(view: ExtendedBlockView, pos: BlockPos): Array<out Sprite> =
         FluidRenderHandlerRegistry.INSTANCE.get(asFluid()).getFluidSprites(view, pos, asFluid().defaultState)
 
     @Environment(EnvType.CLIENT)
@@ -59,7 +60,7 @@ data class FluidStack(var fluid: Identifier, var amount: Int, var data: Compound
 
     companion object {
         val EMPTY = FluidStack(Registry.FLUID.getId(Fluids.EMPTY), 0)
-        val BUCKET_AMOUNT = 1000
+        const val BUCKET_AMOUNT = 1000
 
         fun create(tag: CompoundTag?): FluidStack {
             val instance = create()

@@ -16,11 +16,10 @@ data class WitchWaterEntityRecipe(val target: EntityTypeIngredient,
         if(entity == null || entity !is LivingEntity)
             return false
         if(target.test(entity.type)) {
-            if(entity is VillagerEntity) {
-                return entity.villagerData.profession == profession
-            }
+            return if(entity is VillagerEntity)
+                entity.villagerData.profession == profession
             else
-                return profession == null
+                profession == null
 
         }
         return false

@@ -1,6 +1,7 @@
 package exnihilofabrico.api.crafting
 
 import net.minecraft.entity.Entity
+import net.minecraft.entity.EntityCategory
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.SpawnType
 import net.minecraft.nbt.CompoundTag
@@ -16,7 +17,7 @@ class EntityStack(val type: EntityType<*>, var size: Int = 1, var data: Compound
 
     fun isEmpty() = this == EMPTY || size == 0
 
-    fun getCategory() = type.category
+    fun getCategory(): EntityCategory = type.category
 
     fun toTag(): CompoundTag {
         val tag = CompoundTag()

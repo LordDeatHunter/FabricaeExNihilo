@@ -6,7 +6,7 @@ import exnihilofabrico.api.crafting.FluidIngredient
 import java.lang.reflect.Type
 
 object FluidIngredientJson: JsonDeserializer<FluidIngredient>, JsonSerializer<FluidIngredient> {
-    val TYPE_TOKEN = object: TypeToken<FluidIngredient>(){}.type
+    val TYPE_TOKEN: Type = object: TypeToken<FluidIngredient>(){}.type
     @Throws(JsonParseException::class)
     override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext) =
         FluidIngredient.fromJson(json, context)

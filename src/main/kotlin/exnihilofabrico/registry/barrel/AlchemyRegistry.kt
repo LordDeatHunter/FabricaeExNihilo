@@ -10,6 +10,7 @@ import exnihilofabrico.registry.AbstractRegistry
 import net.minecraft.item.ItemStack
 import java.io.File
 import java.io.FileReader
+import java.lang.reflect.Type
 
 data class AlchemyRegistry(val registry: MutableList<AlchemyRecipe> = mutableListOf()):
     AbstractRegistry<MutableList<AlchemyRecipe>>(), IAlchemyRegistry {
@@ -21,7 +22,7 @@ data class AlchemyRegistry(val registry: MutableList<AlchemyRecipe> = mutableLis
         val conflict = registry.any { it.reactant == recipe.reactant && it.catalyst == recipe.catalyst }
 
         if(conflict) {
-            ExNihiloFabrico.LOGGER.warn("Conflicting Alchemy Recipe not registered: ${recipe}")
+            ExNihiloFabrico.LOGGER.warn("Conflicting Alchemy Recipe not registered: $recipe")
             return false
         }
 
@@ -42,7 +43,7 @@ data class AlchemyRegistry(val registry: MutableList<AlchemyRecipe> = mutableLis
     }
 
     companion object {
-        val SERIALIZATION_TYPE = object : TypeToken<MutableList<AlchemyRecipe>>() {}.type
+        val SERIALIZATION_TYPE: Type = object : TypeToken<MutableList<AlchemyRecipe>>() {}.type
         fun fromJson(file: File) = fromJson(
             file,
             { AlchemyRegistry() },

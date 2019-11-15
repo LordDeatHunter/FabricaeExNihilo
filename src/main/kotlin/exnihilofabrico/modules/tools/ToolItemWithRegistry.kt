@@ -5,14 +5,13 @@ import exnihilofabrico.api.registry.IToolRegistry
 import net.minecraft.block.BlockState
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
-import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ToolItem
 import net.minecraft.item.ToolMaterial
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-abstract class ToolItemWithRegistry(material: ToolMaterial, val registry: IToolRegistry, settings: Item.Settings):
+abstract class ToolItemWithRegistry(material: ToolMaterial, val registry: IToolRegistry, settings: Settings):
     ToolItem(material, settings.group(ExNihiloFabrico.ITEM_GROUP)) {
 
     private val blockBreakingSpeed: Float = material.miningSpeed

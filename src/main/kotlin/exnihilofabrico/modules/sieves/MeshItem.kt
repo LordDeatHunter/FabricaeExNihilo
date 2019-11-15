@@ -24,6 +24,6 @@ class MeshItem(val color: Color, val displayName: String, settings: Settings = i
     }
 
     companion object {
-        val itemSettings = Item.Settings().group(ExNihiloFabrico.ITEM_GROUP).maxCount(ExNihiloFabrico.config.modules.sieves.meshStackSize)
+        val itemSettings: Settings = Item.Settings().group(ExNihiloFabrico.ITEM_GROUP).maxCount(ExNihiloFabrico.config.modules.sieves.meshStackSize)
     }
 }

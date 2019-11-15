@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier
 import java.lang.reflect.Type
 
 object FluidStackJson: JsonDeserializer<FluidStack>, JsonSerializer<FluidStack> {
-    val TYPE_TOKEN = object: TypeToken<FluidStack>(){}.type
+    val TYPE_TOKEN: Type = object: TypeToken<FluidStack>(){}.type
 
     @Throws(JsonParseException::class)
     override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): FluidStack {

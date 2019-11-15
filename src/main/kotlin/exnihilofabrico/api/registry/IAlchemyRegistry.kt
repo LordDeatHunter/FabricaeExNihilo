@@ -15,6 +15,8 @@ interface IAlchemyRegistry {
 
     fun getRecipe(reactant: FluidStack, catalyst: ItemStack): AlchemyRecipe?
 
+    fun hasRecipe(reactant: FluidStack, catalyst: ItemStack) = getRecipe(reactant, catalyst) != null
+
 
     fun register(reactant: FluidIngredient, catalyst: ItemIngredient, byproduct: Lootable, delay: Int, spawn: EntityStack) =
         register(AlchemyRecipe(reactant, catalyst, EmptyMode(), byproduct, delay, spawn))

@@ -10,8 +10,8 @@ import net.fabricmc.loader.api.SemanticVersion
 import net.fabricmc.loader.util.version.VersionParsingException
 
 class PluginEntry: REIPluginV0 {
-    val PLUGIN_ID = id("${MODID}_plugin")
-    override fun getPluginIdentifier() = PLUGIN_ID
+    val pluginID = id("${MODID}_plugin")
+    override fun getPluginIdentifier() = pluginID
 
     @Throws(VersionParsingException::class)
     override fun getMinimumVersion(): SemanticVersion {

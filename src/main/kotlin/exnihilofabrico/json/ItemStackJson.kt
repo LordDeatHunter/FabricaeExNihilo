@@ -11,7 +11,7 @@ import java.lang.reflect.Type
 object ItemStackJson: JsonDeserializer<ItemStack>, JsonSerializer<ItemStack> {
     override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): ItemStack {
         return if(json.isJsonPrimitive) {
-            if(json.asString.length == 0)
+            if(json.asString.isEmpty())
                 ItemStack.EMPTY
             else{
                 val splits = json.asString.split(" x ", ignoreCase = true, limit = 2)

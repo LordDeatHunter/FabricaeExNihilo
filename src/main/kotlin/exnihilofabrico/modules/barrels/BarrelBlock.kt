@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityContext
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.registry.Registry
+import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 
 class BarrelBlock(val texture: Identifier,
@@ -33,6 +34,6 @@ class BarrelBlock(val texture: Identifier,
     }
 
     companion object {
-        val SHAPE = Block.createCuboidShape(1.0, 0.0, 1.0, 15.0, 16.0, 15.0)
+        val SHAPE: VoxelShape = createCuboidShape(1.0, 0.0, 1.0, 15.0, 16.0, 15.0)
     }
 }

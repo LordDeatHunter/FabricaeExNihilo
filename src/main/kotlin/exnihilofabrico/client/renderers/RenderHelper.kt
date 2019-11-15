@@ -25,7 +25,7 @@ object RenderHelper {
         val random = Random()
         Direction.values().forEach {
             random.setSeed(42L)
-            bakedModel.getQuads(null, it, random).forEach { renderQuadColored(bufferBuilder, it, color) }
+            bakedModel.getQuads(null, it, random).forEach { quad -> renderQuadColored(bufferBuilder, quad, color) }
         }
         random.setSeed(42L)
         bakedModel.getQuads(null, null, random).forEach { renderQuadColored(bufferBuilder, it, color) }
@@ -44,7 +44,7 @@ object RenderHelper {
         val random = Random()
         Direction.values().forEach {
             random.setSeed(42L)
-            bakedModel.getQuads(null, it, random).forEach { renderQuad(bufferBuilder, it) }
+            bakedModel.getQuads(null, it, random).forEach { quad -> renderQuad(bufferBuilder, quad) }
         }
         random.setSeed(42L)
         bakedModel.getQuads(null, null, random).forEach { renderQuad(bufferBuilder, it) }

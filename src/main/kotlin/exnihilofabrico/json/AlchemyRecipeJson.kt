@@ -7,8 +7,8 @@ import exnihilofabrico.api.crafting.FluidIngredient
 import exnihilofabrico.api.crafting.ItemIngredient
 import exnihilofabrico.api.crafting.Lootable
 import exnihilofabrico.api.recipes.AlchemyRecipe
-import exnihilofabrico.modules.barrels.modes.BarrelModeFactory
 import exnihilofabrico.modules.barrels.modes.EmptyMode
+import exnihilofabrico.modules.barrels.modes.barrelModeFactory
 import java.lang.reflect.Type
 
 object AlchemyRecipeJson: JsonDeserializer<AlchemyRecipe>, JsonSerializer<AlchemyRecipe> {
@@ -20,7 +20,7 @@ object AlchemyRecipeJson: JsonDeserializer<AlchemyRecipe>, JsonSerializer<Alchem
             if(!obj.has("product"))
                 EmptyMode()
             else
-                BarrelModeFactory(obj.get("product"), context),
+                barrelModeFactory(obj.get("product"), context),
             if(!obj.has("byproduct"))
                 Lootable.EMPTY
             else

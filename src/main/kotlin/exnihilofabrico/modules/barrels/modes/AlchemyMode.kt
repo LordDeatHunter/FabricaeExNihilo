@@ -22,8 +22,8 @@ data class AlchemyMode(val before: BarrelMode = EmptyMode(),
     companion object {
         fun fromTag(tag: CompoundTag) =
             AlchemyMode(
-                BarrelModeFactory(tag.getCompound("before")),
-                BarrelModeFactory(tag.getCompound("after")),
+                barrelModeFactory(tag.getCompound("before")),
+                barrelModeFactory(tag.getCompound("after")),
                 EntityStack(tag.getCompound("toSpawn")),
                 tag.getInt("countdown"))
     }

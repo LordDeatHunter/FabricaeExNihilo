@@ -8,6 +8,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import java.io.File
 import java.io.FileReader
+import java.lang.reflect.Type
 import java.util.*
 
 data class CrucibleRegistry(val registry: MutableList<CrucibleRecipe> = ArrayList()): AbstractRegistry<MutableList<CrucibleRecipe>>(), ICrucibleRegistry {
@@ -27,7 +28,7 @@ data class CrucibleRegistry(val registry: MutableList<CrucibleRecipe> = ArrayLis
     }
 
     companion object {
-        val SERIALIZATION_TYPE = object : TypeToken<MutableList<CrucibleRecipe>>() {}.type
+        val SERIALIZATION_TYPE: Type = object : TypeToken<MutableList<CrucibleRecipe>>() {}.type
         fun fromJson(file: File, defaults: (CrucibleRegistry) -> Unit) =
             fromJson(
                 file,

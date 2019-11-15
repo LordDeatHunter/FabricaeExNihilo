@@ -1,10 +1,7 @@
 package exnihilofabrico.compatibility.modules
 
 import exnihilofabrico.api.compatibility.IExNihiloFabricoModule
-import exnihilofabrico.api.crafting.FluidIngredient
-import exnihilofabrico.api.crafting.FluidStack
-import exnihilofabrico.api.crafting.ItemIngredient
-import exnihilofabrico.api.crafting.Lootable
+import exnihilofabrico.api.crafting.*
 import exnihilofabrico.api.registry.*
 import exnihilofabrico.id
 import exnihilofabrico.modules.ModItems.SEED_MYCELIUM
@@ -111,101 +108,101 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
     }
 
     override fun registerSieve(registry: ISieveRegistry) {
-        val MESH_STRING = Registry.ITEM[id("mesh_string")]
-        val MESH_FLINT = Registry.ITEM[id("mesh_flint")]
-        val MESH_IRON = Registry.ITEM[id("mesh_iron")]
-        val MESH_GOLD = Registry.ITEM[id("mesh_gold")]
-        val MESH_DIAMOND = Registry.ITEM[id("mesh_diamond")]
+        val stringMesh = Registry.ITEM[id("mesh_string")]
+        val flintMesh = Registry.ITEM[id("mesh_flint")]
+        val ironMesh = Registry.ITEM[id("mesh_iron")]
+        val goldMesh = Registry.ITEM[id("mesh_gold")]
+        val diamondMesh = Registry.ITEM[id("mesh_diamond")]
 
-        registry.register(MESH_STRING, Blocks.GRAVEL, Lootable(Items.FLINT, .5))
-        registry.register(MESH_FLINT, Blocks.GRAVEL, Lootable(Items.FLINT, .3))
+        registry.register(stringMesh, Blocks.GRAVEL, Lootable(Items.FLINT, .5))
+        registry.register(flintMesh, Blocks.GRAVEL, Lootable(Items.FLINT, .3))
 
-        registry.register(MESH_STRING, Fluids.WATER, Blocks.SAND, Lootable(id("seed_sugarcane"), .1))
-        registry.register(MESH_STRING, Fluids.WATER, Blocks.SAND, Lootable(id("seed_kelp"), .05))
+        registry.register(stringMesh, Fluids.WATER, Blocks.SAND, Lootable(id("seed_sugarcane"), .1))
+        registry.register(stringMesh, Fluids.WATER, Blocks.SAND, Lootable(id("seed_kelp"), .05))
 
-        registry.register(MESH_FLINT, Fluids.WATER, Blocks.SAND, Lootable(id("seed_sugarcane"), .15))
-        registry.register(MESH_FLINT, Fluids.WATER, Blocks.SAND, Lootable(id("seed_kelp"), .1))
+        registry.register(flintMesh, Fluids.WATER, Blocks.SAND, Lootable(id("seed_sugarcane"), .15))
+        registry.register(flintMesh, Fluids.WATER, Blocks.SAND, Lootable(id("seed_kelp"), .1))
 
-        registry.register(MESH_IRON, Fluids.WATER, Blocks.SAND, Lootable(id("seed_sea_pickle"), .1))
+        registry.register(ironMesh, Fluids.WATER, Blocks.SAND, Lootable(id("seed_sea_pickle"), .1))
 
-        registry.register(MESH_STRING, Fluids.WATER, Blocks.DIRT, Lootable(Items.TROPICAL_FISH, .05))
-        registry.register(MESH_STRING, Fluids.WATER, Blocks.DIRT, Lootable(Items.COD, .05))
-        registry.register(MESH_STRING, Fluids.WATER, Blocks.DIRT, Lootable(Items.SALMON, .05))
+        registry.register(stringMesh, Fluids.WATER, Blocks.DIRT, Lootable(Items.TROPICAL_FISH, .05))
+        registry.register(stringMesh, Fluids.WATER, Blocks.DIRT, Lootable(Items.COD, .05))
+        registry.register(stringMesh, Fluids.WATER, Blocks.DIRT, Lootable(Items.SALMON, .05))
 
-        registry.register(MESH_FLINT, Fluids.WATER, Blocks.DIRT, Lootable(Items.TROPICAL_FISH, .1))
-        registry.register(MESH_FLINT, Fluids.WATER, Blocks.DIRT, Lootable(Items.COD, .1))
-        registry.register(MESH_FLINT, Fluids.WATER, Blocks.DIRT, Lootable(Items.SALMON, .1))
+        registry.register(flintMesh, Fluids.WATER, Blocks.DIRT, Lootable(Items.TROPICAL_FISH, .1))
+        registry.register(flintMesh, Fluids.WATER, Blocks.DIRT, Lootable(Items.COD, .1))
+        registry.register(flintMesh, Fluids.WATER, Blocks.DIRT, Lootable(Items.SALMON, .1))
 
-        registry.register(MESH_IRON, Fluids.WATER, Blocks.DIRT, Lootable(Items.TROPICAL_FISH, .15))
-        registry.register(MESH_IRON, Fluids.WATER, Blocks.DIRT, Lootable(Items.COD, .15))
-        registry.register(MESH_IRON, Fluids.WATER, Blocks.DIRT, Lootable(Items.SALMON, .15))
+        registry.register(ironMesh, Fluids.WATER, Blocks.DIRT, Lootable(Items.TROPICAL_FISH, .15))
+        registry.register(ironMesh, Fluids.WATER, Blocks.DIRT, Lootable(Items.COD, .15))
+        registry.register(ironMesh, Fluids.WATER, Blocks.DIRT, Lootable(Items.SALMON, .15))
 
-        registry.register(MESH_IRON, Fluids.LAVA, Blocks.DIRT, Lootable(Items.COOKED_COD, .15))
-        registry.register(MESH_IRON, Fluids.LAVA, Blocks.DIRT, Lootable(Items.COOKED_SALMON, .15))
+        registry.register(ironMesh, Fluids.LAVA, Blocks.DIRT, Lootable(Items.COOKED_COD, .15))
+        registry.register(ironMesh, Fluids.LAVA, Blocks.DIRT, Lootable(Items.COOKED_SALMON, .15))
 
-        registry.register(MESH_STRING, Fluids.WATER, Blocks.MYCELIUM, Lootable(Items.PUFFERFISH, .01))
-        registry.register(MESH_FLINT, Fluids.WATER, Blocks.MYCELIUM, Lootable(Items.PUFFERFISH, .01))
-        registry.register(MESH_GOLD, Fluids.WATER, Blocks.MYCELIUM, Lootable(Items.PUFFERFISH, .02))
-        registry.register(MESH_DIAMOND, Fluids.WATER, Blocks.MYCELIUM, Lootable(Items.PUFFERFISH, .05))
+        registry.register(stringMesh, Fluids.WATER, Blocks.MYCELIUM, Lootable(Items.PUFFERFISH, .01))
+        registry.register(flintMesh, Fluids.WATER, Blocks.MYCELIUM, Lootable(Items.PUFFERFISH, .01))
+        registry.register(goldMesh, Fluids.WATER, Blocks.MYCELIUM, Lootable(Items.PUFFERFISH, .02))
+        registry.register(diamondMesh, Fluids.WATER, Blocks.MYCELIUM, Lootable(Items.PUFFERFISH, .05))
 
-        registry.register(MESH_STRING, Fluids.WATER, Blocks.GRAVEL, Lootable(Items.PRISMARINE_SHARD, .01))
-        registry.register(MESH_FLINT, Fluids.WATER, Blocks.GRAVEL, Lootable(Items.PRISMARINE_SHARD, .02))
-        registry.register(MESH_IRON, Fluids.WATER, Blocks.GRAVEL, Lootable(Items.PRISMARINE_SHARD, .05))
-        registry.register(MESH_GOLD, Fluids.WATER, Blocks.GRAVEL, Lootable(Items.PRISMARINE_SHARD, .1))
-        registry.register(MESH_DIAMOND, Fluids.WATER, Blocks.GRAVEL, Lootable(Items.PRISMARINE_SHARD, .2))
+        registry.register(stringMesh, Fluids.WATER, Blocks.GRAVEL, Lootable(Items.PRISMARINE_SHARD, .01))
+        registry.register(flintMesh, Fluids.WATER, Blocks.GRAVEL, Lootable(Items.PRISMARINE_SHARD, .02))
+        registry.register(ironMesh, Fluids.WATER, Blocks.GRAVEL, Lootable(Items.PRISMARINE_SHARD, .05))
+        registry.register(goldMesh, Fluids.WATER, Blocks.GRAVEL, Lootable(Items.PRISMARINE_SHARD, .1))
+        registry.register(diamondMesh, Fluids.WATER, Blocks.GRAVEL, Lootable(Items.PRISMARINE_SHARD, .2))
 
-        registry.register(MESH_STRING, WitchWaterFluid.Still, Blocks.DIRT, Lootable(id("seed_mycelium"), .01))
-        registry.register(MESH_FLINT, WitchWaterFluid.Still, Blocks.DIRT, Lootable(id("seed_mycelium"), .02))
-        registry.register(MESH_IRON, WitchWaterFluid.Still, Blocks.DIRT, Lootable(id("seed_mycelium"), .05))
-        registry.register(MESH_GOLD, WitchWaterFluid.Still, Blocks.DIRT, Lootable(id("seed_mycelium"), .1))
-        registry.register(MESH_DIAMOND, WitchWaterFluid.Still, Blocks.DIRT, Lootable(id("seed_mycelium"), .2))
+        registry.register(stringMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(id("seed_mycelium"), .01))
+        registry.register(flintMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(id("seed_mycelium"), .02))
+        registry.register(ironMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(id("seed_mycelium"), .05))
+        registry.register(goldMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(id("seed_mycelium"), .1))
+        registry.register(diamondMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(id("seed_mycelium"), .2))
 
-        registry.register(MESH_STRING, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.RED_MUSHROOM, .01))
-        registry.register(MESH_FLINT, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.RED_MUSHROOM, .02))
-        registry.register(MESH_IRON, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.RED_MUSHROOM, .05))
-        registry.register(MESH_GOLD, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.RED_MUSHROOM, .1))
-        registry.register(MESH_DIAMOND, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.RED_MUSHROOM, .2))
+        registry.register(stringMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.RED_MUSHROOM, .01))
+        registry.register(flintMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.RED_MUSHROOM, .02))
+        registry.register(ironMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.RED_MUSHROOM, .05))
+        registry.register(goldMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.RED_MUSHROOM, .1))
+        registry.register(diamondMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.RED_MUSHROOM, .2))
 
-        registry.register(MESH_STRING, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.BROWN_MUSHROOM, .01))
-        registry.register(MESH_FLINT, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.BROWN_MUSHROOM, .02))
-        registry.register(MESH_IRON, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.BROWN_MUSHROOM, .05))
-        registry.register(MESH_GOLD, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.BROWN_MUSHROOM, .1))
-        registry.register(MESH_DIAMOND, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.BROWN_MUSHROOM, .2))
+        registry.register(stringMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.BROWN_MUSHROOM, .01))
+        registry.register(flintMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.BROWN_MUSHROOM, .02))
+        registry.register(ironMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.BROWN_MUSHROOM, .05))
+        registry.register(goldMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.BROWN_MUSHROOM, .1))
+        registry.register(diamondMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.BROWN_MUSHROOM, .2))
 
-        registry.register(MESH_IRON, Blocks.GRAVEL, Lootable(Items.DIAMOND, .01))
-        registry.register(MESH_GOLD, Blocks.GRAVEL, Lootable(Items.DIAMOND, .02))
-        registry.register(MESH_DIAMOND, Blocks.GRAVEL, Lootable(Items.DIAMOND, .03))
+        registry.register(ironMesh, Blocks.GRAVEL, Lootable(Items.DIAMOND, .01))
+        registry.register(goldMesh, Blocks.GRAVEL, Lootable(Items.DIAMOND, .02))
+        registry.register(diamondMesh, Blocks.GRAVEL, Lootable(Items.DIAMOND, .03))
 
         for(ore in ExNihiloRegistries.ORES.getAll()) {
             if(!Registry.ITEM.containsId(ore.getPieceID())) continue
             when(ore.material) {
                 "iron" -> {
-                    registry.register(MESH_STRING, Blocks.GRAVEL, Lootable(ore.getPieceID(), .01))
-                    registry.register(MESH_FLINT, Blocks.GRAVEL, Lootable(ore.getPieceID(), .05))
-                    registry.register(MESH_IRON, Blocks.GRAVEL, Lootable(ore.getPieceID(), .15))
-                    registry.register(MESH_GOLD, Blocks.GRAVEL, Lootable(ore.getPieceID(), .20))
-                    registry.register(MESH_DIAMOND, Blocks.GRAVEL, Lootable(ore.getPieceID(), .15))
+                    registry.register(stringMesh, Blocks.GRAVEL, Lootable(ore.getPieceID(), .01))
+                    registry.register(flintMesh, Blocks.GRAVEL, Lootable(ore.getPieceID(), .05))
+                    registry.register(ironMesh, Blocks.GRAVEL, Lootable(ore.getPieceID(), .15))
+                    registry.register(goldMesh, Blocks.GRAVEL, Lootable(ore.getPieceID(), .20))
+                    registry.register(diamondMesh, Blocks.GRAVEL, Lootable(ore.getPieceID(), .15))
 
-                    registry.register(MESH_STRING, Blocks.RED_SAND, Lootable(ore.getPieceID(), .05))
-                    registry.register(MESH_FLINT, Blocks.RED_SAND, Lootable(ore.getPieceID(), .1))
-                    registry.register(MESH_IRON, Blocks.RED_SAND, Lootable(ore.getPieceID(), .2))
-                    registry.register(MESH_GOLD, Blocks.RED_SAND, Lootable(ore.getPieceID(), .5, .5))
-                    registry.register(MESH_DIAMOND, Blocks.RED_SAND, Lootable(ore.getPieceID(), 1.0))
+                    registry.register(stringMesh, Blocks.RED_SAND, Lootable(ore.getPieceID(), .05))
+                    registry.register(flintMesh, Blocks.RED_SAND, Lootable(ore.getPieceID(), .1))
+                    registry.register(ironMesh, Blocks.RED_SAND, Lootable(ore.getPieceID(), .2))
+                    registry.register(goldMesh, Blocks.RED_SAND, Lootable(ore.getPieceID(), .5, .5))
+                    registry.register(diamondMesh, Blocks.RED_SAND, Lootable(ore.getPieceID(), 1.0))
 
-                    registry.register(MESH_STRING, id("crushed_granite"), Lootable(ore.getPieceID(), .02))
-                    registry.register(MESH_FLINT, id("crushed_granite"), Lootable(ore.getPieceID(), .05))
-                    registry.register(MESH_IRON, id("crushed_granite"), Lootable(ore.getPieceID(), .1, .1))
-                    registry.register(MESH_GOLD, id("crushed_granite"), Lootable(ore.getPieceID(), .6, .6))
-                    registry.register(MESH_DIAMOND, id("crushed_granite"), Lootable(ore.getPieceID(), 1.0, .5))
+                    registry.register(stringMesh, id("crushed_granite"), Lootable(ore.getPieceID(), .02))
+                    registry.register(flintMesh, id("crushed_granite"), Lootable(ore.getPieceID(), .05))
+                    registry.register(ironMesh, id("crushed_granite"), Lootable(ore.getPieceID(), .1, .1))
+                    registry.register(goldMesh, id("crushed_granite"), Lootable(ore.getPieceID(), .6, .6))
+                    registry.register(diamondMesh, id("crushed_granite"), Lootable(ore.getPieceID(), 1.0, .5))
                 }
                 "gold" -> {
-                    registry.register(MESH_IRON, Blocks.GRAVEL, Lootable(ore.getPieceID(), .05))
-                    registry.register(MESH_GOLD, Blocks.GRAVEL, Lootable(ore.getPieceID(), .075))
-                    registry.register(MESH_DIAMOND, Blocks.GRAVEL, Lootable(ore.getPieceID(), .1))
+                    registry.register(ironMesh, Blocks.GRAVEL, Lootable(ore.getPieceID(), .05))
+                    registry.register(goldMesh, Blocks.GRAVEL, Lootable(ore.getPieceID(), .075))
+                    registry.register(diamondMesh, Blocks.GRAVEL, Lootable(ore.getPieceID(), .1))
 
-                    registry.register(MESH_IRON, id("crushed_netherrack"), Lootable(ore.getPieceID(), .1, .1))
-                    registry.register(MESH_GOLD, id("crushed_netherrack"), Lootable(ore.getPieceID(), .15, .15))
-                    registry.register(MESH_DIAMOND, id("crushed_netherrack"), Lootable(ore.getPieceID(), .2, .2))
+                    registry.register(ironMesh, id("crushed_netherrack"), Lootable(ore.getPieceID(), .1, .1))
+                    registry.register(goldMesh, id("crushed_netherrack"), Lootable(ore.getPieceID(), .15, .15))
+                    registry.register(diamondMesh, id("crushed_netherrack"), Lootable(ore.getPieceID(), .2, .2))
                 }
                 else -> {
                     val sieveable = when(ore.matrix) {
@@ -220,24 +217,24 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
                         EnumChunkMaterial.SOULSAND -> Blocks.SOUL_SAND
                         EnumChunkMaterial.STONE -> Blocks.GRAVEL
                     }
-                    registry.register(MESH_IRON, sieveable, Lootable(ore.getPieceID(), .05))
-                    registry.register(MESH_GOLD, sieveable, Lootable(ore.getPieceID(), .075))
-                    registry.register(MESH_DIAMOND, sieveable, Lootable(ore.getPieceID(), .1))
+                    registry.register(ironMesh, sieveable, Lootable(ore.getPieceID(), .05))
+                    registry.register(goldMesh, sieveable, Lootable(ore.getPieceID(), .075))
+                    registry.register(diamondMesh, sieveable, Lootable(ore.getPieceID(), .1))
                 }
             }
         }
 
-        registry.register(MESH_STRING, Fluids.LAVA, id("crushed_granite"), Lootable(Items.IRON_NUGGET, .1))
-        registry.register(MESH_FLINT, Fluids.LAVA, id("crushed_granite"), Lootable(Items.IRON_NUGGET, .2))
-        registry.register(MESH_IRON, Fluids.LAVA, id("crushed_granite"), Lootable(Items.IRON_NUGGET, .1, .1))
-        registry.register(MESH_GOLD, Fluids.LAVA, id("crushed_granite"), Lootable(Items.IRON_NUGGET, .2, .2))
-        registry.register(MESH_DIAMOND, Fluids.LAVA, id("crushed_granite"), Lootable(Items.IRON_NUGGET, .3, .3))
+        registry.register(stringMesh, Fluids.LAVA, id("crushed_granite"), Lootable(Items.IRON_NUGGET, .1))
+        registry.register(flintMesh, Fluids.LAVA, id("crushed_granite"), Lootable(Items.IRON_NUGGET, .2))
+        registry.register(ironMesh, Fluids.LAVA, id("crushed_granite"), Lootable(Items.IRON_NUGGET, .1, .1))
+        registry.register(goldMesh, Fluids.LAVA, id("crushed_granite"), Lootable(Items.IRON_NUGGET, .2, .2))
+        registry.register(diamondMesh, Fluids.LAVA, id("crushed_granite"), Lootable(Items.IRON_NUGGET, .3, .3))
     }
 
     override fun registerCrook(registry: IToolRegistry) {
         registry.registerDrops(ItemTags.LEAVES, Lootable(Items.STICK, 0.01))
         registry.registerDrops(ItemTags.LEAVES, Lootable(id("silkworm_raw"), 0.1, 0.2, 0.2))
-        registry.registerDrops(ModTags.INFESTED_LEAVES, Lootable(Items.STRING.asStack(1), 0.5, 0.2, 0.1))
+        ModTags.INFESTED_LEAVES?.let { registry.registerDrops(it, Lootable(Items.STRING.asStack(1), 0.5, 0.2, 0.1)) }
         for(w in VanillaWoodDefinitions.values()) {
             registry.registerDrops(w.getLeafBlock(), Lootable(w.getSeedItem(), 0.25))
         }
@@ -296,19 +293,26 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
 
     override fun registerWitchWaterWorld(registry: IWitchWaterWorldRegistry) {
         registry.register(
-            FluidIngredient(Fluids.WATER, Fluids.FLOWING_WATER), WeightedList(mutableMapOf(
-            Blocks.DIRT to 51,
-            Blocks.GRASS_BLOCK to 12,
-            Blocks.COARSE_DIRT to 12,
-            Blocks.MYCELIUM to 12,
-            Blocks.PODZOL to 12,
-            Blocks.PRISMARINE to 1)
-        ))
-        registry.register(FluidIngredient(FluidTags.LAVA), WeightedList(mutableMapOf(
-            Blocks.COBBLESTONE to 3,
-            Blocks.ANDESITE to 1,
-            Blocks.DIORITE to 1,
-            Blocks.GRANITE to 1)))
+            FluidIngredient(Fluids.WATER, Fluids.FLOWING_WATER), WeightedList(
+                mutableMapOf(
+                    Blocks.DIRT to 51,
+                    Blocks.GRASS_BLOCK to 12,
+                    Blocks.COARSE_DIRT to 12,
+                    Blocks.MYCELIUM to 12,
+                    Blocks.PODZOL to 12,
+                    Blocks.PRISMARINE to 1
+                )
+            )
+        )
+        registry.register(FluidIngredient(FluidTags.LAVA), WeightedList(
+            mutableMapOf(
+                Blocks.COBBLESTONE to 3,
+                Blocks.ANDESITE to 1,
+                Blocks.DIORITE to 1,
+                Blocks.GRANITE to 1
+            )
+        )
+        )
 
     }
 

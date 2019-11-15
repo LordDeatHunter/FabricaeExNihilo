@@ -32,10 +32,14 @@ class BarrelConfig {
     var enabled: Boolean = true
     var enableAlchemy: Boolean = true
     var enableCompost: Boolean = true
+    @Comment("How much progress to add each time the barrel ticks")
+    var compostRate = 0.1
     var enableLeaking: Boolean = true
+    @Comment("How far away can a block be and still be affected by wooden barrels leaking")
+    var leakRadius: Int = 2
     var enableMilking: Boolean = true
     @Comment("How many ticks between updates")
-    var tickRate = 20
+    var tickRate = 10
     @Comment("Can barrels be enchanted with efficiency.")
     var efficiency: Boolean = true
 }
@@ -43,7 +47,7 @@ class BarrelConfig {
 class CrucibleConfig {
     var enabled: Boolean = true
     @Comment("How many ticks between updates")
-    var tickRate = 20
+    var tickRate = 10
     @Comment("How many buckets of liquid can a stone crucible store")
     var stoneVolume = 4
     @Comment("How many buckets of liquid can a wooden crucible store")
@@ -117,10 +121,10 @@ class WitchWaterConfig {
     var enabled: Boolean = true
     @Comment("What effects should players get on contact")
     var effects = mutableMapOf(
-        Identifier("blindness") to Pair<Int,Int>(210,0),
-        Identifier("hunger") to Pair<Int,Int>(210,2),
-        Identifier("slowness") to Pair<Int,Int>(210,0),
-        Identifier("weakness") to Pair<Int,Int>(210,2),
-        Identifier("wither") to Pair<Int,Int>(210,0)
+        Identifier("blindness") to Pair(210,0),
+        Identifier("hunger") to Pair(210,2),
+        Identifier("slowness") to Pair(210,0),
+        Identifier("weakness") to Pair(210,2),
+        Identifier("wither") to Pair(210,0)
     )
 }

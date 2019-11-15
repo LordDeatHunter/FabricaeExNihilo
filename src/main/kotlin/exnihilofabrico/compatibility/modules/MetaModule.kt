@@ -7,11 +7,6 @@ object MetaModule: IExNihiloFabricoModule {
 
     val modules: MutableList<IExNihiloFabricoModule> = mutableListOf()
 
-    init {
-        modules.add(ExNihiloFabrico)
-        // Check if an mod with a specific module is installed, then add its module to the list
-    }
-
     override fun registerAlchemy(registry: IAlchemyRegistry) = modules.forEach { it.registerAlchemy(registry) }
     override fun registerCompost(registry: ICompostRegistry) = modules.forEach { it.registerCompost(registry) }
     override fun registerLeaking(registry: ILeakingRegistry) = modules.forEach { it.registerLeaking(registry) }

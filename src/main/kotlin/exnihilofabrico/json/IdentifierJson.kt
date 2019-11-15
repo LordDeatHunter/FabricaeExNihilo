@@ -6,7 +6,7 @@ import net.minecraft.util.Identifier
 import java.lang.reflect.Type
 
 object IdentifierJson: JsonDeserializer<Identifier>, JsonSerializer<Identifier> {
-    val TYPE_TOKEN = object: TypeToken<Identifier>(){}.type
+    val TYPE_TOKEN: Type? = object: TypeToken<Identifier>(){}.type
     @Throws(JsonParseException::class)
     override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext) = Identifier(json.asJsonPrimitive.asString)
 

@@ -11,6 +11,7 @@ import net.minecraft.entity.EntityType
 import net.minecraft.village.VillagerProfession
 import java.io.File
 import java.io.FileReader
+import java.lang.reflect.Type
 
 data class WitchWaterEntityRegistry(val registry: MutableList<WitchWaterEntityRecipe> = mutableListOf()):
     AbstractRegistry<MutableList<WitchWaterEntityRecipe>>(), IWitchWaterEntityRegistry {
@@ -33,7 +34,7 @@ data class WitchWaterEntityRegistry(val registry: MutableList<WitchWaterEntityRe
     }
 
     companion object {
-        val SERIALIZATION_TYPE = object: TypeToken<MutableList<WitchWaterEntityRecipe>>(){}.type
+        val SERIALIZATION_TYPE: Type = object: TypeToken<MutableList<WitchWaterEntityRecipe>>(){}.type
         fun fromJson(file: File) = fromJson(
             file,
             { WitchWaterEntityRegistry() },

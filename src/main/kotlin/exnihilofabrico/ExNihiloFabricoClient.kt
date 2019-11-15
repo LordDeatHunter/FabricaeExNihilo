@@ -44,7 +44,7 @@ object ExNihiloFabricoClient: ClientModInitializer {
         ExNihiloRegistries.MESH.getAll().forEach {
             ColorProviderRegistry.ITEM.register(ExNihiloItemColorProvider, it.item)
         }
-        ModBlocks.INFESTED_LEAVES.forEach { _, v ->
+        ModBlocks.INFESTED_LEAVES.forEach { (_, v) ->
             ColorProviderRegistry.ITEM.register(ExNihiloItemColorProvider, v.asItem())
             ColorProviderRegistry.BLOCK.register(ExNihiloBlockColorProvider, v)
         }
@@ -97,7 +97,7 @@ object ExNihiloFabricoClient: ClientModInitializer {
             }
 
             // Infested Leaves models
-            ModBlocks.INFESTED_LEAVES.forEach {k, leaves ->
+            ModBlocks.INFESTED_LEAVES.forEach { (k, leaves) ->
                 pack.addBlockModel(k) {model ->
                     model.parent(Identifier("item/"+ Registry.BLOCK.getId(leaves.leafBlock).path))
                 }
@@ -115,7 +115,7 @@ object ExNihiloFabricoClient: ClientModInitializer {
                     val material = ore.matrix.name.toLowerCase()
                     model
                         .parent(Identifier("item/generated"))
-                        .texture("layer0", id("item/ore/chunks/${chunkShape}_${material}"))
+                        .texture("layer0", id("item/ore/chunks/${chunkShape}_$material"))
                         .texture("layer1", id("item/ore/chunks/${chunkShape}_overlay"))
                 }
                 // Ore Piece Model
@@ -124,7 +124,7 @@ object ExNihiloFabricoClient: ClientModInitializer {
                     val material = ore.matrix.name.toLowerCase()
                     model
                         .parent(Identifier("item/generated"))
-                        .texture("layer0", id("item/ore/pieces/${pieceShape}_${material}"))
+                        .texture("layer0", id("item/ore/pieces/${pieceShape}_$material"))
                         .texture("layer1", id("item/ore/pieces/${pieceShape}_overlay"))
                 }
             }

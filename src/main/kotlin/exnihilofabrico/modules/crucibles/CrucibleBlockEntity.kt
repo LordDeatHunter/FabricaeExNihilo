@@ -105,12 +105,11 @@ class CrucibleBlockEntity : BaseBlockEntity(TYPE), Tickable, BlockEntityClientSe
         val oldheat = heat
         val state = world?.getBlockState(pos.down()) ?: return
         val block = state.block
-        if(block is FluidBlock) {
+        heat = if(block is FluidBlock) {
             val fluidState = block.getFluidState(state)
-            heat = Math.round(CRUCIBLE_HEAT.getHeat(fluidState.fluid) * fluidState.fluid.getHeight(fluidState, world, pos.down()))
-        }
-        else {
-            heat = CRUCIBLE_HEAT.getHeat(block)
+            Math.round(CRUCIBLE_HEAT.getHeat(fluidState.fluid) * fluidState.fluid.getHeight(fluidState, world, pos.down()))
+        } else {
+            CRUCIBLE_HEAT.getHeat(block)
         }
         if(heat != oldheat)
             markDirty()

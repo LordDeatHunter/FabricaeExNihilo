@@ -45,7 +45,7 @@ class WitchWaterBlock(fluid: BaseFluid, settings: Settings): BaseFluidBlock(flui
                     return
                 }
                 EntityType.PLAYER -> {
-                    ExNihiloFabrico.config.modules.witchwater.effects.forEach { effect, durationLevel ->
+                    ExNihiloFabrico.config.modules.witchwater.effects.forEach { (effect, durationLevel) ->
                         applyStatusEffect(entity,
                             StatusEffectInstance(Registry.STATUS_EFFECT[effect],
                                 durationLevel.first,
@@ -109,7 +109,7 @@ class WitchWaterBlock(fluid: BaseFluid, settings: Settings): BaseFluidBlock(flui
         fun replaceMob(world: World, toKill: LivingEntity, spawnType: EntityType<*>) {
             val toSpawn = spawnType.create(world)
             if(toSpawn is LivingEntity) {
-                // Set postion and angles
+                // Set position and angles
                 toSpawn.setPositionAndAngles(toKill.blockPos, toKill.yaw, toKill.pitch)
                 toSpawn.velocity = toKill.velocity
                 toSpawn.headYaw = toKill.headYaw

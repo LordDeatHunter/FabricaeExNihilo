@@ -9,6 +9,7 @@ import net.minecraft.item.Item
 import net.minecraft.util.registry.Registry
 import java.io.File
 import java.io.FileReader
+import java.lang.reflect.Type
 
 data class MeshRegistry(val registry: MutableList<MeshProperties> = mutableListOf()): AbstractRegistry<MutableList<MeshProperties>>(), IMeshRegistry {
     override fun clear() = registry.clear()
@@ -28,7 +29,7 @@ data class MeshRegistry(val registry: MutableList<MeshProperties> = mutableListO
     }
 
     companion object {
-        val SERIALIZATION_TYPE = object : TypeToken<MutableList<MeshProperties>>() {}.type
+        val SERIALIZATION_TYPE: Type? = object : TypeToken<MutableList<MeshProperties>>() {}.type
         fun fromJson(file: File) = fromJson(
             file,
             { MeshRegistry() },

@@ -9,6 +9,7 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import java.io.File
 import java.io.FileReader
+import java.lang.reflect.Type
 import java.util.*
 
 data class ToolRegistry(val registry: MutableList<ToolRecipe> = mutableListOf()):
@@ -39,7 +40,7 @@ data class ToolRegistry(val registry: MutableList<ToolRecipe> = mutableListOf())
     override fun serializable() = registry
 
     companion object {
-        val SERIALIZATION_TYPE = object: TypeToken<MutableList<ToolRecipe>>(){}.type
+        val SERIALIZATION_TYPE: Type = object: TypeToken<MutableList<ToolRecipe>>(){}.type
         fun fromJson(file: File, defaults: (IToolRegistry) -> Unit) = fromJson(file, {ToolRegistry()}, defaults)
     }
 

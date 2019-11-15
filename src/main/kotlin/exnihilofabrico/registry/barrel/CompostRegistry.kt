@@ -6,8 +6,10 @@ import exnihilofabrico.api.recipes.CompostRecipe
 import exnihilofabrico.api.registry.ICompostRegistry
 import exnihilofabrico.compatibility.modules.MetaModule
 import exnihilofabrico.registry.AbstractRegistry
+import net.minecraft.item.ItemStack
 import java.io.File
 import java.io.FileReader
+import java.lang.reflect.Type
 
 data class CompostRegistry(val registry: MutableList<CompostRecipe> = mutableListOf()):
     AbstractRegistry<MutableList<CompostRecipe>>(), ICompostRegistry {
@@ -19,7 +21,7 @@ data class CompostRegistry(val registry: MutableList<CompostRecipe> = mutableLis
         val conflict = registry.any { it.ingredient == recipe.ingredient }
 
         if(conflict) {
-            ExNihiloFabrico.LOGGER.warn("Conflicting Compost Recipe not registered: ${recipe}")
+            ExNihiloFabrico.LOGGER.warn("Conflicting Compost Recipe not registered: $recipe")
             return false
         }
 
@@ -35,9 +37,10 @@ data class CompostRegistry(val registry: MutableList<CompostRecipe> = mutableLis
             json.forEach { register(it) }
         }
     }
+    override fun getRecipe(stack: ItemStack) = registry.firstOrNull { it.test(stack) }
 
     companion object {
-        val SERIALIZATION_TYPE = object : TypeToken<MutableList<CompostRecipe>>() {}.type
+        val SERIALIZATION_TYPE: Type = object : TypeToken<MutableList<CompostRecipe>>() {}.type
         fun fromJson(file: File) = fromJson(
             file,
             { CompostRegistry() },

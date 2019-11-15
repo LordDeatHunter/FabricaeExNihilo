@@ -7,7 +7,7 @@ import java.lang.reflect.Type
 
 object EntityTypeIngredientJson: JsonDeserializer<EntityTypeIngredient>,
     JsonSerializer<EntityTypeIngredient> {
-    val TYPE_TOKEN = object: TypeToken<EntityTypeIngredient>(){}.type
+    val TYPE_TOKEN: Type = object: TypeToken<EntityTypeIngredient>(){}.type
     @Throws(JsonParseException::class)
     override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext) =
         EntityTypeIngredient.fromJson(json, context)

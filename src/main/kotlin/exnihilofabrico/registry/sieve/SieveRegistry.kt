@@ -12,6 +12,7 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
 import java.io.File
 import java.io.FileReader
+import java.lang.reflect.Type
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -69,7 +70,7 @@ data class SieveRegistry(val registry: MutableList<SieveRecipe> = mutableListOf(
     }
 
     companion object {
-        val SERIALIZATION_TYPE = object : TypeToken<MutableList<SieveRecipe>>() {}.type
+        val SERIALIZATION_TYPE: Type = object : TypeToken<MutableList<SieveRecipe>>() {}.type
         fun fromJson(file: File) = fromJson(
             file,
             { SieveRegistry() },

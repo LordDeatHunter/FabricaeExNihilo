@@ -2,14 +2,15 @@ package exnihilofabrico.registry.witchwater
 
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.api.crafting.FluidIngredient
+import exnihilofabrico.api.crafting.WeightedList
 import exnihilofabrico.api.recipes.WitchWaterWorldRecipe
 import exnihilofabrico.api.registry.IWitchWaterWorldRegistry
-import exnihilofabrico.api.registry.WeightedList
 import exnihilofabrico.compatibility.modules.MetaModule
 import exnihilofabrico.registry.AbstractRegistry
 import net.minecraft.fluid.Fluid
 import java.io.File
 import java.io.FileReader
+import java.lang.reflect.Type
 import java.util.*
 
 data class WitchWaterWorldRegistry(val registry: MutableList<WitchWaterWorldRecipe> = mutableListOf()):
@@ -47,7 +48,7 @@ data class WitchWaterWorldRegistry(val registry: MutableList<WitchWaterWorldReci
     override fun serializable() = registry
 
     companion object {
-        val SERIALIZATION_TYPE = object: TypeToken<MutableList<WitchWaterWorldRecipe>>(){}.type
+        val SERIALIZATION_TYPE: Type = object: TypeToken<MutableList<WitchWaterWorldRecipe>>(){}.type
         // TODO fix serialization
         fun fromJson(file: File) = fromJson(
             file,

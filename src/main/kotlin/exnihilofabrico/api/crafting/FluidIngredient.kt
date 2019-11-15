@@ -22,7 +22,7 @@ class FluidIngredient(tags: MutableCollection<Tag<Fluid>> = mutableListOf(), mat
     constructor(vararg tags: Tag<Fluid>): this(tags.toMutableList(), mutableSetOf())
 
     fun test(block: FluidBlock) = test(block.getFluid())
-    fun test(state: FluidState) = test(state.getFluid())
+    fun test(state: FluidState) = test(state.fluid)
     fun test(stack: FluidStack) = test(stack.asFluid())
 
     override fun serializeElement(t: Fluid, context: JsonSerializationContext) =
@@ -43,7 +43,7 @@ class FluidIngredient(tags: MutableCollection<Tag<Fluid>> = mutableListOf(), mat
                     )
                 })
 
-        fun deserializeTag(json: JsonElement, context: JsonDeserializationContext) =
+        fun deserializeTag(json: JsonElement, context: JsonDeserializationContext): Tag<Fluid> =
             TagRegistry.fluid(Identifier(json.asString.split("#").last()))
         fun deserializeMatch(json: JsonElement, context: JsonDeserializationContext) =
             Registry.FLUID[(Identifier(json.asString))]
