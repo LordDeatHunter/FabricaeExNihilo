@@ -6,6 +6,7 @@ import com.google.gson.JsonPrimitive
 import com.google.gson.JsonSerializationContext
 import exnihilofabrico.util.getId
 import net.fabricmc.fabric.api.tag.TagRegistry
+import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.tag.Tag
 import net.minecraft.util.Identifier
@@ -16,6 +17,8 @@ class EntityTypeIngredient(tags: MutableCollection<Tag<EntityType<*>>> = mutable
 
     constructor(vararg matches: EntityType<*>): this(mutableListOf(), matches.toMutableSet())
     constructor(vararg tags: Tag<EntityType<*>>): this(tags.toMutableList(), mutableSetOf())
+
+    fun test(entity: Entity) = test(entity.type)
 
     override fun serializeElement(t: EntityType<*>, context: JsonSerializationContext) =
         JsonPrimitive(t.getId().toString())

@@ -9,7 +9,7 @@ data class Color(val r: Float, val g: Float, val b: Float, val a: Float) {
         (color and 255).toFloat() / 255f,
         if(ignoreAlpha) 1.0f else (color shr 24 and 255) / 255f
     )
-    constructor(hex: String): this(hex.toInt(16), hex.length <= 6)
+    constructor(hex: String): this(hexToInt(hex), hex.length < 8)
 
     fun toInt(): Int {
         return toIntIgnoreAlpha() or ((a*255).toInt() shl 24)
@@ -23,11 +23,23 @@ data class Color(val r: Float, val g: Float, val b: Float, val a: Float) {
         return ((r*255).toInt() shl 16) or ((g*255).toInt() shl 8) or ((b*255).toInt())
     }
 
+    fun toHex(): String {
+        return Integer.toHexString(toInt()).padStart(8, '0')
+    }
+
     fun toHexNoAlpha(): String {
-        return toIntIgnoreAlpha().toString(16)
+        return Integer.toHexString(toIntIgnoreAlpha()).padStart(6, '0')
     }
 
     companion object {
+
+        fun hexToInt(hex: String): Int {
+            val rgb = if(hex.length < 8) hex else hex.substring(2)
+            val a = if(hex.length < 8) "FF" else hex.substring(0, 2)
+
+            return (Integer.parseInt(a, 16) shl 24) or Integer.parseInt(rgb, 16)
+        }
+
         fun average(left: Color, right: Color, leftWeight: Float = 0.5f): Color {
             val rightWeight = 1.0f - leftWeight
             val r = sqrt(left.r*left.r*leftWeight + right.r*right.r*rightWeight)
@@ -71,6 +83,11 @@ data class Color(val r: Float, val g: Float, val b: Float, val a: Float) {
         val DARK_GRAY = Color("555555")
         @JvmStatic
         val BLACK = Color("000000")
+
+        @JvmStatic
+        val ORANGE = Color("FFA500")
+
+
     }
 }
 

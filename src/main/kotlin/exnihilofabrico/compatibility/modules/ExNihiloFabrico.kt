@@ -3,10 +3,11 @@ package exnihilofabrico.compatibility.modules
 import exnihilofabrico.api.compatibility.IExNihiloFabricoModule
 import exnihilofabrico.api.crafting.FluidIngredient
 import exnihilofabrico.api.crafting.FluidStack
+import exnihilofabrico.api.crafting.ItemIngredient
 import exnihilofabrico.api.crafting.Lootable
-import exnihilofabrico.api.recipes.CrucibleRecipe
 import exnihilofabrico.api.registry.*
 import exnihilofabrico.id
+import exnihilofabrico.modules.ModItems.SEED_MYCELIUM
 import exnihilofabrico.modules.ModTags
 import exnihilofabrico.modules.ore.EnumChunkMaterial
 import exnihilofabrico.modules.ore.EnumChunkShape
@@ -17,21 +18,45 @@ import net.minecraft.block.Blocks
 import net.minecraft.entity.EntityType
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.Items
-import net.minecraft.recipe.Ingredient
 import net.minecraft.tag.FluidTags
 import net.minecraft.tag.ItemTags
+import net.minecraft.tag.Tag
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 import net.minecraft.village.VillagerProfession
 
 object ExNihiloFabrico: IExNihiloFabricoModule {
 
-    override fun registerBarrelAlchemy(registry: IBarrelAlchemyRegistry) {
-
+    override fun registerAlchemy(registry: IAlchemyRegistry) {
+        registry.register(Fluids.WATER, SEED_MYCELIUM.asStack(), WitchWaterFluid.Still)
     }
 
-    override fun registerBarrelMilking(registry: IBarrelMilkingRegistry) {
+    override fun registerCompost(registry: ICompostRegistry) {
+        registry.register(ItemTags.LEAVES, Blocks.DIRT, 0.125, Color.DARK_GREEN)
+        registry.register(ItemTags.SAPLINGS, Blocks.DIRT, 0.0625, Color.DARK_GREEN)
 
+        registry.register(Items.CHORUS_FLOWER, Blocks.END_STONE, 0.25, Color.DARK_PURPLE)
+        registry.register(Items.POPPED_CHORUS_FRUIT, Blocks.END_STONE, 0.125, Color.LIGHT_PURPLE)
+        registry.register(Items.CHORUS_FRUIT, Blocks.END_STONE, 0.0625, Color.LIGHT_PURPLE)
+
+        registry.register(Items.COBWEB, Blocks.WHITE_WOOL, 0.5, Color.WHITE)
+
+        registry.register(Items.CACTUS, Blocks.DIRT, 0.0625, Color.DARK_GREEN)
+
+        registry.register(Tag(Identifier("c:seeds")), Blocks.DIRT, 0.0625, Color.GREEN)
+        registry.register(Tag(Identifier("c:crops")), Blocks.DIRT, 0.0625, Color.YELLOW)
+        registry.register(Tag(Identifier("c:flowers")), Blocks.DIRT, 0.0625, Color.RED)
+        registry.register(Tag(Identifier("c:dyes")), Blocks.DIRT, 0.125, Color.RED)
+        registry.register(Tag(Identifier("c:raw_meat")), Blocks.DIRT, 0.125, Color.RED)
+        registry.register(Tag(Identifier("c:cooked_meat")), Blocks.DIRT, 0.25, Color.RED)
+    }
+
+    override fun registerLeaking(registry: ILeakingRegistry) {
+        registry.register(Blocks.COBBLESTONE, Fluids.WATER, 10, Blocks.MOSSY_COBBLESTONE)
+    }
+
+    override fun registerMilking(registry: IMilkingRegistry) {
+        registry.register(EntityType.WITCH, WitchWaterFluid.Still, 10, 20)
     }
 
     override fun registerCrucibleHeat(registry: ICrucibleHeatRegistry) {
@@ -42,21 +67,12 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
     }
 
     override fun registerCrucibleStone(registry: ICrucibleRegistry) {
-        registry.register(CrucibleRecipe(Ingredient.ofItems(Blocks.COBBLESTONE),
-            FluidStack(
-                Fluids.LAVA.getId(),
-                FluidStack.BUCKET_AMOUNT / 4
-            ), true))
+        registry.register(ItemIngredient(Blocks.COBBLESTONE), FluidStack(Fluids.LAVA,FluidStack.BUCKET_AMOUNT / 4))
     }
 
     override fun registerCrucibleWood(registry: ICrucibleRegistry) {
-        VanillaWoodDefinitions.values().map { it.getLeafBlock() }.forEach {
-            CrucibleRecipe(Ingredient.ofItems(it),
-                FluidStack(
-                    Fluids.WATER.getId(),
-                    FluidStack.BUCKET_AMOUNT / 4
-                ), false)
-        }
+        registry.register(ItemIngredient(ItemTags.SAPLINGS), FluidStack(Fluids.WATER, FluidStack.BUCKET_AMOUNT / 10))
+        registry.register(ItemIngredient(ItemTags.LEAVES), FluidStack(Fluids.WATER, FluidStack.BUCKET_AMOUNT / 4))
     }
 
     override fun registerOres(registry: IOreRegistry) {

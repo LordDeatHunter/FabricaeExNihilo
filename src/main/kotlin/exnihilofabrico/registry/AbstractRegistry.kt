@@ -4,15 +4,19 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.ExNihiloFabrico
+import exnihilofabrico.api.crafting.EntityTypeIngredient
+import exnihilofabrico.api.crafting.FluidIngredient
+import exnihilofabrico.api.crafting.FluidStack
+import exnihilofabrico.api.crafting.ItemIngredient
 import exnihilofabrico.api.recipes.*
 import exnihilofabrico.json.*
 import exnihilofabrico.modules.sieves.MeshProperties
+import exnihilofabrico.util.Color
 import net.minecraft.block.Block
 import net.minecraft.entity.EntityType
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraft.recipe.Ingredient
 import net.minecraft.util.Identifier
 import net.minecraft.util.WeightedList
 import net.minecraft.village.VillagerProfession
@@ -24,20 +28,28 @@ abstract class AbstractRegistry<T>(
         .setPrettyPrinting()
         .setLenient()
         .registerTypeAdapter(Item::class.java, ItemJson)
-        .registerTypeAdapter(Fluid::class.java, FluidJson)
         .registerTypeAdapter(Block::class.java, BlockJson)
+        .registerTypeAdapter(Color::class.java, ColorJson)
         .registerTypeAdapter(EntityType::class.java, EntityTypeJson)
+        .registerTypeAdapter(Fluid::class.java, FluidJson)
+        .registerTypeAdapter(FluidStack::class.java, FluidStackJson)
         .registerTypeAdapter(Identifier::class.java, IdentifierJson)
-        .registerTypeAdapter(Ingredient::class.java, IngredientJson)
         .registerTypeAdapter(ItemStack::class.java, ItemStackJson)
         .registerTypeAdapter(MeshProperties::class.java, MeshPropertiesJson)
+        .registerTypeAdapter(VillagerProfession::class.java, VillagerProfessionJson)
         .registerTypeAdapter(WeightedList::class.java, WeightedListJson())
-        .registerTypeAdapter(ToolRecipe::class.java, ToolRecipeJson)
+
+        .registerTypeAdapter(ItemIngredient::class.java, ItemIngredientJson)
+        .registerTypeAdapter(FluidIngredient::class.java, FluidIngredientJson)
+        .registerTypeAdapter(EntityTypeIngredient::class.java, EntityTypeIngredientJson)
+
+        .registerTypeAdapter(AlchemyRecipe::class.java, AlchemyRecipeJson)
         .registerTypeAdapter(CrucibleHeatRecipe::class.java, CrucibleHeatRecipeJson)
+        .registerTypeAdapter(ToolRecipe::class.java, ToolRecipeJson)
         .registerTypeAdapter(SieveRecipe::class.java, SieveRecipeJson)
         .registerTypeAdapter(WitchWaterWorldRecipe::class.java, WitchWaterWorldRecipeJson)
         .registerTypeAdapter(WitchWaterEntityRecipe::class.java, WitchWaterEntityRecipeJson)
-        .registerTypeAdapter(VillagerProfession::class.java, VillagerProfessionJson)
+
         .enableComplexMapKeySerialization()
         .create()
 ) {

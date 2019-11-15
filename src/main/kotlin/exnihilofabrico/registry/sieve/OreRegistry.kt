@@ -1,4 +1,4 @@
-package exnihilofabrico.registry
+package exnihilofabrico.registry.sieve
 
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.ExNihiloFabrico
@@ -7,6 +7,7 @@ import exnihilofabrico.compatibility.modules.MetaModule
 import exnihilofabrico.modules.ore.OreChunkItem
 import exnihilofabrico.modules.ore.OrePieceItem
 import exnihilofabrico.modules.ore.OreProperties
+import exnihilofabrico.registry.AbstractRegistry
 import net.minecraft.client.util.ModelIdentifier
 import net.minecraft.item.Item
 import net.minecraft.util.registry.Registry
@@ -33,13 +34,19 @@ data class OreRegistry(val registry: MutableList<OreProperties> = mutableListOf(
     override fun serializable() = registry
     override fun registerJson(file: File) {
         if(file.exists()){
-            val json: MutableList<OreProperties> = gson.fromJson(FileReader(file), SERIALIZATION_TYPE)
+            val json: MutableList<OreProperties> = gson.fromJson(FileReader(file),
+                SERIALIZATION_TYPE
+            )
             json.forEach { register(it) }
         }
     }
 
     companion object {
         val SERIALIZATION_TYPE = object : TypeToken<MutableList<OreProperties>>() {}.type
-        fun fromJson(file: File) = fromJson(file, {OreRegistry()}, MetaModule::registerOres)
+        fun fromJson(file: File) = fromJson(
+            file,
+            { OreRegistry() },
+            MetaModule::registerOres
+        )
     }
 }

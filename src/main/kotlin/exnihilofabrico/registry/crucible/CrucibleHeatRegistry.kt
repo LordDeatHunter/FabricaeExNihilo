@@ -1,9 +1,10 @@
-package exnihilofabrico.registry
+package exnihilofabrico.registry.crucible
 
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.api.recipes.CrucibleHeatRecipe
 import exnihilofabrico.api.registry.ICrucibleHeatRegistry
 import exnihilofabrico.compatibility.modules.MetaModule
+import exnihilofabrico.registry.AbstractRegistry
 import net.minecraft.block.Block
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
@@ -25,13 +26,19 @@ data class CrucibleHeatRegistry(val registry: MutableList<CrucibleHeatRecipe> = 
     override fun serializable() = registry
     override fun registerJson(file: File) {
         if(file.exists()){
-            val json: MutableList<CrucibleHeatRecipe> = gson.fromJson(FileReader(file), SERIALIZATION_TYPE)
+            val json: MutableList<CrucibleHeatRecipe> = gson.fromJson(FileReader(file),
+                SERIALIZATION_TYPE
+            )
             json.forEach { register(it) }
         }
     }
 
     companion object {
         val SERIALIZATION_TYPE = object: TypeToken<MutableList<CrucibleHeatRecipe>>(){}.type
-        fun fromJson(file: File) = fromJson(file, {CrucibleHeatRegistry()}, MetaModule::registerCrucibleHeat)
+        fun fromJson(file: File) = fromJson(
+            file,
+            { CrucibleHeatRegistry() },
+            MetaModule::registerCrucibleHeat
+        )
     }
 }

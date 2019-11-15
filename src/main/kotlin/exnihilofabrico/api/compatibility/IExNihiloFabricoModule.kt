@@ -5,8 +5,10 @@ import exnihilofabrico.api.registry.*
 interface IExNihiloFabricoModule {
 
     // Barrel Registries
-    fun registerBarrelAlchemy(registry: IBarrelAlchemyRegistry)
-    fun registerBarrelMilking(registry: IBarrelMilkingRegistry)
+    fun registerAlchemy(registry: IAlchemyRegistry)
+    fun registerCompost(registry: ICompostRegistry)
+    fun registerLeaking(registry: ILeakingRegistry)
+    fun registerMilking(registry: IMilkingRegistry)
 
     // Crucible Registries
     fun registerCrucibleHeat(registry: ICrucibleHeatRegistry)

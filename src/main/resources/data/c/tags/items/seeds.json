@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:wheat_seeds",
+    "minecraft:beetroot_seeds",
+    "exnihilofabrico:seed_sea_pickle",
+    "exnihilofabrico:seed_grass",
+    "exnihilofabrico:seed_mycelium",
+    "exnihilofabrico:seed_chorus",
+    "exnihilofabrico:seed_cactus",
+    "exnihilofabrico:seed_sugarcane",
+    "exnihilofabrico:seed_potato",
+    "exnihilofabrico:seed_carrot",
+    "exnihilofabrico:seed_dark_oak",
+    "exnihilofabrico:seed_acacia",
+    "exnihilofabrico:seed_jungle",
+    "exnihilofabrico:seed_spruce",
+    "exnihilofabrico:seed_birch",
+    "exnihilofabrico:seed_oak",
+    "exnihilofabrico:seed_kelp"
+  ]
+}

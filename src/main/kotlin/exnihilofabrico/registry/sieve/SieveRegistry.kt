@@ -1,9 +1,10 @@
-package exnihilofabrico.registry
+package exnihilofabrico.registry.sieve
 
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.api.recipes.SieveRecipe
 import exnihilofabrico.api.registry.ISieveRegistry
 import exnihilofabrico.compatibility.modules.MetaModule
+import exnihilofabrico.registry.AbstractRegistry
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.player.PlayerEntity
@@ -60,13 +61,19 @@ data class SieveRegistry(val registry: MutableList<SieveRecipe> = mutableListOf(
     override fun serializable() = registry
     override fun registerJson(file: File) {
         if(file.exists()){
-            val json: MutableList<SieveRecipe> = gson.fromJson(FileReader(file), SERIALIZATION_TYPE)
+            val json: MutableList<SieveRecipe> = gson.fromJson(FileReader(file),
+                SERIALIZATION_TYPE
+            )
             json.forEach { register(it) }
         }
     }
 
     companion object {
         val SERIALIZATION_TYPE = object : TypeToken<MutableList<SieveRecipe>>() {}.type
-        fun fromJson(file: File) = fromJson(file, {SieveRegistry()}, MetaModule::registerSieve)
+        fun fromJson(file: File) = fromJson(
+            file,
+            { SieveRegistry() },
+            MetaModule::registerSieve
+        )
     }
 }

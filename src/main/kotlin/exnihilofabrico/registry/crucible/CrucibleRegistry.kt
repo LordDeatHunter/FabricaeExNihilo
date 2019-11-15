@@ -1,8 +1,9 @@
-package exnihilofabrico.registry
+package exnihilofabrico.registry.crucible
 
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.api.recipes.CrucibleRecipe
 import exnihilofabrico.api.registry.ICrucibleRegistry
+import exnihilofabrico.registry.AbstractRegistry
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import java.io.File
@@ -18,13 +19,20 @@ data class CrucibleRegistry(val registry: MutableList<CrucibleRecipe> = ArrayLis
     override fun serializable() = registry
     override fun registerJson(file: File) {
         if(file.exists()){
-            val json: MutableList<CrucibleRecipe> = gson.fromJson(FileReader(file), SERIALIZATION_TYPE)
+            val json: MutableList<CrucibleRecipe> = gson.fromJson(FileReader(file),
+                SERIALIZATION_TYPE
+            )
             json.forEach { register(it) }
         }
     }
 
     companion object {
         val SERIALIZATION_TYPE = object : TypeToken<MutableList<CrucibleRecipe>>() {}.type
-        fun fromJson(file: File, defaults: (CrucibleRegistry) -> Unit) = fromJson(file, {CrucibleRegistry()}, defaults)
+        fun fromJson(file: File, defaults: (CrucibleRegistry) -> Unit) =
+            fromJson(
+                file,
+                { CrucibleRegistry() },
+                defaults
+            )
     }
 }

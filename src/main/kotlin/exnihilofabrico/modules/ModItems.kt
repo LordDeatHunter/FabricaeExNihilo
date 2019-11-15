@@ -46,10 +46,14 @@ object ModItems {
         //id("seed_peony") to PlantableItem(Blocks.PEONY, seed_settings)
     )
 
+    val SEED_SEA_PICKLE = PlantableItem(Blocks.SEA_PICKLE, seed_settings)
+    val SEED_GRASS = TransformingItem(Blocks.DIRT, Blocks.GRASS_BLOCK, seed_settings)
+    val SEED_MYCELIUM = TransformingItem(Blocks.DIRT, Blocks.MYCELIUM, seed_settings)
+
     val OTHER_SEEDS = mutableMapOf<Identifier, Item>(
-        id("seed_sea_pickle") to PlantableItem(Blocks.SEA_PICKLE, seed_settings),
-        id("seed_grass") to TransformingItem(Blocks.DIRT, Blocks.GRASS_BLOCK, seed_settings),
-        id("seed_mycelium") to TransformingItem(Blocks.DIRT, Blocks.MYCELIUM, seed_settings)
+        id("seed_sea_pickle") to SEED_SEA_PICKLE,
+        id("seed_grass") to SEED_GRASS,
+        id("seed_mycelium") to SEED_MYCELIUM
     )
 
     val RESOURCES = mutableMapOf<Identifier, Item>(
@@ -58,7 +62,11 @@ object ModItems {
                 FoodComponents.COD
             )
         ),
-        id("silkworm_cooked") to BaseItem(Item.Settings().maxCount(64).food(FoodComponents.COOKED_COD))
+        id("silkworm_cooked") to BaseItem(Item.Settings().maxCount(64).food(FoodComponents.COOKED_COD)),
+        id("pebble_andesite") to BaseItem(Item.Settings().maxCount(64)),
+        id("pebble_diorite") to BaseItem(Item.Settings().maxCount(64)),
+        id("pebble_granite") to BaseItem(Item.Settings().maxCount(64)),
+        id("pebble_stone") to BaseItem(Item.Settings().maxCount(64))
     )
 
     init {

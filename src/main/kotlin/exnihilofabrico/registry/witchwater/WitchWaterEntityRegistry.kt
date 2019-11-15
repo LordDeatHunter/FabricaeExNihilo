@@ -1,10 +1,11 @@
-package exnihilofabrico.registry
+package exnihilofabrico.registry.witchwater
 
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.api.crafting.EntityTypeIngredient
 import exnihilofabrico.api.recipes.WitchWaterEntityRecipe
 import exnihilofabrico.api.registry.IWitchWaterEntityRegistry
 import exnihilofabrico.compatibility.modules.MetaModule
+import exnihilofabrico.registry.AbstractRegistry
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.village.VillagerProfession
@@ -23,7 +24,9 @@ data class WitchWaterEntityRegistry(val registry: MutableList<WitchWaterEntityRe
 
     override fun serializable() = registry
     override fun registerJson(file: File) {
-        val json: MutableList<WitchWaterEntityRecipe> = gson.fromJson(FileReader(file), SERIALIZATION_TYPE)
+        val json: MutableList<WitchWaterEntityRecipe> = gson.fromJson(FileReader(file),
+            SERIALIZATION_TYPE
+        )
         json.forEach {
             register(it.target, it.profession, it.tospawn)
         }
@@ -31,7 +34,11 @@ data class WitchWaterEntityRegistry(val registry: MutableList<WitchWaterEntityRe
 
     companion object {
         val SERIALIZATION_TYPE = object: TypeToken<MutableList<WitchWaterEntityRecipe>>(){}.type
-        fun fromJson(file: File) = fromJson(file, {WitchWaterEntityRegistry()}, MetaModule::registerWitchWaterEntity)
+        fun fromJson(file: File) = fromJson(
+            file,
+            { WitchWaterEntityRegistry() },
+            MetaModule::registerWitchWaterEntity
+        )
 
     }
 }

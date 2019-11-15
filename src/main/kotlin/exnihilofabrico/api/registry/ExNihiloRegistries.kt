@@ -2,11 +2,29 @@ package exnihilofabrico.api.registry
 
 import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.compatibility.modules.MetaModule
-import exnihilofabrico.registry.*
+import exnihilofabrico.registry.ToolRegistry
+import exnihilofabrico.registry.barrel.AlchemyRegistry
+import exnihilofabrico.registry.barrel.CompostRegistry
+import exnihilofabrico.registry.barrel.LeakingRegistry
+import exnihilofabrico.registry.barrel.MilkingRegistry
+import exnihilofabrico.registry.crucible.CrucibleHeatRegistry
+import exnihilofabrico.registry.crucible.CrucibleRegistry
+import exnihilofabrico.registry.sieve.MeshRegistry
+import exnihilofabrico.registry.sieve.OreRegistry
+import exnihilofabrico.registry.sieve.SieveRegistry
+import exnihilofabrico.registry.witchwater.WitchWaterEntityRegistry
+import exnihilofabrico.registry.witchwater.WitchWaterWorldRegistry
 import net.fabricmc.loader.FabricLoader
 import java.io.File
 
 object ExNihiloRegistries {
+
+    @JvmField
+    var ORES: IOreRegistry = OreRegistry()
+    @JvmField
+    var MESH: IMeshRegistry = MeshRegistry()
+    @JvmField
+    var SIEVE: ISieveRegistry = SieveRegistry()
 
     @JvmField
     var WITCHWATER_WORLD: IWitchWaterWorldRegistry = WitchWaterWorldRegistry()
@@ -19,11 +37,6 @@ object ExNihiloRegistries {
     var CROOK: IToolRegistry = ToolRegistry()
 
     @JvmField
-    var MESH: IMeshRegistry = MeshRegistry()
-    @JvmField
-    var SIEVE: ISieveRegistry = SieveRegistry()
-
-    @JvmField
     var CRUCIBLE_HEAT: ICrucibleHeatRegistry = CrucibleHeatRegistry()
     @JvmField
     var CRUCIBLE_STONE: ICrucibleRegistry = CrucibleRegistry()
@@ -31,8 +44,10 @@ object ExNihiloRegistries {
     var CRUCIBLE_WOOD: ICrucibleRegistry = CrucibleRegistry()
 
     @JvmField
-    var ORES: IOreRegistry = OreRegistry()
-
+    var BARREL_ALCHEMY: IAlchemyRegistry = AlchemyRegistry()
+    var BARREL_COMPOST: ICompostRegistry = CompostRegistry()
+    var BARREL_MILKING: IMilkingRegistry = MilkingRegistry()
+    var BARREL_LEAKING: ILeakingRegistry = LeakingRegistry()
 
     private val configDir = File(FabricLoader.INSTANCE.configDirectory, "exnihilofabrico")
 
@@ -49,6 +64,27 @@ object ExNihiloRegistries {
             loadSieveRegistry()
         if(ExNihiloFabrico.config.modules.witchwater.enabled)
             loadWitchWaterRegistries()
+        if(ExNihiloFabrico.config.modules.barrels.enabled)
+            loadBarrelRegistries()
+    }
+
+    private fun loadBarrelRegistries() {
+        if(ExNihiloFabrico.config.modules.barrels.enableAlchemy)
+            BARREL_ALCHEMY = AlchemyRegistry.fromJson(
+                File(configDir,"barrel_alchemy.json")
+            )
+        if(ExNihiloFabrico.config.modules.barrels.enableCompost)
+            BARREL_COMPOST = CompostRegistry.fromJson(
+                File(configDir,"barrel_compost.json")
+            )
+        if(ExNihiloFabrico.config.modules.barrels.enableLeaking)
+            BARREL_MILKING = MilkingRegistry.fromJson(
+                File(configDir,"barrel_milking.json")
+            )
+        if(ExNihiloFabrico.config.modules.barrels.enableMilking)
+            BARREL_LEAKING = LeakingRegistry.fromJson(
+                File(configDir,"barrel_leaking.json")
+            )
     }
 
     fun loadEarlyRegistries() {

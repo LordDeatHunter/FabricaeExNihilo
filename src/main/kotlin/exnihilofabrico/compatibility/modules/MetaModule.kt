@@ -4,6 +4,7 @@ import exnihilofabrico.api.compatibility.IExNihiloFabricoModule
 import exnihilofabrico.api.registry.*
 
 object MetaModule: IExNihiloFabricoModule {
+
     val modules: MutableList<IExNihiloFabricoModule> = mutableListOf()
 
     init {
@@ -11,8 +12,10 @@ object MetaModule: IExNihiloFabricoModule {
         // Check if an mod with a specific module is installed, then add its module to the list
     }
 
-    override fun registerBarrelAlchemy(registry: IBarrelAlchemyRegistry) = modules.forEach { it.registerBarrelAlchemy(registry) }
-    override fun registerBarrelMilking(registry: IBarrelMilkingRegistry) = modules.forEach { it.registerBarrelMilking(registry) }
+    override fun registerAlchemy(registry: IAlchemyRegistry) = modules.forEach { it.registerAlchemy(registry) }
+    override fun registerCompost(registry: ICompostRegistry) = modules.forEach { it.registerCompost(registry) }
+    override fun registerLeaking(registry: ILeakingRegistry) = modules.forEach { it.registerLeaking(registry) }
+    override fun registerMilking(registry: IMilkingRegistry) = modules.forEach { it.registerMilking(registry) }
     override fun registerCrucibleHeat(registry: ICrucibleHeatRegistry) = modules.forEach { it.registerCrucibleHeat(registry) }
     override fun registerCrucibleStone(registry: ICrucibleRegistry) = modules.forEach { it.registerCrucibleStone(registry) }
     override fun registerCrucibleWood(registry: ICrucibleRegistry) = modules.forEach { it.registerCrucibleWood(registry) }

@@ -12,6 +12,7 @@ class ExNihiloFabricoConfig {
 
 class ModuleConfig {
     var general = GeneralConfig()
+    var barrels = BarrelConfig()
     var crucibles = CrucibleConfig()
     var silkworms = InfestedConfig()
     var seeds = SeedConfig()
@@ -25,6 +26,18 @@ class ModuleConfig {
 class GeneralConfig {
     @Comment("Load json files from <config>/exnihilofabrico/*.json")
     var useJsonRecipes: Boolean = true
+}
+
+class BarrelConfig {
+    var enabled: Boolean = true
+    var enableAlchemy: Boolean = true
+    var enableCompost: Boolean = true
+    var enableLeaking: Boolean = true
+    var enableMilking: Boolean = true
+    @Comment("How many ticks between updates")
+    var tickRate = 20
+    @Comment("Can barrels be enchanted with efficiency.")
+    var efficiency: Boolean = true
 }
 
 class CrucibleConfig {
