@@ -30,6 +30,10 @@ class GeneralConfig {
 
 class BarrelConfig {
     var enabled: Boolean = true
+    @Comment("How many ticks between updates")
+    var tickRate = 6
+    @Comment("Can barrels be enchanted with efficiency.")
+    var efficiency: Boolean = true
     var enableAlchemy: Boolean = true
     var enableCompost: Boolean = true
     @Comment("How much progress to add each time the barrel ticks")
@@ -38,10 +42,6 @@ class BarrelConfig {
     @Comment("How far away can a block be and still be affected by wooden barrels leaking")
     var leakRadius: Int = 2
     var enableMilking: Boolean = true
-    @Comment("How many ticks between updates")
-    var tickRate = 40
-    @Comment("Can barrels be enchanted with efficiency.")
-    var efficiency: Boolean = true
 }
 
 class CrucibleConfig {

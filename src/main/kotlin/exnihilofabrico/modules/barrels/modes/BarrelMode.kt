@@ -15,7 +15,7 @@ fun barrelModeFactory(tag: CompoundTag): BarrelMode {
         tag.containsKey("item_mode") -> ItemMode.fromTag(tag.getCompound("item_mode"))
         tag.containsKey("fluid_mode") -> FluidMode.fromTag(tag.getCompound("fluid_mode"))
         tag.containsKey("alchemy_mode") -> AlchemyMode.fromTag(tag.getCompound("alchemy_mode"))
-        tag.containsKey("compost_mode") -> AlchemyMode.fromTag(tag.getCompound("compost_mode"))
+        tag.containsKey("compost_mode") -> CompostMode.fromTag(tag.getCompound("compost_mode"))
         else -> EmptyMode()
     }
 }

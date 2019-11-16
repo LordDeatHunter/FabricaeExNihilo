@@ -6,7 +6,9 @@ import exnihilofabrico.api.crafting.ItemIngredient
 import exnihilofabrico.api.recipes.LeakingRecipe
 import net.minecraft.block.Block
 import net.minecraft.fluid.Fluid
+import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
+import net.minecraft.tag.Tag
 
 interface ILeakingRegistry {
     fun clear()
@@ -20,6 +22,8 @@ interface ILeakingRegistry {
         register(LeakingRecipe(target, FluidIngredient(fluid.getFluid()), fluid.amount, result))
 
     fun register(target: ItemConvertible, fluid: Fluid, amount: Int, result: Block) =
+        register(LeakingRecipe(ItemIngredient(target), FluidIngredient(fluid), amount, result))
+    fun register(target: Tag<Item>, fluid: Fluid, amount: Int, result: Block) =
         register(LeakingRecipe(ItemIngredient(target), FluidIngredient(fluid), amount, result))
 
     /**

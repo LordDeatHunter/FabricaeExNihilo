@@ -50,6 +50,9 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
 
     override fun registerLeaking(registry: ILeakingRegistry) {
         registry.register(Blocks.COBBLESTONE, Fluids.WATER, 10, Blocks.MOSSY_COBBLESTONE)
+        registry.register(Blocks.STONE_BRICKS, Fluids.WATER, 10, Blocks.MOSSY_STONE_BRICKS)
+        registry.register(ItemTags.SAPLINGS, WitchWaterFluid.Still, 10, Blocks.DEAD_BUSH)
+        registry.register(Blocks.GRAVEL, WitchWaterFluid.Still, 10, getExNihiloBlock("crushed_netherrack"))
     }
 
     override fun registerMilking(registry: IMilkingRegistry) {

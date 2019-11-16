@@ -1,7 +1,6 @@
 package exnihilofabrico.modules.barrels
 
 import com.swordglowsblue.artifice.api.builder.data.recipe.ShapedRecipeBuilder
-import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.modules.base.BaseBlock
 import net.fabricmc.fabric.api.block.FabricBlockSettings
 import net.minecraft.block.*
@@ -26,7 +25,6 @@ class BarrelBlock(val texture: Identifier,
     override fun getRenderType(state: BlockState?) = BlockRenderType.MODEL
 
     override fun activate(state: BlockState?, world: World?, pos: BlockPos?, player: PlayerEntity?, hand: Hand?, hitResult: BlockHitResult?): Boolean {
-        ExNihiloFabrico.LOGGER.info("Activated Barrel")
         if(world?.isClient != false || pos == null)
             return true
         val blockEntity = world.getBlockEntity(pos)

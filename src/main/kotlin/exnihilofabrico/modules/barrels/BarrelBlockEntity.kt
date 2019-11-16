@@ -7,7 +7,6 @@ import exnihilofabrico.id
 import exnihilofabrico.modules.ModBlocks
 import exnihilofabrico.modules.barrels.modes.*
 import exnihilofabrico.modules.base.BaseBlockEntity
-import exnihilofabrico.util.Color
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
@@ -37,8 +36,10 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode()): BaseBlockEntity(TYP
     }
 
     override fun clear() {
-        if(mode is ItemMode)
+        if(mode is ItemMode) {
             mode = EmptyMode()
+
+        }
     }
 
     override fun setInvStack(slot: Int, stack: ItemStack?) {
@@ -81,10 +82,9 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode()): BaseBlockEntity(TYP
 
             if(it.amount <= 1 && recipe.result.isItemEqual(it.result)) {
 
-                val amount = min(it.amount + recipe.amount, 1.0)
-                val color = Color.average(recipe.color, it.color, recipe.amount / amount)
-
-                mode = CompostMode(recipe.result, amount, color)
+                it.amount = min(it.amount + recipe.amount, 1.0)
+                it.color = recipe.color
+                it.progress = 0.0
                 markDirtyClient()
                 return@setInvStack
             }
@@ -136,8 +136,6 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode()): BaseBlockEntity(TYP
                 return@canInsertInvStack true
         }
         (mode as? EmptyMode)?.let {
-            ExNihiloFabrico.LOGGER.info("Testing ${stack}")
-            ExNihiloFabrico.LOGGER.info("${ExNihiloRegistries.BARREL_COMPOST.getRecipe(stack)}")
             if(ExNihiloRegistries.BARREL_COMPOST.hasRecipe(stack))
                 return@canInsertInvStack true
         }
@@ -151,13 +149,13 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode()): BaseBlockEntity(TYP
 
     override fun tick() {
         if (tickCounter <= 0) {
+            tickCounter = ExNihiloFabrico.config.modules.barrels.tickRate
+            markDirty()
             if(leakTick()) return
             if(alchemyTick()) return
             if(compostTick()) return
             //TODO check for nearby block transformations
             //TODO check adjacent fluid changes
-            tickCounter = ExNihiloFabrico.config.modules.barrels.tickRate
-            markDirty()
         }
         else {
             tickCounter -= 1
@@ -168,8 +166,7 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode()): BaseBlockEntity(TYP
     private fun compostTick(): Boolean {
         (mode as? CompostMode)?.let { compostMode ->
             if(compostMode.progress >= 1.0) {
-                mode = ItemMode(compostMode.result)
-                markDirtyClient()
+                mode = ItemMode(compostMode.result.copy())
                 return@compostTick true
             }
             if(compostMode.amount >= 1.0) {
@@ -263,7 +260,6 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode()): BaseBlockEntity(TYP
     }
 
     fun activate(state: BlockState?, player: PlayerEntity?, hand: Hand?, hitResult: BlockHitResult?): Boolean {
-        ExNihiloFabrico.LOGGER.info("Activated Barrel Entity ${mode}")
         if(world?.isClient != false || player == null || hand == null)
             return true
 

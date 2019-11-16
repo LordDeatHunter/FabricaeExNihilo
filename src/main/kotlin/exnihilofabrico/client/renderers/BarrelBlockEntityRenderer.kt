@@ -17,6 +17,7 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
 import org.lwjgl.opengl.GL11
+import kotlin.math.pow
 
 class BarrelBlockEntityRenderer: BlockEntityRenderer<BarrelBlockEntity>() {
     private val xzScale = 12.0 / 16.0
@@ -30,7 +31,7 @@ class BarrelBlockEntityRenderer: BlockEntityRenderer<BarrelBlockEntity>() {
             is FluidMode -> renderFluidMode(mode, barrel.pos)
             is ItemMode -> renderItem(mode.stack, 1.0, x, y, z)
             is AlchemyMode -> renderAlchemyMode(mode, barrel.pos)
-            is CompostMode -> renderCompostMode(mode, barrel.pos)
+            is CompostMode -> renderCompostMode(mode, x, y, z)
         }
     }
 
@@ -38,17 +39,15 @@ class BarrelBlockEntityRenderer: BlockEntityRenderer<BarrelBlockEntity>() {
 
     }
 
-    private fun renderCompostMode(mode: CompostMode, pos: BlockPos) {
-        val level = mode.amount
-        val yScale = (yMax-yMin)*level
+    private fun renderCompostMode(mode: CompostMode, x: Double, y: Double, z: Double) {
+        val yScale = (yMax-yMin) * minOf(mode.amount, 1.0)
 
-        val color = Color.average(Color.WHITE, mode.color, mode.progress)
+        val color = Color.average(Color.WHITE, mode.color, mode.progress.pow(2)).toInt()
 
         GlStateManager.pushMatrix()
-        GlStateManager.color4f(color.r, color.g, color.b, 1f)
-        GlStateManager.translated(pos.x.toDouble()+0.5,pos.y.toDouble()+yMin+yScale/2, pos.z.toDouble()+0.5)
+        GlStateManager.translated(x + 0.125,y + yMin, z + 0.125)
         GlStateManager.scaled(xzScale,yScale,xzScale)
-        MinecraftClient.getInstance().itemRenderer.renderItem(mode.result, ModelTransformation.Type.NONE)
+        RenderHelper.renderBakedModelColored(MinecraftClient.getInstance().itemRenderer.getModel(mode.result), color)
         GlStateManager.popMatrix()
     }
 
