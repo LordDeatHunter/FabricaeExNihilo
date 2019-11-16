@@ -33,13 +33,13 @@ class BarrelConfig {
     var enableAlchemy: Boolean = true
     var enableCompost: Boolean = true
     @Comment("How much progress to add each time the barrel ticks")
-    var compostRate = 0.1
+    var compostRate = 0.01
     var enableLeaking: Boolean = true
     @Comment("How far away can a block be and still be affected by wooden barrels leaking")
     var leakRadius: Int = 2
     var enableMilking: Boolean = true
     @Comment("How many ticks between updates")
-    var tickRate = 10
+    var tickRate = 40
     @Comment("Can barrels be enchanted with efficiency.")
     var efficiency: Boolean = true
 }

@@ -7,10 +7,12 @@ import exnihilofabrico.api.registry.ExNihiloRegistries
 import exnihilofabrico.client.ExNihiloBlockColorProvider
 import exnihilofabrico.client.ExNihiloItemColorProvider
 import exnihilofabrico.client.FluidRenderManager
+import exnihilofabrico.client.renderers.BarrelBlockEntityRenderer
 import exnihilofabrico.client.renderers.CrucibleBlockEntityRenderer
 import exnihilofabrico.client.renderers.InfestingLeavesBlockEntityRenderer
 import exnihilofabrico.client.renderers.SieveBlockEntityRenderer
 import exnihilofabrico.modules.ModBlocks
+import exnihilofabrico.modules.barrels.BarrelBlockEntity
 import exnihilofabrico.modules.crucibles.CrucibleBlockEntity
 import exnihilofabrico.modules.infested.InfestingLeavesBlockEntity
 import exnihilofabrico.modules.sieves.SieveBlockEntity
@@ -33,6 +35,7 @@ object ExNihiloFabricoClient: ClientModInitializer {
         // Register "BE"SRs
         BlockEntityRendererRegistry.INSTANCE.register(SieveBlockEntity::class.java, SieveBlockEntityRenderer())
         BlockEntityRendererRegistry.INSTANCE.register(CrucibleBlockEntity::class.java, CrucibleBlockEntityRenderer())
+        BlockEntityRendererRegistry.INSTANCE.register(BarrelBlockEntity::class.java, BarrelBlockEntityRenderer())
         BlockEntityRendererRegistry.INSTANCE.register(InfestingLeavesBlockEntity::class.java, InfestingLeavesBlockEntityRenderer())
         ExNihiloFabrico.LOGGER.info("Registered BESR for Sieve")
 

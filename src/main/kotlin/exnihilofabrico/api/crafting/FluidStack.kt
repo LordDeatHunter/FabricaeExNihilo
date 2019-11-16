@@ -48,15 +48,18 @@ data class FluidStack(var fluid: Identifier, var amount: Int, var data: Compound
         return "$amount x $fluid@$data"
     }
 
-    fun asFluid() = Registry.FLUID[fluid]
+    fun getFluid() = Registry.FLUID[fluid]
+    fun getDefaultFluidState() = getFluid().defaultState
+    fun getDefaultBlockState() = getDefaultFluidState().blockState
+    fun getBlock() = getDefaultBlockState().block
 
     @Environment(EnvType.CLIENT)
     fun getSprite(view: ExtendedBlockView, pos: BlockPos): Array<out Sprite> =
-        FluidRenderHandlerRegistry.INSTANCE.get(asFluid()).getFluidSprites(view, pos, asFluid().defaultState)
+        FluidRenderHandlerRegistry.INSTANCE.get(getFluid()).getFluidSprites(view, pos, getFluid().defaultState)
 
     @Environment(EnvType.CLIENT)
     fun getColor(view: ExtendedBlockView, pos: BlockPos) =
-        FluidRenderHandlerRegistry.INSTANCE.get(asFluid()).getFluidColor(view, pos, asFluid().defaultState)
+        FluidRenderHandlerRegistry.INSTANCE.get(getFluid()).getFluidColor(view, pos, getFluid().defaultState)
 
     companion object {
         val EMPTY = FluidStack(Registry.FLUID.getId(Fluids.EMPTY), 0)

@@ -17,7 +17,7 @@ interface ILeakingRegistry {
         register(LeakingRecipe(target, fluid, loss, result))
 
     fun register(target: ItemIngredient, fluid: FluidStack, result: Block) =
-        register(LeakingRecipe(target, FluidIngredient(fluid.asFluid()), fluid.amount, result))
+        register(LeakingRecipe(target, FluidIngredient(fluid.getFluid()), fluid.amount, result))
 
     fun register(target: ItemConvertible, fluid: Fluid, amount: Int, result: Block) =
         register(LeakingRecipe(ItemIngredient(target), FluidIngredient(fluid), amount, result))

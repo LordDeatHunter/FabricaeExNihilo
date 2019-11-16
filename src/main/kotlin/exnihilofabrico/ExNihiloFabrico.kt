@@ -56,6 +56,7 @@ object ExNihiloFabrico: ModInitializer {
 
         /* Load the rest of the Ex Nihilo Fabrico registries */
         LOGGER.info("Loading Ex Nihilo Fabrico Registries")
+        ExNihiloFabricoAPI.registerCompatabilityModule(ExNihiloFabrico)
         ExNihiloRegistries.loadRecipeRegistries()
 
         val dataPack = Artifice.registerData(id("data")) {builder ->
@@ -69,7 +70,6 @@ object ExNihiloFabrico: ModInitializer {
     }
 
     private fun generateRecipes(builder: ArtificeResourcePack.ServerResourcePackBuilder) {
-        ExNihiloFabricoAPI.registerCompatabilityModule(ExNihiloFabrico)
         // Ore Chunk Crafting
         ExNihiloRegistries.ORES.getAll().forEach { ore ->
             builder.addShapedRecipe(id("${ore.getChunkID().path}_crafting")) { ore.generateRecipe(it) }
@@ -102,17 +102,11 @@ object ExNihiloFabrico: ModInitializer {
             }
         }
         (ModTags.HAMMER_TAG)?.let {
-            builder.addBlockTag(it.id) {tag ->
-                tag.values(*ModTools.HAMMERS.keys.toTypedArray())
-            }
             builder.addItemTag(it.id) {tag ->
                 tag.values(*ModTools.HAMMERS.keys.toTypedArray())
             }
         }
         (ModTags.CROOK_TAG)?.let {
-            builder.addBlockTag(it.id) {tag ->
-                tag.values(*ModTools.CROOKS.keys.toTypedArray())
-            }
             builder.addItemTag(it.id) {tag ->
                 tag.values(*ModTools.CROOKS.keys.toTypedArray())
             }

@@ -41,7 +41,7 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
         registry.register(Items.CACTUS, Blocks.DIRT, 0.0625, Color.DARK_GREEN)
 
         registry.register(Tag(Identifier("c:seeds")), Blocks.DIRT, 0.0625, Color.GREEN)
-        registry.register(Tag(Identifier("c:crops")), Blocks.DIRT, 0.0625, Color.YELLOW)
+        registry.register(Tag(Identifier("c:veggies")), Blocks.DIRT, 0.0625, Color.YELLOW)
         registry.register(Tag(Identifier("c:flowers")), Blocks.DIRT, 0.0625, Color.RED)
         registry.register(Tag(Identifier("c:dyes")), Blocks.DIRT, 0.125, Color.RED)
         registry.register(Tag(Identifier("c:raw_meat")), Blocks.DIRT, 0.125, Color.RED)

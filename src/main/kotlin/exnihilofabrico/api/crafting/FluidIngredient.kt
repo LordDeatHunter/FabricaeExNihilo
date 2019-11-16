@@ -23,7 +23,7 @@ class FluidIngredient(tags: MutableCollection<Tag<Fluid>> = mutableListOf(), mat
 
     fun test(block: FluidBlock) = test(block.getFluid())
     fun test(state: FluidState) = test(state.fluid)
-    fun test(stack: FluidStack) = test(stack.asFluid())
+    fun test(stack: FluidStack) = test(stack.getFluid())
 
     override fun serializeElement(t: Fluid, context: JsonSerializationContext) =
         JsonPrimitive(t.getId().toString())

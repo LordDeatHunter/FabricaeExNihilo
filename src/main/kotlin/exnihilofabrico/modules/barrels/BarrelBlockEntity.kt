@@ -9,12 +9,16 @@ import exnihilofabrico.modules.barrels.modes.*
 import exnihilofabrico.modules.base.BaseBlockEntity
 import exnihilofabrico.util.Color
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable
+import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
+import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.util.Hand
 import net.minecraft.util.Tickable
+import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import kotlin.math.ceil
@@ -23,7 +27,7 @@ import kotlin.math.min
 class BarrelBlockEntity(var mode: BarrelMode = EmptyMode()): BaseBlockEntity(TYPE), Tickable,
     BlockEntityClientSerializable, SidedInventory {
 
-    var tickCounter = world?.random?.nextInt(ExNihiloFabrico.config.modules.barrels.tickRate) ?: 0
+    var tickCounter = world?.random?.nextInt(ExNihiloFabrico.config.modules.barrels.tickRate) ?: ExNihiloFabrico.config.modules.barrels.tickRate
 
     override fun getInvStack(slot: Int): ItemStack {
         return when(mode) {
@@ -125,11 +129,24 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode()): BaseBlockEntity(TYP
     }
 
     override fun canInsertInvStack(slot: Int, stack: ItemStack?, direction: Direction?): Boolean {
-        return if(stack?.isEmpty != false)
-            false
-        else
-            (mode as? FluidMode)?.let { ExNihiloRegistries.BARREL_ALCHEMY.hasRecipe(it.fluid, stack) } ?: false ||
-            (mode as? EmptyMode)?.let { ExNihiloRegistries.BARREL_COMPOST.hasRecipe(stack) } ?: false
+        if(stack?.isEmpty != false)
+            return false
+        (mode as? FluidMode)?.let {
+            if(ExNihiloRegistries.BARREL_ALCHEMY.hasRecipe(it.fluid, stack))
+                return@canInsertInvStack true
+        }
+        (mode as? EmptyMode)?.let {
+            ExNihiloFabrico.LOGGER.info("Testing ${stack}")
+            ExNihiloFabrico.LOGGER.info("${ExNihiloRegistries.BARREL_COMPOST.getRecipe(stack)}")
+            if(ExNihiloRegistries.BARREL_COMPOST.hasRecipe(stack))
+                return@canInsertInvStack true
+        }
+        (mode as? CompostMode)?.let {
+            val recipe = ExNihiloRegistries.BARREL_COMPOST.getRecipe(stack) ?: return@let
+            if(it.result.isItemEqual(recipe.result) && it.amount < 1.0)
+                return@canInsertInvStack true
+        }
+        return false
     }
 
     override fun tick() {
@@ -139,14 +156,22 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode()): BaseBlockEntity(TYP
             if(compostTick()) return
             //TODO check for nearby block transformations
             //TODO check adjacent fluid changes
+            tickCounter = ExNihiloFabrico.config.modules.barrels.tickRate
+            markDirty()
         }
         else {
             tickCounter -= 1
+            markDirty()
         }
     }
 
     private fun compostTick(): Boolean {
         (mode as? CompostMode)?.let { compostMode ->
+            if(compostMode.progress >= 1.0) {
+                mode = ItemMode(compostMode.result)
+                markDirtyClient()
+                return@compostTick true
+            }
             if(compostMode.amount >= 1.0) {
                 compostMode.progress += ExNihiloFabrico.config.modules.barrels.compostRate
                 markDirtyClient()
@@ -235,6 +260,40 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode()): BaseBlockEntity(TYP
         if(world?.isHeightValidAndBlockLoaded(leakPos) ?: return null)
             return leakPos
         return null
+    }
+
+    fun activate(state: BlockState?, player: PlayerEntity?, hand: Hand?, hitResult: BlockHitResult?): Boolean {
+        ExNihiloFabrico.LOGGER.info("Activated Barrel Entity ${mode}")
+        if(world?.isClient != false || player == null || hand == null)
+            return true
+
+        return when(mode) {
+            is ItemMode -> { dropInventoryAtPlayer(player); true }
+            is EmptyMode, is CompostMode, is FluidMode -> insertFromHand(player, hand)
+            else -> false
+        }
+    }
+
+    fun dropInventoryAtPlayer(player: PlayerEntity) {
+        (mode as? ItemMode)?.let {
+            val entity = ItemEntity(world, pos.x.toDouble() + 0.5, pos.y.toDouble() + 1.0625, pos.z.toDouble() + 0.5, it.stack)
+            entity.velocity = player.pos.subtract(entity.pos).normalize().multiply(0.5)
+            world?.spawnEntity(entity)
+            mode = EmptyMode()
+            markDirtyClient()
+        }
+    }
+
+    fun insertFromHand(player: PlayerEntity, hand: Hand): Boolean {
+        val held = player.getStackInHand(hand) ?: ItemStack.EMPTY
+        if(canInsertInvStack(0, held, null)) {
+            setInvStack(0, held.copy().split(1))
+            if(!player.isCreative)
+                player.getStackInHand(hand).decrement(1)
+            return true
+        }
+        // Check for fluids
+        return false
     }
 
     companion object {

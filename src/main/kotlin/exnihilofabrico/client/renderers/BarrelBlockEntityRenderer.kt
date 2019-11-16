@@ -1,42 +1,101 @@
 package exnihilofabrico.client.renderers
 
+import com.mojang.blaze3d.platform.GlStateManager
+import exnihilofabrico.api.crafting.FluidStack
 import exnihilofabrico.modules.barrels.BarrelBlockEntity
+import exnihilofabrico.modules.barrels.modes.AlchemyMode
+import exnihilofabrico.modules.barrels.modes.CompostMode
+import exnihilofabrico.modules.barrels.modes.FluidMode
+import exnihilofabrico.modules.barrels.modes.ItemMode
+import exnihilofabrico.util.Color
+import net.minecraft.client.MinecraftClient
+import net.minecraft.client.render.Tessellator
+import net.minecraft.client.render.VertexFormats
 import net.minecraft.client.render.block.entity.BlockEntityRenderer
+import net.minecraft.client.render.model.json.ModelTransformation
+import net.minecraft.fluid.Fluid
+import net.minecraft.item.ItemStack
+import net.minecraft.util.math.BlockPos
+import org.lwjgl.opengl.GL11
 
 class BarrelBlockEntityRenderer: BlockEntityRenderer<BarrelBlockEntity>() {
-    private val xzScale = 0.875
+    private val xzScale = 12.0 / 16.0
     private val yMin = 0.1875
     private val yMax = 0.9375
 
-/*    override fun render(barrel: BarrelBlockEntity?, x: Double, y: Double, z: Double, partialTicks: Float, breakingStage: Int) {
+    override fun render(barrel: BarrelBlockEntity?, x: Double, y: Double, z: Double, partialTicks: Float, breakingStage: Int) {
         val mode = barrel?.mode ?: return
 
         when(mode) {
-            is FluidMode -> renderFluid(barrel, mode, x, y, z)
-            is BlockMode -> renderBlock(mode, x, y, z)
+            is FluidMode -> renderFluidMode(mode, barrel.pos)
+            is ItemMode -> renderItem(mode.stack, 1.0, x, y, z)
+            is AlchemyMode -> renderAlchemyMode(mode, barrel.pos)
+            is CompostMode -> renderCompostMode(mode, barrel.pos)
         }
     }
 
-    fun renderFluid(barrel: BarrelBlockEntity, mode: FluidMode, x: Double, y: Double, z: Double) {
-        val level = mode.fluid.amount.toDouble() / DropletValues.BUCKET.toDouble()
-        val yScale = yMax - (yMax-yMin)*level
-        val stack = mode.fluid.fluid.defaultState.blockState.block.asStack()
+    private fun renderAlchemyMode(mode: AlchemyMode, pos: BlockPos) {
+
+    }
+
+    private fun renderCompostMode(mode: CompostMode, pos: BlockPos) {
+        val level = mode.amount
+        val yScale = (yMax-yMin)*level
+
+        val color = Color.average(Color.WHITE, mode.color, mode.progress)
 
         GlStateManager.pushMatrix()
-        GlStateManager.translated(x+0.5,y+0.625+yScale/2, z+0.5)
+        GlStateManager.color4f(color.r, color.g, color.b, 1f)
+        GlStateManager.translated(pos.x.toDouble()+0.5,pos.y.toDouble()+yMin+yScale/2, pos.z.toDouble()+0.5)
+        GlStateManager.scaled(xzScale,yScale,xzScale)
+        MinecraftClient.getInstance().itemRenderer.renderItem(mode.result, ModelTransformation.Type.NONE)
+        GlStateManager.popMatrix()
+    }
+
+    private fun renderFluidMode(mode: FluidMode, pos: BlockPos) {
+        renderFluid(mode.fluid.getFluid(), mode.fluid.amount.toDouble() / FluidStack.BUCKET_AMOUNT, pos)
+    }
+
+    private fun renderFluid(fluid: Fluid, level: Double, pos: BlockPos) {
+        val x = pos.x.toDouble()
+        val y = pos.y.toDouble()
+        val z = pos.z.toDouble()
+
+        val spriteColor = RenderHelper.getFluidSpriteAndColor(world, pos, fluid)
+        val sprite = spriteColor.first
+        val color = spriteColor.second
+        val yRender = (yMax-yMin)*level + yMin
+
+        GlStateManager.pushMatrix()
+        GlStateManager.disableLighting()
+        GlStateManager.translated(x,y,z)
+
+        val tessellator = Tessellator.getInstance()
+        val bufferBuilder = tessellator.bufferBuilder
+
+        val spriteV0 = sprite.getV(2.0).toDouble()
+        val spriteV1 = sprite.getV(14.0).toDouble()
+        val spriteU0 = sprite.getU(2.0).toDouble()
+        val spriteU1 = sprite.getU(14.0).toDouble()
+        bufferBuilder.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV)
+        bufferBuilder.setQuadColor(color)
+        bufferBuilder.vertex(2.0/16.0, yRender, 2.0/16.0).texture(spriteU0, spriteV0).next()
+        bufferBuilder.vertex(2.0/16.0, yRender, 14.0/16.0).texture(spriteU0, spriteV1).next()
+        bufferBuilder.vertex(14.0/16.0, yRender, 14.0/16.0).texture(spriteU1, spriteV1).next()
+        bufferBuilder.vertex(14.0/16.0, yRender, 2.0/16.0).texture(spriteU1, spriteV0).next()
+
+        tessellator.draw()
+        GlStateManager.enableLighting()
+        GlStateManager.popMatrix()
+    }
+
+    private fun renderItem(stack: ItemStack, level: Double, x: Double, y: Double, z: Double) {
+        val yScale = (yMax-yMin)*level
+
+        GlStateManager.pushMatrix()
+        GlStateManager.translated(x+0.5,y+yMin+yScale/2, z+0.5)
         GlStateManager.scaled(xzScale,yScale,xzScale)
         MinecraftClient.getInstance().itemRenderer.renderItem(stack, ModelTransformation.Type.NONE)
         GlStateManager.popMatrix()
     }
-
-    fun renderBlock(mode: BlockMode, x: Double, y: Double, z: Double) {
-        val yScale = yMax - (yMax-yMin)
-        val block = mode.contents
-
-        GlStateManager.pushMatrix()
-        GlStateManager.translated(x+0.5,y+0.625+yScale/2, z+0.5)
-        GlStateManager.scaled(xzScale,yScale,xzScale)
-        MinecraftClient.getInstance().itemRenderer.renderItem(block, ModelTransformation.Type.NONE)
-        GlStateManager.popMatrix()
-    }*/
 }
