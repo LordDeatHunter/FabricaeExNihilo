@@ -1,7 +1,8 @@
 package exnihilofabrico.client.renderers
 
+import alexiil.mc.lib.attributes.fluid.render.FluidRenderFace
+import alexiil.mc.lib.attributes.fluid.volume.FluidVolume
 import com.mojang.blaze3d.platform.GlStateManager
-import exnihilofabrico.api.crafting.FluidStack
 import exnihilofabrico.modules.barrels.BarrelBlockEntity
 import exnihilofabrico.modules.barrels.modes.AlchemyMode
 import exnihilofabrico.modules.barrels.modes.CompostMode
@@ -9,18 +10,20 @@ import exnihilofabrico.modules.barrels.modes.FluidMode
 import exnihilofabrico.modules.barrels.modes.ItemMode
 import exnihilofabrico.util.Color
 import net.minecraft.client.MinecraftClient
-import net.minecraft.client.render.Tessellator
-import net.minecraft.client.render.VertexFormats
+import net.minecraft.client.render.GuiLighting
 import net.minecraft.client.render.block.entity.BlockEntityRenderer
 import net.minecraft.client.render.model.json.ModelTransformation
-import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
-import org.lwjgl.opengl.GL11
+import net.minecraft.util.math.Direction
 import kotlin.math.pow
 
 class BarrelBlockEntityRenderer: BlockEntityRenderer<BarrelBlockEntity>() {
     private val xzScale = 12.0 / 16.0
+    private val xMin = 2.0 / 16.0
+    private val xMax = 14.0 / 16.0
+    private val zMin = 2.0 / 16.0
+    private val zMax = 14.0 / 16.0
     private val yMin = 0.1875
     private val yMax = 0.9375
 
@@ -28,7 +31,7 @@ class BarrelBlockEntityRenderer: BlockEntityRenderer<BarrelBlockEntity>() {
         val mode = barrel?.mode ?: return
 
         when(mode) {
-            is FluidMode -> renderFluidMode(mode, barrel.pos)
+            is FluidMode -> renderFluidMode(mode, x, y, z)
             is ItemMode -> renderItem(mode.stack, 1.0, x, y, z)
             is AlchemyMode -> renderAlchemyMode(mode, barrel.pos)
             is CompostMode -> renderCompostMode(mode, x, y, z)
@@ -51,41 +54,15 @@ class BarrelBlockEntityRenderer: BlockEntityRenderer<BarrelBlockEntity>() {
         GlStateManager.popMatrix()
     }
 
-    private fun renderFluidMode(mode: FluidMode, pos: BlockPos) {
-        renderFluid(mode.fluid.getFluid(), mode.fluid.amount.toDouble() / FluidStack.BUCKET_AMOUNT, pos)
+    private fun renderFluidMode(mode: FluidMode, x: Double, y: Double, z: Double) {
+        renderFluidVolume(mode.fluid, mode.fluid.amount.toDouble() / FluidVolume.BUCKET, x, y, z)
     }
-
-    private fun renderFluid(fluid: Fluid, level: Double, pos: BlockPos) {
-        val x = pos.x.toDouble()
-        val y = pos.y.toDouble()
-        val z = pos.z.toDouble()
-
-        val spriteColor = RenderHelper.getFluidSpriteAndColor(world, pos, fluid)
-        val sprite = spriteColor.first
-        val color = spriteColor.second
+    fun renderFluidVolume(volume: FluidVolume, level: Double, x: Double, y: Double, z: Double) {
         val yRender = (yMax-yMin)*level + yMin
 
-        GlStateManager.pushMatrix()
-        GlStateManager.disableLighting()
-        GlStateManager.translated(x,y,z)
-
-        val tessellator = Tessellator.getInstance()
-        val bufferBuilder = tessellator.bufferBuilder
-
-        val spriteV0 = sprite.getV(2.0).toDouble()
-        val spriteV1 = sprite.getV(14.0).toDouble()
-        val spriteU0 = sprite.getU(2.0).toDouble()
-        val spriteU1 = sprite.getU(14.0).toDouble()
-        bufferBuilder.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV)
-        bufferBuilder.setQuadColor(color)
-        bufferBuilder.vertex(2.0/16.0, yRender, 2.0/16.0).texture(spriteU0, spriteV0).next()
-        bufferBuilder.vertex(2.0/16.0, yRender, 14.0/16.0).texture(spriteU0, spriteV1).next()
-        bufferBuilder.vertex(14.0/16.0, yRender, 14.0/16.0).texture(spriteU1, spriteV1).next()
-        bufferBuilder.vertex(14.0/16.0, yRender, 2.0/16.0).texture(spriteU1, spriteV0).next()
-
-        tessellator.draw()
-        GlStateManager.enableLighting()
-        GlStateManager.popMatrix()
+        GuiLighting.disable()
+        volume.render(listOf(FluidRenderFace.createFlatFace(xMin, yMin, zMin, xMax, yRender, zMax, 16.0, Direction.UP)), x, y, z)
+        GuiLighting.enable()
     }
 
     private fun renderItem(stack: ItemStack, level: Double, x: Double, y: Double, z: Double) {

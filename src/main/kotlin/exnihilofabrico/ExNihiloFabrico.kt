@@ -28,6 +28,7 @@ object ExNihiloFabrico: ModInitializer {
     val config: ExNihiloFabricoConfig = ConfigManager.loadConfig(ExNihiloFabricoConfig::class.java)
 
     override fun onInitialize() {
+        registerCompatModules()
         // Progmatically generate blocks and items
         LOGGER.info("Generating Blocks/Items")
         BlockGenerator.initRegistryCallBack()
@@ -56,7 +57,6 @@ object ExNihiloFabrico: ModInitializer {
 
         /* Load the rest of the Ex Nihilo Fabrico registries */
         LOGGER.info("Loading Ex Nihilo Fabrico Registries")
-        ExNihiloFabricoAPI.registerCompatabilityModule(ExNihiloFabrico)
         ExNihiloRegistries.loadRecipeRegistries()
 
         val dataPack = Artifice.registerData(id("data")) {builder ->
@@ -67,6 +67,10 @@ object ExNihiloFabrico: ModInitializer {
             LOGGER.info("Creating Recipes")
             generateRecipes(builder)
         }
+    }
+
+    private fun registerCompatModules() {
+        ExNihiloFabricoAPI.registerCompatabilityModule(ExNihiloFabrico)
     }
 
     private fun generateRecipes(builder: ArtificeResourcePack.ServerResourcePackBuilder) {

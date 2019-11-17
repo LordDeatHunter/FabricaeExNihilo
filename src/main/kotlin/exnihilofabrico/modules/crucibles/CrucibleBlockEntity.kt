@@ -1,7 +1,10 @@
 package exnihilofabrico.modules.crucibles
 
+import alexiil.mc.lib.attributes.Simulation
+import alexiil.mc.lib.attributes.fluid.volume.FluidKeys
+import alexiil.mc.lib.attributes.fluid.volume.FluidVolume
+import alexiil.mc.lib.attributes.item.ItemInsertable
 import exnihilofabrico.ExNihiloFabrico
-import exnihilofabrico.api.crafting.FluidStack
 import exnihilofabrico.api.registry.ExNihiloRegistries.CRUCIBLE_HEAT
 import exnihilofabrico.api.registry.ExNihiloRegistries.CRUCIBLE_STONE
 import exnihilofabrico.api.registry.ExNihiloRegistries.CRUCIBLE_WOOD
@@ -9,31 +12,61 @@ import exnihilofabrico.id
 import exnihilofabrico.modules.ModBlocks
 import exnihilofabrico.modules.base.BaseBlockEntity
 import exnihilofabrico.util.asStack
+import exnihilofabrico.util.isSimulating
+import exnihilofabrico.util.ofSize
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable
 import net.minecraft.block.BlockState
+import net.minecraft.block.Blocks
 import net.minecraft.block.FluidBlock
 import net.minecraft.block.Material
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.util.Hand
 import net.minecraft.util.Tickable
 import net.minecraft.util.hit.BlockHitResult
-import net.minecraft.util.registry.Registry
 
-class CrucibleBlockEntity : BaseBlockEntity(TYPE), Tickable, BlockEntityClientSerializable {
+class CrucibleBlockEntity : BaseBlockEntity(TYPE), Tickable, BlockEntityClientSerializable, ItemInsertable {
 
     // What stack should be rendered for the queued fluid
     var render: ItemStack = ItemStack.EMPTY
     // Fluid to be made
-    var queued: FluidStack = FluidStack.EMPTY
+    var queued: FluidVolume = FluidKeys.EMPTY.withAmount(0)
     // Fluid already made
-    var contents: FluidStack = FluidStack.EMPTY
+    var contents: FluidVolume = FluidKeys.EMPTY.withAmount(0)
     var heat: Int = 0
 
     private var timer: Int = world?.random?.nextInt(ExNihiloFabrico.config.modules.crucibles.tickRate) ?: 0
+
+    /**
+     * Item Handling
+     */
+    override fun attemptInsertion(stack: ItemStack, simulation: Simulation): ItemStack {
+        ExNihiloFabrico.LOGGER.info("Attempting to insert $stack")
+        val result = (if(isStone()) CRUCIBLE_STONE else CRUCIBLE_WOOD).getResult(stack.item) ?: return stack
+        ExNihiloFabrico.LOGGER.info("Result: $result")
+        ExNihiloFabrico.LOGGER.info("Queued: $queued")
+        ExNihiloFabrico.LOGGER.info("Contents: $contents")
+        ExNihiloFabrico.LOGGER.info("Heat: $heat")
+
+        if((contents.canMerge(result) || contents.isEmpty) && (queued.canMerge(result) || queued.isEmpty) && contents.amount + queued.amount + result.amount <= getMaxCapacity()) {
+            if(simulation.isAction) {
+                queued = FluidVolume.create(result.fluidKey, queued.amount + result.amount)
+                render =
+                    when {
+                        stack.item is BlockItem -> stack.copy()
+                        isStone() -> Blocks.COBBLESTONE.asStack()
+                        else -> Blocks.OAK_LEAVES.asStack()
+                    }
+                markDirtyClient()
+            }
+            return stack.ofSize(stack.count - 1)
+        }
+        return stack
+    }
 
     override fun tick() {
         if(queued.isEmpty() || contents.amount >= getMaxCapacity() || heat <= 0)
@@ -41,11 +74,11 @@ class CrucibleBlockEntity : BaseBlockEntity(TYPE), Tickable, BlockEntityClientSe
         timer += 1
         if(timer > ExNihiloFabrico.config.modules.crucibles.tickRate) {
             if(!queued.isEmpty()) {
-                val amt = if(isStone()) Math.min(queued.amount, heat) else Math.min(queued.amount, ExNihiloFabrico.config.modules.crucibles.tickRate)
-                contents = FluidStack(queued.fluid, amt + contents.amount)
-                queued.amount -= amt
+                val amt = Math.min(queued.amount, getProcessingSpeed())
+                contents = FluidVolume.create(queued.fluidKey, amt + contents.amount)
+                queued.split(amt)
                 if(queued.amount <= 0)
-                    queued = FluidStack.EMPTY
+                    queued = FluidKeys.EMPTY.withAmount(0)
                 markDirtyClient()
             }
             timer = 0
@@ -56,9 +89,20 @@ class CrucibleBlockEntity : BaseBlockEntity(TYPE), Tickable, BlockEntityClientSe
         return world?.getBlockState(pos)?.material == Material.STONE
     }
 
+    fun getProcessingSpeed(): Int {
+        return if(isStone())
+            heat * ExNihiloFabrico.config.modules.crucibles.baseProcessRate
+        else
+            ExNihiloFabrico.config.modules.crucibles.woodenProcessingRate
+    }
+
     fun getMaxCapacity(): Int {
-        return FluidStack.BUCKET_AMOUNT *
-                (if(isStone()) ExNihiloFabrico.config.modules.crucibles.stoneVolume else ExNihiloFabrico.config.modules.crucibles.woodVolume)
+        return FluidVolume.BUCKET *
+                (if(isStone())
+                    ExNihiloFabrico.config.modules.crucibles.stoneVolume
+                else
+                    ExNihiloFabrico.config.modules.crucibles.woodVolume)
+
     }
 
     fun activate(state: BlockState?, player: PlayerEntity?, hand: Hand?, hitResult: BlockHitResult?): Boolean {
@@ -71,32 +115,20 @@ class CrucibleBlockEntity : BaseBlockEntity(TYPE), Tickable, BlockEntityClientSe
             return false
 
         // Removing a bucket's worth of fluid
-        if(held.item == Items.BUCKET && contents.amount > FluidStack.BUCKET_AMOUNT ) {
-            val bucket = Registry.FLUID[contents.fluid].bucketItem.asStack()
+        if(held.item == Items.BUCKET && contents.amount > FluidVolume.BUCKET ) {
+            val bucket = contents.rawFluid?.bucketItem?.asStack() ?: return false
             if(!player.isCreative) {
                 held.decrement(1)
             }
             player.giveItemStack(bucket)
-            contents.amount -= FluidStack.BUCKET_AMOUNT
+            contents.split(FluidVolume.BUCKET)
             markDirtyClient()
             return true
         }
         // Adding a meltable item
-        val registry = if(isStone()) CRUCIBLE_STONE else CRUCIBLE_WOOD
-        val result = registry.getResult(held.item)
-        if(result != null && // Has result
-            (contents.isEmpty() || result.fluid == contents.fluid) && // And contents doesn't clash
-            (queued.isEmpty() || result.fluid == queued.fluid) && // And queued doesn't clash
-            queued.amount + contents.amount + result.amount <= getMaxCapacity()) {
-            render = held.copy()
-            if(!player.isCreative)
-                held.decrement(1)
-            if(queued.isEmpty())
-                queued = result.copy()
-            else
-                queued.amount += result.amount
-            markDirtyClient()
-            return true
+        val result = attemptInsertion(held, Simulation.ACTION)
+        if(result.count != held.count && player.isSimulating() == Simulation.ACTION) {
+            held.decrement(1)
         }
         return true
     }
@@ -143,8 +175,8 @@ class CrucibleBlockEntity : BaseBlockEntity(TYPE), Tickable, BlockEntityClientSe
 
     fun fromTagWithoutWorldInfo(tag: CompoundTag) {
         render = ItemStack.fromTag(tag.getCompound("render"))
-        contents = FluidStack.create(tag.getCompound("contents"))
-        queued = FluidStack.create(tag.getCompound("queued"))
+        contents = FluidVolume.fromTag(tag.getCompound("contents"))
+        queued = FluidVolume.fromTag(tag.getCompound("queued"))
         heat = tag.getInt("heat")
     }
 

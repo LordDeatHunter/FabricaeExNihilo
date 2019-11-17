@@ -1,7 +1,6 @@
 package exnihilofabrico.api.recipes
 
-import exnihilofabrico.api.crafting.FluidStack
+import alexiil.mc.lib.attributes.fluid.volume.FluidVolume
 import exnihilofabrico.api.crafting.ItemIngredient
 
-data class CrucibleRecipe(val input: ItemIngredient,
-                          val output: FluidStack)
+data class CrucibleRecipe(val input: ItemIngredient, val output: FluidVolume)

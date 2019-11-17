@@ -1,5 +1,6 @@
 package exnihilofabrico.api.crafting
 
+import alexiil.mc.lib.attributes.fluid.volume.FluidVolume
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonElement
 import com.google.gson.JsonPrimitive
@@ -19,11 +20,12 @@ class FluidIngredient(tags: MutableCollection<Tag<Fluid>> = mutableListOf(), mat
     AbstractIngredient<Fluid>(tags, matches) {
 
     constructor(vararg matches: Fluid): this(mutableListOf(), matches.toMutableSet())
+    constructor(vararg matches: FluidVolume): this(mutableListOf<Tag<Fluid>>(), matches.map { it.rawFluid }.filterNotNull().toMutableSet())
     constructor(vararg tags: Tag<Fluid>): this(tags.toMutableList(), mutableSetOf())
 
     fun test(block: FluidBlock) = test(block.getFluid())
     fun test(state: FluidState) = test(state.fluid)
-    fun test(stack: FluidStack) = test(stack.getFluid())
+    fun test(stack: FluidVolume) = (stack.rawFluid)?.let { test(it) } ?: false
 
     override fun serializeElement(t: Fluid, context: JsonSerializationContext) =
         JsonPrimitive(t.getId().toString())

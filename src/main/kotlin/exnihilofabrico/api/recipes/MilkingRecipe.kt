@@ -1,8 +1,6 @@
 package exnihilofabrico.api.recipes
 
+import alexiil.mc.lib.attributes.fluid.volume.FluidVolume
 import exnihilofabrico.api.crafting.EntityTypeIngredient
-import exnihilofabrico.api.crafting.FluidStack
 
-data class MilkingRecipe(val entity: EntityTypeIngredient,
-                         val result: FluidStack,
-                         val cooldown: Int)
+data class MilkingRecipe(val entity: EntityTypeIngredient, val result: FluidVolume, val cooldown: Int)

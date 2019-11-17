@@ -1,9 +1,13 @@
 package exnihilofabrico.client.renderers
 
+import alexiil.mc.lib.attributes.fluid.render.FluidRenderFace
+import alexiil.mc.lib.attributes.fluid.volume.FluidVolume
 import com.mojang.blaze3d.platform.GlStateManager
 import exnihilofabrico.client.renderers.RenderHelper.getFluidSpriteAndColor
 import exnihilofabrico.modules.crucibles.CrucibleBlockEntity
+import net.minecraft.block.entity.BlockEntity
 import net.minecraft.client.MinecraftClient
+import net.minecraft.client.render.GuiLighting
 import net.minecraft.client.render.Tessellator
 import net.minecraft.client.render.VertexFormats
 import net.minecraft.client.render.block.entity.BlockEntityRenderer
@@ -11,11 +15,16 @@ import net.minecraft.client.render.model.json.ModelTransformation
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import net.minecraft.util.registry.Registry
 import org.lwjgl.opengl.GL11
 
 class CrucibleBlockEntityRenderer: BlockEntityRenderer<CrucibleBlockEntity>() {
     private val xzScale = 12.0/16.0
+    private val xMin = 2.0 / 16.0
+    private val xMax = 14.0 / 16.0
+    private val zMin = 2.0 / 16.0
+    private val zMax = 14.0 / 16.0
     private val yMin = 5.0/16.0
     private val yMax = 15.0/16.0
 
@@ -24,13 +33,20 @@ class CrucibleBlockEntityRenderer: BlockEntityRenderer<CrucibleBlockEntity>() {
         val queued = crucible.queued
 
         if(!contents.isEmpty()) {
-            renderContents(contents.fluid, contents.amount.toDouble() / crucible.getMaxCapacity(), crucible.pos, x, y, z)
+            renderFluidVolume(crucible, contents, contents.amount.toDouble() / crucible.getMaxCapacity(), x, y, z)
         }
         val render = crucible.render
         if(!queued.isEmpty() && !render.isEmpty) {
-            val level = queued.amount.toDouble() / crucible.getMaxCapacity()
-            renderQueued(render, level, x, y, z)
+            renderQueued(render, queued.amount.toDouble() / crucible.getMaxCapacity(), x, y, z)
         }
+    }
+
+    fun renderFluidVolume(blockentity: BlockEntity, volume: FluidVolume, level: Double, x: Double, y: Double, z: Double) {
+        val yRender = (yMax-yMin)*level + yMin
+
+        GuiLighting.disable()
+        volume.render(listOf(FluidRenderFace.createFlatFace(xMin, yMin, zMin, xMax, yRender, zMax, 16.0, Direction.UP)), x, y, z)
+        GuiLighting.enable()
     }
 
     fun renderContents(contents: Identifier, level: Double, pos: BlockPos, x: Double, y: Double, z: Double) {

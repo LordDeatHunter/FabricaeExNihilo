@@ -1,8 +1,8 @@
 package exnihilofabrico.registry.barrel
 
+import alexiil.mc.lib.attributes.fluid.volume.FluidVolume
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.ExNihiloFabrico
-import exnihilofabrico.api.crafting.FluidStack
 import exnihilofabrico.api.recipes.MilkingRecipe
 import exnihilofabrico.api.registry.IMilkingRegistry
 import exnihilofabrico.compatibility.modules.MetaModule
@@ -27,7 +27,7 @@ data class MilkingRegistry(val registry: MutableList<MilkingRecipe> = mutableLis
         return registry.add(recipe)
     }
 
-    override fun getResult(entity: Entity): Pair<FluidStack, Int>? {
+    override fun getResult(entity: Entity): Pair<FluidVolume, Int>? {
         val match = registry.firstOrNull { it.entity.test(entity) } ?: return null
         return match.result to match.cooldown
     }

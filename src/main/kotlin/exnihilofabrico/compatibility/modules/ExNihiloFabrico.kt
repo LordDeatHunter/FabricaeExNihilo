@@ -1,7 +1,11 @@
 package exnihilofabrico.compatibility.modules
 
+import alexiil.mc.lib.attributes.fluid.volume.FluidVolume
 import exnihilofabrico.api.compatibility.IExNihiloFabricoModule
-import exnihilofabrico.api.crafting.*
+import exnihilofabrico.api.crafting.FluidIngredient
+import exnihilofabrico.api.crafting.ItemIngredient
+import exnihilofabrico.api.crafting.Lootable
+import exnihilofabrico.api.crafting.WeightedList
 import exnihilofabrico.api.registry.*
 import exnihilofabrico.id
 import exnihilofabrico.modules.ModItems.SEED_MYCELIUM
@@ -67,12 +71,12 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
     }
 
     override fun registerCrucibleStone(registry: ICrucibleRegistry) {
-        registry.register(ItemIngredient(Blocks.COBBLESTONE), FluidStack(Fluids.LAVA,FluidStack.BUCKET_AMOUNT / 4))
+        registry.register(ItemIngredient(Blocks.COBBLESTONE), FluidVolume.create(Fluids.LAVA,FluidVolume.BUCKET / 4))
     }
 
     override fun registerCrucibleWood(registry: ICrucibleRegistry) {
-        registry.register(ItemIngredient(ItemTags.SAPLINGS), FluidStack(Fluids.WATER, FluidStack.BUCKET_AMOUNT / 10))
-        registry.register(ItemIngredient(ItemTags.LEAVES), FluidStack(Fluids.WATER, FluidStack.BUCKET_AMOUNT / 4))
+        registry.register(ItemIngredient(ItemTags.SAPLINGS), FluidVolume.create(Fluids.WATER, FluidVolume.BUCKET / 10))
+        registry.register(ItemIngredient(ItemTags.LEAVES), FluidVolume.create(Fluids.WATER, FluidVolume.BUCKET / 4))
     }
 
     override fun registerOres(registry: IOreRegistry) {

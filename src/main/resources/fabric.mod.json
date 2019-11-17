@@ -25,6 +25,8 @@
     "fabricloader": ">=0.4.6",
     "fabric-language-kotlin": ">=1.3.40",
     "towelette": "*",
-    "artifice": "*"
+    "artifice": "*",
+    "libblockattributes_items": "*",
+    "libblockattributes_fluids": "*"
   }
 }

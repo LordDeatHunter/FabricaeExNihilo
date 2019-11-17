@@ -1,5 +1,6 @@
 package exnihilofabrico
 
+import alexiil.mc.lib.attributes.fluid.volume.FluidVolume
 import blue.endless.jankson.Comment
 import io.github.cottonmc.cotton.config.annotations.ConfigFile
 import net.minecraft.util.Identifier
@@ -47,7 +48,9 @@ class BarrelConfig {
 class CrucibleConfig {
     var enabled: Boolean = true
     @Comment("How many ticks between updates")
-    var tickRate = 10
+    var tickRate = 20
+    var baseProcessRate = FluidVolume.BUCKET / 100
+    var woodenProcessingRate = 4
     @Comment("How many buckets of liquid can a stone crucible store")
     var stoneVolume = 4
     @Comment("How many buckets of liquid can a wooden crucible store")

@@ -1,8 +1,8 @@
 package exnihilofabrico.registry.barrel
 
+import alexiil.mc.lib.attributes.fluid.volume.FluidVolume
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.ExNihiloFabrico
-import exnihilofabrico.api.crafting.FluidStack
 import exnihilofabrico.api.recipes.LeakingRecipe
 import exnihilofabrico.api.registry.ILeakingRegistry
 import exnihilofabrico.compatibility.modules.MetaModule
@@ -26,10 +26,10 @@ data class LeakingRegistry(val registry: MutableList<LeakingRecipe> = mutableLis
         return registry.add(recipe)
     }
 
-    override fun getResult(block: Block, fluid: FluidStack): Pair<Block, FluidStack>? {
+    override fun getResult(block: Block, fluid: FluidVolume): Pair<Block, FluidVolume>? {
         val match =
             registry.firstOrNull { it.target.test(block) && it.fluid.test(fluid) && it.loss <= fluid.amount } ?: return null
-        return match.result to fluid.copy(amount = fluid.amount - match.loss)
+        return match.result to FluidVolume.create(fluid.fluidKey, fluid.amount - match.loss)
     }
 
     override fun registerJson(file: File) {

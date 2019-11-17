@@ -1,7 +1,7 @@
 package exnihilofabrico.api.registry
 
+import alexiil.mc.lib.attributes.fluid.volume.FluidVolume
 import exnihilofabrico.api.crafting.EntityTypeIngredient
-import exnihilofabrico.api.crafting.FluidStack
 import exnihilofabrico.api.recipes.MilkingRecipe
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
@@ -13,17 +13,17 @@ interface IMilkingRegistry {
 
     fun register(recipe: MilkingRecipe): Boolean
 
-    fun register(entity: EntityTypeIngredient, fluid: FluidStack, cooldown: Int) =
+    fun register(entity: EntityTypeIngredient, fluid: FluidVolume, cooldown: Int) =
         register(MilkingRecipe(entity, fluid, cooldown))
-    fun register(entity: EntityType<*>, fluid: FluidStack, cooldown: Int) =
+    fun register(entity: EntityType<*>, fluid: FluidVolume, cooldown: Int) =
         register(EntityTypeIngredient(entity), fluid, cooldown)
     fun register(entity: EntityType<*>, fluid: Fluid, amount: Int, cooldown: Int) =
-        register(EntityTypeIngredient(entity), FluidStack(fluid, amount), cooldown)
+        register(EntityTypeIngredient(entity), FluidVolume.create(fluid, amount), cooldown)
     fun register(entity: Tag<EntityType<*>>, fluid: Fluid, amount: Int, cooldown: Int) =
-        register(EntityTypeIngredient(entity), FluidStack(fluid, amount), cooldown)
-    fun register(entity: Tag<EntityType<*>>, fluid: FluidStack, cooldown: Int) =
+        register(EntityTypeIngredient(entity), FluidVolume.create(fluid, amount), cooldown)
+    fun register(entity: Tag<EntityType<*>>, fluid: FluidVolume, cooldown: Int) =
         register(EntityTypeIngredient(entity), fluid, cooldown)
 
-    fun getResult(entity: Entity): Pair<FluidStack, Int>?
+    fun getResult(entity: Entity): Pair<FluidVolume, Int>?
     fun hasResult(entity: Entity): Boolean
 }

@@ -1,12 +1,12 @@
 package exnihilofabrico.registry
 
+import alexiil.mc.lib.attributes.fluid.volume.FluidVolume
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.api.crafting.EntityTypeIngredient
 import exnihilofabrico.api.crafting.FluidIngredient
-import exnihilofabrico.api.crafting.FluidStack
 import exnihilofabrico.api.crafting.ItemIngredient
 import exnihilofabrico.api.recipes.*
 import exnihilofabrico.json.*
@@ -32,7 +32,7 @@ abstract class AbstractRegistry<T>(
         .registerTypeAdapter(Color::class.java, ColorJson)
         .registerTypeAdapter(EntityType::class.java, EntityTypeJson)
         .registerTypeAdapter(Fluid::class.java, FluidJson)
-        .registerTypeAdapter(FluidStack::class.java, FluidStackJson)
+        .registerTypeAdapter(FluidVolume::class.java, FluidVolumeJson)
         .registerTypeAdapter(Identifier::class.java, IdentifierJson)
         .registerTypeAdapter(ItemStack::class.java, ItemStackJson)
         .registerTypeAdapter(MeshProperties::class.java, MeshPropertiesJson)

@@ -1,5 +1,11 @@
 package exnihilofabrico.modules.barrels
 
+import alexiil.mc.lib.attributes.Simulation
+import alexiil.mc.lib.attributes.fluid.FluidExtractable
+import alexiil.mc.lib.attributes.fluid.FluidInsertable
+import alexiil.mc.lib.attributes.fluid.filter.FluidFilter
+import alexiil.mc.lib.attributes.fluid.volume.FluidKeys
+import alexiil.mc.lib.attributes.fluid.volume.FluidVolume
 import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.api.crafting.EntityStack
 import exnihilofabrico.api.registry.ExNihiloRegistries
@@ -7,13 +13,17 @@ import exnihilofabrico.id
 import exnihilofabrico.modules.ModBlocks
 import exnihilofabrico.modules.barrels.modes.*
 import exnihilofabrico.modules.base.BaseBlockEntity
+import exnihilofabrico.util.asStack
+import exnihilofabrico.util.maybeGetFluid
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.SidedInventory
+import net.minecraft.item.BucketItem
 import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.util.Hand
 import net.minecraft.util.Tickable
@@ -24,10 +34,34 @@ import kotlin.math.ceil
 import kotlin.math.min
 
 class BarrelBlockEntity(var mode: BarrelMode = EmptyMode()): BaseBlockEntity(TYPE), Tickable,
-    BlockEntityClientSerializable, SidedInventory {
+    BlockEntityClientSerializable, SidedInventory, FluidInsertable, FluidExtractable {
 
     var tickCounter = world?.random?.nextInt(ExNihiloFabrico.config.modules.barrels.tickRate) ?: ExNihiloFabrico.config.modules.barrels.tickRate
 
+    /**
+     * Fluid Inventory Management
+     */
+    override fun attemptInsertion(volume: FluidVolume, simulation: Simulation): FluidVolume {
+        (mode as? EmptyMode)?.let { emptyMode ->
+            val toDrain = minOf(FluidVolume.BUCKET, volume.amount)
+            val toReturn = FluidVolume.BUCKET - toDrain
+            if(simulation == Simulation.ACTION)
+                mode = FluidMode(volume)
+            return volume.split(toDrain)
+        }
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun attemptExtraction(filter: FluidFilter?, amount: Int, simulation: Simulation?): FluidVolume {
+        (mode as? FluidMode)?.let { fluidMode ->
+
+        }
+        return FluidKeys.EMPTY.withAmount(0)
+    }
+
+    /**
+     * Item Inventory Management
+     */
     override fun getInvStack(slot: Int): ItemStack {
         return when(mode) {
             is ItemMode -> (mode as ItemMode).stack
@@ -200,7 +234,7 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode()): BaseBlockEntity(TYP
                     val leakResult = ExNihiloRegistries.BARREL_LEAKING.getResult(world.getBlockState(leakPos).block, fluidMode.fluid)
                     if(leakResult != null) {
                         world.setBlockState(leakPos, leakResult.first.defaultState)
-                        fluidMode.fluid.amount = leakResult.second.amount
+                        fluidMode.fluid.split(leakResult.second.amount)
                         markDirtyClient()
                         return@leakTick true
                     }
@@ -289,6 +323,16 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode()): BaseBlockEntity(TYP
             return true
         }
         // Check for fluids
+        (held.item as? BucketItem)?.let {bucket ->
+            val fluid = bucket.maybeGetFluid() ?: return@insertFromHand false
+            mode = FluidMode(FluidVolume.create(fluid, FluidVolume.BUCKET))
+            markDirtyClient()
+            if(!player.isCreative) {
+                held.decrement(1)
+                player.giveItemStack(Items.BUCKET.asStack())
+            }
+            return@insertFromHand true
+        }
         return false
     }
 
