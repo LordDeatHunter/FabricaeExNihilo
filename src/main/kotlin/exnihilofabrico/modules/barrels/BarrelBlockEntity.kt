@@ -33,7 +33,7 @@ import net.minecraft.util.math.Direction
 import kotlin.math.ceil
 import kotlin.math.min
 
-class BarrelBlockEntity(var mode: BarrelMode = EmptyMode()): BaseBlockEntity(TYPE), Tickable,
+class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean = false): BaseBlockEntity(TYPE), Tickable,
     BlockEntityClientSerializable, SidedInventory, FluidInsertable, FluidExtractable {
 
     var tickCounter = world?.random?.nextInt(ExNihiloFabrico.config.modules.barrels.tickRate) ?: ExNihiloFabrico.config.modules.barrels.tickRate
@@ -226,19 +226,22 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode()): BaseBlockEntity(TYP
     }
 
     private fun leakTick(): Boolean {
+        if(isStone)
+            return false
         (world)?.let { world ->
+            if(world.isClient)
+                return@leakTick true
             (mode as? FluidMode)?.let {fluidMode ->
-                if(tickCounter <= 0) {
-                    tickCounter = ExNihiloFabrico.config.modules.barrels.tickRate
-                    val leakPos = getLeakPos() ?: return@leakTick false
-                    val leakResult = ExNihiloRegistries.BARREL_LEAKING.getResult(world.getBlockState(leakPos).block, fluidMode.fluid)
-                    if(leakResult != null) {
-                        world.setBlockState(leakPos, leakResult.first.defaultState)
-                        fluidMode.fluid.split(leakResult.second.amount)
-                        markDirtyClient()
-                        return@leakTick true
-                    }
-                }
+                val leakPos = getLeakPos() ?: return@leakTick false
+                val leakResult = ExNihiloRegistries.BARREL_LEAKING.getResult(world.getBlockState(leakPos).block, fluidMode.fluid) ?: return@leakTick false
+
+                world.setBlockState(leakPos, leakResult.first.defaultState)
+                if(fluidMode.fluid.amount > leakResult.second)
+                    fluidMode.fluid.split(leakResult.second)
+                else
+                    mode = EmptyMode()
+                markDirtyClient()
+                return@leakTick true
             }
         }
         return false
@@ -286,8 +289,8 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode()): BaseBlockEntity(TYP
      */
     private fun getLeakPos(): BlockPos? {
         val rand = world?.random ?: return null
-        val r= 1 + 2 * ExNihiloFabrico.config.modules.barrels.leakRadius
-        val leakPos = pos.add(rand.nextInt(2*r)-r, -1, rand.nextInt(2*r)-r)
+        val r= ExNihiloFabrico.config.modules.barrels.leakRadius
+        val leakPos = pos.add(rand.nextInt(2*r)-r, -rand.nextInt(2), rand.nextInt(2*r)-r)
         if(world?.isHeightValidAndBlockLoaded(leakPos) ?: return null)
             return leakPos
         return null

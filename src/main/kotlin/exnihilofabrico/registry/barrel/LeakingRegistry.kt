@@ -26,10 +26,10 @@ data class LeakingRegistry(val registry: MutableList<LeakingRecipe> = mutableLis
         return registry.add(recipe)
     }
 
-    override fun getResult(block: Block, fluid: FluidVolume): Pair<Block, FluidVolume>? {
+    override fun getResult(block: Block, fluid: FluidVolume): Pair<Block, Int>? {
         val match =
             registry.firstOrNull { it.target.test(block) && it.fluid.test(fluid) && it.loss <= fluid.amount } ?: return null
-        return match.result to FluidVolume.create(fluid.fluidKey, fluid.amount - match.loss)
+        return match.result to match.loss
     }
 
     override fun registerJson(file: File) {

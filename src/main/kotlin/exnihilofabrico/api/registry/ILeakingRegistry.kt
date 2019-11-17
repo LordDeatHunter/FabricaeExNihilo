@@ -27,7 +27,7 @@ interface ILeakingRegistry {
         register(LeakingRecipe(ItemIngredient(target), FluidIngredient(fluid), amount, result))
 
     /**
-     * Returns the block to transform the input block into, and the resulting FluidStack; null if not a valid recipe.
+     * Returns the block to transform the input block into, and the amount to drain.
      */
-    fun getResult(block: Block, fluid: FluidVolume): Pair<Block, FluidVolume>?
+    fun getResult(block: Block, fluid: FluidVolume): Pair<Block, Int>?
 }

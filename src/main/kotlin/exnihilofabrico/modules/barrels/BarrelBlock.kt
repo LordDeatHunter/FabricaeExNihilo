@@ -37,7 +37,7 @@ class BarrelBlock(val texture: Identifier,
      * BlockEntity functions
      */
     override fun hasBlockEntity() = true
-    override fun createBlockEntity(world: BlockView?) = BarrelBlockEntity()
+    override fun createBlockEntity(world: BlockView?) = BarrelBlockEntity(isStone = this.material == Material.STONE)
 
     fun generateRecipe(builder: ShapedRecipeBuilder) {
         builder.pattern("x x", "x x", "xyx")

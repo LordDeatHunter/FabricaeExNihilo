@@ -46,21 +46,24 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
 
         registry.register(Tag(Identifier("c:seeds")), Blocks.DIRT, 0.0625, Color.GREEN)
         registry.register(Tag(Identifier("c:veggies")), Blocks.DIRT, 0.0625, Color.YELLOW)
-        registry.register(Tag(Identifier("c:flowers")), Blocks.DIRT, 0.0625, Color.RED)
+        registry.register(ItemTags.SMALL_FLOWERS, Blocks.DIRT, 0.0625, Color.RED)
         registry.register(Tag(Identifier("c:dyes")), Blocks.DIRT, 0.125, Color.RED)
         registry.register(Tag(Identifier("c:raw_meat")), Blocks.DIRT, 0.125, Color.RED)
         registry.register(Tag(Identifier("c:cooked_meat")), Blocks.DIRT, 0.25, Color.RED)
     }
 
     override fun registerLeaking(registry: ILeakingRegistry) {
-        registry.register(Blocks.COBBLESTONE, Fluids.WATER, 10, Blocks.MOSSY_COBBLESTONE)
-        registry.register(Blocks.STONE_BRICKS, Fluids.WATER, 10, Blocks.MOSSY_STONE_BRICKS)
-        registry.register(ItemTags.SAPLINGS, WitchWaterFluid.Still, 10, Blocks.DEAD_BUSH)
-        registry.register(Blocks.GRAVEL, WitchWaterFluid.Still, 10, getExNihiloBlock("crushed_netherrack"))
+        registry.register(Blocks.COBBLESTONE, Fluids.WATER, FluidVolume.BUCKET / 10, Blocks.MOSSY_COBBLESTONE)
+        registry.register(Blocks.STONE_BRICKS, Fluids.WATER, FluidVolume.BUCKET / 10, Blocks.MOSSY_STONE_BRICKS)
+        registry.register(ItemTags.SAPLINGS, WitchWaterFluid.Still, FluidVolume.BUCKET / 10, Blocks.DEAD_BUSH)
+        registry.register(Blocks.GRAVEL, WitchWaterFluid.Still, FluidVolume.BUCKET / 10, getExNihiloBlock("crushed_netherrack"))
+        registry.register(Blocks.SAND, WitchWaterFluid.Still, FluidVolume.BUCKET / 2, Blocks.SOUL_SAND)
+        registry.register(Blocks.PODZOL, WitchWaterFluid.Still, FluidVolume.BUCKET / 2, Blocks.MYCELIUM)
+        registry.register(ItemTags.SMALL_FLOWERS, WitchWaterFluid.Still, FluidVolume.BUCKET / 2, Blocks.BROWN_MUSHROOM)
     }
 
     override fun registerMilking(registry: IMilkingRegistry) {
-        registry.register(EntityType.WITCH, WitchWaterFluid.Still, 10, 20)
+        registry.register(EntityType.WITCH, WitchWaterFluid.Still, FluidVolume.BUCKET / 100, 20)
     }
 
     override fun registerCrucibleHeat(registry: ICrucibleHeatRegistry) {
