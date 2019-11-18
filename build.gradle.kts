@@ -36,9 +36,7 @@ allprojects {
         }
 
         maven (url = "https://maven.fabricmc.net/")
-        maven(url = "https://minecraft.curseforge.com/api/maven") {
-            name = "CurseForge"
-        }
+        maven(url = "https://minecraft.curseforge.com/api/maven") { name = "CurseForge" }
 
         // For cotton, polyester and json-factory
         maven(url = "http://server.bbkr.space:8081/artifactory/libs-release")
@@ -46,6 +44,9 @@ allprojects {
 
         // For Artifice
         maven (url = "https://maven.swordglowsblue.com" )
+
+        // For LibBlockAttributes
+        maven(url = "https://mod-buildcraft.com/maven") { name = "BuildCraft" }
 
         maven (url = "http://maven.sargunv.s3-website-us-west-2.amazonaws.com/")
         jcenter()
@@ -103,6 +104,7 @@ dependencies {
     // Other mods
     modCompileAndInclude("towelette:Towelette:"+v("towelette_version"))
     modCompileAndInclude("io.github.cottonmc:cotton:"+v("cotton_version"))
+    modCompile("alexiil.mc.lib:libblockattributes-all:" + v("libblockattributes_version"))
 
     // Artifice
     modImplementation("artificemc:artifice:"+v("artifice_version"))

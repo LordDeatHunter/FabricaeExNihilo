@@ -50,7 +50,7 @@ class CrucibleConfig {
     @Comment("How many ticks between updates")
     var tickRate = 20
     var baseProcessRate = FluidVolume.BUCKET / 100
-    var woodenProcessingRate = 4
+    var woodenProcessingRate = FluidVolume.BUCKET / 60
     @Comment("How many buckets of liquid can a stone crucible store")
     var stoneVolume = 4
     @Comment("How many buckets of liquid can a wooden crucible store")

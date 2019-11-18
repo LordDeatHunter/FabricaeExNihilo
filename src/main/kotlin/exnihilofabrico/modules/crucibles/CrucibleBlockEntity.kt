@@ -89,7 +89,7 @@ class CrucibleBlockEntity(private val isStone: Boolean = false):
 
         if(held.isEmpty)
             return false
-
+        // Removing a bucket's worth of fluid
         if(contents.amount >= FluidVolume.BUCKET)
             (held.item as? IBucketItem)?.let { bucket ->
                 val drainStack = contents.split(bucket.libblockattributes__getFluidVolumeAmount())
@@ -101,18 +101,6 @@ class CrucibleBlockEntity(private val isStone: Boolean = false):
                 markDirtyClient()
                 return true
             }
-
-/*        // Removing a bucket's worth of fluid
-        if(held.item == Items.BUCKET && contents.amount > FluidVolume.BUCKET ) {
-            val bucket = contents.rawFluid?.bucketItem?.asStack() ?: return true
-            if(!player.isCreative) {
-                held.decrement(1)
-            }
-            player.giveItemStack(bucket)
-            contents.split(FluidVolume.BUCKET)
-            markDirtyClient()
-            return true
-        }*/
         // Adding a meltable item
         val result = itemInserter.attemptInsertion(held, Simulation.ACTION)
         if(result.count != held.count) {

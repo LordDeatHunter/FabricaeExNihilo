@@ -1,11 +1,14 @@
 package exnihilofabrico.modules.barrels
 
 import alexiil.mc.lib.attributes.Simulation
-import alexiil.mc.lib.attributes.fluid.FluidExtractable
-import alexiil.mc.lib.attributes.fluid.FluidInsertable
+import alexiil.mc.lib.attributes.fluid.FluidTransferable
 import alexiil.mc.lib.attributes.fluid.filter.FluidFilter
+import alexiil.mc.lib.attributes.fluid.mixin.api.IBucketItem
 import alexiil.mc.lib.attributes.fluid.volume.FluidKeys
 import alexiil.mc.lib.attributes.fluid.volume.FluidVolume
+import alexiil.mc.lib.attributes.item.ItemTransferable
+import alexiil.mc.lib.attributes.item.filter.ExactItemStackFilter
+import alexiil.mc.lib.attributes.item.filter.ItemFilter
 import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.api.crafting.EntityStack
 import exnihilofabrico.api.registry.ExNihiloRegistries
@@ -13,17 +16,15 @@ import exnihilofabrico.id
 import exnihilofabrico.modules.ModBlocks
 import exnihilofabrico.modules.barrels.modes.*
 import exnihilofabrico.modules.base.BaseBlockEntity
-import exnihilofabrico.util.asStack
-import exnihilofabrico.util.maybeGetFluid
+import exnihilofabrico.util.ofSize
+import exnihilofabrico.util.proxyFluidVolume
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.SidedInventory
-import net.minecraft.item.BucketItem
 import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.util.Hand
 import net.minecraft.util.Tickable
@@ -31,155 +32,15 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import kotlin.math.ceil
-import kotlin.math.min
 
 class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean = false): BaseBlockEntity(TYPE), Tickable,
-    BlockEntityClientSerializable, SidedInventory, FluidInsertable, FluidExtractable {
+    BlockEntityClientSerializable {
 
     var tickCounter = world?.random?.nextInt(ExNihiloFabrico.config.modules.barrels.tickRate) ?: ExNihiloFabrico.config.modules.barrels.tickRate
 
-    /**
-     * Fluid Inventory Management
-     */
-    override fun attemptInsertion(volume: FluidVolume, simulation: Simulation): FluidVolume {
-        (mode as? EmptyMode)?.let { emptyMode ->
-            val toDrain = minOf(FluidVolume.BUCKET, volume.amount)
-            val toReturn = FluidVolume.BUCKET - toDrain
-            if(simulation == Simulation.ACTION)
-                mode = FluidMode(volume)
-            return volume.split(toDrain)
-        }
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun attemptExtraction(filter: FluidFilter?, amount: Int, simulation: Simulation?): FluidVolume {
-        (mode as? FluidMode)?.let { fluidMode ->
-
-        }
-        return FluidKeys.EMPTY.withAmount(0)
-    }
-
-    /**
-     * Item Inventory Management
-     */
-    override fun getInvStack(slot: Int): ItemStack {
-        return when(mode) {
-            is ItemMode -> (mode as ItemMode).stack
-            else -> ItemStack.EMPTY
-        }
-    }
-
-    override fun clear() {
-        if(mode is ItemMode) {
-            mode = EmptyMode()
-
-        }
-    }
-
-    override fun setInvStack(slot: Int, stack: ItemStack?) {
-        if(stack?.isEmpty != false) {
-            clear()
-            return
-        }
-
-        (mode as? ItemMode)?.let {
-            mode = ItemMode(stack.copy())
-            markDirtyClient()
-            return@setInvStack
-        }
-
-        (mode as? EmptyMode)?.let {
-            // Check For Compost Recipes
-            val recipe = ExNihiloRegistries.BARREL_COMPOST.getRecipe(stack) ?: return@let
-
-            mode = CompostMode(recipe.result, recipe.amount, recipe.color)
-            markDirtyClient()
-            return@setInvStack
-        }
-
-        (mode as? FluidMode)?.let {
-            val result = ExNihiloRegistries.BARREL_ALCHEMY.getRecipe(it.fluid, stack) ?: return@let
-
-            if(result.delay != 0) {
-                mode = result.product
-                spawnEntity(result.toSpawn)
-            }
-            else {
-                AlchemyMode(mode, result.product, result.toSpawn, result.delay)
-            }
-            markDirtyClient()
-            return@setInvStack
-        }
-
-        (mode as? CompostMode)?.let {
-            val recipe = ExNihiloRegistries.BARREL_COMPOST.getRecipe(stack) ?: return@let
-
-            if(it.amount <= 1 && recipe.result.isItemEqual(it.result)) {
-
-                it.amount = min(it.amount + recipe.amount, 1.0)
-                it.color = recipe.color
-                it.progress = 0.0
-                markDirtyClient()
-                return@setInvStack
-            }
-        }
-    }
-
-    override fun removeInvStack(slot: Int): ItemStack {
-        if(mode is ItemMode) {
-            val stack = (mode as ItemMode).stack
-            clear()
-            markDirtyClient()
-            return stack
-        }
-        return ItemStack.EMPTY
-    }
-
-    override fun canPlayerUseInv(player: PlayerEntity?) = false
-    override fun getInvSize() = 1
-
-    override fun takeInvStack(slot: Int, amount: Int): ItemStack {
-        return (mode as? ItemMode)?.let{
-            val stack = it.stack.split(amount)
-            if(it.stack.isEmpty) {
-                mode = EmptyMode()
-                markDirtyClient()
-            }
-            stack
-        } ?: ItemStack.EMPTY
-    }
-
-    override fun isInvEmpty() = mode !is ItemMode
-
-    override fun getInvAvailableSlots(direction: Direction?): IntArray {
-        return IntArray(1){0}
-    }
-
-    override fun canExtractInvStack(slot: Int, stack: ItemStack?, direction: Direction?): Boolean {
-        return if(stack?.isEmpty != false)
-            false
-        else
-            (mode as? ItemMode)?.let {it.stack.isItemEqual(stack) && stack.count >= it.stack.count } ?: false
-    }
-
-    override fun canInsertInvStack(slot: Int, stack: ItemStack?, direction: Direction?): Boolean {
-        if(stack?.isEmpty != false)
-            return false
-        (mode as? FluidMode)?.let {
-            if(ExNihiloRegistries.BARREL_ALCHEMY.hasRecipe(it.fluid, stack))
-                return@canInsertInvStack true
-        }
-        (mode as? EmptyMode)?.let {
-            if(ExNihiloRegistries.BARREL_COMPOST.hasRecipe(stack))
-                return@canInsertInvStack true
-        }
-        (mode as? CompostMode)?.let {
-            val recipe = ExNihiloRegistries.BARREL_COMPOST.getRecipe(stack) ?: return@let
-            if(it.result.isItemEqual(recipe.result) && it.amount < 1.0)
-                return@canInsertInvStack true
-        }
-        return false
-    }
+    val fluidTransferable = FluidTransferer(this)
+    val itemTransferable = ItemTransferer(this)
+    val inventory = BarrelInventory(this)
 
     override fun tick() {
         if (tickCounter <= 0) {
@@ -319,14 +180,13 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
 
     fun insertFromHand(player: PlayerEntity, hand: Hand): Boolean {
         val held = player.getStackInHand(hand) ?: ItemStack.EMPTY
-        if(canInsertInvStack(0, held, null)) {
-            setInvStack(0, held.copy().split(1))
-            if(!player.isCreative)
-                player.getStackInHand(hand).decrement(1)
+        val remaining = itemTransferable.attemptInsertion(held, Simulation.ACTION)
+        if(remaining.count != held.count) {
+            held.decrement(1)
             return true
         }
         // Check for fluids
-        (held.item as? BucketItem)?.let {bucket ->
+/*        (held.item as? BucketItem)?.let {bucket ->
             val fluid = bucket.maybeGetFluid() ?: return@insertFromHand false
             mode = FluidMode(FluidVolume.create(fluid, FluidVolume.BUCKET))
             markDirtyClient()
@@ -335,8 +195,192 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
                 player.giveItemStack(Items.BUCKET.asStack())
             }
             return@insertFromHand true
+        }*/
+        (held.item as? IBucketItem)?.let { bucket ->
+            // Filling with a fluid
+            val volume = bucket.proxyFluidVolume(held)
+            val amount = bucket.libblockattributes__getFluidVolumeAmount()
+            if(!volume.isEmpty) {
+                val remaining = fluidTransferable.attemptInsertion(volume, Simulation.SIMULATE)
+                if(remaining.isEmpty) {
+                    fluidTransferable.attemptInsertion(volume, Simulation.ACTION)
+                    val returnStack = bucket.libblockattributes__drainedOfFluid(held)
+                    if(!player.isCreative)
+                        held.decrement(1)
+                    player.giveItemStack(returnStack)
+                    markDirtyClient()
+                    return@insertFromHand true
+                }
+            }
+            else {
+                (mode as? FluidMode)?.let { fluidMode ->
+                    // Removing a bucket's worth of fluid
+                    val drained = fluidTransferable.attemptExtraction({ true }, amount, Simulation.SIMULATE)
+                    if(!drained.isEmpty) {
+                        val returnStack = bucket.libblockattributes__withFluid(fluidMode.fluid.fluidKey)
+                        fluidTransferable.attemptExtraction({ true }, amount, Simulation.ACTION)
+                        if(!player.isCreative)
+                            held.decrement(1)
+                        player.giveItemStack(returnStack)
+                        markDirtyClient()
+                        return@insertFromHand true
+                    }
+                }
+            }
+            false
         }
         return false
+    }
+
+    /**
+     * Fluid Inventory Management
+     */
+    class FluidTransferer(val barrel: BarrelBlockEntity): FluidTransferable {
+        override fun attemptInsertion(volume: FluidVolume, simulation: Simulation): FluidVolume {
+            return (barrel.mode as? EmptyMode)?.let { emptyMode ->
+                val toReturn = FluidVolume.BUCKET - minOf(FluidVolume.BUCKET, volume.amount)
+                if(simulation.isAction) {
+                    barrel.mode = FluidMode(volume)
+                    barrel.markDirtyClient()
+                }
+                volume.copy().split(toReturn)
+            } ?: volume
+        }
+
+        override fun attemptExtraction(filter: FluidFilter, amount: Int, simulation: Simulation): FluidVolume {
+            return (barrel.mode as? FluidMode)?.let { fluidMode ->
+                if(filter.matches(fluidMode.fluid.fluidKey)) {
+                    val returnVolume = FluidVolume.create(fluidMode.fluid.fluidKey, minOf(fluidMode.fluid.amount, amount))
+                    if(simulation.isAction) {
+                        if(amount >= fluidMode.fluid.amount)
+                            barrel.mode = EmptyMode()
+                        else
+                            fluidMode.fluid.split(amount)
+                        barrel.markDirtyClient()
+                    }
+                    returnVolume
+                }
+                else {
+                    FluidKeys.EMPTY.withAmount(0)
+                }
+            } ?: FluidKeys.EMPTY.withAmount(0)
+        }
+    }
+
+    /**
+     * Item Inventory Management
+     */
+    class ItemTransferer(val barrel: BarrelBlockEntity): ItemTransferable {
+        override fun attemptInsertion(stack: ItemStack, simulation: Simulation): ItemStack {
+            (barrel.mode as? EmptyMode)?.let { emptyMode ->
+                val recipe = ExNihiloRegistries.BARREL_COMPOST.getRecipe(stack) ?: return@attemptInsertion stack
+                if(simulation.isAction) {
+                    barrel.mode = CompostMode(recipe.result, recipe.amount, recipe.color)
+                    barrel. markDirtyClient()
+                }
+                return@attemptInsertion stack.ofSize(stack.count-1)
+
+            }
+            (barrel.mode as? FluidMode)?.let { fluidMode ->
+                val result = ExNihiloRegistries.BARREL_ALCHEMY.getRecipe(fluidMode.fluid, stack) ?: return@attemptInsertion stack
+
+                if(simulation.isAction) {
+                    if(result.delay != 0) {
+                        barrel.mode = result.product
+                        barrel.spawnEntity(result.toSpawn)
+                        barrel.markDirtyClient()
+                    }
+                    else {
+                        AlchemyMode(fluidMode, result.product, result.toSpawn, result.delay)
+                    }
+                }
+                barrel.markDirtyClient()
+                return@attemptInsertion  stack.ofSize(stack.count-1)
+            }
+            (barrel.mode as? CompostMode)?.let { compostMode ->
+                val recipe = ExNihiloRegistries.BARREL_COMPOST.getRecipe(stack) ?: return@attemptInsertion stack
+
+                if(compostMode.amount < 1.0 && recipe.result.isItemEqual(compostMode.result)) {
+                    if(simulation.isAction) {
+                        compostMode.amount = minOf(compostMode.amount + recipe.amount, 1.0)
+                        compostMode.color = recipe.color
+                        compostMode.progress = 0.0
+                        barrel.markDirtyClient()
+                    }
+
+                    return@attemptInsertion  stack.ofSize(stack.count-1)
+                }
+            }
+            return stack
+        }
+
+        override fun attemptExtraction(filter: ItemFilter, amount: Int, simulation: Simulation): ItemStack {
+            return (barrel.mode as? ItemMode)?.let { itemMode ->
+                if(filter.matches(itemMode.stack)) {
+                    val returnStack = itemMode.stack.ofSize(minOf(amount, itemMode.stack.count))
+                    if(simulation.isAction) {
+                        if(amount >= itemMode.stack.count)
+                            barrel.mode = EmptyMode()
+                        else
+                            itemMode.stack.decrement(amount)
+                        barrel.markDirtyClient()
+                    }
+                    returnStack
+                }
+                else {
+                    ItemStack.EMPTY
+                }
+            } ?: ItemStack.EMPTY
+        }
+    }
+
+    class BarrelInventory(val barrel: BarrelBlockEntity): SidedInventory {
+        override fun getInvStack(slot: Int): ItemStack {
+            return (barrel.mode as? ItemMode)?.stack ?: ItemStack.EMPTY
+        }
+
+        override fun markDirty() = barrel.markDirtyClient()
+
+        override fun clear() {
+            (barrel.mode as? ItemMode)?.let { barrel.mode = EmptyMode() }
+        }
+
+        override fun setInvStack(slot: Int, stack: ItemStack) {
+            if(!stack.isEmpty)
+                barrel.itemTransferable.attemptInsertion(stack, Simulation.ACTION)
+        }
+
+        override fun removeInvStack(slot: Int): ItemStack {
+            return (barrel.mode as? ItemMode)?.let { itemMode ->
+                val stack = itemMode.stack
+                barrel.mode = EmptyMode()
+                barrel.markDirtyClient()
+                stack
+            } ?: ItemStack.EMPTY
+        }
+
+        override fun canPlayerUseInv(p0: PlayerEntity) = false
+
+        override fun getInvAvailableSlots(p0: Direction?) = IntArray(1) {0}
+
+        override fun getInvSize() = 1
+
+        override fun canExtractInvStack(slot: Int, stack: ItemStack, direction: Direction?): Boolean {
+            return !barrel.itemTransferable.attemptExtraction(ExactItemStackFilter(stack), stack.count, Simulation.SIMULATE).isEmpty
+        }
+
+        override fun takeInvStack(slot: Int, amount: Int): ItemStack {
+            return barrel.itemTransferable.attemptExtraction({ _: ItemStack -> true }, amount, Simulation.ACTION)
+        }
+
+        override fun isInvEmpty() = barrel.mode !is ItemMode
+
+        override fun canInsertInvStack(slot: Int, stack: ItemStack?, p2: Direction?): Boolean {
+            if(stack == null)
+                return false
+            return (barrel.itemTransferable.attemptInsertion(stack, Simulation.SIMULATE).count != stack.count)
+        }
+
     }
 
     companion object {
