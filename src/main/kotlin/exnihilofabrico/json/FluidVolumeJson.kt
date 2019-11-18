@@ -3,6 +3,7 @@ package exnihilofabrico.json
 import alexiil.mc.lib.attributes.fluid.volume.FluidKeys
 import alexiil.mc.lib.attributes.fluid.volume.FluidVolume
 import com.google.gson.*
+import com.google.gson.reflect.TypeToken
 import exnihilofabrico.util.getId
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
@@ -10,6 +11,7 @@ import java.lang.reflect.Type
 
 
 object FluidVolumeJson: JsonDeserializer<FluidVolume>, JsonSerializer<FluidVolume> {
+    val TYPE_TOKEN: Type = object: TypeToken<FluidVolume>() {}.type
     override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): FluidVolume {
         val splits = json.asString.split(" x ")
         val amount = splits[0].toInt()

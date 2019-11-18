@@ -2,7 +2,7 @@ package exnihilofabrico.api.registry
 
 import alexiil.mc.lib.attributes.fluid.volume.FluidVolume
 import exnihilofabrico.api.crafting.EntityTypeIngredient
-import exnihilofabrico.api.recipes.MilkingRecipe
+import exnihilofabrico.api.recipes.barrel.MilkingRecipe
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.fluid.Fluid

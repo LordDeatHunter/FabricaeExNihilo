@@ -1,7 +1,7 @@
 package exnihilofabrico.registry.crucible
 
 import com.google.gson.reflect.TypeToken
-import exnihilofabrico.api.recipes.CrucibleHeatRecipe
+import exnihilofabrico.api.recipes.crucible.CrucibleHeatRecipe
 import exnihilofabrico.api.registry.ICrucibleHeatRegistry
 import exnihilofabrico.compatibility.modules.MetaModule
 import exnihilofabrico.registry.AbstractRegistry

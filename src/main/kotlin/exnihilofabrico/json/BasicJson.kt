@@ -19,7 +19,7 @@ object ItemJson: JsonDeserializer<Item>, JsonSerializer<Item> {
         Registry.ITEM[context.deserialize<Identifier>(json, IdentifierJson.TYPE_TOKEN)]
 
     override fun serialize(src: Item, typeOfSrc: Type, context: JsonSerializationContext): JsonElement =
-            context.serialize(src.getId())
+        JsonPrimitive(src.getId().toString())
 }
 
 object BlockJson: JsonDeserializer<Block>, JsonSerializer<Block> {
@@ -27,7 +27,7 @@ object BlockJson: JsonDeserializer<Block>, JsonSerializer<Block> {
         Registry.BLOCK[context.deserialize<Identifier>(json, IdentifierJson.TYPE_TOKEN)]
 
     override fun serialize(src: Block, typeOfSrc: Type, context: JsonSerializationContext): JsonElement =
-        context.serialize(src.getId())
+        JsonPrimitive(src.getId().toString())
 
 }
 
@@ -36,7 +36,7 @@ object FluidJson: JsonDeserializer<Fluid>, JsonSerializer<Fluid> {
         Registry.FLUID[context.deserialize<Identifier>(json, IdentifierJson.TYPE_TOKEN)]
 
     override fun serialize(src: Fluid, typeOfSrc: Type, context: JsonSerializationContext): JsonElement =
-        context.serialize(src.getId())
+        JsonPrimitive(src.getId().toString())
 }
 
 object EntityTypeJson: JsonDeserializer<EntityType<*>>, JsonSerializer<EntityType<*>> {

@@ -3,7 +3,7 @@ package exnihilofabrico.registry.witchwater
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.api.crafting.FluidIngredient
 import exnihilofabrico.api.crafting.WeightedList
-import exnihilofabrico.api.recipes.WitchWaterWorldRecipe
+import exnihilofabrico.api.recipes.witchwater.WitchWaterWorldRecipe
 import exnihilofabrico.api.registry.IWitchWaterWorldRegistry
 import exnihilofabrico.compatibility.modules.MetaModule
 import exnihilofabrico.registry.AbstractRegistry

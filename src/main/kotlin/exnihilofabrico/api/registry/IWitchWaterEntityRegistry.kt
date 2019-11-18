@@ -1,7 +1,7 @@
 package exnihilofabrico.api.registry
 
 import exnihilofabrico.api.crafting.EntityTypeIngredient
-import exnihilofabrico.api.recipes.WitchWaterEntityRecipe
+import exnihilofabrico.api.recipes.witchwater.WitchWaterEntityRecipe
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.village.VillagerProfession

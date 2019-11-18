@@ -2,7 +2,7 @@ package exnihilofabrico.registry.barrel
 
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.ExNihiloFabrico
-import exnihilofabrico.api.recipes.CompostRecipe
+import exnihilofabrico.api.recipes.barrel.CompostRecipe
 import exnihilofabrico.api.registry.ICompostRegistry
 import exnihilofabrico.compatibility.modules.MetaModule
 import exnihilofabrico.registry.AbstractRegistry

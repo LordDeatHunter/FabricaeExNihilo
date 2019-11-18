@@ -2,7 +2,7 @@ package exnihilofabrico.json
 
 import com.google.gson.*
 import exnihilofabrico.api.crafting.EntityTypeIngredient
-import exnihilofabrico.api.recipes.WitchWaterEntityRecipe
+import exnihilofabrico.api.recipes.witchwater.WitchWaterEntityRecipe
 import java.lang.reflect.Type
 
 object WitchWaterEntityRecipeJson: JsonDeserializer<WitchWaterEntityRecipe>, JsonSerializer<WitchWaterEntityRecipe> {
@@ -10,7 +10,7 @@ object WitchWaterEntityRecipeJson: JsonDeserializer<WitchWaterEntityRecipe>, Jso
         val obj = json.asJsonObject
         return WitchWaterEntityRecipe(
             EntityTypeIngredient.fromJson(obj["target"], context),
-            if(obj.has("profession"))
+            if (obj.has("profession"))
                 VillagerProfessionJson.deserialize(obj["profession"], VillagerProfessionJson.TYPE_TOKEN, context)
             else
                 null,

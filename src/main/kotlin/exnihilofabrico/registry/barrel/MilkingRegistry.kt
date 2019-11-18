@@ -3,7 +3,7 @@ package exnihilofabrico.registry.barrel
 import alexiil.mc.lib.attributes.fluid.volume.FluidVolume
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.ExNihiloFabrico
-import exnihilofabrico.api.recipes.MilkingRecipe
+import exnihilofabrico.api.recipes.barrel.MilkingRecipe
 import exnihilofabrico.api.registry.IMilkingRegistry
 import exnihilofabrico.compatibility.modules.MetaModule
 import exnihilofabrico.registry.AbstractRegistry

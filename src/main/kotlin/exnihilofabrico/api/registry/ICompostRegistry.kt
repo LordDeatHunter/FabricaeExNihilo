@@ -1,7 +1,7 @@
 package exnihilofabrico.api.registry
 
 import exnihilofabrico.api.crafting.ItemIngredient
-import exnihilofabrico.api.recipes.CompostRecipe
+import exnihilofabrico.api.recipes.barrel.CompostRecipe
 import exnihilofabrico.util.Color
 import exnihilofabrico.util.asStack
 import net.minecraft.item.Item

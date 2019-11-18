@@ -1,4 +1,4 @@
-package exnihilofabrico.api.recipes
+package exnihilofabrico.api.recipes.witchwater
 
 import exnihilofabrico.api.crafting.EntityTypeIngredient
 import net.minecraft.entity.Entity

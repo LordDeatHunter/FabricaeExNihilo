@@ -1,4 +1,4 @@
-package exnihilofabrico.api.recipes
+package exnihilofabrico.api.recipes.crucible
 
 import exnihilofabrico.api.crafting.FluidIngredient
 import exnihilofabrico.api.crafting.ItemIngredient

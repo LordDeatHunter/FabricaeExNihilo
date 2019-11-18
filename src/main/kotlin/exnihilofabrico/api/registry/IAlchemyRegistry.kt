@@ -5,7 +5,7 @@ import exnihilofabrico.api.crafting.EntityStack
 import exnihilofabrico.api.crafting.FluidIngredient
 import exnihilofabrico.api.crafting.ItemIngredient
 import exnihilofabrico.api.crafting.Lootable
-import exnihilofabrico.api.recipes.AlchemyRecipe
+import exnihilofabrico.api.recipes.barrel.AlchemyRecipe
 import exnihilofabrico.modules.barrels.modes.EmptyMode
 import exnihilofabrico.modules.barrels.modes.FluidMode
 import exnihilofabrico.modules.barrels.modes.ItemMode
@@ -25,11 +25,38 @@ interface IAlchemyRegistry {
 
 
     fun register(reactant: FluidIngredient, catalyst: ItemIngredient, byproduct: Lootable, delay: Int, spawn: EntityStack) =
-        register(AlchemyRecipe(reactant, catalyst, EmptyMode(), byproduct, delay, spawn))
+        register(
+            AlchemyRecipe(
+                reactant,
+                catalyst,
+                EmptyMode(),
+                byproduct,
+                delay,
+                spawn
+            )
+        )
     fun register(reactant: FluidIngredient, catalyst: ItemIngredient, product: ItemStack, byproduct: Lootable, delay: Int, spawn: EntityStack) =
-        register(AlchemyRecipe(reactant, catalyst, ItemMode(product), byproduct, delay, spawn))
+        register(
+            AlchemyRecipe(
+                reactant,
+                catalyst,
+                ItemMode(product),
+                byproduct,
+                delay,
+                spawn
+            )
+        )
     fun register(reactant: FluidIngredient, catalyst: ItemIngredient, product: FluidVolume, byproduct: Lootable, delay: Int, spawn: EntityStack) =
-        register(AlchemyRecipe(reactant, catalyst, FluidMode(product), byproduct, delay, spawn))
+        register(
+            AlchemyRecipe(
+                reactant,
+                catalyst,
+                FluidMode(product),
+                byproduct,
+                delay,
+                spawn
+            )
+        )
 
     fun register(reactant: FluidIngredient, catalyst: ItemIngredient, product: FluidVolume) =
         register(AlchemyRecipe(reactant, catalyst, FluidMode(product)))

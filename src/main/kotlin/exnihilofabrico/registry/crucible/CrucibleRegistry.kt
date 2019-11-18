@@ -1,7 +1,7 @@
 package exnihilofabrico.registry.crucible
 
 import com.google.gson.reflect.TypeToken
-import exnihilofabrico.api.recipes.CrucibleRecipe
+import exnihilofabrico.api.recipes.crucible.CrucibleRecipe
 import exnihilofabrico.api.registry.ICrucibleRegistry
 import exnihilofabrico.registry.AbstractRegistry
 import net.minecraft.item.Item

@@ -2,7 +2,7 @@ package exnihilofabrico.registry.witchwater
 
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.api.crafting.EntityTypeIngredient
-import exnihilofabrico.api.recipes.WitchWaterEntityRecipe
+import exnihilofabrico.api.recipes.witchwater.WitchWaterEntityRecipe
 import exnihilofabrico.api.registry.IWitchWaterEntityRegistry
 import exnihilofabrico.compatibility.modules.MetaModule
 import exnihilofabrico.registry.AbstractRegistry

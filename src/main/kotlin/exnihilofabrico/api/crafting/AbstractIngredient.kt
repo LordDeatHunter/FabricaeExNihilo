@@ -8,7 +8,7 @@ import net.minecraft.tag.Tag
 import java.util.function.Predicate
 
 
-abstract class AbstractIngredient<T>(val tags: MutableCollection<Tag<T>>, val matches: MutableSet<T>): Predicate<T> {
+abstract class AbstractIngredient<T>(val tags: MutableCollection<Tag<T>> = mutableListOf(), val matches: MutableSet<T> = mutableSetOf()): Predicate<T> {
 
     constructor(vararg matches: T): this(mutableListOf(), matches.toMutableSet())
 

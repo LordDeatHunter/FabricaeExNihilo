@@ -1,4 +1,4 @@
-package exnihilofabrico.api.recipes
+package exnihilofabrico.api.recipes.barrel
 
 import alexiil.mc.lib.attributes.fluid.volume.FluidVolume
 import exnihilofabrico.api.crafting.EntityTypeIngredient

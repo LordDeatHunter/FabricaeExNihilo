@@ -8,7 +8,14 @@ import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.api.crafting.EntityTypeIngredient
 import exnihilofabrico.api.crafting.FluidIngredient
 import exnihilofabrico.api.crafting.ItemIngredient
-import exnihilofabrico.api.recipes.*
+import exnihilofabrico.api.recipes.SieveRecipe
+import exnihilofabrico.api.recipes.ToolRecipe
+import exnihilofabrico.api.recipes.barrel.AlchemyRecipe
+import exnihilofabrico.api.recipes.barrel.LeakingRecipe
+import exnihilofabrico.api.recipes.crucible.CrucibleHeatRecipe
+import exnihilofabrico.api.recipes.crucible.CrucibleRecipe
+import exnihilofabrico.api.recipes.witchwater.WitchWaterEntityRecipe
+import exnihilofabrico.api.recipes.witchwater.WitchWaterWorldRecipe
 import exnihilofabrico.json.*
 import exnihilofabrico.modules.sieves.MeshProperties
 import exnihilofabrico.util.Color
@@ -37,18 +44,25 @@ abstract class AbstractRegistry<T>(
         .registerTypeAdapter(ItemStack::class.java, ItemStackJson)
         .registerTypeAdapter(MeshProperties::class.java, MeshPropertiesJson)
         .registerTypeAdapter(VillagerProfession::class.java, VillagerProfessionJson)
-        .registerTypeAdapter(WeightedList::class.java, WeightedListJson())
-
+        .registerTypeAdapter(WeightedList::class.java, WeightedListJson)
         .registerTypeAdapter(ItemIngredient::class.java, ItemIngredientJson)
         .registerTypeAdapter(FluidIngredient::class.java, FluidIngredientJson)
         .registerTypeAdapter(EntityTypeIngredient::class.java, EntityTypeIngredientJson)
-
+        /**
+         * Recipes
+         */
+            // Barrel
         .registerTypeAdapter(AlchemyRecipe::class.java, AlchemyRecipeJson)
+        .registerTypeAdapter(LeakingRecipe::class.java, LeakingRecipeJson)
+            // Crucible
         .registerTypeAdapter(CrucibleHeatRecipe::class.java, CrucibleHeatRecipeJson)
-        .registerTypeAdapter(ToolRecipe::class.java, ToolRecipeJson)
-        .registerTypeAdapter(SieveRecipe::class.java, SieveRecipeJson)
+        .registerTypeAdapter(CrucibleRecipe::class.java, CrucibleRecipeJson)
+            // Witchwater
         .registerTypeAdapter(WitchWaterWorldRecipe::class.java, WitchWaterWorldRecipeJson)
         .registerTypeAdapter(WitchWaterEntityRecipe::class.java, WitchWaterEntityRecipeJson)
+            // Other
+        .registerTypeAdapter(ToolRecipe::class.java, ToolRecipeJson)
+        .registerTypeAdapter(SieveRecipe::class.java, SieveRecipeJson)
 
         .enableComplexMapKeySerialization()
         .create()

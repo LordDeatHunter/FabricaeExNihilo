@@ -6,7 +6,7 @@ import exnihilofabrico.api.crafting.EntityStack
 import exnihilofabrico.api.crafting.FluidIngredient
 import exnihilofabrico.api.crafting.ItemIngredient
 import exnihilofabrico.api.crafting.Lootable
-import exnihilofabrico.api.recipes.AlchemyRecipe
+import exnihilofabrico.api.recipes.barrel.AlchemyRecipe
 import exnihilofabrico.modules.barrels.modes.EmptyMode
 import exnihilofabrico.modules.barrels.modes.barrelModeFactory
 import java.lang.reflect.Type
@@ -17,19 +17,19 @@ object AlchemyRecipeJson: JsonDeserializer<AlchemyRecipe>, JsonSerializer<Alchem
         return AlchemyRecipe(
             FluidIngredient.fromJson(obj.get("reactant"), context),
             ItemIngredient.fromJson(obj.get("catalyst"), context),
-            if(!obj.has("product"))
+            if (!obj.has("product"))
                 EmptyMode()
             else
                 barrelModeFactory(obj.get("product"), context),
-            if(!obj.has("byproduct"))
+            if (!obj.has("byproduct"))
                 Lootable.EMPTY
             else
-                context.deserialize<Lootable>(obj["byproduct"], object: TypeToken<Lootable>(){}.type),
+                context.deserialize<Lootable>(obj["byproduct"], object : TypeToken<Lootable>() {}.type),
             obj["delay"].asInt,
-            if(!obj.has("toSpawn"))
+            if (!obj.has("toSpawn"))
                 EntityStack.EMPTY
             else
-                context.deserialize(obj["toSpawn"], object: TypeToken<EntityStack>(){}.type)
+                context.deserialize(obj["toSpawn"], object : TypeToken<EntityStack>() {}.type)
         )
     }
 

@@ -1,4 +1,4 @@
-package exnihilofabrico.api.recipes
+package exnihilofabrico.api.recipes.barrel
 
 import exnihilofabrico.api.crafting.ItemIngredient
 import exnihilofabrico.util.Color
