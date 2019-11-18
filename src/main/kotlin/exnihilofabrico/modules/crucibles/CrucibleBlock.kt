@@ -1,5 +1,7 @@
 package exnihilofabrico.modules.crucibles
 
+import alexiil.mc.lib.attributes.AttributeList
+import alexiil.mc.lib.attributes.AttributeProvider
 import com.swordglowsblue.artifice.api.builder.data.recipe.ShapedRecipeBuilder
 import exnihilofabrico.modules.base.BaseBlock
 import exnihilofabrico.util.VoxelShapeHelper
@@ -7,6 +9,7 @@ import net.fabricmc.fabric.api.block.FabricBlockSettings
 import net.minecraft.block.*
 import net.minecraft.entity.EntityContext
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.inventory.SidedInventory
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.hit.BlockHitResult
@@ -14,11 +17,12 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.registry.Registry
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
+import net.minecraft.world.IWorld
 import net.minecraft.world.World
 
 class CrucibleBlock(val texture: Identifier, val craftIngredient: Identifier,
                     settings: FabricBlockSettings = FabricBlockSettings.of(Material.WOOD)):
-        BaseBlock(settings), BlockEntityProvider {
+        BaseBlock(settings), BlockEntityProvider, InventoryProvider, AttributeProvider {
 
     override fun activate(state: BlockState?, world: World?, pos: BlockPos?, player: PlayerEntity?, hand: Hand?, hitResult: BlockHitResult?): Boolean {
         if(world?.isClient != false || pos == null)
@@ -26,7 +30,17 @@ class CrucibleBlock(val texture: Identifier, val craftIngredient: Identifier,
         val blockEntity = world.getBlockEntity(pos)
         if(blockEntity is CrucibleBlockEntity)
             return blockEntity.activate(state, player, hand, hitResult)
-        return false
+        return super.activate(state, world, pos, player, hand, hitResult)
+    }
+    override fun getInventory(state: BlockState?, world: IWorld?, pos: BlockPos): SidedInventory? {
+        return (world?.getBlockEntity(pos) as? CrucibleBlockEntity)?.inventory
+    }
+
+    override fun addAllAttributes(world: World?, pos: BlockPos?, state: BlockState?, attributes: AttributeList<*>) {
+        (world?.getBlockEntity(pos) as? CrucibleBlockEntity)?.let {crucible ->
+            attributes.offer(crucible.fluidExtractor)
+            attributes.offer(crucible.itemInserter)
+        }
     }
 
     override fun neighborUpdate(state: BlockState?, world: World?, pos: BlockPos?, block: Block?, fromPos: BlockPos?, boolean_1: Boolean) {
@@ -53,7 +67,7 @@ class CrucibleBlock(val texture: Identifier, val craftIngredient: Identifier,
      * BlockEntity functions
      */
     override fun hasBlockEntity() = true
-    override fun createBlockEntity(world: BlockView?) = CrucibleBlockEntity()
+    override fun createBlockEntity(world: BlockView?) = CrucibleBlockEntity(this.material == Material.STONE)
 
 
     fun generateRecipe(builder: ShapedRecipeBuilder) {
