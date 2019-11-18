@@ -6,7 +6,7 @@
   "refmap": "exnihilofabrico-refmap.json",
   "mixins": [
     "BlockHarvestMixin",
-    "BucketItemMixin"
+    "MilkBucketMixin"
   ],
   "injectors": {
     "defaultRequire": 1

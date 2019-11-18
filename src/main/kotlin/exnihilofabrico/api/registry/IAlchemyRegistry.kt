@@ -9,7 +9,9 @@ import exnihilofabrico.api.recipes.AlchemyRecipe
 import exnihilofabrico.modules.barrels.modes.EmptyMode
 import exnihilofabrico.modules.barrels.modes.FluidMode
 import exnihilofabrico.modules.barrels.modes.ItemMode
+import exnihilofabrico.util.asStack
 import net.minecraft.fluid.Fluid
+import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 
 interface IAlchemyRegistry {
@@ -46,4 +48,6 @@ interface IAlchemyRegistry {
         register(FluidIngredient(reactant), ItemIngredient(catalyst), FluidVolume.create(product, FluidVolume.BUCKET))
     fun register(reactant: Fluid, catalyst: ItemStack, product: ItemStack) =
         register(FluidIngredient(reactant), ItemIngredient(catalyst), product)
+    fun register(reactant: Fluid, catalyst: ItemConvertible, product: ItemConvertible) =
+        register(FluidIngredient(reactant), ItemIngredient(catalyst), product.asStack())
 }

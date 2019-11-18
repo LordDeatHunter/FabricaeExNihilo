@@ -2,6 +2,7 @@ package exnihilofabrico.modules
 
 import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.id
+import exnihilofabrico.modules.fluids.MilkFluid
 import exnihilofabrico.modules.witchwater.WitchWaterFluid
 import net.fabricmc.fabric.api.block.FabricBlockSettings
 import net.minecraft.block.Block
@@ -18,5 +19,8 @@ object ModFluids {
     fun registerFluids(registry: Registry<Fluid>) {
         Registry.register(registry, id("witchwater"), WitchWaterFluid.Still)
         Registry.register(registry, id("witchwater_flowing"), WitchWaterFluid.Flowing)
+        Registry.register(registry, id("milk"), MilkFluid.Still)
+        Registry.register(registry, id("milk_flowing"), MilkFluid.Flowing)
+
     }
 }

@@ -1,10 +1,13 @@
 {
   "replace": false,
   "values": [
-    "minecraft:raw_beef",
-    "minecraft:raw_porkchop",
-    "minecraft:raw_chicken",
-    "minecraft:raw_mutton",
+    "minecraft:beef",
+    "minecraft:porkchop",
+    "minecraft:chicken",
+    "minecraft:rabbit",
+    "minecraft:mutton",
+    "minecraft:cod",
+    "minecraft:salmon",
     "exnihilofabrico:silkworm_raw"
   ]
 }

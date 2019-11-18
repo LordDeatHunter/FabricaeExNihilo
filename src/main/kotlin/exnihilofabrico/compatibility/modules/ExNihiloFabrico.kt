@@ -3,13 +3,13 @@ package exnihilofabrico.compatibility.modules
 import alexiil.mc.lib.attributes.fluid.volume.FluidVolume
 import exnihilofabrico.api.compatibility.IExNihiloFabricoModule
 import exnihilofabrico.api.crafting.FluidIngredient
-import exnihilofabrico.api.crafting.ItemIngredient
 import exnihilofabrico.api.crafting.Lootable
 import exnihilofabrico.api.crafting.WeightedList
 import exnihilofabrico.api.registry.*
 import exnihilofabrico.id
 import exnihilofabrico.modules.ModItems.SEED_MYCELIUM
 import exnihilofabrico.modules.ModTags
+import exnihilofabrico.modules.fluids.MilkFluid
 import exnihilofabrico.modules.ore.EnumChunkMaterial
 import exnihilofabrico.modules.ore.EnumChunkShape
 import exnihilofabrico.modules.ore.EnumPieceShape
@@ -30,6 +30,12 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
 
     override fun registerAlchemy(registry: IAlchemyRegistry) {
         registry.register(Fluids.WATER, SEED_MYCELIUM.asStack(), WitchWaterFluid.Still)
+        registry.register(Fluids.LAVA, Items.GLOWSTONE_DUST, Blocks.END_STONE)
+        registry.register(Fluids.LAVA, Items.REDSTONE, Blocks.NETHERRACK)
+        registry.register(Fluids.WATER, getExNihiloBlock("dust"), Blocks.CLAY)
+        registry.register(Fluids.WATER, getExNihiloBlock("silt"), Blocks.CLAY)
+        registry.register(MilkFluid.Still, Items.BROWN_MUSHROOM, Blocks.SLIME_BLOCK)
+        registry.register(MilkFluid.Still, Items.RED_MUSHROOM, Blocks.SLIME_BLOCK)
     }
 
     override fun registerCompost(registry: ICompostRegistry) {
@@ -63,6 +69,7 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
     }
 
     override fun registerMilking(registry: IMilkingRegistry) {
+        registry.register(EntityType.COW, MilkFluid.Still, FluidVolume.BUCKET / 100, 20)
         registry.register(EntityType.WITCH, WitchWaterFluid.Still, FluidVolume.BUCKET / 100, 20)
     }
 
@@ -74,12 +81,18 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
     }
 
     override fun registerCrucibleStone(registry: ICrucibleRegistry) {
-        registry.register(ItemIngredient(Blocks.COBBLESTONE), FluidVolume.create(Fluids.LAVA,FluidVolume.BUCKET / 4))
+        registry.register(Blocks.NETHERRACK, Fluids.LAVA,FluidVolume.BUCKET / 2)
+        registry.register(Blocks.COBBLESTONE, Fluids.LAVA,FluidVolume.BUCKET / 4)
+        registry.register(Blocks.GRAVEL, Fluids.LAVA,FluidVolume.BUCKET / 8)
+        registry.register(ItemTags.SAND, Fluids.LAVA,FluidVolume.BUCKET / 16)
     }
 
     override fun registerCrucibleWood(registry: ICrucibleRegistry) {
-        registry.register(ItemIngredient(ItemTags.SAPLINGS), FluidVolume.create(Fluids.WATER, FluidVolume.BUCKET / 10))
-        registry.register(ItemIngredient(ItemTags.LEAVES), FluidVolume.create(Fluids.WATER, FluidVolume.BUCKET / 4))
+        registry.register(ItemTags.SAPLINGS, Fluids.WATER, FluidVolume.BUCKET / 10)
+        registry.register(ItemTags.LEAVES, Fluids.WATER, FluidVolume.BUCKET / 4)
+        registry.register(ItemTags.SMALL_FLOWERS, Fluids.WATER, FluidVolume.BUCKET / 10)
+        registry.register(Tag(Identifier("c:seeds")), Fluids.WATER, FluidVolume.BUCKET / 10)
+        registry.register(Tag(Identifier("c:veggies")), Fluids.WATER, FluidVolume.BUCKET / 10)
     }
 
     override fun registerOres(registry: IOreRegistry) {

@@ -186,24 +186,13 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
             return true
         }
         // Check for fluids
-/*        (held.item as? BucketItem)?.let {bucket ->
-            val fluid = bucket.maybeGetFluid() ?: return@insertFromHand false
-            mode = FluidMode(FluidVolume.create(fluid, FluidVolume.BUCKET))
-            markDirtyClient()
-            if(!player.isCreative) {
-                held.decrement(1)
-                player.giveItemStack(Items.BUCKET.asStack())
-            }
-            return@insertFromHand true
-        }*/
         (held.item as? IBucketItem)?.let { bucket ->
             // Filling with a fluid
             val volume = bucket.proxyFluidVolume(held)
             val amount = bucket.libblockattributes__getFluidVolumeAmount()
             if(!volume.isEmpty) {
-                val remaining = fluidTransferable.attemptInsertion(volume, Simulation.SIMULATE)
+                val remaining = fluidTransferable.attemptInsertion(volume, Simulation.ACTION)
                 if(remaining.isEmpty) {
-                    fluidTransferable.attemptInsertion(volume, Simulation.ACTION)
                     val returnStack = bucket.libblockattributes__drainedOfFluid(held)
                     if(!player.isCreative)
                         held.decrement(1)
@@ -216,7 +205,7 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
                 (mode as? FluidMode)?.let { fluidMode ->
                     // Removing a bucket's worth of fluid
                     val drained = fluidTransferable.attemptExtraction({ true }, amount, Simulation.SIMULATE)
-                    if(!drained.isEmpty) {
+                    if(drained.amount == bucket.libblockattributes__getFluidVolumeAmount()) {
                         val returnStack = bucket.libblockattributes__withFluid(fluidMode.fluid.fluidKey)
                         fluidTransferable.attemptExtraction({ true }, amount, Simulation.ACTION)
                         if(!player.isCreative)
@@ -237,14 +226,33 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
      */
     class FluidTransferer(val barrel: BarrelBlockEntity): FluidTransferable {
         override fun attemptInsertion(volume: FluidVolume, simulation: Simulation): FluidVolume {
-            return (barrel.mode as? EmptyMode)?.let { emptyMode ->
-                val toReturn = FluidVolume.BUCKET - minOf(FluidVolume.BUCKET, volume.amount)
-                if(simulation.isAction) {
-                    barrel.mode = FluidMode(volume)
-                    barrel.markDirtyClient()
+            (barrel.mode as? EmptyMode)?.let { emptyMode ->
+                val amount = minOf(FluidVolume.BUCKET, volume.amount)
+                if(amount > 0) {
+                    val toTake = FluidVolume.create(volume.fluidKey, amount)
+                    if(simulation.isAction) {
+                        barrel.mode = FluidMode(toTake)
+                        barrel.markDirtyClient()
+                    }
+                    return@attemptInsertion volume.copy().split(toTake.amount)
                 }
-                volume.copy().split(toReturn)
-            } ?: volume
+            }
+            (barrel.mode as? FluidMode)?.let { fluidMode ->
+                if(fluidMode.fluid.canMerge(volume)) {
+                    val amount = minOf(FluidVolume.BUCKET - fluidMode.fluid.amount, volume.amount)
+                    if(amount > 0) {
+                        val toTake = FluidVolume.create(fluidMode.fluid.fluidKey, amount)
+                        if(simulation.isAction) {
+                            fluidMode.fluid.merge(toTake, Simulation.ACTION)
+                            barrel.markDirtyClient()
+                        }
+
+                        return@attemptInsertion volume.copy().split(toTake.amount)
+                    }
+                }
+            }
+
+            return volume
         }
 
         override fun attemptExtraction(filter: FluidFilter, amount: Int, simulation: Simulation): FluidVolume {
@@ -285,13 +293,14 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
                 val result = ExNihiloRegistries.BARREL_ALCHEMY.getRecipe(fluidMode.fluid, stack) ?: return@attemptInsertion stack
 
                 if(simulation.isAction) {
-                    if(result.delay != 0) {
+                    if(result.delay == 0) {
                         barrel.mode = result.product
                         barrel.spawnEntity(result.toSpawn)
                         barrel.markDirtyClient()
                     }
                     else {
-                        AlchemyMode(fluidMode, result.product, result.toSpawn, result.delay)
+                        barrel.mode = AlchemyMode(fluidMode, result.product, result.toSpawn, result.delay)
+                        barrel.markDirtyClient()
                     }
                 }
                 barrel.markDirtyClient()

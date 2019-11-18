@@ -8,6 +8,7 @@ import exnihilofabrico.modules.barrels.BarrelBlockEntity
 import exnihilofabrico.modules.base.BaseFallingBlock
 import exnihilofabrico.modules.crucibles.CrucibleBlock
 import exnihilofabrico.modules.crucibles.CrucibleBlockEntity
+import exnihilofabrico.modules.fluids.MilkFluid
 import exnihilofabrico.modules.infested.InfestedLeavesBlock
 import exnihilofabrico.modules.infested.InfestedLeavesItem
 import exnihilofabrico.modules.infested.InfestingLeavesBlock
@@ -72,6 +73,7 @@ object ModBlocks {
 
         // Fluid Blocks
         Registry.register(registry, id("witchwater"), WitchWaterFluid.Block)
+        Registry.register(registry, id("milk"), MilkFluid.Block)
     }
 
     fun registerBlockItems(registry: Registry<Item>) {

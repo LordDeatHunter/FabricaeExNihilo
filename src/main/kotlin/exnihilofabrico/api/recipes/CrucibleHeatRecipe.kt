@@ -2,13 +2,11 @@ package exnihilofabrico.api.recipes
 
 import exnihilofabrico.api.crafting.FluidIngredient
 import exnihilofabrico.api.crafting.ItemIngredient
-import exnihilofabrico.util.maybeGetFluid
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.FluidBlock
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.FluidState
-import net.minecraft.fluid.Fluids
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
@@ -23,6 +21,6 @@ data class CrucibleHeatRecipe(val ingredient: ItemIngredient, val fluid: FluidIn
     fun test(fluid: Fluid) = this.fluid.test(fluid)
     fun test(fluid: FluidBlock) = this.fluid.test(fluid)
     fun test(fluid: FluidState) = this.fluid.test(fluid)
-    fun test(item: Item) = ingredient.test(item) || fluid.test(item.maybeGetFluid() ?: Fluids.EMPTY)
+    fun test(item: Item) = ingredient.test(item)
     fun test(stack: ItemStack) = test(stack.item)
 }
