@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "exnihilofabrico:crook",
+  "pattern": [
+    "##",
+    " #",
+    " #"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:popped_chorus_fruit"
+    }
+  },
+  "result": {
+    "item": "exnihilofabrico:crook_purpur"
+  }
+}

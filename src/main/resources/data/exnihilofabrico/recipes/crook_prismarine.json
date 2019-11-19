@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "exnihilofabrico:crook",
+  "pattern": [
+    "##",
+    " #",
+    " #"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:prismarine_shard"
+    }
+  },
+  "result": {
+    "item": "exnihilofabrico:crook_prismarine"
+  }
+}

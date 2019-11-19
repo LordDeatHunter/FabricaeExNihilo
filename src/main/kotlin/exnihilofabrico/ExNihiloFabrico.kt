@@ -91,7 +91,7 @@ object ExNihiloFabrico: ModInitializer {
         // Mesh Crafting
         ModBlocks.SIEVES.forEach { (k, sieve) -> builder.addShapedRecipe(k) { sieve.generateRecipe(it) } }
         // Crucible Crafting
-        ModBlocks.CRUCIBLES.forEach { (k, crucible) -> builder.addShapedRecipe(k) { crucible.generateRecipe(it) } }
+        ModBlocks.CRUCIBLES.filter{ it.key.path != "unfired_crucible" }.forEach { (k, crucible) -> builder.addShapedRecipe(k) { crucible.generateRecipe(it) } }
         // Barrel Crafting
         ModBlocks.BARRELS.forEach { (k, barrel) -> builder.addShapedRecipe(k) { barrel.generateRecipe(it) } }
     }

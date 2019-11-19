@@ -66,7 +66,9 @@ object ModItems {
         id("pebble_andesite") to BaseItem(Item.Settings().maxCount(64)),
         id("pebble_diorite") to BaseItem(Item.Settings().maxCount(64)),
         id("pebble_granite") to BaseItem(Item.Settings().maxCount(64)),
-        id("pebble_stone") to BaseItem(Item.Settings().maxCount(64))
+        id("pebble_stone") to BaseItem(Item.Settings().maxCount(64)),
+        id("porcelain") to BaseItem(Item.Settings().maxCount(64)),
+        id("unfired_crucible") to BaseItem(Item.Settings().maxCount(64))
     )
 
     init {
