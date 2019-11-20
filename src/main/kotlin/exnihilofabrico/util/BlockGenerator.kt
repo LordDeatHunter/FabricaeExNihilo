@@ -1,5 +1,6 @@
 package exnihilofabrico.util
 
+import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.MODID
 import exnihilofabrico.api.IBlockGenerator
 import exnihilofabrico.id
@@ -23,13 +24,15 @@ object BlockGenerator: IBlockGenerator {
     }
 
     override fun createInfestedLeavesBlock(block: LeavesBlock) {
-        val originalIdentifier = Registry.BLOCK.getId(block)
-        val infestedIdentifier =
-            if(originalIdentifier.namespace != "minecraft")
-                id("infested_${originalIdentifier.namespace}_${originalIdentifier.path}")
-            else
-                id("infested_${originalIdentifier.path}")
-        ModBlocks.INFESTED_LEAVES[infestedIdentifier] = InfestedLeavesBlock(block, ModBlocks.infestedLeavesSettings)
+        if(ExNihiloFabrico.config.modules.silkworms.enabled) {
+            val originalIdentifier = Registry.BLOCK.getId(block)
+            val infestedIdentifier =
+                if(originalIdentifier.namespace != "minecraft")
+                    id("infested_${originalIdentifier.namespace}_${originalIdentifier.path}")
+                else
+                    id("infested_${originalIdentifier.path}")
+            ModBlocks.INFESTED_LEAVES[infestedIdentifier] = InfestedLeavesBlock(block, ModBlocks.infestedLeavesSettings)
+        }
     }
     override fun createSieveBlock(plankID: Identifier, slabID: Identifier, tex: Identifier) {
         val sieveID =

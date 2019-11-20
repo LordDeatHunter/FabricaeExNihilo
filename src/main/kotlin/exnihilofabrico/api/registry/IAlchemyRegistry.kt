@@ -74,6 +74,8 @@ interface IAlchemyRegistry {
 
     fun register(reactant: Fluid, catalyst: ItemStack, product: Fluid) =
         register(FluidIngredient(reactant), ItemIngredient(catalyst), FluidVolume.create(product, FluidVolume.BUCKET))
+    fun register(reactant: Fluid, catalyst: ItemConvertible, product: Fluid) =
+        register(FluidIngredient(reactant), ItemIngredient(catalyst), FluidVolume.create(product, FluidVolume.BUCKET))
     fun register(reactant: Fluid, catalyst: ItemStack, product: ItemStack) =
         register(FluidIngredient(reactant), ItemIngredient(catalyst), product)
     fun register(reactant: Fluid, catalyst: ItemConvertible, product: ItemConvertible) =

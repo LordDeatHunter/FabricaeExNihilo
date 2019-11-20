@@ -94,8 +94,15 @@ class SieveBlockEntity: BaseBlockEntity(TYPE), BlockEntityClientSerializable {
     }
 
     fun doProgress(player: PlayerEntity) {
-        val efficiency = EnchantmentHelper.getLevel(Enchantments.EFFICIENCY, mesh)
-        val haste = (player.activeStatusEffects[StatusEffects.HASTE]?.amplifier ?: -1) + 1
+
+        val efficiency = if(ExNihiloFabrico.config.modules.sieves.efficiency)
+            EnchantmentHelper.getLevel(Enchantments.EFFICIENCY, mesh)
+        else
+            0
+        val haste = if(ExNihiloFabrico.config.modules.sieves.haste)
+            (player.activeStatusEffects[StatusEffects.HASTE]?.amplifier ?: -1) + 1
+        else
+            0
 
         progress += ExNihiloFabrico.config.modules.sieves.baseProgress
                 + ExNihiloFabrico.config.modules.sieves.efficiencyScaleFactor * efficiency

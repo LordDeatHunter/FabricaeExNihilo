@@ -7,7 +7,6 @@ import exnihilofabrico.api.crafting.Lootable
 import exnihilofabrico.api.crafting.WeightedList
 import exnihilofabrico.api.registry.*
 import exnihilofabrico.id
-import exnihilofabrico.modules.ModItems.SEED_MYCELIUM
 import exnihilofabrico.modules.ModTags
 import exnihilofabrico.modules.fluids.MilkFluid
 import exnihilofabrico.modules.ore.EnumChunkMaterial
@@ -30,7 +29,7 @@ import net.minecraft.village.VillagerProfession
 object ExNihiloFabrico: IExNihiloFabricoModule {
 
     override fun registerAlchemy(registry: IAlchemyRegistry) {
-        registry.register(Fluids.WATER, SEED_MYCELIUM.asStack(), WitchWaterFluid.Still)
+        registry.register(Fluids.WATER, getExNihiloItem("seed_mycelium"), WitchWaterFluid.Still)
         registry.register(Fluids.LAVA, Items.GLOWSTONE_DUST, Blocks.END_STONE)
         registry.register(Fluids.LAVA, Items.REDSTONE, Blocks.NETHERRACK)
         registry.register(Fluids.WATER, getExNihiloBlock("dust"), Blocks.CLAY)

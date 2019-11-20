@@ -1,6 +1,7 @@
 package exnihilofabrico.registry.sieve
 
 import com.google.gson.reflect.TypeToken
+import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.api.recipes.SieveRecipe
 import exnihilofabrico.api.registry.ISieveRegistry
 import exnihilofabrico.compatibility.modules.MetaModule
@@ -22,9 +23,12 @@ data class SieveRegistry(val registry: MutableList<SieveRecipe> = mutableListOf(
 
     override fun getResult(mesh: ItemStack, fluid: Fluid?, sievable: ItemStack, player: PlayerEntity?, rand: Random): List<ItemStack> {
         val allResults = getAllResults(mesh, fluid, sievable)
-        val tries = 1 +
-                (EnchantmentHelper.getEnchantments(mesh)[Enchantments.FORTUNE] ?: 0) + // Fortune tries
-                (player?.luck?.toInt() ?: 0) // Player's luck
+        val tries = 1 + (player?.luck?.toInt() ?: 0) + // Player's luck
+                if(ExNihiloFabrico.config.modules.sieves.fortune) // Fortune tries
+                    (EnchantmentHelper.getEnchantments(mesh)[Enchantments.FORTUNE] ?: 0)
+                else
+                    0
+
 
         val results: MutableList<ItemStack> = ArrayList()
         for(i in 0 until tries)

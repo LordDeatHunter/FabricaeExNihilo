@@ -32,7 +32,7 @@ class BarrelConfig {
     var enabled: Boolean = true
     @Comment("How many ticks between updates")
     var tickRate = 6
-    @Comment("Can barrels be enchanted with efficiency.")
+    @Comment("Can barrels be enchanted with efficiency. (WIP)")
     var efficiency: Boolean = true
     var enableAlchemy: Boolean = true
     var enableCompost: Boolean = true
@@ -54,9 +54,9 @@ class CrucibleConfig {
     var stoneVolume = 4
     @Comment("How many buckets of liquid can a wooden crucible store")
     var woodVolume = 1
-    @Comment("Can crucibles be enchanted with efficiency.")
+    @Comment("Can crucibles be enchanted with efficiency. (WIP)")
     var efficiency: Boolean = true
-    @Comment("Can stone crucibles be enchanted with flame.")
+    @Comment("Can stone crucibles be enchanted with flame. (WIP)")
     var flame: Boolean = true
 }
 
@@ -77,9 +77,12 @@ class InfestedConfig {
 }
 class SeedConfig {
     var enabled: Boolean = true
+    var cactus: Boolean = true
     var carrot: Boolean = true
     var chorus: Boolean = true
+    var grass: Boolean = true
     var kelp: Boolean = true
+    var mycelium: Boolean = true
     var potato: Boolean = true
     var seaPickle: Boolean = true
     var sugarCane: Boolean = true
@@ -87,7 +90,7 @@ class SeedConfig {
 }
 class SieveConfig {
     var enabled: Boolean = true
-    @Comment("Do meshes use up durability")
+    @Comment("Do meshes use up durability (WIP)")
     var meshDurability: Boolean = false
     var meshStackSize = 16
     @Comment("How far can sieves be connected")
@@ -105,14 +108,9 @@ class SieveConfig {
 }
 class CrookConfig{
     var enabled: Boolean = true
-    @Comment("Do crooks use durability")
-    var durability: Boolean = true
-    var vanillaDropAttempts = 3
 }
 class HammerConfig {
     var enabled: Boolean = true
-    @Comment("Do hammers use durability")
-    var durability: Boolean = true
 }
 class WitchWaterConfig {
     var enabled: Boolean = true
