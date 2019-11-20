@@ -3,6 +3,7 @@ package exnihilofabrico.modules.fluids
 import exnihilofabrico.id
 import exnihilofabrico.modules.ModFluids
 import exnihilofabrico.modules.base.AbstractFluid
+import exnihilofabrico.modules.base.BaseFluidBlock
 import exnihilofabrico.modules.base.FluidSettings
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Items
@@ -15,6 +16,6 @@ class MilkFluid(isStill: Boolean): AbstractFluid(isStill, fluidSettings, Supplie
         val Still = MilkFluid(true)
         val Flowing = MilkFluid(false)
         val Bucket = Items.MILK_BUCKET
-        val Block = MilkBlock(Still, ModFluids.blockSettings)
+        val Block = BaseFluidBlock(Still, ModFluids.blockSettings)
     }
 }
