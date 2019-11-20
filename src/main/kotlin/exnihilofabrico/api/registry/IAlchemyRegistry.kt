@@ -13,6 +13,7 @@ import exnihilofabrico.util.asStack
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
+import net.minecraft.tag.Tag
 
 interface IAlchemyRegistry {
     fun clear()
@@ -76,5 +77,7 @@ interface IAlchemyRegistry {
     fun register(reactant: Fluid, catalyst: ItemStack, product: ItemStack) =
         register(FluidIngredient(reactant), ItemIngredient(catalyst), product)
     fun register(reactant: Fluid, catalyst: ItemConvertible, product: ItemConvertible) =
+        register(FluidIngredient(reactant), ItemIngredient(catalyst), product.asStack())
+    fun register(reactant: Tag<Fluid>, catalyst: ItemConvertible, product: ItemConvertible) =
         register(FluidIngredient(reactant), ItemIngredient(catalyst), product.asStack())
 }

@@ -14,7 +14,8 @@ object ModTools {
     val tool_settings: Item.Settings = Item.Settings().group(ExNihiloFabrico.ITEM_GROUP).maxCount(1)
 
     val CROOKS = ModToolMaterials.values().map {
-        id("crook_${it.name.toLowerCase()}") to CrookTool(it, tool_settings)
+        id("crook_${it.name.toLowerCase()}") to
+                CrookTool(it, Item.Settings().group(ExNihiloFabrico.ITEM_GROUP).maxCount(1).maxDamage(it.durability))
     }.toMap()
 
     val HAMMERS = mapOf<Identifier, Item>(

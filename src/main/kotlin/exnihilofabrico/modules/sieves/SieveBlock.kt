@@ -49,7 +49,6 @@ class SieveBlock(val texture: Identifier,
             .ingredientItem('z', Identifier("stick"))
             .result(Registry.ITEM.getId(asItem()), 1)
     }
-
     companion object {
         val SUB_SHAPE = arrayOf<VoxelShape>(
                 createCuboidShape(0.0, 0.0, 0.0, 2.0, 12.0, 2.0),

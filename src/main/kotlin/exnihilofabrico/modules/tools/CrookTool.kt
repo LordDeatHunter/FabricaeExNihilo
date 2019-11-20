@@ -14,9 +14,7 @@ class CrookTool(material: ToolMaterial, settings: Settings):
     companion object {
         @JvmStatic
         fun isCrook(stack: ItemStack): Boolean {
-            if(stack.item is CrookTool || stack.item.isIn(CROOK_TAG))
-                return true
-            return false
+            return (stack.item is CrookTool || stack.item.isIn(CROOK_TAG))
         }
     }
 

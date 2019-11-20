@@ -5,6 +5,7 @@ import exnihilofabrico.api.crafting.ItemIngredient
 import exnihilofabrico.api.crafting.Lootable
 import exnihilofabrico.api.recipes.ToolRecipe
 import exnihilofabrico.api.registry.IToolRegistry
+import exnihilofabrico.util.ofSize
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import java.io.File
@@ -27,8 +28,12 @@ data class ToolRegistry(val registry: MutableList<ToolRecipe> = mutableListOf())
 
     override fun getResult(target: ItemConvertible, rand: Random): MutableList<ItemStack> {
         return getAllResults(target)
-            .filter { loot-> loot.chance.any {it > rand.nextDouble() }}
-            .map{it.stack.copy()}.toMutableList()
+            .map { loot ->
+                val amount = loot.chance.count { chance -> chance > rand.nextDouble() }
+                if(amount > 0) loot.stack.ofSize(amount) else ItemStack.EMPTY
+            }
+            .filter { !it.isEmpty }
+            .toMutableList()
     }
     override fun getAllResults(target: ItemConvertible) =
         registry.filter { it.ingredient.test(target.asItem()) }.map { it.lootables }.flatten()

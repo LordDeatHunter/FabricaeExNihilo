@@ -20,7 +20,6 @@ class ModuleConfig {
     var sieves = SieveConfig()
     var crooks = CrookConfig()
     var hammer = HammerConfig()
-    var wrench = WrenchConfig()
     var witchwater = WitchWaterConfig()
 }
 
@@ -113,11 +112,6 @@ class CrookConfig{
 class HammerConfig {
     var enabled: Boolean = true
     @Comment("Do hammers use durability")
-    var durability: Boolean = true
-}
-class WrenchConfig {
-    var enabled: Boolean = true
-    @Comment("Do wrenches use durability")
     var durability: Boolean = true
 }
 class WitchWaterConfig {

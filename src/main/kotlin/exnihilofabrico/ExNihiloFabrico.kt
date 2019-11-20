@@ -1,11 +1,11 @@
 package exnihilofabrico
 
 import com.swordglowsblue.artifice.api.Artifice
-import com.swordglowsblue.artifice.api.ArtificeResourcePack
 import exnihilofabrico.api.ExNihiloFabricoAPI
 import exnihilofabrico.api.registry.ExNihiloRegistries
 import exnihilofabrico.compatibility.modules.ExNihiloFabrico
 import exnihilofabrico.modules.*
+import exnihilofabrico.util.ArtificeUtils
 import exnihilofabrico.util.BlockGenerator
 import exnihilofabrico.util.getExNihiloItemStack
 import io.github.cottonmc.cotton.config.ConfigManager
@@ -61,64 +61,18 @@ object ExNihiloFabrico: ModInitializer {
 
         val dataPack = Artifice.registerData(id("data")) {builder ->
             builder.setDisplayName("Ex Nihilo Fabrico")
-            builder.setDescription("Crafting recipes")
+            builder.setDescription("Generated datapack for dynamic content")
             LOGGER.info("Creating Tags")
-            generateTags(builder)
+            ArtificeUtils.generateTags(builder)
             LOGGER.info("Creating Recipes")
-            generateRecipes(builder)
+            ArtificeUtils.generateRecipes(builder)
+            LOGGER.info("Creating Loot Tables")
+            ArtificeUtils.generateLootTables(builder)
         }
+//        dataPack.dumpResources("exnihilofabrico_generated")
     }
 
     private fun registerCompatModules() {
         ExNihiloFabricoAPI.registerCompatabilityModule(ExNihiloFabrico)
-    }
-
-    private fun generateRecipes(builder: ArtificeResourcePack.ServerResourcePackBuilder) {
-        // Ore Chunk Crafting
-        ExNihiloRegistries.ORES.getAll().forEach { ore ->
-            builder.addShapedRecipe(id("${ore.getChunkID().path}_crafting")) { ore.generateRecipe(it) }
-            if(Registry.ITEM.containsId(ore.getNuggetID())) {
-                builder.addSmeltingRecipe(id("${ore.getPieceID().path}_smelting")) { ore.generateNuggetCookingRecipe(it) }
-                builder.addBlastingRecipe(id("${ore.getPieceID().path}_blasting")) { ore.generateNuggetCookingRecipe(it) }
-            }
-            if(Registry.ITEM.containsId(ore.getIngotID())) {
-                builder.addSmeltingRecipe(id("${ore.getChunkID().path}_smelting")) { ore.generateIngotCookingRecipe(it) }
-                builder.addBlastingRecipe(id("${ore.getChunkID().path}_blasting")) { ore.generateIngotCookingRecipe(it) }
-            }
-        }
-        // Mesh Crafting
-        ExNihiloRegistries.MESH.getAll().forEach { mesh -> builder.addShapedRecipe(mesh.identifier) { mesh.generateRecipe(it) } }
-        // Mesh Crafting
-        ModBlocks.SIEVES.forEach { (k, sieve) -> builder.addShapedRecipe(k) { sieve.generateRecipe(it) } }
-        // Crucible Crafting
-        ModBlocks.CRUCIBLES.filter{ it.key.path != "unfired_crucible" }.forEach { (k, crucible) -> builder.addShapedRecipe(k) { crucible.generateRecipe(it) } }
-        // Barrel Crafting
-        ModBlocks.BARRELS.forEach { (k, barrel) -> builder.addShapedRecipe(k) { barrel.generateRecipe(it) } }
-    }
-    private fun generateTags(builder: ArtificeResourcePack.ServerResourcePackBuilder) {
-        // exnihilofabrico:infested_leaves tag
-        (ModTags.INFESTED_LEAVES_BLOCK)?.let {
-            builder.addBlockTag(it.id) {tag ->
-                tag.values(*ModBlocks.INFESTED_LEAVES.keys.toTypedArray())
-            }
-            builder.addItemTag(it.id) {tag ->
-                tag.values(*ModBlocks.INFESTED_LEAVES.keys.toTypedArray())
-            }
-        }
-        (ModTags.HAMMER_TAG)?.let {
-            builder.addItemTag(it.id) {tag ->
-                tag.values(*ModTools.HAMMERS.keys.toTypedArray())
-            }
-        }
-        (ModTags.CROOK_TAG)?.let {
-            builder.addItemTag(it.id) {tag ->
-                tag.values(*ModTools.CROOKS.keys.toTypedArray())
-            }
-        }
-        ExNihiloRegistries.ORES.getAll().forEach { property ->
-            builder.addItemTag(property.getOreID()) {tag ->
-                tag.value(property.getChunkID())
-            }
-        }
     }
 }

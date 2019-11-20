@@ -12,5 +12,4 @@ data class MeshProperties(val identifier: Identifier, val displayName: String, v
             .ingredientItem('o', keyIngredient)
             .result(identifier, 1)
     }
-
 }

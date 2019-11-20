@@ -15,6 +15,7 @@ import exnihilofabrico.modules.ore.EnumChunkShape
 import exnihilofabrico.modules.ore.EnumPieceShape
 import exnihilofabrico.modules.witchwater.WitchWaterFluid
 import exnihilofabrico.util.*
+import net.fabricmc.fabric.api.tag.TagRegistry
 import net.minecraft.block.Blocks
 import net.minecraft.entity.EntityType
 import net.minecraft.fluid.Fluids
@@ -34,8 +35,8 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
         registry.register(Fluids.LAVA, Items.REDSTONE, Blocks.NETHERRACK)
         registry.register(Fluids.WATER, getExNihiloBlock("dust"), Blocks.CLAY)
         registry.register(Fluids.WATER, getExNihiloBlock("silt"), Blocks.CLAY)
-        registry.register(MilkFluid.Still, Items.BROWN_MUSHROOM, Blocks.SLIME_BLOCK)
-        registry.register(MilkFluid.Still, Items.RED_MUSHROOM, Blocks.SLIME_BLOCK)
+        registry.register(TagRegistry.fluid(Identifier("c:milk")), Items.BROWN_MUSHROOM, Blocks.SLIME_BLOCK)
+        registry.register(TagRegistry.fluid(Identifier("c:milk")), Items.RED_MUSHROOM, Blocks.SLIME_BLOCK)
     }
 
     override fun registerCompost(registry: ICompostRegistry) {
@@ -257,7 +258,7 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
     override fun registerCrook(registry: IToolRegistry) {
         registry.registerDrops(ItemTags.LEAVES, Lootable(Items.STICK, 0.01))
         registry.registerDrops(ItemTags.LEAVES, Lootable(id("silkworm_raw"), 0.1, 0.2, 0.2))
-        ModTags.INFESTED_LEAVES?.let { registry.registerDrops(it, Lootable(Items.STRING.asStack(1), 0.5, 0.2, 0.1)) }
+        ModTags.INFESTED_LEAVES?.let { registry.registerDrops(it, Lootable(Items.STRING.asStack(1), 1.0, 1.0, 0.5, 0.2, 0.1)) }
         for(w in VanillaWoodDefinitions.values()) {
             registry.registerDrops(w.getLeafBlock(), Lootable(w.getSeedItem(), 0.25))
         }
@@ -266,36 +267,36 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
     override fun registerHammer(registry: IToolRegistry) {
         // Stone
         registry.registerDrops(Blocks.STONE, Lootable(Blocks.COBBLESTONE, 1.0))
-        registry.registerDrops(Blocks.COBBLESTONE, Lootable(Blocks.GRAVEL, 1.0))
-        registry.registerDrops(Blocks.GRAVEL, Lootable(Blocks.SAND, 1.0))
-        registry.registerDrops(Blocks.SAND, Lootable(id("silt"), 1.0))
-        registry.registerDrops(id("silt"), Lootable(id("dust"), 1.0))
+        registry.registerDrops(Blocks.COBBLESTONE, Lootable(Blocks.GRAVEL, 1.0, 0.25))
+        registry.registerDrops(Blocks.GRAVEL, Lootable(Blocks.SAND, 1.0, 0.25))
+        registry.registerDrops(Blocks.SAND, Lootable(id("silt"), 1.0, 0.25))
+        registry.registerDrops(id("silt"), Lootable(id("dust"), 1.0, 0.25))
 
         // Andesite
-        registry.registerDrops(Blocks.ANDESITE, Lootable(id("crushed_andesite"), 1.0))
-        registry.registerDrops(id("crushed_andesite"), Lootable(Blocks.LIGHT_GRAY_CONCRETE_POWDER, 1.0))
+        registry.registerDrops(Blocks.ANDESITE, Lootable(id("crushed_andesite"), 1.0, 0.5))
+        registry.registerDrops(id("crushed_andesite"), Lootable(Blocks.LIGHT_GRAY_CONCRETE_POWDER, 1.0, 0.5))
 
         // Diorite
-        registry.registerDrops(Blocks.DIORITE, Lootable(id("crushed_diorite"), 1.0))
-        registry.registerDrops(id("crushed_diorite"), Lootable(Items.WHITE_CONCRETE_POWDER, 1.0))
+        registry.registerDrops(Blocks.DIORITE, Lootable(id("crushed_diorite"), 1.0, 0.5))
+        registry.registerDrops(id("crushed_diorite"), Lootable(Items.WHITE_CONCRETE_POWDER, 1.0, 0.5))
 
         // Granite
-        registry.registerDrops(Blocks.GRANITE, Lootable(id("crushed_granite"), 1.0))
-        registry.registerDrops(id("crushed_granite"), Lootable(Items.RED_SAND, 1.0))
+        registry.registerDrops(Blocks.GRANITE, Lootable(id("crushed_granite"), 1.0, 0.5))
+        registry.registerDrops(id("crushed_granite"), Lootable(Items.RED_SAND, 1.0, 0.5))
 
         // Netherrack
-        registry.registerDrops(Blocks.NETHERRACK, Lootable(id("crushed_netherrack"), 1.0))
-        registry.registerDrops(Blocks.NETHER_BRICKS, Lootable(id("crushed_netherrack"), 1.0))
-        registry.registerDrops(id("crushed_netherrack"), Lootable(Blocks.RED_CONCRETE_POWDER, 1.0))
+        registry.registerDrops(Blocks.NETHERRACK, Lootable(id("crushed_netherrack"), 1.0, 0.5))
+        registry.registerDrops(Blocks.NETHER_BRICKS, Lootable(id("crushed_netherrack"), 1.0, 0.5))
+        registry.registerDrops(id("crushed_netherrack"), Lootable(Blocks.RED_CONCRETE_POWDER, 1.0, 0.5))
 
         // End Stone
         registry.registerDrops(Blocks.END_STONE, Lootable(id("crushed_endstone"), 1.0))
-        registry.registerDrops(Blocks.END_STONE_BRICKS, Lootable(id("crushed_endstone"), 1.0))
-        registry.registerDrops(id("crushed_endstone"), Lootable(Blocks.YELLOW_CONCRETE_POWDER, 1.0))
+        registry.registerDrops(Blocks.END_STONE_BRICKS, Lootable(id("crushed_endstone"), 1.0, 0.5))
+        registry.registerDrops(id("crushed_endstone"), Lootable(Blocks.YELLOW_CONCRETE_POWDER, 1.0, 0.5))
 
         // Prismarine
         registry.registerDrops(Blocks.PRISMARINE, Lootable(id("crushed_prismarine"), 1.0))
-        registry.registerDrops(id("crushed_prismarine"), Lootable(Blocks.CYAN_CONCRETE_POWDER, 1.0))
+        registry.registerDrops(id("crushed_prismarine"), Lootable(Blocks.CYAN_CONCRETE_POWDER, 1.0, 0.5))
 
         // Misc.
         registry.registerDrops(ItemTags.WOOL, Lootable(Items.STRING.asStack(4), 1.0))
