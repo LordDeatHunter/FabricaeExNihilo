@@ -14,6 +14,7 @@ import exnihilofabrico.api.registry.ExNihiloRegistries.CRUCIBLE_WOOD
 import exnihilofabrico.id
 import exnihilofabrico.modules.ModBlocks
 import exnihilofabrico.modules.base.BaseBlockEntity
+import exnihilofabrico.modules.base.EnchantmentContainer
 import exnihilofabrico.util.asStack
 import exnihilofabrico.util.ofSize
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable
@@ -21,6 +22,7 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.block.FluidBlock
 import net.minecraft.block.entity.BlockEntityType
+import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.BlockItem
@@ -44,9 +46,17 @@ class CrucibleBlockEntity(private val isStone: Boolean = false):
 
     private var timer: Int = world?.random?.nextInt(ExNihiloFabrico.config.modules.crucibles.tickRate) ?: ExNihiloFabrico.config.modules.crucibles.tickRate
 
+    /**
+     * Inventories
+     */
     val itemInserter = ItemInserter(this)
     val fluidExtractor = FluidExtractor(this)
     val inventory = CrucibleInventory(this)
+
+    /**
+     * Enchantments
+     */
+    val enchantments = EnchantmentContainer()
 
     override fun tick() {
         if(queued.isEmpty() || contents.amount >= getMaxCapacity() || (heat <= 0 && isStone))
@@ -65,11 +75,15 @@ class CrucibleBlockEntity(private val isStone: Boolean = false):
         }
     }
 
+    private fun getEfficiencyMultiplier() = (1 + enchantments.getEnchantmentLevel(Enchantments.EFFICIENCY))
+    private fun getFireAspectAdder() = enchantments.getEnchantmentLevel(Enchantments.FIRE_ASPECT)
+
     fun getProcessingSpeed(): Int {
-        return if(isStone)
-            heat * ExNihiloFabrico.config.modules.crucibles.baseProcessRate
-        else
-            ExNihiloFabrico.config.modules.crucibles.woodenProcessingRate
+        return getEfficiencyMultiplier() *
+                if(isStone)
+                    heat * ExNihiloFabrico.config.modules.crucibles.baseProcessRate
+                else
+                    ExNihiloFabrico.config.modules.crucibles.woodenProcessingRate
     }
 
     fun getMaxCapacity(): Int {
@@ -120,7 +134,7 @@ class CrucibleBlockEntity(private val isStone: Boolean = false):
             Math.round(CRUCIBLE_HEAT.getHeat(fluidState.fluid) * fluidState.fluid.getHeight(fluidState, world, pos.down()))
         } else {
             CRUCIBLE_HEAT.getHeat(block)
-        }
+        } + getFireAspectAdder()
         if(heat != oldheat)
             markDirty()
     }
@@ -148,6 +162,7 @@ class CrucibleBlockEntity(private val isStone: Boolean = false):
         tag.put("contents", contents.toTag())
         tag.put("queued", queued.toTag())
         tag.putInt("heat", heat)
+        tag.put("enchantments", enchantments.toTag())
         return tag
     }
 
@@ -156,6 +171,11 @@ class CrucibleBlockEntity(private val isStone: Boolean = false):
         contents = FluidVolume.fromTag(tag.getCompound("contents"))
         queued = FluidVolume.fromTag(tag.getCompound("queued"))
         heat = tag.getInt("heat")
+        if(tag.containsKey("enchantments")) {
+            val readEnchantments = EnchantmentContainer()
+            readEnchantments.fromTag(tag.getCompound("enchantments"))
+            enchantments.setAllEnchantments(readEnchantments)
+        }
     }
 
     /**

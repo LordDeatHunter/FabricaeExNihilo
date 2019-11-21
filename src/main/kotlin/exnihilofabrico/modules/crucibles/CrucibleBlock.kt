@@ -7,9 +7,12 @@ import exnihilofabrico.modules.base.BaseBlock
 import exnihilofabrico.util.VoxelShapeHelper
 import net.fabricmc.fabric.api.block.FabricBlockSettings
 import net.minecraft.block.*
+import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.EntityContext
+import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.SidedInventory
+import net.minecraft.item.ItemStack
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.hit.BlockHitResult
@@ -69,6 +72,12 @@ class CrucibleBlock(val texture: Identifier, val craftIngredient: Identifier,
     override fun hasBlockEntity() = true
     override fun createBlockEntity(world: BlockView?) = CrucibleBlockEntity(this.material == Material.STONE)
 
+    override fun onPlaced(world: World?, pos: BlockPos?, state: BlockState?, placer: LivingEntity?, itemStack: ItemStack?) {
+        val crucible = (world?.getBlockEntity(pos) as? CrucibleBlockEntity) ?: return
+        EnchantmentHelper.getEnchantments(itemStack).forEach { enchantment, level ->
+            crucible.enchantments.setEnchantmentLevel(enchantment, level)
+        }
+    }
 
     fun generateRecipe(builder: ShapedRecipeBuilder) {
         builder.pattern("x x", "x x", "xxx")

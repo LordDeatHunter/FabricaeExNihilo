@@ -9,12 +9,14 @@ import exnihilofabrico.modules.ModEffects
 import exnihilofabrico.modules.base.BaseBlock
 import net.fabricmc.fabric.api.block.FabricBlockSettings
 import net.minecraft.block.*
+import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityContext
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.SidedInventory
+import net.minecraft.item.ItemStack
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.hit.BlockHitResult
@@ -75,6 +77,13 @@ class BarrelBlock(val texture: Identifier,
      */
     override fun hasBlockEntity() = true
     override fun createBlockEntity(world: BlockView?) = BarrelBlockEntity(isStone = this.material == Material.STONE)
+
+    override fun onPlaced(world: World?, pos: BlockPos?, state: BlockState?, placer: LivingEntity?, itemStack: ItemStack?) {
+        val barrel = (world?.getBlockEntity(pos) as? BarrelBlockEntity) ?: return
+        EnchantmentHelper.getEnchantments(itemStack).forEach { enchantment, level ->
+            barrel.enchantments.setEnchantmentLevel(enchantment, level)
+        }
+    }
 
     fun generateRecipe(builder: ShapedRecipeBuilder) {
         builder.pattern("x x", "x x", "xyx")

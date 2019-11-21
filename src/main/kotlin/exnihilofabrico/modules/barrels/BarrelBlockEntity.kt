@@ -16,11 +16,13 @@ import exnihilofabrico.id
 import exnihilofabrico.modules.ModBlocks
 import exnihilofabrico.modules.barrels.modes.*
 import exnihilofabrico.modules.base.BaseBlockEntity
+import exnihilofabrico.modules.base.EnchantmentContainer
 import exnihilofabrico.util.ofSize
 import exnihilofabrico.util.proxyFluidVolume
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
+import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.SidedInventory
@@ -38,9 +40,17 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
 
     var tickCounter = world?.random?.nextInt(ExNihiloFabrico.config.modules.barrels.tickRate) ?: ExNihiloFabrico.config.modules.barrels.tickRate
 
+    /**
+     * Inventories
+     */
     val fluidTransferable = FluidTransferer(this)
     val itemTransferable = ItemTransferer(this)
     val inventory = BarrelInventory(this)
+
+    /**
+     * Enchantments
+     */
+    val enchantments = EnchantmentContainer()
 
     override fun tick() {
         if (tickCounter <= 0) {
@@ -58,6 +68,8 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
         }
     }
 
+    private fun getEfficiencyMultiplier() = (1 + enchantments.getEnchantmentLevel(Enchantments.EFFICIENCY))
+
     private fun compostTick(): Boolean {
         (mode as? CompostMode)?.let { compostMode ->
             if(compostMode.progress >= 1.0) {
@@ -65,7 +77,7 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
                 return@compostTick true
             }
             if(compostMode.amount >= 1.0) {
-                compostMode.progress += ExNihiloFabrico.config.modules.barrels.compostRate
+                compostMode.progress += ExNihiloFabrico.config.modules.barrels.compostRate * getEfficiencyMultiplier()
                 markDirtyClient()
             }
             return@compostTick true
@@ -75,7 +87,7 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
 
     private fun alchemyTick(): Boolean {
         (mode as? AlchemyMode)?.let { alchemyMode ->
-            alchemyMode.countdown -= 1
+            alchemyMode.countdown -= getEfficiencyMultiplier()
             if (alchemyMode.countdown <= 0) {
                 spawnEntity(alchemyMode.toSpawn)
                 mode = alchemyMode.after
@@ -127,11 +139,18 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
 
     private fun toTagWithoutWorldInfo(tag: CompoundTag): CompoundTag {
         tag.put(mode.tagKey(), mode.toTag())
+        tag.put("enchantments", enchantments.toTag())
         return tag
     }
 
     private fun fromTagWithoutWorldInfo(tag: CompoundTag) {
         mode = barrelModeFactory(tag)
+        if(tag.containsKey("enchantments")) {
+            val readEnchantments = EnchantmentContainer()
+            readEnchantments.fromTag(tag.getCompound("enchantments"))
+            enchantments.setAllEnchantments(readEnchantments)
+        }
+
     }
 
     private fun spawnEntity(entityStack: EntityStack) {

@@ -57,7 +57,7 @@ class CrucibleConfig {
     @Comment("Can crucibles be enchanted with efficiency. (WIP)")
     var efficiency: Boolean = true
     @Comment("Can stone crucibles be enchanted with flame. (WIP)")
-    var flame: Boolean = true
+    var fireAspect: Boolean = true
 }
 
 class InfestedConfig {

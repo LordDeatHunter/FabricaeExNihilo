@@ -6,6 +6,8 @@
   "refmap": "exnihilofabrico-refmap.json",
   "mixins": [
     "BlockHarvestMixin",
+    "EnchantmentMixin",
+    "EnchantmentHelperMixin",
     "MilkBucketMixin"
   ],
   "injectors": {
