@@ -11,8 +11,8 @@ interface IMeshRegistry {
     fun getAll(): List<MeshProperties>
 
     fun register(properties: MeshProperties): Boolean
-    fun register(identifier: Identifier, displayName: String, color: Color, ingredient: Identifier) =
-        register(MeshProperties(identifier, displayName, color, ingredient))
+    fun register(identifier: Identifier, enchantability: Int, displayName: String, color: Color, ingredient: Identifier) =
+        register(MeshProperties(identifier, enchantability, displayName, color, ingredient))
 
     fun registerItems(itemRegistry: Registry<Item>)
 }

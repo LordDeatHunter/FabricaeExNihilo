@@ -1,6 +1,7 @@
 package exnihilofabrico.mixins;
 
-import exnihilofabrico.impl.enchantments.EnchantmentTagManager;
+import exnihilofabrico.ExNihiloFabrico;
+import exnihilofabrico.impl.EnchantmentTagManager;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.InfoEnchantment;
 import net.minecraft.item.ItemStack;
@@ -17,16 +18,22 @@ public abstract class EnchantmentHelperMixin {
      * Inject into getHighestApplicableEnchantmentsAtPower (used by EnchantmentHelper and thus enchantment tables)
      * and check item tags for the applicability of enchantments.
      *
-     * @param power
-     * @param stack
-     * @param hasTreasure
-     * @param cir
+     * @param power Enchantment setup power
+     * @param stack Stack to be enchanted
+     * @param hasTreasure Include treasure enchantments?
+     * @param cir Callback info.
      */
     @Inject(method = "getHighestApplicableEnchantmentsAtPower", at=@At(value = "RETURN"), cancellable = true)
     private static void getHighestApplicableEnchantmentsAtPower(int power, ItemStack stack, boolean hasTreasure, CallbackInfoReturnable<List<InfoEnchantment>> cir) {
         List<InfoEnchantment> taggedEnchantments = EnchantmentTagManager.INSTANCE.getHighestApplicableEnchantmentsAtPower(power, stack, hasTreasure);
 
-        cir.setReturnValue(EnchantmentTagManager.INSTANCE.mergeInfoLists(taggedEnchantments, cir.getReturnValue()));
+        ExNihiloFabrico.INSTANCE.getLOGGER().info("Attempting to Enchant: "+stack.getItem().toString());
+        ExNihiloFabrico.INSTANCE.getLOGGER().info("---------------------: "+taggedEnchantments.size());
+
+        if(taggedEnchantments.isEmpty())
+            cir.cancel();
+        else
+            cir.setReturnValue(EnchantmentTagManager.INSTANCE.mergeInfoLists(taggedEnchantments, cir.getReturnValue()));
 
     }
 

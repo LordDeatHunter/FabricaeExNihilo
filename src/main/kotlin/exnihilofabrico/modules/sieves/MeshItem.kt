@@ -11,9 +11,14 @@ import net.minecraft.item.ItemStack
 import net.minecraft.text.Text
 import net.minecraft.text.TranslatableText
 
-class MeshItem(val color: Color, val displayName: String, settings: Settings = itemSettings): BaseItem(settings), IHasColor {
+class MeshItem(val color: Color, val _enchantability: Int, val displayName: String, settings: Settings = itemSettings): BaseItem(settings), IHasColor {
 
     override fun getColor(index: Int) = color.toInt()
+
+    override fun isEnchantable(stack: ItemStack?) = true
+    override fun getEnchantability(): Int {
+        return _enchantability
+    }
 
     @Environment(EnvType.CLIENT)
     override fun getName(): Text {

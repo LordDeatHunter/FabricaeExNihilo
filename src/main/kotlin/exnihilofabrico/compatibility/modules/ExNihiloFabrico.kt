@@ -19,6 +19,7 @@ import net.minecraft.block.Blocks
 import net.minecraft.entity.EntityType
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.Items
+import net.minecraft.item.ToolMaterials
 import net.minecraft.tag.FluidTags
 import net.minecraft.tag.ItemTags
 import net.minecraft.tag.Tag
@@ -123,11 +124,36 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
     }
 
     override fun registerMesh(registry: IMeshRegistry) {
-        registry.register(id("mesh_string"), "item.minecraft.string", Color.WHITE, Identifier("string"))
-        registry.register(id("mesh_flint"), "item.minecraft.flint", Color.DARK_GRAY, Identifier("flint"))
-        registry.register(id("mesh_iron"), "Iron", Color("777777"), Identifier("iron_ingot"))
-        registry.register(id("mesh_gold"), "Gold", Color.GOLD, Identifier("gold_ingot"))
-        registry.register(id("mesh_diamond"), "item.minecraft.diamond", Color.DARK_AQUA, Identifier("diamond"))
+        registry.register(
+            id("mesh_string"),
+            ToolMaterials.WOOD.enchantability,
+            "item.minecraft.string",
+            Color.WHITE,
+            Identifier("string"))
+        registry.register(
+            id("mesh_flint"),
+            ToolMaterials.STONE.enchantability,
+            "item.minecraft.flint",
+            Color.DARK_GRAY,
+            Identifier("flint"))
+        registry.register(
+            id("mesh_iron"),
+            ToolMaterials.IRON.enchantability,
+            "Iron",
+            Color("777777"),
+            Identifier("iron_ingot"))
+        registry.register(
+            id("mesh_gold"),
+            ToolMaterials.GOLD.enchantability,
+            "Gold",
+            Color.GOLD,
+            Identifier("gold_ingot"))
+        registry.register(
+            id("mesh_diamond"),
+            ToolMaterials.DIAMOND.enchantability,
+            "item.minecraft.diamond",
+            Color.DARK_AQUA,
+            Identifier("diamond"))
     }
 
     override fun registerSieve(registry: ISieveRegistry) {

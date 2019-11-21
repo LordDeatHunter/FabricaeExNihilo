@@ -1,6 +1,6 @@
 package exnihilofabrico.mixins;
 
-import exnihilofabrico.impl.enchantments.EnchantmentTagManager;
+import exnihilofabrico.impl.EnchantmentTagManager;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;

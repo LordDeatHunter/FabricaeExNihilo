@@ -3,7 +3,7 @@ package exnihilofabrico.util
 import com.swordglowsblue.artifice.api.ArtificeResourcePack
 import exnihilofabrico.api.registry.ExNihiloRegistries
 import exnihilofabrico.id
-import exnihilofabrico.impl.enchantments.EnchantmentTagManager
+import exnihilofabrico.impl.EnchantmentTagManager
 import exnihilofabrico.modules.ModBlocks
 import exnihilofabrico.modules.ModTags
 import exnihilofabrico.modules.ModTools

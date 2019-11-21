@@ -6,6 +6,7 @@ import exnihilofabrico.id
 import exnihilofabrico.modules.barrels.BarrelBlock
 import exnihilofabrico.modules.barrels.BarrelBlockEntity
 import exnihilofabrico.modules.base.BaseFallingBlock
+import exnihilofabrico.modules.base.EnchantableBlockItem
 import exnihilofabrico.modules.crucibles.CrucibleBlock
 import exnihilofabrico.modules.crucibles.CrucibleBlockEntity
 import exnihilofabrico.modules.fluids.MilkFluid
@@ -26,6 +27,7 @@ import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
+import net.minecraft.item.ToolMaterials
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
@@ -77,10 +79,20 @@ object ModBlocks {
     }
 
     fun registerBlockItems(registry: Registry<Item>) {
-        SIEVES.forEach { (k, v) -> Registry.register(registry, k, BlockItem(v, itemSettings)) }
-        CRUCIBLES.forEach { (k, v) -> Registry.register(registry, k, BlockItem(v, itemSettings)) }
-        BARRELS.forEach { (k, v) -> Registry.register(registry, k, BlockItem(v, itemSettings)) }
-        CRUSHED.forEach { (k, v) -> Registry.register(registry, k, BlockItem(v, itemSettings)) }
+        SIEVES.forEach { (k, v) ->
+            Registry.register(registry, k, BlockItem(v, itemSettings))
+        }
+        CRUCIBLES.forEach { (k, v) ->
+            val ench = if(v.defaultState.material == Material.STONE) ToolMaterials.STONE.enchantability else ToolMaterials.WOOD.enchantability
+            Registry.register(registry, k, EnchantableBlockItem(v, ench, itemSettings))
+        }
+        BARRELS.forEach { (k, v) ->
+            val ench = if(v.defaultState.material == Material.STONE) ToolMaterials.STONE.enchantability else ToolMaterials.WOOD.enchantability
+            Registry.register(registry, k, EnchantableBlockItem(v, ench, itemSettings))
+        }
+        CRUSHED.forEach { (k, v) ->
+            Registry.register(registry, k, BlockItem(v, itemSettings))
+        }
         INFESTED_LEAVES.forEach { (k, v) -> Registry.register(registry, k,
             InfestedLeavesItem(v, itemSettings)
         ) }

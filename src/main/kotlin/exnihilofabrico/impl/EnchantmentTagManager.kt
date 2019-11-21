@@ -1,4 +1,4 @@
-package exnihilofabrico.impl.enchantments
+package exnihilofabrico.impl
 
 import com.swordglowsblue.artifice.api.ArtificeResourcePack
 import exnihilofabrico.ExNihiloFabrico
@@ -17,7 +17,7 @@ object EnchantmentTagManager {
     fun getHighestApplicableEnchantmentsAtPower(power: Int, stack: ItemStack, hasTreasure: Boolean): List<InfoEnchantment> {
         val enchantments = getApplicableEnchantments(stack, hasTreasure)
 
-        return enchantments.map { it.getHighestLevelAtPower(power) }.flatten()
+        return enchantments.map { it.getHighestLevelAtPower(power) }
     }
 
 
@@ -27,7 +27,11 @@ object EnchantmentTagManager {
     }
 
     fun itemIsAcceptableForEnchantment(stack: ItemStack, enchantment: Enchantment): Boolean {
-        return stack.item.isIn(TagRegistry.item(getTagIDForEnchantment(enchantment)))
+        return stack.item.isIn(TagRegistry.item(
+            getTagIDForEnchantment(
+                enchantment
+            )
+        ))
     }
 
     /**
@@ -37,7 +41,11 @@ object EnchantmentTagManager {
     fun getApplicableEnchantments(stack: ItemStack, hasTreasure: Boolean): List<Enchantment> =
         Registry.ENCHANTMENT
             .filter { hasTreasure || !it.isTreasure }
-            .filter { stack.item.isIn(TagRegistry.item(getTagIDForEnchantment(it))) }
+            .filter { stack.item.isIn(TagRegistry.item(
+                getTagIDForEnchantment(
+                    it
+                )
+            )) }
 
 
     fun generateDefaultTags(builder: ArtificeResourcePack.ServerResourcePackBuilder) {
@@ -60,17 +68,17 @@ object EnchantmentTagManager {
     }
 
     fun mergeInfoLists(first: List<InfoEnchantment>, second: List<InfoEnchantment>): List<InfoEnchantment> {
-        val mapping = mutableMapOf<Enchantment, MutableList<Int>>()
+        val mapping = mutableMapOf<Enchantment, Int>()
         for(set in listOf(first, second))
             set.forEach {
-                mapping.getOrDefault(it.enchantment, mutableListOf()).add(it.level)
+                mapping[it.enchantment] = maxOf(mapping.getOrDefault(it.enchantment, 0), it.level)
             }
-        return mapping.map { (k,v) -> v.map { InfoEnchantment(k,it) } }.flatten()
+        return mapping.map { (k,v) -> InfoEnchantment(k,v) }
     }
 }
 
-fun Enchantment.getHighestLevelAtPower(power: Int): List<InfoEnchantment> {
-    return (this.maximumLevel downTo this.minimumLevel)
+fun Enchantment.getHighestLevelAtPower(power: Int): InfoEnchantment {
+    return (this.maximumLevel downTo this.minimumLevel-1)
         .filter { power >= this.getMinimumPower(it) && power <= this.getMaximumPower(it) }
-        .map { InfoEnchantment(this, it) }
+        .map { InfoEnchantment(this, it) }.first()
 }
