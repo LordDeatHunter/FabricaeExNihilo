@@ -1,6 +1,5 @@
 package exnihilofabrico.mixins;
 
-import exnihilofabrico.ExNihiloFabrico;
 import exnihilofabrico.impl.EnchantmentTagManager;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.InfoEnchantment;
@@ -28,9 +27,6 @@ public abstract class EnchantmentHelperMixin {
     @Inject(method = "getHighestApplicableEnchantmentsAtPower", at=@At(value = "RETURN"), cancellable = true)
     private static void getHighestApplicableEnchantmentsAtPower(int power, ItemStack stack, boolean hasTreasure, CallbackInfoReturnable<List<InfoEnchantment>> cir) {
         List<InfoEnchantment> taggedEnchantments = EnchantmentTagManager.INSTANCE.getHighestApplicableEnchantmentsAtPower(power, stack, hasTreasure);
-
-        ExNihiloFabrico.INSTANCE.getLOGGER().info("Attempting to Enchant: "+stack.getItem().toString());
-        ExNihiloFabrico.INSTANCE.getLOGGER().info("---------------------: "+taggedEnchantments.size());
 
         if(taggedEnchantments.isEmpty())
             cir.cancel();
