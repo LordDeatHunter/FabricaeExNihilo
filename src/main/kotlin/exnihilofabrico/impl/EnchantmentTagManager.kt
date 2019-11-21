@@ -15,9 +15,7 @@ import net.minecraft.util.registry.Registry
 
 object EnchantmentTagManager {
     fun getHighestApplicableEnchantmentsAtPower(power: Int, stack: ItemStack, hasTreasure: Boolean): List<InfoEnchantment> {
-        val enchantments = getApplicableEnchantments(stack, hasTreasure)
-
-        return enchantments.map { it.getHighestLevelAtPower(power) }
+        return getApplicableEnchantments(stack, hasTreasure).map { it.getHighestLevelAtPower(power) }
     }
 
 
@@ -27,11 +25,7 @@ object EnchantmentTagManager {
     }
 
     fun itemIsAcceptableForEnchantment(stack: ItemStack, enchantment: Enchantment): Boolean {
-        return stack.item.isIn(TagRegistry.item(
-            getTagIDForEnchantment(
-                enchantment
-            )
-        ))
+        return stack.item.isIn(TagRegistry.item(getTagIDForEnchantment(enchantment)))
     }
 
     /**
@@ -41,11 +35,7 @@ object EnchantmentTagManager {
     fun getApplicableEnchantments(stack: ItemStack, hasTreasure: Boolean): List<Enchantment> =
         Registry.ENCHANTMENT
             .filter { hasTreasure || !it.isTreasure }
-            .filter { stack.item.isIn(TagRegistry.item(
-                getTagIDForEnchantment(
-                    it
-                )
-            )) }
+            .filter { stack.item.isIn(TagRegistry.item(getTagIDForEnchantment(it))) }
 
 
     fun generateDefaultTags(builder: ArtificeResourcePack.ServerResourcePackBuilder) {
