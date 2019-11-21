@@ -16,7 +16,9 @@ import java.util.List;
 public abstract class EnchantmentHelperMixin {
     /**
      * Inject into getHighestApplicableEnchantmentsAtPower (used by EnchantmentHelper and thus enchantment tables)
-     * and check item tags for the applicability of enchantments.
+     * and check item tags for the applicability of enchantments. The enchantment table skips
+     * Enchantment$isAcceptableItem and goes straight for the EnchantmentType's member ... which are all overridden
+     * with anonymous functions ....
      *
      * @param power Enchantment setup power
      * @param stack Stack to be enchanted
