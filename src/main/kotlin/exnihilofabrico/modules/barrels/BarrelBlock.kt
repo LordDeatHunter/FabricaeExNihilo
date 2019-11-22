@@ -69,7 +69,7 @@ class BarrelBlock(val texture: Identifier,
             if(ExNihiloFabrico.config.modules.barrels.enableBleeding) {
                 (world.getBlockEntity(pos) as? BarrelBlockEntity)?.let { barrel ->
                     val thorns = barrel.enchantments.getEnchantmentLevel(Enchantments.THORNS)
-                    if(thorns > 0 && living.damage(DamageSource.CACTUS, thorns.toFloat())) {
+                    if(thorns > 0 && living.damage(DamageSource.CACTUS, thorns.toFloat()/2)) {
                         val volume = FluidVolume.create(BloodFluid.still, (FluidVolume.BUCKET*thorns / living.healthMaximum).toInt())
                         barrel.fluidTransferable.attemptInsertion(volume, Simulation.ACTION)
                     }

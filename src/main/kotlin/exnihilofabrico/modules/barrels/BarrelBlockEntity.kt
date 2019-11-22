@@ -11,6 +11,7 @@ import alexiil.mc.lib.attributes.item.filter.ExactItemStackFilter
 import alexiil.mc.lib.attributes.item.filter.ItemFilter
 import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.api.crafting.EntityStack
+import exnihilofabrico.api.crafting.Lootable
 import exnihilofabrico.api.registry.ExNihiloRegistries
 import exnihilofabrico.id
 import exnihilofabrico.modules.ModBlocks
@@ -29,7 +30,9 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.util.DefaultedList
 import net.minecraft.util.Hand
+import net.minecraft.util.ItemScatterer
 import net.minecraft.util.Tickable
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
@@ -154,6 +157,19 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
 
     }
 
+    private fun spawnByproduct(loot: Lootable) {
+        loot.chance.filter { it > world?.random?.nextDouble() ?: Double.MAX_VALUE }
+            .size.let { amount -> spawnByproduct(loot.stack.ofSize(amount)) }
+    }
+
+    private fun spawnByproduct(stack: ItemStack) {
+        if(stack.isEmpty)
+            return
+        (world)?.let {world ->
+            ItemScatterer.spawn(world, pos.up(), DefaultedList.copyOf(ItemStack.EMPTY, stack))
+        }
+    }
+
     private fun spawnEntity(entityStack: EntityStack) {
         if(entityStack.isEmpty())
             return
@@ -171,7 +187,7 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
     private fun getLeakPos(): BlockPos? {
         val rand = world?.random ?: return null
         val r= ExNihiloFabrico.config.modules.barrels.leakRadius
-        val leakPos = pos.add(rand.nextInt(2*r)-r, -rand.nextInt(2), rand.nextInt(2*r)-r)
+        val leakPos = pos.add(rand.nextInt(2*r+1)-r, -rand.nextInt(2), rand.nextInt(2*r+1)-r)
         if(world?.isHeightValidAndBlockLoaded(leakPos) ?: return null)
             return leakPos
         return null
@@ -315,10 +331,12 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
                     if(result.delay == 0) {
                         barrel.mode = result.product
                         barrel.spawnEntity(result.toSpawn)
+                        barrel.spawnByproduct(result.byproduct)
                         barrel.markDirtyClient()
                     }
                     else {
                         barrel.mode = AlchemyMode(fluidMode, result.product, result.toSpawn, result.delay)
+                        barrel.spawnByproduct(result.byproduct)
                         barrel.markDirtyClient()
                     }
                 }
