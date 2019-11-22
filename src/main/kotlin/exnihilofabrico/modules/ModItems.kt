@@ -7,7 +7,6 @@ import exnihilofabrico.modules.base.BaseItem
 import exnihilofabrico.modules.farming.PlantableItem
 import exnihilofabrico.modules.farming.TransformingItem
 import exnihilofabrico.modules.infested.SilkWormItem
-import exnihilofabrico.modules.witchwater.WitchWaterFluid
 import net.minecraft.block.Blocks
 import net.minecraft.block.KelpBlock
 import net.minecraft.fluid.Fluids
@@ -40,7 +39,8 @@ object ModItems {
         id("pebble_granite") to BaseItem(Item.Settings().maxCount(64)),
         id("pebble_stone") to BaseItem(Item.Settings().maxCount(64)),
         id("porcelain") to BaseItem(Item.Settings().maxCount(64)),
-        id("unfired_crucible") to BaseItem(Item.Settings().maxCount(64))
+        id("unfired_crucible") to BaseItem(Item.Settings().maxCount(64)),
+        id("salt_bottle") to BaseItem(Item.Settings().maxCount(64))
     )
 
     init {
@@ -99,7 +99,6 @@ object ModItems {
         ExNihiloRegistries.ORES.registerPieceItems(registry)
         ExNihiloRegistries.ORES.registerChunkItems(registry)
 
-        // Register Buckets
-        Registry.register(registry, id("witchwater_bucket"), WitchWaterFluid.Bucket)
+        ModFluids.registerBuckets(registry)
     }
 }

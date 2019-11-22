@@ -17,6 +17,7 @@ import exnihilofabrico.modules.ModBlocks
 import exnihilofabrico.modules.barrels.modes.*
 import exnihilofabrico.modules.base.BaseBlockEntity
 import exnihilofabrico.modules.base.EnchantmentContainer
+import exnihilofabrico.util.copyLess
 import exnihilofabrico.util.ofSize
 import exnihilofabrico.util.proxyFluidVolume
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable
@@ -253,7 +254,7 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
                         barrel.mode = FluidMode(toTake)
                         barrel.markDirtyClient()
                     }
-                    return@attemptInsertion volume.copy().split(toTake.amount)
+                    return@attemptInsertion volume.copyLess(toTake.amount)
                 }
             }
             (barrel.mode as? FluidMode)?.let { fluidMode ->
@@ -265,8 +266,7 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
                             fluidMode.fluid.merge(toTake, Simulation.ACTION)
                             barrel.markDirtyClient()
                         }
-
-                        return@attemptInsertion volume.copy().split(toTake.amount)
+                        return@attemptInsertion volume.copyLess(toTake.amount)
                     }
                 }
             }

@@ -47,6 +47,10 @@ object EnchantmentTagManager {
             if(ExNihiloFabrico.config.modules.sieves.efficiency)
                 tag.values(*ExNihiloRegistries.MESH.getAll().map { it.identifier }.toTypedArray())
         }
+        builder.addItemTag(getTagIDForEnchantment(Enchantments.THORNS)) { tag ->
+            if(ExNihiloFabrico.config.modules.barrels.thorns)
+                tag.values(*ModBlocks.BARRELS.keys.toTypedArray())
+        }
         builder.addItemTag(getTagIDForEnchantment(Enchantments.FIRE_ASPECT)) { tag ->
             if(ExNihiloFabrico.config.modules.crucibles.fireAspect)
                 tag.values(*ModBlocks.CRUCIBLES.keys.toTypedArray())

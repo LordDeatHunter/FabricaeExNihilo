@@ -11,15 +11,18 @@ import net.minecraft.util.registry.Registry
 import java.util.*
 
 interface IToolRegistry {
-    fun registerDrops(target: ItemIngredient, loot: Collection<Lootable>)
-    fun registerDrops(target: Identifier, loot: Collection<Lootable>) = registerDrops(Registry.BLOCK[target], loot)
-    fun registerDrops(target: Identifier, vararg loot: Lootable) = registerDrops(Registry.BLOCK[target], loot.toList())
-    fun registerDrops(target: ItemIngredient, vararg loot: Lootable) = registerDrops(target, loot.toList())
-    fun registerDrops(target: ItemConvertible, loot: Collection<Lootable>) = registerDrops(ItemIngredient(target.asItem()), loot)
-    fun registerDrops(target: ItemConvertible, vararg loot: Lootable) = registerDrops(ItemIngredient(target.asItem()), loot.toList())
+    fun register(target: ItemIngredient, loot: Collection<Lootable>)
+    fun register(target: Identifier, loot: Collection<Lootable>) = register(Registry.BLOCK[target], loot)
+    fun register(target: Identifier, vararg loot: Lootable) = register(Registry.BLOCK[target], loot.toList())
+    fun register(target: ItemIngredient, vararg loot: Lootable) = register(target, loot.toList())
+    fun register(target: ItemConvertible, loot: Collection<Lootable>) = register(ItemIngredient(target.asItem()), loot)
+    fun register(target: ItemConvertible, vararg loot: Lootable) = register(ItemIngredient(target.asItem()), loot.toList())
+    fun register(target: ItemConvertible, result: ItemConvertible) = register(ItemIngredient(target.asItem()),Lootable(result, 1.0))
+    fun register(target: ItemConvertible, result: ItemConvertible, vararg chances: Double) =
+        register(ItemIngredient(target.asItem()), Lootable(result, *chances))
 
-    fun registerDrops(target: Tag<Item>, loot: Collection<Lootable>) = registerDrops(ItemIngredient(target), loot)
-    fun registerDrops(target: Tag<Item>, vararg loot: Lootable) = registerDrops(ItemIngredient(target), loot.toList())
+    fun register(target: Tag<Item>, loot: Collection<Lootable>) = register(ItemIngredient(target), loot)
+    fun register(target: Tag<Item>, vararg loot: Lootable) = register(ItemIngredient(target), loot.toList())
 
     fun isRegistered(target: ItemConvertible): Boolean
 

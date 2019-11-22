@@ -9,14 +9,12 @@ import exnihilofabrico.modules.base.BaseFallingBlock
 import exnihilofabrico.modules.base.EnchantableBlockItem
 import exnihilofabrico.modules.crucibles.CrucibleBlock
 import exnihilofabrico.modules.crucibles.CrucibleBlockEntity
-import exnihilofabrico.modules.fluids.MilkFluid
 import exnihilofabrico.modules.infested.InfestedLeavesBlock
 import exnihilofabrico.modules.infested.InfestedLeavesItem
 import exnihilofabrico.modules.infested.InfestingLeavesBlock
 import exnihilofabrico.modules.infested.InfestingLeavesBlockEntity
 import exnihilofabrico.modules.sieves.SieveBlock
 import exnihilofabrico.modules.sieves.SieveBlockEntity
-import exnihilofabrico.modules.witchwater.WitchWaterFluid
 import exnihilofabrico.util.VanillaWoodDefinitions
 import exnihilofabrico.util.strength
 import net.fabricmc.fabric.api.block.FabricBlockSettings
@@ -73,9 +71,7 @@ object ModBlocks {
 
         Registry.register(registry, id("infesting_leaves"), INFESTING_LEAVES)
 
-        // Fluid Blocks
-        Registry.register(registry, id("witchwater"), WitchWaterFluid.Block)
-        Registry.register(registry, id("milk"), MilkFluid.Block)
+        ModFluids.registerFluidBlocks(registry)
     }
 
     fun registerBlockItems(registry: Registry<Item>) {

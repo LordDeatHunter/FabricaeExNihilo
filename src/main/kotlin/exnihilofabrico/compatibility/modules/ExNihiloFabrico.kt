@@ -3,11 +3,16 @@ package exnihilofabrico.compatibility.modules
 import alexiil.mc.lib.attributes.fluid.volume.FluidVolume
 import exnihilofabrico.api.compatibility.IExNihiloFabricoModule
 import exnihilofabrico.api.crafting.FluidIngredient
+import exnihilofabrico.api.crafting.ItemIngredient
 import exnihilofabrico.api.crafting.Lootable
 import exnihilofabrico.api.crafting.WeightedList
+import exnihilofabrico.api.recipes.barrel.AlchemyRecipe
 import exnihilofabrico.api.registry.*
 import exnihilofabrico.id
 import exnihilofabrico.modules.ModTags
+import exnihilofabrico.modules.barrels.modes.FluidMode
+import exnihilofabrico.modules.fluids.BloodFluid
+import exnihilofabrico.modules.fluids.BrineFluid
 import exnihilofabrico.modules.fluids.MilkFluid
 import exnihilofabrico.modules.ore.EnumChunkMaterial
 import exnihilofabrico.modules.ore.EnumChunkShape
@@ -30,13 +35,36 @@ import net.minecraft.village.VillagerProfession
 object ExNihiloFabrico: IExNihiloFabricoModule {
 
     override fun registerAlchemy(registry: IAlchemyRegistry) {
-        registry.register(Fluids.WATER, getExNihiloItem("seed_mycelium"), WitchWaterFluid.Still)
+        registry.register(Fluids.WATER, getExNihiloItem("seed_mycelium"), WitchWaterFluid.still)
+
         registry.register(Fluids.LAVA, Items.GLOWSTONE_DUST, Blocks.END_STONE)
         registry.register(Fluids.LAVA, Items.REDSTONE, Blocks.NETHERRACK)
         registry.register(Fluids.WATER, getExNihiloBlock("dust"), Blocks.CLAY)
         registry.register(Fluids.WATER, getExNihiloBlock("silt"), Blocks.CLAY)
-        registry.register(TagRegistry.fluid(Identifier("c:milk")), Items.BROWN_MUSHROOM, Blocks.SLIME_BLOCK)
-        registry.register(TagRegistry.fluid(Identifier("c:milk")), Items.RED_MUSHROOM, Blocks.SLIME_BLOCK)
+
+        registry.register(MilkFluid.tag, Items.BROWN_MUSHROOM, Blocks.SLIME_BLOCK)
+        registry.register(MilkFluid.tag, Items.RED_MUSHROOM, Blocks.SLIME_BLOCK)
+
+        registry.register(BloodFluid.tag, Blocks.SAND, Blocks.RED_SAND)
+        registry.register(BloodFluid.tag, Blocks.SANDSTONE, Blocks.RED_SANDSTONE)
+        registry.register(BloodFluid.tag, Blocks.CHISELED_SANDSTONE, Blocks.CHISELED_RED_SANDSTONE)
+        registry.register(BloodFluid.tag, Blocks.CUT_SANDSTONE, Blocks.CUT_RED_SANDSTONE)
+        registry.register(BloodFluid.tag, Blocks.SMOOTH_SANDSTONE, Blocks.SMOOTH_RED_SANDSTONE)
+
+        registry.register(AlchemyRecipe(FluidIngredient(Fluids.WATER),
+                                        ItemIngredient(getExNihiloItem("salt_bottle")),
+                                        FluidMode(FluidVolume.create(BrineFluid.still, FluidVolume.BUCKET)),
+                                        Lootable(Items.GLASS_BOTTLE.asStack(), 1.0)))
+
+        registry.register(AlchemyRecipe(FluidIngredient(Fluids.WATER),
+            ItemIngredient(TagRegistry.item(Identifier("c:salt"))),
+            FluidMode(FluidVolume.create(BrineFluid.still, FluidVolume.BUCKET))))
+
+        registry.register(BrineFluid.still, Items.BLUE_DYE, Blocks.TUBE_CORAL_BLOCK)
+        registry.register(BrineFluid.still, Items.PINK_DYE, Blocks.BRAIN_CORAL_BLOCK)
+        registry.register(BrineFluid.still, Items.MAGENTA_DYE, Blocks.BUBBLE_CORAL_BLOCK)
+        registry.register(BrineFluid.still, Items.RED_DYE, Blocks.FIRE_CORAL_BLOCK)
+        registry.register(BrineFluid.still, Items.YELLOW_DYE, Blocks.HORN_CORAL_BLOCK)
     }
 
     override fun registerCompost(registry: ICompostRegistry) {
@@ -62,16 +90,20 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
     override fun registerLeaking(registry: ILeakingRegistry) {
         registry.register(Blocks.COBBLESTONE, Fluids.WATER, FluidVolume.BUCKET / 10, Blocks.MOSSY_COBBLESTONE)
         registry.register(Blocks.STONE_BRICKS, Fluids.WATER, FluidVolume.BUCKET / 10, Blocks.MOSSY_STONE_BRICKS)
-        registry.register(ItemTags.SAPLINGS, WitchWaterFluid.Still, FluidVolume.BUCKET / 10, Blocks.DEAD_BUSH)
-        registry.register(Blocks.GRAVEL, WitchWaterFluid.Still, FluidVolume.BUCKET / 10, getExNihiloBlock("crushed_netherrack"))
-        registry.register(Blocks.SAND, WitchWaterFluid.Still, FluidVolume.BUCKET / 2, Blocks.SOUL_SAND)
-        registry.register(Blocks.PODZOL, WitchWaterFluid.Still, FluidVolume.BUCKET / 2, Blocks.MYCELIUM)
-        registry.register(ItemTags.SMALL_FLOWERS, WitchWaterFluid.Still, FluidVolume.BUCKET / 2, Blocks.BROWN_MUSHROOM)
+
+        registry.register(ItemTags.SAPLINGS, WitchWaterFluid.still, FluidVolume.BUCKET / 10, Blocks.DEAD_BUSH)
+        registry.register(Blocks.GRAVEL, WitchWaterFluid.still, FluidVolume.BUCKET / 10, getExNihiloBlock("crushed_netherrack"))
+        registry.register(Blocks.SAND, WitchWaterFluid.still, FluidVolume.BUCKET / 2, Blocks.SOUL_SAND)
+        registry.register(Blocks.PODZOL, WitchWaterFluid.still, FluidVolume.BUCKET / 2, Blocks.MYCELIUM)
+        registry.register(ItemTags.SMALL_FLOWERS, WitchWaterFluid.still, FluidVolume.BUCKET / 2, Blocks.BROWN_MUSHROOM)
+
+        registry.register(Blocks.COBBLESTONE, BloodFluid.tag, FluidVolume.BUCKET / 10, Blocks.NETHERRACK)
+        registry.register(Blocks.GRAVEL, BloodFluid.tag, FluidVolume.BUCKET / 20, getExNihiloBlock("crushed_netherrack"))
     }
 
     override fun registerMilking(registry: IMilkingRegistry) {
-        registry.register(EntityType.COW, MilkFluid.Still, FluidVolume.BUCKET / 100, 20)
-        registry.register(EntityType.WITCH, WitchWaterFluid.Still, FluidVolume.BUCKET / 100, 20)
+        registry.register(EntityType.COW, MilkFluid.still, FluidVolume.BUCKET / 100, 20)
+        registry.register(EntityType.WITCH, WitchWaterFluid.still, FluidVolume.BUCKET / 100, 20)
     }
 
     override fun registerCrucibleHeat(registry: ICrucibleHeatRegistry) {
@@ -200,23 +232,23 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
         registry.register(goldMesh, Fluids.WATER, Blocks.GRAVEL, Lootable(Items.PRISMARINE_SHARD, .1))
         registry.register(diamondMesh, Fluids.WATER, Blocks.GRAVEL, Lootable(Items.PRISMARINE_SHARD, .2))
 
-        registry.register(stringMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(id("seed_mycelium"), .01))
-        registry.register(flintMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(id("seed_mycelium"), .02))
-        registry.register(ironMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(id("seed_mycelium"), .05))
-        registry.register(goldMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(id("seed_mycelium"), .1))
-        registry.register(diamondMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(id("seed_mycelium"), .2))
+        registry.register(stringMesh, WitchWaterFluid.still, Blocks.DIRT, Lootable(id("seed_mycelium"), .01))
+        registry.register(flintMesh, WitchWaterFluid.still, Blocks.DIRT, Lootable(id("seed_mycelium"), .02))
+        registry.register(ironMesh, WitchWaterFluid.still, Blocks.DIRT, Lootable(id("seed_mycelium"), .05))
+        registry.register(goldMesh, WitchWaterFluid.still, Blocks.DIRT, Lootable(id("seed_mycelium"), .1))
+        registry.register(diamondMesh, WitchWaterFluid.still, Blocks.DIRT, Lootable(id("seed_mycelium"), .2))
 
-        registry.register(stringMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.RED_MUSHROOM, .01))
-        registry.register(flintMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.RED_MUSHROOM, .02))
-        registry.register(ironMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.RED_MUSHROOM, .05))
-        registry.register(goldMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.RED_MUSHROOM, .1))
-        registry.register(diamondMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.RED_MUSHROOM, .2))
+        registry.register(stringMesh, WitchWaterFluid.still, Blocks.DIRT, Lootable(Items.RED_MUSHROOM, .01))
+        registry.register(flintMesh, WitchWaterFluid.still, Blocks.DIRT, Lootable(Items.RED_MUSHROOM, .02))
+        registry.register(ironMesh, WitchWaterFluid.still, Blocks.DIRT, Lootable(Items.RED_MUSHROOM, .05))
+        registry.register(goldMesh, WitchWaterFluid.still, Blocks.DIRT, Lootable(Items.RED_MUSHROOM, .1))
+        registry.register(diamondMesh, WitchWaterFluid.still, Blocks.DIRT, Lootable(Items.RED_MUSHROOM, .2))
 
-        registry.register(stringMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.BROWN_MUSHROOM, .01))
-        registry.register(flintMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.BROWN_MUSHROOM, .02))
-        registry.register(ironMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.BROWN_MUSHROOM, .05))
-        registry.register(goldMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.BROWN_MUSHROOM, .1))
-        registry.register(diamondMesh, WitchWaterFluid.Still, Blocks.DIRT, Lootable(Items.BROWN_MUSHROOM, .2))
+        registry.register(stringMesh, WitchWaterFluid.still, Blocks.DIRT, Lootable(Items.BROWN_MUSHROOM, .01))
+        registry.register(flintMesh, WitchWaterFluid.still, Blocks.DIRT, Lootable(Items.BROWN_MUSHROOM, .02))
+        registry.register(ironMesh, WitchWaterFluid.still, Blocks.DIRT, Lootable(Items.BROWN_MUSHROOM, .05))
+        registry.register(goldMesh, WitchWaterFluid.still, Blocks.DIRT, Lootable(Items.BROWN_MUSHROOM, .1))
+        registry.register(diamondMesh, WitchWaterFluid.still, Blocks.DIRT, Lootable(Items.BROWN_MUSHROOM, .2))
 
         registry.register(ironMesh, Blocks.GRAVEL, Lootable(Items.DIAMOND, .01))
         registry.register(goldMesh, Blocks.GRAVEL, Lootable(Items.DIAMOND, .02))
@@ -281,63 +313,74 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
     }
 
     override fun registerCrook(registry: IToolRegistry) {
-        registry.registerDrops(ItemTags.LEAVES, Lootable(Items.STICK, 0.01))
-        registry.registerDrops(ItemTags.LEAVES, Lootable(id("silkworm_raw"), 0.1, 0.2, 0.2))
-        ModTags.INFESTED_LEAVES?.let { registry.registerDrops(it, Lootable(Items.STRING.asStack(1), 1.0, 1.0, 0.5, 0.2, 0.1)) }
+        registry.register(ItemTags.LEAVES, Lootable(Items.STICK, 0.01))
+        registry.register(ItemTags.LEAVES, Lootable(id("silkworm_raw"), 0.1, 0.2, 0.2))
+        ModTags.INFESTED_LEAVES?.let { registry.register(it, Lootable(Items.STRING.asStack(1), 1.0, 1.0, 0.5, 0.2, 0.1)) }
         for(w in VanillaWoodDefinitions.values()) {
-            registry.registerDrops(w.getLeafBlock(), Lootable(w.getSeedItem(), 0.25))
+            registry.register(w.getLeafBlock(), Lootable(w.getSeedItem(), 0.25))
         }
     }
 
     override fun registerHammer(registry: IToolRegistry) {
         // Stone
-        registry.registerDrops(Blocks.STONE, Lootable(Blocks.COBBLESTONE, 1.0))
-        registry.registerDrops(Blocks.COBBLESTONE, Lootable(Blocks.GRAVEL, 1.0, 0.25))
-        registry.registerDrops(Blocks.GRAVEL, Lootable(Blocks.SAND, 1.0, 0.25))
-        registry.registerDrops(Blocks.SAND, Lootable(id("silt"), 1.0, 0.25))
-        registry.registerDrops(id("silt"), Lootable(id("dust"), 1.0, 0.25))
+        registry.register(Blocks.STONE, Lootable(Blocks.COBBLESTONE, 1.0))
+        registry.register(Blocks.COBBLESTONE, Lootable(Blocks.GRAVEL, 1.0, 0.25))
+        registry.register(Blocks.GRAVEL, Lootable(Blocks.SAND, 1.0, 0.25))
+        registry.register(Blocks.SAND, Lootable(id("silt"), 1.0, 0.25))
+        registry.register(id("silt"), Lootable(id("dust"), 1.0, 0.25))
 
         // Andesite
-        registry.registerDrops(Blocks.ANDESITE, Lootable(id("crushed_andesite"), 1.0, 0.5))
-        registry.registerDrops(id("crushed_andesite"), Lootable(Blocks.LIGHT_GRAY_CONCRETE_POWDER, 1.0, 0.5))
+        registry.register(Blocks.ANDESITE, Lootable(id("crushed_andesite"), 1.0, 0.5))
+        registry.register(id("crushed_andesite"), Lootable(Blocks.LIGHT_GRAY_CONCRETE_POWDER, 1.0, 0.5))
 
         // Diorite
-        registry.registerDrops(Blocks.DIORITE, Lootable(id("crushed_diorite"), 1.0, 0.5))
-        registry.registerDrops(id("crushed_diorite"), Lootable(Items.WHITE_CONCRETE_POWDER, 1.0, 0.5))
+        registry.register(Blocks.DIORITE, Lootable(id("crushed_diorite"), 1.0, 0.5))
+        registry.register(id("crushed_diorite"), Lootable(Items.WHITE_CONCRETE_POWDER, 1.0, 0.5))
 
         // Granite
-        registry.registerDrops(Blocks.GRANITE, Lootable(id("crushed_granite"), 1.0, 0.5))
-        registry.registerDrops(id("crushed_granite"), Lootable(Items.RED_SAND, 1.0, 0.5))
+        registry.register(Blocks.GRANITE, Lootable(id("crushed_granite"), 1.0, 0.5))
+        registry.register(id("crushed_granite"), Lootable(Items.RED_SAND, 1.0, 0.5))
 
         // Netherrack
-        registry.registerDrops(Blocks.NETHERRACK, Lootable(id("crushed_netherrack"), 1.0, 0.5))
-        registry.registerDrops(Blocks.NETHER_BRICKS, Lootable(id("crushed_netherrack"), 1.0, 0.5))
-        registry.registerDrops(id("crushed_netherrack"), Lootable(Blocks.RED_CONCRETE_POWDER, 1.0, 0.5))
+        registry.register(Blocks.NETHERRACK, Lootable(id("crushed_netherrack"), 1.0, 0.5))
+        registry.register(Blocks.NETHER_BRICKS, Lootable(id("crushed_netherrack"), 1.0, 0.5))
+        registry.register(id("crushed_netherrack"), Lootable(Blocks.RED_CONCRETE_POWDER, 1.0, 0.5))
 
         // End Stone
-        registry.registerDrops(Blocks.END_STONE, Lootable(id("crushed_endstone"), 1.0))
-        registry.registerDrops(Blocks.END_STONE_BRICKS, Lootable(id("crushed_endstone"), 1.0, 0.5))
-        registry.registerDrops(id("crushed_endstone"), Lootable(Blocks.YELLOW_CONCRETE_POWDER, 1.0, 0.5))
+        registry.register(Blocks.END_STONE, Lootable(id("crushed_endstone"), 1.0))
+        registry.register(Blocks.END_STONE_BRICKS, Lootable(id("crushed_endstone"), 1.0, 0.5))
+        registry.register(id("crushed_endstone"), Lootable(Blocks.YELLOW_CONCRETE_POWDER, 1.0, 0.5))
 
         // Prismarine
-        registry.registerDrops(Blocks.PRISMARINE, Lootable(id("crushed_prismarine"), 1.0))
-        registry.registerDrops(id("crushed_prismarine"), Lootable(Blocks.CYAN_CONCRETE_POWDER, 1.0, 0.5))
+        registry.register(Blocks.PRISMARINE, Lootable(id("crushed_prismarine"), 1.0))
+        registry.register(id("crushed_prismarine"), Lootable(Blocks.CYAN_CONCRETE_POWDER, 1.0, 0.5))
 
         // Misc.
-        registry.registerDrops(ItemTags.WOOL, Lootable(Items.STRING.asStack(4), 1.0))
+        registry.register(ItemTags.WOOL, Lootable(Items.STRING.asStack(4), 1.0))
         EnumVanillaColors.values().forEach { c ->
             // Concrete Hammering
-            registry.registerDrops(c.getConcrete(), Lootable(c.getConcretePowder(), 1.0))
-            registry.registerDrops(c.getConcretePowder(), Lootable(id("silt"), 1.0))
-            registry.registerDrops(c.getConcretePowder(), Lootable(c.getDye(), 0.0625))
+            registry.register(c.getConcrete(), Lootable(c.getConcretePowder(), 1.0))
+            registry.register(c.getConcretePowder(), Lootable(id("silt"), 1.0))
+            registry.register(c.getConcretePowder(), Lootable(c.getDye(), 0.0625))
             // Wool Hammering
-            registry.registerDrops(c.getWool(), Lootable(c.getDye(), 0.5))
+            registry.register(c.getWool(), Lootable(c.getDye(), 0.5))
             // Glass Hammering
-            registry.registerDrops(c.getGlass(), Lootable(Blocks.SAND, 1.0))
-            registry.registerDrops(c.getGlass(), Lootable(c.getDye(), 0.0625))
+            registry.register(c.getGlass(), Lootable(Blocks.SAND, 1.0))
+            registry.register(c.getGlass(), Lootable(c.getDye(), 0.0625))
         }
 
-        //
+        // Corals
+        registry.register(Blocks.TUBE_CORAL_BLOCK, Blocks.TUBE_CORAL, 1.0, 1.0, 0.5, 0.1)
+        registry.register(Blocks.BRAIN_CORAL_BLOCK, Blocks.BRAIN_CORAL, 1.0, 1.0, 0.5, 0.1)
+        registry.register(Blocks.BUBBLE_CORAL_BLOCK, Blocks.BUBBLE_CORAL, 1.0, 1.0, 0.5, 0.1)
+        registry.register(Blocks.FIRE_CORAL_BLOCK, Blocks.FIRE_CORAL, 1.0, 1.0, 0.5, 0.1)
+        registry.register(Blocks.HORN_CORAL_BLOCK, Blocks.HORN_CORAL, 1.0, 1.0, 0.5, 0.1)
+
+        registry.register(Blocks.TUBE_CORAL, Blocks.TUBE_CORAL_FAN, 1.0, 0.5)
+        registry.register(Blocks.BRAIN_CORAL, Blocks.BRAIN_CORAL_FAN, 1.0, 0.5)
+        registry.register(Blocks.BUBBLE_CORAL, Blocks.BUBBLE_CORAL_FAN, 1.0, 0.5)
+        registry.register(Blocks.FIRE_CORAL, Blocks.FIRE_CORAL_FAN, 1.0, 0.5)
+        registry.register(Blocks.HORN_CORAL, Blocks.HORN_CORAL_FAN, 1.0, 0.5)
     }
 
     override fun registerWitchWaterWorld(registry: IWitchWaterWorldRegistry) {
@@ -360,9 +403,7 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
                 Blocks.DIORITE to 1,
                 Blocks.GRANITE to 1
             )
-        )
-        )
-
+        ))
     }
 
     override fun registerWitchWaterEntity(registry: IWitchWaterEntityRegistry) {

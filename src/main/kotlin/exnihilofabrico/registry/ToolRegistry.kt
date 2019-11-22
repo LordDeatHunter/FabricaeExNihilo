@@ -16,7 +16,7 @@ import java.util.*
 data class ToolRegistry(val registry: MutableList<ToolRecipe> = mutableListOf()):
     AbstractRegistry<MutableList<ToolRecipe>>(), IToolRegistry {
 
-    override fun registerDrops(target: ItemIngredient, loot: Collection<Lootable>) {
+    override fun register(target: ItemIngredient, loot: Collection<Lootable>) {
         val match = registry.firstOrNull { target == it.ingredient }
         if(match == null)
             registry.add(ToolRecipe(target, loot.toMutableList()))
@@ -40,7 +40,7 @@ data class ToolRegistry(val registry: MutableList<ToolRecipe> = mutableListOf())
 
     override fun registerJson(file: File) {
         val json: MutableList<ToolRecipe> = gson.fromJson(FileReader(file), SERIALIZATION_TYPE)
-        json.forEach { registerDrops(it.ingredient, it.lootables) }
+        json.forEach { register(it.ingredient, it.lootables) }
     }
     override fun serializable() = registry
 

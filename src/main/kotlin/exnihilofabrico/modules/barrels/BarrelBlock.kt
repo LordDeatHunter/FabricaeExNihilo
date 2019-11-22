@@ -3,16 +3,21 @@ package exnihilofabrico.modules.barrels
 import alexiil.mc.lib.attributes.AttributeList
 import alexiil.mc.lib.attributes.AttributeProvider
 import alexiil.mc.lib.attributes.Simulation
+import alexiil.mc.lib.attributes.fluid.volume.FluidVolume
 import com.swordglowsblue.artifice.api.builder.data.recipe.ShapedRecipeBuilder
+import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.api.registry.ExNihiloRegistries
 import exnihilofabrico.modules.ModEffects
 import exnihilofabrico.modules.base.BaseBlock
+import exnihilofabrico.modules.fluids.BloodFluid
 import net.fabricmc.fabric.api.block.FabricBlockSettings
 import net.minecraft.block.*
 import net.minecraft.enchantment.EnchantmentHelper
+import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityContext
 import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.SidedInventory
@@ -60,9 +65,18 @@ class BarrelBlock(val texture: Identifier,
      * Milking
      */
     override fun onSteppedOn(world: World, pos: BlockPos, entity: Entity) {
-        if(entity is PlayerEntity)
-            return
         (entity as? LivingEntity)?.let{living ->
+            if(ExNihiloFabrico.config.modules.barrels.enableBleeding) {
+                (world.getBlockEntity(pos) as? BarrelBlockEntity)?.let { barrel ->
+                    val thorns = barrel.enchantments.getEnchantmentLevel(Enchantments.THORNS)
+                    if(thorns > 0 && living.damage(DamageSource.CACTUS, thorns.toFloat())) {
+                        val volume = FluidVolume.create(BloodFluid.still, (FluidVolume.BUCKET*thorns / living.healthMaximum).toInt())
+                        barrel.fluidTransferable.attemptInsertion(volume, Simulation.ACTION)
+                    }
+                }
+            }
+            if(entity is PlayerEntity)
+                return
             if(!living.hasStatusEffect(ModEffects.MILKED)) {
                 val duration = ExNihiloRegistries.BARREL_MILKING.getResult(entity)?.let { (volume, cooldown) ->
                     (world.getBlockEntity(pos) as? BarrelBlockEntity)?.fluidTransferable?.attemptInsertion(volume, Simulation.ACTION)

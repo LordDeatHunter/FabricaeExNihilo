@@ -1,5 +1,7 @@
 package exnihilofabrico.modules.base
 
+import exnihilofabrico.id
+import net.minecraft.block.Block
 import net.minecraft.block.BlockRenderLayer
 import net.minecraft.block.BlockState
 import net.minecraft.block.FluidBlock
@@ -10,6 +12,7 @@ import net.minecraft.item.Item
 import net.minecraft.state.StateFactory
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
+import net.minecraft.util.registry.Registry
 import net.minecraft.world.BlockView
 import net.minecraft.world.IWorld
 import net.minecraft.world.ViewableWorld
@@ -54,5 +57,17 @@ abstract class AbstractFluid(private val still: Boolean,
         return false
     }
 
+    fun registerFluids(registry: Registry<Fluid>) {
+        Registry.register(registry, id(this.fluidSettings.basePath), stillSupplier.get())
+        Registry.register(registry, id("${this.fluidSettings.basePath}_flowing"), flowingSupplier.get())
+    }
+
+    fun registerFluidBlock(registry: Registry<Block>) {
+        Registry.register(registry, id(fluidSettings.basePath), fluidBlockSupplier.get())
+    }
+
+    fun registerBucket(registry: Registry<Item>) {
+        Registry.register(registry, id("${fluidSettings.basePath}_bucket"), bucketItemSupplier.get())
+    }
 
  }

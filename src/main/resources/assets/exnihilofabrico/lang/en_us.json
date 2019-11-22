@@ -102,7 +102,16 @@
   "item.exnihilofabrico.silkworm_cooked": "Silkworm",
   "item.exnihilofabrico.silkworm_raw": "Raw Silkworm",
 
-  "item.exnihilofabrico.witchwater_bucket": "Witch Water Bucket",
+  "item.exnihilofabrico.witchwater_bucket": "Witchwater Bucket",
+  "item.exnihilofabrico.blood_bucket": "Bucket o' Blood",
+  "item.exnihilofabrico.brine_bucket": "Brine Bucket",
+
+  "item.exnihilofabrico.pebble_stone": "Stone Pebble",
+  "item.exnihilofabrico.pebble_andesite": "Andesite Pebble",
+  "item.exnihilofabrico.pebble_diorite": "Diorite Pebble",
+  "item.exnihilofabrico.pebble_granite": "Granite Pebble",
+  "item.exnihilofabrico.porcelain": "Porcelain",
+  "item.exnihilofabrico.salt_bottle": "Salt",
 
   "text.autoconfig.exnihilofabrico.title": "Ex Nihilo Fabrico Config",
   "text.autoconfig.exnihilofabrico.category.client": "Client",

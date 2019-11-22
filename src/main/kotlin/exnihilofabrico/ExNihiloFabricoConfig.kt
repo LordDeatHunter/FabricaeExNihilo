@@ -32,8 +32,10 @@ class BarrelConfig {
     var enabled: Boolean = true
     @Comment("How many ticks between updates")
     var tickRate = 6
-    @Comment("Can barrels be enchanted with efficiency. (WIP)")
+    @Comment("Can barrels be enchanted with efficiency.")
     var efficiency: Boolean = true
+    @Comment("Can barrels be enchanted with thorns.")
+    var thorns: Boolean = true
     var enableAlchemy: Boolean = true
     var enableCompost: Boolean = true
     @Comment("How much progress to add each time the barrel ticks")
@@ -42,6 +44,8 @@ class BarrelConfig {
     @Comment("How far away can a block be and still be affected by wooden barrels leaking")
     var leakRadius: Int = 2
     var enableMilking: Boolean = true
+    @Comment("Requires that thorns be enabled too.")
+    var enableBleeding: Boolean = true
 }
 
 class CrucibleConfig {

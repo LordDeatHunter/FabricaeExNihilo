@@ -2,6 +2,10 @@
   "replace": false,
   "values": [
     "exnihilofabrico:witchwater",
-    "exnihilofabrico:witchwater_flowing"
+    "exnihilofabrico:witchwater_flowing",
+    "exnihilofabrico:blood",
+    "exnihilofabrico:blood_flowing",
+    "exnihilofabrico:brine",
+    "exnihilofabrico:brine_flowing"
   ]
 }
