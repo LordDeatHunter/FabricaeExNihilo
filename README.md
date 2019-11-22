@@ -1,4 +1,4 @@
-# Ex Nihilo Fabrico [![Discord](https://img.shields.io/discord/495546952834875392.svg?style=flat&label=Discord&colorB=blue&logo=discord)](https://discord.gg/fPZhsZ8)
+# Ex Nihilo Fabrico [![Discord](https://img.shields.io/discord/380866297107316746.svg?style=flat&label=Discord&colorB=blue&logo=discord)](https://discord.gg/8UT9Zxs)
 
 A fork/re-implementation of Ex Nihilo Creatio for the Fabric modloader.
 
