@@ -69,7 +69,8 @@ object ExNihiloFabrico: ModInitializer {
             LOGGER.info("Creating Loot Tables")
             ArtificeUtils.generateLootTables(builder)
         }
-        dataPack.dumpResources("exnihilofabrico_generated")
+        if(config.modules.general.dumpGeneratedResource)
+            dataPack.dumpResources("exnihilofabrico_generated")
     }
 
     private fun registerCompatModules() {

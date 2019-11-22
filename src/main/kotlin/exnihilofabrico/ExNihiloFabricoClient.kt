@@ -133,5 +133,7 @@ object ExNihiloFabricoClient: ClientModInitializer {
             }
         }
         ExNihiloFabrico.LOGGER.info("Created Resources")
+        if(ExNihiloFabrico.config.modules.general.dumpGeneratedResource)
+            resourcePack.dumpResources("exnihilofabrico_generated")
     }
 }

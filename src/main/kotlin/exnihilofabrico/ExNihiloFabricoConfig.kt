@@ -25,7 +25,9 @@ class ModuleConfig {
 
 class GeneralConfig {
     @Comment("Load json files from <config>/exnihilofabrico/*.json")
-    var useJsonRecipes: Boolean = true
+    var useJsonRecipes: Boolean = false
+    @Comment("Dump generated json files to <minecraft>/exnihilofabrico_generated")
+    var dumpGeneratedResource: Boolean = false
 }
 
 class BarrelConfig {
@@ -58,9 +60,9 @@ class CrucibleConfig {
     var stoneVolume = 4
     @Comment("How many buckets of liquid can a wooden crucible store")
     var woodVolume = 1
-    @Comment("Can crucibles be enchanted with efficiency. (WIP)")
+    @Comment("Can crucibles be enchanted with efficiency.")
     var efficiency: Boolean = true
-    @Comment("Can stone crucibles be enchanted with flame. (WIP)")
+    @Comment("Can stone crucibles be enchanted with fire aspect.")
     var fireAspect: Boolean = true
 }
 

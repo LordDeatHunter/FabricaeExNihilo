@@ -11,7 +11,7 @@ object BottleHarvestingImpl {
         return if(target.block != Blocks.SAND)
             ItemStack.EMPTY
         else
-            ItemStack(getExNihiloItem("salt"))
+            ItemStack(getExNihiloItem("salt_bottle"))
     }
 
 }
