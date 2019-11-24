@@ -48,5 +48,7 @@ interface ISieveRegistry {
         register(mesh, Registry.ITEM.get(sievable), *loot)
 
     fun getAllRecipes(): Collection<SieveRecipe>
+    // Like getAllRecipes, except paginated.
+    fun getREIRecipes(): Collection<SieveRecipe>
 }
 

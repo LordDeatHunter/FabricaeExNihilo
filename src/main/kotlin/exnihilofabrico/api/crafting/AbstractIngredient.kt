@@ -25,6 +25,16 @@ abstract class AbstractIngredient<T>(val tags: MutableCollection<Tag<T>> = mutab
 
     fun isEmpty() = tags.isEmpty() && matches.isEmpty()
 
+    fun flatten(): MutableList<T> {
+        val ret = tags.map { tag -> tag.values() }.flatten().toMutableList()
+        ret.addAll(matches)
+        return ret
+    }
+
+    fun <U> flatten(func: (T) -> U): MutableList<U> {
+        return flatten().map { func(it) }.toMutableList()
+    }
+
     companion object {
         inline fun <T,U> fromJson(json: JsonElement,
                                 context: JsonDeserializationContext,

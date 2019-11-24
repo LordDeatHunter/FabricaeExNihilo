@@ -5,6 +5,7 @@ import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.api.recipes.SieveRecipe
 import exnihilofabrico.api.registry.ISieveRegistry
 import exnihilofabrico.compatibility.modules.MetaModule
+import exnihilofabrico.compatibility.rei.SieveCategory
 import exnihilofabrico.registry.AbstractRegistry
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.enchantment.Enchantments
@@ -62,6 +63,12 @@ data class SieveRegistry(val registry: MutableList<SieveRecipe> = mutableListOf(
     }
 
     override fun getAllRecipes() = registry
+    override fun getREIRecipes() =
+        registry.map { recipe ->
+            recipe.loot.chunked(SieveCategory.MAX_OUTPUTS) {
+                SieveRecipe(recipe.mesh, recipe.fluid, recipe.sievable, it.toMutableList())
+            }
+        }.flatten()
 
     override fun serializable() = registry
     override fun registerJson(file: File) {

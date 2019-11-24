@@ -5,6 +5,7 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonElement
 import com.google.gson.JsonPrimitive
 import com.google.gson.JsonSerializationContext
+import exnihilofabrico.util.asStack
 import exnihilofabrico.util.getFluid
 import exnihilofabrico.util.getId
 import net.fabricmc.fabric.api.tag.TagRegistry
@@ -26,6 +27,21 @@ class FluidIngredient(tags: MutableCollection<Tag<Fluid>> = mutableListOf(), mat
     fun test(block: FluidBlock) = test(block.getFluid())
     fun test(state: FluidState) = test(state.fluid)
     fun test(stack: FluidVolume) = (stack.rawFluid)?.let { test(it) } ?: false
+
+    fun flattenListOfBuckets() = flatten { it.bucketItem.asStack() }.filterNot { it.isEmpty }.toMutableList()
+
+    override fun equals(other: Any?): Boolean {
+        return (other as? FluidIngredient)?.let { other ->
+            this.tags.size == other.tags.size &&
+                    this.matches.size == other.matches.size &&
+                    this.tags.containsAll(other.tags) &&
+                    this.matches.containsAll(other.matches)
+        }?: false
+    }
+
+    override fun hashCode(): Int {
+        return tags.hashCode() xor matches.hashCode()
+    }
 
     override fun serializeElement(t: Fluid, context: JsonSerializationContext) =
         JsonPrimitive(t.getId().toString())

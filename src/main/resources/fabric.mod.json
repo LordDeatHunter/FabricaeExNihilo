@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "id": "exnihilofabrico",
-  "name": "ExNihiloFabrico",
-  "description": "I construct from nothingness.",
+  "name": "Ex Nihilo Fabrico",
+  "description": "Fabricate from nothing.",
   "authors": ["SirLyle"],
   "version": "${version}",
   "license": "MIT",

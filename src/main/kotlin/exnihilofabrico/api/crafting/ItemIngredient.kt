@@ -4,6 +4,7 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonElement
 import com.google.gson.JsonPrimitive
 import com.google.gson.JsonSerializationContext
+import exnihilofabrico.util.asStack
 import exnihilofabrico.util.getId
 import net.fabricmc.fabric.api.tag.TagRegistry
 import net.minecraft.item.Item
@@ -26,6 +27,21 @@ class ItemIngredient(tags: MutableCollection<Tag<Item>> = mutableListOf(), match
 
     fun test(stack: ItemStack) = test(stack.item)
     fun test(item: ItemConvertible) = test(item.asItem())
+
+    fun flattenedListOfStacks() = flatten { it.asStack() }
+
+    override fun equals(other: Any?): Boolean {
+        return (other as? ItemIngredient)?.let { other ->
+            this.tags.size == other.tags.size &&
+                    this.matches.size == other.matches.size &&
+                    this.tags.containsAll(other.tags) &&
+                    this.matches.containsAll(other.matches)
+        }?: false
+    }
+
+    override fun hashCode(): Int {
+        return tags.hashCode() xor matches.hashCode()
+    }
 
     companion object {
         val EMPTY = ItemIngredient()

@@ -65,6 +65,8 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
         registry.register(BrineFluid.still, Items.MAGENTA_DYE, Blocks.BUBBLE_CORAL_BLOCK)
         registry.register(BrineFluid.still, Items.RED_DYE, Blocks.FIRE_CORAL_BLOCK)
         registry.register(BrineFluid.still, Items.YELLOW_DYE, Blocks.HORN_CORAL_BLOCK)
+
+        registry.register(FluidIngredient(BrineFluid.still), ItemIngredient(ItemTags.WOOL), Blocks.WET_SPONGE.asStack())
     }
 
     override fun registerCompost(registry: ICompostRegistry) {
@@ -253,6 +255,17 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
         registry.register(ironMesh, Blocks.GRAVEL, Lootable(Items.DIAMOND, .01))
         registry.register(goldMesh, Blocks.GRAVEL, Lootable(Items.DIAMOND, .02))
         registry.register(diamondMesh, Blocks.GRAVEL, Lootable(Items.DIAMOND, .03))
+
+        registry.register(flintMesh, getExNihiloBlock("crushed_prismarine"), Lootable(Items.PRISMARINE_CRYSTALS, 0.2))
+        registry.register(ironMesh, getExNihiloBlock("crushed_prismarine"), Lootable(Items.PRISMARINE_CRYSTALS, 0.3))
+        registry.register(goldMesh, getExNihiloBlock("crushed_prismarine"), Lootable(Items.PRISMARINE_CRYSTALS, 0.4))
+        registry.register(diamondMesh, getExNihiloBlock("crushed_prismarine"), Lootable(Items.PRISMARINE_CRYSTALS, 0.5))
+
+        registry.register(flintMesh, Fluids.WATER, getExNihiloBlock("crushed_prismarine"), Lootable(Items.PRISMARINE_CRYSTALS, 1.0, 0.2))
+        registry.register(ironMesh, Fluids.WATER, getExNihiloBlock("crushed_prismarine"), Lootable(Items.PRISMARINE_CRYSTALS, 1.0, 0.3))
+        registry.register(goldMesh, Fluids.WATER, getExNihiloBlock("crushed_prismarine"), Lootable(Items.PRISMARINE_CRYSTALS, 1.0, 0.4))
+        registry.register(diamondMesh, Fluids.WATER, getExNihiloBlock("crushed_prismarine"), Lootable(Items.PRISMARINE_CRYSTALS, 1.0, 0.5))
+
 
         for(ore in ExNihiloRegistries.ORES.getAll()) {
             if(!Registry.ITEM.containsId(ore.getPieceID())) continue

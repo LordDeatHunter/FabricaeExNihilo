@@ -23,6 +23,18 @@ class EntityTypeIngredient(tags: MutableCollection<Tag<EntityType<*>>> = mutable
     override fun serializeElement(t: EntityType<*>, context: JsonSerializationContext) =
         JsonPrimitive(t.getId().toString())
 
+    override fun equals(other: Any?): Boolean {
+        return (other as? EntityTypeIngredient)?.let { other ->
+            this.tags.size == other.tags.size &&
+                    this.matches.size == other.matches.size &&
+                    this.tags.containsAll(other.tags) &&
+                    this.matches.containsAll(other.matches)
+        }?: false
+    }
+
+    override fun hashCode(): Int {
+        return tags.hashCode() xor matches.hashCode()
+    }
     companion object {
         val EMPTY = EntityTypeIngredient()
 
