@@ -2,7 +2,6 @@ package exnihilofabrico.json
 
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
-import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.api.crafting.WeightedList
 import exnihilofabrico.util.getId
 import net.minecraft.block.Block
@@ -19,7 +18,6 @@ object WeightedListJson: JsonDeserializer<WeightedList>, JsonSerializer<Weighted
     }
 
     override fun serialize(src: WeightedList, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
-        ExNihiloFabrico.LOGGER.info("Serializing: ${src}")
         val json = JsonObject()
         src.values.forEach { (k,v) ->
             json.add(k.getId().toString(), JsonPrimitive(v))

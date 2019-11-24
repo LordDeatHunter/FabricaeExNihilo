@@ -9,22 +9,16 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.tag.Tag
 
-interface ICrucibleHeatRegistry {
-    fun clear()
-    fun register(recipe: CrucibleHeatRecipe): Boolean
+interface ICrucibleHeatRegistry: IRegistry<CrucibleHeatRecipe> {
+    fun register(blocks: ItemIngredient, fluids: FluidIngredient, heat: Int) =
+        register(CrucibleHeatRecipe(blocks, fluids, heat))
+    fun register(tag: Tag<Fluid>, heat: Int) =
+        register(ItemIngredient.EMPTY, FluidIngredient(tag), heat)
 
-    fun register(blocks: ItemIngredient, fluids: FluidIngredient, heat: Int) = register(
-        CrucibleHeatRecipe(
-            blocks,
-            fluids,
-            heat
-        )
-    )
-
-    fun registerFluidTag(tag: Tag<Fluid>, heat: Int) = register(ItemIngredient.EMPTY, FluidIngredient(tag), heat)
-
-    fun register(block: Block, heat: Int) = register(ItemIngredient(block), FluidIngredient.EMPTY, heat)
-    fun register(fluid: Fluid, heat: Int) = register(ItemIngredient.EMPTY, FluidIngredient(fluid), heat)
+    fun register(block: Block, heat: Int) =
+        register(ItemIngredient(block), FluidIngredient.EMPTY, heat)
+    fun register(fluid: Fluid, heat: Int) =
+        register(ItemIngredient.EMPTY, FluidIngredient(fluid), heat)
 
     fun getHeat(block: Block): Int
     fun getHeat(fluid: Fluid): Int

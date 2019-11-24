@@ -8,6 +8,9 @@ interface IExNihiloFabricoModule {
     fun registerAlchemy(registry: IAlchemyRegistry)
     fun registerCompost(registry: ICompostRegistry)
     fun registerLeaking(registry: ILeakingRegistry)
+    fun registerFluidOnTop(registry: IFluidOnTopRegistry)
+    fun registerFluidTransform(registry: IFluidTransformRegistry)
+
     fun registerMilking(registry: IMilkingRegistry)
 
     // Crucible Registries

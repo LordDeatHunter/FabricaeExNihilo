@@ -8,11 +8,7 @@ import net.minecraft.entity.EntityType
 import net.minecraft.fluid.Fluid
 import net.minecraft.tag.Tag
 
-interface IMilkingRegistry {
-    fun clear()
-
-    fun register(recipe: MilkingRecipe): Boolean
-
+interface IMilkingRegistry: IRegistry<MilkingRecipe> {
     fun register(entity: EntityTypeIngredient, fluid: FluidVolume, cooldown: Int) =
         register(MilkingRecipe(entity, fluid, cooldown))
     fun register(entity: EntityType<*>, fluid: FluidVolume, cooldown: Int) =

@@ -9,8 +9,7 @@ import net.minecraft.client.util.ModelIdentifier
 import net.minecraft.item.Item
 import net.minecraft.util.registry.Registry
 
-interface IOreRegistry {
-    fun clear()
+interface IOreRegistry: IRegistry<OreProperties> {
     fun getAll(): List<OreProperties>
 
     fun register(vararg properties: OreProperties): Boolean

@@ -16,49 +16,17 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.tag.Tag
 
-interface IAlchemyRegistry {
-    fun clear()
-
-    fun register(recipe: AlchemyRecipe): Boolean
+interface IAlchemyRegistry: IRegistry<AlchemyRecipe> {
 
     fun getRecipe(reactant: FluidVolume, catalyst: ItemStack): AlchemyRecipe?
-
     fun hasRecipe(reactant: FluidVolume, catalyst: ItemStack) = getRecipe(reactant, catalyst) != null
 
-
     fun register(reactant: FluidIngredient, catalyst: ItemIngredient, byproduct: Lootable, delay: Int, spawn: EntityStack) =
-        register(
-            AlchemyRecipe(
-                reactant,
-                catalyst,
-                EmptyMode(),
-                byproduct,
-                delay,
-                spawn
-            )
-        )
+        register(AlchemyRecipe(reactant, catalyst, EmptyMode(), byproduct, delay, spawn))
     fun register(reactant: FluidIngredient, catalyst: ItemIngredient, product: ItemStack, byproduct: Lootable, delay: Int, spawn: EntityStack) =
-        register(
-            AlchemyRecipe(
-                reactant,
-                catalyst,
-                ItemMode(product),
-                byproduct,
-                delay,
-                spawn
-            )
-        )
+        register(AlchemyRecipe(reactant, catalyst, ItemMode(product), byproduct, delay, spawn))
     fun register(reactant: FluidIngredient, catalyst: ItemIngredient, product: FluidVolume, byproduct: Lootable, delay: Int, spawn: EntityStack) =
-        register(
-            AlchemyRecipe(
-                reactant,
-                catalyst,
-                FluidMode(product),
-                byproduct,
-                delay,
-                spawn
-            )
-        )
+        register(AlchemyRecipe(reactant, catalyst, FluidMode(product), byproduct, delay, spawn))
 
     fun register(reactant: FluidIngredient, catalyst: ItemIngredient, product: FluidVolume) =
         register(AlchemyRecipe(reactant, catalyst, FluidMode(product)))

@@ -11,6 +11,8 @@ import exnihilofabrico.api.crafting.ItemIngredient
 import exnihilofabrico.api.recipes.SieveRecipe
 import exnihilofabrico.api.recipes.ToolRecipe
 import exnihilofabrico.api.recipes.barrel.AlchemyRecipe
+import exnihilofabrico.api.recipes.barrel.FluidOnTopRecipe
+import exnihilofabrico.api.recipes.barrel.FluidTransformRecipe
 import exnihilofabrico.api.recipes.barrel.LeakingRecipe
 import exnihilofabrico.api.recipes.crucible.CrucibleHeatRecipe
 import exnihilofabrico.api.recipes.crucible.CrucibleRecipe
@@ -54,6 +56,8 @@ abstract class AbstractRegistry<T>(
             // Barrel
         .registerTypeAdapter(AlchemyRecipe::class.java, AlchemyRecipeJson)
         .registerTypeAdapter(LeakingRecipe::class.java, LeakingRecipeJson)
+        .registerTypeAdapter(FluidTransformRecipe::class.java, FluidTransformRecipeJson)
+        .registerTypeAdapter(FluidOnTopRecipe::class.java, FluidOnTopRecipeJson)
             // Crucible
         .registerTypeAdapter(CrucibleHeatRecipe::class.java, CrucibleHeatRecipeJson)
         .registerTypeAdapter(CrucibleRecipe::class.java, CrucibleRecipeJson)

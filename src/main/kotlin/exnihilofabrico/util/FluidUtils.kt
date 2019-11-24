@@ -11,6 +11,8 @@ import net.minecraft.item.ItemStack
 fun FluidBlock.getDefaultFluidState(): FluidState = this.getFluidState(this.defaultState)
 fun FluidBlock.getFluid(): Fluid = this.getDefaultFluidState().fluid
 
+fun Fluid.asVolume() = FluidVolume.create(this, FluidVolume.BUCKET)
+
 fun IBucketItem.proxyFluidVolume(stack: ItemStack): FluidVolume {
     return if(this.libblockattributes__getFluid(stack).isEmpty)
         FluidKeys.EMPTY.withAmount(0)

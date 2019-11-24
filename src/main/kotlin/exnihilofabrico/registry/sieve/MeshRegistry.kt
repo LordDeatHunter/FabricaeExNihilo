@@ -14,7 +14,7 @@ import java.lang.reflect.Type
 data class MeshRegistry(val registry: MutableList<MeshProperties> = mutableListOf()): AbstractRegistry<MutableList<MeshProperties>>(), IMeshRegistry {
     override fun clear() = registry.clear()
     override fun getAll() = registry
-    override fun register(properties: MeshProperties) = registry.add(properties)
+    override fun register(recipe: MeshProperties) = registry.add(recipe)
     override fun registerItems(itemRegistry: Registry<Item>) =
         registry.forEach { Registry.register(itemRegistry, it.identifier, it.item) }
 

@@ -12,15 +12,13 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 import java.util.*
 
-interface ISieveRegistry {
-    fun clear()
+interface ISieveRegistry: IRegistry<SieveRecipe> {
     fun getResult(mesh: ItemStack, fluid: Fluid?, sievable: ItemStack, player: PlayerEntity?, rand: Random): List<ItemStack>
     fun getAllResults(mesh: ItemStack, fluid: Fluid?, sievable: ItemStack): List<Lootable>
 
     fun isValidRecipe(mesh: ItemStack, fluid: Fluid?, sievable: ItemStack): Boolean
     fun isValidMesh(mesh: ItemStack): Boolean
-
-    fun register(sieveRecipe: SieveRecipe): Boolean
+    
     fun register(mesh: ItemIngredient, fluid: FluidIngredient, sievable: ItemIngredient, loot: Collection<Lootable>) =
         register(SieveRecipe(mesh, fluid, sievable, loot.toMutableList()))
     fun register(mesh: ItemIngredient, fluid: FluidIngredient, sievable: ItemIngredient, vararg loot: Lootable) =

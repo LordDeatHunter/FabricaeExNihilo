@@ -52,14 +52,14 @@ data class SieveRegistry(val registry: MutableList<SieveRecipe> = mutableListOf(
 
     override fun isValidMesh(mesh: ItemStack) = registry.any { it.mesh.test(mesh)}
 
-    override fun register(sieveRecipe: SieveRecipe): Boolean {
+    override fun register(recipe: SieveRecipe): Boolean {
         registry.forEach {
-            if(it.test(sieveRecipe)){
-                it.loot.addAll(sieveRecipe.loot)
+            if(it.test(recipe)){
+                it.loot.addAll(recipe.loot)
                 return true
             }
         }
-        return registry.add(sieveRecipe)
+        return registry.add(recipe)
     }
 
     override fun getAllRecipes() = registry

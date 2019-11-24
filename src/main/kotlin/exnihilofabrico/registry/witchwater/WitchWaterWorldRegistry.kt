@@ -1,7 +1,6 @@
 package exnihilofabrico.registry.witchwater
 
 import com.google.gson.reflect.TypeToken
-import exnihilofabrico.api.crafting.FluidIngredient
 import exnihilofabrico.api.crafting.WeightedList
 import exnihilofabrico.api.recipes.witchwater.WitchWaterWorldRecipe
 import exnihilofabrico.api.registry.IWitchWaterWorldRegistry
@@ -18,13 +17,13 @@ data class WitchWaterWorldRegistry(val registry: MutableList<WitchWaterWorldReci
 
     override fun clear() = registry.clear()
 
-    override fun register(fluid: FluidIngredient, result: WeightedList) {
-        val match = registry.firstOrNull { it.fluid == fluid }
+    override fun register(recipe: WitchWaterWorldRecipe): Boolean {
+        val match = registry.firstOrNull { it.fluid == recipe.fluid }
         if(match != null)
-            match.results.amend(result)
-        else {
-            registry.add(WitchWaterWorldRecipe(fluid, result))
-        }
+            match.results.amend(recipe.results)
+        else
+            return registry.add(recipe)
+        return false
     }
 
     override fun isRegistered(fluid: Fluid) = registry.any { it.fluid.test(fluid) }

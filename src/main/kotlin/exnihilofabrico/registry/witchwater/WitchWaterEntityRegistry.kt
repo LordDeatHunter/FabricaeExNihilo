@@ -1,14 +1,11 @@
 package exnihilofabrico.registry.witchwater
 
 import com.google.gson.reflect.TypeToken
-import exnihilofabrico.api.crafting.EntityTypeIngredient
 import exnihilofabrico.api.recipes.witchwater.WitchWaterEntityRecipe
 import exnihilofabrico.api.registry.IWitchWaterEntityRegistry
 import exnihilofabrico.compatibility.modules.MetaModule
 import exnihilofabrico.registry.AbstractRegistry
 import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityType
-import net.minecraft.village.VillagerProfession
 import java.io.File
 import java.io.FileReader
 import java.lang.reflect.Type
@@ -16,8 +13,7 @@ import java.lang.reflect.Type
 data class WitchWaterEntityRegistry(val registry: MutableList<WitchWaterEntityRecipe> = mutableListOf()):
     AbstractRegistry<MutableList<WitchWaterEntityRecipe>>(), IWitchWaterEntityRegistry {
 
-    override fun register(target: EntityTypeIngredient, profession: VillagerProfession?, spawn: EntityType<*>) =
-        registry.add(WitchWaterEntityRecipe(target, profession, spawn))
+    override fun register(recipe: WitchWaterEntityRecipe) = registry.add(recipe)
     override fun clear() = registry.clear()
     override fun getAll() = registry
 

@@ -10,10 +10,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.tag.Tag
 
-interface ILeakingRegistry {
-    fun clear()
-
-    fun register(recipe: LeakingRecipe): Boolean
+interface ILeakingRegistry: IRegistry<LeakingRecipe> {
 
     fun register(target: ItemIngredient, fluid: FluidIngredient, loss: Int, result: Block) =
         register(LeakingRecipe(target, fluid, loss, result))

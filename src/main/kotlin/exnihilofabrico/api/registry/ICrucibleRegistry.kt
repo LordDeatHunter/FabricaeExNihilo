@@ -8,16 +8,8 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.tag.Tag
 
-interface ICrucibleRegistry {
-    fun clear()
-    fun register(recipe: CrucibleRecipe): Boolean
-
-    fun register(input: ItemIngredient, output: FluidVolume) = register(
-        CrucibleRecipe(
-            input,
-            output
-        )
-    )
+interface ICrucibleRegistry: IRegistry<CrucibleRecipe> {
+    fun register(input: ItemIngredient, output: FluidVolume) = register(CrucibleRecipe(input, output))
     fun register(input: ItemConvertible, output: FluidVolume) = register(ItemIngredient(input), output)
     fun register(input: Tag<Item>, output: FluidVolume) = register(ItemIngredient(input), output)
     fun register(input: ItemIngredient, fluid: Fluid, amount: Int) = register(input, FluidVolume.create(fluid, amount))

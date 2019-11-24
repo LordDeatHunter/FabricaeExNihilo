@@ -39,15 +39,23 @@ class BarrelConfig {
     @Comment("Can barrels be enchanted with thorns.")
     var thorns: Boolean = true
     var enableAlchemy: Boolean = true
+    @Comment("Requires that thorns be enabled too.")
+    var enableBleeding: Boolean = true
     var enableCompost: Boolean = true
     @Comment("How much progress to add each time the barrel ticks")
     var compostRate = 0.01
+    var enableFluidOnTop: Boolean = true
     var enableLeaking: Boolean = true
     @Comment("How far away can a block be and still be affected by wooden barrels leaking")
     var leakRadius: Int = 2
     var enableMilking: Boolean = true
-    @Comment("Requires that thorns be enabled too.")
-    var enableBleeding: Boolean = true
+    var enableTransforming: Boolean = true
+    @Comment("How far away can a block be and still boost the transformation rate")
+    var transformBoostRadius: Int = 2
+    @Comment("How many ticks does it take to fully transform")
+    var transformRate: Int = 600
+    @Comment("How many ticks does each block below remove")
+    var transformBoost: Int = 15
 }
 
 class CrucibleConfig {

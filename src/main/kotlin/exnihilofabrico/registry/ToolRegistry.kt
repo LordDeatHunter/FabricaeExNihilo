@@ -1,8 +1,6 @@
 package exnihilofabrico.registry
 
 import com.google.gson.reflect.TypeToken
-import exnihilofabrico.api.crafting.ItemIngredient
-import exnihilofabrico.api.crafting.Lootable
 import exnihilofabrico.api.recipes.ToolRecipe
 import exnihilofabrico.api.registry.IToolRegistry
 import exnihilofabrico.util.ofSize
@@ -15,13 +13,15 @@ import java.util.*
 
 data class ToolRegistry(val registry: MutableList<ToolRecipe> = mutableListOf()):
     AbstractRegistry<MutableList<ToolRecipe>>(), IToolRegistry {
+    override fun clear() = registry.clear()
 
-    override fun register(target: ItemIngredient, loot: Collection<Lootable>) {
-        val match = registry.firstOrNull { target == it.ingredient }
+    override fun register(recipe: ToolRecipe): Boolean {
+        val match = registry.firstOrNull { recipe.ingredient == it.ingredient }
         if(match == null)
-            registry.add(ToolRecipe(target, loot.toMutableList()))
+            return registry.add(recipe)
         else
-            match.lootables.addAll(loot)
+            match.lootables.addAll(recipe.lootables)
+        return false
     }
 
     override fun isRegistered(target: ItemConvertible) = registry.any { it.ingredient.test(target.asItem()) }

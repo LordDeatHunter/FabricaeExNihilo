@@ -110,7 +110,7 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
 
     override fun registerCrucibleHeat(registry: ICrucibleHeatRegistry) {
         registry.register(Blocks.TORCH, 1)
-        registry.registerFluidTag(FluidTags.LAVA, 3)
+        registry.register(FluidTags.LAVA, 3)
         registry.register(Blocks.MAGMA_BLOCK, 4)
         registry.register(Blocks.GLOWSTONE, 2)
     }
@@ -462,5 +462,15 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
         // Do generic last.
         registry.register(EntityType.VILLAGER, VillagerProfession.NONE, EntityType.ZOMBIE_VILLAGER)
 
+    }
+
+    override fun registerFluidOnTop(registry: IFluidOnTopRegistry) {
+        registry.register(Fluids.LAVA, Fluids.WATER, Blocks.OBSIDIAN)
+        registry.register(Fluids.WATER, Fluids.LAVA, Blocks.STONE)
+    }
+
+    override fun registerFluidTransform(registry: IFluidTransformRegistry) {
+        registry.register(Fluids.WATER, Blocks.MYCELIUM, WitchWaterFluid.still)
+        registry.register(MilkFluid.still, Blocks.MYCELIUM, Blocks.SLIME_BLOCK)
     }
 }

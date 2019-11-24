@@ -14,7 +14,6 @@ import net.minecraft.client.render.GuiLighting
 import net.minecraft.client.render.block.entity.BlockEntityRenderer
 import net.minecraft.client.render.model.json.ModelTransformation
 import net.minecraft.item.ItemStack
-import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import kotlin.math.pow
 
@@ -33,13 +32,24 @@ class BarrelBlockEntityRenderer: BlockEntityRenderer<BarrelBlockEntity>() {
         when(mode) {
             is FluidMode -> renderFluidMode(mode, x, y, z)
             is ItemMode -> renderItem(mode.stack, 1.0, x, y, z)
-            is AlchemyMode -> renderAlchemyMode(mode, barrel.pos)
+            is AlchemyMode -> renderAlchemyMode(mode, x, y, z)
             is CompostMode -> renderCompostMode(mode, x, y, z)
         }
     }
 
-    private fun renderAlchemyMode(mode: AlchemyMode, pos: BlockPos) {
-
+    private fun renderAlchemyMode(mode: AlchemyMode, x: Double, y: Double, z: Double) {
+        when(mode.before) {
+            is FluidMode -> renderFluidMode(mode.before, x, y, z)
+            is ItemMode -> renderItem(mode.before.stack, 1.0, x, y, z)
+            is AlchemyMode -> renderAlchemyMode(mode.before, x, y, z)
+            is CompostMode -> renderCompostMode(mode.before, x, y, z)
+        }
+        when(mode.after) {
+            is FluidMode -> renderFluidMode(mode.after, x, y, z)
+            is ItemMode -> renderItem(mode.after.stack, 1.0, x, y, z)
+            is AlchemyMode -> renderAlchemyMode(mode.after, x, y, z)
+            is CompostMode -> renderCompostMode(mode.after, x, y, z)
+        }
     }
 
     private fun renderCompostMode(mode: CompostMode, x: Double, y: Double, z: Double) {

@@ -21,6 +21,7 @@ data class OreRegistry(val registry: MutableList<OreProperties> = mutableListOf(
 
     override fun clear() = registry.clear()
     override fun getAll() = registry
+    override fun register(recipe: OreProperties) = registry.add(recipe)
     override fun register(vararg properties: OreProperties) = registry.addAll(properties)
 
     override fun registerPieceItems(itemRegistry: Registry<Item>) =

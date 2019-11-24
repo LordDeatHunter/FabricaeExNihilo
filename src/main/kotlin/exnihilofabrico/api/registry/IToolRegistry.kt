@@ -2,6 +2,7 @@ package exnihilofabrico.api.registry
 
 import exnihilofabrico.api.crafting.ItemIngredient
 import exnihilofabrico.api.crafting.Lootable
+import exnihilofabrico.api.recipes.ToolRecipe
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
@@ -10,8 +11,8 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 import java.util.*
 
-interface IToolRegistry {
-    fun register(target: ItemIngredient, loot: Collection<Lootable>)
+interface IToolRegistry: IRegistry<ToolRecipe> {
+    fun register(target: ItemIngredient, loot: Collection<Lootable>) = register(ToolRecipe(target, loot.toMutableList()))
     fun register(target: Identifier, loot: Collection<Lootable>) = register(Registry.BLOCK[target], loot)
     fun register(target: Identifier, vararg loot: Lootable) = register(Registry.BLOCK[target], loot.toList())
     fun register(target: ItemIngredient, vararg loot: Lootable) = register(target, loot.toList())

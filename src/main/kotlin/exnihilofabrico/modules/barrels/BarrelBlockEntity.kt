@@ -19,10 +19,13 @@ import exnihilofabrico.modules.barrels.modes.*
 import exnihilofabrico.modules.base.BaseBlockEntity
 import exnihilofabrico.modules.base.EnchantmentContainer
 import exnihilofabrico.util.copyLess
+import exnihilofabrico.util.getFluid
 import exnihilofabrico.util.ofSize
 import exnihilofabrico.util.proxyFluidVolume
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable
+import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.block.FluidBlock
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.ItemEntity
@@ -60,6 +63,7 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
         if (tickCounter <= 0) {
             tickCounter = ExNihiloFabrico.config.modules.barrels.tickRate
             markDirty()
+            if(transformTick()) return
             if(leakTick()) return
             if(alchemyTick()) return
             if(compostTick()) return
@@ -73,6 +77,36 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
     }
 
     private fun getEfficiencyMultiplier() = (1 + enchantments.getEnchantmentLevel(Enchantments.EFFICIENCY))
+
+    private fun transformTick(): Boolean {
+        if(world?.isClient == true)
+            return false
+        (mode as? FluidMode)?.let { fluidMode ->
+            if(fluidMode.fluid.amount >= FluidVolume.BUCKET) {
+                // Check block above for fluid on top
+                (world?.getBlockState(pos.up())?.block as? FluidBlock)?.getFluid()?.let {above ->
+                    val result = ExNihiloRegistries.BARREL_ON_TOP.getResult(fluidMode.fluid, above)
+                    if(result != null) {
+                        this.mode = result
+                        markDirtyClient()
+                        return@transformTick true
+                    }
+                }
+                // Check block below for fluid transform
+                world?.getBlockState(pos.down())?.block?.let { block ->
+                    val result = ExNihiloRegistries.BARREL_TRANSFORM.getResult(fluidMode.fluid, block)
+                    if(result != null) {
+                        val num = countBelow(block, ExNihiloFabrico.config.modules.barrels.transformBoostRadius)
+                        this.mode = AlchemyMode(fluidMode, result, countdown = ExNihiloFabrico.config.modules.barrels.transformRate - (num - 1)*ExNihiloFabrico.config.modules.barrels.transformBoost)
+                        markDirtyClient()
+                        return@transformTick true
+                    }
+                }
+
+            }
+        }
+        return false
+    }
 
     private fun compostTick(): Boolean {
         (mode as? CompostMode)?.let { compostMode ->
@@ -92,11 +126,13 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
     private fun alchemyTick(): Boolean {
         (mode as? AlchemyMode)?.let { alchemyMode ->
             alchemyMode.countdown -= getEfficiencyMultiplier()
-            if (alchemyMode.countdown <= 0) {
-                spawnEntity(alchemyMode.toSpawn)
-                mode = alchemyMode.after
+            if(world?.isClient != true) {
+                if (alchemyMode.countdown <= 0) {
+                    spawnEntity(alchemyMode.toSpawn)
+                    mode = alchemyMode.after
+                    markDirtyClient()
+                }
             }
-            markDirtyClient()
             return@alchemyTick true
         }
         return false
@@ -107,7 +143,7 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
             return false
         (world)?.let { world ->
             if(world.isClient)
-                return@leakTick true
+                return@leakTick false
             (mode as? FluidMode)?.let {fluidMode ->
                 val leakPos = getLeakPos() ?: return@leakTick false
                 val leakResult = ExNihiloRegistries.BARREL_LEAKING.getResult(world.getBlockState(leakPos).block, fluidMode.fluid) ?: return@leakTick false
@@ -122,6 +158,15 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
             }
         }
         return false
+    }
+
+    private fun countBelow(block: Block, radius: Int): Int {
+        var count = 0
+        for(x in -radius .. radius)
+            for(z in -radius .. radius)
+                if(world?.getBlockState(pos.add(x, -1, z))?.block == block)
+                    count += 1
+        return count
     }
 
     /**

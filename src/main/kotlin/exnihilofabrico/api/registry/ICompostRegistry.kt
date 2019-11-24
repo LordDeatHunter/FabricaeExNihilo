@@ -9,10 +9,7 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.tag.Tag
 
-interface ICompostRegistry {
-    fun clear()
-
-    fun register(recipe: CompostRecipe): Boolean
+interface ICompostRegistry: IRegistry<CompostRecipe> {
     fun register(ingredient: ItemIngredient, result: ItemStack, amount: Double, color: Color) =
         register(CompostRecipe(ingredient, result, amount, color))
     fun register(ingredient: ItemConvertible, result: ItemStack, amount: Double, color: Color) =
