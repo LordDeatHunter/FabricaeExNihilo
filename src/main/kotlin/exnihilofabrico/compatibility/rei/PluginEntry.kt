@@ -2,6 +2,8 @@ package exnihilofabrico.compatibility.rei
 
 import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.api.registry.ExNihiloRegistries
+import exnihilofabrico.compatibility.rei.crucible.CrucibleHeatCategory
+import exnihilofabrico.compatibility.rei.crucible.CrucibleHeatDisplay
 import exnihilofabrico.compatibility.rei.sieve.SieveCategory
 import exnihilofabrico.compatibility.rei.sieve.SieveDisplay
 import exnihilofabrico.compatibility.rei.tools.ToolCategory
@@ -23,11 +25,13 @@ class PluginEntry: REIPluginV0 {
         helper.registerCategory(SieveCategory())
         helper.registerCategory(ToolCategory(CROOK, getExNihiloItemStack("crook_wood"), "Crook"))
         helper.registerCategory(ToolCategory(HAMMER, getExNihiloItemStack("hammer_wood"), "Hammer"))
+        helper.registerCategory(CrucibleHeatCategory())
 
         // Hackishly Remove the autocrafting button
         helper.registerAutoCraftButtonArea(SIEVE) {_ -> Rectangle(0,0,0,0) }
         helper.registerAutoCraftButtonArea(CROOK) {_ -> Rectangle(0,0,0,0) }
         helper.registerAutoCraftButtonArea(HAMMER) {_ -> Rectangle(0,0,0,0) }
+        helper.registerAutoCraftButtonArea(CRUCIBLE_HEAT) {_ -> Rectangle(0,0,0,0) }
     }
 
     override fun registerRecipeDisplays(helper: RecipeHelper) {
@@ -35,6 +39,7 @@ class PluginEntry: REIPluginV0 {
         ExNihiloRegistries.SIEVE.getREIRecipes().forEach { helper.registerDisplay(SIEVE, SieveDisplay(it)) }
         ExNihiloRegistries.CROOK.getREIRecipes().forEach { helper.registerDisplay(CROOK, ToolDisplay(it, CROOK)) }
         ExNihiloRegistries.HAMMER.getREIRecipes().forEach { helper.registerDisplay(HAMMER, ToolDisplay(it, HAMMER)) }
+        ExNihiloRegistries.CRUCIBLE_HEAT.getREIRecipes().forEach { helper.registerDisplay(CRUCIBLE_HEAT, CrucibleHeatDisplay(it)) }
 
     }
 

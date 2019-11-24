@@ -43,7 +43,7 @@ class ToolCategory(val tool: Identifier, val icon: ItemStack, val name: String):
         )
         widgets.add(arrowWidget)
 
-        val inputs = display.input ?: mutableListOf(mutableListOf(),mutableListOf(),mutableListOf())
+        val inputs = display.input ?: mutableListOf(mutableListOf(),mutableListOf())
         val outputs = display.output
 
         // Tools
