@@ -1,5 +1,6 @@
 package exnihilofabrico.compatibility.rei.sieve
 
+import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.compatibility.rei.GlyphWidget
 import exnihilofabrico.compatibility.rei.PluginEntry
 import exnihilofabrico.id
@@ -83,27 +84,31 @@ class SieveCategory: RecipeCategory<SieveDisplay> {
     companion object {
         val ARROW = id("textures/gui/rei/glyphs.png")
 
-        val OUTPUT_SLOTS_X = 8
-        val OUTPUT_SLOTS_Y = 3
+        val OUTPUT_SLOTS_X = maxOf(ExNihiloFabrico.config.modules.REI.sieveNumCols, 1)
+        val OUTPUT_SLOTS_Y = maxOf(ExNihiloFabrico.config.modules.REI.sieveNumRows, 3)
 
-        val BLOCK_X = 6
-        val BLOCK_Y = 6
-        val MESH_X = BLOCK_X
-        val MESH_Y = BLOCK_Y + 18
-        val BUCKET_X = MESH_X
-        val BUCKET_Y = MESH_Y + 18
+        val MARGIN = 6
+
+        val WIDTH = 2*18 + OUTPUT_SLOTS_X*18 + MARGIN*2
+        val HEIGHT = OUTPUT_SLOTS_Y*18 + MARGIN*2
+
+        val BLOCK_X = MARGIN
+        val MESH_X = MARGIN
+        val BUCKET_X = MARGIN
         val ARROW_OFFSET_X = MESH_X + 18
-        val ARROW_OFFSET_Y = MESH_Y
         val OUTPUT_X = ARROW_OFFSET_X + 18
-        val OUTPUT_Y = BLOCK_Y
+
+
+        val BLOCK_Y = MARGIN + (HEIGHT - 2*MARGIN)/2 - 27
+        val MESH_Y = BLOCK_Y + 18
+        val BUCKET_Y = MESH_Y + 18
+        val ARROW_OFFSET_Y = MESH_Y
+        val OUTPUT_Y = MARGIN
 
         val ARROW_WIDTH = 16
         val ARROW_HEIGHT= 16
         val ARROW_U = 0
         val ARROW_V= 0
-
-        val WIDTH = OUTPUT_X + OUTPUT_SLOTS_X *18 + BLOCK_X
-        val HEIGHT = OUTPUT_Y + OUTPUT_SLOTS_Y *18 + BLOCK_Y
 
         val MAX_OUTPUTS = OUTPUT_SLOTS_X * OUTPUT_SLOTS_Y
     }

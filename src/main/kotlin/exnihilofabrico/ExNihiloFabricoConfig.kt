@@ -13,6 +13,7 @@ class ExNihiloFabricoConfig {
 
 class ModuleConfig {
     var general = GeneralConfig()
+    var REI = REIConfig()
     var barrels = BarrelConfig()
     var crucibles = CrucibleConfig()
     var silkworms = InfestedConfig()
@@ -28,6 +29,17 @@ class GeneralConfig {
     var useJsonRecipes: Boolean = false
     @Comment("Dump generated json files to <minecraft>/exnihilofabrico_generated")
     var dumpGeneratedResource: Boolean = false
+}
+
+class REIConfig {
+    @Comment("How many rows should show up for the sieve outputs, min = 3")
+    var sieveNumRows: Int = 3
+    @Comment("How many columns should show up for the sieve outputs, min = 1")
+    var sieveNumCols: Int = 8
+    @Comment("How many rows should show up for the crook/hammer outputs, min = 2")
+    var toolNumRows: Int = 3
+    @Comment("How many columns should show up for the crook/hammer outputs, min = 1")
+    var toolNumCols: Int = 8
 }
 
 class BarrelConfig {
