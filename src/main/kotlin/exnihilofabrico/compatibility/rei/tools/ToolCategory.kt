@@ -1,6 +1,7 @@
 package exnihilofabrico.compatibility.rei.tools
 
 import exnihilofabrico.compatibility.rei.GlyphWidget
+import exnihilofabrico.compatibility.rei.PluginEntry
 import exnihilofabrico.id
 import me.shedaniel.math.api.Rectangle
 import me.shedaniel.rei.api.RecipeCategory
@@ -14,6 +15,7 @@ import net.minecraft.util.Identifier
 import java.util.function.Supplier
 
 class ToolCategory(val tool: Identifier, val icon: ItemStack, val name: String): RecipeCategory<ToolDisplay> {
+    val GLYPH_U = if(tool == PluginEntry.HAMMER) 16 else 32
 
     override fun getIdentifier() = tool
     override fun getIcon(): ItemStackRenderer = Renderer.fromItemStack(icon)
@@ -89,9 +91,8 @@ class ToolCategory(val tool: Identifier, val icon: ItemStack, val name: String):
         val OUTPUT_Y = TOOL_Y
 
         val GLYPH_WIDTH = 16
-        val GLYPH_HEIGHT= 16
-        val GLYPH_U = 16
-        val GLYPH_V= 0
+        val GLYPH_HEIGHT = 16
+        val GLYPH_V = 0
 
         val WIDTH = OUTPUT_X + OUTPUT_SLOTS_X *18 + TOOL_X
         val HEIGHT = OUTPUT_Y + OUTPUT_SLOTS_Y *18 + TOOL_Y
