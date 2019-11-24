@@ -30,6 +30,7 @@ class FluidOnTopRegistry(val registry: MutableList<FluidOnTopRecipe> = mutableLi
     }
 
     override fun serializable() = registry
+    override fun getREIRecipes() = registry
 
     companion object {
         val SERIALIZATION_TYPE: Type = object : TypeToken<MutableList<FluidOnTopRecipe>>() {}.type

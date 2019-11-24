@@ -5,7 +5,7 @@ import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.api.recipes.SieveRecipe
 import exnihilofabrico.api.registry.ISieveRegistry
 import exnihilofabrico.compatibility.modules.MetaModule
-import exnihilofabrico.compatibility.rei.SieveCategory
+import exnihilofabrico.compatibility.rei.sieve.SieveCategory
 import exnihilofabrico.registry.AbstractRegistry
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.enchantment.Enchantments

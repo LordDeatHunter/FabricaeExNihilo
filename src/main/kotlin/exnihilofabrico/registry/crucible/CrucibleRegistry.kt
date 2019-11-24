@@ -26,6 +26,7 @@ data class CrucibleRegistry(val registry: MutableList<CrucibleRecipe> = ArrayLis
             json.forEach { register(it) }
         }
     }
+    override fun getREIRecipes() = registry
 
     companion object {
         val SERIALIZATION_TYPE: Type = object : TypeToken<MutableList<CrucibleRecipe>>() {}.type

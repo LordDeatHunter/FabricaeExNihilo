@@ -45,6 +45,7 @@ data class WitchWaterWorldRegistry(val registry: MutableList<WitchWaterWorldReci
     }
 
     override fun serializable() = registry
+    override fun getREIRecipes() = registry // TODO Chunk
 
     companion object {
         val SERIALIZATION_TYPE: Type = object: TypeToken<MutableList<WitchWaterWorldRecipe>>(){}.type

@@ -33,6 +33,7 @@ data class CrucibleHeatRegistry(val registry: MutableList<CrucibleHeatRecipe> = 
             json.forEach { register(it) }
         }
     }
+    override fun getREIRecipes() = registry
 
     companion object {
         val SERIALIZATION_TYPE: Type = object: TypeToken<MutableList<CrucibleHeatRecipe>>(){}.type

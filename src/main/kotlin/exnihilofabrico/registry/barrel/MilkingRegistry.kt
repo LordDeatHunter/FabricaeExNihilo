@@ -34,6 +34,8 @@ data class MilkingRegistry(val registry: MutableList<MilkingRecipe> = mutableLis
 
     override fun hasResult(entity: Entity) = registry.any { it.entity.test(entity) }
 
+    override fun getREIRecipes() = registry
+
     override fun registerJson(file: File) {
         if(file.exists()){
             val json: MutableList<MilkingRecipe> = gson.fromJson(

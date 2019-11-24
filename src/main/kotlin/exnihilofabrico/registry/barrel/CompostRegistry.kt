@@ -38,6 +38,7 @@ data class CompostRegistry(val registry: MutableList<CompostRecipe> = mutableLis
         }
     }
     override fun getRecipe(stack: ItemStack) = registry.firstOrNull { it.test(stack) }
+    override fun getREIRecipes() = registry
 
     companion object {
         val SERIALIZATION_TYPE: Type = object : TypeToken<MutableList<CompostRecipe>>() {}.type

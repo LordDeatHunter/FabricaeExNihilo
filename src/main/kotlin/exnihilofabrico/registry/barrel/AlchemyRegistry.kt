@@ -42,6 +42,8 @@ data class AlchemyRegistry(val registry: MutableList<AlchemyRecipe> = mutableLis
         }
     }
 
+    override fun getREIRecipes() = registry
+
     companion object {
         val SERIALIZATION_TYPE: Type = object : TypeToken<MutableList<AlchemyRecipe>>() {}.type
         fun fromJson(file: File) = fromJson(

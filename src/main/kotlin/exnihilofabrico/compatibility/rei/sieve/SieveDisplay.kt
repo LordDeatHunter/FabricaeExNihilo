@@ -1,6 +1,7 @@
-package exnihilofabrico.compatibility.rei
+package exnihilofabrico.compatibility.rei.sieve
 
 import exnihilofabrico.api.recipes.SieveRecipe
+import exnihilofabrico.compatibility.rei.PluginEntry
 import exnihilofabrico.modules.ModBlocks
 import exnihilofabrico.util.asStack
 import me.shedaniel.rei.api.RecipeDisplay

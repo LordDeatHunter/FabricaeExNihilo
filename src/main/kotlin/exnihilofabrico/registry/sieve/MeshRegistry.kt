@@ -27,6 +27,7 @@ data class MeshRegistry(val registry: MutableList<MeshProperties> = mutableListO
             json.forEach { register(it) }
         }
     }
+    override fun getREIRecipes() = registry
 
     companion object {
         val SERIALIZATION_TYPE: Type? = object : TypeToken<MutableList<MeshProperties>>() {}.type

@@ -3,6 +3,7 @@ package exnihilofabrico.registry
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.api.recipes.ToolRecipe
 import exnihilofabrico.api.registry.IToolRegistry
+import exnihilofabrico.compatibility.rei.tools.ToolCategory
 import exnihilofabrico.util.ofSize
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
@@ -21,6 +22,7 @@ data class ToolRegistry(val registry: MutableList<ToolRecipe> = mutableListOf())
             return registry.add(recipe)
         else
             match.lootables.addAll(recipe.lootables)
+        // TODO use ToolManager to set break by tools
         return false
     }
 
@@ -43,6 +45,12 @@ data class ToolRegistry(val registry: MutableList<ToolRecipe> = mutableListOf())
         json.forEach { register(it.ingredient, it.lootables) }
     }
     override fun serializable() = registry
+    override fun getREIRecipes() =
+        registry.map { recipe ->
+            recipe.lootables.chunked(ToolCategory.MAX_OUTPUTS) {
+                ToolRecipe(recipe.ingredient, it.toMutableList())
+            }
+        }.flatten()
 
     companion object {
         val SERIALIZATION_TYPE: Type = object: TypeToken<MutableList<ToolRecipe>>(){}.type

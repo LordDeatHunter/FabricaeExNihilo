@@ -32,6 +32,8 @@ data class LeakingRegistry(val registry: MutableList<LeakingRecipe> = mutableLis
         return match.result to match.loss
     }
 
+    override fun getREIRecipes() = registry
+
     override fun registerJson(file: File) {
         if(file.exists()){
             val json: MutableList<LeakingRecipe> = gson.fromJson(

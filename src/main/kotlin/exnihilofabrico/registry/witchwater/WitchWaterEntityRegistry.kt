@@ -28,6 +28,7 @@ data class WitchWaterEntityRegistry(val registry: MutableList<WitchWaterEntityRe
             register(it.target, it.profession, it.tospawn)
         }
     }
+    override fun getREIRecipes() = registry
 
     companion object {
         val SERIALIZATION_TYPE: Type = object: TypeToken<MutableList<WitchWaterEntityRecipe>>(){}.type
