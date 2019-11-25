@@ -31,16 +31,7 @@ class SieveCategory: RecipeCategory<SieveDisplay> {
         val display = displaySupplier.get()
         val widgets = mutableListOf<Widget>(RecipeBaseWidget(bounds))
 
-        val arrowWidget = GlyphWidget(
-            bounds,
-            bounds.minX + ARROW_OFFSET_X,
-            bounds.minY + ARROW_OFFSET_Y,
-            ARROW_WIDTH,
-            ARROW_HEIGHT,
-            ARROW,
-            ARROW_U,
-            ARROW_V
-        )
+        val arrowWidget = GlyphWidget(bounds, bounds.minX + ARROW_OFFSET_X, bounds.minY + ARROW_OFFSET_Y, ARROW_WIDTH, ARROW_HEIGHT, ARROW, ARROW_U, ARROW_V)
         widgets.add(arrowWidget)
 
         val inputs = display.input ?: mutableListOf(mutableListOf(),mutableListOf(),mutableListOf())

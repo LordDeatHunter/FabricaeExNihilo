@@ -2,6 +2,8 @@ package exnihilofabrico.compatibility.rei
 
 import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.api.registry.ExNihiloRegistries
+import exnihilofabrico.compatibility.rei.crucible.CrucibleCategory
+import exnihilofabrico.compatibility.rei.crucible.CrucibleDisplay
 import exnihilofabrico.compatibility.rei.crucible.CrucibleHeatCategory
 import exnihilofabrico.compatibility.rei.crucible.CrucibleHeatDisplay
 import exnihilofabrico.compatibility.rei.sieve.SieveCategory
@@ -26,12 +28,16 @@ class PluginEntry: REIPluginV0 {
         helper.registerCategory(ToolCategory(CROOK, getExNihiloItemStack("crook_wood"), "Crook"))
         helper.registerCategory(ToolCategory(HAMMER, getExNihiloItemStack("hammer_wood"), "Hammer"))
         helper.registerCategory(CrucibleHeatCategory())
+        helper.registerCategory(CrucibleCategory(WOOD_CRUCIBLE, getExNihiloItemStack("oak_crucible"), "Wood Crucible"))
+        helper.registerCategory(CrucibleCategory(STONE_CRUCIBLE, getExNihiloItemStack("stone_crucible"), "Stone Crucible"))
 
         // Hackishly Remove the autocrafting button
         helper.registerAutoCraftButtonArea(SIEVE) {_ -> Rectangle(0,0,0,0) }
         helper.registerAutoCraftButtonArea(CROOK) {_ -> Rectangle(0,0,0,0) }
         helper.registerAutoCraftButtonArea(HAMMER) {_ -> Rectangle(0,0,0,0) }
         helper.registerAutoCraftButtonArea(CRUCIBLE_HEAT) {_ -> Rectangle(0,0,0,0) }
+        helper.registerAutoCraftButtonArea(WOOD_CRUCIBLE) {_ -> Rectangle(0,0,0,0) }
+        helper.registerAutoCraftButtonArea(STONE_CRUCIBLE) {_ -> Rectangle(0,0,0,0) }
     }
 
     override fun registerRecipeDisplays(helper: RecipeHelper) {
@@ -40,6 +46,8 @@ class PluginEntry: REIPluginV0 {
         ExNihiloRegistries.CROOK.getREIRecipes().forEach { helper.registerDisplay(CROOK, ToolDisplay(it, CROOK)) }
         ExNihiloRegistries.HAMMER.getREIRecipes().forEach { helper.registerDisplay(HAMMER, ToolDisplay(it, HAMMER)) }
         ExNihiloRegistries.CRUCIBLE_HEAT.getREIRecipes().forEach { helper.registerDisplay(CRUCIBLE_HEAT, CrucibleHeatDisplay(it)) }
+        ExNihiloRegistries.CRUCIBLE_WOOD.getREIRecipes().forEach { helper.registerDisplay(WOOD_CRUCIBLE, CrucibleDisplay(it, WOOD_CRUCIBLE)) }
+        ExNihiloRegistries.CRUCIBLE_STONE.getREIRecipes().forEach { helper.registerDisplay(STONE_CRUCIBLE, CrucibleDisplay(it, STONE_CRUCIBLE)) }
 
     }
 

@@ -24,8 +24,7 @@ class ToolCategory(val tool: Identifier, val icon: ItemStack, val name: String):
 
 
     override fun getDisplayHeight() = HEIGHT
-    override fun getDisplayWidth(display: ToolDisplay) =
-        WIDTH
+    override fun getDisplayWidth(display: ToolDisplay) = WIDTH
 
     override fun setupDisplay(displaySupplier: Supplier<ToolDisplay>, bounds: Rectangle): MutableList<Widget> {
         val display = displaySupplier.get()
