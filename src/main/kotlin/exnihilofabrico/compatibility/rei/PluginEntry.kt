@@ -13,6 +13,8 @@ import exnihilofabrico.compatibility.rei.tools.ToolCategory
 import exnihilofabrico.compatibility.rei.tools.ToolDisplay
 import exnihilofabrico.compatibility.rei.witchwater.WitchWaterEntityCategory
 import exnihilofabrico.compatibility.rei.witchwater.WitchWaterEntityDisplay
+import exnihilofabrico.compatibility.rei.witchwater.WitchWaterWorldCategory
+import exnihilofabrico.compatibility.rei.witchwater.WitchWaterWorldDisplay
 import exnihilofabrico.id
 import exnihilofabrico.util.getExNihiloItemStack
 import me.shedaniel.math.api.Rectangle
@@ -42,6 +44,7 @@ class PluginEntry: REIPluginV0 {
         helper.registerCategory(MilkingCategory())
 
         helper.registerCategory(WitchWaterEntityCategory())
+        helper.registerCategory(WitchWaterWorldCategory())
 
         // Hackishly Remove the autocrafting button
         helper.registerAutoCraftButtonArea(SIEVE) {_ -> Rectangle(0,0,0,0) }
@@ -55,6 +58,7 @@ class PluginEntry: REIPluginV0 {
         helper.registerAutoCraftButtonArea(ON_TOP) {_ -> Rectangle(0,0,0,0) }
         helper.registerAutoCraftButtonArea(MILKING) {_ -> Rectangle(0,0,0,0) }
         helper.registerAutoCraftButtonArea(WITCH_WATER_ENTITY) {_ -> Rectangle(0,0,0,0) }
+        helper.registerAutoCraftButtonArea(WITCH_WATER_WORLD) {_ -> Rectangle(0,0,0,0) }
     }
 
     override fun registerRecipeDisplays(helper: RecipeHelper) {
@@ -70,6 +74,7 @@ class PluginEntry: REIPluginV0 {
         ExNihiloRegistries.BARREL_ON_TOP.getREIRecipes().forEach { helper.registerDisplay(ON_TOP, FluidOnTopDisplay(it)) }
         ExNihiloRegistries.BARREL_MILKING.getREIRecipes().forEach { helper.registerDisplay(MILKING, MilkingDisplay(it)) }
         ExNihiloRegistries.WITCHWATER_ENTITY.getREIRecipes().forEach { helper.registerDisplay(WITCH_WATER_ENTITY, WitchWaterEntityDisplay(it)) }
+        ExNihiloRegistries.WITCHWATER_WORLD.getREIRecipes().forEach { helper.registerDisplay(WITCH_WATER_WORLD, WitchWaterWorldDisplay(it)) }
 
     }
 

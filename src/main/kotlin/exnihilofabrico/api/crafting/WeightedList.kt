@@ -1,5 +1,6 @@
 package exnihilofabrico.api.crafting
 
+import exnihilofabrico.util.asStack
 import net.minecraft.block.Block
 import java.util.*
 
@@ -13,6 +14,8 @@ data class WeightedList(val values: MutableMap<Block, Int> = mutableMapOf()){
         values.forEach { rem -= it.value; if(rem <= 0) return it.key }
         return values.entries.last().key
     }
+
+    fun asListOfStacks() = values.map { it.key.asStack(it.value) }
 
     /**
      * Takes another weighted list and adds all its entries to this WeightedList.

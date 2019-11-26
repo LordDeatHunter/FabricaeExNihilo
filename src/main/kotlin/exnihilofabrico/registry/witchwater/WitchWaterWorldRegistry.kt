@@ -5,6 +5,7 @@ import exnihilofabrico.api.crafting.WeightedList
 import exnihilofabrico.api.recipes.witchwater.WitchWaterWorldRecipe
 import exnihilofabrico.api.registry.IWitchWaterWorldRegistry
 import exnihilofabrico.compatibility.modules.MetaModule
+import exnihilofabrico.compatibility.rei.witchwater.WitchWaterWorldCategory
 import exnihilofabrico.registry.AbstractRegistry
 import net.minecraft.fluid.Fluid
 import java.io.File
@@ -41,11 +42,17 @@ data class WitchWaterWorldRegistry(val registry: MutableList<WitchWaterWorldReci
         val json: MutableList<WitchWaterWorldRecipe> = gson.fromJson(FileReader(file),
             SERIALIZATION_TYPE
         )
-        json.forEach { register(it.fluid, it.results) }
+        json.forEach { register(it) }
     }
 
     override fun serializable() = registry
-    override fun getREIRecipes() = registry // TODO Chunk
+    override fun getREIRecipes(): List<WitchWaterWorldRecipe> {
+        return registry.map { recipe ->
+            recipe.results.values.toList().chunked(WitchWaterWorldCategory.MAX_OUTPUTS) {
+                WitchWaterWorldRecipe(recipe.fluid, WeightedList(it.toMap().toMutableMap()))
+            }
+        }.flatten()
+    }
 
     companion object {
         val SERIALIZATION_TYPE: Type = object: TypeToken<MutableList<WitchWaterWorldRecipe>>(){}.type

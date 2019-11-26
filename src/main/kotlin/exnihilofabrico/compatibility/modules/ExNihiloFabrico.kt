@@ -403,8 +403,7 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
                     Blocks.GRASS_BLOCK to 12,
                     Blocks.COARSE_DIRT to 12,
                     Blocks.MYCELIUM to 12,
-                    Blocks.PODZOL to 12,
-                    Blocks.PRISMARINE to 1
+                    Blocks.PODZOL to 12
                 )
             )
         )
@@ -414,6 +413,28 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
                 Blocks.ANDESITE to 1,
                 Blocks.DIORITE to 1,
                 Blocks.GRANITE to 1
+            )
+        ))
+        registry.register(FluidIngredient(TagRegistry.fluid(Identifier("c:brine"))), WeightedList(
+            mutableMapOf(
+                Blocks.DEAD_BRAIN_CORAL_BLOCK to 16,
+                Blocks.DEAD_BUBBLE_CORAL_BLOCK to 16,
+                Blocks.DEAD_FIRE_CORAL_BLOCK to 16,
+                Blocks.DEAD_HORN_CORAL_BLOCK to 16,
+                Blocks.DEAD_TUBE_CORAL_BLOCK to 16,
+                Blocks.BRAIN_CORAL_BLOCK to 4,
+                Blocks.BUBBLE_CORAL_BLOCK to 4,
+                Blocks.FIRE_CORAL_BLOCK to 4,
+                Blocks.HORN_CORAL_BLOCK to 4,
+                Blocks.TUBE_CORAL_BLOCK to 4,
+                Blocks.PRISMARINE to 1
+            )
+        ))
+        registry.register(FluidIngredient(TagRegistry.fluid(Identifier("c:blood"))), WeightedList(
+            mutableMapOf(
+                Blocks.NETHERRACK to 1,
+                Blocks.RED_SAND to 16,
+                Blocks.FIRE_CORAL_BLOCK to 4
             )
         ))
     }

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "exnihilofabrico:blood"
+    "exnihilofabrico:blood",
+    "exnihilofabrico:blood_flowing"
   ]
 }

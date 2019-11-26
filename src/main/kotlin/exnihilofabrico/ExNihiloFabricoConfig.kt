@@ -44,6 +44,10 @@ class REIConfig {
     var toolNumRows: Int = 3
     @Comment("How many columns should show up for the crook/hammer outputs, min = 1")
     var toolNumCols: Int = 8
+    @Comment("How many rows should show up for the Witch Water fluid interactions outputs, min = 3")
+    var witchwaterworldRows: Int = 3
+    @Comment("How many columns should show up for the Witch Water fluid interactions outputs, min = 1")
+    var witchwaterworldCols: Int = 8
 }
 
 class BarrelConfig {

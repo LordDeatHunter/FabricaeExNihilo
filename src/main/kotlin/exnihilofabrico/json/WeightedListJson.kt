@@ -4,7 +4,6 @@ import com.google.gson.*
 import com.google.gson.reflect.TypeToken
 import exnihilofabrico.api.crafting.WeightedList
 import exnihilofabrico.util.getId
-import net.minecraft.block.Block
 import java.lang.reflect.Type
 
 object WeightedListJson: JsonDeserializer<WeightedList>, JsonSerializer<WeightedList> {
@@ -12,7 +11,7 @@ object WeightedListJson: JsonDeserializer<WeightedList>, JsonSerializer<Weighted
     override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): WeightedList {
         return WeightedList(
             json.asJsonObject.entrySet().map { (k, v) ->
-                context.deserialize<Block>(JsonPrimitive(k), object : TypeToken<Block>() {}.type) to v.asInt
+                BlockJson.deserialize(JsonPrimitive(k), BLOCK_TYPE_TOKEN, context) to v.asInt
             }.toMap().toMutableMap()
         )
     }
