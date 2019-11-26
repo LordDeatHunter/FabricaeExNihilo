@@ -11,6 +11,8 @@ import exnihilofabrico.compatibility.rei.sieve.SieveCategory
 import exnihilofabrico.compatibility.rei.sieve.SieveDisplay
 import exnihilofabrico.compatibility.rei.tools.ToolCategory
 import exnihilofabrico.compatibility.rei.tools.ToolDisplay
+import exnihilofabrico.compatibility.rei.witchwater.WitchWaterEntityCategory
+import exnihilofabrico.compatibility.rei.witchwater.WitchWaterEntityDisplay
 import exnihilofabrico.id
 import exnihilofabrico.util.getExNihiloItemStack
 import me.shedaniel.math.api.Rectangle
@@ -39,6 +41,8 @@ class PluginEntry: REIPluginV0 {
         helper.registerCategory(FluidOnTopCategory())
         helper.registerCategory(MilkingCategory())
 
+        helper.registerCategory(WitchWaterEntityCategory())
+
         // Hackishly Remove the autocrafting button
         helper.registerAutoCraftButtonArea(SIEVE) {_ -> Rectangle(0,0,0,0) }
         helper.registerAutoCraftButtonArea(CROOK) {_ -> Rectangle(0,0,0,0) }
@@ -50,6 +54,7 @@ class PluginEntry: REIPluginV0 {
         helper.registerAutoCraftButtonArea(LEAKING) {_ -> Rectangle(0,0,0,0) }
         helper.registerAutoCraftButtonArea(ON_TOP) {_ -> Rectangle(0,0,0,0) }
         helper.registerAutoCraftButtonArea(MILKING) {_ -> Rectangle(0,0,0,0) }
+        helper.registerAutoCraftButtonArea(WITCH_WATER_ENTITY) {_ -> Rectangle(0,0,0,0) }
     }
 
     override fun registerRecipeDisplays(helper: RecipeHelper) {
@@ -64,6 +69,7 @@ class PluginEntry: REIPluginV0 {
         ExNihiloRegistries.BARREL_LEAKING.getREIRecipes().forEach { helper.registerDisplay(LEAKING, LeakingDisplay(it)) }
         ExNihiloRegistries.BARREL_ON_TOP.getREIRecipes().forEach { helper.registerDisplay(ON_TOP, FluidOnTopDisplay(it)) }
         ExNihiloRegistries.BARREL_MILKING.getREIRecipes().forEach { helper.registerDisplay(MILKING, MilkingDisplay(it)) }
+        ExNihiloRegistries.WITCHWATER_ENTITY.getREIRecipes().forEach { helper.registerDisplay(WITCH_WATER_ENTITY, WitchWaterEntityDisplay(it)) }
 
     }
 
@@ -84,6 +90,9 @@ class PluginEntry: REIPluginV0 {
         val WOOD_CRUCIBLE = id("rei/crucible/wood")
         val STONE_CRUCIBLE = id("rei/crucible/stone")
         val CRUCIBLE_HEAT = id("rei/crucible/heat")
+
+        val WITCH_WATER_WORLD = id("rei/witchwater/world")
+        val WITCH_WATER_ENTITY = id("rei/witchwater/entity")
 
         val CROOK = id("rei/tools/crook")
         val HAMMER = id("rei/tools/hammer")
