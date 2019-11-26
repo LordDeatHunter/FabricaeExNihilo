@@ -37,6 +37,7 @@ class PluginEntry: REIPluginV0 {
         helper.registerCategory(CompostCategory())
         helper.registerCategory(LeakingCategory())
         helper.registerCategory(FluidOnTopCategory())
+        helper.registerCategory(MilkingCategory())
 
         // Hackishly Remove the autocrafting button
         helper.registerAutoCraftButtonArea(SIEVE) {_ -> Rectangle(0,0,0,0) }
@@ -48,6 +49,7 @@ class PluginEntry: REIPluginV0 {
         helper.registerAutoCraftButtonArea(COMPOSTING) {_ -> Rectangle(0,0,0,0) }
         helper.registerAutoCraftButtonArea(LEAKING) {_ -> Rectangle(0,0,0,0) }
         helper.registerAutoCraftButtonArea(ON_TOP) {_ -> Rectangle(0,0,0,0) }
+        helper.registerAutoCraftButtonArea(MILKING) {_ -> Rectangle(0,0,0,0) }
     }
 
     override fun registerRecipeDisplays(helper: RecipeHelper) {
@@ -61,6 +63,7 @@ class PluginEntry: REIPluginV0 {
         ExNihiloRegistries.BARREL_COMPOST.getREIRecipes().forEach { helper.registerDisplay(COMPOSTING, CompostDisplay(it)) }
         ExNihiloRegistries.BARREL_LEAKING.getREIRecipes().forEach { helper.registerDisplay(LEAKING, LeakingDisplay(it)) }
         ExNihiloRegistries.BARREL_ON_TOP.getREIRecipes().forEach { helper.registerDisplay(ON_TOP, FluidOnTopDisplay(it)) }
+        ExNihiloRegistries.BARREL_MILKING.getREIRecipes().forEach { helper.registerDisplay(MILKING, MilkingDisplay(it)) }
 
     }
 
