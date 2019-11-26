@@ -2,10 +2,7 @@ package exnihilofabrico.compatibility.rei
 
 import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.api.registry.ExNihiloRegistries
-import exnihilofabrico.compatibility.rei.barrel.CompostCategory
-import exnihilofabrico.compatibility.rei.barrel.CompostDisplay
-import exnihilofabrico.compatibility.rei.barrel.LeakingCategory
-import exnihilofabrico.compatibility.rei.barrel.LeakingDisplay
+import exnihilofabrico.compatibility.rei.barrel.*
 import exnihilofabrico.compatibility.rei.crucible.CrucibleCategory
 import exnihilofabrico.compatibility.rei.crucible.CrucibleDisplay
 import exnihilofabrico.compatibility.rei.crucible.CrucibleHeatCategory
@@ -39,6 +36,7 @@ class PluginEntry: REIPluginV0 {
 
         helper.registerCategory(CompostCategory())
         helper.registerCategory(LeakingCategory())
+        helper.registerCategory(FluidOnTopCategory())
 
         // Hackishly Remove the autocrafting button
         helper.registerAutoCraftButtonArea(SIEVE) {_ -> Rectangle(0,0,0,0) }
@@ -49,6 +47,7 @@ class PluginEntry: REIPluginV0 {
         helper.registerAutoCraftButtonArea(STONE_CRUCIBLE) {_ -> Rectangle(0,0,0,0) }
         helper.registerAutoCraftButtonArea(COMPOSTING) {_ -> Rectangle(0,0,0,0) }
         helper.registerAutoCraftButtonArea(LEAKING) {_ -> Rectangle(0,0,0,0) }
+        helper.registerAutoCraftButtonArea(ON_TOP) {_ -> Rectangle(0,0,0,0) }
     }
 
     override fun registerRecipeDisplays(helper: RecipeHelper) {
@@ -61,6 +60,7 @@ class PluginEntry: REIPluginV0 {
         ExNihiloRegistries.CRUCIBLE_STONE.getREIRecipes().forEach { helper.registerDisplay(STONE_CRUCIBLE, CrucibleDisplay(it, STONE_CRUCIBLE)) }
         ExNihiloRegistries.BARREL_COMPOST.getREIRecipes().forEach { helper.registerDisplay(COMPOSTING, CompostDisplay(it)) }
         ExNihiloRegistries.BARREL_LEAKING.getREIRecipes().forEach { helper.registerDisplay(LEAKING, LeakingDisplay(it)) }
+        ExNihiloRegistries.BARREL_ON_TOP.getREIRecipes().forEach { helper.registerDisplay(ON_TOP, FluidOnTopDisplay(it)) }
 
     }
 
@@ -76,6 +76,7 @@ class PluginEntry: REIPluginV0 {
         val BLEEDING= id("rei/barrel/bleeding")
         val MILKING= id("rei/barrel/milking")
         val TRANSFORMING= id("rei/barrel/transforming")
+        val ON_TOP= id("rei/barrel/fluid_on_top")
 
         val WOOD_CRUCIBLE = id("rei/crucible/wood")
         val STONE_CRUCIBLE = id("rei/crucible/stone")
