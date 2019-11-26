@@ -29,4 +29,7 @@ interface IToolRegistry: IRegistry<ToolRecipe> {
 
     fun getResult(target: ItemConvertible, rand: Random): MutableList<ItemStack>
     fun getAllResults(target: ItemConvertible): List<Lootable>
+
+    // All recipes, chunked/broken up for pagination
+    fun getREIRecipes(): Collection<ToolRecipe>
 }

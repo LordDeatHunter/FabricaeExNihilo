@@ -42,7 +42,6 @@ data class OreRegistry(val registry: MutableList<OreProperties> = mutableListOf(
             json.forEach { register(it) }
         }
     }
-    override fun getREIRecipes() = registry
 
     companion object {
         val SERIALIZATION_TYPE: Type? = object : TypeToken<MutableList<OreProperties>>() {}.type

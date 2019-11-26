@@ -20,4 +20,6 @@ interface IWitchWaterEntityRegistry: IRegistry<WitchWaterEntityRecipe> {
 
     fun getAll(): List<WitchWaterEntityRecipe>
 
+    // All recipes, chunked/broken up for pagination
+    fun getREIRecipes(): Collection<WitchWaterEntityRecipe>
 }

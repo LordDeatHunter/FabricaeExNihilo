@@ -27,7 +27,6 @@ import net.minecraft.item.Items
 import net.minecraft.item.ToolMaterials
 import net.minecraft.tag.FluidTags
 import net.minecraft.tag.ItemTags
-import net.minecraft.tag.Tag
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 import net.minecraft.village.VillagerProfession
@@ -81,12 +80,12 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
 
         registry.register(Items.CACTUS, Blocks.DIRT, 0.0625, Color.DARK_GREEN)
 
-        registry.register(Tag(Identifier("c:seeds")), Blocks.DIRT, 0.0625, Color.GREEN)
-        registry.register(Tag(Identifier("c:veggies")), Blocks.DIRT, 0.0625, Color.YELLOW)
+        registry.register(TagRegistry.item(Identifier("c:seeds")), Blocks.DIRT, 0.0625, Color.GREEN)
+        registry.register(TagRegistry.item(Identifier("c:veggies")), Blocks.DIRT, 0.0625, Color.YELLOW)
         registry.register(ItemTags.SMALL_FLOWERS, Blocks.DIRT, 0.0625, Color.RED)
-        registry.register(Tag(Identifier("c:dyes")), Blocks.DIRT, 0.125, Color.RED)
-        registry.register(Tag(Identifier("c:raw_meat")), Blocks.DIRT, 0.125, Color.RED)
-        registry.register(Tag(Identifier("c:cooked_meat")), Blocks.DIRT, 0.25, Color.RED)
+        registry.register(TagRegistry.item(Identifier("c:dyes")), Blocks.DIRT, 0.125, Color.RED)
+        registry.register(TagRegistry.item(Identifier("c:raw_meat")), Blocks.DIRT, 0.125, Color.RED)
+        registry.register(TagRegistry.item(Identifier("c:cooked_meat")), Blocks.DIRT, 0.25, Color.RED)
     }
 
     override fun registerLeaking(registry: ILeakingRegistry) {
@@ -126,8 +125,8 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
         registry.register(ItemTags.SAPLINGS, Fluids.WATER, FluidVolume.BUCKET / 10)
         registry.register(ItemTags.LEAVES, Fluids.WATER, FluidVolume.BUCKET / 4)
         registry.register(ItemTags.SMALL_FLOWERS, Fluids.WATER, FluidVolume.BUCKET / 10)
-        registry.register(Tag(Identifier("c:seeds")), Fluids.WATER, FluidVolume.BUCKET / 10)
-        registry.register(Tag(Identifier("c:veggies")), Fluids.WATER, FluidVolume.BUCKET / 10)
+        registry.register(TagRegistry.item(Identifier("c:seeds")), Fluids.WATER, FluidVolume.BUCKET / 10)
+        registry.register(TagRegistry.item(Identifier("c:veggies")), Fluids.WATER, FluidVolume.BUCKET / 10)
     }
 
     override fun registerOres(registry: IOreRegistry) {

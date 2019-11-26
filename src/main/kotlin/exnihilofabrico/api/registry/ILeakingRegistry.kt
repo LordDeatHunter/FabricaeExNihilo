@@ -31,4 +31,7 @@ interface ILeakingRegistry: IRegistry<LeakingRecipe> {
      * Returns the block to transform the input block into, and the amount to drain.
      */
     fun getResult(block: Block, fluid: FluidVolume): Pair<Block, Int>?
+
+    // All recipes, chunked/broken up for pagination
+    fun getREIRecipes(): Collection<LeakingRecipe>
 }

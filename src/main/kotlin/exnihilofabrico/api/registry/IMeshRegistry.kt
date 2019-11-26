@@ -13,5 +13,4 @@ interface IMeshRegistry: IRegistry<MeshProperties> {
     fun registerItems(itemRegistry: Registry<Item>)
 
     fun getAll(): List<MeshProperties>
-
 }

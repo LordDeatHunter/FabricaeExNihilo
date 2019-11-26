@@ -32,6 +32,10 @@ class GeneralConfig {
 }
 
 class REIConfig {
+    @Comment("How many rows should show up for the compost inputs, min = 1")
+    var compostNumRows: Int = 5
+    @Comment("How many columns should show up for the compost inputs, min = 1")
+    var compostNumCols: Int = 8
     @Comment("How many rows should show up for the sieve outputs, min = 3")
     var sieveNumRows: Int = 3
     @Comment("How many columns should show up for the sieve outputs, min = 1")

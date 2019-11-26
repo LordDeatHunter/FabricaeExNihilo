@@ -24,4 +24,7 @@ interface ICrucibleHeatRegistry: IRegistry<CrucibleHeatRecipe> {
     fun getHeat(fluid: Fluid): Int
     fun getHeat(item: Item): Int
     fun getHeat(stack: ItemStack): Int
+
+    // All recipes, chunked/broken up for pagination
+    fun getREIRecipes(): Collection<CrucibleHeatRecipe>
 }

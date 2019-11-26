@@ -22,4 +22,7 @@ interface IMilkingRegistry: IRegistry<MilkingRecipe> {
 
     fun getResult(entity: Entity): Pair<FluidVolume, Int>?
     fun hasResult(entity: Entity): Boolean
+
+    // All recipes, chunked/broken up for pagination
+    fun getREIRecipes(): Collection<MilkingRecipe>
 }

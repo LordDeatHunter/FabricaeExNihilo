@@ -46,5 +46,8 @@ interface ISieveRegistry: IRegistry<SieveRecipe> {
         register(mesh, Registry.ITEM.get(sievable), *loot)
 
     fun getAllRecipes(): Collection<SieveRecipe>
+
+    // All recipes, chunked/broken up for pagination
+    fun getREIRecipes(): Collection<SieveRecipe>
 }
 

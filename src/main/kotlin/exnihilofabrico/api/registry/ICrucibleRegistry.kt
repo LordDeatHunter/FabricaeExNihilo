@@ -17,4 +17,7 @@ interface ICrucibleRegistry: IRegistry<CrucibleRecipe> {
     fun register(input: Tag<Item>, fluid: Fluid, amount: Int) = register(ItemIngredient(input), FluidVolume.create(fluid, amount))
 
     fun getResult(item: Item): FluidVolume?
+
+    // All recipes, chunked/broken up for pagination
+    fun getREIRecipes(): Collection<CrucibleRecipe>
 }

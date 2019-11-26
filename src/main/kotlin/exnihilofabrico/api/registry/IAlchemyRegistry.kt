@@ -53,4 +53,8 @@ interface IAlchemyRegistry: IRegistry<AlchemyRecipe> {
         register(FluidIngredient(reactant), ItemIngredient(catalyst), product.asStack())
     fun register(reactant: Tag<Fluid>, catalyst: ItemConvertible, product: ItemConvertible) =
         register(FluidIngredient(reactant), ItemIngredient(catalyst), product.asStack())
+
+
+    // All recipes, chunked/broken up for pagination
+    fun getREIRecipes(): Collection<AlchemyRecipe>
 }

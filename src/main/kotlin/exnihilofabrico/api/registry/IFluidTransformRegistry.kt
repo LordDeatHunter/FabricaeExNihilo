@@ -24,4 +24,7 @@ interface IFluidTransformRegistry: IRegistry<FluidTransformRecipe> {
 
     fun getResult(contents: Fluid, block: Block): BarrelMode?
     fun getResult(contents: FluidVolume, block: Block) = contents.rawFluid?.let { fluid -> getResult(fluid, block) }
+
+    // All recipes, chunked/broken up for pagination
+    fun getREIRecipes(): Collection<FluidTransformRecipe>
 }

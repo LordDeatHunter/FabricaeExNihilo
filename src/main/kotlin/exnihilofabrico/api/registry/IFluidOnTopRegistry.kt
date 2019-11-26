@@ -23,4 +23,7 @@ interface IFluidOnTopRegistry: IRegistry<FluidOnTopRecipe> {
 
     fun getResult(contents: Fluid, onTop: Fluid): BarrelMode?
     fun getResult(contents: FluidVolume, onTop: Fluid) = contents.rawFluid?.let { fluid -> getResult(fluid, onTop) }
+
+    // All recipes, chunked/broken up for pagination
+    fun getREIRecipes(): Collection<FluidOnTopRecipe>
 }

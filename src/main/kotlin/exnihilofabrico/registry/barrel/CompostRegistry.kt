@@ -5,11 +5,15 @@ import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.api.recipes.barrel.CompostRecipe
 import exnihilofabrico.api.registry.ICompostRegistry
 import exnihilofabrico.compatibility.modules.MetaModule
+import exnihilofabrico.compatibility.rei.barrel.CompostCategory
+import exnihilofabrico.compatibility.rei.barrel.REICompostRecipe
 import exnihilofabrico.registry.AbstractRegistry
+import exnihilofabrico.util.asStack
 import net.minecraft.item.ItemStack
 import java.io.File
 import java.io.FileReader
 import java.lang.reflect.Type
+import kotlin.math.ceil
 
 data class CompostRegistry(val registry: MutableList<CompostRecipe> = mutableListOf()):
     AbstractRegistry<MutableList<CompostRecipe>>(), ICompostRegistry {
@@ -38,7 +42,24 @@ data class CompostRegistry(val registry: MutableList<CompostRecipe> = mutableLis
         }
     }
     override fun getRecipe(stack: ItemStack) = registry.firstOrNull { it.test(stack) }
-    override fun getREIRecipes() = registry
+
+    override fun getREIRecipes(): Collection<REICompostRecipe> {
+        return registry.map { it.result.item }.toSet().map {output ->
+            registry
+                    // Grab all the same outputs
+                .filter { it.result.item == output }
+                    // Get a list of ALL possible inputs
+                .map {recipe ->
+                    recipe.ingredient.flatten().map {
+                        it.asStack(ceil((1.0 / recipe.amount)).toInt())
+                    }
+                }.flatten()
+                    // Chunk the list up based on max number of inputs
+                .chunked(CompostCategory.MAX_INPUT) {inputs ->
+                    REICompostRecipe(inputs.toList(), output.asStack())
+                }
+        }.flatten()
+    }
 
     companion object {
         val SERIALIZATION_TYPE: Type = object : TypeToken<MutableList<CompostRecipe>>() {}.type

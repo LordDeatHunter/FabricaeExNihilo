@@ -12,4 +12,5 @@ interface IWitchWaterWorldRegistry: IRegistry<WitchWaterWorldRecipe> {
     fun isRegistered(fluid: Fluid): Boolean
     fun getResult(fluid: Fluid, rand: Random): Block?
     fun getAllResults(fluid: Fluid): WeightedList?
+    fun getREIRecipes(): Collection<WitchWaterWorldRecipe>
 }
