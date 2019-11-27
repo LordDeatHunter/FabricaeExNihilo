@@ -102,7 +102,8 @@ object ExNihiloFabricoClient: ClientModInitializer {
             // Infested Leaves models
             ModBlocks.INFESTED_LEAVES.forEach { (k, leaves) ->
                 pack.addBlockModel(k) {model ->
-                    model.parent(Identifier("item/"+ Registry.BLOCK.getId(leaves.leafBlock).path))
+                    val root = Registry.BLOCK.getId(leaves.leafBlock)
+                    model.parent(Identifier(root.namespace, "block/${root.path}"))
                 }
                 pack.addBlockState(k) {state ->
                     state.variant("") {it.model(id("block/${k.path}")) }
