@@ -79,8 +79,8 @@ class ToolCategory(val tool: Identifier, val icon: ItemStack, val name: String):
     companion object {
         val GLYPH = id("textures/gui/rei/glyphs.png")
 
-        val OUTPUT_SLOTS_X = maxOf(ExNihiloFabrico.config.modules.REI.toolNumRows, 1)
-        val OUTPUT_SLOTS_Y = maxOf(ExNihiloFabrico.config.modules.REI.toolNumCols, 2)
+        val OUTPUT_SLOTS_X = maxOf(ExNihiloFabrico.config.modules.REI.toolNumCols, 1)
+        val OUTPUT_SLOTS_Y = maxOf(ExNihiloFabrico.config.modules.REI.toolNumRows, 2)
 
         val MARGIN = 6
 
