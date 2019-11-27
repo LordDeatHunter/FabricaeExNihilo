@@ -466,8 +466,8 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
          * Villagers
          */
         registry.register(EntityType.VILLAGER, VillagerProfession.ARMORER, EntityType.PILLAGER)
-        registry.register(EntityType.VILLAGER, VillagerProfession.BUTCHER, EntityType.ZOMBIE_VILLAGER)
-        registry.register(EntityType.VILLAGER, VillagerProfession.CARTOGRAPHER, EntityType.VINDICATOR)
+        registry.register(EntityType.VILLAGER, VillagerProfession.BUTCHER, EntityType.VINDICATOR)
+        registry.register(EntityType.VILLAGER, VillagerProfession.CARTOGRAPHER, EntityType.PILLAGER)
         registry.register(EntityType.VILLAGER, VillagerProfession.CLERIC, EntityType.EVOKER)
         registry.register(EntityType.VILLAGER, VillagerProfession.FARMER, EntityType.HUSK)
         registry.register(EntityType.VILLAGER, VillagerProfession.FISHERMAN, EntityType.DROWNED)
@@ -475,7 +475,7 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
         registry.register(EntityType.VILLAGER, VillagerProfession.LEATHERWORKER, EntityType.PILLAGER)
         registry.register(EntityType.VILLAGER, VillagerProfession.LIBRARIAN, EntityType.ILLUSIONER)
         registry.register(EntityType.VILLAGER, VillagerProfession.MASON, EntityType.PILLAGER)
-        //registry.register(EntityType.VILLAGER, VillagerProfession.NITWIT, EntityType.)
+        registry.register(EntityType.VILLAGER, VillagerProfession.NITWIT, EntityType.ZOMBIE_VILLAGER)
         registry.register(EntityType.VILLAGER, VillagerProfession.SHEPHERD, EntityType.PILLAGER)
         registry.register(EntityType.VILLAGER, VillagerProfession.TOOLSMITH, EntityType.PILLAGER)
         registry.register(EntityType.VILLAGER, VillagerProfession.WEAPONSMITH, EntityType.PILLAGER)

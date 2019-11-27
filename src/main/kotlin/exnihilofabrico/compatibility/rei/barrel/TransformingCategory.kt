@@ -3,7 +3,7 @@ package exnihilofabrico.compatibility.rei.barrel
 import exnihilofabrico.compatibility.rei.GlyphWidget
 import exnihilofabrico.compatibility.rei.PluginEntry
 import exnihilofabrico.id
-import exnihilofabrico.util.getExNihiloItemStack
+import exnihilofabrico.util.asStack
 import me.shedaniel.math.api.Rectangle
 import me.shedaniel.rei.api.RecipeCategory
 import me.shedaniel.rei.api.Renderer
@@ -11,20 +11,21 @@ import me.shedaniel.rei.gui.renderers.ItemStackRenderer
 import me.shedaniel.rei.gui.widget.RecipeBaseWidget
 import me.shedaniel.rei.gui.widget.SlotWidget
 import me.shedaniel.rei.gui.widget.Widget
+import net.minecraft.block.Blocks
 import java.util.function.Supplier
 
-class FluidOnTopCategory: RecipeCategory<FluidOnTopDisplay> {
+class TransformingCategory: RecipeCategory<TransformingDisplay> {
 
-    override fun getIdentifier() = PluginEntry.ON_TOP
-    override fun getIcon(): ItemStackRenderer = Renderer.fromItemStack(getExNihiloItemStack("oak_barrel"))
-    override fun getCategoryName() = "Fluid Above"
+    override fun getIdentifier() = PluginEntry.TRANSFORMING
+    override fun getIcon(): ItemStackRenderer = Renderer.fromItemStack(Blocks.MYCELIUM.asStack())
+    override fun getCategoryName() = "Transformation"
 
 
     override fun getDisplayHeight() = HEIGHT
-    override fun getDisplayWidth(display: FluidOnTopDisplay) =
+    override fun getDisplayWidth(display: TransformingDisplay) =
         WIDTH
 
-    override fun setupDisplay(displaySupplier: Supplier<FluidOnTopDisplay>, bounds: Rectangle): MutableList<Widget> {
+    override fun setupDisplay(displaySupplier: Supplier<TransformingDisplay>, bounds: Rectangle): MutableList<Widget> {
         val display = displaySupplier.get()
         val widgets = mutableListOf<Widget>(RecipeBaseWidget(bounds))
 
@@ -34,12 +35,12 @@ class FluidOnTopCategory: RecipeCategory<FluidOnTopDisplay> {
         widgets.add(arrow2)
 
         val inBarrel = display.input[0]
-        val onTop = display.input[1]
+        val below = display.input[1]
         val barrels = display.input[2]
         val outputs = display.output
 
         widgets.add(SlotWidget(bounds.minX + INPUT_X, bounds.minY + INPUT_Y, Renderer.fromItemStacks(inBarrel), true, true, true))
-        widgets.add(SlotWidget(bounds.minX + ABOVE_X, bounds.minY + ABOVE_Y, Renderer.fromItemStacks(onTop), false, true, true))
+        widgets.add(SlotWidget(bounds.minX + BELOW_X, bounds.minY + BELOW_Y, Renderer.fromItemStacks(below), false, true, true))
         widgets.add(SlotWidget(bounds.minX + BARRELS_X, bounds.minY + BARRELS_Y, Renderer.fromItemStacks(barrels), false, false, true))
         widgets.add(SlotWidget(bounds.minX + OUTPUT_X, bounds.minY + OUTPUT_Y, Renderer.fromItemStacks(outputs), true, true, true))
 
@@ -54,16 +55,16 @@ class FluidOnTopCategory: RecipeCategory<FluidOnTopDisplay> {
         val WIDTH = 8*18 + MARGIN*2
         val HEIGHT = 2*18 + MARGIN*2
 
-        val ABOVE_X = WIDTH/2 - 9
-        val ABOVE_Y = MARGIN
-
-        val BARRELS_X = ABOVE_X
-        val BARRELS_Y = ABOVE_Y + 18
+        val BARRELS_X = WIDTH/2 - 9
+        val BARRELS_Y = MARGIN
 
         val ARROW1_X = BARRELS_X -18
         val ARROW1_Y = BARRELS_Y
         val ARROW2_X = BARRELS_X + 18
         val ARROW2_Y = BARRELS_Y
+
+        val BELOW_X = BARRELS_X
+        val BELOW_Y = BARRELS_Y + 18
 
         val INPUT_X = BARRELS_X - 2*18
         val INPUT_Y = BARRELS_Y

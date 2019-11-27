@@ -42,6 +42,7 @@ class PluginEntry: REIPluginV0 {
         helper.registerCategory(LeakingCategory())
         helper.registerCategory(FluidOnTopCategory())
         helper.registerCategory(MilkingCategory())
+        helper.registerCategory(TransformingCategory())
 
         helper.registerCategory(WitchWaterEntityCategory())
         helper.registerCategory(WitchWaterWorldCategory())
@@ -57,6 +58,7 @@ class PluginEntry: REIPluginV0 {
         helper.registerAutoCraftButtonArea(LEAKING) {_ -> Rectangle(0,0,0,0) }
         helper.registerAutoCraftButtonArea(ON_TOP) {_ -> Rectangle(0,0,0,0) }
         helper.registerAutoCraftButtonArea(MILKING) {_ -> Rectangle(0,0,0,0) }
+        helper.registerAutoCraftButtonArea(TRANSFORMING) { _ -> Rectangle(0,0,0,0) }
         helper.registerAutoCraftButtonArea(WITCH_WATER_ENTITY) {_ -> Rectangle(0,0,0,0) }
         helper.registerAutoCraftButtonArea(WITCH_WATER_WORLD) {_ -> Rectangle(0,0,0,0) }
     }
@@ -73,6 +75,7 @@ class PluginEntry: REIPluginV0 {
         ExNihiloRegistries.BARREL_LEAKING.getREIRecipes().forEach { helper.registerDisplay(LEAKING, LeakingDisplay(it)) }
         ExNihiloRegistries.BARREL_ON_TOP.getREIRecipes().forEach { helper.registerDisplay(ON_TOP, FluidOnTopDisplay(it)) }
         ExNihiloRegistries.BARREL_MILKING.getREIRecipes().forEach { helper.registerDisplay(MILKING, MilkingDisplay(it)) }
+        ExNihiloRegistries.BARREL_TRANSFORM.getREIRecipes().forEach { helper.registerDisplay(TRANSFORMING, TransformingDisplay(it)) }
         ExNihiloRegistries.WITCHWATER_ENTITY.getREIRecipes().forEach { helper.registerDisplay(WITCH_WATER_ENTITY, WitchWaterEntityDisplay(it)) }
         ExNihiloRegistries.WITCHWATER_WORLD.getREIRecipes().forEach { helper.registerDisplay(WITCH_WATER_WORLD, WitchWaterWorldDisplay(it)) }
 

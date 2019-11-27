@@ -9,9 +9,14 @@ import me.shedaniel.math.api.Rectangle
 import me.shedaniel.rei.api.RecipeCategory
 import me.shedaniel.rei.api.Renderer
 import me.shedaniel.rei.gui.renderers.ItemStackRenderer
+import me.shedaniel.rei.gui.widget.LabelWidget
 import me.shedaniel.rei.gui.widget.RecipeBaseWidget
 import me.shedaniel.rei.gui.widget.SlotWidget
 import me.shedaniel.rei.gui.widget.Widget
+import net.minecraft.client.resource.language.I18n
+import net.minecraft.entity.EntityType
+import net.minecraft.util.registry.Registry
+import net.minecraft.village.VillagerProfession
 import java.util.function.Supplier
 
 class WitchWaterEntityCategory: RecipeCategory<WitchWaterEntityDisplay> {
@@ -41,7 +46,13 @@ class WitchWaterEntityCategory: RecipeCategory<WitchWaterEntityDisplay> {
         widgets.add(SlotWidget(bounds.minX + OUT_X, bounds.minY + OUT_Y, Renderer.fromItemStacks(eggOut), false, true, true))
         widgets.add(SlotWidget(bounds.minX + FLUID_X, bounds.minY + FLUID_Y, Renderer.fromItemStacks(fluids), false, true, true))
 
-        // TODO Add tooltips to villager eggs
+        if(display.recipe.target.test(EntityType.VILLAGER)) {
+            val profession = Registry.VILLAGER_PROFESSION.getId(display.recipe.profession ?: VillagerProfession.NONE)
+            val text = LabelWidget(0, 0, I18n.translate("entity.${profession.namespace}.villager.${profession.path}"))
+            text.x = bounds.minX + MARGIN + text.bounds.maxX
+            text.y = bounds.minY - MARGIN + text.bounds.maxY
+            widgets.add(text)
+        }
 
         return widgets
     }

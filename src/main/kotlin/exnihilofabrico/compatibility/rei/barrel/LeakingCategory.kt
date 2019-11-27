@@ -4,7 +4,7 @@ import alexiil.mc.lib.attributes.fluid.mixin.api.IBucketItem
 import exnihilofabrico.compatibility.rei.GlyphWidget
 import exnihilofabrico.compatibility.rei.PluginEntry
 import exnihilofabrico.id
-import exnihilofabrico.util.getExNihiloItemStack
+import exnihilofabrico.util.asStack
 import me.shedaniel.math.api.Rectangle
 import me.shedaniel.rei.api.RecipeCategory
 import me.shedaniel.rei.api.Renderer
@@ -13,12 +13,13 @@ import me.shedaniel.rei.gui.widget.LabelWidget
 import me.shedaniel.rei.gui.widget.RecipeBaseWidget
 import me.shedaniel.rei.gui.widget.SlotWidget
 import me.shedaniel.rei.gui.widget.Widget
+import net.minecraft.block.Blocks
 import java.util.function.Supplier
 
 class LeakingCategory: RecipeCategory<LeakingDisplay> {
 
     override fun getIdentifier() = PluginEntry.LEAKING
-    override fun getIcon(): ItemStackRenderer = Renderer.fromItemStack(getExNihiloItemStack("oak_barrel"))
+    override fun getIcon(): ItemStackRenderer = Renderer.fromItemStack(Blocks.MOSSY_COBBLESTONE.asStack())
     override fun getCategoryName() = "Barrel Leaking"
 
 
