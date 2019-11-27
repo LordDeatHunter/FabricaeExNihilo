@@ -10,6 +10,7 @@ import exnihilofabrico.modules.barrels.modes.EmptyMode
 import exnihilofabrico.modules.barrels.modes.FluidMode
 import exnihilofabrico.modules.barrels.modes.ItemMode
 import exnihilofabrico.util.asStack
+import net.minecraft.entity.EntityType
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
@@ -53,6 +54,10 @@ interface IAlchemyRegistry: IRegistry<AlchemyRecipe> {
         register(FluidIngredient(reactant), ItemIngredient(catalyst), product.asStack())
     fun register(reactant: Tag<Fluid>, catalyst: ItemConvertible, product: ItemConvertible) =
         register(FluidIngredient(reactant), ItemIngredient(catalyst), product.asStack())
+    fun register(reactant: Tag<Fluid>, catalyst: ItemStack, spawn: EntityType<*>) =
+        register(FluidIngredient(reactant), ItemIngredient(catalyst), EntityStack(spawn))
+    fun register(reactant: FluidIngredient, catalyst: ItemStack, spawn: EntityType<*>) =
+        register(reactant, ItemIngredient(catalyst), EntityStack(spawn))
 
 
     // All recipes, chunked/broken up for pagination

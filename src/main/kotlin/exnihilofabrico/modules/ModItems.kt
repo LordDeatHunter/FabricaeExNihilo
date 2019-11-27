@@ -43,6 +43,14 @@ object ModItems {
         id("salt_bottle") to BaseItem(Item.Settings().maxCount(64))
     )
 
+    val DOLLS = listOf<Identifier>(
+        id("doll"),
+        id("doll_blaze"),
+        id("doll_enderman"),
+        id("doll_guardian"),
+        id("doll_shulker")
+    )
+
     init {
         if(ExNihiloFabrico.config.modules.silkworms.enabled) {
             RESOURCES[id("silkworm_raw")] = SilkWormItem(Item.Settings().maxCount(64).food(FoodComponents.COD))
@@ -94,6 +102,7 @@ object ModItems {
 
         // Register Others
         RESOURCES.forEach { (k, v) -> Registry.register(registry, k, v) }
+        DOLLS.forEach { Registry.register(registry, it, BaseItem(Item.Settings().maxCount(64))) }
 
         // Register Ores
         ExNihiloRegistries.ORES.registerPieceItems(registry)

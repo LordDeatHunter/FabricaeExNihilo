@@ -1,4 +1,4 @@
 {
   "parent": "item/generated",
-  "textures": {"layer0": "exnihilofabrico:item/doll_enderman"}
+  "textures": {"layer0": "exnihilofabrico:item/dolls/enderman"}
 }

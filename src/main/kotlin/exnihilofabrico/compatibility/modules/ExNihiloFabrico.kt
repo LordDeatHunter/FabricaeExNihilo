@@ -59,13 +59,20 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
             ItemIngredient(TagRegistry.item(Identifier("c:salt"))),
             FluidMode(FluidVolume.create(BrineFluid.still, FluidVolume.BUCKET))))
 
-        registry.register(BrineFluid.still, Items.BLUE_DYE, Blocks.TUBE_CORAL_BLOCK)
-        registry.register(BrineFluid.still, Items.PINK_DYE, Blocks.BRAIN_CORAL_BLOCK)
-        registry.register(BrineFluid.still, Items.MAGENTA_DYE, Blocks.BUBBLE_CORAL_BLOCK)
-        registry.register(BrineFluid.still, Items.RED_DYE, Blocks.FIRE_CORAL_BLOCK)
-        registry.register(BrineFluid.still, Items.YELLOW_DYE, Blocks.HORN_CORAL_BLOCK)
+        registry.register(BrineFluid.tag, Items.BLUE_DYE, Blocks.TUBE_CORAL_BLOCK)
+        registry.register(BrineFluid.tag, Items.PINK_DYE, Blocks.BRAIN_CORAL_BLOCK)
+        registry.register(BrineFluid.tag, Items.MAGENTA_DYE, Blocks.BUBBLE_CORAL_BLOCK)
+        registry.register(BrineFluid.tag, Items.RED_DYE, Blocks.FIRE_CORAL_BLOCK)
+        registry.register(BrineFluid.tag, Items.YELLOW_DYE, Blocks.HORN_CORAL_BLOCK)
 
         registry.register(FluidIngredient(BrineFluid.still), ItemIngredient(ItemTags.WOOL), Blocks.WET_SPONGE.asStack())
+
+        registry.register(FluidTags.LAVA, getExNihiloItemStack("doll_blaze"), EntityType.BLAZE)
+        registry.register(FluidIngredient(WitchWaterFluid.flowing, WitchWaterFluid.still),
+            getExNihiloItemStack("doll_enderman"), EntityType.ENDERMAN)
+        registry.register(BrineFluid.tag, getExNihiloItemStack("doll_guardian"), EntityType.GUARDIAN)
+        registry.register(FluidIngredient(WitchWaterFluid.flowing, WitchWaterFluid.still),
+            getExNihiloItemStack("doll_shulker"), EntityType.SHULKER)
     }
 
     override fun registerCompost(registry: ICompostRegistry) {
@@ -415,7 +422,7 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
                 Blocks.GRANITE to 1
             )
         ))
-        registry.register(FluidIngredient(TagRegistry.fluid(Identifier("c:brine"))), WeightedList(
+        registry.register(FluidIngredient(BrineFluid.tag), WeightedList(
             mutableMapOf(
                 Blocks.DEAD_BRAIN_CORAL_BLOCK to 16,
                 Blocks.DEAD_BUBBLE_CORAL_BLOCK to 16,

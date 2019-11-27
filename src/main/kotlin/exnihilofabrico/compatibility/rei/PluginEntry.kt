@@ -43,6 +43,7 @@ class PluginEntry: REIPluginV0 {
         helper.registerCategory(FluidOnTopCategory())
         helper.registerCategory(MilkingCategory())
         helper.registerCategory(TransformingCategory())
+        helper.registerCategory(AlchemyCategory())
 
         helper.registerCategory(WitchWaterEntityCategory())
         helper.registerCategory(WitchWaterWorldCategory())
@@ -61,6 +62,7 @@ class PluginEntry: REIPluginV0 {
         helper.registerAutoCraftButtonArea(TRANSFORMING) { _ -> Rectangle(0,0,0,0) }
         helper.registerAutoCraftButtonArea(WITCH_WATER_ENTITY) {_ -> Rectangle(0,0,0,0) }
         helper.registerAutoCraftButtonArea(WITCH_WATER_WORLD) {_ -> Rectangle(0,0,0,0) }
+        helper.registerAutoCraftButtonArea(ALCHEMY) { _ -> Rectangle(0,0,0,0) }
     }
 
     override fun registerRecipeDisplays(helper: RecipeHelper) {
@@ -71,6 +73,7 @@ class PluginEntry: REIPluginV0 {
         ExNihiloRegistries.CRUCIBLE_HEAT.getREIRecipes().forEach { helper.registerDisplay(CRUCIBLE_HEAT, CrucibleHeatDisplay(it)) }
         ExNihiloRegistries.CRUCIBLE_WOOD.getREIRecipes().forEach { helper.registerDisplay(WOOD_CRUCIBLE, CrucibleDisplay(it, WOOD_CRUCIBLE)) }
         ExNihiloRegistries.CRUCIBLE_STONE.getREIRecipes().forEach { helper.registerDisplay(STONE_CRUCIBLE, CrucibleDisplay(it, STONE_CRUCIBLE)) }
+        ExNihiloRegistries.BARREL_ALCHEMY.getREIRecipes().forEach { helper.registerDisplay(ALCHEMY, AlchemyDisplay(it)) }
         ExNihiloRegistries.BARREL_COMPOST.getREIRecipes().forEach { helper.registerDisplay(COMPOSTING, CompostDisplay(it)) }
         ExNihiloRegistries.BARREL_LEAKING.getREIRecipes().forEach { helper.registerDisplay(LEAKING, LeakingDisplay(it)) }
         ExNihiloRegistries.BARREL_ON_TOP.getREIRecipes().forEach { helper.registerDisplay(ON_TOP, FluidOnTopDisplay(it)) }

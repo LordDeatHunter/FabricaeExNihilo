@@ -113,6 +113,12 @@
   "item.exnihilofabrico.porcelain": "Porcelain",
   "item.exnihilofabrico.salt_bottle": "Salt",
 
+  "item.exnihilofabrico.doll": "Porcelain Doll",
+  "item.exnihilofabrico.doll_blaze": "Blazing Doll",
+  "item.exnihilofabrico.doll_enderman": "Creeping Doll",
+  "item.exnihilofabrico.doll_guardian": "Protecting Doll",
+  "item.exnihilofabrico.doll_shulker": "Floating Doll",
+
   "text.autoconfig.exnihilofabrico.title": "Ex Nihilo Fabrico Config",
   "text.autoconfig.exnihilofabrico.category.client": "Client",
   "text.autoconfig.exnihilofabrico.category.misc": "Misc.",
