@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "exnihilofabrico:silkworm_raw"
+  },
+  "result": "exnihilofabrico:silkworm_cooked",
+  "experience": 0.35,
+  "cookingtime": 100
+}

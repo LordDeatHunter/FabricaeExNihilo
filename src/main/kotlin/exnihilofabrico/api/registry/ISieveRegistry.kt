@@ -6,8 +6,10 @@ import exnihilofabrico.api.crafting.Lootable
 import exnihilofabrico.api.recipes.SieveRecipe
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.fluid.Fluid
+import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
+import net.minecraft.tag.Tag
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 import java.util.*
@@ -32,6 +34,8 @@ interface ISieveRegistry: IRegistry<SieveRecipe> {
     fun register(mesh: ItemConvertible, fluid: Fluid, sievable: Identifier, vararg loot: Lootable) =
         register(ItemIngredient(mesh),FluidIngredient(fluid),ItemIngredient(Registry.ITEM.get(sievable)), *loot)
     fun register(mesh: ItemConvertible, sievable: ItemConvertible, vararg loot: Lootable) =
+        register(ItemIngredient(mesh), FluidIngredient.EMPTY, ItemIngredient(sievable), loot.toMutableList())
+    fun register(mesh: ItemConvertible, sievable: Tag<Item>, vararg loot: Lootable) =
         register(ItemIngredient(mesh), FluidIngredient.EMPTY, ItemIngredient(sievable), loot.toMutableList())
 
     fun register(mesh: Identifier, fluid: FluidIngredient, sievable: ItemIngredient, loot: Collection<Lootable>) =
