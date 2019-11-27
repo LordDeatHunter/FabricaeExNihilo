@@ -203,6 +203,15 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
         val goldMesh = Registry.ITEM[id("mesh_gold")]
         val diamondMesh = Registry.ITEM[id("mesh_diamond")]
 
+        registry.register(stringMesh, Blocks.DIRT, Lootable(getExNihiloItem("pebble_andesite"), .1))
+        registry.register(stringMesh, Blocks.DIRT, Lootable(getExNihiloItem("pebble_diorite"), .1))
+        registry.register(stringMesh, Blocks.DIRT, Lootable(getExNihiloItem("pebble_granite"), .1))
+        registry.register(stringMesh, Blocks.DIRT, Lootable(getExNihiloItem("pebble_stone"), .5))
+
+        registry.register(flintMesh, Blocks.DIRT, Lootable(getExNihiloItem("pebble_andesite"), .5))
+        registry.register(flintMesh, Blocks.DIRT, Lootable(getExNihiloItem("pebble_diorite"), .5))
+        registry.register(flintMesh, Blocks.DIRT, Lootable(getExNihiloItem("pebble_granite"), .5))
+
         registry.register(stringMesh, Blocks.GRAVEL, Lootable(Items.FLINT, .5))
         registry.register(flintMesh, Blocks.GRAVEL, Lootable(Items.FLINT, .3))
 
