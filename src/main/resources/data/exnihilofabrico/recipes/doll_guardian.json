@@ -14,7 +14,7 @@
       "item": "minecraft:redstone"
     },
     "d": {
-      "tag": "minecraft:fish"
+      "tag": "c:raw_fish"
     },
     "s": {
       "item": "minecraft:glowstone"

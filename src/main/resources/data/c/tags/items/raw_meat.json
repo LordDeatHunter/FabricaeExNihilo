@@ -1,13 +1,12 @@
 {
   "replace": false,
   "values": [
+    "#c:raw_fish",
     "minecraft:beef",
     "minecraft:porkchop",
     "minecraft:chicken",
     "minecraft:rabbit",
     "minecraft:mutton",
-    "minecraft:cod",
-    "minecraft:salmon",
     "exnihilofabrico:silkworm_raw"
   ]
 }

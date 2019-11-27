@@ -31,6 +31,8 @@ class EntityStack(val type: EntityType<*>, var size: Int = 1, var data: Compound
         return type.create(world, data, null, null, pos, spawnType, true, true)
     }
 
+    fun copy() = EntityStack(this.type, this.size)
+
     companion object {
         val EMPTY = EntityStack(EntityType.PIG,0)
     }

@@ -375,12 +375,12 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
                 if(simulation.isAction) {
                     if(result.delay == 0) {
                         barrel.mode = result.product
-                        barrel.spawnEntity(result.toSpawn)
+                        barrel.spawnEntity(result.toSpawn.copy())
                         barrel.spawnByproduct(result.byproduct)
                         barrel.markDirtyClient()
                     }
                     else {
-                        barrel.mode = AlchemyMode(fluidMode, result.product, result.toSpawn, result.delay)
+                        barrel.mode = AlchemyMode(fluidMode, result.product, result.toSpawn.copy(), result.delay)
                         barrel.spawnByproduct(result.byproduct)
                         barrel.markDirtyClient()
                     }

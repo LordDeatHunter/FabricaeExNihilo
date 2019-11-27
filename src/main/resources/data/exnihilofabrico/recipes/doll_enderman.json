@@ -14,16 +14,16 @@
       "item": "minecraft:redstone"
     },
     "d": {
-      "tag": "minecraft:nether_wart"
+      "item": "minecraft:nether_wart"
     },
     "s": {
-      "item": "minecraft:glowstone"
+      "item": "minecraft:glowstone_dust"
     },
     "c": {
       "item": "exnihilofabrico:doll"
     }
   },
   "result": {
-    "item": "exnihilofabrico:doll_guardian"
+    "item": "exnihilofabrico:doll_enderman"
   }
 }
