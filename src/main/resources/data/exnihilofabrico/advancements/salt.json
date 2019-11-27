@@ -1,0 +1,35 @@
+{
+  "parent": "exnihilofabrico:sand",
+  "display": {
+    "icon": {
+      "item": "exnihilofabrico:salt_bottle"
+    },
+    "title": {
+      "translate": "advancements.exnihilofabrico.salt.title"
+    },
+    "description": {
+      "translate": "advancements.exnihilofabrico.salt.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "salt": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "exnihilofabrico:salt_bottle"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "salt"
+    ]
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "parent": "exnihilofabrico:mesh",
+  "display": {
+    "icon": {
+      "item": "exnihilofabrico:seed_mycelium"
+    },
+    "title": {
+      "translate": "advancements.exnihilofabrico.ancient_spores.title"
+    },
+    "description": {
+      "translate": "advancements.exnihilofabrico.ancient_spores.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "ancient_spores": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "exnihilofabrico:seed_mycelium"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "ancient_spores"
+    ]
+  ]
+}

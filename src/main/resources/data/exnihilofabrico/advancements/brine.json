@@ -1,0 +1,35 @@
+{
+  "parent": "exnihilofabrico:salt",
+  "display": {
+    "icon": {
+      "item": "exnihilofabrico:brine_bucket"
+    },
+    "title": {
+      "translate": "advancements.exnihilofabrico.brine.title"
+    },
+    "description": {
+      "translate": "advancements.exnihilofabrico.brine.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "brine": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "exnihilofabrico:brine_bucket"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "brine"
+    ]
+  ]
+}

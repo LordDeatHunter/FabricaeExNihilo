@@ -1,0 +1,35 @@
+{
+  "parent": "exnihilofabrico:gravel",
+  "display": {
+    "icon": {
+      "item": "minecraft:sand"
+    },
+    "title": {
+      "translate": "advancements.exnihilofabrico.sand.title"
+    },
+    "description": {
+      "translate": "advancements.exnihilofabrico.sand.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "sand": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:sand"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "sand"
+    ]
+  ]
+}

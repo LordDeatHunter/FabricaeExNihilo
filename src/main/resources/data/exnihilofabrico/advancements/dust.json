@@ -1,0 +1,35 @@
+{
+  "parent": "exnihilofabrico:silt",
+  "display": {
+    "icon": {
+      "item": "exnihilofabrico:dust"
+    },
+    "title": {
+      "translate": "advancements.exnihilofabrico.dust.title"
+    },
+    "description": {
+      "translate": "advancements.exnihilofabrico.dust.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "dust": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "exnihilofabrico:dust"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "dust"
+    ]
+  ]
+}
