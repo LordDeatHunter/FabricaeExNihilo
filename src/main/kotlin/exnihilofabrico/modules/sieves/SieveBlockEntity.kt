@@ -75,7 +75,7 @@ class SieveBlockEntity: BaseBlockEntity(TYPE), BlockEntityClientSerializable {
             sieves.forEach { it.setContents(held, !player.isCreative) }
             return true
         }
-        return false
+        return true
     }
 
     fun setContents(stack: ItemStack, doDrain: Boolean) {

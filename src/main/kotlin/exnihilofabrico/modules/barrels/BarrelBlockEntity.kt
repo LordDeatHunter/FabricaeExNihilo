@@ -272,8 +272,8 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
             val volume = bucket.proxyFluidVolume(held)
             val amount = bucket.libblockattributes__getFluidVolumeAmount()
             if(!volume.isEmpty) {
-                val remaining = fluidTransferable.attemptInsertion(volume, Simulation.ACTION)
-                if(remaining.isEmpty) {
+                val leftover = fluidTransferable.attemptInsertion(volume, Simulation.ACTION)
+                if(leftover.isEmpty) {
                     val returnStack = bucket.libblockattributes__drainedOfFluid(held)
                     if(!player.isCreative)
                         held.decrement(1)
@@ -282,24 +282,26 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
                     return@insertFromHand true
                 }
             }
+            // Removing a bucket's worth of fluid
             else {
                 (mode as? FluidMode)?.let { fluidMode ->
-                    // Removing a bucket's worth of fluid
                     val drained = fluidTransferable.attemptExtraction({ true }, amount, Simulation.SIMULATE)
                     if(drained.amount == bucket.libblockattributes__getFluidVolumeAmount()) {
                         val returnStack = bucket.libblockattributes__withFluid(fluidMode.fluid.fluidKey)
-                        fluidTransferable.attemptExtraction({ true }, amount, Simulation.ACTION)
-                        if(!player.isCreative)
-                            held.decrement(1)
-                        player.giveItemStack(returnStack)
-                        markDirtyClient()
-                        return@insertFromHand true
+                        if(!returnStack.isEmpty) {
+                            fluidTransferable.attemptExtraction({ true }, amount, Simulation.ACTION)
+                            if(!player.isCreative)
+                                held.decrement(1)
+                            player.giveItemStack(returnStack)
+                            markDirtyClient()
+                            return@insertFromHand true
+                        }
                     }
                 }
             }
-            false
+            true // To make kotlin happy
         }
-        return false
+        return true
     }
 
     /**
