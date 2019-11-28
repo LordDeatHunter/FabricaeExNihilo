@@ -44,15 +44,15 @@ object ArtificeUtils {
 
     fun generateLootTables(builder: ArtificeResourcePack.ServerResourcePackBuilder) {
         // Block Breaking
-        ModBlocks.SIEVES.keys.forEach { k ->
-            generateBlockEntityLootTable(k, builder)
-        }
-        ModBlocks.CRUCIBLES.filter{ it.key.path != "unfired_crucible" }.keys.forEach { k ->
-            generateBlockEntityLootTable(k, builder)
-        }
-        ModBlocks.BARRELS.keys.forEach { k ->
-            generateBlockEntityLootTable(k, builder)
-        }
+//        ModBlocks.SIEVES.keys.forEach { k ->
+//            generateBlockEntityLootTable(k, builder)
+//        }
+//        ModBlocks.CRUCIBLES.filter{ it.key.path != "unfired_crucible" }.keys.forEach { k ->
+//            generateBlockEntityLootTable(k, builder)
+//        }
+//        ModBlocks.BARRELS.keys.forEach { k ->
+//            generateBlockEntityLootTable(k, builder)
+//        }
         (ModBlocks.INFESTED_LEAVES).forEach { k, block ->
             generateInfestedLeavesBlockLootTable(k, builder)
         }

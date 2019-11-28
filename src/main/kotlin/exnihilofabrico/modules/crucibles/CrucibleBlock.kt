@@ -4,11 +4,14 @@ import alexiil.mc.lib.attributes.AttributeList
 import alexiil.mc.lib.attributes.AttributeProvider
 import com.swordglowsblue.artifice.api.builder.data.recipe.ShapedRecipeBuilder
 import exnihilofabrico.modules.base.BaseBlock
+import exnihilofabrico.modules.base.addEnchantments
 import exnihilofabrico.util.VoxelShapeHelper
+import exnihilofabrico.util.asStack
 import net.fabricmc.fabric.api.block.FabricBlockSettings
 import net.minecraft.block.*
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.EntityContext
+import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.SidedInventory
@@ -77,6 +80,17 @@ class CrucibleBlock(val texture: Identifier, val craftIngredient: Identifier,
         EnchantmentHelper.getEnchantments(itemStack).forEach { enchantment, level ->
             crucible.enchantments.setEnchantmentLevel(enchantment, level)
         }
+    }
+
+    override fun onBreak(world: World, pos: BlockPos, state: BlockState, player: PlayerEntity?) {
+        if(player?.isCreative == false)
+            (world.getBlockEntity(pos) as? CrucibleBlockEntity)?.let{crucible ->
+                val stack = this.asStack()
+                stack.addEnchantments(crucible.enchantments)
+                val itemEntity = ItemEntity(world, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), stack)
+                world.spawnEntity(itemEntity)
+            }
+        super.onBreak(world, pos, state, player)
     }
 
     fun generateRecipe(builder: ShapedRecipeBuilder) {

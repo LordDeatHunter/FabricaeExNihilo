@@ -8,8 +8,12 @@ import com.swordglowsblue.artifice.api.builder.data.recipe.ShapedRecipeBuilder
 import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.api.registry.ExNihiloRegistries
 import exnihilofabrico.modules.ModEffects
+import exnihilofabrico.modules.barrels.modes.ItemMode
 import exnihilofabrico.modules.base.BaseBlock
+import exnihilofabrico.modules.base.addEnchantments
 import exnihilofabrico.modules.fluids.BloodFluid
+import exnihilofabrico.util.asEntity
+import exnihilofabrico.util.asStack
 import net.fabricmc.fabric.api.block.FabricBlockSettings
 import net.minecraft.block.*
 import net.minecraft.enchantment.EnchantmentHelper
@@ -59,6 +63,19 @@ class BarrelBlock(val texture: Identifier,
 
     override fun getInventory(state: BlockState?, world: IWorld?, pos: BlockPos): SidedInventory? {
         return (world?.getBlockEntity(pos) as? BarrelBlockEntity)?.inventory
+    }
+
+    override fun onBreak(world: World, pos: BlockPos, state: BlockState, player: PlayerEntity?) {
+        if(player?.isCreative == false)
+            (world.getBlockEntity(pos) as? BarrelBlockEntity)?.let{barrel ->
+                val stack = this.asStack()
+                stack.addEnchantments(barrel.enchantments)
+                world.spawnEntity(stack.asEntity(world, pos))
+                (barrel.mode as? ItemMode)?.let { mode ->
+                    world.spawnEntity(mode.stack.asEntity(world, pos))
+                }
+            }
+        super.onBreak(world, pos, state, player)
     }
 
     /**

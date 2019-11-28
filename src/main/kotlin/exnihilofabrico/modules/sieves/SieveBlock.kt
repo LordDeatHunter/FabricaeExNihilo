@@ -3,6 +3,8 @@ package exnihilofabrico.modules.sieves
 import com.swordglowsblue.artifice.api.builder.data.recipe.ShapedRecipeBuilder
 import exnihilofabrico.modules.base.BaseBlock
 import exnihilofabrico.util.VoxelShapeHelper
+import exnihilofabrico.util.asEntity
+import exnihilofabrico.util.asStack
 import net.fabricmc.fabric.api.block.FabricBlockSettings
 import net.minecraft.block.*
 import net.minecraft.entity.EntityContext
@@ -41,6 +43,18 @@ class SieveBlock(val texture: Identifier,
     override fun hasBlockEntity() = true
     override fun createBlockEntity(world: BlockView?) = SieveBlockEntity()
 
+    override fun onBreak(world: World, pos: BlockPos, state: BlockState, player: PlayerEntity?) {
+        if (player?.isCreative == false)
+            (world.getBlockEntity(pos) as? SieveBlockEntity)?.let { sieve ->
+                val stack = this.asStack()
+                world.spawnEntity(stack.asEntity(world, pos))
+                if (!sieve.mesh.isEmpty)
+                    world.spawnEntity(sieve.mesh.asEntity(world, pos))
+                if (!sieve.contents.isEmpty)
+                    world.spawnEntity(sieve.contents.asEntity(world, pos))
+            }
+        super.onBreak(world, pos, state, player)
+    }
 
     fun generateRecipe(builder: ShapedRecipeBuilder) {
         builder.pattern("x x", "xyx", "z z")
