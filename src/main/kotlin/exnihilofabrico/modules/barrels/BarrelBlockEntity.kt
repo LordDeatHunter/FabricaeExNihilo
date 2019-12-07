@@ -67,8 +67,6 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
             if(leakTick()) return
             if(alchemyTick()) return
             if(compostTick()) return
-            //TODO check for nearby block transformations
-            //TODO check adjacent fluid changes
         }
         else {
             tickCounter -= 1

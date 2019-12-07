@@ -21,7 +21,7 @@ data class CompostMode(val result: ItemStack = ItemStack.EMPTY, var amount: Doub
 
     companion object {
         fun fromTag(tag: CompoundTag): CompostMode {
-            val mode = CompostMode(ItemStack.fromTag(tag.getCompound("result")), tag.getDouble("amount"), Color(tag.getInt("color")))
+            val mode = CompostMode(ItemStack.fromTag(tag.getCompound("result")), tag.getDouble("amount"), Color(tag.getInt("color"), false))
             mode.progress = tag.getDouble("progress")
             return mode
         }

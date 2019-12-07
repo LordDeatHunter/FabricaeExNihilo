@@ -55,12 +55,13 @@ class BarrelBlockEntityRenderer: BlockEntityRenderer<BarrelBlockEntity>() {
     private fun renderCompostMode(mode: CompostMode, x: Double, y: Double, z: Double) {
         val yScale = (yMax-yMin) * minOf(mode.amount, 1.0)
 
-        val color = Color.average(Color.WHITE, mode.color, mode.progress.pow(2)).toInt()
+        val color = Color.average(Color.WHITE, mode.color, mode.progress.pow(4))
 
         GlStateManager.pushMatrix()
-        GlStateManager.translated(x + 0.125,y + yMin, z + 0.125)
+        GlStateManager.translated(x+0.5,y+yMin+yScale/2, z+0.5)
         GlStateManager.scaled(xzScale,yScale,xzScale)
-        RenderHelper.renderBakedModelColored(MinecraftClient.getInstance().itemRenderer.getModel(mode.result), color)
+        GlStateManager.color4f(color.r, color.g, color.b, color.a)
+        RenderHelper.renderItemColored(mode.result, ModelTransformation.Type.NONE, color)
         GlStateManager.popMatrix()
     }
 

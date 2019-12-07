@@ -9,6 +9,7 @@ import exnihilofabrico.api.crafting.WeightedList
 import exnihilofabrico.api.recipes.barrel.AlchemyRecipe
 import exnihilofabrico.api.registry.*
 import exnihilofabrico.id
+import exnihilofabrico.modules.ModItems
 import exnihilofabrico.modules.ModTags
 import exnihilofabrico.modules.barrels.modes.FluidMode
 import exnihilofabrico.modules.fluids.BloodFluid
@@ -116,9 +117,10 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
 
     override fun registerCrucibleHeat(registry: ICrucibleHeatRegistry) {
         registry.register(Blocks.TORCH, 1)
-        registry.register(FluidTags.LAVA, 3)
-        registry.register(Blocks.MAGMA_BLOCK, 4)
+        registry.register(FluidTags.LAVA, 4)
+        registry.register(Blocks.MAGMA_BLOCK, 3)
         registry.register(Blocks.GLOWSTONE, 2)
+        registry.register(Blocks.FIRE, 5)
     }
 
     override fun registerCrucibleStone(registry: ICrucibleRegistry) {
@@ -226,6 +228,13 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
 
 
         registry.register(stringMesh, Blocks.DIRT, Lootable(getExNihiloItem("pebble_stone"), .5))
+
+        getExNihiloItemStack("seed_rubber").let { rubber ->
+            if(!rubber.isEmpty) {
+                registry.register(ironMesh, Blocks.DIRT, Lootable(rubber, .02, .02, .01))
+            }
+        }
+
         listOf("pebble_andesite", "pebble_diorite", "pebble_granite").map { getExNihiloItem(it)}.forEach {
             registry.register(stringMesh, Blocks.DIRT, Lootable(it, .05))
             registry.register(flintMesh, Blocks.DIRT, Lootable(it, .2))
@@ -247,6 +256,10 @@ object ExNihiloFabrico: IExNihiloFabricoModule {
             registry.register(ironMesh, crushedEndstone, Lootable(it, .05))
             registry.register(goldMesh, crushedEndstone, Lootable(it, .2))
             registry.register(diamondMesh, crushedEndstone, Lootable(it, .1))
+        }
+
+        ModItems.FLOWER_SEEDS.values.forEach {flowerSeed ->
+            registry.register(flintMesh, Blocks.DIRT, Lootable(flowerSeed, .05))
         }
 
         registry.register(flintMesh, Blocks.SOUL_SAND, Lootable(Items.QUARTZ, .1))

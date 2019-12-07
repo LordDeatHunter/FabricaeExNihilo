@@ -13,6 +13,7 @@ import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback
 import net.minecraft.block.Block
 import net.minecraft.block.LeavesBlock
 import net.minecraft.block.Material
+import net.minecraft.item.BlockItem
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
@@ -31,7 +32,7 @@ object BlockGenerator: IBlockGenerator {
                     id("infested_${originalIdentifier.namespace}_${originalIdentifier.path}")
                 else
                     id("infested_${originalIdentifier.path}")
-            ModBlocks.INFESTED_LEAVES[infestedIdentifier] = InfestedLeavesBlock(block, ModBlocks.infestedLeavesSettings)
+            registerBlockAndItem(InfestedLeavesBlock(block, ModBlocks.infestedLeavesSettings), infestedIdentifier)
         }
     }
     override fun createSieveBlock(plankID: Identifier, slabID: Identifier, tex: Identifier) {
@@ -40,7 +41,7 @@ object BlockGenerator: IBlockGenerator {
                 id("${plankID.namespace}_"+plankID.path.replace("planks","sieve"))
             else
                 id(plankID.path.replace("planks","sieve"))
-        ModBlocks.SIEVES[sieveID] = SieveBlock(tex, plankID, slabID, ModBlocks.woodSettings)
+        registerBlockAndItem(SieveBlock(tex, plankID, slabID, ModBlocks.woodSettings), sieveID)
     }
     override fun createWoodBarrelBlock(plankID: Identifier, slabID: Identifier, tex: Identifier) {
         val barrelID =
@@ -48,7 +49,7 @@ object BlockGenerator: IBlockGenerator {
                 id("${plankID.namespace}_"+plankID.path.replace("planks","barrel"))
             else
                 id(plankID.path.replace("planks","barrel"))
-        ModBlocks.BARRELS[barrelID] = BarrelBlock(tex, plankID, slabID, ModBlocks.woodSettings)
+        registerBlockAndItem(BarrelBlock(tex, plankID, slabID, ModBlocks.woodSettings), barrelID)
     }
     override fun createWoodCrucibleBlock(logID: Identifier, logTex: Identifier) {
         val crucibleID =
@@ -56,7 +57,18 @@ object BlockGenerator: IBlockGenerator {
                 id("${logID.namespace}_"+logID.path.replace("log","crucible"))
             else
                 id(logID.path.replace("log","crucible"))
-        ModBlocks.CRUCIBLES[crucibleID] = CrucibleBlock(logTex, logID, ModBlocks.woodSettings)
+        registerBlockAndItem(CrucibleBlock(logTex, logID, ModBlocks.woodSettings), crucibleID)
+    }
+
+    private fun registerBlockAndItem(block: Block, identifier: Identifier) {
+        Registry.register(Registry.BLOCK, identifier, block)
+        Registry.register(Registry.ITEM, identifier, BlockItem(block, ModBlocks.itemSettings))
+        when(block) {
+            is CrucibleBlock -> ModBlocks.CRUCIBLES[identifier] = block
+            is BarrelBlock -> ModBlocks.BARRELS[identifier] = block
+            is SieveBlock -> ModBlocks.SIEVES[identifier] = block
+            is InfestedLeavesBlock -> ModBlocks.INFESTED_LEAVES[identifier] = block
+        }
     }
 
     fun initRegistryCallBack() {
@@ -69,12 +81,17 @@ object BlockGenerator: IBlockGenerator {
 
     fun processBlock(identifier: Identifier, block: Block) {
         if(MOD_BLACKLIST.contains(identifier.namespace)) return
+        if(ExNihiloFabrico.config.modules.generator.blackList.contains(identifier)) return
         if(block.defaultState.material == Material.WOOD && identifier.path.contains("planks")) {
             val slabID = Identifier(identifier.namespace, identifier.path.replace("planks", "slab"))
             createSieveBlock(identifier, slabID)
             createWoodBarrelBlock(identifier, slabID)
         }
-        if(block.defaultState.material == Material.WOOD && identifier.path.contains("log") && !identifier.path.contains("stripped")) {
+        if(block.defaultState.material == Material.WOOD &&
+            identifier.path.contains("log") &&
+            !identifier.path.contains("stripped") &&
+            !identifier.path.contains("quarter") // Suppress Terrestria's quarter blocks
+        ) {
             createWoodCrucibleBlock(identifier)
         }
         else if(block is LeavesBlock) {

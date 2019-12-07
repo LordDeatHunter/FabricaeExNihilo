@@ -15,6 +15,7 @@ import exnihilofabrico.modules.infested.InfestingLeavesBlock
 import exnihilofabrico.modules.infested.InfestingLeavesBlockEntity
 import exnihilofabrico.modules.sieves.SieveBlock
 import exnihilofabrico.modules.sieves.SieveBlockEntity
+import exnihilofabrico.util.BlockGenerator
 import exnihilofabrico.util.VanillaWoodDefinitions
 import exnihilofabrico.util.strength
 import net.fabricmc.fabric.api.block.FabricBlockSettings
@@ -31,7 +32,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
 object ModBlocks {
-    private val itemSettings = Item.Settings().group(ExNihiloFabrico.ITEM_GROUP).maxCount(64)
+    val itemSettings = Item.Settings().group(ExNihiloFabrico.ITEM_GROUP).maxCount(64)
 
     val woodSettings: FabricBlockSettings = FabricBlockSettings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD).breakByHand(true)
     val stoneSettings: FabricBlockSettings = FabricBlockSettings.of(Material.STONE).strength(2.0f, 6.0f).sounds(BlockSoundGroup.STONE)
@@ -89,9 +90,10 @@ object ModBlocks {
         CRUSHED.forEach { (k, v) ->
             Registry.register(registry, k, BlockItem(v, itemSettings))
         }
-        INFESTED_LEAVES.forEach { (k, v) -> Registry.register(registry, k,
-            InfestedLeavesItem(v, itemSettings)
-        ) }
+        INFESTED_LEAVES.forEach { (k, v) ->
+            Registry.register(registry, k, InfestedLeavesItem(v, itemSettings))
+        }
+        BlockGenerator.initRegistryCallBack()
     }
 
     fun registerBlockEntities(registry: Registry<BlockEntityType<out BlockEntity>>) {

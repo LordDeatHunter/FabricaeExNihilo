@@ -17,6 +17,8 @@ open class PlantableItem(val plants: List<BlockState>, settings: Settings): Base
         for (plant in plants.shuffled()) {
             if(placementCheck(context) && plant.canPlaceAt(context.world, plantPos)){
                 context.world.setBlockState(plantPos, plant)
+                if(context.player?.isCreative == false)
+                    context.stack.decrement(1)
                 return ActionResult.SUCCESS
             }
         }

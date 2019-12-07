@@ -31,6 +31,9 @@ data class Color(val r: Float, val g: Float, val b: Float, val a: Float) {
         return Integer.toHexString(toIntIgnoreAlpha()).padStart(6, '0')
     }
 
+    fun withAlpha(alpha: Float = a) = Color(r, g, b, alpha).toInt()
+    fun withAlpha(alpha: Double = a.toDouble()) = Color(r, g, b, alpha.toFloat()).toInt()
+
     companion object {
 
         fun hexToInt(hex: String): Int {

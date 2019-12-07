@@ -5,10 +5,12 @@ import exnihilofabrico.api.registry.ExNihiloRegistries
 import exnihilofabrico.id
 import exnihilofabrico.modules.base.BaseItem
 import exnihilofabrico.modules.farming.PlantableItem
+import exnihilofabrico.modules.farming.TallPlantableItem
 import exnihilofabrico.modules.farming.TransformingItem
 import exnihilofabrico.modules.infested.SilkWormItem
 import net.minecraft.block.Blocks
 import net.minecraft.block.KelpBlock
+import net.minecraft.block.TallPlantBlock
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.FoodComponents
 import net.minecraft.item.Item
@@ -24,11 +26,10 @@ object ModItems {
     val CROP_SEEDS = mutableMapOf<Identifier, Item>()
 
     val FLOWER_SEEDS = mutableMapOf<Identifier, Item>(
-        // TODO double tall seeds
-        //id("seed_sunflower") to PlantableItem(Blocks.SUNFLOWER, seed_settings),
-        //id("seed_lilac") to PlantableItem(Blocks.LILAC, seed_settings),
-        //id("seed_rose_bush") to PlantableItem(Blocks.ROSE_BUSH, seed_settings),
-        //id("seed_peony") to PlantableItem(Blocks.PEONY, seed_settings)
+        id("seed_sunflower") to TallPlantableItem(Blocks.SUNFLOWER as TallPlantBlock, seed_settings),
+        id("seed_lilac") to TallPlantableItem(Blocks.LILAC as TallPlantBlock, seed_settings),
+        id("seed_rose_bush") to TallPlantableItem(Blocks.ROSE_BUSH as TallPlantBlock, seed_settings),
+        id("seed_peony") to TallPlantableItem(Blocks.PEONY as TallPlantBlock, seed_settings)
     )
 
     val OTHER_SEEDS = mutableMapOf<Identifier, Item>()
@@ -51,7 +52,31 @@ object ModItems {
         id("doll_shulker")
     )
 
-    init {
+    fun registerItems(registry: Registry<Item>) {
+        // Setup Conditional Items.
+        setup()
+        // Register Seeds
+        TREE_SEEDS.forEach { (k, v) -> Registry.register(registry, k, v) }
+        CROP_SEEDS.forEach { (k, v) -> Registry.register(registry, k, v) }
+        OTHER_SEEDS.forEach { (k, v) -> Registry.register(registry, k, v) }
+        FLOWER_SEEDS.forEach { (k, v) -> Registry.register(registry, k, v) }
+
+        // Register Meshes
+        ExNihiloRegistries.MESH.registerItems(registry)
+
+        // Register Others
+        RESOURCES.forEach { (k, v) -> Registry.register(registry, k, v) }
+        DOLLS.forEach { Registry.register(registry, it, BaseItem(Item.Settings().maxCount(64))) }
+
+        // Register Ores
+        ExNihiloRegistries.ORES.registerPieceItems(registry)
+        ExNihiloRegistries.ORES.registerChunkItems(registry)
+
+        ModFluids.registerBuckets(registry)
+    }
+
+    fun setup() {
+
         if(ExNihiloFabrico.config.modules.silkworms.enabled) {
             RESOURCES[id("silkworm_raw")] = SilkWormItem(Item.Settings().maxCount(64).food(FoodComponents.COD))
             RESOURCES[id("silkworm_cooked")] = BaseItem(Item.Settings().maxCount(64).food(FoodComponents.COOKED_COD))
@@ -86,28 +111,15 @@ object ModItems {
                 TREE_SEEDS[id("seed_jungle")] = PlantableItem(Blocks.JUNGLE_SAPLING, seed_settings)
                 TREE_SEEDS[id("seed_acacia")] = PlantableItem(Blocks.ACACIA_SAPLING, seed_settings)
                 TREE_SEEDS[id("seed_dark_oak")] = PlantableItem(Blocks.DARK_OAK_SAPLING, seed_settings)
+                ExNihiloFabrico.config.modules.seeds.rubberSeed
+                    .map { Registry.BLOCK[Identifier(it)] }
+                    .map { it.defaultState }
+                    .filter { !it.isAir } // Remove unrecognized ones
+                    .let { rubberSaplings ->
+                        if(!rubberSaplings.isEmpty())
+                            TREE_SEEDS[id("seed_rubber")] = PlantableItem(rubberSaplings, seed_settings)
+                    }
             }
         }
-    }
-
-    fun registerItems(registry: Registry<Item>) {
-        // Register Seeds
-        TREE_SEEDS.forEach { (k, v) -> Registry.register(registry, k, v) }
-        CROP_SEEDS.forEach { (k, v) -> Registry.register(registry, k, v) }
-        OTHER_SEEDS.forEach { (k, v) -> Registry.register(registry, k, v) }
-        FLOWER_SEEDS.forEach { (k, v) -> Registry.register(registry, k, v) }
-
-        // Register Meshes
-        ExNihiloRegistries.MESH.registerItems(registry)
-
-        // Register Others
-        RESOURCES.forEach { (k, v) -> Registry.register(registry, k, v) }
-        DOLLS.forEach { Registry.register(registry, it, BaseItem(Item.Settings().maxCount(64))) }
-
-        // Register Ores
-        ExNihiloRegistries.ORES.registerPieceItems(registry)
-        ExNihiloRegistries.ORES.registerChunkItems(registry)
-
-        ModFluids.registerBuckets(registry)
     }
 }

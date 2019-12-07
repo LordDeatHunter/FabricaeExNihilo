@@ -4,14 +4,15 @@ import com.swordglowsblue.artifice.api.Artifice
 import exnihilofabrico.api.ExNihiloFabricoAPI
 import exnihilofabrico.api.registry.ExNihiloRegistries
 import exnihilofabrico.compatibility.modules.ExNihiloFabrico
+import exnihilofabrico.compatibility.modules.TechReborn.TechReborn
 import exnihilofabrico.modules.*
 import exnihilofabrico.util.ArtificeUtils
-import exnihilofabrico.util.BlockGenerator
 import exnihilofabrico.util.getExNihiloItemStack
 import io.github.cottonmc.cotton.config.ConfigManager
 import io.github.cottonmc.cotton.logging.ModLogger
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder
+import net.fabricmc.loader.FabricLoader
 import net.minecraft.item.ItemGroup
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
@@ -31,7 +32,6 @@ object ExNihiloFabrico: ModInitializer {
         registerCompatModules()
         // Progmatically generate blocks and items
         LOGGER.info("Generating Blocks/Items")
-        BlockGenerator.initRegistryCallBack()
 
         // Load the early registries that create items/blocks
         ExNihiloRegistries.loadEarlyRegistries()
@@ -75,5 +75,7 @@ object ExNihiloFabrico: ModInitializer {
 
     private fun registerCompatModules() {
         ExNihiloFabricoAPI.registerCompatabilityModule(ExNihiloFabrico)
+        if(FabricLoader.INSTANCE.isModLoaded("techreborn"))
+            ExNihiloFabricoAPI.registerCompatabilityModule(TechReborn)
     }
 }

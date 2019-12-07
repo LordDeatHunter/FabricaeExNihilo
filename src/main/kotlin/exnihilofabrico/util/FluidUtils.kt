@@ -7,6 +7,8 @@ import net.minecraft.block.FluidBlock
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.FluidState
 import net.minecraft.item.ItemStack
+import net.minecraft.util.Identifier
+import net.minecraft.util.registry.Registry
 
 fun FluidBlock.getDefaultFluidState(): FluidState = this.getFluidState(this.defaultState)
 fun FluidBlock.getFluid(): Fluid = this.getDefaultFluidState().fluid
@@ -26,3 +28,5 @@ fun FluidVolume.copyLess(amount: Int): FluidVolume {
     else
         FluidVolume.create(this.fluidKey, this.amount - amount)
 }
+
+fun FluidVolume.fromID(identifier: Identifier, amount: Int) = FluidVolume.create(Registry.FLUID[identifier], amount)

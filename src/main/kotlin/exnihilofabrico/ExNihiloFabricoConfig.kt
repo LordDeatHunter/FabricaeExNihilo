@@ -14,6 +14,7 @@ class ExNihiloFabricoConfig {
 class ModuleConfig {
     var general = GeneralConfig()
     var REI = REIConfig()
+    var generator = Generator()
     var barrels = BarrelConfig()
     var crucibles = CrucibleConfig()
     var silkworms = InfestedConfig()
@@ -23,12 +24,18 @@ class ModuleConfig {
     var hammer = HammerConfig()
     var witchwater = WitchWaterConfig()
 }
-
 class GeneralConfig {
     @Comment("Load json files from <config>/exnihilofabrico/*.json")
     var useJsonRecipes: Boolean = false
     @Comment("Dump generated json files to <minecraft>/exnihilofabrico_generated")
     var dumpGeneratedResource: Boolean = false
+}
+
+class Generator {
+    @Comment("Blocks to be ignored as triggers for the block generator (i.e. makes sieves/barrels/crucibles)")
+    var blackList = mutableSetOf<Identifier>(
+        Identifier("terrestria:sakura_log")
+    )
 }
 
 class REIConfig {
@@ -121,6 +128,12 @@ class SeedConfig {
     var seaPickle: Boolean = true
     var sugarCane: Boolean = true
     var treeSeeds: Boolean = true
+    @Comment("List of blocks that the rubber sapling could turn into.")
+    var rubberSeed: List<String> = listOf(
+            "techreborn:rubber_sapling",
+            "ic2:rubber_sapling",
+            "terrestria:rubber_sapling"
+    )
 }
 class SieveConfig {
     var enabled: Boolean = true
@@ -133,9 +146,9 @@ class SieveConfig {
     var baseProgress = 0.1
     var efficiencyScaleFactor = 0.05
     var hasteScaleFactor = 1.0
-    @Comment("Can Sieves be enchanted with efficiency")
+    @Comment("Can meshes be enchanted with efficiency")
     var efficiency: Boolean = true
-    @Comment("Can Sieves be enchanted with fortune")
+    @Comment("Can meshes be enchanted with fortune")
     var fortune: Boolean = true
     @Comment("Do haste beacons/potions affect sieving speed")
     var haste: Boolean = true

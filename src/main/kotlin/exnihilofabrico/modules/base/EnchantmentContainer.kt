@@ -1,6 +1,7 @@
 package exnihilofabrico.modules.base
 
 import net.minecraft.enchantment.Enchantment
+import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
@@ -43,5 +44,12 @@ data class EnchantmentContainer(val enchantments: MutableMap<Identifier, Int> = 
             enchantments[enchantment] = level
         }
     }
+}
 
+fun ItemStack.addEnchantments(container: EnchantmentContainer) {
+    container.enchantments.filter { it.value > 0 }.forEach {enchID, level ->
+        Registry.ENCHANTMENT[enchID]?.let {enchantment ->
+            this.addEnchantment(enchantment, level)
+        }
+    }
 }

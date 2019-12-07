@@ -7,6 +7,8 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.fluid.Fluid
 import net.minecraft.tag.Tag
+import net.minecraft.util.Identifier
+import net.minecraft.util.registry.Registry
 
 interface IMilkingRegistry: IRegistry<MilkingRecipe> {
     fun register(entity: EntityTypeIngredient, fluid: FluidVolume, cooldown: Int) =
@@ -19,6 +21,10 @@ interface IMilkingRegistry: IRegistry<MilkingRecipe> {
         register(EntityTypeIngredient(entity), FluidVolume.create(fluid, amount), cooldown)
     fun register(entity: Tag<EntityType<*>>, fluid: FluidVolume, cooldown: Int) =
         register(EntityTypeIngredient(entity), fluid, cooldown)
+    fun register(entity: EntityType<*>, fluid: Identifier, amount: Int, cooldown: Int) =
+        register(EntityTypeIngredient(entity), FluidVolume.create(Registry.FLUID[fluid], amount), cooldown)
+    fun register(entity: Tag<EntityType<*>>, fluid: Identifier, amount: Int, cooldown: Int) =
+        register(EntityTypeIngredient(entity), FluidVolume.create(Registry.FLUID[fluid], amount), cooldown)
 
     fun getResult(entity: Entity): Pair<FluidVolume, Int>?
     fun hasResult(entity: Entity): Boolean
