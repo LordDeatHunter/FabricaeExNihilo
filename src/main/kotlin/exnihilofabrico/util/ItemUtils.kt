@@ -1,6 +1,7 @@
 package exnihilofabrico.util
 
 import exnihilofabrico.id
+import me.shedaniel.rei.api.EntryStack
 import net.minecraft.entity.ItemEntity
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
@@ -17,6 +18,8 @@ fun ItemStack.ofSize(num: Int = 1):ItemStack {
 }
 
 fun ItemConvertible.asStack(num: Int = 1) = ItemStack(this.asItem(), num)
+fun ItemConvertible.asREIEntry() = EntryStack.create(this.asItem())
+fun ItemStack.asREIEntry() = EntryStack.create(this)
 
 fun getItemStack(identifier: Identifier) = Registry.ITEM[identifier].asStack()
 fun getExNihiloItemStack(str: String) = getItemStack(id(str))

@@ -12,10 +12,10 @@ interface BarrelMode {
 
 fun barrelModeFactory(tag: CompoundTag): BarrelMode {
     return when {
-        tag.containsKey("item_mode") -> ItemMode.fromTag(tag.getCompound("item_mode"))
-        tag.containsKey("fluid_mode") -> FluidMode.fromTag(tag.getCompound("fluid_mode"))
-        tag.containsKey("alchemy_mode") -> AlchemyMode.fromTag(tag.getCompound("alchemy_mode"))
-        tag.containsKey("compost_mode") -> CompostMode.fromTag(tag.getCompound("compost_mode"))
+        tag.contains("item_mode") -> ItemMode.fromTag(tag.getCompound("item_mode"))
+        tag.contains("fluid_mode") -> FluidMode.fromTag(tag.getCompound("fluid_mode"))
+        tag.contains("alchemy_mode") -> AlchemyMode.fromTag(tag.getCompound("alchemy_mode"))
+        tag.contains("compost_mode") -> CompostMode.fromTag(tag.getCompound("compost_mode"))
         else -> EmptyMode()
     }
 }

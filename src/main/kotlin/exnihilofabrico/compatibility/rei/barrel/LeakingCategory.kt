@@ -4,14 +4,13 @@ import alexiil.mc.lib.attributes.fluid.mixin.api.IBucketItem
 import exnihilofabrico.compatibility.rei.GlyphWidget
 import exnihilofabrico.compatibility.rei.PluginEntry
 import exnihilofabrico.id
-import exnihilofabrico.util.asStack
+import exnihilofabrico.util.asREIEntry
+import me.shedaniel.math.api.Point
 import me.shedaniel.math.api.Rectangle
 import me.shedaniel.rei.api.RecipeCategory
-import me.shedaniel.rei.api.Renderer
-import me.shedaniel.rei.gui.renderers.ItemStackRenderer
+import me.shedaniel.rei.gui.widget.EntryWidget
 import me.shedaniel.rei.gui.widget.LabelWidget
 import me.shedaniel.rei.gui.widget.RecipeBaseWidget
-import me.shedaniel.rei.gui.widget.SlotWidget
 import me.shedaniel.rei.gui.widget.Widget
 import net.minecraft.block.Blocks
 import java.util.function.Supplier
@@ -19,7 +18,7 @@ import java.util.function.Supplier
 class LeakingCategory: RecipeCategory<LeakingDisplay> {
 
     override fun getIdentifier() = PluginEntry.LEAKING
-    override fun getIcon(): ItemStackRenderer = Renderer.fromItemStack(Blocks.MOSSY_COBBLESTONE.asStack())
+    override fun getLogo() = Blocks.MOSSY_COBBLESTONE.asREIEntry()
     override fun getCategoryName() = "Barrel Leaking"
 
 
@@ -34,22 +33,21 @@ class LeakingCategory: RecipeCategory<LeakingDisplay> {
         val arrowWidget = GlyphWidget(bounds, bounds.minX + ARROW_OFFSET_X, bounds.minY + ARROW_OFFSET_Y, ARROW_WIDTH, ARROW_HEIGHT, ARROW, ARROW_U, ARROW_V)
         widgets.add(arrowWidget)
 
-        val targets = display.input[0]
-        val fluids = display.input[1]
+        val targets = display.inputEntries[0]
+        val fluids = display.inputEntries[1]
         val loss = display.recipe.loss
-        val result = display.output
+        val result = display.outputEntries
 
-        widgets.add(SlotWidget(bounds.minX + OUTPUT_X, bounds.minY + OUTPUT_Y, Renderer.fromItemStacks(result), true, true, true))
-        widgets.add(SlotWidget(bounds.minX + BUCKET_X, bounds.minY + BUCKET_Y, Renderer.fromItemStacks(fluids), true, true, true))
-        widgets.add(SlotWidget(bounds.minX + TARGET_X, bounds.minY + TARGET_Y, Renderer.fromItemStacks(targets), true, true, true))
+        widgets.add(EntryWidget.create(bounds.minX + OUTPUT_X, bounds.minY + OUTPUT_Y).entries(result))
+        widgets.add(EntryWidget.create(bounds.minX + BUCKET_X, bounds.minY + BUCKET_Y).entries(fluids))
+        widgets.add(EntryWidget.create(bounds.minX + TARGET_X, bounds.minY + TARGET_Y).entries(targets))
 
         val label = (fluids.firstOrNull())?.let { bucketStack ->
-            val key = (bucketStack.item as? IBucketItem)?.libblockattributes__getFluid(bucketStack)
+            val key = (bucketStack.item as? IBucketItem)?.libblockattributes__getFluid(bucketStack.itemStack)
             key?.unitSet?.localizeAmount(loss) } ?: "?"
 
         val text =  LabelWidget(0, 0, "-${label}")
-        text.x = bounds.maxX - MARGIN - text.bounds.maxX
-        text.y = bounds.minY + MARGIN + 9
+        text.position = Point(bounds.maxX - MARGIN - text.bounds.maxX, bounds.minY + MARGIN + 9)
         widgets.add(text)
 
         return widgets

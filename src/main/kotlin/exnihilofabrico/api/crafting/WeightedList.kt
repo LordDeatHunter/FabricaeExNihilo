@@ -1,6 +1,7 @@
 package exnihilofabrico.api.crafting
 
 import exnihilofabrico.util.asStack
+import me.shedaniel.rei.api.EntryStack
 import net.minecraft.block.Block
 import java.util.*
 
@@ -16,6 +17,8 @@ data class WeightedList(val values: MutableMap<Block, Int> = mutableMapOf()){
     }
 
     fun asListOfStacks() = values.map { it.key.asStack(it.value) }
+
+    fun asEntryList(): List<EntryStack> = values.map { EntryStack.create(it.key)}
 
     /**
      * Takes another weighted list and adds all its entries to this WeightedList.

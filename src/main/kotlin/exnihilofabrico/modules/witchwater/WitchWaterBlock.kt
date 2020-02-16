@@ -32,9 +32,9 @@ class WitchWaterBlock(fluid: BaseFluid, settings: Settings): BaseFluidBlock(flui
             when(entity.type) {
                 EntityType.CREEPER -> {
                     markEntity(entity)
-                    if(!(entity as CreeperEntity).isCharged)
+                    if(!(entity as CreeperEntity).ignited)
                         entity.onStruckByLightning(LightningEntity(world, entity.pos.x, entity.pos.y, entity.pos.z, true))
-                    entity.health = entity.healthMaximum
+                    entity.health = entity.maximumHealth
                     return
                 }
                 EntityType.RABBIT -> {
@@ -70,7 +70,7 @@ class WitchWaterBlock(fluid: BaseFluid, settings: Settings): BaseFluidBlock(flui
                     // Replace arrows with shulker bullets
                     val bullet = EntityType.SHULKER_BULLET.create(world)
                     bullet?.velocity = entity.velocity
-                    bullet?.setPositionAndAngles(entity.blockPos, entity.yaw, entity.pitch)
+                    bullet?.refreshPositionAndAngles(entity.blockPos, entity.yaw, entity.pitch)
                     replaceMob(world, entity, bullet)
                 }
                 // TODO item changes
@@ -110,7 +110,7 @@ class WitchWaterBlock(fluid: BaseFluid, settings: Settings): BaseFluidBlock(flui
             val toSpawn = spawnType.create(world)
             if(toSpawn is LivingEntity) {
                 // Set position and angles
-                toSpawn.setPositionAndAngles(toKill.blockPos, toKill.yaw, toKill.pitch)
+                toSpawn.refreshPositionAndAngles(toKill.blockPos, toKill.yaw, toKill.pitch)
                 toSpawn.velocity = toKill.velocity
                 toSpawn.headYaw = toKill.headYaw
 
@@ -120,7 +120,7 @@ class WitchWaterBlock(fluid: BaseFluid, settings: Settings): BaseFluidBlock(flui
                 }
 
                 // Set Health
-                toSpawn.health = toSpawn.healthMaximum * toKill.health / toKill.healthMaximum
+                toSpawn.health = toSpawn.maximumHealth * toKill.health / toKill.maximumHealth
             }
             replaceMob(world, toKill, toSpawn)
         }
@@ -135,7 +135,7 @@ class WitchWaterBlock(fluid: BaseFluid, settings: Settings): BaseFluidBlock(flui
         fun applyStatusEffect(entity: LivingEntity, statusEffect: StatusEffectInstance) {
             // Grab the potion effect on the entity (null if not active) compare its duration (defaulting to 0) to the new duration
             if(entity.activeStatusEffects[statusEffect.effectType]?.duration ?: Int.MIN_VALUE <= statusEffect.duration-20)
-                entity.addPotionEffect(statusEffect)
+                entity.addStatusEffect(statusEffect)
         }
     }
 }

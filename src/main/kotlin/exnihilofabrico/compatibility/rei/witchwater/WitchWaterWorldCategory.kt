@@ -5,21 +5,18 @@ import exnihilofabrico.compatibility.rei.GlyphWidget
 import exnihilofabrico.compatibility.rei.PluginEntry
 import exnihilofabrico.id
 import exnihilofabrico.modules.witchwater.WitchWaterFluid
-import exnihilofabrico.util.asStack
+import exnihilofabrico.util.asREIEntry
 import me.shedaniel.math.api.Rectangle
 import me.shedaniel.rei.api.RecipeCategory
-import me.shedaniel.rei.api.Renderer
-import me.shedaniel.rei.gui.renderers.ItemStackRenderer
+import me.shedaniel.rei.gui.widget.EntryWidget
 import me.shedaniel.rei.gui.widget.RecipeBaseWidget
-import me.shedaniel.rei.gui.widget.SlotWidget
 import me.shedaniel.rei.gui.widget.Widget
-import net.minecraft.item.ItemStack
 import java.util.function.Supplier
 
 class WitchWaterWorldCategory: RecipeCategory<WitchWaterWorldDisplay> {
 
     override fun getIdentifier() = PluginEntry.WITCH_WATER_WORLD
-    override fun getIcon(): ItemStackRenderer = Renderer.fromItemStack(WitchWaterFluid.bucket.asStack())
+    override fun getLogo() = WitchWaterFluid.bucket.asREIEntry()
     override fun getCategoryName() = "Witch Water Fluid Interactions"
 
 
@@ -35,34 +32,26 @@ class WitchWaterWorldCategory: RecipeCategory<WitchWaterWorldDisplay> {
         widgets.add(glyphPlus)
         widgets.add(glypgArrow)
 
-        val witchWaterwitchWater = display.input[0]
-        val fluids = display.input[1]
-        val results = display.output
+        val witchWaterwitchWater = display.inputEntries[0]
+        val fluids = display.inputEntries[1]
+        val results = display.outputEntries
 
-        widgets.add(SlotWidget(bounds.minX + WITCH_X, bounds.minY + WITCH_Y, Renderer.fromItemStacks(witchWaterwitchWater), false, true, true))
-        widgets.add(SlotWidget(bounds.minX + FLUID_X, bounds.minY + FLUID_Y, Renderer.fromItemStacks(fluids), false, true, true))
+        widgets.add(EntryWidget.create(bounds.minX + WITCH_X, bounds.minY + WITCH_Y).entries(witchWaterwitchWater))
+        widgets.add(EntryWidget.create(bounds.minX + FLUID_X, bounds.minY + FLUID_Y).entries(fluids))
 
 
         results.forEachIndexed { index, result ->
             widgets.add(
-                SlotWidget(
+                EntryWidget.create(
                     bounds.minX + OUTPUT_X + (index % OUTPUT_SLOTS_X)*18,
-                    bounds.minY + OUTPUT_Y + (index / OUTPUT_SLOTS_X)*18,
-                    Renderer.fromItemStack(result),
-                    true, true, true
-                )
-            )
+                    bounds.minY + OUTPUT_Y + (index / OUTPUT_SLOTS_X)*18).entry(result))
         }
         // Fill in the empty spots
         for(index in results.size until MAX_OUTPUTS) {
             widgets.add(
-                SlotWidget(
+                EntryWidget.create(
                     bounds.minX + OUTPUT_X + (index % OUTPUT_SLOTS_X)*18,
-                    bounds.minY + OUTPUT_Y + (index / OUTPUT_SLOTS_X)*18,
-                    Renderer.fromItemStack(ItemStack.EMPTY),
-                    true, false, false
-                )
-            )
+                    bounds.minY + OUTPUT_Y + (index / OUTPUT_SLOTS_X)*18))
         }
 
         return widgets

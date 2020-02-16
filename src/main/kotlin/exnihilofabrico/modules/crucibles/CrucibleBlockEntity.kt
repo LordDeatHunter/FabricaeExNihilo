@@ -28,6 +28,7 @@ import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.util.Tickable
 import net.minecraft.util.hit.BlockHitResult
@@ -95,21 +96,21 @@ class CrucibleBlockEntity(private val isStone: Boolean = false):
 
     }
 
-    fun activate(state: BlockState?, player: PlayerEntity?, hand: Hand?, hitResult: BlockHitResult?): Boolean {
+    fun activate(state: BlockState?, player: PlayerEntity?, hand: Hand?, hitResult: BlockHitResult?): ActionResult {
         if(world?.isClient != false || player == null)
-            return true
+            return ActionResult.PASS
 
         val held = player.getStackInHand(hand ?: player.activeHand) ?: ItemStack.EMPTY
 
         if(held.isEmpty)
-            return false
+            return ActionResult.CONSUME
         // Removing a bucket's worth of fluid
         (held.item as? IBucketItem)?.let { bucket ->
             if(bucket.libblockattributes__getFluid(held) == FluidKeys.EMPTY) {
                 val amount = bucket.libblockattributes__getFluidVolumeAmount()
-                if(contents.amount >= amount) {
+                if(contents.amount_F >= amount) {
                     val drained = fluidExtractor.attemptExtraction({ true }, amount, Simulation.SIMULATE)
-                    if(drained.amount == amount) {
+                    if(drained.amount_F == amount) {
                         val returnStack = bucket.libblockattributes__withFluid(contents.fluidKey)
                         if(!returnStack.isEmpty) {
                             fluidExtractor.attemptExtraction({ true }, amount, Simulation.ACTION)
@@ -117,7 +118,7 @@ class CrucibleBlockEntity(private val isStone: Boolean = false):
                                 held.decrement(1)
                             player.giveItemStack(returnStack)
                             markDirtyClient()
-                            return@activate true
+                            return@activate ActionResult.SUCCESS
                         }
                     }
                 }
@@ -128,9 +129,9 @@ class CrucibleBlockEntity(private val isStone: Boolean = false):
         if(result.count != held.count) {
             if(!player.isCreative)
                 held.decrement(1)
-            return true
+            return ActionResult.SUCCESS
         }
-        return true
+        return ActionResult.SUCCESS
     }
 
     fun updateHeat() {
@@ -179,7 +180,7 @@ class CrucibleBlockEntity(private val isStone: Boolean = false):
         contents = FluidVolume.fromTag(tag.getCompound("contents"))
         queued = FluidVolume.fromTag(tag.getCompound("queued"))
         heat = tag.getInt("heat")
-        if(tag.containsKey("enchantments")) {
+        if(tag.contains("enchantments")) {
             val readEnchantments = EnchantmentContainer()
             readEnchantments.fromTag(tag.getCompound("enchantments"))
             enchantments.setAllEnchantments(readEnchantments)

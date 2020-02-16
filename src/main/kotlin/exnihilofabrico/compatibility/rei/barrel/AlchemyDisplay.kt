@@ -5,29 +5,29 @@ import exnihilofabrico.compatibility.rei.PluginEntry
 import exnihilofabrico.modules.ModBlocks
 import exnihilofabrico.modules.barrels.modes.FluidMode
 import exnihilofabrico.modules.barrels.modes.ItemMode
-import exnihilofabrico.util.asStack
+import exnihilofabrico.util.asREIEntry
+import me.shedaniel.rei.api.EntryStack
 import me.shedaniel.rei.api.RecipeDisplay
-import net.minecraft.item.ItemStack
 import net.minecraft.item.SpawnEggItem
 
 class AlchemyDisplay(val recipe: AlchemyRecipe): RecipeDisplay {
     override fun getRecipeCategory() = PluginEntry.ALCHEMY
 
-    override fun getOutput() = listOf(
+    override fun getOutputEntries() = listOf(
         recipe.product.let { mode ->
             when(mode){
-                is ItemMode -> mode.stack
-                is FluidMode -> mode.fluid.rawFluid?.bucketItem?.asStack() ?: ItemStack.EMPTY
-                else -> ItemStack.EMPTY
+                is ItemMode -> mode.stack.asREIEntry()
+                is FluidMode -> mode.fluid.rawFluid?.bucketItem?.asREIEntry() ?: EntryStack.empty()
+                else -> EntryStack.empty()
             }
         },
-        recipe.byproduct.stack,
+        recipe.byproduct.stack.asREIEntry(),
         if(!recipe.toSpawn.isEmpty())
-            SpawnEggItem.forEntity(recipe.toSpawn.type).asStack()
+            SpawnEggItem.forEntity(recipe.toSpawn.type)?.asREIEntry()
         else
-            ItemStack.EMPTY
+            EntryStack.empty()
     )
-    override fun getInput() =
-        listOf(recipe.reactant.flattenListOfBuckets(), recipe.catalyst.flattenedListOfStacks(), ModBlocks.BARRELS.values.map { it.asStack() })
+    override fun getInputEntries() =
+        listOf(recipe.reactant.asREIEntries(), recipe.catalyst.asREIEntries(), ModBlocks.BARRELS.values.map { it.asREIEntry() })
 
 }

@@ -3,13 +3,11 @@ package exnihilofabrico.compatibility.rei.barrel
 import exnihilofabrico.compatibility.rei.GlyphWidget
 import exnihilofabrico.compatibility.rei.PluginEntry
 import exnihilofabrico.id
-import exnihilofabrico.util.asStack
 import me.shedaniel.math.api.Rectangle
+import me.shedaniel.rei.api.EntryStack
 import me.shedaniel.rei.api.RecipeCategory
-import me.shedaniel.rei.api.Renderer
-import me.shedaniel.rei.gui.renderers.ItemStackRenderer
+import me.shedaniel.rei.gui.widget.EntryWidget
 import me.shedaniel.rei.gui.widget.RecipeBaseWidget
-import me.shedaniel.rei.gui.widget.SlotWidget
 import me.shedaniel.rei.gui.widget.Widget
 import net.minecraft.block.Blocks
 import java.util.function.Supplier
@@ -17,7 +15,7 @@ import java.util.function.Supplier
 class TransformingCategory: RecipeCategory<TransformingDisplay> {
 
     override fun getIdentifier() = PluginEntry.TRANSFORMING
-    override fun getIcon(): ItemStackRenderer = Renderer.fromItemStack(Blocks.MYCELIUM.asStack())
+    override fun getLogo() = EntryStack.create(Blocks.MYCELIUM)
     override fun getCategoryName() = "Transformation"
 
 
@@ -34,15 +32,15 @@ class TransformingCategory: RecipeCategory<TransformingDisplay> {
         widgets.add(arrow1)
         widgets.add(arrow2)
 
-        val inBarrel = display.input[0]
-        val below = display.input[1]
-        val barrels = display.input[2]
-        val outputs = display.output
+        val inBarrel = display.inputEntries[0]
+        val below = display.inputEntries[1]
+        val barrels = display.inputEntries[2]
+        val outputs = display.outputEntries
 
-        widgets.add(SlotWidget(bounds.minX + INPUT_X, bounds.minY + INPUT_Y, Renderer.fromItemStacks(inBarrel), true, true, true))
-        widgets.add(SlotWidget(bounds.minX + BELOW_X, bounds.minY + BELOW_Y, Renderer.fromItemStacks(below), false, true, true))
-        widgets.add(SlotWidget(bounds.minX + BARRELS_X, bounds.minY + BARRELS_Y, Renderer.fromItemStacks(barrels), false, false, true))
-        widgets.add(SlotWidget(bounds.minX + OUTPUT_X, bounds.minY + OUTPUT_Y, Renderer.fromItemStacks(outputs), true, true, true))
+        widgets.add(EntryWidget.create(bounds.minX + INPUT_X, bounds.minY + INPUT_Y).entries(inBarrel))
+        widgets.add(EntryWidget.create(bounds.minX + BELOW_X, bounds.minY + BELOW_Y).entries(below))
+        widgets.add(EntryWidget.create(bounds.minX + BARRELS_X, bounds.minY + BARRELS_Y).entries(barrels))
+        widgets.add(EntryWidget.create(bounds.minX + OUTPUT_X, bounds.minY + OUTPUT_Y).entries(outputs))
 
         return widgets
     }

@@ -19,7 +19,7 @@ fun IBucketItem.proxyFluidVolume(stack: ItemStack): FluidVolume {
     return if(this.libblockattributes__getFluid(stack).isEmpty)
         FluidKeys.EMPTY.withAmount(0)
     else
-        FluidVolume.create(this.libblockattributes__getFluid(stack), this.libblockattributes__getFluidVolumeAmount())
+        this.libblockattributes__getFluid(stack).withAmount(this.libblockattributes__getFluidVolumeAmount())
 }
 
 fun FluidVolume.copyLess(amount: Int): FluidVolume {

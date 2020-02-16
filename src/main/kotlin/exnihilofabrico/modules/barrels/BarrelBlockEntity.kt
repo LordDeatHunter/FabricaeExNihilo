@@ -33,13 +33,11 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.util.DefaultedList
-import net.minecraft.util.Hand
-import net.minecraft.util.ItemScatterer
-import net.minecraft.util.Tickable
+import net.minecraft.util.*
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
+import net.minecraft.world.World
 import kotlin.math.ceil
 
 class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean = false): BaseBlockEntity(TYPE), Tickable,
@@ -192,7 +190,7 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
 
     private fun fromTagWithoutWorldInfo(tag: CompoundTag) {
         mode = barrelModeFactory(tag)
-        if(tag.containsKey("enchantments")) {
+        if(tag.contains("enchantments")) {
             val readEnchantments = EnchantmentContainer()
             readEnchantments.fromTag(tag.getCompound("enchantments"))
             enchantments.setAllEnchantments(readEnchantments)
@@ -231,19 +229,19 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
         val rand = world?.random ?: return null
         val r= ExNihiloFabrico.config.modules.barrels.leakRadius
         val leakPos = pos.add(rand.nextInt(2*r+1)-r, -rand.nextInt(2), rand.nextInt(2*r+1)-r)
-        if(world?.isHeightValidAndBlockLoaded(leakPos) ?: return null)
+        if(World.isValid(leakPos))
             return leakPos
         return null
     }
 
-    fun activate(state: BlockState?, player: PlayerEntity?, hand: Hand?, hitResult: BlockHitResult?): Boolean {
+    fun activate(state: BlockState?, player: PlayerEntity?, hand: Hand?, hitResult: BlockHitResult?): ActionResult {
         if(world?.isClient != false || player == null || hand == null)
-            return true
+            return ActionResult.CONSUME
 
         return when(mode) {
-            is ItemMode -> { dropInventoryAtPlayer(player); true }
+            is ItemMode -> { dropInventoryAtPlayer(player); ActionResult.SUCCESS }
             is EmptyMode, is CompostMode, is FluidMode -> insertFromHand(player, hand)
-            else -> false
+            else -> ActionResult.CONSUME
         }
     }
 
@@ -257,12 +255,12 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
         }
     }
 
-    fun insertFromHand(player: PlayerEntity, hand: Hand): Boolean {
+    fun insertFromHand(player: PlayerEntity, hand: Hand): ActionResult {
         val held = player.getStackInHand(hand) ?: ItemStack.EMPTY
         val remaining = itemTransferable.attemptInsertion(held, Simulation.ACTION)
         if(remaining.count != held.count) {
             held.decrement(1)
-            return true
+            return ActionResult.SUCCESS
         }
         // Check for fluids
         (held.item as? IBucketItem)?.let { bucket ->
@@ -277,14 +275,14 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
                         held.decrement(1)
                     player.giveItemStack(returnStack)
                     markDirtyClient()
-                    return@insertFromHand true
+                    return@insertFromHand ActionResult.SUCCESS
                 }
             }
             // Removing a bucket's worth of fluid
             else {
                 (mode as? FluidMode)?.let { fluidMode ->
                     val drained = fluidTransferable.attemptExtraction({ true }, amount, Simulation.SIMULATE)
-                    if(drained.amount == bucket.libblockattributes__getFluidVolumeAmount()) {
+                    if(drained.amount_F == bucket.libblockattributes__getFluidVolumeAmount()) {
                         val returnStack = bucket.libblockattributes__withFluid(fluidMode.fluid.fluidKey)
                         if(!returnStack.isEmpty) {
                             fluidTransferable.attemptExtraction({ true }, amount, Simulation.ACTION)
@@ -292,14 +290,14 @@ class BarrelBlockEntity(var mode: BarrelMode = EmptyMode(), val isStone: Boolean
                                 held.decrement(1)
                             player.giveItemStack(returnStack)
                             markDirtyClient()
-                            return@insertFromHand true
+                            return@insertFromHand ActionResult.SUCCESS
                         }
                     }
                 }
             }
-            true // To make kotlin happy
+            ActionResult.CONSUME // To make kotlin happy
         }
-        return true
+        return ActionResult.CONSUME
     }
 
     /**

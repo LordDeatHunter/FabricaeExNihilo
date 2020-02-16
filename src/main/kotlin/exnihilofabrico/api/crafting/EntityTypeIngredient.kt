@@ -6,6 +6,7 @@ import com.google.gson.JsonPrimitive
 import com.google.gson.JsonSerializationContext
 import exnihilofabrico.util.asStack
 import exnihilofabrico.util.getId
+import me.shedaniel.rei.api.EntryStack
 import net.fabricmc.fabric.api.tag.TagRegistry
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
@@ -22,7 +23,8 @@ class EntityTypeIngredient(tags: MutableCollection<Tag<EntityType<*>>> = mutable
 
     fun test(entity: Entity) = test(entity.type)
 
-    fun flattenListOfEggStacks() = flatten { SpawnEggItem.forEntity(it).asStack() }
+    fun flattenListOfEggStacks() = flatten { SpawnEggItem.forEntity(it)?.asStack() }.filterNotNull()
+    fun asREIEntries() = flattenListOfEggStacks().map { EntryStack.create(it) }
 
     override fun serializeElement(t: EntityType<*>, context: JsonSerializationContext) =
         JsonPrimitive(t.getId().toString())

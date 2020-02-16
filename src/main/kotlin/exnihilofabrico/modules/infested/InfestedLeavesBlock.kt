@@ -8,10 +8,10 @@ import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.block.FabricBlockSettings
 import net.minecraft.block.BlockState
 import net.minecraft.block.LeavesBlock
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
 import net.minecraft.text.TranslatableText
 import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
 import java.util.*
 
 class InfestedLeavesBlock(val leafBlock: LeavesBlock, settings: FabricBlockSettings): LeavesBlock(settings.build()), IHasColor {
@@ -19,8 +19,8 @@ class InfestedLeavesBlock(val leafBlock: LeavesBlock, settings: FabricBlockSetti
 
 
     override fun hasRandomTicks(blockState_1: BlockState?) = true
-    override fun onRandomTick(state: BlockState, world: World, pos: BlockPos, random: Random) {
-        super.onRandomTick(state, world, pos, random)
+    override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random) {
+        super.randomTick(state, world, pos, random)
         if(world.isClient) return
         InfestedHelper.tryToSpreadFrom(
             world,

@@ -22,7 +22,7 @@
   },
   "depends": {
     "fabric": "*",
-    "fabricloader": ">=0.4.6",
+    "fabricloader": ">=0.7.6",
     "fabric-language-kotlin": ">=1.3.40",
     "towelette": "*",
     "artifice": "*",

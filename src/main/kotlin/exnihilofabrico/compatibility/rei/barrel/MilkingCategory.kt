@@ -3,14 +3,13 @@ package exnihilofabrico.compatibility.rei.barrel
 import exnihilofabrico.compatibility.rei.GlyphWidget
 import exnihilofabrico.compatibility.rei.PluginEntry
 import exnihilofabrico.id
-import exnihilofabrico.util.asStack
+import exnihilofabrico.util.asREIEntry
+import me.shedaniel.math.api.Point
 import me.shedaniel.math.api.Rectangle
 import me.shedaniel.rei.api.RecipeCategory
-import me.shedaniel.rei.api.Renderer
-import me.shedaniel.rei.gui.renderers.ItemStackRenderer
+import me.shedaniel.rei.gui.widget.EntryWidget
 import me.shedaniel.rei.gui.widget.LabelWidget
 import me.shedaniel.rei.gui.widget.RecipeBaseWidget
-import me.shedaniel.rei.gui.widget.SlotWidget
 import me.shedaniel.rei.gui.widget.Widget
 import net.minecraft.item.Items
 import java.util.function.Supplier
@@ -18,7 +17,7 @@ import java.util.function.Supplier
 class MilkingCategory: RecipeCategory<MilkingDisplay> {
 
     override fun getIdentifier() = PluginEntry.MILKING
-    override fun getIcon(): ItemStackRenderer = Renderer.fromItemStack(Items.MILK_BUCKET.asStack())
+    override fun getLogo() = Items.MILK_BUCKET.asREIEntry()
     override fun getCategoryName() = "Barrel Milking"
 
 
@@ -32,13 +31,13 @@ class MilkingCategory: RecipeCategory<MilkingDisplay> {
         val arrow = GlyphWidget(bounds, bounds.minX + ARROW_X, bounds.minY + ARROW_Y, ARROW_WIDTH, ARROW_HEIGHT, ARROW, ARROW_U, ARROW_V)
         widgets.add(arrow)
 
-        val eggs = display.input[0]
-        val barrels = display.input[1]
-        val outputs = display.output
+        val eggs = display.inputEntries[0]
+        val barrels = display.inputEntries[1]
+        val outputs = display.outputEntries
 
-        widgets.add(SlotWidget(bounds.minX + ABOVE_X, bounds.minY + ABOVE_Y, Renderer.fromItemStacks(eggs), false, true, true))
-        widgets.add(SlotWidget(bounds.minX + BARRELS_X, bounds.minY + BARRELS_Y, Renderer.fromItemStacks(barrels), false, false, true))
-        widgets.add(SlotWidget(bounds.minX + OUTPUT_X, bounds.minY + OUTPUT_Y, Renderer.fromItemStacks(outputs), true, true, true))
+        widgets.add(EntryWidget.create(bounds.minX + ABOVE_X, bounds.minY + ABOVE_Y).entries(eggs))
+        widgets.add(EntryWidget.create(bounds.minX + BARRELS_X, bounds.minY + BARRELS_Y).entries(barrels))
+        widgets.add(EntryWidget.create(bounds.minX + OUTPUT_X, bounds.minY + OUTPUT_Y).entries(outputs))
 
         // TODO some day figure out how to render a little entity over the barrel instead of an egg :/
 //        (display.recipe.entity.flatten().firstOrNull())?.let{
@@ -47,8 +46,7 @@ class MilkingCategory: RecipeCategory<MilkingDisplay> {
 
 
         val text =  LabelWidget(0, 0, display.recipe.result.localizeAmount())
-        text.x = bounds.maxX - MARGIN - text.bounds.maxX
-        text.y = bounds.minY + MARGIN
+        text.position = Point(bounds.maxX - MARGIN - text.bounds.maxX, bounds.minY + MARGIN)
         widgets.add(text)
 
 

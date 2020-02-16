@@ -37,7 +37,7 @@ object InfestedHelper {
                 val j = world.random.nextInt(3) - 1
                 val k = world.random.nextInt(3) - 1
                 val newPos = pos.add(Vec3i(i,j,k))
-                if(world.isHeightValidAndBlockLoaded(newPos))
+                if(World.isValid(newPos))
                     tryToInfest(world, newPos)
             }
         }

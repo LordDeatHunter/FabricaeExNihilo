@@ -6,9 +6,15 @@ import exnihilofabrico.util.VoxelShapeHelper
 import exnihilofabrico.util.asEntity
 import exnihilofabrico.util.asStack
 import net.fabricmc.fabric.api.block.FabricBlockSettings
-import net.minecraft.block.*
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
+import net.minecraft.block.BlockEntityProvider
+import net.minecraft.block.BlockRenderType
+import net.minecraft.block.BlockState
+import net.minecraft.block.Material
+import net.minecraft.client.render.RenderLayer
 import net.minecraft.entity.EntityContext
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.hit.BlockHitResult
@@ -24,17 +30,20 @@ class SieveBlock(val texture: Identifier,
                  settings: FabricBlockSettings = FabricBlockSettings.of(Material.WOOD)):
         BaseBlock(settings), BlockEntityProvider, Fluidloggable {
 
+    init {
+        BlockRenderLayerMap.INSTANCE.putBlock(this, RenderLayer.getCutout())
+    }
+
     override fun getOutlineShape(state: BlockState?, view: BlockView?, pos: BlockPos?, entityContext: EntityContext?) = SHAPE
-    override fun getRenderLayer() = BlockRenderLayer.CUTOUT
     override fun getRenderType(state: BlockState?) = BlockRenderType.MODEL
 
-    override fun activate(state: BlockState?, world: World?, pos: BlockPos?, player: PlayerEntity?, hand: Hand?, hitResult: BlockHitResult?): Boolean {
+    override fun onUse(state: BlockState?, world: World?, pos: BlockPos?, player: PlayerEntity?, hand: Hand?, hitResult: BlockHitResult?): ActionResult {
         if(world?.isClient != false || pos == null)
-            return true
+            return ActionResult.PASS
         val blockEntity = world.getBlockEntity(pos)
         if(blockEntity is SieveBlockEntity)
             return blockEntity.activate(state, player, hand, hitResult)
-        return false
+        return ActionResult.PASS
     }
 
     /**

@@ -18,6 +18,7 @@ import net.minecraft.fluid.Fluids
 import net.minecraft.item.BucketItem
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.util.ActionResult
 import net.minecraft.util.DefaultedList
 import net.minecraft.util.Hand
 import net.minecraft.util.ItemScatterer
@@ -36,15 +37,15 @@ class SieveBlockEntity: BaseBlockEntity(TYPE), BlockEntityClientSerializable {
     var contents: ItemStack = ItemStack.EMPTY
     var progress: Double = 0.0
 
-    fun activate(state: BlockState?, player: PlayerEntity?, hand: Hand?, hitResult: BlockHitResult?): Boolean {
+    fun activate(state: BlockState?, player: PlayerEntity?, hand: Hand?, hitResult: BlockHitResult?): ActionResult {
 
         if(world?.isClient != false || player == null)
-            return true
+            return ActionResult.PASS
 
         val held = player.getStackInHand(hand ?: player.activeHand) ?: ItemStack.EMPTY
 
         if(held.item is BucketItem)
-            return false // Done for fluid logging
+            return ActionResult.PASS // Done for fluid logging
 
 
         // Remove/Swap a mesh
@@ -61,21 +62,21 @@ class SieveBlockEntity: BaseBlockEntity(TYPE), BlockEntityClientSerializable {
                     held.decrement(1)
             }
             markDirtyClient()
-            return true
+            return ActionResult.SUCCESS
         }
         val sieves = getConnectedSieves()
         // Make Progress
         if(!contents.isEmpty) {
             sieves.forEach { it.doProgress(player) }
-            return true
+            return ActionResult.SUCCESS
         }
 
         // Add a block
         if(!held.isEmpty && SIEVE.isValidRecipe(mesh, getFluid(), held)) {
             sieves.forEach { it.setContents(held, !player.isCreative) }
-            return true
+            return ActionResult.SUCCESS
         }
-        return true
+        return ActionResult.CONSUME
     }
 
     fun setContents(stack: ItemStack, doDrain: Boolean) {

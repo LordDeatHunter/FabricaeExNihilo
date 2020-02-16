@@ -3,20 +3,19 @@ package exnihilofabrico.compatibility.rei.barrel
 import exnihilofabrico.compatibility.rei.GlyphWidget
 import exnihilofabrico.compatibility.rei.PluginEntry
 import exnihilofabrico.id
+import exnihilofabrico.util.asREIEntry
 import exnihilofabrico.util.getExNihiloItemStack
 import me.shedaniel.math.api.Rectangle
 import me.shedaniel.rei.api.RecipeCategory
-import me.shedaniel.rei.api.Renderer
-import me.shedaniel.rei.gui.renderers.ItemStackRenderer
+import me.shedaniel.rei.gui.widget.EntryWidget
 import me.shedaniel.rei.gui.widget.RecipeBaseWidget
-import me.shedaniel.rei.gui.widget.SlotWidget
 import me.shedaniel.rei.gui.widget.Widget
 import java.util.function.Supplier
 
 class FluidOnTopCategory: RecipeCategory<FluidOnTopDisplay> {
 
     override fun getIdentifier() = PluginEntry.ON_TOP
-    override fun getIcon(): ItemStackRenderer = Renderer.fromItemStack(getExNihiloItemStack("oak_barrel"))
+    override fun getLogo() = getExNihiloItemStack("oak_barrel").asREIEntry()
     override fun getCategoryName() = "Fluid Above"
 
 
@@ -33,15 +32,15 @@ class FluidOnTopCategory: RecipeCategory<FluidOnTopDisplay> {
         widgets.add(arrow1)
         widgets.add(arrow2)
 
-        val inBarrel = display.input[0]
-        val onTop = display.input[1]
-        val barrels = display.input[2]
-        val outputs = display.output
+        val inBarrel = display.inputEntries[0]
+        val onTop = display.inputEntries[1]
+        val barrels = display.inputEntries[2]
+        val outputs = display.outputEntries
 
-        widgets.add(SlotWidget(bounds.minX + INPUT_X, bounds.minY + INPUT_Y, Renderer.fromItemStacks(inBarrel), true, true, true))
-        widgets.add(SlotWidget(bounds.minX + ABOVE_X, bounds.minY + ABOVE_Y, Renderer.fromItemStacks(onTop), false, true, true))
-        widgets.add(SlotWidget(bounds.minX + BARRELS_X, bounds.minY + BARRELS_Y, Renderer.fromItemStacks(barrels), false, false, true))
-        widgets.add(SlotWidget(bounds.minX + OUTPUT_X, bounds.minY + OUTPUT_Y, Renderer.fromItemStacks(outputs), true, true, true))
+        widgets.add(EntryWidget.create(bounds.minX + INPUT_X, bounds.minY + INPUT_Y).entries(inBarrel))
+        widgets.add(EntryWidget.create(bounds.minX + ABOVE_X, bounds.minY + ABOVE_Y).entries(onTop))
+        widgets.add(EntryWidget.create(bounds.minX + BARRELS_X, bounds.minY + BARRELS_Y).entries(barrels))
+        widgets.add(EntryWidget.create(bounds.minX + OUTPUT_X, bounds.minY + OUTPUT_Y).entries(outputs))
 
         return widgets
     }

@@ -4,14 +4,13 @@ import exnihilofabrico.compatibility.rei.GlyphWidget
 import exnihilofabrico.compatibility.rei.PluginEntry
 import exnihilofabrico.id
 import exnihilofabrico.modules.witchwater.WitchWaterFluid
-import exnihilofabrico.util.asStack
+import exnihilofabrico.util.asREIEntry
+import me.shedaniel.math.api.Point
 import me.shedaniel.math.api.Rectangle
 import me.shedaniel.rei.api.RecipeCategory
-import me.shedaniel.rei.api.Renderer
-import me.shedaniel.rei.gui.renderers.ItemStackRenderer
+import me.shedaniel.rei.gui.widget.EntryWidget
 import me.shedaniel.rei.gui.widget.LabelWidget
 import me.shedaniel.rei.gui.widget.RecipeBaseWidget
-import me.shedaniel.rei.gui.widget.SlotWidget
 import me.shedaniel.rei.gui.widget.Widget
 import net.minecraft.client.resource.language.I18n
 import net.minecraft.entity.EntityType
@@ -22,7 +21,7 @@ import java.util.function.Supplier
 class WitchWaterEntityCategory: RecipeCategory<WitchWaterEntityDisplay> {
 
     override fun getIdentifier() = PluginEntry.WITCH_WATER_ENTITY
-    override fun getIcon(): ItemStackRenderer = Renderer.fromItemStack(WitchWaterFluid.bucket.asStack())
+    override fun getLogo() =WitchWaterFluid.bucket.asREIEntry()
     override fun getCategoryName() = "Witch Water Bathing"
 
 
@@ -38,19 +37,18 @@ class WitchWaterEntityCategory: RecipeCategory<WitchWaterEntityDisplay> {
         widgets.add(arrowIn)
         widgets.add(arrowOut)
 
-        val eggsIn = display.input[0]
-        val eggOut = display.output
-        val fluids = display.input[1]
+        val eggsIn = display.inputEntries[0]
+        val eggOut = display.outputEntries
+        val fluids = display.inputEntries[1]
 
-        widgets.add(SlotWidget(bounds.minX + IN_X, bounds.minY + IN_Y, Renderer.fromItemStacks(eggsIn), false, true, true))
-        widgets.add(SlotWidget(bounds.minX + OUT_X, bounds.minY + OUT_Y, Renderer.fromItemStacks(eggOut), false, true, true))
-        widgets.add(SlotWidget(bounds.minX + FLUID_X, bounds.minY + FLUID_Y, Renderer.fromItemStacks(fluids), false, true, true))
+        widgets.add(EntryWidget.create(bounds.minX + IN_X, bounds.minY + IN_Y).entries(eggsIn))
+        widgets.add(EntryWidget.create(bounds.minX + OUT_X, bounds.minY + OUT_Y).entries(eggOut))
+        widgets.add(EntryWidget.create(bounds.minX + FLUID_X, bounds.minY + FLUID_Y).entries(fluids))
 
         if(display.recipe.target.test(EntityType.VILLAGER)) {
             val profession = Registry.VILLAGER_PROFESSION.getId(display.recipe.profession ?: VillagerProfession.NONE)
             val text = LabelWidget(0, 0, I18n.translate("entity.${profession.namespace}.villager.${profession.path}"))
-            text.x = bounds.minX + MARGIN + text.bounds.maxX
-            text.y = bounds.minY - MARGIN + text.bounds.maxY
+            text.position = Point(bounds.minX + MARGIN + text.bounds.maxX, bounds.minY - MARGIN + text.bounds.maxY)
             widgets.add(text)
         }
 

@@ -2,6 +2,7 @@ package exnihilofabrico.client
 
 import exnihilofabrico.modules.ModFluids
 import exnihilofabrico.modules.base.AbstractFluid
+import exnihilofabrico.util.getId
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback
 import net.minecraft.client.MinecraftClient
@@ -25,10 +26,10 @@ class FluidRenderManager: ClientSpriteRegistryCallback {
         }
         private fun setupFluidRenderer(fluid: AbstractFluid) {
             val sprites = lazy {
-                val atlas = MinecraftClient.getInstance().spriteAtlas
+                val atlas = MinecraftClient.getInstance().getSpriteAtlas(fluid.getId())
                 arrayOf(
-                    atlas.getSprite(fluid.fluidSettings.stillTexture),
-                    atlas.getSprite(fluid.fluidSettings.flowingTexture)
+                    atlas.apply(fluid.fluidSettings.stillTexture),
+                    atlas.apply(fluid.fluidSettings.flowingTexture)
                 )
             }
 

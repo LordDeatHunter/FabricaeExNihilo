@@ -3,14 +3,14 @@ package exnihilofabrico.compatibility.rei.barrel
 import exnihilofabrico.api.recipes.barrel.MilkingRecipe
 import exnihilofabrico.compatibility.rei.PluginEntry
 import exnihilofabrico.modules.ModBlocks
-import exnihilofabrico.util.asStack
+import exnihilofabrico.util.asREIEntry
+import me.shedaniel.rei.api.EntryStack
 import me.shedaniel.rei.api.RecipeDisplay
-import net.minecraft.item.ItemStack
 
 class MilkingDisplay(val recipe: MilkingRecipe): RecipeDisplay {
     override fun getRecipeCategory() = PluginEntry.MILKING
 
-    override fun getOutput() = listOf(recipe.result.rawFluid?.bucketItem?.asStack() ?: ItemStack.EMPTY)
-    override fun getInput() =
-        listOf(recipe.entity.flattenListOfEggStacks(), ModBlocks.BARRELS.values.map { it.asStack() })
+    override fun getOutputEntries() = listOf(recipe.result.rawFluid?.bucketItem?.asREIEntry() ?: EntryStack.empty())
+    override fun getInputEntries() =
+        listOf(recipe.entity.asREIEntries(), ModBlocks.BARRELS.values.map { it.asREIEntry() })
 }

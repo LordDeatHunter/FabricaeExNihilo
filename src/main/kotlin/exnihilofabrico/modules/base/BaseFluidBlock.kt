@@ -16,7 +16,7 @@ open class BaseFluidBlock(fluid: BaseFluid, settings: Settings): FluidBlock(flui
         for(i in 1 until 8)
             statesByLevel.add(fluid.getFlowing(8 - i, false))
     }
-    override fun appendProperties(builder: net.minecraft.state.StateFactory.Builder<Block, BlockState>) {
+    override fun appendProperties(builder: net.minecraft.state.StateManager.Builder<Block, BlockState>) {
         builder.add(LEVEL)
     }
 }

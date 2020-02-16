@@ -26,6 +26,7 @@ import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.ItemStack
+import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.hit.BlockHitResult
@@ -42,16 +43,15 @@ class BarrelBlock(val texture: Identifier,
         BaseBlock(settings), BlockEntityProvider, AttributeProvider, InventoryProvider {
 
     override fun getOutlineShape(state: BlockState?, view: BlockView?, pos: BlockPos?, entityContext: EntityContext?) = SHAPE
-    override fun getRenderLayer() = BlockRenderLayer.CUTOUT
     override fun getRenderType(state: BlockState?) = BlockRenderType.MODEL
 
-    override fun activate(state: BlockState?, world: World?, pos: BlockPos?, player: PlayerEntity?, hand: Hand?, hitResult: BlockHitResult?): Boolean {
+    override fun onUse(state: BlockState?, world: World?, pos: BlockPos?, player: PlayerEntity?, hand: Hand?, hitResult: BlockHitResult?): ActionResult {
         if(world?.isClient != false || pos == null)
-            return true
+            return ActionResult.CONSUME
         val blockEntity = world.getBlockEntity(pos)
         if(blockEntity is BarrelBlockEntity)
             return blockEntity.activate(state, player, hand, hitResult)
-        return false
+        return ActionResult.CONSUME
     }
     override fun addAllAttributes(world: World, pos: BlockPos, state: BlockState, attributes: AttributeList<*>) {
         val blockEntity = world.getBlockEntity(pos)
@@ -87,7 +87,7 @@ class BarrelBlock(val texture: Identifier,
                 (world.getBlockEntity(pos) as? BarrelBlockEntity)?.let { barrel ->
                     val thorns = barrel.enchantments.getEnchantmentLevel(Enchantments.THORNS)
                     if(thorns > 0 && living.damage(DamageSource.CACTUS, thorns.toFloat()/2)) {
-                        val volume = FluidVolume.create(BloodFluid.still, (FluidVolume.BUCKET*thorns / living.healthMaximum).toInt())
+                        val volume = FluidVolume.create(BloodFluid.still, (FluidVolume.BUCKET*thorns / living.maximumHealth).toInt())
                         barrel.fluidTransferable.attemptInsertion(volume, Simulation.ACTION)
                     }
                 }
@@ -98,7 +98,7 @@ class BarrelBlock(val texture: Identifier,
                 val duration = ExNihiloRegistries.BARREL_MILKING.getResult(entity)?.let { (volume, cooldown) ->
                     (world.getBlockEntity(pos) as? BarrelBlockEntity)?.fluidTransferable?.attemptInsertion(volume, Simulation.ACTION)
                     cooldown } ?: 72000
-                living.addPotionEffect(StatusEffectInstance(ModEffects.MILKED, duration,1, false, false, false))
+                living.addStatusEffect(StatusEffectInstance(ModEffects.MILKED, duration,1, false, false, false))
             }
         }
     }

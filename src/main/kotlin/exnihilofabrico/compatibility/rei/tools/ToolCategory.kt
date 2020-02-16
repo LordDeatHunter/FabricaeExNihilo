@@ -4,12 +4,11 @@ import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.compatibility.rei.GlyphWidget
 import exnihilofabrico.compatibility.rei.PluginEntry
 import exnihilofabrico.id
+import exnihilofabrico.util.asREIEntry
 import me.shedaniel.math.api.Rectangle
 import me.shedaniel.rei.api.RecipeCategory
-import me.shedaniel.rei.api.Renderer
-import me.shedaniel.rei.gui.renderers.ItemStackRenderer
+import me.shedaniel.rei.gui.widget.EntryWidget
 import me.shedaniel.rei.gui.widget.RecipeBaseWidget
-import me.shedaniel.rei.gui.widget.SlotWidget
 import me.shedaniel.rei.gui.widget.Widget
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier
@@ -19,7 +18,7 @@ class ToolCategory(val tool: Identifier, val icon: ItemStack, val name: String):
     val GLYPH_U = if(tool == PluginEntry.HAMMER) 16 else 32
 
     override fun getIdentifier() = tool
-    override fun getIcon(): ItemStackRenderer = Renderer.fromItemStack(icon)
+    override fun getLogo() = icon.asREIEntry()
     override fun getCategoryName() = name
 
 
@@ -42,35 +41,27 @@ class ToolCategory(val tool: Identifier, val icon: ItemStack, val name: String):
         )
         widgets.add(arrowWidget)
 
-        val inputs = display.input ?: mutableListOf(mutableListOf(),mutableListOf())
-        val outputs = display.output
+        val inputs = display.inputEntries ?: mutableListOf(mutableListOf(),mutableListOf())
+        val outputs = display.outputEntries
 
         // Tools
         if(!inputs[1].isEmpty())
-            widgets.add(SlotWidget(bounds.minX + TOOL_X, bounds.minY + TOOL_Y, Renderer.fromItemStacks(inputs[1]), false, true, true))
+            widgets.add(EntryWidget.create(bounds.minX + TOOL_X, bounds.minY + TOOL_Y).entries(inputs[1]))
         // Target
-        widgets.add(SlotWidget(bounds.minX + BLOCK_X, bounds.minY + BLOCK_Y, Renderer.fromItemStacks(inputs[0]), true, true, true))
+        widgets.add(EntryWidget.create(bounds.minX + BLOCK_X, bounds.minY + BLOCK_Y).entries(inputs[0]))
 
         outputs.forEachIndexed { index, output ->
             widgets.add(
-                SlotWidget(
+                EntryWidget.create(
                     bounds.minX + OUTPUT_X + (index % OUTPUT_SLOTS_X)*18,
-                    bounds.minY + OUTPUT_Y + (index / OUTPUT_SLOTS_X)*18,
-                    Renderer.fromItemStack(output),
-                    true, true, true
-                )
-            )
+                    bounds.minY + OUTPUT_Y + (index / OUTPUT_SLOTS_X)*18).entry(output))
         }
         // Fill in the empty spots
         for(index in outputs.size until MAX_OUTPUTS) {
             widgets.add(
-                SlotWidget(
+                EntryWidget.create(
                     bounds.minX + OUTPUT_X + (index % OUTPUT_SLOTS_X)*18,
-                    bounds.minY + OUTPUT_Y + (index / OUTPUT_SLOTS_X)*18,
-                    Renderer.fromItemStack(ItemStack.EMPTY),
-                    true, false, false
-                )
-            )
+                    bounds.minY + OUTPUT_Y + (index / OUTPUT_SLOTS_X)*18))
         }
 
         return widgets

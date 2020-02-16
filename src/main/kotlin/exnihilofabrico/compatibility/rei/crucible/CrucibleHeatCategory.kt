@@ -1,21 +1,21 @@
 package exnihilofabrico.compatibility.rei.crucible
 
 import exnihilofabrico.compatibility.rei.PluginEntry
+import exnihilofabrico.util.asREIEntry
 import exnihilofabrico.util.getExNihiloItemStack
+import me.shedaniel.math.api.Point
 import me.shedaniel.math.api.Rectangle
 import me.shedaniel.rei.api.RecipeCategory
-import me.shedaniel.rei.api.Renderer
-import me.shedaniel.rei.gui.renderers.ItemStackRenderer
+import me.shedaniel.rei.gui.widget.EntryWidget
 import me.shedaniel.rei.gui.widget.LabelWidget
 import me.shedaniel.rei.gui.widget.RecipeBaseWidget
-import me.shedaniel.rei.gui.widget.SlotWidget
 import me.shedaniel.rei.gui.widget.Widget
 import java.util.function.Supplier
 
 class CrucibleHeatCategory(): RecipeCategory<CrucibleHeatDisplay> {
 
     override fun getIdentifier() = PluginEntry.CRUCIBLE_HEAT
-    override fun getIcon(): ItemStackRenderer = Renderer.fromItemStack(getExNihiloItemStack("stone_crucible"))
+    override fun getLogo() = getExNihiloItemStack("stone_crucible").asREIEntry()
     override fun getCategoryName() = "Heat"
 
 
@@ -27,17 +27,14 @@ class CrucibleHeatCategory(): RecipeCategory<CrucibleHeatDisplay> {
         val display = displaySupplier.get()
         val widgets = mutableListOf<Widget>(RecipeBaseWidget(bounds))
 
-        val inputs = display.input[0]
+        val inputs = display.inputEntries[0]
         val heat = display.getHeat()
 
         // Block
-        widgets.add(
-            SlotWidget(bounds.minX + BLOCK_X, bounds.minY + BLOCK_Y, Renderer.fromItemStacks(inputs), true, true, true)
-        )
+        widgets.add(EntryWidget.create(bounds.minX + BLOCK_X, bounds.minY + BLOCK_Y).entries(inputs))
         // Heat Value
         val text =  LabelWidget(0, 0, "${heat}")
-        text.x = bounds.minX + WIDTH - MARGIN - text.bounds.maxX
-        text.y = bounds.minY + MARGIN + 18 - text.bounds.maxY - text.bounds.maxY / 2
+        text.position = Point(bounds.minX + WIDTH - MARGIN - text.bounds.maxX, bounds.minY + MARGIN + 18 - text.bounds.maxY - text.bounds.maxY / 2)
 
         widgets.add(text)
 

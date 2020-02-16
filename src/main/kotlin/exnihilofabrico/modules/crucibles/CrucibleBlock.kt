@@ -8,7 +8,9 @@ import exnihilofabrico.modules.base.addEnchantments
 import exnihilofabrico.util.VoxelShapeHelper
 import exnihilofabrico.util.asStack
 import net.fabricmc.fabric.api.block.FabricBlockSettings
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.minecraft.block.*
+import net.minecraft.client.render.RenderLayer
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.EntityContext
 import net.minecraft.entity.ItemEntity
@@ -16,6 +18,7 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.ItemStack
+import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.hit.BlockHitResult
@@ -30,13 +33,17 @@ class CrucibleBlock(val texture: Identifier, val craftIngredient: Identifier,
                     settings: FabricBlockSettings = FabricBlockSettings.of(Material.WOOD)):
         BaseBlock(settings), BlockEntityProvider, InventoryProvider, AttributeProvider {
 
-    override fun activate(state: BlockState?, world: World?, pos: BlockPos?, player: PlayerEntity?, hand: Hand?, hitResult: BlockHitResult?): Boolean {
+    init {
+        BlockRenderLayerMap.INSTANCE.putBlock(this, RenderLayer.getCutout())
+    }
+
+    override fun onUse(state: BlockState?, world: World?, pos: BlockPos?, player: PlayerEntity?, hand: Hand?, hitResult: BlockHitResult?): ActionResult {
         if(world?.isClient != false || pos == null)
-            return true
+            return ActionResult.PASS
         val blockEntity = world.getBlockEntity(pos)
         if(blockEntity is CrucibleBlockEntity)
             return blockEntity.activate(state, player, hand, hitResult)
-        return super.activate(state, world, pos, player, hand, hitResult)
+        return super.onUse(state, world, pos, player, hand, hitResult)
     }
     override fun getInventory(state: BlockState?, world: IWorld?, pos: BlockPos): SidedInventory? {
         return (world?.getBlockEntity(pos) as? CrucibleBlockEntity)?.inventory
@@ -66,7 +73,6 @@ class CrucibleBlock(val texture: Identifier, val craftIngredient: Identifier,
     }
 
     override fun getOutlineShape(state: BlockState?, view: BlockView?, pos: BlockPos?, entityContext: EntityContext?) = SHAPE
-    override fun getRenderLayer() = BlockRenderLayer.CUTOUT
     override fun getRenderType(state: BlockState?) = BlockRenderType.MODEL
 
     /**

@@ -1,21 +1,22 @@
 package exnihilofabrico.modules.base
 
 import exnihilofabrico.id
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.minecraft.block.Block
-import net.minecraft.block.BlockRenderLayer
 import net.minecraft.block.BlockState
 import net.minecraft.block.FluidBlock
+import net.minecraft.client.render.RenderLayer
 import net.minecraft.fluid.BaseFluid
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.FluidState
 import net.minecraft.item.Item
-import net.minecraft.state.StateFactory
+import net.minecraft.state.StateManager
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.registry.Registry
 import net.minecraft.world.BlockView
 import net.minecraft.world.IWorld
-import net.minecraft.world.ViewableWorld
+import net.minecraft.world.WorldView
 import java.util.function.Supplier
 
 abstract class AbstractFluid(private val still: Boolean,
@@ -25,19 +26,21 @@ abstract class AbstractFluid(private val still: Boolean,
                              private val flowingSupplier: Supplier<BaseFluid>,
                              private val stillSupplier: Supplier<BaseFluid>): BaseFluid() {
 
+    init {
+        BlockRenderLayerMap.INSTANCE.putFluid(this, RenderLayer.getTranslucent())
+    }
+
     override fun toBlockState(fluidState: FluidState?): BlockState = fluidBlockSupplier.get().defaultState.with(FluidBlock.LEVEL, method_15741(fluidState))
 
-    override fun getLevelDecreasePerBlock(world: ViewableWorld?) = 1
+    override fun getLevelDecreasePerBlock(world: WorldView?) = 1
     override fun getBlastResistance() = 100f
-    override fun method_15733(world: ViewableWorld?) = 4
+    override fun method_15733(world: WorldView?) = 4
 
     override fun getStill() = stillSupplier.get()
     override fun getFlowing() = flowingSupplier.get()
     override fun getBucketItem() = bucketItemSupplier.get()
 
-    override fun getRenderLayer() = BlockRenderLayer.TRANSLUCENT
-
-    override fun getTickRate(world: ViewableWorld?) = 10
+    override fun getTickRate(world: WorldView?) = 10
     override fun isInfinite() = fluidSettings.isInfinite
     override fun isStill(fluidState: FluidState?) = still
     override fun getLevel(fluidState: FluidState?) = if(still) 8 else fluidState?.get(LEVEL) ?: 8
@@ -46,7 +49,7 @@ abstract class AbstractFluid(private val still: Boolean,
 
     }
     
-    override fun appendProperties(builder: StateFactory.Builder<Fluid, FluidState>?) {
+    override fun appendProperties(builder: StateManager.Builder<Fluid, FluidState>?) {
         super.appendProperties(builder)
         if(!still)
             builder?.add(LEVEL)

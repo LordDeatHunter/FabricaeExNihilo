@@ -8,6 +8,7 @@ import com.google.gson.JsonSerializationContext
 import exnihilofabrico.util.asStack
 import exnihilofabrico.util.getFluid
 import exnihilofabrico.util.getId
+import me.shedaniel.rei.api.EntryStack
 import net.fabricmc.fabric.api.tag.TagRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -33,6 +34,8 @@ class FluidIngredient(tags: MutableCollection<Tag<Fluid>> = mutableListOf(), mat
     fun test(stack: FluidVolume) = (stack.rawFluid)?.let { test(it) } ?: false
 
     fun flattenListOfBuckets() = flatten { it.bucketItem.asStack() }.filterNot { it.isEmpty }.toMutableList()
+
+    fun asREIEntries() = flattenListOfBuckets().map { EntryStack.create(it) }
 
     override fun equals(other: Any?): Boolean {
         return (other as? FluidIngredient)?.let { other ->

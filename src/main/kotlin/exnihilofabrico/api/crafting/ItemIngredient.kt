@@ -4,6 +4,7 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonElement
 import com.google.gson.JsonPrimitive
 import com.google.gson.JsonSerializationContext
+import exnihilofabrico.util.asREIEntry
 import exnihilofabrico.util.asStack
 import exnihilofabrico.util.getId
 import net.fabricmc.fabric.api.tag.TagRegistry
@@ -29,6 +30,7 @@ class ItemIngredient(tags: MutableCollection<Tag<Item>> = mutableListOf(), match
     fun test(item: ItemConvertible) = test(item.asItem())
 
     fun flattenedListOfStacks() = flatten { it.asStack() }
+    fun asREIEntries() = flatten { it.asREIEntry() }
 
     override fun equals(other: Any?): Boolean {
         return (other as? ItemIngredient)?.let { other ->

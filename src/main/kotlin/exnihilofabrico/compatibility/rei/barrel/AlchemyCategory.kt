@@ -3,20 +3,19 @@ package exnihilofabrico.compatibility.rei.barrel
 import exnihilofabrico.compatibility.rei.GlyphWidget
 import exnihilofabrico.compatibility.rei.PluginEntry
 import exnihilofabrico.id
+import exnihilofabrico.util.asREIEntry
 import exnihilofabrico.util.getExNihiloItemStack
 import me.shedaniel.math.api.Rectangle
 import me.shedaniel.rei.api.RecipeCategory
-import me.shedaniel.rei.api.Renderer
-import me.shedaniel.rei.gui.renderers.ItemStackRenderer
+import me.shedaniel.rei.gui.widget.EntryWidget
 import me.shedaniel.rei.gui.widget.RecipeBaseWidget
-import me.shedaniel.rei.gui.widget.SlotWidget
 import me.shedaniel.rei.gui.widget.Widget
 import java.util.function.Supplier
 
 class AlchemyCategory: RecipeCategory<AlchemyDisplay> {
 
     override fun getIdentifier() = PluginEntry.ALCHEMY
-    override fun getIcon(): ItemStackRenderer = Renderer.fromItemStack(getExNihiloItemStack("oak_barrel"))
+    override fun getLogo() = getExNihiloItemStack("oak_barrel").asREIEntry()
     override fun getCategoryName() = "Alchemy"
 
 
@@ -33,19 +32,19 @@ class AlchemyCategory: RecipeCategory<AlchemyDisplay> {
         widgets.add(plusGlyph)
         widgets.add(arrowGlyph)
 
-        val reactant = display.input[0]
-        val catalyst = display.input[1]
-        val barrels = display.input[2]
-        val product = display.output[0]
-        val byproduct = display.output[1]
-        val toSpawn = display.output[2]
+        val reactant = display.inputEntries[0]
+        val catalyst = display.inputEntries[1]
+        val barrels = display.inputEntries[2]
+        val product = display.outputEntries[0]
+        val byproduct = display.outputEntries[1]
+        val toSpawn = display.outputEntries[2]
 
-        widgets.add(SlotWidget(bounds.minX + REACTANT_X, bounds.minY + REACTANT_Y, Renderer.fromItemStacks(reactant), true, true, true))
-        widgets.add(SlotWidget(bounds.minX + CATALYST_X, bounds.minY + CATALYST_Y, Renderer.fromItemStacks(catalyst), false, true, true))
-        widgets.add(SlotWidget(bounds.minX + PRODUCT_X, bounds.minY + PRODUCT_Y, Renderer.fromItemStack(product), true, true, true))
-        widgets.add(SlotWidget(bounds.minX + BYPRODUCT_X, bounds.minY + BYPRODUCT_Y, Renderer.fromItemStack(byproduct), false, true, true))
-        widgets.add(SlotWidget(bounds.minX + SPAWN_X, bounds.minY + SPAWN_Y, Renderer.fromItemStack(toSpawn), false, true, true))
-        widgets.add(SlotWidget(bounds.minX + BARRELS_X, bounds.minY + BARRELS_Y, Renderer.fromItemStacks(barrels), false, true, true))
+        widgets.add(EntryWidget.create(bounds.minX + REACTANT_X, bounds.minY + REACTANT_Y).entries(reactant))
+        widgets.add(EntryWidget.create(bounds.minX + CATALYST_X, bounds.minY + CATALYST_Y).entries(catalyst))
+        widgets.add(EntryWidget.create(bounds.minX + PRODUCT_X, bounds.minY + PRODUCT_Y).entry(product))
+        widgets.add(EntryWidget.create(bounds.minX + BYPRODUCT_X, bounds.minY + BYPRODUCT_Y).entry(byproduct))
+        widgets.add(EntryWidget.create(bounds.minX + SPAWN_X, bounds.minY + SPAWN_Y).entry(toSpawn))
+        widgets.add(EntryWidget.create(bounds.minX + BARRELS_X, bounds.minY + BARRELS_Y).entries(barrels))
 
         return widgets
     }

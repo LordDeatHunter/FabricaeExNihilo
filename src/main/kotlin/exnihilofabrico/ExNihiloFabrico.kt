@@ -53,7 +53,7 @@ object ExNihiloFabrico: ModInitializer {
 
         /* Register Block Entities */
         LOGGER.info("Registering Block Entities")
-        ModBlocks.registerBlockEntities(Registry.BLOCK_ENTITY)
+        ModBlocks.registerBlockEntities(Registry.BLOCK_ENTITY_TYPE)
 
         /* Load the rest of the Ex Nihilo Fabrico registries */
         LOGGER.info("Loading Ex Nihilo Fabrico Registries")

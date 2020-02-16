@@ -4,7 +4,7 @@ plugins {
     java
     kotlin("jvm") version "1.3.40"
     idea
-    id("fabric-loom") version "0.2.5-SNAPSHOT"
+    id("fabric-loom") version "0.2.6-SNAPSHOT"
 }
 
 base {
@@ -71,26 +71,16 @@ allprojects {
 minecraft {
 }
 
-inline fun DependencyHandler.modCompileAndInclude(str: String, block: ExternalModuleDependency.() -> Unit = {}) {
-    modCompile(str, block)
-    include(str, block)
-}
-
-inline fun DependencyHandler.includedMod(str: String, block: ExternalModuleDependency.() -> Unit = {}) {
-    modImplementation(str, block)
-    include(str, block)
-}
-
-inline fun DependencyHandler.includedMod(group: String, name: String, version: String, block: ExternalModuleDependency.() -> Unit = {}) {
-    modImplementation(group, name, version, dependencyConfiguration = block)
-    include(group, name, version, dependencyConfiguration = block)
-}
 
 dependencies {
     /**
      * Gets a version string with the [key].
      */
     fun v(key: String) = ext[key].toString()
+    fun ExternalModuleDependency.byeFabric(){
+        exclude(group = "net.fabricmc.fabric-api")
+        exclude(module = "modmenu")
+    }
 
     minecraft("com.mojang:minecraft:"+v("minecraft"))
     mappings("net.fabricmc:yarn:"+v("yarn_mappings"))
@@ -102,17 +92,18 @@ dependencies {
     compileOnly("net.fabricmc:fabric-language-kotlin:"+v("fabric_kotlin"))
 
     // Other mods
-    modCompileAndInclude("towelette:Towelette:"+v("towelette_version"))
-    modCompileAndInclude("io.github.cottonmc:cotton:"+v("cotton_version"))
-    modCompile("alexiil.mc.lib:libblockattributes-all:" + v("libblockattributes_version"))
+    modCompile("towelette:Towelette:"+v("towelette_version")) { byeFabric() }
+    modRuntime("statement:Statement:" + v("statement_version")) { byeFabric() }
+    modCompile("io.github.cottonmc.cotton:cotton:"+v("cotton_version")) { byeFabric() }
+    modCompile("alexiil.mc.lib:libblockattributes-all:" + v("libblockattributes_version")) { byeFabric() }
 
     // Artifice
-    modImplementation("artificemc:artifice:"+v("artifice_version"))
-    include("artificemc:artifice:"+v("artifice_version"))
+    modCompile("com.lettuce.fudge:artifice:"+v("artifice_version")) { byeFabric() }
+    include("com.lettuce.fudge:artifice:"+v("artifice_version")) { byeFabric() }
 
     // Roughly Enough Items
-    modCompile("me.shedaniel:RoughlyEnoughItems:"+v("rei_version"))
+    modCompile("me.shedaniel:RoughlyEnoughItems:"+v("rei_version")) { byeFabric() }
 
     // Other libraries
-    compileOnly("org.apiguardian:apiguardian-api:1.0.0")
+    // compileOnly("org.apiguardian:apiguardian-api:1.0.0")
 }

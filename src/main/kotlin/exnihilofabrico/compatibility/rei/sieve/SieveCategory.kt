@@ -4,22 +4,20 @@ import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.compatibility.rei.GlyphWidget
 import exnihilofabrico.compatibility.rei.PluginEntry
 import exnihilofabrico.id
+import exnihilofabrico.util.asREIEntry
 import exnihilofabrico.util.getExNihiloItemStack
 import me.shedaniel.math.api.Rectangle
 import me.shedaniel.rei.api.RecipeCategory
-import me.shedaniel.rei.api.Renderer
-import me.shedaniel.rei.gui.renderers.ItemStackRenderer
+import me.shedaniel.rei.gui.widget.EntryWidget
 import me.shedaniel.rei.gui.widget.RecipeBaseWidget
-import me.shedaniel.rei.gui.widget.SlotWidget
 import me.shedaniel.rei.gui.widget.Widget
-import net.minecraft.item.ItemStack
 import java.util.function.Supplier
 
 
 class SieveCategory: RecipeCategory<SieveDisplay> {
 
     override fun getIdentifier() = PluginEntry.SIEVE
-    override fun getIcon(): ItemStackRenderer = Renderer.fromItemStack(getExNihiloItemStack("oak_sieve"))
+    override fun getLogo() = getExNihiloItemStack("oak_sieve").asREIEntry()
     override fun getCategoryName() = "Sieve"
 
 
@@ -34,38 +32,32 @@ class SieveCategory: RecipeCategory<SieveDisplay> {
         val arrowWidget = GlyphWidget(bounds, bounds.minX + ARROW_OFFSET_X, bounds.minY + ARROW_OFFSET_Y, ARROW_WIDTH, ARROW_HEIGHT, ARROW, ARROW_U, ARROW_V)
         widgets.add(arrowWidget)
 
-        val inputs = display.input ?: mutableListOf(mutableListOf(),mutableListOf(),mutableListOf())
-        val outputs = display.output
+        val inputs = display.inputEntries ?: mutableListOf(mutableListOf(),mutableListOf(),mutableListOf())
+        val outputs = display.outputEntries
 
         // Sieves
-        widgets.add(SlotWidget(bounds.minX + MESH_X, bounds.minY + MESH_Y, Renderer.fromItemStacks(inputs[3]), false, false, false))
+        widgets.add(EntryWidget.create(bounds.minX + MESH_X, bounds.minY + MESH_Y).entries(inputs[3]))
         // Meshes
-        widgets.add(SlotWidget(bounds.minX + MESH_X, bounds.minY + MESH_Y, Renderer.fromItemStacks(inputs[1]), false, true, true))
+        widgets.add(EntryWidget.create(bounds.minX + MESH_X, bounds.minY + MESH_Y).entries(inputs[1]))
         // Fluids
         if(!inputs[2].isEmpty())
-            widgets.add(SlotWidget(bounds.minX + BUCKET_X, bounds.minY + BUCKET_Y, Renderer.fromItemStacks(inputs[2]), false, true, true))
+            widgets.add(EntryWidget.create(bounds.minX + BUCKET_X, bounds.minY + BUCKET_Y).entries(inputs[2]))
         // Sievables
-        widgets.add(SlotWidget(bounds.minX + BLOCK_X, bounds.minY + BLOCK_Y, Renderer.fromItemStacks(inputs[0]), true, true, true))
+        widgets.add(EntryWidget.create(bounds.minX + BLOCK_X, bounds.minY + BLOCK_Y).entries(inputs[0]))
 
         outputs.forEachIndexed { index, output ->
             widgets.add(
-                SlotWidget(
+                EntryWidget.create(
                     bounds.minX + OUTPUT_X + (index % OUTPUT_SLOTS_X)*18,
-                    bounds.minY + OUTPUT_Y + (index / OUTPUT_SLOTS_X)*18,
-                    Renderer.fromItemStack(output),
-                    true, true, true
-                )
+                    bounds.minY + OUTPUT_Y + (index / OUTPUT_SLOTS_X)*18).entry(output)
             )
         }
         // Fill in the empty spots
         for(index in outputs.size until MAX_OUTPUTS) {
             widgets.add(
-                SlotWidget(
+                EntryWidget.create(
                     bounds.minX + OUTPUT_X + (index % OUTPUT_SLOTS_X)*18,
-                    bounds.minY + OUTPUT_Y + (index / OUTPUT_SLOTS_X)*18,
-                    Renderer.fromItemStack(ItemStack.EMPTY),
-                    true, false, false
-                )
+                    bounds.minY + OUTPUT_Y + (index / OUTPUT_SLOTS_X)*18)
             )
         }
 

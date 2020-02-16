@@ -20,8 +20,8 @@ import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.api.EnvironmentInterface
-import net.fabricmc.fabric.api.client.render.BlockEntityRendererRegistry
 import net.fabricmc.fabric.api.client.render.ColorProviderRegistry
+import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
@@ -33,10 +33,10 @@ object ExNihiloFabricoClient: ClientModInitializer {
         // Fluid Rendering
         FluidRenderManager.setupClient()
         // Register "BE"SRs
-        BlockEntityRendererRegistry.INSTANCE.register(SieveBlockEntity::class.java, SieveBlockEntityRenderer())
-        BlockEntityRendererRegistry.INSTANCE.register(CrucibleBlockEntity::class.java, CrucibleBlockEntityRenderer())
-        BlockEntityRendererRegistry.INSTANCE.register(BarrelBlockEntity::class.java, BarrelBlockEntityRenderer())
-        BlockEntityRendererRegistry.INSTANCE.register(InfestingLeavesBlockEntity::class.java, InfestingLeavesBlockEntityRenderer())
+        BlockEntityRendererRegistry.INSTANCE.register(SieveBlockEntity.TYPE) { SieveBlockEntityRenderer(it) }
+        BlockEntityRendererRegistry.INSTANCE.register(CrucibleBlockEntity.TYPE) { CrucibleBlockEntityRenderer(it) }
+        BlockEntityRendererRegistry.INSTANCE.register(BarrelBlockEntity.TYPE) { BarrelBlockEntityRenderer(it) }
+        BlockEntityRendererRegistry.INSTANCE.register(InfestingLeavesBlockEntity.TYPE) { InfestingLeavesBlockEntityRenderer(it) }
         ExNihiloFabrico.LOGGER.info("Registered BESR for Sieve")
 
         // Item Colors

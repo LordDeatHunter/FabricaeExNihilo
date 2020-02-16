@@ -4,21 +4,20 @@ import exnihilofabrico.ExNihiloFabrico
 import exnihilofabrico.compatibility.rei.GlyphWidget
 import exnihilofabrico.compatibility.rei.PluginEntry
 import exnihilofabrico.id
+import exnihilofabrico.util.asREIEntry
 import exnihilofabrico.util.getExNihiloItemStack
 import me.shedaniel.math.api.Rectangle
+import me.shedaniel.rei.api.EntryStack
 import me.shedaniel.rei.api.RecipeCategory
-import me.shedaniel.rei.api.Renderer
-import me.shedaniel.rei.gui.renderers.ItemStackRenderer
+import me.shedaniel.rei.gui.widget.EntryWidget
 import me.shedaniel.rei.gui.widget.RecipeBaseWidget
-import me.shedaniel.rei.gui.widget.SlotWidget
 import me.shedaniel.rei.gui.widget.Widget
-import net.minecraft.item.ItemStack
 import java.util.function.Supplier
 
 class CompostCategory: RecipeCategory<CompostDisplay> {
 
     override fun getIdentifier() = PluginEntry.COMPOSTING
-    override fun getIcon(): ItemStackRenderer = Renderer.fromItemStack(getExNihiloItemStack("oak_barrel"))
+    override fun getLogo() = getExNihiloItemStack("oak_barrel").asREIEntry()
     override fun getCategoryName() = "Barrel Composting"
 
 
@@ -33,33 +32,25 @@ class CompostCategory: RecipeCategory<CompostDisplay> {
         val arrowWidget = GlyphWidget(bounds, bounds.minX + ARROW_OFFSET_X, bounds.minY + ARROW_OFFSET_Y, ARROW_WIDTH, ARROW_HEIGHT, ARROW, ARROW_U, ARROW_V)
         widgets.add(arrowWidget)
 
-        val inputs = display.input[0]
-        val outputs = display.output
+        val inputs = display.inputEntries[0]
+        val outputs = display.outputEntries
 
         // Output
-        widgets.add(SlotWidget(bounds.minX + BLOCK_X, bounds.minY + BLOCK_Y, Renderer.fromItemStacks(outputs), true, true, true))
+        widgets.add(EntryWidget.create(bounds.minX + BLOCK_X, bounds.minY + BLOCK_Y).entries(outputs))
 
         // Input
         inputs.forEachIndexed { index, output ->
             widgets.add(
-                SlotWidget(
+                EntryWidget.create(
                     bounds.minX + INPUT_X + (index % INPUT_SLOTS_X)*18,
-                    bounds.minY + INPUT_Y + (index / INPUT_SLOTS_X)*18,
-                    Renderer.fromItemStack(output),
-                    true, true, true
-                )
-            )
+                    bounds.minY + INPUT_Y + (index / INPUT_SLOTS_X)*18).entry(output))
         }
         // Fill in the empty spots
         for(index in inputs.size until MAX_INPUT) {
             widgets.add(
-                SlotWidget(
+                EntryWidget.create(
                     bounds.minX + INPUT_X + (index % INPUT_SLOTS_X)*18,
-                    bounds.minY + INPUT_Y + (index / INPUT_SLOTS_X)*18,
-                    Renderer.fromItemStack(ItemStack.EMPTY),
-                    true, false, false
-                )
-            )
+                    bounds.minY + INPUT_Y + (index / INPUT_SLOTS_X)*18).entry(EntryStack.empty()))
         }
 
         return widgets

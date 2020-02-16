@@ -1,9 +1,9 @@
 package exnihilofabrico.mixins;
 
+import alexiil.mc.lib.attributes.fluid.amount.FluidAmount;
 import alexiil.mc.lib.attributes.fluid.mixin.api.IBucketItem;
 import alexiil.mc.lib.attributes.fluid.volume.FluidKey;
 import alexiil.mc.lib.attributes.fluid.volume.FluidKeys;
-import alexiil.mc.lib.attributes.fluid.volume.FluidVolume;
 import exnihilofabrico.modules.fluids.MilkFluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -41,7 +41,7 @@ public class MilkBucketMixin extends Item implements IBucketItem {
     }
 
     @Override
-    public int libblockattributes__getFluidVolumeAmount() {
-        return FluidVolume.BUCKET;
+    public FluidAmount libblockattributes__getFluidVolumeAmount() {
+        return FluidAmount.BUCKET;
     }
 }

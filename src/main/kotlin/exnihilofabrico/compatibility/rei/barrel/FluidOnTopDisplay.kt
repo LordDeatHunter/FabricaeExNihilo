@@ -5,21 +5,21 @@ import exnihilofabrico.compatibility.rei.PluginEntry
 import exnihilofabrico.modules.ModBlocks
 import exnihilofabrico.modules.barrels.modes.FluidMode
 import exnihilofabrico.modules.barrels.modes.ItemMode
-import exnihilofabrico.util.asStack
+import exnihilofabrico.util.asREIEntry
+import me.shedaniel.rei.api.EntryStack
 import me.shedaniel.rei.api.RecipeDisplay
-import net.minecraft.item.ItemStack
 
 class FluidOnTopDisplay(val recipe: FluidOnTopRecipe): RecipeDisplay {
     override fun getRecipeCategory() = PluginEntry.ON_TOP
 
-    override fun getOutput() = listOf(
+    override fun getOutputEntries() = listOf(
         when(recipe.result) {
-            is ItemMode -> recipe.result.stack
-            is FluidMode -> recipe.result.fluid.rawFluid?.bucketItem?.asStack() ?: ItemStack.EMPTY
-            else -> ItemStack.EMPTY
+            is ItemMode -> EntryStack.create(recipe.result.stack)
+            is FluidMode -> recipe.result.fluid.rawFluid?.bucketItem?.asREIEntry() ?: EntryStack.empty()
+            else -> EntryStack.empty()
         }
     )
-    override fun getInput() =
-        listOf(recipe.inBarrel.flattenListOfBuckets(), recipe.onTop.flattenListOfBuckets(), ModBlocks.BARRELS.values.map { it.asStack() })
+    override fun getInputEntries() =
+        listOf(recipe.inBarrel.asREIEntries(), recipe.onTop.asREIEntries(), ModBlocks.BARRELS.values.map { it.asREIEntry() })
 
 }

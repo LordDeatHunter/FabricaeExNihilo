@@ -1,8 +1,8 @@
 package exnihilofabrico.modules.tools
 
-import net.minecraft.world.loot.condition.LootCondition
-import net.minecraft.world.loot.context.LootContext
-import net.minecraft.world.loot.context.LootContextParameters
+import net.minecraft.loot.condition.LootCondition
+import net.minecraft.loot.context.LootContext
+import net.minecraft.loot.context.LootContextParameters
 
 object CrookLootCondition: LootCondition {
     override fun test(context: LootContext?): Boolean {
