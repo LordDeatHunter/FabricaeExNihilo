@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "fabricaeexnihilo:crook_clay_uncooked"
+  },
+  "result": "fabricaeexnihilo:crook_clay",
+  "experience": 0.15,
+  "cookingtime": 200
+}

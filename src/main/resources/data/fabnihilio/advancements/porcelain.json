@@ -1,0 +1,35 @@
+{
+  "parent": "fabricaeexnihilo:clay",
+  "display": {
+    "icon": {
+      "item": "fabricaeexnihilo:porcelain"
+    },
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.porcelain.title"
+    },
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.porcelain.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "porcelain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "fabricaeexnihilo:porcelain"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "porcelain"
+    ]
+  ]
+}

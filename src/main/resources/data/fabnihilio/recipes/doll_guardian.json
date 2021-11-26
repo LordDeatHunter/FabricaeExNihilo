@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "fabricaeexnihilo:doll",
+  "pattern": [
+    "xux",
+    "scs",
+    "xdx"
+  ],
+  "key": {
+    "x": {
+      "item": "minecraft:prismarine_crystals"
+    },
+    "u": {
+      "item": "minecraft:redstone"
+    },
+    "d": {
+      "tag": "c:raw_fish"
+    },
+    "s": {
+      "item": "minecraft:glowstone"
+    },
+    "c": {
+      "item": "fabricaeexnihilo:doll"
+    }
+  },
+  "result": {
+    "item": "fabricaeexnihilo:doll_guardian"
+  }
+}

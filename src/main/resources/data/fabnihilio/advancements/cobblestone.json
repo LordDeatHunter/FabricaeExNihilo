@@ -1,0 +1,35 @@
+{
+  "parent": "fabricaeexnihilo:pebbles",
+  "display": {
+    "icon": {
+      "item": "minecraft:cobblestone"
+    },
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.cobblestone.title"
+    },
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.cobblestone.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "cobblestone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:cobblestone"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "cobblestone"
+    ]
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "parent": "fabricaeexnihilo:barrel",
+  "display": {
+    "icon": {
+      "item": "fabricaeexnihilo:blood_bucket"
+    },
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.blood.title"
+    },
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.blood.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "blood": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "fabricaeexnihilo:blood_bucket"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "blood"
+    ]
+  ]
+}

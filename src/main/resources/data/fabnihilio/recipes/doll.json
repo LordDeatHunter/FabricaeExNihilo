@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "fabricaeexnihilo:doll",
+  "pattern": [
+    "xyx",
+    " x ",
+    "x x"
+  ],
+  "key": {
+    "x": {
+      "tag": "c:porcelain"
+    },
+    "y": {
+      "item": "minecraft:emerald"
+    }
+  },
+  "result": {
+    "item": "fabricaeexnihilo:doll"
+  }
+}

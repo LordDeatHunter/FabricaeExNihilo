@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "item": "fabricaeexnihilo:silkworm_raw"
+  },
+  "result": "fabricaeexnihilo:silkworm_cooked",
+  "experience": 0.35,
+  "cookingtime": 600
+}

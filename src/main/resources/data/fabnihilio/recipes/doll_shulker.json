@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "fabricaeexnihilo:doll",
+  "pattern": [
+    "xux",
+    "scs",
+    "xdx"
+  ],
+  "key": {
+    "x": {
+      "item": "minecraft:purple_dye"
+    },
+    "u": {
+      "item": "minecraft:end_stone"
+    },
+    "d": {
+      "item": "minecraft:ender_pearl"
+    },
+    "s": {
+      "item": "minecraft:glowstone_dust"
+    },
+    "c": {
+      "item": "fabricaeexnihilo:doll"
+    }
+  },
+  "result": {
+    "item": "fabricaeexnihilo:doll_shulker"
+  }
+}

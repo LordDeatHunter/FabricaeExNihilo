@@ -1,32 +1,28 @@
 {
   "schemaVersion": 1,
-  "id": "exnihilofabrico",
-  "name": "Ex Nihilo Fabrico",
+  "id": "fabricaeexnihilo",
+  "name": "FabricaeExNihilo",
   "description": "Fabricate from nothing.",
-  "authors": ["SirLyle"],
+  "authors": ["LordDeatHunter"],
   "version": "${version}",
   "license": "MIT",
   "icon": "icon.png",
   "environment": "*",
-  "mixins": [
-    "exnihilofabrico.common.json"
-  ],
   "entrypoints": {
-    "main": [{
-        "adapter": "kotlin",
-        "value": "exnihilofabrico.ExNihiloFabrico"}],
-    "client": [{
-      "adapter": "kotlin",
-      "value": "exnihilofabrico.ExNihiloFabricoClient"}],
-    "rei_plugins_v0": ["exnihilofabrico.compatibility.rei.PluginEntry"]
+    "main": [
+      "wraith.fabricaeexnihilo.FabricaeExNihilo"
+    ],
+    "client": [
+      "wraith.fabricaeexnihilo.client.FabricaeExNihiloClient"
+    ]
   },
+  "mixins": [
+    "fabricaeexnihilo.mixin.json"
+  ],
   "depends": {
+    "fabricloader": ">=0.11.3",
     "fabric": "*",
-    "fabricloader": ">=0.7.6",
-    "fabric-language-kotlin": ">=1.3.40",
-    "towelette": "*",
-    "artifice": "*",
-    "libblockattributes_items": "*",
-    "libblockattributes_fluids": "*"
+    "minecraft": "1.17.x",
+    "java": ">=16"
   }
 }

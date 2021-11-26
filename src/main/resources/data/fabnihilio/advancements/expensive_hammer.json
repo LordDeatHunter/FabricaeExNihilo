@@ -1,0 +1,35 @@
+{
+  "parent": "fabricaeexnihilo:better_hammer",
+  "display": {
+    "icon": {
+      "item": "fabricaeexnihilo:hammer_diamond"
+    },
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.expensive_hammer.title"
+    },
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.expensive_hammer.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "hammer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "fabricaeexnihilo:hammer_diamond"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "hammer"
+    ]
+  ]
+}

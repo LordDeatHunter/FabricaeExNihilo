@@ -1,0 +1,35 @@
+{
+  "parent": "fabricaeexnihilo:ancient_spores",
+  "display": {
+    "icon": {
+      "item": "fabricaeexnihilo:witchwater_bucket"
+    },
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.witchwater.title"
+    },
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.witchwater.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "witchwater": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "fabricaeexnihilo:witchwater_bucket"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "witchwater"
+    ]
+  ]
+}

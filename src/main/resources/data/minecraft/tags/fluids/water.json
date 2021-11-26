@@ -1,11 +1,11 @@
 {
   "replace": false,
   "values": [
-    "exnihilofabrico:witchwater",
-    "exnihilofabrico:witchwater_flowing",
-    "exnihilofabrico:blood",
-    "exnihilofabrico:blood_flowing",
-    "exnihilofabrico:brine",
-    "exnihilofabrico:brine_flowing"
+    "fabricaeexnihilo:witchwater",
+    "fabricaeexnihilo:witchwater_flowing",
+    "fabricaeexnihilo:blood",
+    "fabricaeexnihilo:blood_flowing",
+    "fabricaeexnihilo:brine",
+    "fabricaeexnihilo:brine_flowing"
   ]
 }

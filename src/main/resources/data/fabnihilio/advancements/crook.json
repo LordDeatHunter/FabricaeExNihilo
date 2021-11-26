@@ -1,0 +1,35 @@
+{
+  "parent": "fabricaeexnihilo:root",
+  "display": {
+    "icon": {
+      "item": "fabricaeexnihilo:crook_wood"
+    },
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.crook.title"
+    },
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.crook.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "crook": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "fabricaeexnihilo:crook_wood"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "crook"
+    ]
+  ]
+}

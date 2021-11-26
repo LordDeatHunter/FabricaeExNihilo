@@ -1,0 +1,4 @@
+{
+  "parent": "item/generated",
+  "textures": {"layer0": "fabricaeexnihilo:item/tools/hammer/hammer_gold"}
+}
