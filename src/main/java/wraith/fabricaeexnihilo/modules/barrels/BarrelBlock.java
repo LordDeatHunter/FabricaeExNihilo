@@ -182,4 +182,8 @@ public class BarrelBlock extends BlockWithEntity implements BlockEntityProvider,
         );
     }
 
+    public Identifier getTexture() {
+        return texture;
+    }
+
 }

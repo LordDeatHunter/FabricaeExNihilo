@@ -180,4 +180,8 @@ public class CrucibleBlock extends BlockWithEntity implements BlockEntityProvide
         return this.material;
     }
 
+    public Identifier getTexture() {
+        return texture;
+    }
+
 }

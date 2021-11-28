@@ -1,5 +1,9 @@
 package wraith.fabricaeexnihilo.client;
 
+import net.devtech.arrp.api.RRPCallback;
+import net.devtech.arrp.api.RuntimeResourcePack;
+import net.devtech.arrp.json.blockstate.JState;
+import net.devtech.arrp.json.models.JModel;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -7,6 +11,7 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.api.registry.FabricaeExNihiloRegistries;
 import wraith.fabricaeexnihilo.client.renderers.BarrelBlockEntityRenderer;
@@ -18,6 +23,10 @@ import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
 import wraith.fabricaeexnihilo.modules.crucibles.CrucibleBlockEntity;
 import wraith.fabricaeexnihilo.modules.infested.InfestingLeavesBlockEntity;
 import wraith.fabricaeexnihilo.modules.sieves.SieveBlockEntity;
+
+import java.nio.file.Path;
+
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.ID;
 
 @Environment(EnvType.CLIENT)
 public class FabricaeExNihiloClient implements ClientModInitializer {
@@ -47,93 +56,66 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
         ModBlocks.SIEVES.forEach((identifier, sieve) -> BlockRenderLayerMap.INSTANCE.putBlock(sieve, RenderLayer.getCutout()));
         ModBlocks.CRUCIBLES.forEach((identifier, crucible) -> BlockRenderLayerMap.INSTANCE.putBlock(crucible, RenderLayer.getCutout()));
 
-        /*
-        TODO
         // ARRP resource pack
-        val resourcePack: ArtificeResourcePack = Artifice.registerAssets(ID("resources")) { pack ->
-                pack.setDisplayName("Fabricae Ex Nihilo Generated Resources")
-            pack.setDescription("Generated Resources for Fabricae Ex Nihilo")
-
-            // Barrel models
-            ModBlocks.BARRELS.forEach { (k, v) ->
-                    pack.addBlockModel(k) {model ->
-                    model.parent(id("block/barrel"))
-                            .texture("all", v.texture)
-            }
-                pack.addBlockState(k) {state ->
-                        state.variant("") {it.model(id("block/${k.path}")) }
-                }
-                pack.addItemModel(k) { model -> model.parent(id("block/${k.path}")) }
-            }
-            // Crucible models
-            ModBlocks.CRUCIBLES.forEach { (k, v) ->
-                    pack.addBlockModel(k) {model ->
-                    model.parent(id("block/crucible"))
-                            .texture("all", v.texture)
-            }
-                pack.addBlockState(k) {state ->
-                        state.variant("") {it.model(id("block/${k.path}")) }
-                }
-                pack.addItemModel(k) { model -> model.parent(id("block/${k.path}")) }
-            }
-            // Sieve models
-            ModBlocks.SIEVES.forEach { (k, v) ->
-                    pack.addBlockModel(k) {model ->
-                    model.parent(id("block/sieve"))
-                            .texture("all", v.texture)
-            }
-                pack.addBlockState(k) {state ->
-                        state.variant("") {it.model(id("block/${k.path}")) }
-                }
-                pack.addItemModel(k) { model -> model.parent(id("block/${k.path}")) }
-            }
-
-            // Mesh models
-            for(mesh in FabricaeExNihiloRegistries.MESH.getAll()) {
-                pack.addItemModel(mesh.identifier) { model ->
-                        model.parent(id("item/mesh"))
-                }
-            }
-
-            // Infested Leaves models
-            ModBlocks.INFESTED_LEAVES.forEach { (k, leaves) ->
-                    pack.addBlockModel(k) {model ->
-                    val root = Registry.BLOCK.getId(leaves.leafBlock)
-                model.parent(Identifier(root.namespace, "block/${root.path}"))
-            }
-                pack.addBlockState(k) {state ->
-                        state.variant("") {it.model(id("block/${k.path}")) }
-                }
-                pack.addItemModel(k) { model -> model.parent(id("block/${k.path}")) }
-            }
-
-            // Ore Chunks/Pieces
-            for(ore in FabricaeExNihiloRegistries.ORES.getAll()) {
-                // Ore Chunk Model
-                pack.addItemModel(ore.getChunkID()) { model: ModelBuilder ->
-                        val chunkShape = ore.chunk.name.toLowerCase()
-                    val material = ore.matrix.name.toLowerCase()
-                    model
-                            .parent(Identifier("item/generated"))
-                            .texture("layer0", id("item/ore/chunks/${chunkShape}_$material"))
-                            .texture("layer1", id("item/ore/chunks/${chunkShape}_overlay"))
-                }
-                // Ore Piece Model
-                pack.addItemModel(ore.getPieceID()) { model: ModelBuilder ->
-                        val pieceShape = ore.piece.name.toLowerCase()
-                    val material = ore.matrix.name.toLowerCase()
-                    model
-                            .parent(Identifier("item/generated"))
-                            .texture("layer0", id("item/ore/pieces/${pieceShape}_$material"))
-                            .texture("layer1", id("item/ore/pieces/${pieceShape}_overlay"))
-                }
-            }
+        var resourcePack = RuntimeResourcePack.create(ID("resources"));
+        // Barrel models
+        ModBlocks.BARRELS.forEach((identifier, barrel) -> {
+            resourcePack.addModel(JModel.modelKeepElements(ID("block/barrel")).textures(JModel.textures().var("all", barrel.getTexture().toString())), ID("block/" + identifier.getPath()));
+            resourcePack.addModel(JModel.modelKeepElements(ID("block/" + identifier.getPath())), ID("item/" + identifier.getPath()));
+            resourcePack.addBlockState(JState.state(JState.variant(JState.model(ID("block/" + identifier.getPath())))), identifier);
+        });
+        // Crucible models
+        ModBlocks.CRUCIBLES.forEach((identifier, crucible) -> {
+            resourcePack.addModel(JModel.modelKeepElements(ID("block/crucible")).textures(JModel.textures().var("all", crucible.getTexture().toString())), ID("block/" + identifier.getPath()));
+            resourcePack.addModel(JModel.modelKeepElements(ID("block/" + identifier.getPath())), ID("item/" + identifier.getPath()));
+            resourcePack.addBlockState(JState.state(JState.variant(JState.model(ID("block/" + identifier.getPath())))), identifier);
+        });
+        // Sieve models
+        ModBlocks.SIEVES.forEach((identifier, sieve) -> {
+            resourcePack.addModel(JModel.modelKeepElements(ID("block/sieve")).textures(JModel.textures().var("all", sieve.getTexture().toString())), ID("block/" + identifier.getPath()));
+            resourcePack.addModel(JModel.modelKeepElements(ID("block/" + identifier.getPath())), ID("item/" + identifier.getPath()));
+            resourcePack.addBlockState(JState.state(JState.variant(JState.model(ID("block/" + identifier.getPath())))), identifier);
+        });
+        // Mesh models
+        for (var mesh : FabricaeExNihiloRegistries.MESH.getAll()) {
+            resourcePack.addModel(JModel.modelKeepElements(ID("item/mesh")), ID("item/" + mesh.getIdentifier().getPath()));
         }
+        // Infested Leaves models
+        ModBlocks.INFESTED_LEAVES.forEach((identifier, infestedLeaves) -> {
+            var root = Registry.BLOCK.getId(infestedLeaves.getLeafBlock());
+            resourcePack.addModel(JModel.modelKeepElements(root.getNamespace() + ":block/" + root.getPath()), ID("block/" + identifier.getPath()));
+            resourcePack.addModel(JModel.modelKeepElements(ID("block/" + identifier.getPath())), ID("item/" + identifier.getPath()));
+            resourcePack.addBlockState(JState.state(JState.variant(JState.model(ID("block/" + identifier.getPath())))), identifier);
+        });
+        // Ore Chunks/Pieces
+        for (var ore : FabricaeExNihiloRegistries.ORES.getAll()) {
+            // Ore Chunk Model
+            var chunkShape = ore.getChunkShape().name().toLowerCase();
+            var material = ore.getChunkMaterial().name().toLowerCase();
+            resourcePack.addModel(
+                    JModel.modelKeepElements("item/generated")
+                            .textures(
+                                    JModel.textures()
+                                            .layer0(ID("item/ore/chunks/" + chunkShape + "_" + material).toString())
+                                            .layer1(ID("item/ore/chunks/" + chunkShape + "_overlay").toString())),
+                    ID("item/" + ore.getChunkID().getPath()));
+            // Ore Piece Model
+            var pieceShape = ore.getPieceShape().name().toLowerCase();
+            resourcePack.addModel(
+                    JModel.modelKeepElements("item/generated")
+                            .textures(
+                                    JModel.textures()
+                                            .layer0(ID("item/ore/pieces/" + pieceShape + "_" + material).toString())
+                                            .layer1(ID("item/ore/pieces/" + pieceShape + "_overlay").toString())),
+                    ID("item/" + ore.getPieceID().getPath()));
+        }
+
         FabricaeExNihilo.LOGGER.info("Created Resources");
-        if(FabricaeExNihilo.CONFIG.dumpGeneratedResource) {
-            resourcePack.dumpResources("fabricaeexnihilo_generated");
+        if (FabricaeExNihilo.CONFIG.dumpGeneratedResource) {
+            resourcePack.dump(Path.of("fabricaeexnihilo_generated"));
         }
-         */
+
+        RRPCallback.BEFORE_VANILLA.register(a -> a.add(resourcePack));
     }
 
 }

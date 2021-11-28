@@ -157,4 +157,8 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
         );
     }
 
+    public Identifier getTexture() {
+        return texture;
+    }
+
 }
