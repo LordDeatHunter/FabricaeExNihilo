@@ -1,6 +1,7 @@
 package wraith.fabricaeexnihilo.client.renderers;
 
 import alexiil.mc.lib.attributes.fluid.amount.FluidAmount;
+import alexiil.mc.lib.attributes.fluid.render.FluidRenderFace;
 import alexiil.mc.lib.attributes.fluid.volume.FluidVolume;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -10,6 +11,7 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
 import wraith.fabricaeexnihilo.modules.barrels.modes.AlchemyMode;
@@ -18,15 +20,17 @@ import wraith.fabricaeexnihilo.modules.barrels.modes.FluidMode;
 import wraith.fabricaeexnihilo.modules.barrels.modes.ItemMode;
 import wraith.fabricaeexnihilo.util.Color;
 
+import java.util.List;
+
 public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBlockEntity> {
 
-    private float xzScale = 12.0F / 16.0F;
-    private float xMin = 2.0F / 16.0F;
-    private float xMax = 14.0F / 16.0F;
-    private float zMin = 2.0F / 16.0F;
-    private float zMax = 14.0F / 16.0F;
-    private float yMin = 0.1875F;
-    private float yMax = 0.9375F;
+    private final float xzScale = 12.0F / 16.0F;
+    private final float xMin = 2.0F / 16.0F;
+    private final float xMax = 14.0F / 16.0F;
+    private final float zMin = 2.0F / 16.0F;
+    private final float zMax = 14.0F / 16.0F;
+    private final float yMin = 0.1875F;
+    private final float yMax = 0.9375F;
 
     public BarrelBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
     }
@@ -69,7 +73,7 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
         var color = Color.average(Color.WHITE, mode.getColor(), Math.pow(mode.getProgress(), 4));
 
 //        matrices.push()
-//        matrices.translate(pos.x+0.5,(pos.y+yMin+yScale/2).todouble(), pos.z+0.5)
+//        matrices.translate(0.5, yMin+yScale/2.0, 0.5)
 //        matrices.scale(xzScale,yScale,xzScale)
 //        RenderHelper.renderItemColored(mode.result, ModelTransformation.NONE, color)
 //        matrices.pop()
@@ -79,31 +83,31 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
         var yScale = (yMax - yMin) * level;
 
         matrices.push();
-        matrices.translate(pos.getX() + 0.5, pos.getY() + yMin + yScale / 2, pos.getZ() + 0.5);
+        matrices.translate(0.5, yMin + yScale / 2, 0.5);
         matrices.scale(xzScale, yScale, xzScale);
         MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.NONE, light, overlays, matrices, vertexConsumers, (int) pos.asLong());
         matrices.pop();
     }
 
-    private void renderAlchemyMode(AlchemyMode mode, double x, double y, double z) {
+    private void renderAlchemyMode(AlchemyMode mode, double x, double y, double z, VertexConsumerProvider vertexConsumerProvider, MatrixStack matrices) {
         var before = mode.getBefore();
         if (before instanceof FluidMode fluidMode) {
-            renderFluidMode(fluidMode, x, y, z);
+            renderFluidMode(fluidMode, vertexConsumerProvider, matrices);
         } else if (before instanceof ItemMode itemMode) {
             //renderItem(itemMode.getStack(), 1.0, x, y, z);
         } else if (before instanceof AlchemyMode alchemyMode) {
-            renderAlchemyMode(alchemyMode, x, y, z);
+            renderAlchemyMode(alchemyMode, x, y, z, vertexConsumerProvider, matrices);
         } else if (before instanceof CompostMode compostMode) {
             renderCompostMode(compostMode, x, y, z);
         }
 
         var after = mode.getAfter();
         if (after instanceof FluidMode fluidMode) {
-            renderFluidMode(fluidMode, x, y, z);
+            renderFluidMode(fluidMode, vertexConsumerProvider, matrices);
         } else if (before instanceof ItemMode itemMode) {
             //renderItem(itemMode.getStack(), 1.0, x, y, z);
         } else if (before instanceof AlchemyMode alchemyMode) {
-            renderAlchemyMode(alchemyMode, x, y, z);
+            renderAlchemyMode(alchemyMode, x, y, z, vertexConsumerProvider, matrices);
         } else if (before instanceof CompostMode compostMode) {
             renderCompostMode(compostMode, x, y, z);
         }
@@ -116,23 +120,20 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
         var color = Color.average(Color.WHITE, mode.getColor(), Math.pow(mode.getProgress(), 4));
 
 //        GlStateManager.pushMatrix()
-//        GlStateManager.translated(x+0.5,y+yMin+yScale/2, z+0.5)
+//        GlStateManager.translated(0.5, yMin+yScale/2.0, 0.5)
 //        GlStateManager.scaled(xzScale,yScale,xzScale)
 //        GlStateManager.color4f(color.r, color.g, color.b, color.a)
 //        RenderHelper.renderItemColored(mode.result, ModelTransformation.Type.NONE, color)
 //        GlStateManager.popMatrix()
     }
 
-    public void renderFluidMode(FluidMode mode, double x, double y, double z) {
-        renderFluidVolume(mode.getFluid(), (double) mode.getFluid().amount().as1620() / FluidAmount.BUCKET.as1620(), x, y, z);
+    public void renderFluidMode(FluidMode mode, VertexConsumerProvider vertexConsumerProvider, MatrixStack matrices) {
+        renderFluidVolume(mode.getFluid(), (double) mode.getFluid().amount().as1620() / FluidAmount.BUCKET.as1620(), vertexConsumerProvider, matrices);
     }
 
-    public void renderFluidVolume(FluidVolume volume, double level, double x, double y, double z) {
+    public void renderFluidVolume(FluidVolume volume, double level, VertexConsumerProvider vertexConsumerProvider, MatrixStack matrices) {
         var yRender = (yMax - yMin) * level + yMin;
-
-//        GuiLighting.disable()
-//        volume.render(listOf(FluidRenderFace.createFlatFace(xMin, yMin, zMin, xMax, yRender, zMax, 16.0, Direction.UP)), x, y, z)
-//        GuiLighting.enable()
+        volume.render(List.of(FluidRenderFace.createFlatFace(xMin, yMin, zMin, xMax, yRender, zMax, 16.0, Direction.UP)), vertexConsumerProvider, matrices);
     }
 
 }

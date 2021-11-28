@@ -2,6 +2,7 @@ package wraith.fabricaeexnihilo.client.renderers;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.model.json.ModelTransformation;
@@ -29,8 +30,10 @@ public class SieveBlockEntityRenderer implements BlockEntityRenderer<SieveBlockE
         var progress = sieve.getProgress();
 
         // Render the Mesh
-        renderMesh(matrixStack, sieve.getPos(), mesh, light, overlays, vertexConsumerProvider);
-        renderContents(matrixStack, sieve.getPos(), contents, (float) progress, light, overlays, vertexConsumerProvider);
+        var pos = sieve.getPos();
+        int lightAbove = WorldRenderer.getLightmapCoordinates(sieve.getWorld(), pos.up());
+        renderMesh(matrixStack, pos, mesh, lightAbove, overlays, vertexConsumerProvider);
+        renderContents(matrixStack, pos, contents, (float) progress, lightAbove, overlays, vertexConsumerProvider);
     }
 
     public void renderMesh(MatrixStack matrixStack, BlockPos pos, ItemStack mesh, int light, int overlays, @Nullable VertexConsumerProvider vertexConsumerProvider) {
@@ -42,7 +45,7 @@ public class SieveBlockEntityRenderer implements BlockEntityRenderer<SieveBlockE
         var z = pos.getZ();
 
         matrixStack.push();
-        matrixStack.translate(x + 0.5, y + 0.5, z + 0.5);
+        matrixStack.translate(0.5, 0.5, 0.5);
         MinecraftClient.getInstance().getItemRenderer().renderItem(mesh, ModelTransformation.Mode.NONE, light, overlays, matrixStack, vertexConsumerProvider, (int) pos.asLong());
         matrixStack.pop();
     }
@@ -58,7 +61,7 @@ public class SieveBlockEntityRenderer implements BlockEntityRenderer<SieveBlockE
         var z = pos.getZ();
 
         matrixStack.push();
-        matrixStack.translate(x + 0.5, y + 0.625 + yScale / 2, z + 0.5);
+        matrixStack.translate(0.5, 0.625 + yScale / 2,0.5);
         matrixStack.scale(xzScale, yScale, xzScale);
         MinecraftClient.getInstance().getItemRenderer().renderItem(contents, ModelTransformation.Mode.NONE, light, overlays, matrixStack, vertexConsumerProvider, (int) pos.asLong());
         matrixStack.pop();

@@ -19,7 +19,7 @@ public class InfestingLeavesBlock extends LeavesBlock implements BlockEntityProv
 
     @Override
     public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
+        return BlockRenderType.INVISIBLE;
     }
 
     @Nullable

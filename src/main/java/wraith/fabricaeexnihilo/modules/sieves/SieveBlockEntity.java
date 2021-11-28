@@ -149,7 +149,7 @@ public class SieveBlockEntity extends BaseBlockEntity implements BlockEntityClie
         // TODO spawn some particles
 
         if (progress > 1.0) {
-            SIEVE.getResult(mesh, getFluid(), contents, player, world.random).forEach(sieveDrop -> player.giveItemStack(sieveDrop));
+            SIEVE.getResult(mesh, getFluid(), contents, player, world.random).forEach(player.getInventory()::offerOrDrop);
             progress = 0.0;
             contents = ItemStack.EMPTY;
         }
@@ -176,16 +176,18 @@ public class SieveBlockEntity extends BaseBlockEntity implements BlockEntityClie
     public List<SieveBlockEntity> getConnectedSieves() {
         var sieves = new ArrayList<SieveBlockEntity>();
 
+        if (world == null) {
+            return sieves;
+        }
+
         var tested = new HashSet<BlockPos>();
         var stack = new Stack<BlockPos>();
         stack.add(this.pos);
+
         while (!stack.empty()) {
             var popped = stack.pop();
             // Record that this one has been tested
             tested.add(popped);
-            if (world == null) {
-                continue;
-            }
             if (matchingSieveAt(world, popped)) {
                 if (!(this.world.getBlockEntity(popped) instanceof SieveBlockEntity sieve)) {
                     continue;

@@ -32,7 +32,6 @@ public class InfestingLeavesBlockEntityRenderer implements BlockEntityRenderer<I
         //}
         matrices.push();
 
-        matrices.translate(infesting.getPos().getX(), infesting.getPos().getY(), infesting.getPos().getZ());
         var r = (color >> 16 & 255) / 255.0F;
         var g = (color >> 8 & 255) / 255.0F;
         var b = (color & 255) / 255.0F;

@@ -3,9 +3,11 @@ package wraith.fabricaeexnihilo.client.renderers;
 import alexiil.mc.lib.attributes.fluid.render.FluidRenderFace;
 import alexiil.mc.lib.attributes.fluid.volume.FluidVolume;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
+import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Direction;
@@ -16,13 +18,13 @@ import java.util.List;
 
 public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<CrucibleBlockEntity> {
 
-    private static final double xzScale = 12.0 / 16.0;
-    private static final double xMin = 2.0 / 16.0;
-    private static final double xMax = 14.0 / 16.0;
-    private static final double zMin = 2.0 / 16.0;
-    private static final double zMax = 14.0 / 16.0;
-    private static final double yMin = 5.0 / 16.0;
-    private static final double yMax = 15.0 / 16.0;
+    private final float xzScale = 12.0F / 16.0F;
+    private final float xMin = 2.0F / 16.0F;
+    private final float xMax = 14.0F / 16.0F;
+    private final float zMin = 2.0F / 16.0F;
+    private final float zMax = 14.0F / 16.0F;
+    private final float yMin = 5.0F / 16.0F;
+    private final float yMax = 15.0F / 16.0F;
 
     public CrucibleBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
     }
@@ -36,33 +38,31 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
         var queued = crucible.getQueued();
 
         if (!contents.isEmpty()) {
-            renderFluidVolume(crucible, contents, (double)contents.amount().as1620() / crucible.getMaxCapacity(), matrices, vertexConsumers);
+            renderFluidVolume(contents, (double) contents.amount().as1620() / crucible.getMaxCapacity(), matrices, vertexConsumers);
         }
 
         var render = crucible.getRender();
 
         if (!queued.isEmpty() && !render.isEmpty()) {
-            renderQueued(render, (double)queued.amount().as1620() / crucible.getMaxCapacity(), matrices, vertexConsumers, light, overlay);
+            renderQueued(render, (float) queued.amount().as1620() / crucible.getMaxCapacity(), matrices, vertexConsumers, light, overlay, (int) crucible.getPos().asLong());
         }
 
     }
 
-    public void renderFluidVolume(BlockEntity blockEntity, FluidVolume volume, double level, @Nullable MatrixStack matrices, @Nullable VertexConsumerProvider vertexConsumer) {
+    public void renderFluidVolume(FluidVolume volume, double level, MatrixStack matrices, VertexConsumerProvider vertexConsumer) {
         var yRender = (yMax - yMin) * level + yMin;
 
-        //RenderSystem.disableLighting();
         volume.render(List.of(FluidRenderFace.createFlatFace(xMin, yMin, zMin, xMax, yRender, zMax, 16.0, Direction.UP)), vertexConsumer, matrices);
-        //RenderSystem.enableLighting();
     }
 
-    public void renderQueued(ItemStack renderStack, double level, @Nullable MatrixStack matrices, @Nullable VertexConsumerProvider vertexConsumer, int light, int overlay) {
+    public void renderQueued(ItemStack renderStack, float level, MatrixStack matrices, VertexConsumerProvider vertexConsumer, int light, int overlay, int seed) {
         var yScale = (yMax - yMin) * level;
 
-//        GlStateManager.pushMatrix()
-//        GlStateManager.translated(x+0.5,y+yMin+yScale/2, z+0.5)
-//        GlStateManager.scaled(xzScale,yScale,xzScale)
-//        MinecraftClient.getInstance().itemRenderer.renderItem(renderStack, ModelTransformation.Mode.NONE, light, overlay, matrices, vertexConsumer)
-//        GlStateManager.popMatrix()
+        matrices.push();
+        matrices.translate(0.5, yMin + yScale / 2, 0.5);
+        matrices.scale(xzScale, yScale, xzScale);
+        MinecraftClient.getInstance().getItemRenderer().renderItem(renderStack, ModelTransformation.Mode.NONE, light, overlay, matrices, vertexConsumer, seed);
+        matrices.pop();
     }
 
 }
