@@ -22,7 +22,8 @@
   "depends": {
     "fabricloader": ">=0.12.8",
     "fabric": "*",
-    "minecraft": "1.18",
-    "java": ">=17"
+    "minecraft": "1.18.x",
+    "java": ">=17",
+    "libblockattributes-all": ">=0.10.0"
   }
 }
