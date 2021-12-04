@@ -1,8 +1,6 @@
 package wraith.fabricaeexnihilo.api.registry;
 
-import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.modules.sieves.MeshProperties;
 import wraith.fabricaeexnihilo.util.Color;
 

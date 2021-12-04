@@ -2,7 +2,6 @@ package wraith.fabricaeexnihilo.api.crafting;
 
 import com.google.common.collect.Streams;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
-import me.shedaniel.rei.api.common.entry.EntryStack;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;

@@ -1,6 +1,5 @@
 package wraith.fabricaeexnihilo.modules.infested;
 
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeavesBlock;
@@ -17,7 +16,7 @@ import wraith.fabricaeexnihilo.modules.base.BaseBlockEntity;
 import wraith.fabricaeexnihilo.modules.base.IHasColor;
 import wraith.fabricaeexnihilo.util.Color;
 
-public class InfestingLeavesBlockEntity extends BaseBlockEntity implements BlockEntityClientSerializable, IHasColor {
+public class InfestingLeavesBlockEntity extends BaseBlockEntity implements IHasColor {
 
     private InfestedLeavesBlock infestedBlock = ModBlocks.INFESTED_LEAVES.values().stream().findFirst().get();
     private double progress = 0.0;
@@ -75,24 +74,14 @@ public class InfestingLeavesBlockEntity extends BaseBlockEntity implements Block
     }
 
     @Override
-    public NbtCompound writeNbt(NbtCompound nbt) {
-        return toNBTWithoutWorldInfo(super.writeNbt(nbt));
+    public void writeNbt(NbtCompound nbt) {
+        super.writeNbt(nbt);
+        toNBTWithoutWorldInfo(nbt);
     }
 
-    @Override
-    public void fromClientTag(NbtCompound nbt) {
-        readNbt(nbt);
-    }
-
-    @Override
-    public NbtCompound toClientTag(NbtCompound nbt) {
-        return writeNbt(nbt);
-    }
-
-    public NbtCompound toNBTWithoutWorldInfo(NbtCompound nbt) {
+    public void toNBTWithoutWorldInfo(NbtCompound nbt) {
         nbt.putString("block", Registry.BLOCK.getId(infestedBlock).toString());
         nbt.putDouble("progress", progress);
-        return nbt;
     }
 
     public void readNbtWithoutWorldInfo(NbtCompound nbt) {

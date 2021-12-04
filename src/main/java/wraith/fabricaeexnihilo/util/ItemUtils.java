@@ -1,9 +1,7 @@
 package wraith.fabricaeexnihilo.util;
 
 import dev.architectury.fluid.FluidStack;
-import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.entry.EntryStack;
-import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.block.Block;
 import net.minecraft.entity.ItemEntity;

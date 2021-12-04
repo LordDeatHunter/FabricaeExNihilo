@@ -2,7 +2,6 @@ package wraith.fabricaeexnihilo.client.renderers;
 
 import alexiil.mc.lib.attributes.fluid.render.FluidRenderFace;
 import alexiil.mc.lib.attributes.fluid.volume.FluidVolume;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
@@ -11,7 +10,6 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Direction;
-import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.modules.crucibles.CrucibleBlockEntity;
 
 import java.util.List;

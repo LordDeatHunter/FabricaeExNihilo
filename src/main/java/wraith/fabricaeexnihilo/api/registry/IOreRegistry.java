@@ -1,8 +1,6 @@
 package wraith.fabricaeexnihilo.api.registry;
 
 import net.minecraft.client.util.ModelIdentifier;
-import net.minecraft.item.Item;
-import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.modules.ore.EnumChunkMaterial;
 import wraith.fabricaeexnihilo.modules.ore.EnumChunkShape;

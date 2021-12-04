@@ -1,7 +1,6 @@
 package wraith.fabricaeexnihilo.json.recipe;
 
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
 import wraith.fabricaeexnihilo.api.crafting.FluidIngredient;
 import wraith.fabricaeexnihilo.api.crafting.ItemIngredient;
 import wraith.fabricaeexnihilo.api.recipes.barrel.LeakingRecipe;

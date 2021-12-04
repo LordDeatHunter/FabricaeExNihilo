@@ -28,7 +28,7 @@ import wraith.fabricaeexnihilo.modules.base.EnchantmentContainer;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 import wraith.fabricaeexnihilo.util.VoxelShapeHelper;
 
-public class CrucibleBlock extends BlockWithEntity implements BlockEntityProvider, InventoryProvider, AttributeProvider {
+public class CrucibleBlock extends BlockWithEntity implements InventoryProvider, AttributeProvider {
 
     private final Identifier texture;
     private final Identifier craftIngredient;

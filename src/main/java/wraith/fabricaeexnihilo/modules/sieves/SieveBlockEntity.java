@@ -1,6 +1,5 @@
 package wraith.fabricaeexnihilo.modules.sieves;
 
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
@@ -33,7 +32,7 @@ import java.util.*;
 
 import static wraith.fabricaeexnihilo.api.registry.FabricaeExNihiloRegistries.SIEVE;
 
-public class SieveBlockEntity extends BaseBlockEntity implements BlockEntityClientSerializable {
+public class SieveBlockEntity extends BaseBlockEntity {
 
     private ItemStack mesh = ItemStack.EMPTY;
     private ItemStack contents = ItemStack.EMPTY;
@@ -227,8 +226,9 @@ public class SieveBlockEntity extends BaseBlockEntity implements BlockEntityClie
      */
 
     @Override
-    public NbtCompound writeNbt(NbtCompound nbt) {
-        return writeNbtWithoutWorldInfo(super.writeNbt(nbt));
+    public void writeNbt(NbtCompound nbt) {
+        super.writeNbt(nbt);
+        writeNbtWithoutWorldInfo(nbt);
     }
 
     @Override
@@ -241,21 +241,10 @@ public class SieveBlockEntity extends BaseBlockEntity implements BlockEntityClie
         readNbtWithoutWorldInfo(nbt);
     }
 
-    @Override
-    public void fromClientTag(NbtCompound tag) {
-        readNbt(tag);
-    }
-
-    @Override
-    public NbtCompound toClientTag(NbtCompound tag) {
-        return writeNbt(tag);
-    }
-
-    public NbtCompound writeNbtWithoutWorldInfo(NbtCompound nbt) {
+    public void writeNbtWithoutWorldInfo(NbtCompound nbt) {
         nbt.put("mesh", mesh.writeNbt(new NbtCompound()));
         nbt.put("contents", contents.writeNbt(new NbtCompound()));
         nbt.putDouble("progress", progress);
-        return nbt;
     }
 
     public void readNbtWithoutWorldInfo(NbtCompound nbt) {
