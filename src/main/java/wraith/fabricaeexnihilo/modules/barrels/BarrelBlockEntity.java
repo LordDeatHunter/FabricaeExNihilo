@@ -10,7 +10,6 @@ import alexiil.mc.lib.attributes.fluid.volume.FluidVolume;
 import alexiil.mc.lib.attributes.item.ItemTransferable;
 import alexiil.mc.lib.attributes.item.filter.ExactItemStackFilter;
 import alexiil.mc.lib.attributes.item.filter.ItemFilter;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -43,7 +42,7 @@ import wraith.fabricaeexnihilo.modules.base.EnchantmentContainer;
 import wraith.fabricaeexnihilo.util.FluidUtils;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
-public class BarrelBlockEntity extends BaseBlockEntity implements BlockEntityClientSerializable {
+public class BarrelBlockEntity extends BaseBlockEntity{
 
     public static final Identifier BLOCK_ENTITY_ID = FabricaeExNihilo.ID("barrel");
     public static final BlockEntityType<BarrelBlockEntity> TYPE = FabricBlockEntityTypeBuilder.create(
@@ -236,8 +235,9 @@ public class BarrelBlockEntity extends BaseBlockEntity implements BlockEntityCli
     // NBT Serialization section
 
     @Override
-    public NbtCompound writeNbt(NbtCompound nbt) {
-        return writeNbtWithoutWorldInfo(super.writeNbt(nbt));
+    public void writeNbt(NbtCompound nbt) {
+        super.writeNbt(nbt);
+        writeNbtWithoutWorldInfo(nbt);
     }
 
     @Override
@@ -250,20 +250,9 @@ public class BarrelBlockEntity extends BaseBlockEntity implements BlockEntityCli
         readNbtWithoutWorldInfo(nbt);
     }
 
-    @Override
-    public NbtCompound toClientTag(NbtCompound tag) {
-        return writeNbt(tag == null ? new NbtCompound() : tag);
-    }
-
-    @Override
-    public void fromClientTag(NbtCompound tag) {
-        readNbt(tag == null ? new NbtCompound() : tag);
-    }
-
-    private NbtCompound writeNbtWithoutWorldInfo(NbtCompound nbt) {
+    private void writeNbtWithoutWorldInfo(NbtCompound nbt) {
         nbt.put(mode.nbtKey(), mode.writeNbt());
         nbt.put("enchantments", enchantments.writeNbt());
-        return nbt;
     }
 
     private void readNbtWithoutWorldInfo(NbtCompound nbt) {

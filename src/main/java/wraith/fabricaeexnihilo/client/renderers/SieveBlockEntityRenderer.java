@@ -40,9 +40,9 @@ public class SieveBlockEntityRenderer implements BlockEntityRenderer<SieveBlockE
         if (mesh.isEmpty()) {
             return;
         }
-        var x = pos.getX();
-        var y = pos.getY();
-        var z = pos.getZ();
+//      var x = pos.getX();
+//      var y = pos.getY();
+//      var z = pos.getZ();
 
         matrixStack.push();
         matrixStack.translate(0.5, 0.5, 0.5);
@@ -56,9 +56,9 @@ public class SieveBlockEntityRenderer implements BlockEntityRenderer<SieveBlockE
         }
         var yScale = yMax - (yMax - yMin) * progress;
 
-        var x = pos.getX();
-        var y = pos.getY();
-        var z = pos.getZ();
+//      var x = pos.getX();
+//      var y = pos.getY();
+//      var z = pos.getZ();
 
         matrixStack.push();
         matrixStack.translate(0.5, 0.625 + yScale / 2,0.5);

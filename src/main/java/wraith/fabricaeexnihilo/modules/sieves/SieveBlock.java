@@ -1,11 +1,9 @@
 package wraith.fabricaeexnihilo.modules.sieves;
 
 import net.devtech.arrp.json.recipe.*;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -41,18 +39,18 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
         this.craftIngredient1 = craftIngredient1;
         this.craftIngredient2 = craftIngredient2;
         setDefaultState(getStateManager().getDefaultState().with(WATERLOGGED, false));
-        BlockRenderLayerMap.INSTANCE.putBlock(this, RenderLayer.getCutout());
     }
-
     public SieveBlock(Identifier texture, Identifier craftIngredient1, Identifier craftIngredient2) {
         this(texture, craftIngredient1, craftIngredient2, FabricBlockSettings.of(Material.WOOD));
     }
 
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+        /*
         if (state.get(WATERLOGGED)) {
             world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
+        */
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
 

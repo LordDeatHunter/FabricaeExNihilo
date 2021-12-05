@@ -25,7 +25,6 @@ import wraith.fabricaeexnihilo.api.registry.FabricaeExNihiloRegistries;
 import wraith.fabricaeexnihilo.modules.ModEffects;
 import wraith.fabricaeexnihilo.modules.base.BaseFluidBlock;
 
-@SuppressWarnings("deprecation")
 public class WitchWaterBlock extends BaseFluidBlock {
 
     public WitchWaterBlock(FlowableFluid fluid, Settings settings) {

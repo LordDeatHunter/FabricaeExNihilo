@@ -18,7 +18,6 @@ import wraith.fabricaeexnihilo.modules.barrels.modes.AlchemyMode;
 import wraith.fabricaeexnihilo.modules.barrels.modes.CompostMode;
 import wraith.fabricaeexnihilo.modules.barrels.modes.FluidMode;
 import wraith.fabricaeexnihilo.modules.barrels.modes.ItemMode;
-import wraith.fabricaeexnihilo.util.Color;
 
 import java.util.List;
 
@@ -68,9 +67,9 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
 
     public void renderCompost(CompostMode mode, BlockPos pos, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlays) {
 
-        var yScale = (yMax - yMin) * Math.min(mode.getAmount(), 1.0f);
+//        var yScale = (yMax - yMin) * Math.min(mode.getAmount(), 1.0f);
 
-        var color = Color.average(Color.WHITE, mode.getColor(), Math.pow(mode.getProgress(), 4));
+//        var color = Color.average(Color.WHITE, mode.getColor(), Math.pow(mode.getProgress(), 4));
 
 //        matrices.push()
 //        matrices.translate(0.5, yMin+yScale/2.0, 0.5)
@@ -88,7 +87,7 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
         MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.NONE, light, overlays, matrices, vertexConsumers, (int) pos.asLong());
         matrices.pop();
     }
-
+    /*
     private void renderAlchemyMode(AlchemyMode mode, double x, double y, double z, VertexConsumerProvider vertexConsumerProvider, MatrixStack matrices) {
         var before = mode.getBefore();
         if (before instanceof FluidMode fluidMode) {
@@ -113,11 +112,11 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
         }
 
     }
-
+    */
     public void renderCompostMode(CompostMode mode, double x, double y, double z) {
-        var yScale = (yMax - yMin) * Math.min(mode.getAmount(), 1.0);
+//        var yScale = (yMax - yMin) * Math.min(mode.getAmount(), 1.0);
 
-        var color = Color.average(Color.WHITE, mode.getColor(), Math.pow(mode.getProgress(), 4));
+//        var color = Color.average(Color.WHITE, mode.getColor(), Math.pow(mode.getProgress(), 4));
 
 //        GlStateManager.pushMatrix()
 //        GlStateManager.translated(0.5, yMin+yScale/2.0, 0.5)

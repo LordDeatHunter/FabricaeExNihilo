@@ -32,26 +32,22 @@ public class OreProperties {
     public Identifier getPieceID() {
         return FabricaeExNihilo.ID((material + "_piece").toLowerCase());
     }
-
+    
     public Identifier getIngotID() {
-        return switch (material) {
-            case "iron", "gold" -> new Identifier(material + "_ingot");
-            default -> new Identifier("c", material + "_ingot");
-        };
+        return isVanillaMaterial() ? new Identifier(material + "_ingot") : new Identifier("c", material + "_ingots");
     }
 
     public Identifier getNuggetID() {
-        return switch (material) {
-            case "iron", "gold" -> new Identifier(material + "_nugget");
-            default -> new Identifier("c", material + "_nugget");
-        };
+        return isVanillaMaterial() ? new Identifier(material + "_nugget") : new Identifier("c", material + "_nuggets");
     }
 
     public Identifier getOreID() {
-        return switch (material) {
-            case "iron", "gold" -> new Identifier(material + "_ore");
-            default -> new Identifier("c", material + "_ore");
-        };
+        return new Identifier("c", "raw_" + material + "_ores");
+    }
+
+    public boolean isVanillaMaterial() {
+        // return Registry.ITEM.containsId(new Identifier(material + "_ingot")) || Registry.ITEM.containsId(new Identifier(material + "_nugget")) || Registry.ITEM.containsId(new Identifier("raw_" + material)); // generic
+        return material == "copper" || material == "iron" || material == "gold"; //fast
     }
 
     public Item getChunkItem() {
@@ -76,7 +72,6 @@ public class OreProperties {
                 JResult.result(getChunkID().toString())
         );
     }
-
     public JRecipe generateNuggetCookingRecipe() {
         return JRecipe.smelting(JIngredient.ingredient().item(getPieceID().toString()), JResult.result(getNuggetID().toString()));
     }

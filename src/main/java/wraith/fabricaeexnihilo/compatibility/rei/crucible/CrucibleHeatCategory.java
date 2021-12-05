@@ -11,7 +11,6 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 import wraith.fabricaeexnihilo.util.ItemUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 

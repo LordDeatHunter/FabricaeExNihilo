@@ -8,7 +8,6 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
-
 import java.util.HashMap;
 
 public final class InfestedHelper {

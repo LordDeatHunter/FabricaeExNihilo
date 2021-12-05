@@ -1,7 +1,6 @@
 package wraith.fabricaeexnihilo.registry.sieve;
 
 import com.google.common.reflect.TypeToken;
-import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.api.recipes.crucible.CrucibleRecipe;
 import wraith.fabricaeexnihilo.api.registry.IMeshRegistry;

@@ -39,7 +39,7 @@ import wraith.fabricaeexnihilo.modules.base.EnchantmentContainer;
 import wraith.fabricaeexnihilo.modules.fluids.BloodFluid;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
-public class BarrelBlock extends BlockWithEntity implements BlockEntityProvider, AttributeProvider, InventoryProvider {
+public class BarrelBlock extends BlockWithEntity implements AttributeProvider, InventoryProvider {
 
     private static final VoxelShape SHAPE = createCuboidShape(1.0, 0.0, 1.0, 15.0, 16.0, 15.0);
 

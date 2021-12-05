@@ -25,7 +25,6 @@ import wraith.fabricaeexnihilo.modules.sieves.SieveBlock;
 import wraith.fabricaeexnihilo.modules.sieves.SieveBlockEntity;
 import wraith.fabricaeexnihilo.util.BlockGenerator;
 import wraith.fabricaeexnihilo.util.VanillaWoodDefinitions;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
