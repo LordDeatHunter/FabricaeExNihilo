@@ -32,26 +32,25 @@ public class OreProperties {
     public Identifier getPieceID() {
         return FabricaeExNihilo.ID((material + "_piece").toLowerCase());
     }
-
     public Identifier getIngotID() {
-        return switch (material) {
-            case "iron", "gold" -> new Identifier(material + "_ingot");
-            default -> new Identifier("c", material + "_ingot");
-        };
+        return isVanillaMaterial() ? new Identifier(material + "_ingot") : new Identifier("c", material + "_ingots");
     }
 
     public Identifier getNuggetID() {
-        return switch (material) {
-            case "iron", "gold" -> new Identifier(material + "_nugget");
-            default -> new Identifier("c", material + "_nugget");
-        };
+        return isVanillaMaterial() ? new Identifier(material + "_nugget") : new Identifier("c", material + "_nuggets");
     }
 
     public Identifier getOreID() {
-        return switch (material) {
-            case "iron", "gold" -> new Identifier(material + "_ore");
-            default -> new Identifier("c", material + "_ore");
-        };
+        return FabricaeExNihilo.ID(material + "_ore");
+    }
+
+    public Identifier getCommonRawOreID() {
+        return new Identifier("c", "raw_" + material + "_ores");
+    }
+
+    public boolean isVanillaMaterial() {
+        // return Registry.ITEM.containsId(new Identifier("minecraft", material + "_ingot")) || Registry.ITEM.containsId(new Identifier("minecraft", material + "_nugget")) || Registry.ITEM.containsId(new Identifier("minecraft", "raw_" + material)); // universal
+        return material == "copper" || material == "iron" || material == "gold"; //fast
     }
 
     public Item getChunkItem() {
@@ -76,7 +75,6 @@ public class OreProperties {
                 JResult.result(getChunkID().toString())
         );
     }
-
     public JRecipe generateNuggetCookingRecipe() {
         return JRecipe.smelting(JIngredient.ingredient().item(getPieceID().toString()), JResult.result(getNuggetID().toString()));
     }
@@ -84,7 +82,7 @@ public class OreProperties {
     public JRecipe generateIngotCookingRecipe() {
         return JRecipe.smelting(JIngredient.ingredient().item(getChunkID().toString()), JResult.result(getIngotID().toString()));
     }
-
+    
     public String getMaterial() {
         return material;
     }

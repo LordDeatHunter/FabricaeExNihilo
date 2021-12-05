@@ -23,19 +23,19 @@ public final class ModTags {
     public static final Tag.Identified<Item> INFESTED_LEAVES = TagFactory.ITEM.create(FabricaeExNihilo.ID("infested_leaves"));
     public static final Tag.Identified<Block> INFESTED_LEAVES_BLOCK = TagFactory.BLOCK.create(FabricaeExNihilo.ID("infested_leaves"));
 
-    public static JTag getnerateResourcePackTag(Collection<Identifier> identifiers) {
+    public static JTag generateResourcePackTag(Collection<Identifier> identifiers) {
         return addAllTags(JTag.tag(), identifiers);
     }
 
-    public static JTag getnerateResourcePackTag(Identifier identifier) {
+    public static JTag generateResourcePackTag(Identifier identifier) {
         JTag tag = JTag.tag();
         tag.add(identifier);
         return tag;
     }
 
     public static void registerBlockAndItem(RuntimeResourcePack resourcePack, Tag.Identified<?> tag, Map<Identifier, ?> map) {
-        resourcePack.addTag(ID("blocks/" + tag.getId().getPath()), ModTags.getnerateResourcePackTag(map.keySet()));
-        resourcePack.addTag(ID("items/" + tag.getId().getPath()), ModTags.getnerateResourcePackTag(map.keySet()));
+        resourcePack.addTag(ID("blocks/" + tag.getId().getPath()), ModTags.generateResourcePackTag(map.keySet()));
+        resourcePack.addTag(ID("items/" + tag.getId().getPath()), ModTags.generateResourcePackTag(map.keySet()));
     }
 
     public static JTag addAllTags(JTag tag, Collection<Identifier> identifiers) {
@@ -44,5 +44,4 @@ public final class ModTags {
         }
         return tag;
     }
-
 }
