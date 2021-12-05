@@ -40,12 +40,7 @@ public class OreProperties {
     public Identifier getNuggetID() {
         return isVanillaMaterial() ? new Identifier(material + "_nugget") : new Identifier("c", material + "_nuggets");
     }
-
     public Identifier getOreID() {
-        return FabricaeExNihilo.ID(material + "_ore");
-    }
-
-    public Identifier getCommonRawOreID() {
         return new Identifier("c", "raw_" + material + "_ores");
     }
 

@@ -21,7 +21,7 @@ public final class ARRPUtils {
         // Ore Chunk Crafting
         FabricaeExNihiloRegistries.ORES.getAll().forEach(ore -> {
             resourcePack.addRecipe(ID(ore.getChunkID().getPath() + "_crafting"), ore.generateRecipe());
-            
+
             if (Registry.ITEM.containsId(ore.getNuggetID())) {
                 resourcePack.addRecipe(ID(ore.getPieceID().getPath() + "_smelting"), ore.generateNuggetCookingRecipe());
                 resourcePack.addRecipe(ID(ore.getPieceID().getPath() + "_blasting"), ore.generateNuggetCookingRecipe());
@@ -63,8 +63,7 @@ public final class ARRPUtils {
         ModTags.registerBlockAndItem(resourcePack, ModTags.CROOK_TAG, ModTools.CROOKS);
 
         FabricaeExNihiloRegistries.ORES.getAll().forEach(property -> {
-            resourcePack.addTag(new Identifier(property.getOreID().getNamespace(), "items/" + property.getOreID().getPath()), ModTags.generateResourcePackTag(property.getChunkID())); // mod exclusive ore tag
-            resourcePack.addTag(new Identifier(property.getCommonRawOreID().getNamespace(), "items/" + property.getCommonRawOreID().getPath()), ModTags.generateResourcePackTag(property.getChunkID())); // common RAW ore tag. 1 chunk is treated as 1 raw ore.
+            resourcePack.addTag(new Identifier(property.getOreID().getNamespace(), "items/" + property.getOreID().getPath()), ModTags.generateResourcePackTag(property.getChunkID())); // common raw ore tag. 1 chunk is treated as 1 raw ore.
         });
         EnchantmentTagManager.generateDefaultTags(resourcePack);
     }
