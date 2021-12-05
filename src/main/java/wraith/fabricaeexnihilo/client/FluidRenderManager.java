@@ -33,7 +33,6 @@ public class FluidRenderManager implements ClientSpriteRegistryCallback {
     public static void setupClient() {
         var renderManager = new FluidRenderManager();
         ClientSpriteRegistryCallback.event(BLOCK_ATLAS_TEXTURE).register(renderManager);
-        ModFluids.FLUIDS.forEach(FluidRenderManager::setupFluidRenderer);
         ModFluids.FLUIDS.forEach((fluid) -> {
             FluidRenderManager.setupFluidRenderer(fluid);
             BlockRenderLayerMap.INSTANCE.putFluid(fluid, RenderLayer.getTranslucent());
