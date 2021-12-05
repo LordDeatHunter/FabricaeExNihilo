@@ -21,6 +21,7 @@ public final class ARRPUtils {
         // Ore Chunk Crafting
         FabricaeExNihiloRegistries.ORES.getAll().forEach(ore -> {
             resourcePack.addRecipe(ID(ore.getChunkID().getPath() + "_crafting"), ore.generateRecipe());
+            
             if (Registry.ITEM.containsId(ore.getNuggetID())) {
                 resourcePack.addRecipe(ID(ore.getPieceID().getPath() + "_smelting"), ore.generateNuggetCookingRecipe());
                 resourcePack.addRecipe(ID(ore.getPieceID().getPath() + "_blasting"), ore.generateNuggetCookingRecipe());
