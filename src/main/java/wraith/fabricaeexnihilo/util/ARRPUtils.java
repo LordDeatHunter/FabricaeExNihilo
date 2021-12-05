@@ -62,9 +62,7 @@ public final class ARRPUtils {
         ModTags.registerBlockAndItem(resourcePack, ModTags.HAMMER_TAG, ModTools.HAMMERS);
         ModTags.registerBlockAndItem(resourcePack, ModTags.CROOK_TAG, ModTools.CROOKS);
 
-        FabricaeExNihiloRegistries.ORES.getAll().forEach(property -> {
-            resourcePack.addTag(new Identifier(property.getOreID().getNamespace(), "items/" + property.getOreID().getPath()), ModTags.generateResourcePackTag(property.getChunkID())); // common raw ore tag. 1 chunk is treated as 1 raw ore.
-        });
+        FabricaeExNihiloRegistries.ORES.getAll().forEach(property -> resourcePack.addTag(new Identifier(property.getOreID().getNamespace(), "items/" + property.getOreID().getPath()), ModTags.generateResourcePackTag(property.getChunkID()))); // common raw ore tag. 1 chunk is treated as 1 raw ore.
         EnchantmentTagManager.generateDefaultTags(resourcePack);
     }
 

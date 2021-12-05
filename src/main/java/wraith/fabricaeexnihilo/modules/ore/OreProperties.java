@@ -40,12 +40,13 @@ public class OreProperties {
     public Identifier getNuggetID() {
         return isVanillaMaterial() ? new Identifier(material + "_nugget") : new Identifier("c", material + "_nuggets");
     }
+
     public Identifier getOreID() {
         return new Identifier("c", "raw_" + material + "_ores");
     }
 
     public boolean isVanillaMaterial() {
-        // return Registry.ITEM.containsId(new Identifier("minecraft", material + "_ingot")) || Registry.ITEM.containsId(new Identifier("minecraft", material + "_nugget")) || Registry.ITEM.containsId(new Identifier("minecraft", "raw_" + material)); // universal
+        // return Registry.ITEM.containsId(new Identifier(material + "_ingot")) || Registry.ITEM.containsId(new Identifier(material + "_nugget")) || Registry.ITEM.containsId(new Identifier("raw_" + material)); // generic
         return material == "copper" || material == "iron" || material == "gold"; //fast
     }
 
