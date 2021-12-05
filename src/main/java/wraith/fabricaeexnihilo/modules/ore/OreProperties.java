@@ -32,6 +32,7 @@ public class OreProperties {
     public Identifier getPieceID() {
         return FabricaeExNihilo.ID((material + "_piece").toLowerCase());
     }
+    
     public Identifier getIngotID() {
         return isVanillaMaterial() ? new Identifier(material + "_ingot") : new Identifier("c", material + "_ingots");
     }
@@ -82,7 +83,7 @@ public class OreProperties {
     public JRecipe generateIngotCookingRecipe() {
         return JRecipe.smelting(JIngredient.ingredient().item(getChunkID().toString()), JResult.result(getIngotID().toString()));
     }
-    
+
     public String getMaterial() {
         return material;
     }
