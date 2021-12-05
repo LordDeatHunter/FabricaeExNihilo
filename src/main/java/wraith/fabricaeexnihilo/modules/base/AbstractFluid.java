@@ -36,7 +36,6 @@ public abstract class AbstractFluid extends FlowableFluid {
         this.bucketItemSupplier = bucketItemSupplier;
         this.flowingSupplier = flowingSupplier;
         this.stillSupplier = stillSupplier;
-        BlockRenderLayerMap.INSTANCE.putFluid(this, RenderLayer.getTranslucent());
     }
 
     public FluidSettings getFluidSettings() {

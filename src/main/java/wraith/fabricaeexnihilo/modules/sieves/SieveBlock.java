@@ -1,6 +1,8 @@
 package wraith.fabricaeexnihilo.modules.sieves;
 
 import net.devtech.arrp.json.recipe.*;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
@@ -41,9 +43,7 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
         this.craftIngredient1 = craftIngredient1;
         this.craftIngredient2 = craftIngredient2;
         setDefaultState(getStateManager().getDefaultState().with(WATERLOGGED, false));
-        BlockRenderLayerMap.INSTANCE.putBlock(this, RenderLayer.getCutout());
     }
-
     public SieveBlock(Identifier texture, Identifier craftIngredient1, Identifier craftIngredient2) {
         this(texture, craftIngredient1, craftIngredient2, FabricBlockSettings.of(Material.WOOD));
     }

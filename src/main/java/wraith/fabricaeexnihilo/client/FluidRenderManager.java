@@ -1,10 +1,12 @@
 package wraith.fabricaeexnihilo.client;
 
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.resource.ResourceManager;
@@ -32,6 +34,10 @@ public class FluidRenderManager implements ClientSpriteRegistryCallback {
         var renderManager = new FluidRenderManager();
         ClientSpriteRegistryCallback.event(BLOCK_ATLAS_TEXTURE).register(renderManager);
         ModFluids.FLUIDS.forEach(FluidRenderManager::setupFluidRenderer);
+        ModFluids.FLUIDS.forEach((fluid) -> {
+            FluidRenderManager.setupFluidRenderer(fluid);
+            BlockRenderLayerMap.INSTANCE.putFluid(fluid, RenderLayer.getTranslucent());
+        });
     }
 
     private static void setupFluidRenderer(AbstractFluid fluid) {
