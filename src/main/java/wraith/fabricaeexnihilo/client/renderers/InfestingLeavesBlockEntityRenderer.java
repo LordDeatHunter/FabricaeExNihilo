@@ -7,7 +7,9 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.screen.PlayerScreenHandler;
 import wraith.fabricaeexnihilo.modules.infested.InfestingLeavesBlockEntity;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
@@ -24,13 +26,10 @@ public class InfestingLeavesBlockEntityRenderer implements BlockEntityRenderer<I
         var color = infesting.getColor(0) | -16777216;
         var stack = ItemUtils.asStack(infesting.getInfestedBlock().asItem());
 
-        // TODO: Check if this is valid
-        //MinecraftClient.getInstance().getTextureManager().bindTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
-        //var texture = MinecraftClient.getInstance().getTextureManager().getTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
-        //if (texture != null) {
-        //    texture.setFilter(false, false);
-        //}
+        MinecraftClient.getInstance().getTextureManager().bindTexture(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE);
+        MinecraftClient.getInstance().getTextureManager().getTexture(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).setFilter(false, false);
         matrices.push();
+        matrices.translate(0.5, 0.5, 0.5);
 
         var r = (color >> 16 & 255) / 255.0F;
         var g = (color >> 8 & 255) / 255.0F;
@@ -38,7 +37,6 @@ public class InfestingLeavesBlockEntityRenderer implements BlockEntityRenderer<I
 
         RenderSystem.setShaderColor(r, g, b, 1F);
         MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.NONE, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, (int) infesting.getPos().asLong());
-
         RenderSystem.enableCull();
         matrices.pop();
     }

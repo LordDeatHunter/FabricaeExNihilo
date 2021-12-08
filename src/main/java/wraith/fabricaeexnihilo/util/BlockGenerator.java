@@ -13,6 +13,7 @@ import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlock;
 import wraith.fabricaeexnihilo.modules.crucibles.CrucibleBlock;
 import wraith.fabricaeexnihilo.modules.infested.InfestedLeavesBlock;
+import wraith.fabricaeexnihilo.modules.infested.NonInfestableLeavesBlock;
 import wraith.fabricaeexnihilo.modules.sieves.SieveBlock;
 
 import java.util.HashSet;
@@ -102,7 +103,7 @@ public class BlockGenerator implements IBlockGenerator {
         ) {
             createWoodCrucibleBlock(identifier);
         }
-        else if(block instanceof LeavesBlock leavesBlock && !(block instanceof InfestedLeavesBlock)) {
+        else if(block instanceof LeavesBlock leavesBlock && !(block instanceof NonInfestableLeavesBlock)) {
             createInfestedLeavesBlock(leavesBlock);
         }
     }

@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.FallingBlock;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.Material;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ToolMaterials;
 import net.minecraft.sound.BlockSoundGroup;
@@ -36,7 +37,7 @@ public final class ModBlocks {
     public static final FabricBlockSettings WOOD_SETTINGS = FabricBlockSettings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD).breakByHand(true);
     public static final FabricBlockSettings STONE_SETTINGS = FabricBlockSettings.of(Material.STONE).strength(2.0f, 6.0f).sounds(BlockSoundGroup.STONE);
     public static final FabricBlockSettings CRUSHED_SETTINGS = FabricBlockSettings.of(Material.AGGREGATE).strength(0.6f).sounds(BlockSoundGroup.GRAVEL).breakByHand(true);
-    public static final FabricBlockSettings INFESTED_LEAVES_SETTINGS = FabricBlockSettings.of(Material.LEAVES).strength(0.2F).ticksRandomly().sounds(BlockSoundGroup.GRASS);
+    public static final FabricBlockSettings INFESTED_LEAVES_SETTINGS = FabricBlockSettings.of(Material.LEAVES).nonOpaque().suffocates((state, world, pos) -> false).allowsSpawning((state, world, pos, type) -> type == EntityType.OCELOT || type == EntityType.PARROT).strength(0.2F).ticksRandomly().sounds(BlockSoundGroup.GRASS);
 
     public static final Map<Identifier, SieveBlock> SIEVES = new HashMap<>();
     public static final Map<Identifier, CrucibleBlock> CRUCIBLES = new HashMap<>();

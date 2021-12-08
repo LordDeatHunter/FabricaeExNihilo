@@ -10,6 +10,7 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3f;
 import wraith.fabricaeexnihilo.modules.crucibles.CrucibleBlockEntity;
 
 import java.util.List;
@@ -49,7 +50,6 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
 
     public void renderFluidVolume(FluidVolume volume, double level, MatrixStack matrices, VertexConsumerProvider vertexConsumer) {
         var yRender = (yMax - yMin) * level + yMin;
-
         volume.render(List.of(FluidRenderFace.createFlatFace(xMin, yMin, zMin, xMax, yRender, zMax, 16.0, Direction.UP)), vertexConsumer, matrices);
     }
 
@@ -59,6 +59,7 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
         matrices.push();
         matrices.translate(0.5, yMin + yScale / 2, 0.5);
         matrices.scale(xzScale, yScale, xzScale);
+        matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
         MinecraftClient.getInstance().getItemRenderer().renderItem(renderStack, ModelTransformation.Mode.NONE, light, overlay, matrices, vertexConsumer, seed);
         matrices.pop();
     }

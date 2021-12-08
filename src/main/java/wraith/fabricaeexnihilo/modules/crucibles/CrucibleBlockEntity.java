@@ -130,8 +130,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
         if (queued.isEmpty() || contents.amount().as1620() >= getMaxCapacity() || (heat <= 0 && isStone)) {
             return;
         }
-        tickCounter -= 1;
-        if (tickCounter <= 0) {
+        if (--tickCounter <= 0) {
             if (!queued.isEmpty()) {
                 var amt = Math.min(queued.amount().as1620(), getProcessingSpeed());
                 contents = queued.fluidKey.withAmount(contents.amount().add(amt));

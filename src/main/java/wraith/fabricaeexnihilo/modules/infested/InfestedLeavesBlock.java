@@ -3,6 +3,7 @@ package wraith.fabricaeexnihilo.modules.infested;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.server.world.ServerWorld;
@@ -15,7 +16,7 @@ import wraith.fabricaeexnihilo.util.Color;
 
 import java.util.Random;
 
-public class InfestedLeavesBlock extends LeavesBlock implements IHasColor {
+public class InfestedLeavesBlock extends LeavesBlock implements IHasColor, NonInfestableLeavesBlock {
     private final LeavesBlock leafBlock;
 
     public InfestedLeavesBlock(LeavesBlock leafBlock, FabricBlockSettings settings) {

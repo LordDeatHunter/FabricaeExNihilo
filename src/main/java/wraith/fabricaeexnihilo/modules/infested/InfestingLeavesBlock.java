@@ -6,11 +6,14 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.mixins.BlockWithEntityInvoker;
 
-public class InfestingLeavesBlock extends LeavesBlock implements BlockEntityProvider {
+public class InfestingLeavesBlock extends LeavesBlock implements BlockEntityProvider, NonInfestableLeavesBlock {
 
     public InfestingLeavesBlock(FabricBlockSettings settings) {
         super(settings);
@@ -18,13 +21,23 @@ public class InfestingLeavesBlock extends LeavesBlock implements BlockEntityProv
 
     @Override
     public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.INVISIBLE;
+        return BlockRenderType.MODEL;
     }
 
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new InfestingLeavesBlockEntity(pos, state);
+    }
+
+    @Override
+    public VoxelShape getSidesShape(BlockState state, BlockView world, BlockPos pos) {
+        return VoxelShapes.empty();
+    }
+
+    @Override
+    public int getOpacity(BlockState state, BlockView world, BlockPos pos) {
+        return 1;
     }
 
     @Nullable

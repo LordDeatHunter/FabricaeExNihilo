@@ -28,6 +28,7 @@ public class InfestingLeavesBlockEntity extends BaseBlockEntity implements IHasC
             InfestingLeavesBlockEntity::new,
             new InfestingLeavesBlock[]{ModBlocks.INFESTING_LEAVES}
     ).build(null);
+
     public InfestingLeavesBlockEntity(BlockPos pos, BlockState state) {
         super(TYPE, pos, state);
         tickCounter = world == null ? 0 : world.random.nextInt(FabricaeExNihilo.CONFIG.modules.barrels.tickRate);
@@ -35,18 +36,15 @@ public class InfestingLeavesBlockEntity extends BaseBlockEntity implements IHasC
 
     public static void ticker(World world, BlockPos blockPos, BlockState blockState, InfestingLeavesBlockEntity infestedLeavesEntity) {
         // Don't update every single tick
-        infestedLeavesEntity.tickCounter += 1;
-        if(infestedLeavesEntity.tickCounter < FabricaeExNihilo.CONFIG.modules.silkworms.updateFrequency) {
+        if (++infestedLeavesEntity.tickCounter % FabricaeExNihilo.CONFIG.modules.silkworms.updateFrequency != 0) {
             return;
         }
-        infestedLeavesEntity.tickCounter = 0;
-
         // Advance
         infestedLeavesEntity.progress += FabricaeExNihilo.CONFIG.modules.silkworms.progressPerUpdate;
 
-        if(infestedLeavesEntity.progress < 1f) {
+        if (infestedLeavesEntity.progress < 1f) {
             infestedLeavesEntity.markDirty();
-            if(infestedLeavesEntity.progress > FabricaeExNihilo.CONFIG.modules.silkworms.minimumSpreadPercent && world != null) {
+            if (infestedLeavesEntity.progress > FabricaeExNihilo.CONFIG.modules.silkworms.minimumSpreadPercent && world != null) {
                 InfestedHelper.tryToSpreadFrom(world, blockPos, FabricaeExNihilo.CONFIG.modules.silkworms.infestingSpreadAttempts);
             }
             return;
@@ -66,7 +64,7 @@ public class InfestingLeavesBlockEntity extends BaseBlockEntity implements IHasC
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
-        if(nbt==null){
+        if (nbt == null) {
             FabricaeExNihilo.LOGGER.warn("An infesting leaves block at " + pos + " is missing data.");
             return;
         }
@@ -85,7 +83,7 @@ public class InfestingLeavesBlockEntity extends BaseBlockEntity implements IHasC
     }
 
     public void readNbtWithoutWorldInfo(NbtCompound nbt) {
-        infestedBlock = (InfestedLeavesBlock)Registry.BLOCK.getOrEmpty(new Identifier(nbt.getString("block"))).orElse(
+        infestedBlock = (InfestedLeavesBlock) Registry.BLOCK.getOrEmpty(new Identifier(nbt.getString("block"))).orElse(
                 ModBlocks.INFESTED_LEAVES.values().stream().findFirst().get()
         );
         progress = nbt.getDouble("progress");

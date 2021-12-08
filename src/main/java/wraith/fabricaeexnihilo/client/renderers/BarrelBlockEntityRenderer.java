@@ -18,6 +18,7 @@ import wraith.fabricaeexnihilo.modules.barrels.modes.AlchemyMode;
 import wraith.fabricaeexnihilo.modules.barrels.modes.CompostMode;
 import wraith.fabricaeexnihilo.modules.barrels.modes.FluidMode;
 import wraith.fabricaeexnihilo.modules.barrels.modes.ItemMode;
+import wraith.fabricaeexnihilo.util.Color;
 
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
     }
 
     public void renderFluid(FluidMode mode, BlockPos pos, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlays) {
-
+        renderFluidMode(mode, vertexConsumers, matrices);
     }
 
     public void renderItemMode(ItemMode mode, BlockPos pos, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlays) {
@@ -62,20 +63,19 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
     }
 
     public void renderAlchemy(AlchemyMode mode, BlockPos pos, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlays) {
-
+        renderAlchemyMode(mode, pos.getX(), pos.getY(), pos.getZ(), vertexConsumers, matrices);
     }
 
     public void renderCompost(CompostMode mode, BlockPos pos, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlays) {
+        var yScale = (float) ((yMax - yMin) * Math.min(mode.getAmount(), 1.0f));
 
-//        var yScale = (yMax - yMin) * Math.min(mode.getAmount(), 1.0f);
+        var color = Color.average(Color.WHITE, mode.getColor(), Math.pow(mode.getProgress(), 4));
 
-//        var color = Color.average(Color.WHITE, mode.getColor(), Math.pow(mode.getProgress(), 4));
-
-//        matrices.push()
-//        matrices.translate(0.5, yMin+yScale/2.0, 0.5)
-//        matrices.scale(xzScale,yScale,xzScale)
-//        RenderHelper.renderItemColored(mode.result, ModelTransformation.NONE, color)
-//        matrices.pop()
+        matrices.push();
+        matrices.translate(0.5, yMin + yScale / 2.0, 0.5);
+        matrices.scale(xzScale, yScale, xzScale);
+        MinecraftClient.getInstance().getItemRenderer().renderItem(mode.getResult(), ModelTransformation.Mode.NONE, light, overlays, matrices, vertexConsumers, (int) pos.asLong());
+        matrices.pop();
     }
 
     public void renderItem(ItemStack stack, BlockPos pos, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlays, float level) {
@@ -87,7 +87,7 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
         MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.NONE, light, overlays, matrices, vertexConsumers, (int) pos.asLong());
         matrices.pop();
     }
-    /*
+
     private void renderAlchemyMode(AlchemyMode mode, double x, double y, double z, VertexConsumerProvider vertexConsumerProvider, MatrixStack matrices) {
         var before = mode.getBefore();
         if (before instanceof FluidMode fluidMode) {
@@ -97,7 +97,7 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
         } else if (before instanceof AlchemyMode alchemyMode) {
             renderAlchemyMode(alchemyMode, x, y, z, vertexConsumerProvider, matrices);
         } else if (before instanceof CompostMode compostMode) {
-            renderCompostMode(compostMode, x, y, z);
+            renderCompostMode(compostMode, x, y, z, matrices);
         }
 
         var after = mode.getAfter();
@@ -108,22 +108,22 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
         } else if (before instanceof AlchemyMode alchemyMode) {
             renderAlchemyMode(alchemyMode, x, y, z, vertexConsumerProvider, matrices);
         } else if (before instanceof CompostMode compostMode) {
-            renderCompostMode(compostMode, x, y, z);
+            renderCompostMode(compostMode, x, y, z, matrices);
         }
 
     }
-    */
-    public void renderCompostMode(CompostMode mode, double x, double y, double z) {
-//        var yScale = (yMax - yMin) * Math.min(mode.getAmount(), 1.0);
 
-//        var color = Color.average(Color.WHITE, mode.getColor(), Math.pow(mode.getProgress(), 4));
+    public void renderCompostMode(CompostMode mode, double x, double y, double z, MatrixStack matrices) {
+        var yScale = (float) ((yMax - yMin) * Math.min(mode.getAmount(), 1.0));
 
-//        GlStateManager.pushMatrix()
-//        GlStateManager.translated(0.5, yMin+yScale/2.0, 0.5)
-//        GlStateManager.scaled(xzScale,yScale,xzScale)
-//        GlStateManager.color4f(color.r, color.g, color.b, color.a)
-//        RenderHelper.renderItemColored(mode.result, ModelTransformation.Type.NONE, color)
-//        GlStateManager.popMatrix()
+        var color = Color.average(Color.WHITE, mode.getColor(), Math.pow(mode.getProgress(), 4));
+
+        matrices.push();
+        matrices.translate(0.5, yMin + yScale / 2.0, 0.5);
+        matrices.scale(xzScale, yScale, xzScale);
+        //RendSy.color4f(color.r, color.g, color.b, color.a)
+        //MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.NONE, light, overlays, matrices, vertexConsumers, (int) pos.asLong());
+        matrices.pop();
     }
 
     public void renderFluidMode(FluidMode mode, VertexConsumerProvider vertexConsumerProvider, MatrixStack matrices) {
