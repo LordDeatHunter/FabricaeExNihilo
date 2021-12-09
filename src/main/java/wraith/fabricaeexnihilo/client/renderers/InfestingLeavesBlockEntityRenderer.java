@@ -23,7 +23,6 @@ public class InfestingLeavesBlockEntityRenderer implements BlockEntityRenderer<I
         var model = MinecraftClient.getInstance().getBakedModelManager().getBlockModels().getModel(state);
 
         matrices.push();
-        matrices.translate(0.5, 0.5, 0.5);
 
         var r = (color >> 16 & 255) / 255.0F;
         var g = (color >> 8 & 255) / 255.0F;

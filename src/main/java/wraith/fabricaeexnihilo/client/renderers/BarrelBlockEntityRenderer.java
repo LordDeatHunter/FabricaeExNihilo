@@ -22,6 +22,7 @@ import wraith.fabricaeexnihilo.util.Color;
 
 import java.util.List;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBlockEntity> {
 
     private final float xzScale = 12.0F / 16.0F;
@@ -132,7 +133,7 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
 
     public void renderFluidVolume(FluidVolume volume, double level, VertexConsumerProvider vertexConsumerProvider, MatrixStack matrices) {
         var yRender = (yMax - yMin) * level + yMin;
-        volume.render(List.of(FluidRenderFace.createFlatFace(xMin, yMin, zMin, xMax, yRender, zMax, 16.0, Direction.UP)), vertexConsumerProvider, matrices);
+        volume.render(List.of(FluidRenderFace.createFlatFace(xMin, yMin, zMin, xMax, yRender, zMax, 1.0, Direction.UP)), vertexConsumerProvider, matrices);
     }
 
 }

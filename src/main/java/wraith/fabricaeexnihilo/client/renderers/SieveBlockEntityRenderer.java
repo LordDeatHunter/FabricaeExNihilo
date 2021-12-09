@@ -22,7 +22,7 @@ public class SieveBlockEntityRenderer implements BlockEntityRenderer<SieveBlockE
     }
 
     public void render(@Nullable SieveBlockEntity sieve, float partialTicks, MatrixStack matrixStack, @Nullable VertexConsumerProvider vertexConsumerProvider, int light, int overlays) {
-        if (sieve == null) {
+        if (sieve == null || sieve.getWorld() == null) {
             return;
         }
         var mesh = sieve.getMesh();
@@ -40,10 +40,6 @@ public class SieveBlockEntityRenderer implements BlockEntityRenderer<SieveBlockE
         if (mesh.isEmpty()) {
             return;
         }
-//      var x = pos.getX();
-//      var y = pos.getY();
-//      var z = pos.getZ();
-
         matrixStack.push();
         matrixStack.translate(0.5, 0.5, 0.5);
         MinecraftClient.getInstance().getItemRenderer().renderItem(mesh, ModelTransformation.Mode.NONE, light, overlays, matrixStack, vertexConsumerProvider, (int) pos.asLong());
@@ -55,10 +51,6 @@ public class SieveBlockEntityRenderer implements BlockEntityRenderer<SieveBlockE
             return;
         }
         var yScale = yMax - (yMax - yMin) * progress;
-
-//      var x = pos.getX();
-//      var y = pos.getY();
-//      var z = pos.getZ();
 
         matrixStack.push();
         matrixStack.translate(0.5, 0.625 + yScale / 2,0.5);

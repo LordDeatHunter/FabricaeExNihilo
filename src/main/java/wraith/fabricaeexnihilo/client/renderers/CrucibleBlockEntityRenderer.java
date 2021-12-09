@@ -50,7 +50,7 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
 
     public void renderFluidVolume(FluidVolume volume, double level, MatrixStack matrices, VertexConsumerProvider vertexConsumer) {
         var yRender = (yMax - yMin) * level + yMin;
-        volume.render(List.of(FluidRenderFace.createFlatFace(xMin, yMin, zMin, xMax, yRender, zMax, 16.0, Direction.UP)), vertexConsumer, matrices);
+        volume.render(List.of(FluidRenderFace.createFlatFace(xMin, yMin, zMin, xMax, yRender, zMax, 1.0, Direction.UP)), vertexConsumer, matrices);
     }
 
     public void renderQueued(ItemStack renderStack, float level, MatrixStack matrices, VertexConsumerProvider vertexConsumer, int light, int overlay, int seed) {
