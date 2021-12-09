@@ -6,6 +6,7 @@ import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
@@ -101,6 +102,14 @@ public class InfestingLeavesBlockEntity extends BaseBlockEntity implements IHasC
     public int getColor(int index) {
         var originalColor = MinecraftClient.getInstance().getBlockColors().getColor(infestedBlock.getLeafBlock().getDefaultState(), world, pos, 0);
         return Color.average(Color.WHITE, new Color(originalColor), progress).toInt();
+    }
+
+    @Override
+    public void markDirty() {
+        super.markDirty();
+        if (world != null && world instanceof ServerWorld serverWorld) {
+            serverWorld.getChunkManager().markForUpdate(pos);
+        }
     }
 
 }
