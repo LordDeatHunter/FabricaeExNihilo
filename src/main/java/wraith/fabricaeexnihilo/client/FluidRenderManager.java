@@ -8,42 +8,33 @@ import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.texture.Sprite;
-import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.modules.ModFluids;
 import wraith.fabricaeexnihilo.modules.base.AbstractFluid;
 
 import java.util.function.Function;
 
 import static net.minecraft.screen.PlayerScreenHandler.BLOCK_ATLAS_TEXTURE;
-import static net.minecraft.util.registry.Registry.FLUID;
 
-public class FluidRenderManager implements ClientSpriteRegistryCallback {
-
-    @Override
-    public void registerSprites(SpriteAtlasTexture atlasTexture, ClientSpriteRegistryCallback.Registry registry) {
-        ModFluids.FLUIDS.forEach(fluid -> {
-            registry.register(fluid.getFluidSettings().getFlowingTexture());
-            registry.register(fluid.getFluidSettings().getStillTexture());
-        });
-    }
+public class FluidRenderManager {
 
     public static void setupClient() {
-        var renderManager = new FluidRenderManager();
-        ClientSpriteRegistryCallback.event(BLOCK_ATLAS_TEXTURE).register(renderManager);
-        ModFluids.FLUIDS.forEach((fluid) -> {
-            FluidRenderManager.setupFluidRenderer(fluid);
-            BlockRenderLayerMap.INSTANCE.putFluid(fluid, RenderLayer.getTranslucent());
-        });
+        ModFluids.FLUIDS.forEach(FluidRenderManager::setupFluidRenderer);
     }
 
     private static void setupFluidRenderer(AbstractFluid fluid) {
-        final Identifier fluidId = FLUID.getId(fluid);
-        final Identifier listenerId = new Identifier(fluidId.getNamespace(), fluidId.getPath() + "_reload_listener");
+        var identifier = Registry.FLUID.getId(fluid);
+        final Identifier listenerId = new Identifier(identifier.getNamespace(), identifier.getPath() + "_reload_listener");
 
         final Sprite[] fluidSprites = {null, null};
+
+        ClientSpriteRegistryCallback.event(BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
+            registry.register(fluid.getFluidSettings().getStillTexture());
+            registry.register(fluid.getFluidSettings().getFlowingTexture());
+        });
 
         ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
             @Override
@@ -59,6 +50,10 @@ public class FluidRenderManager implements ClientSpriteRegistryCallback {
             }
         });
         FluidRenderHandlerRegistry.INSTANCE.register(fluid, (view, pos, state) -> fluidSprites);
+        FluidRenderHandlerRegistry.INSTANCE.register(fluid.getFlowing(), (view, pos, state) -> fluidSprites);
+
+        BlockRenderLayerMap.INSTANCE.putFluid(fluid, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putFluid(fluid.getFlowing(), RenderLayer.getCutout());
     }
 
 }

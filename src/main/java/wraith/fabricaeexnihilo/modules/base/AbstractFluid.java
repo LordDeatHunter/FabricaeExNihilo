@@ -97,9 +97,7 @@ public abstract class AbstractFluid extends FlowableFluid {
 
     @Override
     protected void beforeBreakingBlock(WorldAccess world, BlockPos pos, BlockState state) {
-
     }
-
 
     @Override
     protected void appendProperties(StateManager.Builder<Fluid, FluidState> builder) {
@@ -117,7 +115,7 @@ public abstract class AbstractFluid extends FlowableFluid {
 
     public void registerFluids() {
         Registry.register(Registry.FLUID, FabricaeExNihilo.ID(this.fluidSettings.getBasePath()), stillSupplier.get());
-        Registry.register(Registry.FLUID, FabricaeExNihilo.ID(this.fluidSettings.getBasePath() + "_flowing"), flowingSupplier.get());
+        Registry.register(Registry.FLUID, FabricaeExNihilo.ID("flowing_" + this.fluidSettings.getBasePath()), flowingSupplier.get());
     }
 
     public void registerFluidBlock() {

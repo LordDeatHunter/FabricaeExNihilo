@@ -24,6 +24,12 @@ public final class ModFluids {
             BrineFluid.STILL,
             BloodFluid.STILL
     );
+    public static final List<AbstractFluid> FLUIDS_FLOWING = List.of(
+            WitchWaterFluid.FLOWING,
+            MilkFluid.FLOWING,
+            BrineFluid.FLOWING,
+            BloodFluid.FLOWING
+    );
 
     public static void registerFluids() {
         FLUIDS.forEach(AbstractFluid::registerFluids);
