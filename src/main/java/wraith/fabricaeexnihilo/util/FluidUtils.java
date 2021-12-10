@@ -13,6 +13,8 @@ import net.minecraft.util.registry.Registry;
 
 public final class FluidUtils {
 
+    private FluidUtils() {}
+
     public static FluidState getDefaultFluidState(FluidBlock fluidBlock) {
         return fluidBlock.getFluidState(fluidBlock.getDefaultState());
     }

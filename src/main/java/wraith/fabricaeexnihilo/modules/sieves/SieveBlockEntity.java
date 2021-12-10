@@ -87,7 +87,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
                     held.decrement(1);
                 }
             }
-            markDirtyClient();
+            markDirty();
             return ActionResult.SUCCESS;
         }
         var sieves = getConnectedSieves();
@@ -103,7 +103,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
             sieves.forEach(sieve -> sieve.setContents(finalHeld, !player.isCreative()));
             return ActionResult.SUCCESS;
         }
-        return ActionResult.CONSUME;
+        return ActionResult.PASS;
     }
 
     public void setContents(ItemStack stack, boolean doDrain) {
@@ -115,7 +115,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
             stack.decrement(1);
         }
         progress = 0.0;
-        markDirtyClient();
+        markDirty();
     }
 
     @Nullable
@@ -152,7 +152,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
             progress = 0.0;
             contents = ItemStack.EMPTY;
         }
-        markDirtyClient();
+        markDirty();
     }
 
     public void dropInventory() {

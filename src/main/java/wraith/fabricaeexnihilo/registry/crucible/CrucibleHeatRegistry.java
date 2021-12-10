@@ -3,8 +3,7 @@ package wraith.fabricaeexnihilo.registry.crucible;
 import com.google.common.reflect.TypeToken;
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.BlockItem;
 import wraith.fabricaeexnihilo.api.recipes.crucible.CrucibleHeatRecipe;
 import wraith.fabricaeexnihilo.api.registry.ICrucibleHeatRegistry;
 import wraith.fabricaeexnihilo.compatibility.modules.MetaModule;
@@ -51,13 +50,8 @@ public class CrucibleHeatRegistry extends AbstractRegistry<List<CrucibleHeatReci
     }
 
     @Override
-    public int getHeat(Item item) {
+    public int getHeat(BlockItem item) {
         return registry.stream().filter(recipe -> recipe.test(item)).findFirst().map(CrucibleHeatRecipe::value).orElse(0);
-    }
-
-    @Override
-    public int getHeat(ItemStack stack) {
-        return registry.stream().filter(recipe -> recipe.test(stack)).findFirst().map(CrucibleHeatRecipe::value).orElse(0);
     }
 
     @Override

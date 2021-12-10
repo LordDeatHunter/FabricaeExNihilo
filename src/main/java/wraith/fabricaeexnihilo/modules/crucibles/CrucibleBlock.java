@@ -46,7 +46,7 @@ public class CrucibleBlock extends BlockWithEntity implements InventoryProvider,
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (world == null || world.isClient() || pos == null) {
-            return ActionResult.PASS;
+            return ActionResult.SUCCESS;
         }
         if (world.getBlockEntity(pos) instanceof CrucibleBlockEntity crucible) {
             return crucible.activate(state, player, hand, hit);
@@ -78,7 +78,7 @@ public class CrucibleBlock extends BlockWithEntity implements InventoryProvider,
 
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
-        if (fromPos == null || fromPos != (pos == null ? null : pos.down()) || world == null) {
+        if (fromPos == null || !fromPos.equals(pos == null ? null : pos.down()) || world == null) {
             return;
         }
         if (world.getBlockEntity(pos) instanceof CrucibleBlockEntity crucible) {

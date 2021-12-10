@@ -1,8 +1,8 @@
 package wraith.fabricaeexnihilo.json.recipe;
 
 import com.google.gson.*;
+import wraith.fabricaeexnihilo.api.crafting.BlockIngredient;
 import wraith.fabricaeexnihilo.api.crafting.FluidIngredient;
-import wraith.fabricaeexnihilo.api.crafting.ItemIngredient;
 import wraith.fabricaeexnihilo.api.recipes.crucible.CrucibleHeatRecipe;
 import wraith.fabricaeexnihilo.json.BaseJson;
 
@@ -18,7 +18,7 @@ public final class CrucibleHeatRecipeJson extends BaseJson<CrucibleHeatRecipe> {
     public CrucibleHeatRecipe deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         var obj = json.getAsJsonObject();
         return new CrucibleHeatRecipe(
-            obj.has("block") ? ItemIngredient.fromJson(obj.get("block"), context) : ItemIngredient.EMPTY,
+            obj.has("block") ? BlockIngredient.fromJson(obj.get("block"), context) : BlockIngredient.EMPTY,
             obj.has("fluid") ? FluidIngredient.fromJson(obj.get("fluid"), context) : FluidIngredient.EMPTY,
             obj.get("heat").getAsInt()
         );

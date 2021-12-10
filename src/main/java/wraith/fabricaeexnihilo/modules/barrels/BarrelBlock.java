@@ -43,9 +43,9 @@ public class BarrelBlock extends BlockWithEntity implements AttributeProvider, I
 
     private static final VoxelShape SHAPE = createCuboidShape(1.0, 0.0, 1.0, 15.0, 16.0, 15.0);
 
-    private Identifier texture;
-    private Identifier craftIngredient1;
-    private Identifier craftIngredient2;
+    private final Identifier texture;
+    private final Identifier craftIngredient1;
+    private final Identifier craftIngredient2;
     public FabricBlockSettings settings;
 
     public BarrelBlock(Identifier texture, Identifier craftIngredient1, Identifier craftIngredient2, FabricBlockSettings settings) {
@@ -77,12 +77,12 @@ public class BarrelBlock extends BlockWithEntity implements AttributeProvider, I
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hitResult) {
         if (world == null || world.isClient || pos == null) {
-            return ActionResult.CONSUME;
+            return ActionResult.SUCCESS;
         }
         var blockEntity = world.getBlockEntity(pos);
         return blockEntity instanceof BarrelBlockEntity barrelBlock
                 ? barrelBlock.activate(state, player, hand, hitResult)
-                : ActionResult.CONSUME;
+                : ActionResult.PASS;
     }
 
     public void addAllAttributes(World world, BlockPos pos, BlockState state, AttributeList<?> attributes) {

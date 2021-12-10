@@ -12,6 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.modules.sieves.SieveBlockEntity;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class SieveBlockEntityRenderer implements BlockEntityRenderer<SieveBlockEntity> {
 
     private final float xzScale = 0.875F;

@@ -36,7 +36,7 @@ public class FabricaeExNihilo implements ModInitializer {
     @Override
     public void onInitialize() {
         registerCompatModules();
-        // Progmatically generate blocks and items
+        // Programmatically generate blocks and items
         LOGGER.info("Generating Blocks/Items");
 
         // Load the early registries that create items/blocks

@@ -25,7 +25,6 @@ import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 import wraith.fabricaeexnihilo.util.VoxelShapeHelper;
 
-@SuppressWarnings("deprecation")
 public class SieveBlock extends Block implements BlockEntityProvider, Waterloggable {
 
     private final Identifier texture;
@@ -82,7 +81,7 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (world.isClient() || pos == null) {
-            return ActionResult.PASS;
+            return ActionResult.SUCCESS;
         }
         if (world.getBlockEntity(pos) instanceof SieveBlockEntity sieve) {
             return sieve.activate(state, player, hand, hit);

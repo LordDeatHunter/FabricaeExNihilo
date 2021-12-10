@@ -42,7 +42,7 @@ import wraith.fabricaeexnihilo.modules.base.EnchantmentContainer;
 import wraith.fabricaeexnihilo.util.FluidUtils;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
-public class BarrelBlockEntity extends BaseBlockEntity{
+public class BarrelBlockEntity extends BaseBlockEntity {
 
     public static final Identifier BLOCK_ENTITY_ID = FabricaeExNihilo.ID("barrel");
     public static final BlockEntityType<BarrelBlockEntity> TYPE = FabricBlockEntityTypeBuilder.create(
@@ -52,12 +52,12 @@ public class BarrelBlockEntity extends BaseBlockEntity{
 
     private int tickCounter;
     // Inventories
-    private FluidTransferer fluidTransferable;
-    private ItemTransferer itemTransferable;
-    private BarrelInventory inventory;
+    private final FluidTransferer fluidTransferable;
+    private final ItemTransferer itemTransferable;
+    private final BarrelInventory inventory;
     private BarrelMode mode;
 
-    private boolean isStone;
+    private final boolean isStone;
 
     public BarrelMode getMode() {
         return mode;
@@ -141,7 +141,7 @@ public class BarrelBlockEntity extends BaseBlockEntity{
                     var result = FabricaeExNihiloRegistries.BARREL_ON_TOP.getResult(fluidMode.getFluid(), fluid);
                     if (result != null) {
                         this.mode = result;
-                        markDirtyClient();
+                        markDirty();
                         return true;
                     }
                 }
@@ -153,7 +153,7 @@ public class BarrelBlockEntity extends BaseBlockEntity{
                     if (result != null) {
                         var num = countBelow(block, FabricaeExNihilo.CONFIG.modules.barrels.transformBoostRadius);
                         this.mode = new AlchemyMode(fluidMode, result, FabricaeExNihilo.CONFIG.modules.barrels.transformRate - (num - 1) * FabricaeExNihilo.CONFIG.modules.barrels.transformBoost);
-                        markDirtyClient();
+                        markDirty();
                         return true;
                     }
                 }
@@ -173,7 +173,7 @@ public class BarrelBlockEntity extends BaseBlockEntity{
         }
         if (compostMode.getAmount() >= 1.0) {
             compostMode.setProgress(compostMode.getProgress() + FabricaeExNihilo.CONFIG.modules.barrels.compostRate * getEfficiencyMultiplier());
-            markDirtyClient();
+            markDirty();
         }
         return true;
     }
@@ -186,7 +186,7 @@ public class BarrelBlockEntity extends BaseBlockEntity{
         if (world != null && !world.isClient && alchemyMode.getCountdown() <= 0) {
             spawnEntity(alchemyMode.getToSpawn());
             mode = alchemyMode.getAfter();
-            markDirtyClient();
+            markDirty();
         }
         return true;
     }
@@ -211,7 +211,7 @@ public class BarrelBlockEntity extends BaseBlockEntity{
             } else {
                 mode = new EmptyMode();
             }
-            markDirtyClient();
+            markDirty();
             return true;
         }
         return false;
@@ -306,8 +306,8 @@ public class BarrelBlockEntity extends BaseBlockEntity{
     }
 
     public ActionResult activate(@Nullable BlockState state, @Nullable PlayerEntity player, @Nullable Hand hand, @Nullable BlockHitResult hitResult) {
-        if (world == null || world.isClient || player == null || hand == null) {
-            return ActionResult.CONSUME;
+        if (world == null || player == null || hand == null) {
+            return ActionResult.PASS;
         }
         if (mode instanceof ItemMode) {
             dropInventoryAtPlayer(player);
@@ -316,7 +316,7 @@ public class BarrelBlockEntity extends BaseBlockEntity{
         if (mode instanceof EmptyMode || mode instanceof CompostMode || mode instanceof FluidMode) {
             return insertFromHand(player, hand);
         } else {
-            return ActionResult.CONSUME;
+            return ActionResult.PASS;
         }
     }
 
@@ -330,7 +330,7 @@ public class BarrelBlockEntity extends BaseBlockEntity{
             world.spawnEntity(entity);
         }
         mode = new EmptyMode();
-        markDirtyClient();
+        markDirty();
     }
 
     public ActionResult insertFromHand(PlayerEntity player, Hand hand) {
@@ -345,7 +345,7 @@ public class BarrelBlockEntity extends BaseBlockEntity{
         }
         // Check for fluids
         if (!(held.getItem() instanceof IBucketItem bucket)) {
-            return ActionResult.CONSUME;
+            return ActionResult.PASS;
         }
         // Filling with a fluid
         var volume = FluidUtils.proxyFluidVolume(bucket, held);
@@ -356,9 +356,9 @@ public class BarrelBlockEntity extends BaseBlockEntity{
                 var returnStack = bucket.libblockattributes__drainedOfFluid(held);
                 if (!player.isCreative()) {
                     held.decrement(1);
+                    player.giveItemStack(returnStack);
                 }
-                player.giveItemStack(returnStack);
-                markDirtyClient();
+                markDirty();
                 return ActionResult.SUCCESS;
             }
         }
@@ -371,19 +371,18 @@ public class BarrelBlockEntity extends BaseBlockEntity{
                     fluidTransferable.attemptExtraction(fluidKey -> true, amount, Simulation.ACTION);
                     if (!player.isCreative()) {
                         held.decrement(1);
+                        player.giveItemStack(returnStack);
                     }
-                    player.giveItemStack(returnStack);
-                    markDirtyClient();
+                    markDirty();
                     return ActionResult.SUCCESS;
                 }
             }
         }
-        return ActionResult.CONSUME;
+        return ActionResult.PASS;
     }
 
     // Fluid Inventory Management
     record FluidTransferer(BarrelBlockEntity barrel) implements FluidTransferable {
-
 
         @Override
         public FluidVolume attemptInsertion(FluidVolume volume, Simulation simulation) {
@@ -393,7 +392,7 @@ public class BarrelBlockEntity extends BaseBlockEntity{
                     var toTake = volume.withAmount(amount);
                     if (simulation.isAction()) {
                         barrel.mode = new FluidMode(toTake);
-                        barrel.markDirtyClient();
+                        barrel.markDirty();
                     }
                     return FluidUtils.copyLess(volume, toTake.amount());
                 }
@@ -405,7 +404,7 @@ public class BarrelBlockEntity extends BaseBlockEntity{
                         var toTake = fluidMode.getFluid().getFluidKey().withAmount(amount);
                         if (simulation.isAction()) {
                             fluidMode.getFluid().merge(toTake, Simulation.ACTION);
-                            barrel.markDirtyClient();
+                            barrel.markDirty();
                         }
                         return FluidUtils.copyLess(volume, toTake.amount());
                     }
@@ -429,7 +428,7 @@ public class BarrelBlockEntity extends BaseBlockEntity{
             } else {
                 fluidMode.getFluid().split(amount);
             }
-            barrel.markDirtyClient();
+            barrel.markDirty();
             return returnVolume;
         }
 
@@ -447,7 +446,7 @@ public class BarrelBlockEntity extends BaseBlockEntity{
                 }
                 if (simulation.isAction()) {
                     barrel.mode = new CompostMode(recipe.result(), recipe.amount(), recipe.color());
-                    barrel.markDirtyClient();
+                    barrel.markDirty();
                 }
                 var returnStack = stack.copy();
                 returnStack.decrement(1);
@@ -466,9 +465,9 @@ public class BarrelBlockEntity extends BaseBlockEntity{
                         barrel.mode = new AlchemyMode(fluidMode, result.getProduct(), result.getToSpawn().copy(), result.getDelay());
                     }
                     barrel.spawnByproduct(result.getByproduct());
-                    barrel.markDirtyClient();
+                    barrel.markDirty();
                 }
-                barrel.markDirtyClient();
+                barrel.markDirty();
                 var returnStack = stack.copy();
                 returnStack.decrement(1);
                 return returnStack;
@@ -483,7 +482,7 @@ public class BarrelBlockEntity extends BaseBlockEntity{
                         compostMode.setAmount(Math.min(compostMode.getAmount() + recipe.amount(), 1.0));
                         compostMode.setColor(recipe.color());
                         compostMode.setProgress(0);
-                        barrel.markDirtyClient();
+                        barrel.markDirty();
                     }
                     return ItemUtils.ofSize(stack, stack.getCount() - 1);
                 }
@@ -506,7 +505,7 @@ public class BarrelBlockEntity extends BaseBlockEntity{
             } else {
                 itemMode.getStack().decrement(amount);
             }
-            barrel.markDirtyClient();
+            barrel.markDirty();
             return returnStack;
         }
 
@@ -522,7 +521,7 @@ public class BarrelBlockEntity extends BaseBlockEntity{
 
         @Override
         public void markDirty() {
-            barrel.markDirtyClient();
+            barrel.markDirty();
         }
 
         @Override
@@ -551,7 +550,7 @@ public class BarrelBlockEntity extends BaseBlockEntity{
             }
             var stack = itemMode.getStack();
             barrel.mode = new EmptyMode();
-            barrel.markDirtyClient();
+            barrel.markDirty();
             return stack;
         }
 

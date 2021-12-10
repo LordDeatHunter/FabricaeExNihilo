@@ -92,8 +92,8 @@ public class FabricaeExNihiloConfig implements ConfigData {
             public boolean enabled = true;
             @Comment("How many ticks between updates")
             public int tickRate = 20;
-            public int baseProcessRate = FluidAmount.BUCKET.as1620() / 100;
-            public int woodenProcessingRate = FluidAmount.BUCKET.as1620() / 60;
+            public int baseProcessRate = FluidAmount.BUCKET.div(100).as1620();
+            public int woodenProcessingRate = FluidAmount.BUCKET.div(60).as1620();
             @Comment("How many buckets of liquid can a stone crucible store")
             public int stoneVolume = 4;
             @Comment("How many buckets of liquid can a wooden crucible store")

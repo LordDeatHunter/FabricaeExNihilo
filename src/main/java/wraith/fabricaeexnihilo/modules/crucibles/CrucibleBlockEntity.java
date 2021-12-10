@@ -12,6 +12,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityT
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FluidBlock;
+import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
@@ -67,7 +68,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
     }
 
     public CrucibleBlockEntity(BlockPos pos, BlockState state) {
-        this(pos, state, false);
+        this(pos, state, state.getMaterial() == Material.STONE);
     }
 
     /**
@@ -120,25 +121,26 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
     /**
      * Enchantments
      */
-    private EnchantmentContainer enchantments = new EnchantmentContainer();
+    private final EnchantmentContainer enchantments = new EnchantmentContainer();
 
     public static void ticker(World world, BlockPos blockPos, BlockState blockState, CrucibleBlockEntity crucibleEntity) {
         crucibleEntity.tick();
     }
 
     public void tick() {
-        if (queued.isEmpty() || contents.amount().as1620() >= getMaxCapacity() || (heat <= 0 && isStone)) {
+        if (queued.isEmpty() || contents.amount().isGreaterThanOrEqual(getMaxCapacity()) || (heat <= 0 && isStone)) {
             return;
         }
         if (--tickCounter <= 0) {
             if (!queued.isEmpty()) {
                 var amt = Math.min(queued.amount().as1620(), getProcessingSpeed());
-                contents = queued.fluidKey.withAmount(contents.amount().add(amt));
-                queued.split(FluidAmount.of1620(amt));
+                var fluid = FluidAmount.of1620(amt);
+                contents = queued.copy().fluidKey.withAmount(contents.copy().amount().add(fluid));
+                queued.split(fluid);
                 if (queued.amount().isLessThanOrEqual(FluidAmount.ZERO)) {
                     queued = FluidKeys.EMPTY.withAmount(FluidAmount.ZERO);
                 }
-                markDirtyClient();
+                markDirty();
             }
             tickCounter = FabricaeExNihilo.CONFIG.modules.crucibles.tickRate;
         }
@@ -156,12 +158,12 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
         return getEfficiencyMultiplier() * (isStone ? heat * FabricaeExNihilo.CONFIG.modules.crucibles.baseProcessRate : FabricaeExNihilo.CONFIG.modules.crucibles.woodenProcessingRate);
     }
 
-    public int getMaxCapacity() {
-        return FluidAmount.BUCKET.as1620() * (isStone ? FabricaeExNihilo.CONFIG.modules.crucibles.stoneVolume : FabricaeExNihilo.CONFIG.modules.crucibles.woodVolume);
+    public FluidAmount getMaxCapacity() {
+        return FluidAmount.BUCKET.mul((isStone ? FabricaeExNihilo.CONFIG.modules.crucibles.stoneVolume : FabricaeExNihilo.CONFIG.modules.crucibles.woodVolume));
     }
 
     public ActionResult activate(@Nullable BlockState state, @Nullable PlayerEntity player, @Nullable Hand hand, @Nullable BlockHitResult hitResult) {
-        if (world == null || world.isClient() || player == null) {
+        if (world == null || player == null) {
             return ActionResult.PASS;
         }
         var held = player.getStackInHand(hand == null ? player.getActiveHand() : hand);
@@ -170,14 +172,14 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
         }
 
         if (held.isEmpty()) {
-            return ActionResult.CONSUME;
+            return ActionResult.PASS;
         }
 
         // Removing a bucket's worth of fluid
         if (held.getItem() instanceof IBucketItem bucket) {
             if (bucket.libblockattributes__getFluid(held) == FluidKeys.EMPTY) {
                 var amount = bucket.libblockattributes__getFluidVolumeAmount();
-                if (contents.amount().as1620() >= amount.as1620()) {
+                if (contents.amount().isGreaterThanOrEqual(amount)) {
                     var drained = fluidExtractor.attemptExtraction(ANYTHING, amount, Simulation.SIMULATE);
                     if (drained.amount().equals(amount)) {
                         var returnStack = bucket.libblockattributes__withFluid(contents.fluidKey);
@@ -185,9 +187,9 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
                             fluidExtractor.attemptExtraction(ANYTHING, amount, Simulation.ACTION);
                             if (!player.isCreative()) {
                                 held.decrement(1);
+                                player.giveItemStack(returnStack);
                             }
-                            player.giveItemStack(returnStack);
-                            markDirtyClient();
+                            markDirty();
                             return ActionResult.SUCCESS;
                         }
                     }
@@ -202,7 +204,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
             }
             return ActionResult.SUCCESS;
         }
-        return ActionResult.SUCCESS;
+        return ActionResult.PASS;
     }
 
     public void updateHeat() {
@@ -274,11 +276,11 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
             if (!crucible.contents.isEmpty() && maxAmount.isGreaterThan(FluidAmount.ZERO) && filter != null && filter.matches(crucible.contents.fluidKey)) {
                 var toDrain = maxAmount.min(crucible.contents.amount());
                 if (simulation.isAction()) {
-                    var toReturn = crucible.contents.split(toDrain);
-                    crucible.markDirtyClient();
+                    var toReturn = crucible.contents.copy().split(toDrain);
+                    crucible.markDirty();
                     return toReturn;
                 } else {
-                    return crucible.contents.fluidKey.withAmount(toDrain);
+                    return crucible.contents.copy().fluidKey.withAmount(toDrain);
                 }
             } else {
                 return FluidKeys.EMPTY.withAmount(FluidAmount.ZERO);
@@ -298,10 +300,9 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
             if (result == null) {
                 return stack;
             }
-
             if ((crucible.contents.canMerge(result) || crucible.contents.isEmpty())
                     && (crucible.queued.canMerge(result) || crucible.queued.isEmpty())
-                    && crucible.contents.amount().as1620() + crucible.queued.amount().as1620() + result.amount().as1620() <= crucible.getMaxCapacity()) {
+                    && crucible.contents.copy().amount().add(crucible.queued.amount()).add(result.amount()).isLessThanOrEqual(crucible.getMaxCapacity())) {
                 if (simulation.isAction()) {
                     crucible.queued = result.fluidKey.withAmount(crucible.queued.amount().add(result.amount()));
                     if (stack.getItem() instanceof BlockItem) {
@@ -311,7 +312,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
                     } else {
                         crucible.render = ItemUtils.asStack(Blocks.OAK_LEAVES);
                     }
-                    crucible.markDirtyClient();
+                    crucible.markDirty();
                 }
                 return ItemUtils.ofSize(stack, stack.getCount() - 1);
             }
@@ -328,7 +329,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
 
         @Override
         public void markDirty() {
-            crucible.markDirtyClient();
+            crucible.markDirty();
         }
 
         @Override
@@ -375,7 +376,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
 
         @Override
         public boolean isEmpty() {
-            return crucible.contents.amount().as1620() + crucible.queued.amount().as1620() < crucible.getMaxCapacity();
+            return crucible.contents.copy().amount().add(crucible.queued.amount()).isLessThan(crucible.getMaxCapacity());
         }
 
         @Override
