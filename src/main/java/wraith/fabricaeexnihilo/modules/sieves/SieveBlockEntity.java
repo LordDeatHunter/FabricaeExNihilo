@@ -81,7 +81,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
                 mesh = ItemStack.EMPTY;
             }
             // Add mesh
-            if (SIEVE.isValidMesh(held)) {
+            else if (SIEVE.isValidMesh(held)) {
                 mesh = ItemUtils.ofSize(held, 1);
                 if (!player.isCreative()) {
                     held.decrement(1);
@@ -146,9 +146,9 @@ public class SieveBlockEntity extends BaseBlockEntity {
                 + FabricaeExNihilo.CONFIG.modules.sieves.hasteScaleFactor * hasteLevel;
 
         // TODO spawn some particles
-
         if (progress > 1.0) {
-            SIEVE.getResult(mesh, getFluid(), contents, player, world.random).forEach(player.getInventory()::offerOrDrop);
+            var drops = DefaultedList.copyOf(ItemStack.EMPTY, SIEVE.getResult(mesh, getFluid(), contents, player, world.random).toArray(new ItemStack[0]));
+            ItemScatterer.spawn(world, pos.up(), drops);
             progress = 0.0;
             contents = ItemStack.EMPTY;
         }
@@ -195,14 +195,14 @@ public class SieveBlockEntity extends BaseBlockEntity {
                 // Add adjacent locations to test to the stack
                 Arrays.stream(Direction.values())
                         // Horizontals
-                        .filter(dir -> dir.getOffsetY() == 0)
+                        .filter(dir -> dir.getAxis().isHorizontal())
                         // to BlockPos
                         .map(popped::offset)
                         // Remove already tested positions
                         .filter(dir -> !tested.contains(dir) && !stack.contains(dir))
                         // Remove positions too far away
-                        .filter(dir -> Math.abs(this.pos.getX()) - dir.getX() <= FabricaeExNihilo.CONFIG.modules.sieves.sieveRadius &&
-                                Math.abs(this.pos.getZ()) - dir.getZ() <= FabricaeExNihilo.CONFIG.modules.sieves.sieveRadius)
+                        .filter(dir -> Math.abs(this.pos.getX() - dir.getX()) <= FabricaeExNihilo.CONFIG.modules.sieves.sieveRadius &&
+                                       Math.abs(this.pos.getZ() - dir.getZ()) <= FabricaeExNihilo.CONFIG.modules.sieves.sieveRadius)
                         // Add to the stack to be processed
                         .forEach(stack::add);
             }

@@ -187,8 +187,8 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
                             fluidExtractor.attemptExtraction(ANYTHING, amount, Simulation.ACTION);
                             if (!player.isCreative()) {
                                 held.decrement(1);
-                                player.giveItemStack(returnStack);
                             }
+                            player.giveItemStack(returnStack);
                             markDirty();
                             return ActionResult.SUCCESS;
                         }

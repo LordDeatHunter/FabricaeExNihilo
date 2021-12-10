@@ -340,7 +340,9 @@ public class BarrelBlockEntity extends BaseBlockEntity {
         }
         var remaining = itemTransferable.attemptInsertion(held, Simulation.ACTION);
         if (remaining.getCount() != held.getCount()) {
-            held.decrement(1);
+            if (!player.isCreative()) {
+                held.decrement(1);
+            }
             return ActionResult.SUCCESS;
         }
         // Check for fluids
@@ -356,8 +358,8 @@ public class BarrelBlockEntity extends BaseBlockEntity {
                 var returnStack = bucket.libblockattributes__drainedOfFluid(held);
                 if (!player.isCreative()) {
                     held.decrement(1);
-                    player.giveItemStack(returnStack);
                 }
+                player.giveItemStack(returnStack);
                 markDirty();
                 return ActionResult.SUCCESS;
             }
@@ -371,8 +373,8 @@ public class BarrelBlockEntity extends BaseBlockEntity {
                     fluidTransferable.attemptExtraction(fluidKey -> true, amount, Simulation.ACTION);
                     if (!player.isCreative()) {
                         held.decrement(1);
-                        player.giveItemStack(returnStack);
                     }
+                    player.giveItemStack(returnStack);
                     markDirty();
                     return ActionResult.SUCCESS;
                 }
