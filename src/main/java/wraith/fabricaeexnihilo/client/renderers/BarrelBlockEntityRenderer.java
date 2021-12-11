@@ -4,7 +4,6 @@ import alexiil.mc.lib.attributes.fluid.amount.FluidAmount;
 import alexiil.mc.lib.attributes.fluid.render.FluidRenderFace;
 import alexiil.mc.lib.attributes.fluid.volume.FluidVolume;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.RenderLayers;
 import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
@@ -15,6 +14,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.client.BlockModelRendererFlags;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
@@ -73,25 +73,30 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
 
     public void renderCompost(CompostMode mode, BlockPos pos, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlays) {
         var color = Color.average(Color.WHITE, mode.getColor(), Math.pow(mode.getProgress(), 4));
+        var r = color.r;
+        var g = color.g;
+        var b = color.b;
+        var a = color.a;
 
         matrices.push();
-    
-        var yScale = (float) ((yMax - yMin) * Math.min(mode.getAmount(), 1.0f));
-        
+
+        var amount = mode.getAmount();
+        var yScale = MathHelper.clamp((float) ((yMax - yMin) * Math.min(amount, 1.0f)), 0, 1);
+
         var result = mode.getResult();
-        if(result.getItem() instanceof BlockItem blockItem){
+        if (result.getItem() instanceof BlockItem blockItem) {
             var block = blockItem.getBlock().getDefaultState();
             var model = MinecraftClient.getInstance().getBakedModelManager().getBlockModels().getModel(block);
             var consumer = vertexConsumers.getBuffer(TexturedRenderLayers.getEntityCutout());
-            matrices.translate(0, yMin + yScale / 2.0, 0);
-            matrices.scale(13/16F, yScale, 13/16F);
-            BlockModelRendererFlags.setColorOverride(false);
-            MinecraftClient.getInstance().getBlockRenderManager().getModelRenderer().render(matrices.peek(), consumer, block, model, 1, 0, 1, light, overlays);
-            BlockModelRendererFlags.setColorOverride(true);
-        }else{
-            matrices.translate(0.5, yMin + yScale / 2.0, 0.5);
+            matrices.translate(xMin, yMin, xMin);
             matrices.scale(xzScale, yScale, xzScale);
-            MinecraftClient.getInstance().getItemRenderer().renderItem(mode.getResult(), ModelTransformation.Mode.NONE, light, overlays, matrices, vertexConsumers, (int)pos.asLong());
+            BlockModelRendererFlags.setColorOverride(true);
+            MinecraftClient.getInstance().getBlockRenderManager().getModelRenderer().render(matrices.peek(), consumer, block, model, r, g, b, light, overlays);
+            BlockModelRendererFlags.setColorOverride(false);
+        } else {
+            matrices.translate(xMin, yMin, xMin);
+            matrices.scale(xzScale, yScale, xzScale);
+            MinecraftClient.getInstance().getItemRenderer().renderItem(mode.getResult(), ModelTransformation.Mode.NONE, light, overlays, matrices, vertexConsumers, (int) pos.asLong());
         }
         matrices.pop();
     }
