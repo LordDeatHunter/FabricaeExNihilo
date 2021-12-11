@@ -64,7 +64,7 @@ public class CompostMode implements BarrelMode {
         this.color = color;
     }
 
-    public static CompostMode fromTag(NbtCompound nbt) {
+    public static CompostMode readNbt(NbtCompound nbt) {
         var mode = new CompostMode(ItemStack.fromNbt(nbt.getCompound("result")), nbt.getDouble("amount"), new Color(nbt.getInt("color"), false));
         mode.progress = nbt.getDouble("progress");
         return mode;

@@ -77,8 +77,8 @@ public class AlchemyMode implements BarrelMode {
         this.countdown = countdown;
     }
 
-    public static AlchemyMode fromTag(NbtCompound tag) {
-        return new AlchemyMode(BarrelMode.BARREL_MODE_FACTORY(tag.getCompound("before")), BarrelMode.BARREL_MODE_FACTORY(tag.getCompound("after")), new EntityStack(tag.getCompound("toSpawn")), tag.getInt("countdown"));
+    public static AlchemyMode readNbt(NbtCompound nbt) {
+        return new AlchemyMode(BarrelMode.BARREL_MODE_FACTORY(nbt.getCompound("before")), BarrelMode.BARREL_MODE_FACTORY(nbt.getCompound("after")), new EntityStack(nbt.getCompound("toSpawn")), nbt.getInt("countdown"));
     }
 
 }

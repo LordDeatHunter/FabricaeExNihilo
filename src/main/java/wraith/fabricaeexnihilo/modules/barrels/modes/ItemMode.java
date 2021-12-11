@@ -31,8 +31,8 @@ public class ItemMode implements BarrelMode {
         this.stack = stack;
     }
 
-    public static ItemMode fromTag(NbtCompound tag) {
-        return new ItemMode(ItemStack.fromNbt(tag.getCompound("item_mode")));
+    public static ItemMode readNbt(NbtCompound nbt) {
+        return new ItemMode(ItemStack.fromNbt(nbt.contains("item_mode") ? nbt.getCompound("item_mode") : nbt));
     }
 
 }

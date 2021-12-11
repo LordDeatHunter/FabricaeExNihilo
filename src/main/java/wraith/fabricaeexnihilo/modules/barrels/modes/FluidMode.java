@@ -31,8 +31,8 @@ public class FluidMode implements BarrelMode {
         this.fluid = fluid;
     }
 
-    public static FluidMode fromTag(NbtCompound nbt) {
-        return new FluidMode(FluidVolume.fromTag(nbt.getCompound("fluid_mode")));
+    public static FluidMode readNbt(NbtCompound nbt) {
+        return new FluidMode(FluidVolume.fromTag(nbt.contains("fluid_mode") ? nbt.getCompound("fluid_mode") : nbt));
     }
 
 }

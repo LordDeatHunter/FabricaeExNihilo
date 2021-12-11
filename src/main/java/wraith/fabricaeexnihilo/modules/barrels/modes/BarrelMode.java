@@ -12,16 +12,16 @@ public interface BarrelMode {
 
     static BarrelMode BARREL_MODE_FACTORY(NbtCompound nbt) {
         if (nbt.contains("item_mode")) {
-            return ItemMode.fromTag(nbt.getCompound("item_mode"));
+            return ItemMode.readNbt(nbt.getCompound("item_mode"));
         }
         if (nbt.contains("fluid_mode")) {
-            return FluidMode.fromTag(nbt.getCompound("fluid_mode"));
+            return FluidMode.readNbt(nbt.getCompound("fluid_mode"));
         }
         if (nbt.contains("alchemy_mode")) {
-            return AlchemyMode.fromTag(nbt.getCompound("alchemy_mode"));
+            return AlchemyMode.readNbt(nbt.getCompound("alchemy_mode"));
         }
         if (nbt.contains("compost_mode")) {
-            return CompostMode.fromTag(nbt.getCompound("compost_mode"));
+            return CompostMode.readNbt(nbt.getCompound("compost_mode"));
         }
         return new EmptyMode();
     }
