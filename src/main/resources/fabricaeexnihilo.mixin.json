@@ -10,7 +10,9 @@
     "EnchantmentHelperMixin",
     "EnchantmentMixin",
     "FluidBlockMixin",
-    "MilkBucketMixin"
+    "MilkBucketMixin",
+    "client.FastBlockModelRendererMixin",
+    "client.SlowBlockModelRendererMixin"
   ],
   "client": [
   ],
