@@ -1,6 +1,5 @@
 package wraith.fabricaeexnihilo.modules;
 
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.FallingBlock;
@@ -33,8 +32,6 @@ import java.util.Map;
 
 public final class ModBlocks {
 
-    public static final FabricItemSettings ITEM_SETTINGS = new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP).maxCount(64);
-
     public static final FabricBlockSettings WOOD_SETTINGS = FabricBlockSettings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD).breakByHand(true);
     public static final FabricBlockSettings STONE_SETTINGS = FabricBlockSettings.of(Material.STONE).strength(2.0f, 6.0f).sounds(BlockSoundGroup.STONE);
     public static final FabricBlockSettings CRUSHED_GRAVELY_SETTINGS = FabricBlockSettings.of(Material.AGGREGATE).strength(0.6f).sounds(BlockSoundGroup.GRAVEL).breakByHand(true);
@@ -63,21 +60,21 @@ public final class ModBlocks {
     }
 
     public static void registerBlockItems() {
-        SIEVES.forEach((identifier, block) -> Registry.register(Registry.ITEM, identifier, new BlockItem(block, ITEM_SETTINGS)));
+        SIEVES.forEach((identifier, block) -> Registry.register(Registry.ITEM, identifier, new BlockItem(block, ModItems.BASE_SETTINGS)));
         CRUCIBLES.forEach((identifier, block) -> {
             var ench = block.getDefaultState().getMaterial() == Material.STONE
                     ? ToolMaterials.STONE.getEnchantability()
                     : ToolMaterials.WOOD.getEnchantability();
-            Registry.register(Registry.ITEM, identifier, new EnchantableBlockItem(block, ITEM_SETTINGS, ench));
+            Registry.register(Registry.ITEM, identifier, new EnchantableBlockItem(block, ModItems.BASE_SETTINGS, ench));
         });
         BARRELS.forEach((identifier, block) -> {
             var ench = block.getDefaultState().getMaterial() == Material.STONE
                     ? ToolMaterials.STONE.getEnchantability()
                     : ToolMaterials.WOOD.getEnchantability();
-            Registry.register(Registry.ITEM, identifier, new EnchantableBlockItem(block, ITEM_SETTINGS, ench));
+            Registry.register(Registry.ITEM, identifier, new EnchantableBlockItem(block, ModItems.BASE_SETTINGS, ench));
         });
-        CRUSHED.forEach((identifier, block) -> Registry.register(Registry.ITEM, identifier, new BlockItem(block, ITEM_SETTINGS)));
-        INFESTED_LEAVES.forEach((identifier, block) -> Registry.register(Registry.ITEM, identifier, new InfestedLeavesItem(block, ITEM_SETTINGS)));
+        CRUSHED.forEach((identifier, block) -> Registry.register(Registry.ITEM, identifier, new BlockItem(block, ModItems.BASE_SETTINGS)));
+        INFESTED_LEAVES.forEach((identifier, block) -> Registry.register(Registry.ITEM, identifier, new InfestedLeavesItem(block, ModItems.BASE_SETTINGS)));
         BlockGenerator.INSTANCE.initRegistryCallBack();
     }
 

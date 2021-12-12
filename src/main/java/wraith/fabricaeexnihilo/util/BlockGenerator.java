@@ -10,6 +10,7 @@ import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.api.IBlockGenerator;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
+import wraith.fabricaeexnihilo.modules.ModItems;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlock;
 import wraith.fabricaeexnihilo.modules.crucibles.CrucibleBlock;
 import wraith.fabricaeexnihilo.modules.infested.InfestedLeavesBlock;
@@ -69,20 +70,20 @@ public class BlockGenerator implements IBlockGenerator {
     private void registerBlockAndItem(Block block, Identifier identifier) {
         if (block instanceof CrucibleBlock crucibleBlock) {
             Registry.register(Registry.BLOCK, identifier, crucibleBlock);
-            Registry.register(Registry.ITEM, identifier, new BlockItem(crucibleBlock, ModBlocks.ITEM_SETTINGS));
+            Registry.register(Registry.ITEM, identifier, new BlockItem(crucibleBlock, ModItems.BASE_SETTINGS));
             ModBlocks.CRUCIBLES.put(identifier, crucibleBlock);
         } else if (block instanceof BarrelBlock barrelBlock) {
             Registry.register(Registry.BLOCK, identifier, barrelBlock);
-            Registry.register(Registry.ITEM, identifier, new BlockItem(barrelBlock, ModBlocks.ITEM_SETTINGS));
+            Registry.register(Registry.ITEM, identifier, new BlockItem(barrelBlock, ModItems.BASE_SETTINGS));
             ModBlocks.BARRELS.put(identifier, barrelBlock);
         } else if (block instanceof SieveBlock sieveBlock) {
             Registry.register(Registry.BLOCK, identifier, sieveBlock);
             ModBlocks.SIEVES.put(identifier, sieveBlock);
-            Registry.register(Registry.ITEM, identifier, new BlockItem(sieveBlock, ModBlocks.ITEM_SETTINGS));
+            Registry.register(Registry.ITEM, identifier, new BlockItem(sieveBlock, ModItems.BASE_SETTINGS));
         } else if (block instanceof InfestedLeavesBlock infestedLeavesBlock) {
             Registry.register(Registry.BLOCK, identifier, infestedLeavesBlock);
             ModBlocks.INFESTED_LEAVES.put(identifier, infestedLeavesBlock);
-            Registry.register(Registry.ITEM, identifier, new InfestedLeavesItem(infestedLeavesBlock, ModBlocks.ITEM_SETTINGS));
+            Registry.register(Registry.ITEM, identifier, new InfestedLeavesItem(infestedLeavesBlock, ModItems.BASE_SETTINGS));
         }
     }
 
