@@ -34,8 +34,12 @@ public final class ModTags {
     }
 
     public static void registerBlockAndItem(RuntimeResourcePack resourcePack, Tag.Identified<?> tag, Map<Identifier, ?> map) {
-        resourcePack.addTag(ID("blocks/" + tag.getId().getPath()), ModTags.generateResourcePackTag(map.keySet()));
-        resourcePack.addTag(ID("items/" + tag.getId().getPath()), ModTags.generateResourcePackTag(map.keySet()));
+        register(CATEGORY.BLOCKS, resourcePack, tag, map);
+        register(CATEGORY.ITEMS, resourcePack, tag, map);
+    }
+
+    public static void register(CATEGORY category, RuntimeResourcePack resourcePack, Tag.Identified<?> tag, Map<Identifier, ?> map) {
+        resourcePack.addTag(ID(category.asString() + "/" + tag.getId().getPath()), ModTags.generateResourcePackTag(map.keySet()));
     }
 
     public static JTag addAllTags(JTag tag, Collection<Identifier> identifiers) {
@@ -44,4 +48,20 @@ public final class ModTags {
         }
         return tag;
     }
+
+    public enum CATEGORY {
+        BLOCKS("blocks"),
+        ITEMS("items");
+
+        public final String type;
+
+        CATEGORY(String type) {
+            this.type = type;
+        }
+
+        public String asString() {
+            return type;
+        }
+    }
+
 }
