@@ -13,6 +13,7 @@ import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlock;
 import wraith.fabricaeexnihilo.modules.crucibles.CrucibleBlock;
 import wraith.fabricaeexnihilo.modules.infested.InfestedLeavesBlock;
+import wraith.fabricaeexnihilo.modules.infested.InfestedLeavesItem;
 import wraith.fabricaeexnihilo.modules.infested.NonInfestableLeavesBlock;
 import wraith.fabricaeexnihilo.modules.sieves.SieveBlock;
 
@@ -66,19 +67,22 @@ public class BlockGenerator implements IBlockGenerator {
     }
 
     private void registerBlockAndItem(Block block, Identifier identifier) {
-        Registry.register(Registry.BLOCK, identifier, block);
-        Registry.register(Registry.ITEM, identifier, new BlockItem(block, ModBlocks.ITEM_SETTINGS));
         if (block instanceof CrucibleBlock crucibleBlock) {
+            Registry.register(Registry.BLOCK, identifier, crucibleBlock);
+            Registry.register(Registry.ITEM, identifier, new BlockItem(crucibleBlock, ModBlocks.ITEM_SETTINGS));
             ModBlocks.CRUCIBLES.put(identifier, crucibleBlock);
-        }
-        if (block instanceof BarrelBlock barrelBlock) {
+        } else if (block instanceof BarrelBlock barrelBlock) {
+            Registry.register(Registry.BLOCK, identifier, barrelBlock);
+            Registry.register(Registry.ITEM, identifier, new BlockItem(barrelBlock, ModBlocks.ITEM_SETTINGS));
             ModBlocks.BARRELS.put(identifier, barrelBlock);
-        }
-        if (block instanceof SieveBlock sieveBlock) {
+        } else if (block instanceof SieveBlock sieveBlock) {
+            Registry.register(Registry.BLOCK, identifier, sieveBlock);
             ModBlocks.SIEVES.put(identifier, sieveBlock);
-        }
-        if (block instanceof InfestedLeavesBlock infestedLeavesBlock) {
+            Registry.register(Registry.ITEM, identifier, new BlockItem(sieveBlock, ModBlocks.ITEM_SETTINGS));
+        } else if (block instanceof InfestedLeavesBlock infestedLeavesBlock) {
+            Registry.register(Registry.BLOCK, identifier, infestedLeavesBlock);
             ModBlocks.INFESTED_LEAVES.put(identifier, infestedLeavesBlock);
+            Registry.register(Registry.ITEM, identifier, new InfestedLeavesItem(infestedLeavesBlock, ModBlocks.ITEM_SETTINGS));
         }
     }
 

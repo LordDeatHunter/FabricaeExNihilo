@@ -7,14 +7,16 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import wraith.fabricaeexnihilo.modules.base.IHasColor;
 import wraith.fabricaeexnihilo.util.Color;
 
 public class InfestedLeavesItem extends BlockItem implements IHasColor {
 
+    private final InfestedLeavesBlock leafBlock;
+
     public InfestedLeavesItem(InfestedLeavesBlock block, FabricItemSettings settings) {
         super(block, settings);
+        this.leafBlock = block;
     }
 
     @Override
@@ -25,7 +27,7 @@ public class InfestedLeavesItem extends BlockItem implements IHasColor {
     @Override
     @Environment(EnvType.CLIENT)
     public MutableText getName() {
-        return new TranslatableText("block.fabricaeexnihilo.infested", getBlock().getName());
+        return leafBlock.getName();
     }
 
     @Override
