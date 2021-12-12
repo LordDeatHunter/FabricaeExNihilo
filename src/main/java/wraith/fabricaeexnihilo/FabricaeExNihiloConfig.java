@@ -10,7 +10,7 @@ import wraith.fabricaeexnihilo.util.StatusEffectStats;
 import java.util.List;
 import java.util.Map;
 
-@Config(name="fabricaeexnihilo")
+@Config(name = "fabricaeexnihilo")
 public class FabricaeExNihiloConfig implements ConfigData {
 
     @Comment("Load json files from <config>/fabricaeexnihilo/*.json")

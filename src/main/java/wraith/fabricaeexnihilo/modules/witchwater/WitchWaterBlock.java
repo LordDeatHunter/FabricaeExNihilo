@@ -34,7 +34,7 @@ public class WitchWaterBlock extends BaseFluidBlock {
 
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        if(world == null || entity == null || !entity.isAlive() || entity.isRemoved()) {
+        if (world == null || entity == null || !entity.isAlive() || entity.isRemoved()) {
             return;
         }
         if (entity instanceof LivingEntity livingEntity && !isMarked(livingEntity)) {
@@ -53,7 +53,7 @@ public class WitchWaterBlock extends BaseFluidBlock {
             if (livingEntity instanceof RabbitEntity rabbit) {
                 markEntity(rabbit);
                 // Killer Rabbit.
-                if(rabbit.getRabbitType() != 99) {
+                if (rabbit.getRabbitType() != 99) {
                     rabbit.setRabbitType(99);
                 }
                 return;
@@ -62,8 +62,8 @@ public class WitchWaterBlock extends BaseFluidBlock {
                 FabricaeExNihilo.CONFIG.modules.witchwater.effects.forEach((effect, durationLevel) ->
                         applyStatusEffect(player,
                                 new StatusEffectInstance(Registry.STATUS_EFFECT.get(new Identifier(effect)),
-                                        durationLevel.duration(),
-                                        durationLevel.amplifier()
+                                        durationLevel.duration,
+                                        durationLevel.amplifier
                                 )
                         )
                 );
@@ -126,7 +126,7 @@ public class WitchWaterBlock extends BaseFluidBlock {
         }
         var changePos = witchPos.offset(Direction.DOWN) == otherPos ? otherPos : witchPos;
         world.setBlockState(changePos, block.getDefaultState());
-        world.playSound(null, changePos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 0.7f,0.8f + world.random.nextFloat() * 0.2f);
+        world.playSound(null, changePos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 0.7f, 0.8f + world.random.nextFloat() * 0.2f);
         return true;
     }
 
@@ -148,10 +148,11 @@ public class WitchWaterBlock extends BaseFluidBlock {
         }
         replaceMob(world, toKill, toSpawn);
     }
+
     public static void replaceMob(World world, Entity toKill, @Nullable Entity toSpawn) {
         toKill.remove(Entity.RemovalReason.DISCARDED);
-        if(toSpawn != null) {
-            if (toSpawn instanceof LivingEntity livingEntity){
+        if (toSpawn != null) {
+            if (toSpawn instanceof LivingEntity livingEntity) {
                 markEntity(livingEntity);
             }
             world.spawnEntity(toSpawn);
@@ -162,7 +163,7 @@ public class WitchWaterBlock extends BaseFluidBlock {
         // Grab the potion effect on the entity (null if not active) compare its duration (defaulting to 0) to the new duration
         boolean hasEffect = entity.getActiveStatusEffects().containsKey(statusEffect.getEffectType());
         var entityEffectDuration = hasEffect ? entity.getActiveStatusEffects().get(statusEffect.getEffectType()).getDuration() : Integer.MIN_VALUE;
-        if(entityEffectDuration <= statusEffect.getDuration() - 20) {
+        if (entityEffectDuration <= statusEffect.getDuration() - 20) {
             entity.addStatusEffect(statusEffect);
         }
     }
