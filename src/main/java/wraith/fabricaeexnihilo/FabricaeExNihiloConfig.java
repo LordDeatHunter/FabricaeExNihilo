@@ -5,8 +5,7 @@ import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
+import wraith.fabricaeexnihilo.util.StatusEffectStats;
 
 import java.util.List;
 import java.util.Map;
@@ -29,7 +28,7 @@ public class FabricaeExNihiloConfig implements ConfigData {
 
         public static class Generator {
             @Comment("Blocks to be ignored as triggers for the block generator (i.e. makes sieves/barrels/crucibles)")
-            public List<Identifier> blackList = List.of(new Identifier("terrestria:sakura_log"));
+            public List<String> blackList = List.of("terrestria:sakura_log");
         }
 
         @ConfigEntry.Gui.CollapsibleObject
@@ -189,12 +188,12 @@ public class FabricaeExNihiloConfig implements ConfigData {
         public static class WitchWaterConfig {
             public boolean enabled = true;
             @Comment("What effects should players get on contact")
-            public Map<Identifier, Pair<Integer, Integer>> effects = Map.of(
-                    new Identifier("blindness"), new Pair<>(210, 0),
-                    new Identifier("hunger"), new Pair<>(210, 2),
-                    new Identifier("slowness"), new Pair<>(210, 0),
-                    new Identifier("weakness"), new Pair<>(210, 2),
-                    new Identifier("wither"), new Pair<>(210, 0)
+            public Map<String, StatusEffectStats> effects = Map.of(
+                    "blindness", new StatusEffectStats(210, 0),
+                    "hunger", new StatusEffectStats(210, 2),
+                    "slowness", new StatusEffectStats(210, 0),
+                    "weakness", new StatusEffectStats(210, 2),
+                    "wither", new StatusEffectStats(210, 0)
             );
         }
 

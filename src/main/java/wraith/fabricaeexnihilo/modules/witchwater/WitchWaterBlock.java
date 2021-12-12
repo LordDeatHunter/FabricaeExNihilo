@@ -15,6 +15,7 @@ import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
@@ -60,9 +61,9 @@ public class WitchWaterBlock extends BaseFluidBlock {
             if (livingEntity instanceof PlayerEntity player) {
                 FabricaeExNihilo.CONFIG.modules.witchwater.effects.forEach((effect, durationLevel) ->
                         applyStatusEffect(player,
-                                new StatusEffectInstance(Registry.STATUS_EFFECT.get(effect),
-                                        durationLevel.getLeft(),
-                                        durationLevel.getRight()
+                                new StatusEffectInstance(Registry.STATUS_EFFECT.get(new Identifier(effect)),
+                                        durationLevel.duration(),
+                                        durationLevel.amplifier()
                                 )
                         )
                 );
