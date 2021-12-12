@@ -21,7 +21,9 @@
       "conditions": {
         "items": [
           {
-            "item": "fabricaeexnihilo:witchwater_bucket"
+            "items": [
+              "fabricaeexnihilo:witchwater_bucket"
+            ]
           }
         ]
       }

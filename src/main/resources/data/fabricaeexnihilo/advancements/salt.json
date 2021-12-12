@@ -21,7 +21,9 @@
       "conditions": {
         "items": [
           {
-            "item": "fabricaeexnihilo:salt_bottle"
+            "items": [
+              "fabricaeexnihilo:salt_bottle"
+            ]
           }
         ]
       }

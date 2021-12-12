@@ -21,7 +21,9 @@
       "conditions": {
         "items": [
           {
-            "item": "fabricaeexnihilo:crook_wood"
+            "items": [
+              "fabricaeexnihilo:crook_wood"
+            ]
           }
         ]
       }

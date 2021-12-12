@@ -21,7 +21,9 @@
       "conditions": {
         "items": [
           {
-            "item": "fabricaeexnihilo:hammer_diamond"
+            "items": [
+              "fabricaeexnihilo:hammer_diamond"
+            ]
           }
         ]
       }

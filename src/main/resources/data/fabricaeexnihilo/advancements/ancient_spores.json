@@ -21,7 +21,9 @@
       "conditions": {
         "items": [
           {
-            "item": "fabricaeexnihilo:seed_mycelium"
+            "items": [
+              "fabricaeexnihilo:seed_mycelium"
+            ]
           }
         ]
       }

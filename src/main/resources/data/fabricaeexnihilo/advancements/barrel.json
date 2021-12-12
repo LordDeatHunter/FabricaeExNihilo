@@ -21,7 +21,9 @@
       "conditions": {
         "items": [
           {
-            "item": "fabricaeexnihilo:oak_barrel"
+            "items": [
+              "fabricaeexnihilo:oak_barrel"
+            ]
           }
         ]
       }
