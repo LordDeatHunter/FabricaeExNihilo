@@ -58,10 +58,10 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
 
     public void renderQueued(ItemStack renderStack, FluidAmount level, MatrixStack matrices, VertexConsumerProvider vertexConsumer, int light, int overlay, int seed) {
         float dLevel = (float)level.as1620() / FluidAmount.BUCKET.as1620();
-        var yScale = MathHelper.clamp((yMax - yMin) * dLevel, 0, 1);
+        var yScale = MathHelper.clamp((yMax - yMin) * dLevel, 0, yMax - yMin);
 
         matrices.push();
-        matrices.translate(0.5, yMin + yScale / 2, 0.5);
+        matrices.translate(0.5, yMin + yScale, 0.5);
         matrices.scale(xzScale, yScale, xzScale);
         matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
         MinecraftClient.getInstance().getItemRenderer().renderItem(renderStack, ModelTransformation.Mode.NONE, light, overlay, matrices, vertexConsumer, seed);
