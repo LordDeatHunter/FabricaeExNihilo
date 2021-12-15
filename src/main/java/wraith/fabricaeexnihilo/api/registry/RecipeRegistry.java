@@ -1,6 +1,6 @@
 package wraith.fabricaeexnihilo.api.registry;
 
-public interface Registry<T> {
+public interface RecipeRegistry<T> {
     void clear();
     boolean register(T recipe);
 }

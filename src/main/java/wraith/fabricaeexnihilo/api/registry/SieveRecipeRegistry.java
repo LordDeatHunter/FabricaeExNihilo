@@ -17,7 +17,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
-public interface SieveRegistry extends Registry<SieveRecipe> {
+public interface SieveRecipeRegistry extends RecipeRegistry<SieveRecipe> {
 
     List<ItemStack> getResult(ItemStack mesh, @Nullable Fluid fluid, ItemStack sievable, @Nullable PlayerEntity player, Random rand);
 

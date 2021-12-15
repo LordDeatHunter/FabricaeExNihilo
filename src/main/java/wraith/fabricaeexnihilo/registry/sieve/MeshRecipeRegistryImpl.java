@@ -3,6 +3,7 @@ package wraith.fabricaeexnihilo.registry.sieve;
 import com.google.common.reflect.TypeToken;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.api.recipes.crucible.CrucibleRecipe;
+import wraith.fabricaeexnihilo.api.registry.MeshRecipeRegistry;
 import wraith.fabricaeexnihilo.compatibility.modules.MetaModule;
 import wraith.fabricaeexnihilo.modules.sieves.MeshProperties;
 import wraith.fabricaeexnihilo.registry.AbstractRegistry;
@@ -14,15 +15,15 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MeshRegistry extends AbstractRegistry<List<MeshProperties>> implements wraith.fabricaeexnihilo.api.registry.MeshRegistry {
+public class MeshRecipeRegistryImpl extends AbstractRegistry<List<MeshProperties>> implements MeshRecipeRegistry {
 
     private final List<MeshProperties> registry;
 
-    public MeshRegistry() {
+    public MeshRecipeRegistryImpl() {
         this(new ArrayList<>());
     }
 
-    public MeshRegistry(List<MeshProperties> registry) {
+    public MeshRecipeRegistryImpl(List<MeshProperties> registry) {
         this.registry = registry;
     }
 
@@ -67,8 +68,8 @@ public class MeshRegistry extends AbstractRegistry<List<MeshProperties>> impleme
 
     private static final Type SERIALIZATION_TYPE = new TypeToken<List<CrucibleRecipe>>(){}.getType();
 
-    public static wraith.fabricaeexnihilo.api.registry.MeshRegistry fromJson(File file) {
-        return fromJson(file, wraith.fabricaeexnihilo.registry.sieve.MeshRegistry::new, MetaModule.INSTANCE::registerMesh);
+    public static MeshRecipeRegistry fromJson(File file) {
+        return fromJson(file, MeshRecipeRegistryImpl::new, MetaModule.INSTANCE::registerMesh);
     }
 
 }

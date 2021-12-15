@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.api.crafting.Lootable;
 import wraith.fabricaeexnihilo.api.recipes.SieveRecipe;
+import wraith.fabricaeexnihilo.api.registry.SieveRecipeRegistry;
 import wraith.fabricaeexnihilo.compatibility.modules.MetaModule;
 import wraith.fabricaeexnihilo.compatibility.rei.sieve.SieveCategory;
 import wraith.fabricaeexnihilo.registry.AbstractRegistry;
@@ -23,15 +24,15 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class SieveRegistry extends AbstractRegistry<List<SieveRecipe>> implements wraith.fabricaeexnihilo.api.registry.SieveRegistry {
+public class SieveRecipeRegistryImpl extends AbstractRegistry<List<SieveRecipe>> implements SieveRecipeRegistry {
 
     private final List<SieveRecipe> registry;
 
-    public SieveRegistry() {
+    public SieveRecipeRegistryImpl() {
         this(new ArrayList<>());
     }
 
-    public SieveRegistry(List<SieveRecipe> registry) {
+    public SieveRecipeRegistryImpl(List<SieveRecipe> registry) {
         this.registry = registry;
     }
 
@@ -143,10 +144,10 @@ public class SieveRegistry extends AbstractRegistry<List<SieveRecipe>> implement
 
     private static final Type SERIALIZATION_TYPE = new TypeToken<List<SieveRecipe>>() {}.getType();
 
-    public static SieveRegistry fromJson(File file) {
+    public static SieveRecipeRegistryImpl fromJson(File file) {
         return fromJson(
                 file,
-                wraith.fabricaeexnihilo.registry.sieve.SieveRegistry::new,
+                SieveRecipeRegistryImpl::new,
                 MetaModule.INSTANCE::registerSieve
         );
     }

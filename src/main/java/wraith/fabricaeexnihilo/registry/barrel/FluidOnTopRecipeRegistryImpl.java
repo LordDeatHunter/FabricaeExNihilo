@@ -3,6 +3,7 @@ package wraith.fabricaeexnihilo.registry.barrel;
 import com.google.common.reflect.TypeToken;
 import net.minecraft.fluid.Fluid;
 import wraith.fabricaeexnihilo.api.recipes.barrel.FluidOnTopRecipe;
+import wraith.fabricaeexnihilo.api.registry.FluidOnTopRecipeRegistry;
 import wraith.fabricaeexnihilo.compatibility.modules.MetaModule;
 import wraith.fabricaeexnihilo.modules.barrels.modes.BarrelMode;
 import wraith.fabricaeexnihilo.registry.AbstractRegistry;
@@ -14,7 +15,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FluidOnTopRegistry extends AbstractRegistry<List<FluidOnTopRecipe>> implements wraith.fabricaeexnihilo.api.registry.FluidOnTopRegistry {
+public class FluidOnTopRecipeRegistryImpl extends AbstractRegistry<List<FluidOnTopRecipe>> implements FluidOnTopRecipeRegistry {
 
     private final List<FluidOnTopRecipe> registry = new ArrayList<>();
 
@@ -60,8 +61,8 @@ public class FluidOnTopRegistry extends AbstractRegistry<List<FluidOnTopRecipe>>
 
     private static final Type SERIALIZATION_TYPE = new TypeToken<List<FluidOnTopRecipe>>(){}.getType();
 
-    public static wraith.fabricaeexnihilo.api.registry.FluidOnTopRegistry fromJson(File file) {
-        return fromJson(file, wraith.fabricaeexnihilo.registry.barrel.FluidOnTopRegistry::new, MetaModule.INSTANCE::registerFluidOnTop);
+    public static FluidOnTopRecipeRegistry fromJson(File file) {
+        return fromJson(file, FluidOnTopRecipeRegistryImpl::new, MetaModule.INSTANCE::registerFluidOnTop);
     }
 
 }

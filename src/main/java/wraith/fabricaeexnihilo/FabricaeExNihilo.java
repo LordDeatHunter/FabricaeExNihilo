@@ -13,7 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import wraith.fabricaeexnihilo.api.FabricaeExNihiloAPI;
 import wraith.fabricaeexnihilo.api.registry.FabricaeExNihiloRegistries;
-import wraith.fabricaeexnihilo.compatibility.modules.FabricaeExNihiloModule;
+import wraith.fabricaeexnihilo.compatibility.modules.FabricaeExNihiloModuleImpl;
 import wraith.fabricaeexnihilo.compatibility.modules.techreborn.TechReborn;
 import wraith.fabricaeexnihilo.modules.*;
 import wraith.fabricaeexnihilo.util.ARRPUtils;
@@ -80,7 +80,7 @@ public class FabricaeExNihilo implements ModInitializer {
     }
 
     private void registerCompatModules() {
-        FabricaeExNihiloAPI.registerCompatabilityModule(FabricaeExNihiloModule.INSTANCE);
+        FabricaeExNihiloAPI.registerCompatabilityModule(FabricaeExNihiloModuleImpl.INSTANCE);
         if (FabricLoader.getInstance().isModLoaded("techreborn")) {
             FabricaeExNihiloAPI.registerCompatabilityModule(new TechReborn());
         }

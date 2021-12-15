@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
-public interface ToolRegistry extends Registry<ToolRecipe> {
+public interface ToolRecipeRegistry extends RecipeRegistry<ToolRecipe> {
 
     default boolean register(ItemIngredient target, Collection<Lootable> loot) {
         return register(new ToolRecipe(target, loot.stream().toList()));

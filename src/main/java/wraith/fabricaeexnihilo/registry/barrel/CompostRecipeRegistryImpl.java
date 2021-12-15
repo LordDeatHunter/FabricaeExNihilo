@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.api.recipes.barrel.CompostRecipe;
+import wraith.fabricaeexnihilo.api.registry.CompostRecipeRegistry;
 import wraith.fabricaeexnihilo.compatibility.modules.MetaModule;
 import wraith.fabricaeexnihilo.compatibility.rei.barrel.CompostCategory;
 import wraith.fabricaeexnihilo.compatibility.rei.barrel.REICompostRecipe;
@@ -19,15 +20,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CompostRegistry extends AbstractRegistry<List<CompostRecipe>> implements wraith.fabricaeexnihilo.api.registry.CompostRegistry {
+public class CompostRecipeRegistryImpl extends AbstractRegistry<List<CompostRecipe>> implements CompostRecipeRegistry {
 
     private final List<CompostRecipe> registry;
 
-    public CompostRegistry(List<CompostRecipe> registry) {
+    public CompostRecipeRegistryImpl(List<CompostRecipe> registry) {
         this.registry = registry;
     }
 
-    public CompostRegistry() {
+    public CompostRecipeRegistryImpl() {
         this(new ArrayList<>());
     }
 
@@ -102,8 +103,8 @@ public class CompostRegistry extends AbstractRegistry<List<CompostRecipe>> imple
 
     private static final Type SERIALIZATION_TYPE = new TypeToken<List<CompostRecipe>>() {}.getType();
 
-    public static wraith.fabricaeexnihilo.api.registry.CompostRegistry fromJson(File file) {
-        return fromJson(file, wraith.fabricaeexnihilo.registry.barrel.CompostRegistry::new, MetaModule.INSTANCE::registerCompost);
+    public static CompostRecipeRegistry fromJson(File file) {
+        return fromJson(file, CompostRecipeRegistryImpl::new, MetaModule.INSTANCE::registerCompost);
     }
 
 }

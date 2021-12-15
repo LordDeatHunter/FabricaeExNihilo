@@ -12,7 +12,7 @@ import wraith.fabricaeexnihilo.api.recipes.barrel.MilkingRecipe;
 
 import java.util.Collection;
 
-public interface MilkingRegistry extends Registry<MilkingRecipe> {
+public interface MilkingRecipeRegistry extends RecipeRegistry<MilkingRecipe> {
 
     default boolean register(EntityTypeIngredient entity, FluidVolume fluid, int cooldown) {
         return register(new MilkingRecipe(entity, fluid, cooldown));

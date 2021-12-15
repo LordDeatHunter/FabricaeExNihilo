@@ -14,7 +14,7 @@ import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.util.Collection;
 
-public interface FluidOnTopRegistry extends Registry<FluidOnTopRecipe> {
+public interface FluidOnTopRecipeRegistry extends RecipeRegistry<FluidOnTopRecipe> {
 
         default boolean register(FluidIngredient contents, FluidIngredient onTop, BarrelMode result) {
             return register(new FluidOnTopRecipe(contents, onTop, result));

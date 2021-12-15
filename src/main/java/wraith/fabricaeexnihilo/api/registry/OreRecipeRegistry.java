@@ -10,7 +10,7 @@ import wraith.fabricaeexnihilo.util.Color;
 
 import java.util.List;
 
-public interface OreRegistry extends Registry<OreProperties> {
+public interface OreRecipeRegistry extends RecipeRegistry<OreProperties> {
     List<OreProperties> getAll();
 
     boolean register(OreProperties... properties);

@@ -10,7 +10,7 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Random;
 
-public interface WitchWaterWorldRegistry extends Registry<WitchWaterWorldRecipe> {
+public interface WitchWaterWorldRecipeRegistry extends RecipeRegistry<WitchWaterWorldRecipe> {
 
     default boolean register(FluidIngredient fluid, WeightedList result) {
         return register(new WitchWaterWorldRecipe(fluid, result));

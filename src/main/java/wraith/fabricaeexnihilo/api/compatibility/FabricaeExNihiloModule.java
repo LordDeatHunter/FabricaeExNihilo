@@ -5,32 +5,32 @@ import wraith.fabricaeexnihilo.api.registry.*;
 public interface FabricaeExNihiloModule {
 
     // Barrel Registries
-    void registerAlchemy(AlchemyRegistry registry);
-    void registerCompost(CompostRegistry registry);
-    void registerLeaking(LeakingRegistry registry);
-    void registerFluidOnTop(FluidOnTopRegistry registry);
-    void registerFluidTransform(FluidTransformRegistry registry);
+    void registerAlchemy(AlchemyRecipeRegistry registry);
+    void registerCompost(CompostRecipeRegistry registry);
+    void registerLeaking(LeakingRecipeRegistry registry);
+    void registerFluidOnTop(FluidOnTopRecipeRegistry registry);
+    void registerFluidTransform(FluidTransformRecipeRegistry registry);
 
-    void registerMilking(MilkingRegistry registry);
+    void registerMilking(MilkingRecipeRegistry registry);
 
     // Crucible Registries
-    void registerCrucibleHeat(CrucibleHeatRegistry registry);
-    void registerCrucibleStone(CrucibleRegistry registry);
-    void registerCrucibleWood(CrucibleRegistry registry);
+    void registerCrucibleHeat(CrucibleHeatRecipeRegistry registry);
+    void registerCrucibleStone(CrucibleRecipeRegistry registry);
+    void registerCrucibleWood(CrucibleRecipeRegistry registry);
 
     // Sieve Registries
-    void registerMesh(MeshRegistry registry);
-    void registerSieve(SieveRegistry registry);
+    void registerMesh(MeshRecipeRegistry registry);
+    void registerSieve(SieveRecipeRegistry registry);
 
     // Tool Registries
-    void registerCrook(ToolRegistry registry);
-    void registerHammer(ToolRegistry registry);
+    void registerCrook(ToolRecipeRegistry registry);
+    void registerHammer(ToolRecipeRegistry registry);
 
     // Witch Water Registries
-    void registerWitchWaterWorld(WitchWaterWorldRegistry registry);
-    void registerWitchWaterEntity(WitchWaterEntityRegistry registry);
+    void registerWitchWaterWorld(WitchWaterWorldRecipeRegistry registry);
+    void registerWitchWaterEntity(WitchWaterEntityRecipeRegistry registry);
 
     // Ore Registry
-    void registerOres(OreRegistry registry);
+    void registerOres(OreRecipeRegistry registry);
 
 }

@@ -4,6 +4,7 @@ import alexiil.mc.lib.attributes.fluid.volume.FluidVolume;
 import com.google.common.reflect.TypeToken;
 import net.minecraft.item.Item;
 import wraith.fabricaeexnihilo.api.recipes.crucible.CrucibleRecipe;
+import wraith.fabricaeexnihilo.api.registry.CrucibleRecipeRegistry;
 import wraith.fabricaeexnihilo.registry.AbstractRegistry;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
@@ -16,15 +17,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class CrucibleRegistry extends AbstractRegistry<List<CrucibleRecipe>> implements wraith.fabricaeexnihilo.api.registry.CrucibleRegistry {
+public class CrucibleRecipeRegistryImpl extends AbstractRegistry<List<CrucibleRecipe>> implements CrucibleRecipeRegistry {
 
     private final List<CrucibleRecipe> registry;
 
-    public CrucibleRegistry() {
+    public CrucibleRecipeRegistryImpl() {
         this(new ArrayList<>());
     }
 
-    public CrucibleRegistry(List<CrucibleRecipe> registry) {
+    public CrucibleRecipeRegistryImpl(List<CrucibleRecipe> registry) {
         this.registry = registry;
     }
 
@@ -70,8 +71,8 @@ public class CrucibleRegistry extends AbstractRegistry<List<CrucibleRecipe>> imp
 
     private static final Type SERIALIZATION_TYPE = new TypeToken<List<CrucibleRecipe>>(){}.getType();
 
-    public static wraith.fabricaeexnihilo.api.registry.CrucibleRegistry fromJson(File file, Consumer<CrucibleRegistry> defaults) {
-        return fromJson(file, wraith.fabricaeexnihilo.registry.crucible.CrucibleRegistry::new, defaults);
+    public static CrucibleRecipeRegistry fromJson(File file, Consumer<CrucibleRecipeRegistryImpl> defaults) {
+        return fromJson(file, CrucibleRecipeRegistryImpl::new, defaults);
     }
 
 }

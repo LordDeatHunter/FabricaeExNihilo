@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.api.recipes.barrel.AlchemyRecipe;
+import wraith.fabricaeexnihilo.api.registry.AlchemyRecipeRegistry;
 import wraith.fabricaeexnihilo.compatibility.modules.MetaModule;
 import wraith.fabricaeexnihilo.registry.AbstractRegistry;
 
@@ -17,15 +18,15 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlchemyRegistry extends AbstractRegistry<List<AlchemyRecipe>> implements wraith.fabricaeexnihilo.api.registry.AlchemyRegistry {
+public class AlchemyRecipeRegistryImpl extends AbstractRegistry<List<AlchemyRecipe>> implements AlchemyRecipeRegistry {
 
     private final List<AlchemyRecipe> registry;
 
-    public AlchemyRegistry(List<AlchemyRecipe> registry) {
+    public AlchemyRecipeRegistryImpl(List<AlchemyRecipe> registry) {
         this.registry = registry;
     }
 
-    public AlchemyRegistry() {
+    public AlchemyRecipeRegistryImpl() {
         this(new ArrayList<>());
     }
 
@@ -76,8 +77,8 @@ public class AlchemyRegistry extends AbstractRegistry<List<AlchemyRecipe>> imple
 
     private static final Type SERIALIZATION_TYPE = new TypeToken<List<AlchemyRecipe>>(){}.getType();
 
-    public static wraith.fabricaeexnihilo.api.registry.AlchemyRegistry fromJson(File file) {
-        return fromJson(file, wraith.fabricaeexnihilo.registry.barrel.AlchemyRegistry::new, MetaModule.INSTANCE::registerAlchemy);
+    public static AlchemyRecipeRegistry fromJson(File file) {
+        return fromJson(file, AlchemyRecipeRegistryImpl::new, MetaModule.INSTANCE::registerAlchemy);
     }
 
 }

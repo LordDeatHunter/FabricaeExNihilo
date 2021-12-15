@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.util.Pair;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.api.recipes.barrel.LeakingRecipe;
+import wraith.fabricaeexnihilo.api.registry.LeakingRecipeRegistry;
 import wraith.fabricaeexnihilo.compatibility.modules.MetaModule;
 import wraith.fabricaeexnihilo.registry.AbstractRegistry;
 
@@ -17,7 +18,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LeakingRegistry extends AbstractRegistry<List<LeakingRecipe>> implements wraith.fabricaeexnihilo.api.registry.LeakingRegistry {
+public class LeakingRecipeRegistryImpl extends AbstractRegistry<List<LeakingRecipe>> implements LeakingRecipeRegistry {
 
     private final List<LeakingRecipe> registry = new ArrayList<>();
 
@@ -75,8 +76,8 @@ public class LeakingRegistry extends AbstractRegistry<List<LeakingRecipe>> imple
 
     private static final Type SERIALIZATION_TYPE = new TypeToken<List<LeakingRecipe>>(){}.getType();
 
-    public static wraith.fabricaeexnihilo.api.registry.LeakingRegistry fromJson(File file) {
-        return fromJson(file, wraith.fabricaeexnihilo.registry.barrel.LeakingRegistry::new, MetaModule.INSTANCE::registerLeaking);
+    public static LeakingRecipeRegistry fromJson(File file) {
+        return fromJson(file, LeakingRecipeRegistryImpl::new, MetaModule.INSTANCE::registerLeaking);
     }
 
 }

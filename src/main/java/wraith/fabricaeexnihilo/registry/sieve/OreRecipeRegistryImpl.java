@@ -6,6 +6,7 @@ import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
+import wraith.fabricaeexnihilo.api.registry.OreRecipeRegistry;
 import wraith.fabricaeexnihilo.compatibility.modules.MetaModule;
 import wraith.fabricaeexnihilo.modules.ore.OreChunkItem;
 import wraith.fabricaeexnihilo.modules.ore.OrePieceItem;
@@ -19,16 +20,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class OreRegistry extends AbstractRegistry<List<OreProperties>> implements wraith.fabricaeexnihilo.api.registry.OreRegistry {
+public class OreRecipeRegistryImpl extends AbstractRegistry<List<OreProperties>> implements OreRecipeRegistry {
 
     private static final FabricItemSettings ITEM_SETTINGS = new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP).maxCount(64);
     private final List<OreProperties> registry;
 
-    public OreRegistry(List<OreProperties> registry) {
+    public OreRecipeRegistryImpl(List<OreProperties> registry) {
         this.registry = registry;
     }
 
-    public OreRegistry() {
+    public OreRecipeRegistryImpl() {
         this(new ArrayList<>());
     }
 
@@ -92,8 +93,8 @@ public class OreRegistry extends AbstractRegistry<List<OreProperties>> implement
 
     private static final Type SERIALIZATION_TYPE = new TypeToken<List<OreProperties>>() {}.getType();
 
-    public static wraith.fabricaeexnihilo.api.registry.OreRegistry fromJson(File file) {
-        return fromJson(file, wraith.fabricaeexnihilo.registry.sieve.OreRegistry::new, MetaModule.INSTANCE::registerOres);
+    public static OreRecipeRegistry fromJson(File file) {
+        return fromJson(file, OreRecipeRegistryImpl::new, MetaModule.INSTANCE::registerOres);
     }
 
 }

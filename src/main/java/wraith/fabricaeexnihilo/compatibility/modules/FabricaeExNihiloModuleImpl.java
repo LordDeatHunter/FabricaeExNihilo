@@ -15,6 +15,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.village.VillagerProfession;
+import wraith.fabricaeexnihilo.api.compatibility.FabricaeExNihiloModule;
 import wraith.fabricaeexnihilo.api.crafting.FluidIngredient;
 import wraith.fabricaeexnihilo.api.crafting.ItemIngredient;
 import wraith.fabricaeexnihilo.api.crafting.Lootable;
@@ -41,14 +42,14 @@ import java.util.stream.Stream;
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 import static wraith.fabricaeexnihilo.util.ColorUtils.*;
 
-public final class FabricaeExNihiloModule implements wraith.fabricaeexnihilo.api.compatibility.FabricaeExNihiloModule {
+public final class FabricaeExNihiloModuleImpl implements FabricaeExNihiloModule {
 
-    private FabricaeExNihiloModule() {}
+    private FabricaeExNihiloModuleImpl() {}
 
-    public static final FabricaeExNihiloModule INSTANCE = new FabricaeExNihiloModule();
+    public static final FabricaeExNihiloModuleImpl INSTANCE = new FabricaeExNihiloModuleImpl();
 
     @Override
-    public void registerAlchemy(AlchemyRegistry registry) {
+    public void registerAlchemy(AlchemyRecipeRegistry registry) {
         registry.register(Fluids.WATER, ItemUtils.getExNihiloItem("seed_mycelium"), WitchWaterFluid.STILL);
 
         registry.register(Fluids.LAVA, Items.GLOWSTONE_DUST, Blocks.END_STONE);
@@ -93,7 +94,7 @@ public final class FabricaeExNihiloModule implements wraith.fabricaeexnihilo.api
     }
 
     @Override
-    public void registerCompost(CompostRegistry registry) {
+    public void registerCompost(CompostRecipeRegistry registry) {
         registry.register(ItemTags.LEAVES, Blocks.DIRT, 0.125, Color.DARK_GREEN);
         registry.register(ItemTags.SAPLINGS, Blocks.DIRT, 0.0625, Color.DARK_GREEN);
 
@@ -114,7 +115,7 @@ public final class FabricaeExNihiloModule implements wraith.fabricaeexnihilo.api
     }
 
     @Override
-    public void registerLeaking(LeakingRegistry registry) {
+    public void registerLeaking(LeakingRecipeRegistry registry) {
         registry.register(Blocks.COBBLESTONE, Fluids.WATER, FluidAmount.BUCKET.as1620() / 10, Blocks.MOSSY_COBBLESTONE);
         registry.register(Blocks.STONE_BRICKS, Fluids.WATER, FluidAmount.BUCKET.as1620() / 10, Blocks.MOSSY_STONE_BRICKS);
 
@@ -129,13 +130,13 @@ public final class FabricaeExNihiloModule implements wraith.fabricaeexnihilo.api
     }
 
     @Override
-    public void registerMilking(MilkingRegistry registry) {
+    public void registerMilking(MilkingRecipeRegistry registry) {
         registry.register(EntityType.COW, MilkFluid.STILL, FluidAmount.BUCKET.as1620() / 100, 20);
         registry.register(EntityType.WITCH, WitchWaterFluid.STILL, FluidAmount.BUCKET.as1620() / 100, 20);
     }
 
     @Override
-    public void registerCrucibleHeat(CrucibleHeatRegistry registry) {
+    public void registerCrucibleHeat(CrucibleHeatRecipeRegistry registry) {
         registry.register(Blocks.TORCH, 1);
         registry.register(FluidTags.LAVA, 4);
         registry.register(Blocks.MAGMA_BLOCK, 3);
@@ -144,7 +145,7 @@ public final class FabricaeExNihiloModule implements wraith.fabricaeexnihilo.api
     }
 
     @Override
-    public void registerCrucibleStone(CrucibleRegistry registry) {
+    public void registerCrucibleStone(CrucibleRecipeRegistry registry) {
         registry.register(Blocks.NETHERRACK, Fluids.LAVA,FluidAmount.BUCKET.as1620() / 2);
         registry.register(Blocks.COBBLESTONE, Fluids.LAVA,FluidAmount.BUCKET.as1620() / 4);
         registry.register(Blocks.GRAVEL, Fluids.LAVA,FluidAmount.BUCKET.as1620() / 8);
@@ -152,7 +153,7 @@ public final class FabricaeExNihiloModule implements wraith.fabricaeexnihilo.api
     }
 
     @Override
-    public void registerCrucibleWood(CrucibleRegistry registry) {
+    public void registerCrucibleWood(CrucibleRecipeRegistry registry) {
         registry.register(ItemTags.SAPLINGS, Fluids.WATER, FluidAmount.BUCKET.as1620() / 10);
         registry.register(ItemTags.LEAVES, Fluids.WATER, FluidAmount.BUCKET.as1620() / 4);
         registry.register(ItemTags.SMALL_FLOWERS, Fluids.WATER, FluidAmount.BUCKET.as1620() / 10);
@@ -161,7 +162,7 @@ public final class FabricaeExNihiloModule implements wraith.fabricaeexnihilo.api
     }
 
     @Override
-    public void registerOres(OreRegistry registry) {
+    public void registerOres(OreRecipeRegistry registry) {
         // TODO("Implement tag checking to prevent creation of unnecessary ores")
         // Vanilla Metals
         registry.register("iron", Color.IRON, PieceShape.NORMAL, ChunkShape.CHUNK, ChunkMaterial.GRANITE);
@@ -189,7 +190,7 @@ public final class FabricaeExNihiloModule implements wraith.fabricaeexnihilo.api
     }
 
     @Override
-    public void registerMesh(MeshRegistry registry) {
+    public void registerMesh(MeshRecipeRegistry registry) {
         registry.register(
                 id("mesh_string"),
                 ToolMaterials.WOOD.getEnchantability(),
@@ -228,7 +229,7 @@ public final class FabricaeExNihiloModule implements wraith.fabricaeexnihilo.api
     }
 
     @Override
-    public void registerSieve(SieveRegistry registry) {
+    public void registerSieve(SieveRecipeRegistry registry) {
         var stringMesh = Registry.ITEM.get(id("mesh_string"));
         var flintMesh = Registry.ITEM.get(id("mesh_flint"));
         var ironMesh = Registry.ITEM.get(id("mesh_iron"));
@@ -429,7 +430,7 @@ public final class FabricaeExNihiloModule implements wraith.fabricaeexnihilo.api
     }
 
     @Override
-    public void registerCrook(ToolRegistry registry) {
+    public void registerCrook(ToolRecipeRegistry registry) {
         registry.register(ItemTags.LEAVES, new Lootable(Items.STICK, 0.01));
         registry.register(ItemTags.LEAVES, new Lootable(id("silkworm_raw"), 0.1, 0.2, 0.2));
         if (ModTags.INFESTED_LEAVES != null) {
@@ -441,7 +442,7 @@ public final class FabricaeExNihiloModule implements wraith.fabricaeexnihilo.api
     }
 
     @Override
-    public void registerHammer(ToolRegistry registry) {
+    public void registerHammer(ToolRecipeRegistry registry) {
         // Stone
         registry.register(Blocks.STONE, new Lootable(Blocks.COBBLESTONE, 1.0));
         registry.register(Blocks.COBBLESTONE, new Lootable(Blocks.GRAVEL, 1.0, 0.25));
@@ -504,7 +505,7 @@ public final class FabricaeExNihiloModule implements wraith.fabricaeexnihilo.api
     }
 
     @Override
-    public void registerWitchWaterWorld(WitchWaterWorldRegistry registry) {
+    public void registerWitchWaterWorld(WitchWaterWorldRecipeRegistry registry) {
         registry.register(new FluidIngredient(Fluids.WATER, Fluids.FLOWING_WATER), new WeightedList(
                 new Pair<>(Blocks.DIRT, 51),
                 new Pair<>(Blocks.GRASS_BLOCK, 12),
@@ -539,7 +540,7 @@ public final class FabricaeExNihiloModule implements wraith.fabricaeexnihilo.api
     }
 
     @Override
-    public void registerWitchWaterEntity(WitchWaterEntityRegistry registry) {
+    public void registerWitchWaterEntity(WitchWaterEntityRecipeRegistry registry) {
         registry.register(EntityType.SKELETON, EntityType.WITHER_SKELETON);
         registry.register(EntityType.SLIME, EntityType.MAGMA_CUBE);
         registry.register(EntityType.SPIDER, EntityType.CAVE_SPIDER);
@@ -585,14 +586,14 @@ public final class FabricaeExNihiloModule implements wraith.fabricaeexnihilo.api
     }
 
     @Override
-    public void registerFluidOnTop(FluidOnTopRegistry registry) {
+    public void registerFluidOnTop(FluidOnTopRecipeRegistry registry) {
         registry.register(Fluids.LAVA, Fluids.WATER, Blocks.OBSIDIAN);
         registry.register(Fluids.WATER, Fluids.LAVA, Blocks.STONE);
         registry.register(Fluids.WATER, BrineFluid.TAG, Blocks.ICE);
     }
 
     @Override
-    public void registerFluidTransform(FluidTransformRegistry registry) {
+    public void registerFluidTransform(FluidTransformRecipeRegistry registry) {
         registry.register(Fluids.WATER, Blocks.MYCELIUM, WitchWaterFluid.STILL);
         registry.register(MilkFluid.STILL, Blocks.MYCELIUM, Blocks.SLIME_BLOCK);
     }

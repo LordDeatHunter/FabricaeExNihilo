@@ -5,6 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.api.recipes.witchwater.WitchWaterEntityRecipe;
+import wraith.fabricaeexnihilo.api.registry.WitchWaterEntityRecipeRegistry;
 import wraith.fabricaeexnihilo.compatibility.modules.MetaModule;
 import wraith.fabricaeexnihilo.registry.AbstractRegistry;
 
@@ -16,15 +17,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class WitchWaterEntityRegistry extends AbstractRegistry<List<WitchWaterEntityRecipe>> implements wraith.fabricaeexnihilo.api.registry.WitchWaterEntityRegistry {
+public class WitchWaterEntityRecipeRegistryImpl extends AbstractRegistry<List<WitchWaterEntityRecipe>> implements WitchWaterEntityRecipeRegistry {
 
     private final List<WitchWaterEntityRecipe> registry;
 
-    public WitchWaterEntityRegistry(List<WitchWaterEntityRecipe> registry) {
+    public WitchWaterEntityRecipeRegistryImpl(List<WitchWaterEntityRecipe> registry) {
         this.registry = registry;
     }
 
-    public WitchWaterEntityRegistry() {
+    public WitchWaterEntityRecipeRegistryImpl() {
         this(new ArrayList<>());
     }
 
@@ -73,8 +74,8 @@ public class WitchWaterEntityRegistry extends AbstractRegistry<List<WitchWaterEn
 
     private static final Type SERIALIZATION_TYPE = new TypeToken<List<WitchWaterEntityRecipe>>() {}.getType();
 
-    public static wraith.fabricaeexnihilo.api.registry.WitchWaterEntityRegistry fromJson(File file) {
-        return fromJson(file, wraith.fabricaeexnihilo.registry.witchwater.WitchWaterEntityRegistry::new, MetaModule.INSTANCE::registerWitchWaterEntity);
+    public static WitchWaterEntityRecipeRegistry fromJson(File file) {
+        return fromJson(file, WitchWaterEntityRecipeRegistryImpl::new, MetaModule.INSTANCE::registerWitchWaterEntity);
     }
 
 }
