@@ -24,7 +24,7 @@ public final class AlchemyRecipeJson extends BaseJson<AlchemyRecipe> {
         return new AlchemyRecipe(
                 FluidIngredient.fromJson(obj.get("reactant"), context),
                 ItemIngredient.fromJson(obj.get("catalyst"), context),
-                !obj.has("product") ? new EmptyMode() : BarrelMode.BARREL_MODE_FACTORY(obj.get("product"), context),
+                !obj.has("product") ? new EmptyMode() : BarrelMode.of(obj.get("product"), context),
                 !obj.has("byproduct") ? Lootable.EMPTY : context.deserialize(obj.get("byproduct"), LOOTABLE_TYPE_TOKEN),
                 obj.get("delay").getAsInt(),
                 !obj.has("toSpawn") ? EntityStack.EMPTY : context.deserialize(obj.get("toSpawn"), ENTITY_STACK_TYPE_TOKEN)

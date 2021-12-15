@@ -4,7 +4,6 @@ import com.google.common.reflect.TypeToken;
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
 import wraith.fabricaeexnihilo.api.recipes.barrel.FluidTransformRecipe;
-import wraith.fabricaeexnihilo.api.registry.IFluidTransformRegistry;
 import wraith.fabricaeexnihilo.compatibility.modules.MetaModule;
 import wraith.fabricaeexnihilo.modules.barrels.modes.BarrelMode;
 import wraith.fabricaeexnihilo.registry.AbstractRegistry;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class FluidTransformRegistry extends AbstractRegistry<List<FluidTransformRecipe>> implements IFluidTransformRegistry {
+public class FluidTransformRegistry extends AbstractRegistry<List<FluidTransformRecipe>> implements wraith.fabricaeexnihilo.api.registry.FluidTransformRegistry {
 
     private final List<FluidTransformRecipe> registry;
 
@@ -72,8 +71,8 @@ public class FluidTransformRegistry extends AbstractRegistry<List<FluidTransform
 
     private static final Type SERIALIZATION_TYPE = new TypeToken<List<FluidTransformRecipe>>(){}.getType();
 
-    public static IFluidTransformRegistry fromJson(File file) {
-        return fromJson(file, FluidTransformRegistry::new, MetaModule.INSTANCE::registerFluidTransform);
+    public static wraith.fabricaeexnihilo.api.registry.FluidTransformRegistry fromJson(File file) {
+        return fromJson(file, wraith.fabricaeexnihilo.registry.barrel.FluidTransformRegistry::new, MetaModule.INSTANCE::registerFluidTransform);
     }
 
 }

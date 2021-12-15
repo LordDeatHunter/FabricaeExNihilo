@@ -44,7 +44,7 @@ import wraith.fabricaeexnihilo.util.ItemUtils;
 
 public class BarrelBlockEntity extends BaseBlockEntity {
 
-    public static final Identifier BLOCK_ENTITY_ID = FabricaeExNihilo.ID("barrel");
+    public static final Identifier BLOCK_ENTITY_ID = FabricaeExNihilo.id("barrel");
     public static final BlockEntityType<BarrelBlockEntity> TYPE = FabricBlockEntityTypeBuilder.create(
             BarrelBlockEntity::new,
             ModBlocks.BARRELS.values().toArray(new BarrelBlock[0])
@@ -256,7 +256,7 @@ public class BarrelBlockEntity extends BaseBlockEntity {
     }
 
     private void readNbtWithoutWorldInfo(NbtCompound nbt) {
-        mode = BarrelMode.BARREL_MODE_FACTORY(nbt);
+        mode = BarrelMode.of(nbt);
         if (nbt.contains("enchantments")) {
             var readEnchantments = new EnchantmentContainer();
             readEnchantments.readNbt(nbt.getCompound("enchantments"));

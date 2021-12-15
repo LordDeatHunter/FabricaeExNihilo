@@ -72,7 +72,7 @@ public record CrucibleCategory(CategoryIdentifier<? extends CrucibleDisplay> cru
         return widgets;
     }
 
-    public static final Identifier GLYPH = FabricaeExNihilo.ID("textures/gui/rei/glyphs.png");
+    public static final Identifier GLYPH = FabricaeExNihilo.id("textures/gui/rei/glyphs.png");
 
     public static final int MARGIN = 6;
     public static final int WIDTH = MARGIN * 2 + 18 * 9;

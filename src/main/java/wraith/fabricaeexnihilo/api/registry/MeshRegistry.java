@@ -6,7 +6,7 @@ import wraith.fabricaeexnihilo.util.Color;
 
 import java.util.List;
 
-public interface IMeshRegistry extends IRegistry<MeshProperties> {
+public interface MeshRegistry extends Registry<MeshProperties> {
 
     default boolean register(Identifier identifier, int enchantability, String displayName, Color color, Identifier ingredient) {
         return register(new MeshProperties(identifier, enchantability, displayName, color, ingredient));

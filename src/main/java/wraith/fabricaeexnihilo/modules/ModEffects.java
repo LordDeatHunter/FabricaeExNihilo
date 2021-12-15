@@ -15,8 +15,8 @@ public final class ModEffects {
     public static final StatusEffect MILKED = new StatusEffect(StatusEffectCategory.NEUTRAL, Color.WHITE.toInt()){};
 
     public static void registerEffects() {
-        Registry.register(Registry.STATUS_EFFECT, FabricaeExNihilo.ID("witch_watered"), WITCH_WATERED);
-        Registry.register(Registry.STATUS_EFFECT, FabricaeExNihilo.ID("milked"), MILKED);
+        Registry.register(Registry.STATUS_EFFECT, FabricaeExNihilo.id("witch_watered"), WITCH_WATERED);
+        Registry.register(Registry.STATUS_EFFECT, FabricaeExNihilo.id("milked"), MILKED);
     }
 
 }

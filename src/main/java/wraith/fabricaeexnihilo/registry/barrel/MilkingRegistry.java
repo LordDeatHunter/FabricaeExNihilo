@@ -6,7 +6,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.Pair;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.api.recipes.barrel.MilkingRecipe;
-import wraith.fabricaeexnihilo.api.registry.IMilkingRegistry;
 import wraith.fabricaeexnihilo.compatibility.modules.MetaModule;
 import wraith.fabricaeexnihilo.registry.AbstractRegistry;
 
@@ -17,7 +16,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MilkingRegistry extends AbstractRegistry<List<MilkingRecipe>> implements IMilkingRegistry {
+public class MilkingRegistry extends AbstractRegistry<List<MilkingRecipe>> implements wraith.fabricaeexnihilo.api.registry.MilkingRegistry {
 
     private final List<MilkingRecipe> registry;
 
@@ -81,8 +80,8 @@ public class MilkingRegistry extends AbstractRegistry<List<MilkingRecipe>> imple
 
     private static final Type SERIALIZATION_TYPE = new TypeToken<List<MilkingRecipe>>(){}.getType();
 
-    public static IMilkingRegistry fromJson(File file) {
-        return fromJson(file, MilkingRegistry::new, MetaModule.INSTANCE::registerMilking);
+    public static wraith.fabricaeexnihilo.api.registry.MilkingRegistry fromJson(File file) {
+        return fromJson(file, wraith.fabricaeexnihilo.registry.barrel.MilkingRegistry::new, MetaModule.INSTANCE::registerMilking);
     }
 
 }

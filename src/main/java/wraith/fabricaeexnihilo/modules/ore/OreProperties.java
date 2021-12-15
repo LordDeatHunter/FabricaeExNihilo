@@ -12,11 +12,11 @@ public class OreProperties {
     private final String material;
     private final String displayName;
     private final Color color;
-    private final EnumPieceShape pieceShape;
-    private final EnumChunkShape chunkShape;
-    private final EnumChunkMaterial chunkMaterial;
+    private final PieceShape pieceShape;
+    private final ChunkShape chunkShape;
+    private final ChunkMaterial chunkMaterial;
 
-    public OreProperties(String material, Color color, EnumPieceShape pieceShape, EnumChunkShape chunkShape, EnumChunkMaterial chunkMaterial) {
+    public OreProperties(String material, Color color, PieceShape pieceShape, ChunkShape chunkShape, ChunkMaterial chunkMaterial) {
         this.material = material;
         this.displayName = "item.fabricaeexnihilo." + material;
         this.color = color;
@@ -26,11 +26,11 @@ public class OreProperties {
     }
 
     public Identifier getChunkID() {
-        return FabricaeExNihilo.ID((material + "_chunk").toLowerCase());
+        return FabricaeExNihilo.id((material + "_chunk").toLowerCase());
     }
 
     public Identifier getPieceID() {
-        return FabricaeExNihilo.ID((material + "_piece").toLowerCase());
+        return FabricaeExNihilo.id((material + "_piece").toLowerCase());
     }
     
     public Identifier getIngotID() {
@@ -92,15 +92,15 @@ public class OreProperties {
         return color;
     }
 
-    public EnumPieceShape getPieceShape() {
+    public PieceShape getPieceShape() {
         return pieceShape;
     }
 
-    public EnumChunkShape getChunkShape() {
+    public ChunkShape getChunkShape() {
         return chunkShape;
     }
 
-    public EnumChunkMaterial getChunkMaterial() {
+    public ChunkMaterial getChunkMaterial() {
         return chunkMaterial;
     }
 
@@ -112,9 +112,9 @@ public class OreProperties {
 
         private final String material;
         private Color color = Color.WHITE;
-        private EnumPieceShape pieceShape = EnumPieceShape.NORMAL;
-        private EnumChunkShape chunkShape = EnumChunkShape.CHUNK;
-        private EnumChunkMaterial chunkMaterial = EnumChunkMaterial.STONE;
+        private PieceShape pieceShape = PieceShape.NORMAL;
+        private ChunkShape chunkShape = ChunkShape.CHUNK;
+        private ChunkMaterial chunkMaterial = ChunkMaterial.STONE;
 
         public OrePropertyBuilder(String material) {
             this.material = material;
@@ -125,17 +125,17 @@ public class OreProperties {
             return this;
         }
 
-        public OrePropertyBuilder setPieceShape(EnumPieceShape pieceShape) {
+        public OrePropertyBuilder setPieceShape(PieceShape pieceShape) {
             this.pieceShape = pieceShape;
             return this;
         }
 
-        public OrePropertyBuilder setChunkShape(EnumChunkShape chunkShape) {
+        public OrePropertyBuilder setChunkShape(ChunkShape chunkShape) {
             this.chunkShape = chunkShape;
             return this;
         }
 
-        public OrePropertyBuilder setChunkMaterial(EnumChunkMaterial chunkMaterial) {
+        public OrePropertyBuilder setChunkMaterial(ChunkMaterial chunkMaterial) {
             this.chunkMaterial = chunkMaterial;
             return this;
         }

@@ -9,14 +9,14 @@ import net.minecraft.item.ToolItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import wraith.fabricaeexnihilo.api.registry.IToolRegistry;
+import wraith.fabricaeexnihilo.api.registry.ToolRegistry;
 
 public abstract class ToolItemWithRegistry extends ToolItem {
 
-    private final IToolRegistry registry;
+    private final ToolRegistry registry;
     private final float blockBreakingSpeed;
 
-    public ToolItemWithRegistry(ToolMaterial material, IToolRegistry registry, FabricItemSettings settings) {
+    public ToolItemWithRegistry(ToolMaterial material, ToolRegistry registry, FabricItemSettings settings) {
         super(material, settings);
         this.registry = registry;
         this.blockBreakingSpeed = material.getMiningSpeedMultiplier();

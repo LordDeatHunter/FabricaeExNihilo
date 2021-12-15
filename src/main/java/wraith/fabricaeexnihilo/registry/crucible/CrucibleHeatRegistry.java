@@ -5,7 +5,6 @@ import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItem;
 import wraith.fabricaeexnihilo.api.recipes.crucible.CrucibleHeatRecipe;
-import wraith.fabricaeexnihilo.api.registry.ICrucibleHeatRegistry;
 import wraith.fabricaeexnihilo.compatibility.modules.MetaModule;
 import wraith.fabricaeexnihilo.registry.AbstractRegistry;
 
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class CrucibleHeatRegistry extends AbstractRegistry<List<CrucibleHeatRecipe>> implements ICrucibleHeatRegistry {
+public class CrucibleHeatRegistry extends AbstractRegistry<List<CrucibleHeatRecipe>> implements wraith.fabricaeexnihilo.api.registry.CrucibleHeatRegistry {
 
     private final List<CrucibleHeatRecipe> registry;
 
@@ -81,8 +80,8 @@ public class CrucibleHeatRegistry extends AbstractRegistry<List<CrucibleHeatReci
 
     private static final Type SERIALIZATION_TYPE = new TypeToken<List<CrucibleHeatRecipe>>(){}.getType();
 
-    public static ICrucibleHeatRegistry fromJson(File file) {
-        return fromJson(file, CrucibleHeatRegistry::new, MetaModule.INSTANCE::registerCrucibleHeat);
+    public static wraith.fabricaeexnihilo.api.registry.CrucibleHeatRegistry fromJson(File file) {
+        return fromJson(file, wraith.fabricaeexnihilo.registry.crucible.CrucibleHeatRegistry::new, MetaModule.INSTANCE::registerCrucibleHeat);
     }
 
 }

@@ -10,7 +10,7 @@ import wraith.fabricaeexnihilo.api.recipes.crucible.CrucibleHeatRecipe;
 
 import java.util.Collection;
 
-public interface ICrucibleHeatRegistry extends IRegistry<CrucibleHeatRecipe> {
+public interface CrucibleHeatRegistry extends Registry<CrucibleHeatRecipe> {
 
     default boolean register(BlockIngredient blocks, FluidIngredient fluids, int heat) {
         return register(new CrucibleHeatRecipe(blocks, fluids, heat));

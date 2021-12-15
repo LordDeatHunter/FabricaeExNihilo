@@ -12,7 +12,7 @@ import wraith.fabricaeexnihilo.api.recipes.crucible.CrucibleRecipe;
 
 import java.util.Collection;
 
-public interface ICrucibleRegistry extends IRegistry<CrucibleRecipe> {
+public interface CrucibleRegistry extends Registry<CrucibleRecipe> {
 
     default boolean register(ItemIngredient input, FluidVolume output) {
         return register(new CrucibleRecipe(input, output));

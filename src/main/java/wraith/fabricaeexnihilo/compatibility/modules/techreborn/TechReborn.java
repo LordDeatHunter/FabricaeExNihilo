@@ -6,70 +6,70 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ToolMaterials;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import wraith.fabricaeexnihilo.api.compatibility.IFabricaeExNihiloModule;
+import wraith.fabricaeexnihilo.api.compatibility.FabricaeExNihiloModule;
 import wraith.fabricaeexnihilo.api.crafting.Lootable;
 import wraith.fabricaeexnihilo.api.registry.*;
 import wraith.fabricaeexnihilo.util.Color;
 
-import static wraith.fabricaeexnihilo.FabricaeExNihilo.ID;
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 import static wraith.fabricaeexnihilo.util.ItemUtils.getExNihiloBlock;
 import static wraith.fabricaeexnihilo.util.ItemUtils.getExNihiloItem;
 
-public class TechReborn implements IFabricaeExNihiloModule {
+public class TechReborn implements FabricaeExNihiloModule {
     @Override
-    public void registerAlchemy(IAlchemyRegistry registry) {
+    public void registerAlchemy(AlchemyRegistry registry) {
 
     }
 
     @Override
-    public void registerCompost(ICompostRegistry registry) {
+    public void registerCompost(CompostRegistry registry) {
 
     }
 
     @Override
-    public void registerLeaking(ILeakingRegistry registry) {
+    public void registerLeaking(LeakingRegistry registry) {
 
     }
 
     @Override
-    public void registerFluidOnTop(IFluidOnTopRegistry registry) {
+    public void registerFluidOnTop(FluidOnTopRegistry registry) {
 
     }
 
     @Override
-    public void registerFluidTransform(IFluidTransformRegistry registry) {
+    public void registerFluidTransform(FluidTransformRegistry registry) {
 
     }
 
     @Override
-    public void registerMilking(IMilkingRegistry registry) {
+    public void registerMilking(MilkingRegistry registry) {
 
     }
 
     @Override
-    public void registerCrucibleHeat(ICrucibleHeatRegistry registry) {
+    public void registerCrucibleHeat(CrucibleHeatRegistry registry) {
         registry.register(Registry.FLUID.get(new Identifier("techreborn:nitro_diesel")), 16);
     }
 
     @Override
-    public void registerCrucibleStone(ICrucibleRegistry registry) {
+    public void registerCrucibleStone(CrucibleRegistry registry) {
 
     }
 
     @Override
-    public void registerCrucibleWood(ICrucibleRegistry registry) {
+    public void registerCrucibleWood(CrucibleRegistry registry) {
 
     }
 
     @Override
-    public void registerMesh(IMeshRegistry registry) {
+    public void registerMesh(MeshRegistry registry) {
         registry.register(
-                ID("carbon_mesh"), ToolMaterials.IRON.getEnchantability(), "item.techreborn.carbon_fiber", Color.BLACK, new Identifier("techreborn:carbon_fiber")
+                id("carbon_mesh"), ToolMaterials.IRON.getEnchantability(), "item.techreborn.carbon_fiber", Color.BLACK, new Identifier("techreborn:carbon_fiber")
         );
     }
 
     @Override
-    public void registerSieve(ISieveRegistry registry) {
+    public void registerSieve(SieveRegistry registry) {
         var carbonMesh = getExNihiloItem("carbon_mesh");
         var goldMesh = getExNihiloItem("mesh_gold");
         var diamondMesh = getExNihiloItem("mesh_diamond");
@@ -100,27 +100,27 @@ public class TechReborn implements IFabricaeExNihiloModule {
     }
 
     @Override
-    public void registerCrook(IToolRegistry registry) {
+    public void registerCrook(ToolRegistry registry) {
 
     }
 
     @Override
-    public void registerHammer(IToolRegistry registry) {
+    public void registerHammer(ToolRegistry registry) {
 
     }
 
     @Override
-    public void registerWitchWaterWorld(IWitchWaterWorldRegistry registry) {
+    public void registerWitchWaterWorld(WitchWaterWorldRegistry registry) {
 
     }
 
     @Override
-    public void registerWitchWaterEntity(IWitchWaterEntityRegistry registry) {
+    public void registerWitchWaterEntity(WitchWaterEntityRegistry registry) {
 
     }
 
     @Override
-    public void registerOres(IOreRegistry registry) {
+    public void registerOres(OreRegistry registry) {
 
     }
 }

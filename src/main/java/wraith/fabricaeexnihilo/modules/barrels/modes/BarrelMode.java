@@ -10,7 +10,7 @@ public interface BarrelMode {
     NbtCompound writeNbt();
     String nbtKey();
 
-    static BarrelMode BARREL_MODE_FACTORY(NbtCompound nbt) {
+    static BarrelMode of(NbtCompound nbt) {
         if (nbt.contains("item_mode")) {
             return ItemMode.readNbt(nbt.getCompound("item_mode"));
         }
@@ -26,7 +26,7 @@ public interface BarrelMode {
         return new EmptyMode();
     }
 
-    static BarrelMode BARREL_MODE_FACTORY(JsonElement json, JsonDeserializationContext context) {
+    static BarrelMode of(JsonElement json, JsonDeserializationContext context) {
         var obj = json.getAsJsonObject();
         if (obj.has("fluid_mode")) {
             return context.deserialize(obj.get("fluid_mode"), new TypeToken<FluidMode>(){}.getType());

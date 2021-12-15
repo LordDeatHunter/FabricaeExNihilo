@@ -5,7 +5,6 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.api.recipes.barrel.CompostRecipe;
-import wraith.fabricaeexnihilo.api.registry.ICompostRegistry;
 import wraith.fabricaeexnihilo.compatibility.modules.MetaModule;
 import wraith.fabricaeexnihilo.compatibility.rei.barrel.CompostCategory;
 import wraith.fabricaeexnihilo.compatibility.rei.barrel.REICompostRecipe;
@@ -20,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CompostRegistry extends AbstractRegistry<List<CompostRecipe>> implements ICompostRegistry {
+public class CompostRegistry extends AbstractRegistry<List<CompostRecipe>> implements wraith.fabricaeexnihilo.api.registry.CompostRegistry {
 
     private final List<CompostRecipe> registry;
 
@@ -103,8 +102,8 @@ public class CompostRegistry extends AbstractRegistry<List<CompostRecipe>> imple
 
     private static final Type SERIALIZATION_TYPE = new TypeToken<List<CompostRecipe>>() {}.getType();
 
-    public static ICompostRegistry fromJson(File file) {
-        return fromJson(file, CompostRegistry::new, MetaModule.INSTANCE::registerCompost);
+    public static wraith.fabricaeexnihilo.api.registry.CompostRegistry fromJson(File file) {
+        return fromJson(file, wraith.fabricaeexnihilo.registry.barrel.CompostRegistry::new, MetaModule.INSTANCE::registerCompost);
     }
 
 }

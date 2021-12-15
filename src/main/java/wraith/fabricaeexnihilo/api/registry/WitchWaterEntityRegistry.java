@@ -10,7 +10,7 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.List;
 
-public interface IWitchWaterEntityRegistry extends IRegistry<WitchWaterEntityRecipe> {
+public interface WitchWaterEntityRegistry extends Registry<WitchWaterEntityRecipe> {
 
     default boolean register(EntityTypeIngredient target, @Nullable VillagerProfession profession, EntityType<?> spawn) {
         return register(new WitchWaterEntityRecipe(target, profession, spawn));

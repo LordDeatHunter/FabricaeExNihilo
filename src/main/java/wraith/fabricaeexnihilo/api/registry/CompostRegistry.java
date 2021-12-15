@@ -12,7 +12,7 @@ import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.util.Collection;
 
-public interface ICompostRegistry extends IRegistry<CompostRecipe> {
+public interface CompostRegistry extends Registry<CompostRecipe> {
 
     default boolean register(ItemIngredient ingredient, ItemStack result, double amount, Color color) {
         return register(new CompostRecipe(ingredient, result, amount, color));

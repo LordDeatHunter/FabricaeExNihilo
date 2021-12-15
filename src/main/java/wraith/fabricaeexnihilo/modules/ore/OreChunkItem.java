@@ -6,10 +6,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import wraith.fabricaeexnihilo.modules.base.IHasColor;
+import wraith.fabricaeexnihilo.modules.base.HasColor;
 import wraith.fabricaeexnihilo.util.Color;
 
-public class OreChunkItem extends Item implements IHasColor {
+public class OreChunkItem extends Item implements HasColor {
 
     private final OreProperties properties;
 

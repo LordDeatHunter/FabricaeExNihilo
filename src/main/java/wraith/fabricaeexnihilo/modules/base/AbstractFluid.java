@@ -114,16 +114,16 @@ public abstract class AbstractFluid extends FlowableFluid {
     }
 
     public void registerFluids() {
-        Registry.register(Registry.FLUID, FabricaeExNihilo.ID(this.fluidSettings.getBasePath()), stillSupplier.get());
-        Registry.register(Registry.FLUID, FabricaeExNihilo.ID("flowing_" + this.fluidSettings.getBasePath()), flowingSupplier.get());
+        Registry.register(Registry.FLUID, FabricaeExNihilo.id(this.fluidSettings.getBasePath()), stillSupplier.get());
+        Registry.register(Registry.FLUID, FabricaeExNihilo.id("flowing_" + this.fluidSettings.getBasePath()), flowingSupplier.get());
     }
 
     public void registerFluidBlock() {
-        Registry.register(Registry.BLOCK, FabricaeExNihilo.ID(fluidSettings.getBasePath()), fluidBlockSupplier.get());
+        Registry.register(Registry.BLOCK, FabricaeExNihilo.id(fluidSettings.getBasePath()), fluidBlockSupplier.get());
     }
 
     public void registerBucket() {
-        Registry.register(Registry.ITEM, FabricaeExNihilo.ID(fluidSettings.getBasePath() + "_bucket"), bucketItemSupplier.get());
+        Registry.register(Registry.ITEM, FabricaeExNihilo.id(fluidSettings.getBasePath() + "_bucket"), bucketItemSupplier.get());
     }
 
 }

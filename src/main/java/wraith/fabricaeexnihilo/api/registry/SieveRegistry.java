@@ -7,7 +7,6 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.api.crafting.FluidIngredient;
 import wraith.fabricaeexnihilo.api.crafting.ItemIngredient;
 import wraith.fabricaeexnihilo.api.crafting.Lootable;
@@ -18,7 +17,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
-public interface ISieveRegistry extends IRegistry<SieveRecipe> {
+public interface SieveRegistry extends Registry<SieveRecipe> {
 
     List<ItemStack> getResult(ItemStack mesh, @Nullable Fluid fluid, ItemStack sievable, @Nullable PlayerEntity player, Random rand);
 
@@ -49,7 +48,7 @@ public interface ISieveRegistry extends IRegistry<SieveRecipe> {
     }
 
     default boolean register(ItemConvertible mesh, Fluid fluid, Identifier sievable, Lootable... loot) {
-        return register(new ItemIngredient(mesh), new FluidIngredient(fluid), new ItemIngredient(Registry.ITEM.get(sievable)), List.of(loot));
+        return register(new ItemIngredient(mesh), new FluidIngredient(fluid), new ItemIngredient(net.minecraft.util.registry.Registry.ITEM.get(sievable)), List.of(loot));
     }
 
     default boolean register(ItemConvertible mesh, ItemConvertible sievable, Lootable... loot) {
@@ -61,11 +60,11 @@ public interface ISieveRegistry extends IRegistry<SieveRecipe> {
     }
 
     default boolean register(Identifier mesh, FluidIngredient fluid, ItemIngredient sievable, Collection<Lootable> loot) {
-        return register(new SieveRecipe(new ItemIngredient(Registry.ITEM.get(mesh)), fluid, sievable, loot.stream().toList()));
+        return register(new SieveRecipe(new ItemIngredient(net.minecraft.util.registry.Registry.ITEM.get(mesh)), fluid, sievable, loot.stream().toList()));
     }
 
     default boolean register(Identifier mesh, FluidIngredient fluid, ItemIngredient sievable, Lootable... loot) {
-        return register(new ItemIngredient(Registry.ITEM.get(mesh)), fluid, sievable, List.of(loot));
+        return register(new ItemIngredient(net.minecraft.util.registry.Registry.ITEM.get(mesh)), fluid, sievable, List.of(loot));
     }
 
     default boolean register(Identifier mesh, ItemIngredient sievable, Lootable... loot) {
@@ -77,7 +76,7 @@ public interface ISieveRegistry extends IRegistry<SieveRecipe> {
     }
 
     default boolean register(ItemConvertible mesh, Identifier sievable, Lootable... loot) {
-        return register(mesh, Registry.ITEM.get(sievable), loot);
+        return register(mesh, net.minecraft.util.registry.Registry.ITEM.get(sievable), loot);
     }
 
     Collection<SieveRecipe> getAllRecipes();

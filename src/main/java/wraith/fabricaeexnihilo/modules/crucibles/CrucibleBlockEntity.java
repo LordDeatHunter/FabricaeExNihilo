@@ -53,7 +53,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
             CrucibleBlockEntity::new,
             ModBlocks.CRUCIBLES.values().toArray(new CrucibleBlock[0])
     ).build(null);
-    public static final Identifier BLOCK_ENTITY_ID = FabricaeExNihilo.ID("crucible");
+    public static final Identifier BLOCK_ENTITY_ID = FabricaeExNihilo.id("crucible");
 
 
     public CrucibleBlockEntity(BlockPos pos, BlockState state, boolean isStone) {

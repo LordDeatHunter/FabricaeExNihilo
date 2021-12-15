@@ -14,7 +14,7 @@ import wraith.fabricaeexnihilo.api.recipes.barrel.LeakingRecipe;
 
 import java.util.Collection;
 
-public interface ILeakingRegistry extends IRegistry<LeakingRecipe> {
+public interface LeakingRegistry extends Registry<LeakingRecipe> {
 
     default boolean register(ItemIngredient target, FluidIngredient fluid, int loss, Block result) {
         return register(LeakingRecipe.builder()

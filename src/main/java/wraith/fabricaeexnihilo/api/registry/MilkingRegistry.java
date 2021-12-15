@@ -7,13 +7,12 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
-import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.api.crafting.EntityTypeIngredient;
 import wraith.fabricaeexnihilo.api.recipes.barrel.MilkingRecipe;
 
 import java.util.Collection;
 
-public interface IMilkingRegistry extends IRegistry<MilkingRecipe> {
+public interface MilkingRegistry extends Registry<MilkingRecipe> {
 
     default boolean register(EntityTypeIngredient entity, FluidVolume fluid, int cooldown) {
         return register(new MilkingRecipe(entity, fluid, cooldown));
@@ -36,11 +35,11 @@ public interface IMilkingRegistry extends IRegistry<MilkingRecipe> {
     }
 
     default boolean register(EntityType<?> entity, Identifier fluid, int amount, int cooldown) {
-        return register(new EntityTypeIngredient(entity), FluidVolume.create(Registry.FLUID.get(fluid), amount), cooldown);
+        return register(new EntityTypeIngredient(entity), FluidVolume.create(net.minecraft.util.registry.Registry.FLUID.get(fluid), amount), cooldown);
     }
 
     default boolean register(Tag.Identified<EntityType<?>> entity, Identifier fluid, int amount, int cooldown) {
-        return register(new EntityTypeIngredient(entity), FluidVolume.create(Registry.FLUID.get(fluid), amount), cooldown);
+        return register(new EntityTypeIngredient(entity), FluidVolume.create(net.minecraft.util.registry.Registry.FLUID.get(fluid), amount), cooldown);
     }
 
     Pair<FluidVolume, Integer> getResult(Entity entity);

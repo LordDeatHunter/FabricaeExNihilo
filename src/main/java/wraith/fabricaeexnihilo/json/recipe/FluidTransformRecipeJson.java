@@ -22,7 +22,7 @@ public final class FluidTransformRecipeJson extends BaseJson<FluidTransformRecip
         return new FluidTransformRecipe(
                 FluidIngredient.fromJson(obj.get("inBarrel"), context),
                 ItemIngredient.fromJson(obj.get("catalyst"), context),
-                BarrelMode.BARREL_MODE_FACTORY(obj.get("result"), context)
+                BarrelMode.of(obj.get("result"), context)
         );
     }
 

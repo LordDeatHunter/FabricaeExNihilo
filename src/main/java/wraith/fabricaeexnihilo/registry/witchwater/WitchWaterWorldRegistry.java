@@ -6,7 +6,6 @@ import net.minecraft.fluid.Fluid;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.api.crafting.WeightedList;
 import wraith.fabricaeexnihilo.api.recipes.witchwater.WitchWaterWorldRecipe;
-import wraith.fabricaeexnihilo.api.registry.IWitchWaterWorldRegistry;
 import wraith.fabricaeexnihilo.compatibility.modules.MetaModule;
 import wraith.fabricaeexnihilo.compatibility.rei.witchwater.WitchWaterWorldCategory;
 import wraith.fabricaeexnihilo.registry.AbstractRegistry;
@@ -17,7 +16,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.*;
 
-public class WitchWaterWorldRegistry extends AbstractRegistry<List<WitchWaterWorldRecipe>> implements IWitchWaterWorldRegistry {
+public class WitchWaterWorldRegistry extends AbstractRegistry<List<WitchWaterWorldRecipe>> implements wraith.fabricaeexnihilo.api.registry.WitchWaterWorldRegistry {
 
     private final List<WitchWaterWorldRecipe> registry;
 
@@ -111,8 +110,8 @@ public class WitchWaterWorldRegistry extends AbstractRegistry<List<WitchWaterWor
     private static final Type SERIALIZATION_TYPE = new TypeToken<List<WitchWaterWorldRecipe>>() {}.getType();
 
     // TODO fix serialization
-    public static IWitchWaterWorldRegistry fromJson(File file) {
-        return fromJson(file, WitchWaterWorldRegistry::new, MetaModule.INSTANCE::registerWitchWaterWorld);
+    public static wraith.fabricaeexnihilo.api.registry.WitchWaterWorldRegistry fromJson(File file) {
+        return fromJson(file, wraith.fabricaeexnihilo.registry.witchwater.WitchWaterWorldRegistry::new, MetaModule.INSTANCE::registerWitchWaterWorld);
     }
 
 }

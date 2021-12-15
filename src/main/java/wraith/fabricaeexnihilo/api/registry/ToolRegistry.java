@@ -5,7 +5,6 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.api.crafting.ItemIngredient;
 import wraith.fabricaeexnihilo.api.crafting.Lootable;
 import wraith.fabricaeexnihilo.api.recipes.ToolRecipe;
@@ -14,18 +13,18 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
-public interface IToolRegistry extends IRegistry<ToolRecipe> {
+public interface ToolRegistry extends Registry<ToolRecipe> {
 
     default boolean register(ItemIngredient target, Collection<Lootable> loot) {
         return register(new ToolRecipe(target, loot.stream().toList()));
     }
 
     default boolean register(Identifier target, Collection<Lootable> loot) {
-        return register(Registry.BLOCK.get(target), loot);
+        return register(net.minecraft.util.registry.Registry.BLOCK.get(target), loot);
     }
 
     default boolean register(Identifier target, Lootable... loot) {
-        return register(Registry.BLOCK.get(target), List.of(loot));
+        return register(net.minecraft.util.registry.Registry.BLOCK.get(target), List.of(loot));
     }
 
     default boolean register(ItemIngredient target, Lootable... loot) {

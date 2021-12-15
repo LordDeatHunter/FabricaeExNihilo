@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier;
  * These functions if called before Fabricae Ex Nihilo registers its blocks will cause Fabricae Ex Nihilo to register them.
  *
  */
-public interface IBlockGenerator {
+public interface BlockGenerator {
     /**
      * Black list a mod from auto generation
      */

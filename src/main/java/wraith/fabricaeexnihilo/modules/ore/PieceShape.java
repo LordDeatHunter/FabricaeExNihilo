@@ -1,5 +1,5 @@
 package wraith.fabricaeexnihilo.modules.ore;
 
-public enum EnumPieceShape {
+public enum PieceShape {
     COARSE, NORMAL, FINE
 }

@@ -41,7 +41,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
             SieveBlockEntity::new,
             ModBlocks.SIEVES.values().toArray(new SieveBlock[0])
     ).build(null);
-    public static final Identifier BLOCK_ENTITY_ID = FabricaeExNihilo.ID("sieve");
+    public static final Identifier BLOCK_ENTITY_ID = FabricaeExNihilo.id("sieve");
 
     public SieveBlockEntity(BlockPos pos, BlockState state) {
         super(TYPE, pos, state);

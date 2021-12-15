@@ -5,7 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public interface IWoodDefinition {
+public interface WoodDefinition {
     Identifier getTexturePlanks();
     Identifier getTextureLog();
     Identifier getTextureLogTop();

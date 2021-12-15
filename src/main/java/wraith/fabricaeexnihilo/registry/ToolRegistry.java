@@ -6,7 +6,6 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import wraith.fabricaeexnihilo.api.crafting.Lootable;
 import wraith.fabricaeexnihilo.api.recipes.ToolRecipe;
-import wraith.fabricaeexnihilo.api.registry.IToolRegistry;
 import wraith.fabricaeexnihilo.compatibility.rei.tools.ToolCategory;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
@@ -20,7 +19,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
 
-public class ToolRegistry extends AbstractRegistry<List<ToolRecipe>> implements IToolRegistry {
+public class ToolRegistry extends AbstractRegistry<List<ToolRecipe>> implements wraith.fabricaeexnihilo.api.registry.ToolRegistry {
 
     private final List<ToolRecipe> registry = new ArrayList<>();
 
@@ -64,7 +63,7 @@ public class ToolRegistry extends AbstractRegistry<List<ToolRecipe>> implements 
     @Override
     public void registerJson(File file) {
         try (var reader = new FileReader(file)) {
-            List<ToolRecipe> json = gson.fromJson(reader, ToolRegistry.SERIALIZATION_TYPE);
+            List<ToolRecipe> json = gson.fromJson(reader, wraith.fabricaeexnihilo.registry.ToolRegistry.SERIALIZATION_TYPE);
             json.forEach(entry -> register(entry.ingredient(), entry.lootables()));
         } catch (IOException e) {
             e.printStackTrace();
@@ -102,8 +101,8 @@ public class ToolRegistry extends AbstractRegistry<List<ToolRecipe>> implements 
 
     private static final Type SERIALIZATION_TYPE = new TypeToken<List<ToolRecipe>>(){}.getType();
 
-    public static IToolRegistry fromJson(File file, Consumer<ToolRegistry> defaults) {
-        return fromJson(file, ToolRegistry::new, defaults);
+    public static wraith.fabricaeexnihilo.api.registry.ToolRegistry fromJson(File file, Consumer<ToolRegistry> defaults) {
+        return fromJson(file, wraith.fabricaeexnihilo.registry.ToolRegistry::new, defaults);
     }
 
 }

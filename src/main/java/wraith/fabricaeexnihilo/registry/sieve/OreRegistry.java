@@ -6,7 +6,6 @@ import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
-import wraith.fabricaeexnihilo.api.registry.IOreRegistry;
 import wraith.fabricaeexnihilo.compatibility.modules.MetaModule;
 import wraith.fabricaeexnihilo.modules.ore.OreChunkItem;
 import wraith.fabricaeexnihilo.modules.ore.OrePieceItem;
@@ -20,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class OreRegistry extends AbstractRegistry<List<OreProperties>> implements IOreRegistry {
+public class OreRegistry extends AbstractRegistry<List<OreProperties>> implements wraith.fabricaeexnihilo.api.registry.OreRegistry {
 
     private static final FabricItemSettings ITEM_SETTINGS = new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP).maxCount(64);
     private final List<OreProperties> registry;
@@ -93,8 +92,8 @@ public class OreRegistry extends AbstractRegistry<List<OreProperties>> implement
 
     private static final Type SERIALIZATION_TYPE = new TypeToken<List<OreProperties>>() {}.getType();
 
-    public static IOreRegistry fromJson(File file) {
-        return fromJson(file, OreRegistry::new, MetaModule.INSTANCE::registerOres);
+    public static wraith.fabricaeexnihilo.api.registry.OreRegistry fromJson(File file) {
+        return fromJson(file, wraith.fabricaeexnihilo.registry.sieve.OreRegistry::new, MetaModule.INSTANCE::registerOres);
     }
 
 }

@@ -21,16 +21,16 @@ public class ModTools {
 
     static {
         for (var toolMaterial : ModToolMaterials.values()) {
-            var identifier = FabricaeExNihilo.ID("crook_" + toolMaterial.name().toLowerCase());
+            var identifier = FabricaeExNihilo.id("crook_" + toolMaterial.name().toLowerCase());
             var item = new CrookTool(toolMaterial, new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP).maxCount(1).maxDamage(toolMaterial.getDurability()));
             CROOKS.put(identifier, item);
         }
 
-        HAMMERS.put(FabricaeExNihilo.ID("hammer_wood"), new HammerTool(ToolMaterials.WOOD, tool_settings));
-        HAMMERS.put(FabricaeExNihilo.ID("hammer_stone"), new HammerTool(ToolMaterials.STONE, tool_settings));
-        HAMMERS.put(FabricaeExNihilo.ID("hammer_iron"), new HammerTool(ToolMaterials.IRON, tool_settings));
-        HAMMERS.put(FabricaeExNihilo.ID("hammer_gold"), new HammerTool(ToolMaterials.GOLD, tool_settings));
-        HAMMERS.put(FabricaeExNihilo.ID("hammer_diamond"), new HammerTool(ToolMaterials.DIAMOND, tool_settings));
+        HAMMERS.put(FabricaeExNihilo.id("hammer_wood"), new HammerTool(ToolMaterials.WOOD, tool_settings));
+        HAMMERS.put(FabricaeExNihilo.id("hammer_stone"), new HammerTool(ToolMaterials.STONE, tool_settings));
+        HAMMERS.put(FabricaeExNihilo.id("hammer_iron"), new HammerTool(ToolMaterials.IRON, tool_settings));
+        HAMMERS.put(FabricaeExNihilo.id("hammer_gold"), new HammerTool(ToolMaterials.GOLD, tool_settings));
+        HAMMERS.put(FabricaeExNihilo.id("hammer_diamond"), new HammerTool(ToolMaterials.DIAMOND, tool_settings));
     }
 
     public static void registerItems() {

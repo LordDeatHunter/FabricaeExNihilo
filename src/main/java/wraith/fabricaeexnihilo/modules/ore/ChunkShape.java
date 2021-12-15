@@ -1,5 +1,5 @@
 package wraith.fabricaeexnihilo.modules.ore;
 
-public enum EnumChunkShape {
+public enum ChunkShape {
     CHUNK, FLINT, LUMP
 }

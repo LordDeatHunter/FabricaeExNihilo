@@ -75,7 +75,7 @@ public class AlchemyCategory implements DisplayCategory<AlchemyDisplay> {
         return widgets;
     }
 
-    public static final Identifier GLYPHS = FabricaeExNihilo.ID("textures/gui/rei/glyphs.png");
+    public static final Identifier GLYPHS = FabricaeExNihilo.id("textures/gui/rei/glyphs.png");
 
     public static final int MARGIN = 6;
 

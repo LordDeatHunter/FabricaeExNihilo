@@ -10,11 +10,11 @@ import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterials;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.tag.ItemTags;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.village.VillagerProfession;
-import wraith.fabricaeexnihilo.api.compatibility.IFabricaeExNihiloModule;
 import wraith.fabricaeexnihilo.api.crafting.FluidIngredient;
 import wraith.fabricaeexnihilo.api.crafting.ItemIngredient;
 import wraith.fabricaeexnihilo.api.crafting.Lootable;
@@ -27,28 +27,28 @@ import wraith.fabricaeexnihilo.modules.barrels.modes.FluidMode;
 import wraith.fabricaeexnihilo.modules.fluids.BloodFluid;
 import wraith.fabricaeexnihilo.modules.fluids.BrineFluid;
 import wraith.fabricaeexnihilo.modules.fluids.MilkFluid;
-import wraith.fabricaeexnihilo.modules.ore.EnumChunkMaterial;
-import wraith.fabricaeexnihilo.modules.ore.EnumChunkShape;
-import wraith.fabricaeexnihilo.modules.ore.EnumPieceShape;
+import wraith.fabricaeexnihilo.modules.ore.ChunkMaterial;
+import wraith.fabricaeexnihilo.modules.ore.ChunkShape;
+import wraith.fabricaeexnihilo.modules.ore.PieceShape;
 import wraith.fabricaeexnihilo.modules.witchwater.WitchWaterFluid;
 import wraith.fabricaeexnihilo.util.Color;
-import wraith.fabricaeexnihilo.util.EnumVanillaColors;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 import wraith.fabricaeexnihilo.util.VanillaWoodDefinitions;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-import static wraith.fabricaeexnihilo.FabricaeExNihilo.ID;
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
+import static wraith.fabricaeexnihilo.util.ColorUtils.*;
 
-public final class FabricaeExNihiloModule implements IFabricaeExNihiloModule {
+public final class FabricaeExNihiloModule implements wraith.fabricaeexnihilo.api.compatibility.FabricaeExNihiloModule {
 
     private FabricaeExNihiloModule() {}
 
     public static final FabricaeExNihiloModule INSTANCE = new FabricaeExNihiloModule();
 
     @Override
-    public void registerAlchemy(IAlchemyRegistry registry) {
+    public void registerAlchemy(AlchemyRegistry registry) {
         registry.register(Fluids.WATER, ItemUtils.getExNihiloItem("seed_mycelium"), WitchWaterFluid.STILL);
 
         registry.register(Fluids.LAVA, Items.GLOWSTONE_DUST, Blocks.END_STONE);
@@ -93,7 +93,7 @@ public final class FabricaeExNihiloModule implements IFabricaeExNihiloModule {
     }
 
     @Override
-    public void registerCompost(ICompostRegistry registry) {
+    public void registerCompost(CompostRegistry registry) {
         registry.register(ItemTags.LEAVES, Blocks.DIRT, 0.125, Color.DARK_GREEN);
         registry.register(ItemTags.SAPLINGS, Blocks.DIRT, 0.0625, Color.DARK_GREEN);
 
@@ -114,7 +114,7 @@ public final class FabricaeExNihiloModule implements IFabricaeExNihiloModule {
     }
 
     @Override
-    public void registerLeaking(ILeakingRegistry registry) {
+    public void registerLeaking(LeakingRegistry registry) {
         registry.register(Blocks.COBBLESTONE, Fluids.WATER, FluidAmount.BUCKET.as1620() / 10, Blocks.MOSSY_COBBLESTONE);
         registry.register(Blocks.STONE_BRICKS, Fluids.WATER, FluidAmount.BUCKET.as1620() / 10, Blocks.MOSSY_STONE_BRICKS);
 
@@ -129,13 +129,13 @@ public final class FabricaeExNihiloModule implements IFabricaeExNihiloModule {
     }
 
     @Override
-    public void registerMilking(IMilkingRegistry registry) {
+    public void registerMilking(MilkingRegistry registry) {
         registry.register(EntityType.COW, MilkFluid.STILL, FluidAmount.BUCKET.as1620() / 100, 20);
         registry.register(EntityType.WITCH, WitchWaterFluid.STILL, FluidAmount.BUCKET.as1620() / 100, 20);
     }
 
     @Override
-    public void registerCrucibleHeat(ICrucibleHeatRegistry registry) {
+    public void registerCrucibleHeat(CrucibleHeatRegistry registry) {
         registry.register(Blocks.TORCH, 1);
         registry.register(FluidTags.LAVA, 4);
         registry.register(Blocks.MAGMA_BLOCK, 3);
@@ -144,7 +144,7 @@ public final class FabricaeExNihiloModule implements IFabricaeExNihiloModule {
     }
 
     @Override
-    public void registerCrucibleStone(ICrucibleRegistry registry) {
+    public void registerCrucibleStone(CrucibleRegistry registry) {
         registry.register(Blocks.NETHERRACK, Fluids.LAVA,FluidAmount.BUCKET.as1620() / 2);
         registry.register(Blocks.COBBLESTONE, Fluids.LAVA,FluidAmount.BUCKET.as1620() / 4);
         registry.register(Blocks.GRAVEL, Fluids.LAVA,FluidAmount.BUCKET.as1620() / 8);
@@ -152,7 +152,7 @@ public final class FabricaeExNihiloModule implements IFabricaeExNihiloModule {
     }
 
     @Override
-    public void registerCrucibleWood(ICrucibleRegistry registry) {
+    public void registerCrucibleWood(CrucibleRegistry registry) {
         registry.register(ItemTags.SAPLINGS, Fluids.WATER, FluidAmount.BUCKET.as1620() / 10);
         registry.register(ItemTags.LEAVES, Fluids.WATER, FluidAmount.BUCKET.as1620() / 4);
         registry.register(ItemTags.SMALL_FLOWERS, Fluids.WATER, FluidAmount.BUCKET.as1620() / 10);
@@ -161,65 +161,65 @@ public final class FabricaeExNihiloModule implements IFabricaeExNihiloModule {
     }
 
     @Override
-    public void registerOres(IOreRegistry registry) {
+    public void registerOres(OreRegistry registry) {
         // TODO("Implement tag checking to prevent creation of unnecessary ores")
         // Vanilla Metals
-        registry.register("iron", Color.IRON, EnumPieceShape.NORMAL, EnumChunkShape.CHUNK, EnumChunkMaterial.GRANITE);
-        registry.register("gold", Color.GOLD, EnumPieceShape.FINE, EnumChunkShape.CHUNK, EnumChunkMaterial.STONE);
+        registry.register("iron", Color.IRON, PieceShape.NORMAL, ChunkShape.CHUNK, ChunkMaterial.GRANITE);
+        registry.register("gold", Color.GOLD, PieceShape.FINE, ChunkShape.CHUNK, ChunkMaterial.STONE);
 
         // Modded Metals
-        registry.register("aluminum",  Color.ALUMINUM,  EnumPieceShape.FINE,   EnumChunkShape.CHUNK, EnumChunkMaterial.SAND);
-        registry.register("ardite",    Color.ARDITE,    EnumPieceShape.COARSE, EnumChunkShape.CHUNK, EnumChunkMaterial.NETHERRACK);
-        registry.register("beryllium", Color.BERYLLIUM, EnumPieceShape.NORMAL, EnumChunkShape.FLINT, EnumChunkMaterial.STONE);
-        registry.register("boron",     Color.BORON,     EnumPieceShape.COARSE, EnumChunkShape.CHUNK, EnumChunkMaterial.SAND);
-        registry.register("cobalt",    Color.COBALT,    EnumPieceShape.COARSE, EnumChunkShape.LUMP, EnumChunkMaterial.NETHERRACK);
-        registry.register("copper",    Color.COPPER,    EnumPieceShape.NORMAL, EnumChunkShape.CHUNK, EnumChunkMaterial.STONE);
-        registry.register("lead",      Color.LEAD,      EnumPieceShape.COARSE, EnumChunkShape.LUMP, EnumChunkMaterial.STONE);
-        registry.register("lithium",   Color.LITHIUM,   EnumPieceShape.FINE,   EnumChunkShape.FLINT, EnumChunkMaterial.SAND);
-        registry.register("magnesium", Color.MAGNESIUM, EnumPieceShape.COARSE, EnumChunkShape.LUMP, EnumChunkMaterial.STONE);
-        registry.register("nickel",    Color.NICKEL,    EnumPieceShape.COARSE, EnumChunkShape.LUMP, EnumChunkMaterial.STONE);
-        registry.register("silver",    Color.SILVER,    EnumPieceShape.NORMAL, EnumChunkShape.CHUNK, EnumChunkMaterial.STONE);
-        registry.register("tin",       Color.TIN,       EnumPieceShape.NORMAL, EnumChunkShape.LUMP, EnumChunkMaterial.DIORITE);
-        registry.register("titanium",  Color.TITANIUM,  EnumPieceShape.COARSE, EnumChunkShape.CHUNK, EnumChunkMaterial.STONE);
-        registry.register("thorium",   Color.THORIUM,   EnumPieceShape.COARSE, EnumChunkShape.LUMP, EnumChunkMaterial.STONE);
-        registry.register("tungsten",  Color.TUNGSTEN,  EnumPieceShape.COARSE, EnumChunkShape.CHUNK, EnumChunkMaterial.NETHERRACK);
-        registry.register("uranium",   Color.URANIUM,   EnumPieceShape.COARSE, EnumChunkShape.LUMP, EnumChunkMaterial.STONE);
-        registry.register("zinc",      Color.ZINC,      EnumPieceShape.FINE,   EnumChunkShape.FLINT, EnumChunkMaterial.ANDESITE);
-        registry.register("zirconium", Color.ZIRCONIUM, EnumPieceShape.NORMAL, EnumChunkShape.FLINT, EnumChunkMaterial.ANDESITE);
+        registry.register("aluminum",  Color.ALUMINUM,  PieceShape.FINE,   ChunkShape.CHUNK, ChunkMaterial.SAND);
+        registry.register("ardite",    Color.ARDITE,    PieceShape.COARSE, ChunkShape.CHUNK, ChunkMaterial.NETHERRACK);
+        registry.register("beryllium", Color.BERYLLIUM, PieceShape.NORMAL, ChunkShape.FLINT, ChunkMaterial.STONE);
+        registry.register("boron",     Color.BORON,     PieceShape.COARSE, ChunkShape.CHUNK, ChunkMaterial.SAND);
+        registry.register("cobalt",    Color.COBALT,    PieceShape.COARSE, ChunkShape.LUMP, ChunkMaterial.NETHERRACK);
+        registry.register("copper",    Color.COPPER,    PieceShape.NORMAL, ChunkShape.CHUNK, ChunkMaterial.STONE);
+        registry.register("lead",      Color.LEAD,      PieceShape.COARSE, ChunkShape.LUMP, ChunkMaterial.STONE);
+        registry.register("lithium",   Color.LITHIUM,   PieceShape.FINE,   ChunkShape.FLINT, ChunkMaterial.SAND);
+        registry.register("magnesium", Color.MAGNESIUM, PieceShape.COARSE, ChunkShape.LUMP, ChunkMaterial.STONE);
+        registry.register("nickel",    Color.NICKEL,    PieceShape.COARSE, ChunkShape.LUMP, ChunkMaterial.STONE);
+        registry.register("silver",    Color.SILVER,    PieceShape.NORMAL, ChunkShape.CHUNK, ChunkMaterial.STONE);
+        registry.register("tin",       Color.TIN,       PieceShape.NORMAL, ChunkShape.LUMP, ChunkMaterial.DIORITE);
+        registry.register("titanium",  Color.TITANIUM,  PieceShape.COARSE, ChunkShape.CHUNK, ChunkMaterial.STONE);
+        registry.register("thorium",   Color.THORIUM,   PieceShape.COARSE, ChunkShape.LUMP, ChunkMaterial.STONE);
+        registry.register("tungsten",  Color.TUNGSTEN,  PieceShape.COARSE, ChunkShape.CHUNK, ChunkMaterial.NETHERRACK);
+        registry.register("uranium",   Color.URANIUM,   PieceShape.COARSE, ChunkShape.LUMP, ChunkMaterial.STONE);
+        registry.register("zinc",      Color.ZINC,      PieceShape.FINE,   ChunkShape.FLINT, ChunkMaterial.ANDESITE);
+        registry.register("zirconium", Color.ZIRCONIUM, PieceShape.NORMAL, ChunkShape.FLINT, ChunkMaterial.ANDESITE);
     }
 
     @Override
-    public void registerMesh(IMeshRegistry registry) {
+    public void registerMesh(MeshRegistry registry) {
         registry.register(
-                ID("mesh_string"),
+                id("mesh_string"),
                 ToolMaterials.WOOD.getEnchantability(),
                 "item.minecraft.string",
                 Color.WHITE,
                 new Identifier("string")
         );
         registry.register(
-                ID("mesh_flint"),
+                id("mesh_flint"),
                 ToolMaterials.STONE.getEnchantability(),
                 "item.minecraft.flint",
                 Color.DARK_GRAY,
                 new Identifier("flint")
         );
         registry.register(
-                ID("mesh_iron"),
+                id("mesh_iron"),
                 ToolMaterials.IRON.getEnchantability(),
                 "Iron",
                 new Color("777777"),
                 new Identifier("iron_ingot")
         );
         registry.register(
-                ID("mesh_gold"),
+                id("mesh_gold"),
                 ToolMaterials.GOLD.getEnchantability(),
                 "Gold",
                 Color.GOLDEN,
                 new Identifier("gold_ingot")
         );
         registry.register(
-                ID("mesh_diamond"),
+                id("mesh_diamond"),
                 ToolMaterials.DIAMOND.getEnchantability(),
                 "item.minecraft.diamond",
                 Color.DARK_AQUA,
@@ -228,12 +228,12 @@ public final class FabricaeExNihiloModule implements IFabricaeExNihiloModule {
     }
 
     @Override
-    public void registerSieve(ISieveRegistry registry) {
-        var stringMesh = Registry.ITEM.get(ID("mesh_string"));
-        var flintMesh = Registry.ITEM.get(ID("mesh_flint"));
-        var ironMesh = Registry.ITEM.get(ID("mesh_iron"));
-        var goldMesh = Registry.ITEM.get(ID("mesh_gold"));
-        var diamondMesh = Registry.ITEM.get(ID("mesh_diamond"));
+    public void registerSieve(SieveRegistry registry) {
+        var stringMesh = Registry.ITEM.get(id("mesh_string"));
+        var flintMesh = Registry.ITEM.get(id("mesh_flint"));
+        var ironMesh = Registry.ITEM.get(id("mesh_iron"));
+        var goldMesh = Registry.ITEM.get(id("mesh_gold"));
+        var diamondMesh = Registry.ITEM.get(id("mesh_diamond"));
 
         var crushedNetherrack = ItemUtils.getExNihiloBlock("crushed_netherrack");
         var crushedPrismarine = ItemUtils.getExNihiloBlock("crushed_prismarine");
@@ -293,23 +293,23 @@ public final class FabricaeExNihiloModule implements IFabricaeExNihiloModule {
         registry.register(goldMesh, Blocks.SOUL_SAND, new Lootable(Items.QUARTZ, 0.4));
         registry.register(diamondMesh, Blocks.SOUL_SAND, new Lootable(Items.QUARTZ, 0.3));
 
-        registry.register(stringMesh, Blocks.DIRT, new Lootable(ID("seed_oak"), 0.05));
-        registry.register(stringMesh, Blocks.DIRT, new Lootable(ID("seed_birch"), 0.02));
-        registry.register(flintMesh, Blocks.DIRT, new Lootable(ID("seed_spruce"), 0.05));
-        registry.register(flintMesh, Blocks.DIRT, new Lootable(ID("seed_jungle"), 0.01));
-        registry.register(stringMesh, Blocks.RED_SAND, new Lootable(ID("seed_acacia"), 0.02));
-        registry.register(flintMesh, Blocks.DIRT, new Lootable(ID("seed_dark_oak"), 0.01));
+        registry.register(stringMesh, Blocks.DIRT, new Lootable(id("seed_oak"), 0.05));
+        registry.register(stringMesh, Blocks.DIRT, new Lootable(id("seed_birch"), 0.02));
+        registry.register(flintMesh, Blocks.DIRT, new Lootable(id("seed_spruce"), 0.05));
+        registry.register(flintMesh, Blocks.DIRT, new Lootable(id("seed_jungle"), 0.01));
+        registry.register(stringMesh, Blocks.RED_SAND, new Lootable(id("seed_acacia"), 0.02));
+        registry.register(flintMesh, Blocks.DIRT, new Lootable(id("seed_dark_oak"), 0.01));
 
         registry.register(stringMesh, Blocks.GRAVEL, new Lootable(Items.FLINT, 0.5));
         registry.register(flintMesh, Blocks.GRAVEL, new Lootable(Items.FLINT, 0.3));
 
-        registry.register(stringMesh, Fluids.WATER, Blocks.SAND, new Lootable(ID("seed_sugarcane"), 0.1));
-        registry.register(stringMesh, Fluids.WATER, Blocks.SAND, new Lootable(ID("seed_kelp"), 0.05));
+        registry.register(stringMesh, Fluids.WATER, Blocks.SAND, new Lootable(id("seed_sugarcane"), 0.1));
+        registry.register(stringMesh, Fluids.WATER, Blocks.SAND, new Lootable(id("seed_kelp"), 0.05));
 
-        registry.register(flintMesh, Fluids.WATER, Blocks.SAND, new Lootable(ID("seed_sugarcane"), 0.15));
-        registry.register(flintMesh, Fluids.WATER, Blocks.SAND, new Lootable(ID("seed_kelp"), 0.1));
+        registry.register(flintMesh, Fluids.WATER, Blocks.SAND, new Lootable(id("seed_sugarcane"), 0.15));
+        registry.register(flintMesh, Fluids.WATER, Blocks.SAND, new Lootable(id("seed_kelp"), 0.1));
 
-        registry.register(ironMesh, Fluids.WATER, Blocks.SAND, new Lootable(ID("seed_sea_pickle"), 0.1));
+        registry.register(ironMesh, Fluids.WATER, Blocks.SAND, new Lootable(id("seed_sea_pickle"), 0.1));
 
         Arrays.asList(Items.TROPICAL_FISH, Items.COD, Items.SALMON).forEach(item -> {
             registry.register(stringMesh, Fluids.WATER, Blocks.DIRT, new Lootable(item, 0.05));
@@ -335,11 +335,11 @@ public final class FabricaeExNihiloModule implements IFabricaeExNihiloModule {
         registry.register(flintMesh, Fluids.WATER, silt, new Lootable(Items.LILY_PAD, 0.2));
         registry.register(ironMesh, Fluids.WATER, silt, new Lootable(Items.LILY_PAD, 0.4));
 
-        registry.register(stringMesh, WitchWaterFluid.STILL, Blocks.DIRT, new Lootable(ID("seed_mycelium"), 0.01));
-        registry.register(flintMesh, WitchWaterFluid.STILL, Blocks.DIRT, new Lootable(ID("seed_mycelium"), 0.02));
-        registry.register(ironMesh, WitchWaterFluid.STILL, Blocks.DIRT, new Lootable(ID("seed_mycelium"), 0.05));
-        registry.register(goldMesh, WitchWaterFluid.STILL, Blocks.DIRT, new Lootable(ID("seed_mycelium"), 0.01));
-        registry.register(diamondMesh, WitchWaterFluid.STILL, Blocks.DIRT, new Lootable(ID("seed_mycelium"), 0.2));
+        registry.register(stringMesh, WitchWaterFluid.STILL, Blocks.DIRT, new Lootable(id("seed_mycelium"), 0.01));
+        registry.register(flintMesh, WitchWaterFluid.STILL, Blocks.DIRT, new Lootable(id("seed_mycelium"), 0.02));
+        registry.register(ironMesh, WitchWaterFluid.STILL, Blocks.DIRT, new Lootable(id("seed_mycelium"), 0.05));
+        registry.register(goldMesh, WitchWaterFluid.STILL, Blocks.DIRT, new Lootable(id("seed_mycelium"), 0.01));
+        registry.register(diamondMesh, WitchWaterFluid.STILL, Blocks.DIRT, new Lootable(id("seed_mycelium"), 0.2));
 
         Arrays.asList(Items.RED_MUSHROOM, Items.BROWN_MUSHROOM).forEach(item -> {
             registry.register(stringMesh, WitchWaterFluid.STILL, Blocks.DIRT, new Lootable(item, 0.01));
@@ -429,9 +429,9 @@ public final class FabricaeExNihiloModule implements IFabricaeExNihiloModule {
     }
 
     @Override
-    public void registerCrook(IToolRegistry registry) {
+    public void registerCrook(ToolRegistry registry) {
         registry.register(ItemTags.LEAVES, new Lootable(Items.STICK, 0.01));
-        registry.register(ItemTags.LEAVES, new Lootable(ID("silkworm_raw"), 0.1, 0.2, 0.2));
+        registry.register(ItemTags.LEAVES, new Lootable(id("silkworm_raw"), 0.1, 0.2, 0.2));
         if (ModTags.INFESTED_LEAVES != null) {
             registry.register(ModTags.INFESTED_LEAVES, new Lootable(ItemUtils.asStack(Items.STRING, 1), 1.0, 1.0, 0.5, 0.2, 0.1));
         }
@@ -441,52 +441,52 @@ public final class FabricaeExNihiloModule implements IFabricaeExNihiloModule {
     }
 
     @Override
-    public void registerHammer(IToolRegistry registry) {
+    public void registerHammer(ToolRegistry registry) {
         // Stone
         registry.register(Blocks.STONE, new Lootable(Blocks.COBBLESTONE, 1.0));
         registry.register(Blocks.COBBLESTONE, new Lootable(Blocks.GRAVEL, 1.0, 0.25));
         registry.register(Blocks.GRAVEL, new Lootable(Blocks.SAND, 1.0, 0.25));
-        registry.register(Blocks.SAND, new Lootable(ID("silt"), 1.0, 0.25));
-        registry.register(ID("silt"), new Lootable(ID("dust"), 1.0, 0.25));
+        registry.register(Blocks.SAND, new Lootable(id("silt"), 1.0, 0.25));
+        registry.register(id("silt"), new Lootable(id("dust"), 1.0, 0.25));
 
         // Andesite
-        registry.register(Blocks.ANDESITE, new Lootable(ID("crushed_andesite"), 1.0, 0.5));
-        registry.register(ID("crushed_andesite"), new Lootable(Blocks.LIGHT_GRAY_CONCRETE_POWDER, 1.0, 0.5));
+        registry.register(Blocks.ANDESITE, new Lootable(id("crushed_andesite"), 1.0, 0.5));
+        registry.register(id("crushed_andesite"), new Lootable(Blocks.LIGHT_GRAY_CONCRETE_POWDER, 1.0, 0.5));
 
         // Diorite
-        registry.register(Blocks.DIORITE, new Lootable(ID("crushed_diorite"), 1.0, 0.5));
-        registry.register(ID("crushed_diorite"), new Lootable(Items.WHITE_CONCRETE_POWDER, 1.0, 0.5));
+        registry.register(Blocks.DIORITE, new Lootable(id("crushed_diorite"), 1.0, 0.5));
+        registry.register(id("crushed_diorite"), new Lootable(Items.WHITE_CONCRETE_POWDER, 1.0, 0.5));
 
         // Granite
-        registry.register(Blocks.GRANITE, new Lootable(ID("crushed_granite"), 1.0, 0.5));
-        registry.register(ID("crushed_granite"), new Lootable(Items.RED_SAND, 1.0, 0.5));
+        registry.register(Blocks.GRANITE, new Lootable(id("crushed_granite"), 1.0, 0.5));
+        registry.register(id("crushed_granite"), new Lootable(Items.RED_SAND, 1.0, 0.5));
 
         // Netherrack
-        registry.register(Blocks.NETHERRACK, new Lootable(ID("crushed_netherrack"), 1.0, 0.5));
-        registry.register(Blocks.NETHER_BRICKS, new Lootable(ID("crushed_netherrack"), 1.0, 0.5));
-        registry.register(ID("crushed_netherrack"), new Lootable(Blocks.RED_CONCRETE_POWDER, 1.0, 0.5));
+        registry.register(Blocks.NETHERRACK, new Lootable(id("crushed_netherrack"), 1.0, 0.5));
+        registry.register(Blocks.NETHER_BRICKS, new Lootable(id("crushed_netherrack"), 1.0, 0.5));
+        registry.register(id("crushed_netherrack"), new Lootable(Blocks.RED_CONCRETE_POWDER, 1.0, 0.5));
 
         // End Stone
-        registry.register(Blocks.END_STONE, new Lootable(ID("crushed_endstone"), 1.0));
-        registry.register(Blocks.END_STONE_BRICKS, new Lootable(ID("crushed_endstone"), 1.0, 0.5));
-        registry.register(ID("crushed_endstone"), new Lootable(Blocks.YELLOW_CONCRETE_POWDER, 1.0, 0.5));
+        registry.register(Blocks.END_STONE, new Lootable(id("crushed_endstone"), 1.0));
+        registry.register(Blocks.END_STONE_BRICKS, new Lootable(id("crushed_endstone"), 1.0, 0.5));
+        registry.register(id("crushed_endstone"), new Lootable(Blocks.YELLOW_CONCRETE_POWDER, 1.0, 0.5));
 
         // Prismarine
-        registry.register(Blocks.PRISMARINE, new Lootable(ID("crushed_prismarine"), 1.0));
-        registry.register(ID("crushed_prismarine"), new Lootable(Blocks.CYAN_CONCRETE_POWDER, 1.0, 0.5));
+        registry.register(Blocks.PRISMARINE, new Lootable(id("crushed_prismarine"), 1.0));
+        registry.register(id("crushed_prismarine"), new Lootable(Blocks.CYAN_CONCRETE_POWDER, 1.0, 0.5));
 
         // Misc.
         registry.register(ItemTags.WOOL, new Lootable(ItemUtils.asStack(Items.STRING, 4), 1.0));
-        Arrays.stream(EnumVanillaColors.values()).forEach(c -> {
+        Arrays.stream(DyeColor.values()).forEach(color -> {
             // Concrete Hammering
-            registry.register(c.getConcrete(), new Lootable(c.getConcretePowder(), 1.0));
-            registry.register(c.getConcretePowder(), new Lootable(ID("silt"), 1.0));
-            registry.register(c.getConcretePowder(), new Lootable(c.getDye(), 0.0625));
+            registry.register(getConcrete(color), new Lootable(getConcretePowder(color), 1.0));
+            registry.register(getConcretePowder(color), new Lootable(id("silt"), 1.0));
+            registry.register(getConcretePowder(color), new Lootable(getDye(color), 0.0625));
             // Wool Hammering
-            registry.register(c.getWool(), new Lootable(c.getDye(), 0.5));
+            registry.register(getWool(color), new Lootable(getDye(color), 0.5));
             // Glass Hammering
-            registry.register(c.getGlass(), new Lootable(Blocks.SAND, 1.0));
-            registry.register(c.getGlass(), new Lootable(c.getDye(), 0.0625));
+            registry.register(getGlass(color), new Lootable(Blocks.SAND, 1.0));
+            registry.register(getGlass(color), new Lootable(getDye(color), 0.0625));
         });
 
         // Corals
@@ -504,7 +504,7 @@ public final class FabricaeExNihiloModule implements IFabricaeExNihiloModule {
     }
 
     @Override
-    public void registerWitchWaterWorld(IWitchWaterWorldRegistry registry) {
+    public void registerWitchWaterWorld(WitchWaterWorldRegistry registry) {
         registry.register(new FluidIngredient(Fluids.WATER, Fluids.FLOWING_WATER), new WeightedList(
                 new Pair<>(Blocks.DIRT, 51),
                 new Pair<>(Blocks.GRASS_BLOCK, 12),
@@ -539,7 +539,7 @@ public final class FabricaeExNihiloModule implements IFabricaeExNihiloModule {
     }
 
     @Override
-    public void registerWitchWaterEntity(IWitchWaterEntityRegistry registry) {
+    public void registerWitchWaterEntity(WitchWaterEntityRegistry registry) {
         registry.register(EntityType.SKELETON, EntityType.WITHER_SKELETON);
         registry.register(EntityType.SLIME, EntityType.MAGMA_CUBE);
         registry.register(EntityType.SPIDER, EntityType.CAVE_SPIDER);
@@ -585,14 +585,14 @@ public final class FabricaeExNihiloModule implements IFabricaeExNihiloModule {
     }
 
     @Override
-    public void registerFluidOnTop(IFluidOnTopRegistry registry) {
+    public void registerFluidOnTop(FluidOnTopRegistry registry) {
         registry.register(Fluids.LAVA, Fluids.WATER, Blocks.OBSIDIAN);
         registry.register(Fluids.WATER, Fluids.LAVA, Blocks.STONE);
         registry.register(Fluids.WATER, BrineFluid.TAG, Blocks.ICE);
     }
 
     @Override
-    public void registerFluidTransform(IFluidTransformRegistry registry) {
+    public void registerFluidTransform(FluidTransformRegistry registry) {
         registry.register(Fluids.WATER, Blocks.MYCELIUM, WitchWaterFluid.STILL);
         registry.register(MilkFluid.STILL, Blocks.MYCELIUM, Blocks.SLIME_BLOCK);
     }

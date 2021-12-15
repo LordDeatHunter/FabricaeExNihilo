@@ -20,7 +20,7 @@ import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.util.Collection;
 
-public interface IAlchemyRegistry extends IRegistry<AlchemyRecipe> {
+public interface AlchemyRegistry extends Registry<AlchemyRecipe> {
 
     AlchemyRecipe getRecipe(FluidVolume reactant, ItemStack catalyst);
 

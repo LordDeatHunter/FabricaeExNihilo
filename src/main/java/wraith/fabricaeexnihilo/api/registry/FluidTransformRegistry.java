@@ -14,7 +14,7 @@ import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.util.Collection;
 
-public interface IFluidTransformRegistry extends IRegistry<FluidTransformRecipe> {
+public interface FluidTransformRegistry extends Registry<FluidTransformRecipe> {
 
     default boolean register(FluidIngredient fluid, ItemIngredient block, BarrelMode result) {
         return register(new FluidTransformRecipe(fluid, block, result));

@@ -1,5 +1,5 @@
 package wraith.fabricaeexnihilo.modules.base;
 
-public interface IHasColor {
+public interface HasColor {
     int getColor(int index);
 }
