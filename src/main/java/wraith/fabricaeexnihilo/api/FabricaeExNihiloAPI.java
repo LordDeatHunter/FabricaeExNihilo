@@ -1,16 +1,15 @@
 package wraith.fabricaeexnihilo.api;
 
-import wraith.fabricaeexnihilo.api.compatibility.IFabricaeExNihiloModule;
+import wraith.fabricaeexnihilo.api.compatibility.FabricaeExNihiloModule;
 import wraith.fabricaeexnihilo.compatibility.modules.MetaModule;
-import wraith.fabricaeexnihilo.util.BlockGenerator;
 
 public class FabricaeExNihiloAPI {
 
-    public static IBlockGenerator getBlockGenerator() {
-        return BlockGenerator.INSTANCE;
+    public static BlockGenerator getBlockGenerator() {
+        return wraith.fabricaeexnihilo.util.BlockGenerator.INSTANCE;
     }
 
-    public static void registerCompatabilityModule(IFabricaeExNihiloModule module) {
+    public static void registerCompatabilityModule(FabricaeExNihiloModule module) {
         MetaModule.INSTANCE.modules.add(module);
     }
 

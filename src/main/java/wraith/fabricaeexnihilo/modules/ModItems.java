@@ -37,24 +37,24 @@ public final class ModItems {
     public static final List<Identifier> DOLLS = new ArrayList<>();
 
     static {
-        FLOWER_SEEDS.put(FabricaeExNihilo.ID("seed_sunflower"), new TallPlantableItem((TallPlantBlock) Blocks.SUNFLOWER, BASE_SETTINGS));
-        FLOWER_SEEDS.put(FabricaeExNihilo.ID("seed_lilac"), new TallPlantableItem((TallPlantBlock) Blocks.LILAC, BASE_SETTINGS));
-        FLOWER_SEEDS.put(FabricaeExNihilo.ID("seed_rose_bush"), new TallPlantableItem((TallPlantBlock) Blocks.ROSE_BUSH, BASE_SETTINGS));
-        FLOWER_SEEDS.put(FabricaeExNihilo.ID("seed_peony"), new TallPlantableItem((TallPlantBlock) Blocks.PEONY, BASE_SETTINGS));
+        FLOWER_SEEDS.put(FabricaeExNihilo.id("seed_sunflower"), new TallPlantableItem((TallPlantBlock) Blocks.SUNFLOWER, BASE_SETTINGS));
+        FLOWER_SEEDS.put(FabricaeExNihilo.id("seed_lilac"), new TallPlantableItem((TallPlantBlock) Blocks.LILAC, BASE_SETTINGS));
+        FLOWER_SEEDS.put(FabricaeExNihilo.id("seed_rose_bush"), new TallPlantableItem((TallPlantBlock) Blocks.ROSE_BUSH, BASE_SETTINGS));
+        FLOWER_SEEDS.put(FabricaeExNihilo.id("seed_peony"), new TallPlantableItem((TallPlantBlock) Blocks.PEONY, BASE_SETTINGS));
 
-        RESOURCES.put(FabricaeExNihilo.ID("pebble_andesite"), new Item(BASE_SETTINGS));
-        RESOURCES.put(FabricaeExNihilo.ID("pebble_diorite"), new Item(BASE_SETTINGS));
-        RESOURCES.put(FabricaeExNihilo.ID("pebble_granite"), new Item(BASE_SETTINGS));
-        RESOURCES.put(FabricaeExNihilo.ID("pebble_stone"), new Item(BASE_SETTINGS));
-        RESOURCES.put(FabricaeExNihilo.ID("porcelain"), new Item(BASE_SETTINGS));
-        RESOURCES.put(FabricaeExNihilo.ID("unfired_crucible"), new Item(BASE_SETTINGS));
-        RESOURCES.put(FabricaeExNihilo.ID("salt_bottle"), new Item(BASE_SETTINGS));
+        RESOURCES.put(FabricaeExNihilo.id("pebble_andesite"), new Item(BASE_SETTINGS));
+        RESOURCES.put(FabricaeExNihilo.id("pebble_diorite"), new Item(BASE_SETTINGS));
+        RESOURCES.put(FabricaeExNihilo.id("pebble_granite"), new Item(BASE_SETTINGS));
+        RESOURCES.put(FabricaeExNihilo.id("pebble_stone"), new Item(BASE_SETTINGS));
+        RESOURCES.put(FabricaeExNihilo.id("porcelain"), new Item(BASE_SETTINGS));
+        RESOURCES.put(FabricaeExNihilo.id("unfired_crucible"), new Item(BASE_SETTINGS));
+        RESOURCES.put(FabricaeExNihilo.id("salt_bottle"), new Item(BASE_SETTINGS));
 
-        DOLLS.add(FabricaeExNihilo.ID("doll"));
-        DOLLS.add(FabricaeExNihilo.ID("doll_blaze"));
-        DOLLS.add(FabricaeExNihilo.ID("doll_enderman"));
-        DOLLS.add(FabricaeExNihilo.ID("doll_guardian"));
-        DOLLS.add(FabricaeExNihilo.ID("doll_shulker"));
+        DOLLS.add(FabricaeExNihilo.id("doll"));
+        DOLLS.add(FabricaeExNihilo.id("doll_blaze"));
+        DOLLS.add(FabricaeExNihilo.id("doll_enderman"));
+        DOLLS.add(FabricaeExNihilo.id("doll_guardian"));
+        DOLLS.add(FabricaeExNihilo.id("doll_shulker"));
     }
 
     public static void registerItems() {
@@ -82,21 +82,21 @@ public final class ModItems {
 
     public static void setup() {
         if (FabricaeExNihilo.CONFIG.modules.silkworms.enabled) {
-            RESOURCES.put(FabricaeExNihilo.ID("silkworm_raw"), new SilkWormItem(new FabricItemSettings().maxCount(64).food(FoodComponents.COD).group(FabricaeExNihilo.ITEM_GROUP)));
-            RESOURCES.put(FabricaeExNihilo.ID("silkworm_cooked"), new Item(new FabricItemSettings().maxCount(64).food(FoodComponents.COOKED_COD).group(FabricaeExNihilo.ITEM_GROUP)));
+            RESOURCES.put(FabricaeExNihilo.id("silkworm_raw"), new SilkWormItem(new FabricItemSettings().maxCount(64).food(FoodComponents.COD).group(FabricaeExNihilo.ITEM_GROUP)));
+            RESOURCES.put(FabricaeExNihilo.id("silkworm_cooked"), new Item(new FabricItemSettings().maxCount(64).food(FoodComponents.COOKED_COD).group(FabricaeExNihilo.ITEM_GROUP)));
         }
         if (FabricaeExNihilo.CONFIG.modules.seeds.enabled) {
             if (FabricaeExNihilo.CONFIG.modules.seeds.carrot) {
-                CROP_SEEDS.put(FabricaeExNihilo.ID("seed_carrot"), new PlantableItem(Blocks.CARROTS, BASE_SETTINGS));
+                CROP_SEEDS.put(FabricaeExNihilo.id("seed_carrot"), new PlantableItem(Blocks.CARROTS, BASE_SETTINGS));
             }
             if (FabricaeExNihilo.CONFIG.modules.seeds.chorus) {
-                CROP_SEEDS.put(FabricaeExNihilo.ID("seed_chorus"), new PlantableItem(Blocks.CHORUS_FLOWER, BASE_SETTINGS));
+                CROP_SEEDS.put(FabricaeExNihilo.id("seed_chorus"), new PlantableItem(Blocks.CHORUS_FLOWER, BASE_SETTINGS));
             }
             if (FabricaeExNihilo.CONFIG.modules.seeds.grass) {
-                OTHER_SEEDS.put(FabricaeExNihilo.ID("seed_grass"), new TransformingItem(Blocks.DIRT, Blocks.GRASS_BLOCK, BASE_SETTINGS));
+                OTHER_SEEDS.put(FabricaeExNihilo.id("seed_grass"), new TransformingItem(Blocks.DIRT, Blocks.GRASS_BLOCK, BASE_SETTINGS));
             }
             if (FabricaeExNihilo.CONFIG.modules.seeds.kelp) {
-                CROP_SEEDS.put(FabricaeExNihilo.ID("seed_kelp"), new PlantableItem(IntStream.range(0, 25).mapToObj(age -> Blocks.KELP.getDefaultState().with(KelpBlock.AGE, age)).toList(), BASE_SETTINGS) {
+                CROP_SEEDS.put(FabricaeExNihilo.id("seed_kelp"), new PlantableItem(IntStream.range(0, 25).mapToObj(age -> Blocks.KELP.getDefaultState().with(KelpBlock.AGE, age)).toList(), BASE_SETTINGS) {
                     @Override
                     public boolean placementCheck(ItemUsageContext context) {
                         return context.getWorld().getFluidState(context.getBlockPos().offset(context.getSide())).getFluid() == Fluids.WATER;
@@ -104,33 +104,33 @@ public final class ModItems {
                 });
             }
             if (FabricaeExNihilo.CONFIG.modules.seeds.mycelium) {
-                OTHER_SEEDS.put(FabricaeExNihilo.ID("seed_mycelium"), new TransformingItem(Blocks.DIRT, Blocks.MYCELIUM, BASE_SETTINGS));
+                OTHER_SEEDS.put(FabricaeExNihilo.id("seed_mycelium"), new TransformingItem(Blocks.DIRT, Blocks.MYCELIUM, BASE_SETTINGS));
             }
             if (FabricaeExNihilo.CONFIG.modules.seeds.potato) {
-                CROP_SEEDS.put(FabricaeExNihilo.ID("seed_potato"), new PlantableItem(Blocks.POTATOES, BASE_SETTINGS));
+                CROP_SEEDS.put(FabricaeExNihilo.id("seed_potato"), new PlantableItem(Blocks.POTATOES, BASE_SETTINGS));
             }
             if (FabricaeExNihilo.CONFIG.modules.seeds.seaPickle) {
-                OTHER_SEEDS.put(FabricaeExNihilo.ID("seed_sea_pickle"), new PlantableItem(Blocks.SEA_PICKLE, BASE_SETTINGS));
+                OTHER_SEEDS.put(FabricaeExNihilo.id("seed_sea_pickle"), new PlantableItem(Blocks.SEA_PICKLE, BASE_SETTINGS));
             }
             if (FabricaeExNihilo.CONFIG.modules.seeds.sugarCane) {
-                CROP_SEEDS.put(FabricaeExNihilo.ID("seed_sugarcane"), new PlantableItem(Blocks.SUGAR_CANE, BASE_SETTINGS));
+                CROP_SEEDS.put(FabricaeExNihilo.id("seed_sugarcane"), new PlantableItem(Blocks.SUGAR_CANE, BASE_SETTINGS));
             }
             if (FabricaeExNihilo.CONFIG.modules.seeds.cactus) {
-                CROP_SEEDS.put(FabricaeExNihilo.ID("seed_cactus"), new PlantableItem(Blocks.CACTUS, BASE_SETTINGS));
+                CROP_SEEDS.put(FabricaeExNihilo.id("seed_cactus"), new PlantableItem(Blocks.CACTUS, BASE_SETTINGS));
             }
             if (FabricaeExNihilo.CONFIG.modules.seeds.treeSeeds) {
-                TREE_SEEDS.put(FabricaeExNihilo.ID("seed_oak"), new PlantableItem(Blocks.OAK_SAPLING, BASE_SETTINGS));
-                TREE_SEEDS.put(FabricaeExNihilo.ID("seed_birch"), new PlantableItem(Blocks.BIRCH_SAPLING, BASE_SETTINGS));
-                TREE_SEEDS.put(FabricaeExNihilo.ID("seed_spruce"), new PlantableItem(Blocks.SPRUCE_SAPLING, BASE_SETTINGS));
-                TREE_SEEDS.put(FabricaeExNihilo.ID("seed_jungle"), new PlantableItem(Blocks.JUNGLE_SAPLING, BASE_SETTINGS));
-                TREE_SEEDS.put(FabricaeExNihilo.ID("seed_acacia"), new PlantableItem(Blocks.ACACIA_SAPLING, BASE_SETTINGS));
-                TREE_SEEDS.put(FabricaeExNihilo.ID("seed_dark_oak"), new PlantableItem(Blocks.DARK_OAK_SAPLING, BASE_SETTINGS));
+                TREE_SEEDS.put(FabricaeExNihilo.id("seed_oak"), new PlantableItem(Blocks.OAK_SAPLING, BASE_SETTINGS));
+                TREE_SEEDS.put(FabricaeExNihilo.id("seed_birch"), new PlantableItem(Blocks.BIRCH_SAPLING, BASE_SETTINGS));
+                TREE_SEEDS.put(FabricaeExNihilo.id("seed_spruce"), new PlantableItem(Blocks.SPRUCE_SAPLING, BASE_SETTINGS));
+                TREE_SEEDS.put(FabricaeExNihilo.id("seed_jungle"), new PlantableItem(Blocks.JUNGLE_SAPLING, BASE_SETTINGS));
+                TREE_SEEDS.put(FabricaeExNihilo.id("seed_acacia"), new PlantableItem(Blocks.ACACIA_SAPLING, BASE_SETTINGS));
+                TREE_SEEDS.put(FabricaeExNihilo.id("seed_dark_oak"), new PlantableItem(Blocks.DARK_OAK_SAPLING, BASE_SETTINGS));
                 var rubberSaplings = FabricaeExNihilo.CONFIG.modules.seeds.rubberSeed.stream()
                         .map(rubberSeed -> Registry.BLOCK.get(new Identifier(rubberSeed)).getDefaultState())
                         // Remove unrecognized ones
                         .filter(blockstate -> !blockstate.isAir()).toList();
                 if (!rubberSaplings.isEmpty()) {
-                    TREE_SEEDS.put(FabricaeExNihilo.ID("seed_rubber"), new PlantableItem(rubberSaplings, BASE_SETTINGS));
+                    TREE_SEEDS.put(FabricaeExNihilo.id("seed_rubber"), new PlantableItem(rubberSaplings, BASE_SETTINGS));
                 }
             }
         }

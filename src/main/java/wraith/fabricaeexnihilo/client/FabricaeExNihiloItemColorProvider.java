@@ -2,7 +2,7 @@ package wraith.fabricaeexnihilo.client;
 
 import net.minecraft.client.color.item.ItemColorProvider;
 import net.minecraft.item.ItemStack;
-import wraith.fabricaeexnihilo.modules.base.IHasColor;
+import wraith.fabricaeexnihilo.modules.base.HasColor;
 import wraith.fabricaeexnihilo.util.Color;
 
 public final class FabricaeExNihiloItemColorProvider implements ItemColorProvider {
@@ -13,7 +13,7 @@ public final class FabricaeExNihiloItemColorProvider implements ItemColorProvide
 
     @Override
     public int getColor(ItemStack stack, int tintIndex) {
-        return stack.getItem() instanceof IHasColor colored ? colored.getColor(tintIndex) : Color.WHITE.toIntIgnoreAlpha();
+        return stack.getItem() instanceof HasColor colored ? colored.getColor(tintIndex) : Color.WHITE.toIntIgnoreAlpha();
     }
 
 }

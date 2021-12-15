@@ -10,7 +10,7 @@ import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModTags;
 import wraith.fabricaeexnihilo.modules.ModTools;
 
-import static wraith.fabricaeexnihilo.FabricaeExNihilo.ID;
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public final class ARRPUtils {
 
@@ -20,15 +20,15 @@ public final class ARRPUtils {
     public static void generateRecipes(RuntimeResourcePack resourcePack) {
         // Ore Chunk Crafting
         FabricaeExNihiloRegistries.ORES.getAll().forEach(ore -> {
-            resourcePack.addRecipe(ID(ore.getChunkID().getPath() + "_crafting"), ore.generateRecipe());
+            resourcePack.addRecipe(id(ore.getChunkID().getPath() + "_crafting"), ore.generateRecipe());
 
             if (Registry.ITEM.containsId(ore.getNuggetID())) {
-                resourcePack.addRecipe(ID(ore.getPieceID().getPath() + "_smelting"), ore.generateNuggetCookingRecipe());
-                resourcePack.addRecipe(ID(ore.getPieceID().getPath() + "_blasting"), ore.generateNuggetCookingRecipe());
+                resourcePack.addRecipe(id(ore.getPieceID().getPath() + "_smelting"), ore.generateNuggetCookingRecipe());
+                resourcePack.addRecipe(id(ore.getPieceID().getPath() + "_blasting"), ore.generateNuggetCookingRecipe());
             }
             if (Registry.ITEM.containsId(ore.getIngotID())) {
-                resourcePack.addRecipe(ID(ore.getChunkID().getPath() + "_smelting"), ore.generateIngotCookingRecipe());
-                resourcePack.addRecipe(ID(ore.getChunkID().getPath() + "_blasting"), ore.generateIngotCookingRecipe());
+                resourcePack.addRecipe(id(ore.getChunkID().getPath() + "_smelting"), ore.generateIngotCookingRecipe());
+                resourcePack.addRecipe(id(ore.getChunkID().getPath() + "_blasting"), ore.generateIngotCookingRecipe());
             }
         });
         // Mesh Crafting
@@ -67,7 +67,7 @@ public final class ARRPUtils {
     }
 
     public static void generateBlockEntityLootTable(Identifier identifier, RuntimeResourcePack resourcePack) {
-        resourcePack.addLootTable(ID("blocks/" + identifier.getPath()),
+        resourcePack.addLootTable(id("blocks/" + identifier.getPath()),
                 JLootTable.loot("minecraft:block")
                         .pool(JLootTable.pool()
                                 .entry(JLootTable.entry()
@@ -84,7 +84,7 @@ public final class ARRPUtils {
     }
 
     public static void generateInfestedLeavesBlockLootTable(Identifier identifier, RuntimeResourcePack resourcePack) {
-        resourcePack.addLootTable(ID("blocks/" + identifier.getPath()),
+        resourcePack.addLootTable(id("blocks/" + identifier.getPath()),
                 JLootTable.loot("minecraft:block")
                         .pool(JLootTable.pool()
                                 .entry(JLootTable.entry()

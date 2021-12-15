@@ -67,7 +67,7 @@ public class FluidOnTopCategory implements DisplayCategory<FluidOnTopDisplay> {
         return widgets;
     }
 
-    public static final Identifier ARROW = FabricaeExNihilo.ID("textures/gui/rei/glyphs.png");
+    public static final Identifier ARROW = FabricaeExNihilo.id("textures/gui/rei/glyphs.png");
 
     public static final int MARGIN = 6;
 

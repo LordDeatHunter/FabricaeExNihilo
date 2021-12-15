@@ -54,7 +54,7 @@ public final class ModBlocks {
         CRUSHED.forEach((identifier, block) -> Registry.register(Registry.BLOCK, identifier, block));
         INFESTED_LEAVES.forEach((identifier, block) -> Registry.register(Registry.BLOCK, identifier, block));
 
-        Registry.register(Registry.BLOCK, FabricaeExNihilo.ID("infesting_leaves"), INFESTING_LEAVES);
+        Registry.register(Registry.BLOCK, FabricaeExNihilo.id("infesting_leaves"), INFESTING_LEAVES);
 
         ModFluids.registerFluidBlocks();
     }
@@ -100,19 +100,19 @@ public final class ModBlocks {
     }
 
     static {
-        CRUSHED.put(FabricaeExNihilo.ID("dust"), new FallingBlock(CRUSHED_SANDY_SETTINGS));
-        CRUSHED.put(FabricaeExNihilo.ID("silt"), new FallingBlock(CRUSHED_SANDY_SETTINGS));
-        CRUSHED.put(FabricaeExNihilo.ID("crushed_andesite"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
-        CRUSHED.put(FabricaeExNihilo.ID("crushed_diorite"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
-        CRUSHED.put(FabricaeExNihilo.ID("crushed_granite"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
-        CRUSHED.put(FabricaeExNihilo.ID("crushed_prismarine"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
-        CRUSHED.put(FabricaeExNihilo.ID("crushed_endstone"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
-        CRUSHED.put(FabricaeExNihilo.ID("crushed_netherrack"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
-        //CRUSHED.put(FabricaeExNihilo.ID("crushed_skystone"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
+        CRUSHED.put(FabricaeExNihilo.id("dust"), new FallingBlock(CRUSHED_SANDY_SETTINGS));
+        CRUSHED.put(FabricaeExNihilo.id("silt"), new FallingBlock(CRUSHED_SANDY_SETTINGS));
+        CRUSHED.put(FabricaeExNihilo.id("crushed_andesite"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
+        CRUSHED.put(FabricaeExNihilo.id("crushed_diorite"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
+        CRUSHED.put(FabricaeExNihilo.id("crushed_granite"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
+        CRUSHED.put(FabricaeExNihilo.id("crushed_prismarine"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
+        CRUSHED.put(FabricaeExNihilo.id("crushed_endstone"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
+        CRUSHED.put(FabricaeExNihilo.id("crushed_netherrack"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
+        //CRUSHED.put(FabricaeExNihilo.id("crushed_skystone"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
 
-        CRUCIBLES.put(FabricaeExNihilo.ID("stone_crucible"), new CrucibleBlock(FabricaeExNihilo.ID("block/stone_crucible"), FabricaeExNihilo.ID("porcelain"), STONE_SETTINGS));
+        CRUCIBLES.put(FabricaeExNihilo.id("stone_crucible"), new CrucibleBlock(FabricaeExNihilo.id("block/stone_crucible"), FabricaeExNihilo.id("porcelain"), STONE_SETTINGS));
 
-        BARRELS.put(FabricaeExNihilo.ID("stone_barrel"), new BarrelBlock(new Identifier("block/stone"), new Identifier("stone"), new Identifier("stone_slab"), STONE_SETTINGS));
+        BARRELS.put(FabricaeExNihilo.id("stone_barrel"), new BarrelBlock(new Identifier("block/stone"), new Identifier("stone"), new Identifier("stone_slab"), STONE_SETTINGS));
     }
 
 }

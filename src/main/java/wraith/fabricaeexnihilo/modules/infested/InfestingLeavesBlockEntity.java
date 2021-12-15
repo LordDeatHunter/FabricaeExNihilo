@@ -13,17 +13,17 @@ import net.minecraft.world.World;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.base.BaseBlockEntity;
-import wraith.fabricaeexnihilo.modules.base.IHasColor;
+import wraith.fabricaeexnihilo.modules.base.HasColor;
 import wraith.fabricaeexnihilo.util.Color;
 
-public class InfestingLeavesBlockEntity extends BaseBlockEntity implements IHasColor {
+public class InfestingLeavesBlockEntity extends BaseBlockEntity implements HasColor {
 
     private InfestedLeavesBlock infestedBlock = ModBlocks.INFESTED_LEAVES.values().stream().findFirst().get();
     private double progress = 0.0;
 
     private int tickCounter;
 
-    public static Identifier BLOCK_ENTITY_ID = FabricaeExNihilo.ID("infesting");
+    public static Identifier BLOCK_ENTITY_ID = FabricaeExNihilo.id("infesting");
     public static final BlockEntityType<InfestingLeavesBlockEntity> TYPE = FabricBlockEntityTypeBuilder.create(
             InfestingLeavesBlockEntity::new,
             new InfestingLeavesBlock[]{ModBlocks.INFESTING_LEAVES}

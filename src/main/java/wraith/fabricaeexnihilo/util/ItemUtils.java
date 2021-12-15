@@ -53,15 +53,15 @@ public final class ItemUtils {
     }
 
     public static ItemStack getExNihiloItemStack(String str) {
-        return getItemStack(FabricaeExNihilo.ID(str));
+        return getItemStack(FabricaeExNihilo.id(str));
     }
 
     public static Block getExNihiloBlock(String str) {
-        return Registry.BLOCK.get(FabricaeExNihilo.ID(str));
+        return Registry.BLOCK.get(FabricaeExNihilo.id(str));
     }
 
     public static Item getExNihiloItem(String str) {
-        return Registry.ITEM.get(FabricaeExNihilo.ID(str));
+        return Registry.ITEM.get(FabricaeExNihilo.id(str));
     }
 
     public static ItemEntity asEntity(ItemStack stack, World world, double x, double y, double z) {

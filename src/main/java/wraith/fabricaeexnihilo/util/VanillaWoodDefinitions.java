@@ -2,9 +2,9 @@ package wraith.fabricaeexnihilo.util;
 
 import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
-import wraith.fabricaeexnihilo.api.IWoodDefinition;
+import wraith.fabricaeexnihilo.api.WoodDefinition;
 
-public enum VanillaWoodDefinitions implements IWoodDefinition {
+public enum VanillaWoodDefinitions implements WoodDefinition {
     OAK("oak"),
     SPRUCE("spruce"),
     BIRCH("birch"),
@@ -51,7 +51,7 @@ public enum VanillaWoodDefinitions implements IWoodDefinition {
     }
 
     public Identifier getSeedID() {
-        return FabricaeExNihilo.ID("seed_" + text);
+        return FabricaeExNihilo.id("seed_" + text);
     }
 
 }

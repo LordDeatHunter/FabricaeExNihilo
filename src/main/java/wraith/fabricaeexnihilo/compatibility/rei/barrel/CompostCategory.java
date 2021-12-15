@@ -78,7 +78,7 @@ public class CompostCategory implements DisplayCategory<CompostDisplay> {
         return widgets;
     }
 
-    public static Identifier ARROW = FabricaeExNihilo.ID("textures/gui/rei/glyphs.png");
+    public static Identifier ARROW = FabricaeExNihilo.id("textures/gui/rei/glyphs.png");
 
     public static int INPUT_SLOTS_X = Math.max(FabricaeExNihilo.CONFIG.modules.REI.compostNumCols, 1);
     public static int INPUT_SLOTS_Y = Math.max(FabricaeExNihilo.CONFIG.modules.REI.compostNumRows, 1);

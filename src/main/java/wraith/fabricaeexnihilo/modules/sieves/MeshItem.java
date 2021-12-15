@@ -8,10 +8,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
-import wraith.fabricaeexnihilo.modules.base.IHasColor;
+import wraith.fabricaeexnihilo.modules.base.HasColor;
 import wraith.fabricaeexnihilo.util.Color;
 
-public class MeshItem extends Item implements IHasColor {
+public class MeshItem extends Item implements HasColor {
 
     private final Color color;
     private final int enchantability;

@@ -12,8 +12,8 @@ public class FluidSettings {
     public FluidSettings(String basePath, boolean infinite) {
         this.basePath = basePath;
         this.infinite = infinite;
-        this.flowingTexture = FabricaeExNihilo.ID("block/fluid/" + basePath + "_flow");
-        this.stillTexture = FabricaeExNihilo.ID("block/fluid/" + basePath + "_still");
+        this.flowingTexture = FabricaeExNihilo.id("block/fluid/" + basePath + "_flow");
+        this.stillTexture = FabricaeExNihilo.id("block/fluid/" + basePath + "_still");
     }
 
     public Identifier getFlowingTexture() {

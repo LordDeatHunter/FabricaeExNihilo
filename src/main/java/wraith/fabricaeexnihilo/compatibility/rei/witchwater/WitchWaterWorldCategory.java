@@ -82,7 +82,7 @@ public class WitchWaterWorldCategory implements DisplayCategory<WitchWaterWorldD
         return widgets;
     }
 
-    public static Identifier GLYPHS = FabricaeExNihilo.ID("textures/gui/rei/glyphs.png");
+    public static Identifier GLYPHS = FabricaeExNihilo.id("textures/gui/rei/glyphs.png");
 
     public static final int OUTPUT_SLOTS_X = Math.max(FabricaeExNihilo.CONFIG.modules.REI.witchwaterworldCols, 1);
     public static final int OUTPUT_SLOTS_Y = Math.max(FabricaeExNihilo.CONFIG.modules.REI.witchwaterworldRows, 3);

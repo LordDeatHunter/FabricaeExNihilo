@@ -107,7 +107,7 @@ public class ToolCategory implements DisplayCategory<ToolDisplay> {
         return widgets;
     }
 
-    public static final Identifier GLYPH = FabricaeExNihilo.ID("textures/gui/rei/glyphs.png");
+    public static final Identifier GLYPH = FabricaeExNihilo.id("textures/gui/rei/glyphs.png");
 
     public static final int OUTPUT_SLOTS_X = Math.max(FabricaeExNihilo.CONFIG.modules.REI.toolNumCols, 1);
     public static final int OUTPUT_SLOTS_Y = Math.max(FabricaeExNihilo.CONFIG.modules.REI.toolNumRows, 2);

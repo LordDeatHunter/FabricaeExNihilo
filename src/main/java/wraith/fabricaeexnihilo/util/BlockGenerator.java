@@ -8,7 +8,6 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
-import wraith.fabricaeexnihilo.api.IBlockGenerator;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModItems;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlock;
@@ -20,7 +19,7 @@ import wraith.fabricaeexnihilo.modules.sieves.SieveBlock;
 
 import java.util.HashSet;
 
-public class BlockGenerator implements IBlockGenerator {
+public class BlockGenerator implements wraith.fabricaeexnihilo.api.BlockGenerator {
 
     public static final BlockGenerator INSTANCE = new BlockGenerator();
 
@@ -37,8 +36,8 @@ public class BlockGenerator implements IBlockGenerator {
         if (FabricaeExNihilo.CONFIG.modules.silkworms.enabled) {
             var originalIdentifier = Registry.BLOCK.getId(block);
             var infestedIdentifier = !originalIdentifier.getNamespace().equals("minecraft")
-                    ? FabricaeExNihilo.ID("infested_" + originalIdentifier.getNamespace() + "_" + originalIdentifier.getPath())
-                    : FabricaeExNihilo.ID("infested_" + originalIdentifier.getPath());
+                    ? FabricaeExNihilo.id("infested_" + originalIdentifier.getNamespace() + "_" + originalIdentifier.getPath())
+                    : FabricaeExNihilo.id("infested_" + originalIdentifier.getPath());
             registerBlockAndItem(new InfestedLeavesBlock(block, ModBlocks.INFESTED_LEAVES_SETTINGS), infestedIdentifier);
         }
     }
@@ -46,24 +45,24 @@ public class BlockGenerator implements IBlockGenerator {
     @Override
     public void createSieveBlock(Identifier plankID, Identifier slabID, Identifier tex) {
         var sieveID = !plankID.getNamespace().equals("minecraft")
-                ? FabricaeExNihilo.ID(plankID.getNamespace() + "_" + plankID.getPath().replace("planks", "sieve"))
-                : FabricaeExNihilo.ID(plankID.getPath().replace("planks", "sieve"));
+                ? FabricaeExNihilo.id(plankID.getNamespace() + "_" + plankID.getPath().replace("planks", "sieve"))
+                : FabricaeExNihilo.id(plankID.getPath().replace("planks", "sieve"));
         registerBlockAndItem(new SieveBlock(tex, plankID, slabID, ModBlocks.WOOD_SETTINGS), sieveID);
     }
 
     @Override
     public void createWoodBarrelBlock(Identifier plankID, Identifier slabID, Identifier tex) {
         var barrelID = !plankID.getNamespace().equals("minecraft")
-                ? FabricaeExNihilo.ID(plankID.getNamespace() + "_" + plankID.getPath().replace("planks", "barrel"))
-                : FabricaeExNihilo.ID(plankID.getPath().replace("planks", "barrel"));
+                ? FabricaeExNihilo.id(plankID.getNamespace() + "_" + plankID.getPath().replace("planks", "barrel"))
+                : FabricaeExNihilo.id(plankID.getPath().replace("planks", "barrel"));
         registerBlockAndItem(new BarrelBlock(tex, plankID, slabID, ModBlocks.WOOD_SETTINGS), barrelID);
     }
 
     @Override
     public void createWoodCrucibleBlock(Identifier logID, Identifier logTex) {
         var crucibleID = !logID.getNamespace().equals("minecraft")
-                ? FabricaeExNihilo.ID(logID.getNamespace() + "_" + logID.getPath().replace("log", "crucible"))
-                : FabricaeExNihilo.ID(logID.getPath().replace("log", "crucible"));
+                ? FabricaeExNihilo.id(logID.getNamespace() + "_" + logID.getPath().replace("log", "crucible"))
+                : FabricaeExNihilo.id(logID.getPath().replace("log", "crucible"));
         registerBlockAndItem(new CrucibleBlock(logTex, logID, ModBlocks.WOOD_SETTINGS), crucibleID);
     }
 

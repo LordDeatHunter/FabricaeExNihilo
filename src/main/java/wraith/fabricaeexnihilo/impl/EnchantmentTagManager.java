@@ -21,7 +21,7 @@ import wraith.fabricaeexnihilo.util.RegistryUtils;
 import java.util.HashMap;
 import java.util.List;
 
-import static wraith.fabricaeexnihilo.FabricaeExNihilo.ID;
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public final class EnchantmentTagManager {
 
@@ -37,7 +37,7 @@ public final class EnchantmentTagManager {
         if (enchID == null) {
             enchID = new Identifier("empty");
         }
-        return ID("enchantments/" + enchID.getNamespace() + "/" + enchID.getPath());
+        return id("enchantments/" + enchID.getNamespace() + "/" + enchID.getPath());
     }
 
     public static boolean itemIsAcceptableForEnchantment(ItemStack stack, Enchantment enchantment) {
@@ -71,25 +71,25 @@ public final class EnchantmentTagManager {
         if(FabricaeExNihilo.CONFIG.modules.sieves.efficiency) {
             ModTags.addAllTags(tag, FabricaeExNihiloRegistries.MESH.getAll().stream().map(MeshProperties::getIdentifier).toList());
         }
-        resourcePack.addTag(ID("items/" + getTagIDForEnchantment(Enchantments.EFFICIENCY).getPath()), tag);
+        resourcePack.addTag(id("items/" + getTagIDForEnchantment(Enchantments.EFFICIENCY).getPath()), tag);
 
         tag = JTag.tag();
         if(FabricaeExNihilo.CONFIG.modules.barrels.thorns) {
             ModTags.addAllTags(tag, ModBlocks.BARRELS.keySet());
         }
-        resourcePack.addTag(ID("items/" + getTagIDForEnchantment(Enchantments.THORNS).getPath()), tag);
+        resourcePack.addTag(id("items/" + getTagIDForEnchantment(Enchantments.THORNS).getPath()), tag);
 
         tag = JTag.tag();
         if(FabricaeExNihilo.CONFIG.modules.crucibles.fireAspect) {
             ModTags.addAllTags(tag, ModBlocks.CRUCIBLES.keySet());
         }
-        resourcePack.addTag(ID("items/" + getTagIDForEnchantment(Enchantments.FIRE_ASPECT).getPath()), tag);
+        resourcePack.addTag(id("items/" + getTagIDForEnchantment(Enchantments.FIRE_ASPECT).getPath()), tag);
 
         tag = JTag.tag();
         if(FabricaeExNihilo.CONFIG.modules.sieves.fortune) {
             ModTags.addAllTags(tag, FabricaeExNihiloRegistries.MESH.getAll().stream().map(MeshProperties::getIdentifier).toList());
         }
-        resourcePack.addTag(ID("items/" + getTagIDForEnchantment(Enchantments.FORTUNE).getPath()), tag);
+        resourcePack.addTag(id("items/" + getTagIDForEnchantment(Enchantments.FORTUNE).getPath()), tag);
     }
 
     public static List<EnchantmentLevelEntry> mergeInfoLists(List<EnchantmentLevelEntry> first, List<EnchantmentLevelEntry> second) {

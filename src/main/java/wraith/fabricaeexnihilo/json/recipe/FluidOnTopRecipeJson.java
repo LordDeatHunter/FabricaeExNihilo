@@ -21,7 +21,7 @@ public final class FluidOnTopRecipeJson extends BaseJson<FluidOnTopRecipe> {
         return new FluidOnTopRecipe(
                 FluidIngredient.fromJson(obj.get("inBarrel"), context),
                 FluidIngredient.fromJson(obj.get("onTop"), context),
-                BarrelMode.BARREL_MODE_FACTORY(obj.get("result"), context)
+                BarrelMode.of(obj.get("result"), context)
         );
     }
 

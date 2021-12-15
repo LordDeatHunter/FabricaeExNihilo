@@ -86,7 +86,7 @@ public class SieveCategory implements DisplayCategory<SieveDisplay> {
         return widgets;
     }
 
-    public static Identifier ARROW = FabricaeExNihilo.ID("textures/gui/rei/glyphs.png");
+    public static Identifier ARROW = FabricaeExNihilo.id("textures/gui/rei/glyphs.png");
 
     public static int OUTPUT_SLOTS_X = Math.max(FabricaeExNihilo.CONFIG.modules.REI.sieveNumCols, 1);
     public static int OUTPUT_SLOTS_Y = Math.max(FabricaeExNihilo.CONFIG.modules.REI.sieveNumRows, 3);

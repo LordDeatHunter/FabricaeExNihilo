@@ -12,16 +12,16 @@ import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import java.util.Collection;
 import java.util.Map;
 
-import static wraith.fabricaeexnihilo.FabricaeExNihilo.ID;
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public final class ModTags {
 
     private ModTags() {}
 
-    public static final Tag.Identified<Item> CROOK_TAG = TagFactory.ITEM.create(FabricaeExNihilo.ID("crook"));
-    public static final Tag.Identified<Item> HAMMER_TAG = TagFactory.ITEM.create(FabricaeExNihilo.ID("hammer"));
-    public static final Tag.Identified<Item> INFESTED_LEAVES = TagFactory.ITEM.create(FabricaeExNihilo.ID("infested_leaves"));
-    public static final Tag.Identified<Block> INFESTED_LEAVES_BLOCK = TagFactory.BLOCK.create(FabricaeExNihilo.ID("infested_leaves"));
+    public static final Tag.Identified<Item> CROOK_TAG = TagFactory.ITEM.create(FabricaeExNihilo.id("crook"));
+    public static final Tag.Identified<Item> HAMMER_TAG = TagFactory.ITEM.create(FabricaeExNihilo.id("hammer"));
+    public static final Tag.Identified<Item> INFESTED_LEAVES = TagFactory.ITEM.create(FabricaeExNihilo.id("infested_leaves"));
+    public static final Tag.Identified<Block> INFESTED_LEAVES_BLOCK = TagFactory.BLOCK.create(FabricaeExNihilo.id("infested_leaves"));
 
     public static JTag generateResourcePackTag(Collection<Identifier> identifiers) {
         return addAllTags(JTag.tag(), identifiers);
@@ -39,7 +39,7 @@ public final class ModTags {
     }
 
     public static void register(CATEGORY category, RuntimeResourcePack resourcePack, Tag.Identified<?> tag, Map<Identifier, ?> map) {
-        resourcePack.addTag(ID(category.asString() + "/" + tag.getId().getPath()), ModTags.generateResourcePackTag(map.keySet()));
+        resourcePack.addTag(id(category.asString() + "/" + tag.getId().getPath()), ModTags.generateResourcePackTag(map.keySet()));
     }
 
     public static JTag addAllTags(JTag tag, Collection<Identifier> identifiers) {
