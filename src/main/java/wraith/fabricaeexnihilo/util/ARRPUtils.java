@@ -59,8 +59,8 @@ public final class ARRPUtils {
     public static void generateTags(RuntimeResourcePack resourcePack) {
         // fabricaeexnihilo:infested_leaves tag
         ModTags.registerBlockAndItem(resourcePack, ModTags.INFESTED_LEAVES_BLOCK, ModBlocks.INFESTED_LEAVES);
-        ModTags.register(ModTags.CATEGORY.ITEMS, resourcePack, ModTags.HAMMER_TAG, ModTools.HAMMERS);
-        ModTags.register(ModTags.CATEGORY.ITEMS, resourcePack, ModTags.CROOK_TAG, ModTools.CROOKS);
+        ModTags.register(ModTags.Category.ITEMS, resourcePack, ModTags.HAMMER_TAG, ModTools.HAMMERS);
+        ModTags.register(ModTags.Category.ITEMS, resourcePack, ModTags.CROOK_TAG, ModTools.CROOKS);
 
         FabricaeExNihiloRegistries.ORES.getAll().forEach(property -> resourcePack.addTag(new Identifier(property.getOreID().getNamespace(), "items/" + property.getOreID().getPath()), ModTags.generateResourcePackTag(property.getChunkID()))); // common raw ore tag. 1 chunk is treated as 1 raw ore.
         EnchantmentTagManager.generateDefaultTags(resourcePack);

@@ -18,6 +18,7 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SidedInventory;
+import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
@@ -36,6 +37,7 @@ import wraith.fabricaeexnihilo.api.crafting.EntityStack;
 import wraith.fabricaeexnihilo.api.crafting.Lootable;
 import wraith.fabricaeexnihilo.api.registry.FabricaeExNihiloRegistries;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
+import wraith.fabricaeexnihilo.modules.ModRecipes;
 import wraith.fabricaeexnihilo.modules.barrels.modes.*;
 import wraith.fabricaeexnihilo.modules.base.BaseBlockEntity;
 import wraith.fabricaeexnihilo.modules.base.EnchantmentContainer;
@@ -441,13 +443,16 @@ public class BarrelBlockEntity extends BaseBlockEntity {
 
         @Override
         public ItemStack attemptInsertion(ItemStack stack, Simulation simulation) {
+            if (barrel.world == null) {
+                return stack;
+            }
             if (barrel.mode instanceof EmptyMode) {
-                var recipe = FabricaeExNihiloRegistries.BARREL_COMPOST.getRecipe(stack);
-                if (recipe == null) {
+                var recipe = barrel.world.getRecipeManager().getFirstMatch(ModRecipes.COMPOST, new SimpleInventory(stack), barrel.world);
+                if (recipe.isEmpty()) {
                     return stack;
                 }
                 if (simulation.isAction()) {
-                    barrel.mode = new CompostMode(recipe.result(), recipe.amount(), recipe.color());
+                    barrel.mode = new CompostMode(recipe.get());
                     barrel.markDirty();
                 }
                 var returnStack = stack.copy();
@@ -475,14 +480,14 @@ public class BarrelBlockEntity extends BaseBlockEntity {
                 return returnStack;
             }
             if (barrel.mode instanceof CompostMode compostMode) {
-                var recipe = FabricaeExNihiloRegistries.BARREL_COMPOST.getRecipe(stack);
-                if (recipe == null) {
+                var recipe = barrel.world.getRecipeManager().getFirstMatch(ModRecipes.COMPOST, new SimpleInventory(stack), barrel.world);
+                if (recipe.isEmpty()) {
                     return stack;
                 }
-                if (compostMode.getAmount() < 1.0 && recipe.result().isItemEqual(compostMode.getResult())) {
+                if (compostMode.getAmount() < 1.0 && recipe.get().getOutput().isItemEqual(compostMode.getResult())) {
                     if (simulation.isAction()) {
-                        compostMode.setAmount(Math.min(compostMode.getAmount() + recipe.amount(), 1.0));
-                        compostMode.setColor(recipe.color());
+                        compostMode.setAmount(Math.min(compostMode.getAmount() + recipe.get().getIncrement(), 1.0));
+                        compostMode.setColor(recipe.get().getColor());
                         compostMode.setProgress(0);
                         barrel.markDirty();
                     }

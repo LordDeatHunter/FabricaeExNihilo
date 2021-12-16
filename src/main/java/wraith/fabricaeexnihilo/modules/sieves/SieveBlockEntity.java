@@ -81,7 +81,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
                 mesh = ItemStack.EMPTY;
             }
             // Add mesh
-            else if (SIEVE.isValidMesh(held)) {
+            else {
                 mesh = ItemUtils.ofSize(held, 1);
                 if (!player.isCreative()) {
                     held.decrement(1);
@@ -147,8 +147,10 @@ public class SieveBlockEntity extends BaseBlockEntity {
 
         // TODO spawn some particles
         if (progress > 1.0) {
-            var drops = DefaultedList.copyOf(ItemStack.EMPTY, SIEVE.getResult(mesh, getFluid(), contents, player, world.random).toArray(new ItemStack[0]));
-            ItemScatterer.spawn(world, pos.up(), drops);
+            // The utility method for multiple items is less neat to use
+            for (var result : SIEVE.getResult(mesh, getFluid(), contents, player, world.random)) {
+                ItemScatterer.spawn(world, pos.getX(), pos.getY() + 1, pos.getZ(), result);
+            }
             progress = 0.0;
             contents = ItemStack.EMPTY;
         }
@@ -156,19 +158,18 @@ public class SieveBlockEntity extends BaseBlockEntity {
     }
 
     public void dropInventory() {
-        ItemScatterer.spawn(world, pos.up(), DefaultedList.copyOf(mesh, contents));
-        mesh = ItemStack.EMPTY;
-        contents = ItemStack.EMPTY;
+        dropMesh();
+        dropContents();
     }
 
     public void dropMesh() {
-        ItemScatterer.spawn(world, pos.up(), DefaultedList.copyOf(mesh));
+        ItemScatterer.spawn(world, pos.getX(), pos.getY() + 1, pos.getZ(), mesh);
         mesh = ItemStack.EMPTY;
     }
 
 
     public void dropContents() {
-        ItemScatterer.spawn(world, pos.up(), DefaultedList.copyOf(contents));
+        ItemScatterer.spawn(world, pos.getX(), pos.getY() + 1, pos.getZ(), contents);
         contents = ItemStack.EMPTY;
     }
 

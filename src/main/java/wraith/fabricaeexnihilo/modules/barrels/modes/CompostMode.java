@@ -2,26 +2,32 @@ package wraith.fabricaeexnihilo.modules.barrels.modes;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import wraith.fabricaeexnihilo.recipe.barrel.CompostRecipe;
 import wraith.fabricaeexnihilo.util.Color;
 
 public class CompostMode implements BarrelMode {
-
     private double progress = 0;
     private ItemStack result;
     private double amount;
     private Color color;
-
+    
+    public CompostMode(CompostRecipe recipe) {
+        this.result = recipe.getOutput();
+        this.color = recipe.getColor();
+        this.amount = recipe.getIncrement();
+    }
+    
     public CompostMode(ItemStack result, double amount, Color color) {
         this.result = result;
         this.amount = amount;
         this.color = color;
     }
-
+    
     @Override
     public String nbtKey() {
         return "compost_mode";
     }
-
+    
     @Override
     public NbtCompound writeNbt() {
         var nbt = new NbtCompound();
