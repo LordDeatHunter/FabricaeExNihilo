@@ -68,6 +68,7 @@ public class FabricaeExNihilo implements ModInitializer {
         LOGGER.info("Creating Tags");
         ARRPUtils.generateTags(RESOURCE_PACK);
         LOGGER.info("Creating Recipes");
+        ModRecipes.register();
         ARRPUtils.generateRecipes(RESOURCE_PACK);
         LOGGER.info("Creating Loot Tables");
         ARRPUtils.generateLootTables(RESOURCE_PACK);

@@ -22,11 +22,6 @@ public class TechReborn implements FabricaeExNihiloModule {
     }
 
     @Override
-    public void registerCompost(CompostRecipeRegistry registry) {
-
-    }
-
-    @Override
     public void registerLeaking(LeakingRecipeRegistry registry) {
 
     }

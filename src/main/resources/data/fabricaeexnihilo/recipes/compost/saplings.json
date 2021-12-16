@@ -1,0 +1,9 @@
+{
+  "type": "fabricaeexnihilo:compost",
+  "result": "minecraft:dirt",
+  "input": {
+    "tag": "minecraft:saplings"
+  },
+  "increment": 0.0625,
+  "color": "AA0000"
+}

@@ -6,7 +6,6 @@ public interface FabricaeExNihiloModule {
 
     // Barrel Registries
     void registerAlchemy(AlchemyRecipeRegistry registry);
-    void registerCompost(CompostRecipeRegistry registry);
     void registerLeaking(LeakingRecipeRegistry registry);
     void registerFluidOnTop(FluidOnTopRecipeRegistry registry);
     void registerFluidTransform(FluidTransformRecipeRegistry registry);

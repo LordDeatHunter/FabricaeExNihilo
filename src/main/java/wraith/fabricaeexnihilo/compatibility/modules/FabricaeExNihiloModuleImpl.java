@@ -93,8 +93,8 @@ public final class FabricaeExNihiloModuleImpl implements FabricaeExNihiloModule 
         registry.register(new FluidIngredient(WitchWaterFluid.FLOWING, WitchWaterFluid.STILL), ItemUtils.getExNihiloItemStack("doll_shulker"), EntityType.SHULKER);
     }
 
-    @Override
-    public void registerCompost(CompostRecipeRegistry registry) {
+    /*
+    public void registerCompost() {
         registry.register(ItemTags.LEAVES, Blocks.DIRT, 0.125, Color.DARK_GREEN);
         registry.register(ItemTags.SAPLINGS, Blocks.DIRT, 0.0625, Color.DARK_GREEN);
 
@@ -112,7 +112,9 @@ public final class FabricaeExNihiloModuleImpl implements FabricaeExNihiloModule 
         registry.register(TagFactory.ITEM.create(new Identifier("c:dyes")), Blocks.DIRT, 0.125, Color.RED);
         registry.register(TagFactory.ITEM.create(new Identifier("c:raw_meat")), Blocks.DIRT, 0.125, Color.RED);
         registry.register(TagFactory.ITEM.create(new Identifier("c:cooked_meat")), Blocks.DIRT, 0.25, Color.RED);
+        
     }
+    */
 
     @Override
     public void registerLeaking(LeakingRecipeRegistry registry) {

@@ -19,10 +19,6 @@ public class MetaModule implements FabricaeExNihiloModule {
         modules.forEach(module -> module.registerAlchemy(registry));
     }
 
-    public void registerCompost(@NotNull CompostRecipeRegistry registry) {
-        modules.forEach(module -> module.registerCompost(registry));
-    }
-
     public void registerLeaking(@NotNull LeakingRecipeRegistry registry) {
         modules.forEach(module -> module.registerLeaking(registry));
     }

@@ -62,7 +62,7 @@ public class CompostRecipe extends BaseRecipe<SimpleInventory> {
             ItemStack result = JsonHelper.getItem(json, "result").getDefaultStack();
             Ingredient input = Ingredient.fromJson(JsonHelper.getObject(json, "input"));
             double increment = JsonHelper.getDouble(json, "increment");
-            Color color = new Color(JsonHelper.getInt(json, "color"));
+            Color color = Color.fromJson(json.get("color"));
             
             return new CompostRecipe(id, result, input, increment, color);
         }
