@@ -3,18 +3,21 @@ package wraith.fabricaeexnihilo.client.renderers;
 import alexiil.mc.lib.attributes.fluid.amount.FluidAmount;
 import alexiil.mc.lib.attributes.fluid.render.FluidRenderFace;
 import alexiil.mc.lib.attributes.fluid.volume.FluidVolume;
+import com.mojang.blaze3d.systems.RenderSystem;
+import net.fabricmc.fabric.api.transfer.v1.client.fluid.FluidVariantRendering;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.TexturedRenderLayers;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Matrix4f;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.client.BlockModelRendererFlags;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
@@ -46,9 +49,10 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
             return;
         }
         var mode = barrel.getMode();
-
+        var lightAbove = WorldRenderer.getLightmapCoordinates(barrel.getWorld(), barrel.getPos().up());
+        
         if (mode instanceof FluidMode fluidMode) {
-            renderFluid(fluidMode, barrel.getPos(), tickDelta, matrices, vertexConsumers, light, overlays);
+            renderFluid(fluidMode, barrel.getPos(), tickDelta, matrices, vertexConsumers, lightAbove, overlays);
         } else if (mode instanceof ItemMode itemMode) {
             renderItemMode(itemMode, barrel.getPos(), tickDelta, matrices, vertexConsumers, light, overlays);
         } else if (mode instanceof AlchemyMode alchemyMode) {
@@ -59,8 +63,31 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
 
     }
 
+    @SuppressWarnings("UnstableApiUsage")
     public void renderFluid(FluidMode mode, BlockPos pos, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlays) {
-        renderFluidMode(mode, vertexConsumers, matrices);
+        var sprite = FluidVariantRendering.getSprite(mode.getFluid());
+        var color = FluidVariantRendering.getColor(mode.getFluid());
+    
+        if (sprite == null) return;
+    
+        // FIXME: It renders a black quad through everything. I suspect it's the normals that are messed up. Could also be on the wrong layer. I've never rendered quads in a BER
+        
+        RenderSystem.setShaderTexture(0, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
+        RenderSystem.setShader(GameRenderer::getRenderTypeSolidShader);
+        BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
+        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
+        var u0 = sprite.getMinU();
+        var v0 = sprite.getMinV();
+        var u1 = sprite.getMaxU();
+        var v1 = sprite.getMaxV();
+        var model = matrices.peek().getPositionMatrix();
+        var normal = matrices.peek().getNormalMatrix();
+        bufferBuilder.vertex(model, 0, 0.9f, 1).color(color).texture(u0, v1).light(light).normal(normal, 0, 0, 0).next();
+        bufferBuilder.vertex(model, 1, 0.9f, 1).color(color).texture(u1, v1).light(light).normal(normal, 0, 0, 0).next();
+        bufferBuilder.vertex(model, 1, 0.9f, 0).color(color).texture(u1, v0).light(light).normal(normal, 0, 0, 0).next();
+        bufferBuilder.vertex(model, 0, 0.9f, 0).color(color).texture(u0, v0).light(light).normal(normal, 0, 0, 0).next();
+        bufferBuilder.end();
+        BufferRenderer.draw(bufferBuilder);
     }
 
     public void renderItemMode(ItemMode mode, BlockPos pos, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlays) {
@@ -149,7 +176,10 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
         matrices.pop();
     }
 
+    @SuppressWarnings("UnstableApiUsage")
     public void renderFluidMode(FluidMode mode, VertexConsumerProvider vertexConsumerProvider, MatrixStack matrices) {
+        
+        
         //TODO: reimplement rendering with fapi fluids
         //renderFluidVolume(mode.getFluid(), (double) mode.getFluid().amount().as1620() / FluidAmount.BUCKET.as1620(), vertexConsumerProvider, matrices);
     }
