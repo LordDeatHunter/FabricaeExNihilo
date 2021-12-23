@@ -1,17 +1,53 @@
 package wraith.fabricaeexnihilo.modules.barrels.modes;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.nbt.NbtCompound;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.api.crafting.EntityStack;
+import wraith.fabricaeexnihilo.api.crafting.Loot;
+import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
+import wraith.fabricaeexnihilo.recipe.barrel.AlchemyRecipe;
 
-public class AlchemyMode implements BarrelMode {
+import java.util.Optional;
 
-    private BarrelMode before;
-    private BarrelMode after;
-    private EntityStack toSpawn;
+public class AlchemyMode extends BarrelMode {
+    public static final Codec<AlchemyMode> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            BarrelMode.CODEC
+                    .fieldOf("before")
+                    .forGetter(AlchemyMode::getBefore),
+            BarrelMode.CODEC
+                    .fieldOf("after")
+                    .forGetter(AlchemyMode::getAfter),
+            EntityStack.CODEC
+                    .fieldOf("toSpawn")
+                    .forGetter(AlchemyMode::getToSpawn),
+            Codec.INT
+                    .fieldOf("countdown")
+                    .forGetter(AlchemyMode::getCountdown),
+            Loot.CODEC
+                    .optionalFieldOf("byproduct")
+                    .forGetter(mode -> Optional.ofNullable(mode.byproduct))
+    ).apply(instance, (before, after, toSpawn, countdown, byproduct) -> {
+        var mode = new AlchemyMode(before, after, toSpawn, countdown);
+        mode.byproduct = byproduct.orElse(null);
+        return mode;
+    }));
+    
+    private final BarrelMode before;
+    private final BarrelMode after;
+    private final EntityStack toSpawn;
     private int countdown;
-
+    private @Nullable Loot byproduct;
+    
+    public AlchemyMode(BarrelMode before, AlchemyRecipe recipe) {
+        this(before, recipe.getResult().copy(), recipe.getToSpawn().copy(), recipe.getDelay());
+        this.byproduct = recipe.getByproduct();
+    }
+    
     public AlchemyMode(BarrelMode before, BarrelMode after, EntityStack toSpawn, int countdown) {
+        super();
         this.before = before;
         this.after = after;
         this.toSpawn = toSpawn;
@@ -22,63 +58,48 @@ public class AlchemyMode implements BarrelMode {
         this(before, after, EntityStack.EMPTY, countdown);
     }
 
-    public AlchemyMode(BarrelMode before, BarrelMode after, EntityStack toSpawn) {
-        this(before, after, toSpawn, 0);
-    }
-
-    public AlchemyMode(BarrelMode before, BarrelMode after) {
-        this(before, after, EntityStack.EMPTY, 0);
-    }
-
     @Override
-    public @NotNull String nbtKey() {
-        return "alchemy_mode";
+    public @NotNull String getId() {
+        return "alchemy";
     }
-
+    
     @Override
-    public @NotNull NbtCompound writeNbt() {
-        var nbt = new NbtCompound();
-        nbt.put("before", before.writeNbt());
-        nbt.put("after", after.writeNbt());
-        nbt.put("toSpawn", toSpawn.toTag());
-        nbt.putInt("countdown", countdown);
-        return nbt;
+    public BarrelMode copy() {
+        return new AlchemyMode(before.copy(), after.copy(), toSpawn.copy(), countdown);
+    }
+    
+    @Override
+    public void tick(BarrelBlockEntity barrel) {
+        countdown -= barrel.getEfficiencyMultiplier();
+        var world = barrel.getWorld();
+        if (world != null && !world.isClient && countdown <= 0) {
+            if (byproduct != null) {
+                barrel.spawnByproduct(byproduct.createStack(world.random));
+                byproduct = null;
+            }
+            barrel.spawnEntity(toSpawn);
+            barrel.setMode(after);
+        }
     }
 
     public BarrelMode getBefore() {
         return before;
     }
-
-    public void setBefore(BarrelMode before) {
-        this.before = before;
-    }
-
+    
     public BarrelMode getAfter() {
         return after;
     }
-
-    public void setAfter(BarrelMode after) {
-        this.after = after;
-    }
-
+    
     public EntityStack getToSpawn() {
         return toSpawn;
     }
-
-    public void setToSpawn(EntityStack toSpawn) {
-        this.toSpawn = toSpawn;
-    }
-
+    
     public int getCountdown() {
         return countdown;
     }
-
-    public void setCountdown(int countdown) {
-        this.countdown = countdown;
-    }
-
+    
     public static AlchemyMode readNbt(NbtCompound nbt) {
-        return new AlchemyMode(BarrelMode.of(nbt.getCompound("before")), BarrelMode.of(nbt.getCompound("after")), new EntityStack(nbt.getCompound("toSpawn")), nbt.getInt("countdown"));
+        return new AlchemyMode(BarrelMode.fromNbt(nbt.getCompound("before")), BarrelMode.fromNbt(nbt.getCompound("after")), new EntityStack(nbt.getCompound("toSpawn")), nbt.getInt("countdown"));
     }
 
 }

@@ -1,0 +1,11 @@
+{
+  "type": "fabricaeexnihilo:alchemy",
+  "reactant": "#fabricaeexnihilo:true_lava",
+  "catalyst": "fabricaeexnihilo:doll_blaze",
+  "delay": 20,
+  "toSpawn": {
+    "type": "minecraft:blaze",
+    "size": 1,
+    "data": {}
+  }
+}

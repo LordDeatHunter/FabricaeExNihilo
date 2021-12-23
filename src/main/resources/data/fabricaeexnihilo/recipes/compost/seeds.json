@@ -1,9 +1,7 @@
 {
   "type": "fabricaeexnihilo:compost",
   "result": "minecraft:dirt",
-  "input": {
-    "tag": "c:seeds"
-  },
+  "input": "#c:seeds",
   "increment": 0.0625,
   "color": "55FF55"
 }

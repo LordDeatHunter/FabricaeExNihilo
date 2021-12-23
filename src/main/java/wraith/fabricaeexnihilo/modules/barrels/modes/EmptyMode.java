@@ -1,17 +1,61 @@
 package wraith.fabricaeexnihilo.modules.barrels.modes;
 
-import net.minecraft.nbt.NbtCompound;
+import com.mojang.serialization.Codec;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
+import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions;
+import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
+import wraith.fabricaeexnihilo.modules.barrels.BarrelFluidStorage;
+import wraith.fabricaeexnihilo.modules.barrels.BarrelItemStorage;
+import wraith.fabricaeexnihilo.recipe.barrel.CompostRecipe;
 
-public class EmptyMode implements BarrelMode {
-
-    @Override
-    public NbtCompound writeNbt() {
-        return new NbtCompound();
+@SuppressWarnings("UnstableApiUsage")
+public class EmptyMode extends BarrelMode {
+    public static final Codec<EmptyMode> CODEC = Codec.unit(new EmptyMode());
+    
+    public EmptyMode() {
+        super();
     }
-
+    
     @Override
-    public String nbtKey() {
-        return "empty_mode";
+    public String getId() {
+        return "empty";
     }
-
+    
+    @Override
+    public BarrelMode copy() {
+        return new EmptyMode();
+    }
+    
+    @Override
+    public long insertItem(ItemVariant item, long maxAmount, TransactionContext transaction, BarrelItemStorage storage) {
+        StoragePreconditions.notBlankNotNegative(item, maxAmount);
+        var recipe = CompostRecipe.find(item.toStack(), storage.barrel.getWorld());
+        if (recipe.isEmpty()) {
+            return 0;
+        }
+        storage.updateSnapshots(transaction);
+        storage.barrel.setMode(new CompostMode(recipe.get()));
+        return 1;
+    }
+    
+    @Override
+    public long getItemCapacity() {
+        return 1;
+    }
+    
+    @Override
+    public long insertFluid(FluidVariant fluid, long maxAmount, TransactionContext transaction, BarrelFluidStorage storage) {
+        StoragePreconditions.notBlankNotNegative(fluid, maxAmount);
+        var amount = Math.min(maxAmount, FluidConstants.BUCKET);
+        storage.updateSnapshots(transaction);
+        storage.barrel.setMode(new FluidMode(fluid, amount));
+        return amount;
+    }
+    
+    @Override
+    public long getFluidCapacity() {
+        return FluidConstants.BUCKET;
+    }
 }

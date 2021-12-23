@@ -1,9 +1,11 @@
 package wraith.fabricaeexnihilo.api.crafting;
 
-import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
+import com.mojang.datafixers.util.Either;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.Dynamic;
+import com.mojang.serialization.JsonOps;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.fabricmc.fabric.api.tag.TagFactory;
@@ -11,33 +13,48 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SpawnEggItem;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.NbtString;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.tag.ServerTagManagerHolder;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.util.ItemUtils;
-import wraith.fabricaeexnihilo.util.RegistryUtils;
 
 import java.util.*;
 
 public class EntityTypeIngredient extends AbstractIngredient<EntityType<?>> {
-
-    public EntityTypeIngredient(Collection<Tag.Identified<EntityType<?>>> tags, Set<EntityType<?>> matches) {
-        super(tags, matches);
+    public static final Codec<EntityTypeIngredient> CODEC = Codec.PASSTHROUGH
+            .xmap(dynamic -> {
+                var string = dynamic.asString().getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
+                if (string.startsWith("#")) {
+                    return new EntityTypeIngredient(TagFactory.ENTITY_TYPE.create(new Identifier(string.substring(1))));
+                } else {
+                    return new EntityTypeIngredient(Registry.ENTITY_TYPE.get(new Identifier(string)));
+                }
+            }, itemIngredient -> {
+                var string = itemIngredient.value.map(entry -> Registry.ENTITY_TYPE.getId(entry).toString(),
+                        tag -> "#" + ServerTagManagerHolder.getTagManager()
+                                .getOrCreateTagGroup(Registry.ENTITY_TYPE_KEY)
+                                .getUncheckedTagId(tag));
+                return new Dynamic<>(NbtOps.INSTANCE, NbtString.of(string));
+            });
+    
+    public EntityTypeIngredient(EntityType<?> value) {
+        super(value);
     }
-
-    @SafeVarargs
-    public EntityTypeIngredient(Tag.Identified<EntityType<?>>... tags) {
-        this(Arrays.asList(tags), new HashSet<>());
+    
+    public EntityTypeIngredient(Tag<EntityType<?>> value) {
+        super(value);
     }
-
-    public EntityTypeIngredient(EntityType<?>... matches) {
-        this(new ArrayList<>(), new HashSet<>(Arrays.asList(matches)));
+    
+    public EntityTypeIngredient(Either<EntityType<?>, Tag<EntityType<?>>> value) {
+        super(value);
     }
-
-    public EntityTypeIngredient() {
-        this(new ArrayList<>(), new HashSet<>());
-    }
-
+    
     public boolean test(Entity entity) {
         return test(entity.getType());
     }
@@ -49,40 +66,25 @@ public class EntityTypeIngredient extends AbstractIngredient<EntityType<?>> {
     public List<EntryIngredient> asREIEntries() {
         return flattenListOfEggStacks().stream().map(EntryIngredients::of).toList();
     }
-
+    
+    public static EntityTypeIngredient EMPTY = new EntityTypeIngredient((EntityType<?>) null);
+    
     @Override
-    public JsonElement serializeElement(EntityType<?> entityType, JsonSerializationContext context) {
-        return new JsonPrimitive(RegistryUtils.getId(entityType).toString());
+    public JsonElement toJson() {
+        return CODEC.encodeStart(JsonOps.INSTANCE, this).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
     }
-
+    
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof EntityTypeIngredient other) {
-            return this.tags.size() == other.tags.size() &&
-                    this.matches.size() == other.matches.size() &&
-                    this.tags.containsAll(other.tags) &&
-                    this.matches.containsAll(other.matches);
-        }
-        return false;
+    public void toPacket(PacketByteBuf buf) {
+        // Should be safe to cast here
+        buf.writeNbt((NbtCompound) CODEC.encodeStart(NbtOps.INSTANCE, this).getOrThrow(false, FabricaeExNihilo.LOGGER::warn));
     }
-
-    @Override
-    public int hashCode() {
-        return tags.hashCode() ^ matches.hashCode();
+    
+    public static EntityTypeIngredient fromPacket(PacketByteBuf buf) {
+        return CODEC.parse(NbtOps.INSTANCE, buf.readNbt()).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
     }
-
-    public static EntityTypeIngredient EMPTY = new EntityTypeIngredient();
-
-    public static EntityTypeIngredient fromJson(JsonElement json, JsonDeserializationContext context) {
-        return fromJson(json, context, val -> deserializeTag(val, context), val -> deserializeMatch(val, context), EntityTypeIngredient::new);
+    
+    public static EntityTypeIngredient fromJson(JsonElement json) {
+        return CODEC.parse(JsonOps.INSTANCE, json).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
     }
-
-    public static Tag.Identified<EntityType<?>> deserializeTag(JsonElement json, JsonDeserializationContext context) {
-        return TagFactory.ENTITY_TYPE.create(new Identifier(json.getAsString().substring(1)));
-    }
-
-    public static EntityType<?> deserializeMatch(JsonElement json, JsonDeserializationContext context) {
-        return Registry.ENTITY_TYPE.get(new Identifier(json.getAsString()));
-    }
-
 }

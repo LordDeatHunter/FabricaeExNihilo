@@ -1,0 +1,9 @@
+{
+  "type": "fabricaeexnihilo:alchemy",
+  "reactant": "#c:brine",
+  "catalyst": "minecraft:red_dye",
+  "result": {
+    "id": "item",
+    "stack": "minecraft:fire_coral_block"
+  }
+}

@@ -4,9 +4,16 @@ import com.google.common.base.Strings;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 public class Color {
-
+    public static final Codec<Color> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Codec.INT
+                    .fieldOf("value")
+                    .forGetter(Color::toInt)
+    ).apply(instance, Color::new));
+    
     public float r;
     public float g;
     public float b;

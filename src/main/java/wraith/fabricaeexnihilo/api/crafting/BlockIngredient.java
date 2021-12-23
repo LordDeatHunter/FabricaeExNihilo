@@ -1,51 +1,55 @@
 package wraith.fabricaeexnihilo.api.crafting;
 
-import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
+import com.mojang.datafixers.util.Either;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.Dynamic;
+import com.mojang.serialization.JsonOps;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.fabricmc.fabric.api.tag.TagFactory;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.NbtString;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.tag.ServerTagManagerHolder;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import org.jetbrains.annotations.NotNull;
-import wraith.fabricaeexnihilo.util.RegistryUtils;
+import wraith.fabricaeexnihilo.FabricaeExNihilo;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class BlockIngredient extends AbstractIngredient<Block> {
-
-    public BlockIngredient(Collection<Tag.Identified<Block>> tags, Set<Block> matches) {
-        super(tags, matches);
+    public static final Codec<BlockIngredient> CODEC = Codec.PASSTHROUGH
+            .xmap(dynamic -> {
+                var string = dynamic.asString().getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
+                if (string.startsWith("#")) {
+                    return new BlockIngredient(TagFactory.BLOCK.create(new Identifier(string.substring(1))));
+                } else {
+                    return new BlockIngredient(Registry.BLOCK.get(new Identifier(string)));
+                }
+            }, blockIngredient -> {
+                var string = blockIngredient.value.map(entry -> Registry.BLOCK.getId(entry).toString(), tag -> "#" + ServerTagManagerHolder.getTagManager().getOrCreateTagGroup(Registry.BLOCK_KEY).getUncheckedTagId(tag));
+                return new Dynamic<>(NbtOps.INSTANCE, NbtString.of(string));
+            });
+    
+    public BlockIngredient(Block value) {
+        super(value);
     }
-
-    public BlockIngredient(Block... matches) {
-        this(new ArrayList<>(), new HashSet<>(Arrays.asList(matches)));
+    
+    public BlockIngredient(Tag<Block> value) {
+        super(value);
     }
-
-    public BlockIngredient(BlockItem... matches) {
-        this(new ArrayList<>(), Arrays.stream(matches).map(BlockItem::getBlock).collect(Collectors.toSet()));
+    
+    public BlockIngredient(Either<Block, Tag<Block>> value) {
+        super(value);
     }
-
-    @SafeVarargs
-    public BlockIngredient(Tag.Identified<Block>... tags) {
-        this(Arrays.asList(tags), new HashSet<>());
-    }
-
-    public BlockIngredient() {
-        this(new ArrayList<>(), new HashSet<>());
-    }
-
-    @Override
-    public @NotNull JsonElement serializeElement(Block block, @NotNull JsonSerializationContext context) {
-        return new JsonPrimitive(RegistryUtils.getId(block).toString());
-    }
-
+    
     public boolean test(BlockItem block) {
         return test(block.getBlock());
     }
@@ -53,34 +57,25 @@ public class BlockIngredient extends AbstractIngredient<Block> {
     public List<EntryIngredient> asREIEntries() {
         return flatten(EntryIngredients::of);
     }
-
+    
+    public static BlockIngredient EMPTY = new BlockIngredient((Block)null);
+    
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof BlockIngredient other) {
-            return this.tags.size() == other.tags.size() &&
-                    this.matches.size() == other.matches.size() &&
-                    this.tags.containsAll(other.tags) &&
-                    this.matches.containsAll(other.matches);
-        }
-        return false;
+    public JsonElement toJson() {
+        return CODEC.encodeStart(JsonOps.INSTANCE, this).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
     }
-
-    public int hashCode() {
-        return tags.hashCode() ^ matches.hashCode();
+    
+    @Override
+    public void toPacket(PacketByteBuf buf) {
+        // Should be safe to cast here
+        buf.writeNbt((NbtCompound) CODEC.encodeStart(NbtOps.INSTANCE, this).getOrThrow(false, FabricaeExNihilo.LOGGER::warn));
     }
-
-    public static BlockIngredient EMPTY = new BlockIngredient();
-
-    public static BlockIngredient fromJson(JsonElement json, JsonDeserializationContext context) {
-        return fromJson(json, context, val -> deserializeTag(val, context), val -> deserializeMatch(val, context), BlockIngredient::new);
+    
+    public static BlockIngredient fromPacket(PacketByteBuf buf) {
+        return CODEC.parse(NbtOps.INSTANCE, buf.readNbt()).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
     }
-
-    public static Tag.Identified<Block> deserializeTag(JsonElement json, JsonDeserializationContext context) {
-        return TagFactory.BLOCK.create(new Identifier(json.getAsString().substring(1)));
+    
+    public static BlockIngredient fromJson(JsonElement json) {
+        return CODEC.parse(JsonOps.INSTANCE, json).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
     }
-
-    public static Block deserializeMatch(JsonElement json, JsonDeserializationContext context) {
-        return Registry.BLOCK.get(new Identifier(json.getAsString()));
-    }
-
 }

@@ -1,12 +1,11 @@
 package wraith.fabricaeexnihilo.recipe;
 
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 
-public abstract class BaseRecipe<I extends Inventory> implements Recipe<I> {
+public abstract class BaseRecipe<T extends RecipeContext> implements Recipe<T> {
     protected final Identifier id;
     
     protected BaseRecipe(Identifier id) {
@@ -24,7 +23,21 @@ public abstract class BaseRecipe<I extends Inventory> implements Recipe<I> {
     }
     
     @Override
-    public ItemStack craft(I inventory) {
+    public ItemStack craft(RecipeContext inventory) {
         return getOutput().copy();
     }
+    
+    @Override
+    public abstract boolean matches(T context, World world);
+    
+    @Override
+    public ItemStack getOutput() {
+        return getDisplayStack();
+    }
+    
+    /**
+     * Get an itemstack that represents the result fromPacket this recipe
+     * @return An itemstack representing the output fromPacket the recipe. Only used for visuals.
+     */
+    public abstract ItemStack getDisplayStack();
 }

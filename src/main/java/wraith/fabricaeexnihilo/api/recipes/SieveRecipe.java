@@ -4,14 +4,14 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import wraith.fabricaeexnihilo.api.crafting.FluidIngredient;
 import wraith.fabricaeexnihilo.api.crafting.ItemIngredient;
-import wraith.fabricaeexnihilo.api.crafting.Lootable;
+import wraith.fabricaeexnihilo.api.crafting.Loot;
 
 import java.util.List;
 
 public record SieveRecipe(ItemIngredient mesh,
                           FluidIngredient fluid,
                           ItemIngredient sievable,
-                          List<Lootable> loot) {
+                          List<Loot> loot) {
 
     public ItemIngredient getMesh() {
         return mesh;
@@ -25,7 +25,7 @@ public record SieveRecipe(ItemIngredient mesh,
         return sievable;
     }
 
-    public List<Lootable> getLoot() {
+    public List<Loot> getLoot() {
         return loot;
     }
 

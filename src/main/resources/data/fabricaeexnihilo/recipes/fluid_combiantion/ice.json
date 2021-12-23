@@ -1,0 +1,9 @@
+{
+  "type": "fabricaeexnihilo:fluid_combination",
+  "contained": "minecraft:water",
+  "other": "#c:brine",
+  "result": {
+    "id": "item",
+    "stack": "minecraft:ice"
+  }
+}

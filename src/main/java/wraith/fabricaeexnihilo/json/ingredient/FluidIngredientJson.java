@@ -17,13 +17,13 @@ public final class FluidIngredientJson extends BaseJson<FluidIngredient> {
 
     @Override
     public FluidIngredient deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        return FluidIngredient.fromJson(json, context);
+        return FluidIngredient.fromJson(json);
     }
 
 
     @Override
     public JsonElement serialize(FluidIngredient src, Type typeOfSrc, JsonSerializationContext context) {
-        return src.toJson(context);
+        return src.toJson();
     }
 
 }

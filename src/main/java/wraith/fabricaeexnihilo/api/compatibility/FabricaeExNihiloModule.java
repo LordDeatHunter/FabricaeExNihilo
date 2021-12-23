@@ -3,15 +3,6 @@ package wraith.fabricaeexnihilo.api.compatibility;
 import wraith.fabricaeexnihilo.api.registry.*;
 
 public interface FabricaeExNihiloModule {
-
-    // Barrel Registries
-    void registerAlchemy(AlchemyRecipeRegistry registry);
-    void registerLeaking(LeakingRecipeRegistry registry);
-    void registerFluidOnTop(FluidOnTopRecipeRegistry registry);
-    void registerFluidTransform(FluidTransformRecipeRegistry registry);
-
-    void registerMilking(MilkingRecipeRegistry registry);
-
     // Crucible Registries
     void registerCrucibleHeat(CrucibleHeatRecipeRegistry registry);
     void registerCrucibleStone(CrucibleRecipeRegistry registry);

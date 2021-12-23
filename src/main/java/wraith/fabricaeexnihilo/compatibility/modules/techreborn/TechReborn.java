@@ -7,7 +7,7 @@ import net.minecraft.item.ToolMaterials;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.api.compatibility.FabricaeExNihiloModule;
-import wraith.fabricaeexnihilo.api.crafting.Lootable;
+import wraith.fabricaeexnihilo.api.crafting.Loot;
 import wraith.fabricaeexnihilo.api.registry.*;
 import wraith.fabricaeexnihilo.util.Color;
 
@@ -16,31 +16,6 @@ import static wraith.fabricaeexnihilo.util.ItemUtils.getExNihiloBlock;
 import static wraith.fabricaeexnihilo.util.ItemUtils.getExNihiloItem;
 
 public class TechReborn implements FabricaeExNihiloModule {
-    @Override
-    public void registerAlchemy(AlchemyRecipeRegistry registry) {
-
-    }
-
-    @Override
-    public void registerLeaking(LeakingRecipeRegistry registry) {
-
-    }
-
-    @Override
-    public void registerFluidOnTop(FluidOnTopRecipeRegistry registry) {
-
-    }
-
-    @Override
-    public void registerFluidTransform(FluidTransformRecipeRegistry registry) {
-
-    }
-
-    @Override
-    public void registerMilking(MilkingRecipeRegistry registry) {
-
-    }
-
     @Override
     public void registerCrucibleHeat(CrucibleHeatRecipeRegistry registry) {
         registry.register(Registry.FLUID.get(new Identifier("techreborn:nitro_diesel")), 16);
@@ -74,24 +49,24 @@ public class TechReborn implements FabricaeExNihiloModule {
 
         Item gem;
         gem = Registry.ITEM.get(new Identifier("techreborn:ruby_gem"));
-        registry.register(goldMesh, Blocks.GRAVEL, new Lootable(gem, 0.01));
-        registry.register(carbonMesh, Blocks.GRAVEL, new Lootable(gem, 0.05));
+        registry.register(goldMesh, Blocks.GRAVEL, new Loot(gem, 0.01));
+        registry.register(carbonMesh, Blocks.GRAVEL, new Loot(gem, 0.05));
 
         gem = Registry.ITEM.get(new Identifier("techreborn:red_garnet_gem"));
-        registry.register(diamondMesh, Blocks.GRAVEL, new Lootable(gem, 0.01));
-        registry.register(carbonMesh, Blocks.GRAVEL, new Lootable(gem, 0.05));
+        registry.register(diamondMesh, Blocks.GRAVEL, new Loot(gem, 0.01));
+        registry.register(carbonMesh, Blocks.GRAVEL, new Loot(gem, 0.05));
 
         gem = Registry.ITEM.get(new Identifier("techreborn:sapphire_gem"));
-        registry.register(diamondMesh, Fluids.WATER, Blocks.GRAVEL, new Lootable(gem, 0.01));
-        registry.register(carbonMesh, Fluids.WATER, Blocks.GRAVEL, new Lootable(gem, 0.05));
+        registry.register(diamondMesh, Fluids.WATER, Blocks.GRAVEL, new Loot(gem, 0.01));
+        registry.register(carbonMesh, Fluids.WATER, Blocks.GRAVEL, new Loot(gem, 0.05));
 
         gem = Registry.ITEM.get(new Identifier("techreborn:yellow_garnet_gem"));
-        registry.register(diamondMesh, crushedNetherrack, new Lootable(gem, 0.01));
-        registry.register(carbonMesh, Registry.FLUID.get(new Identifier("techreborn:sodium_persulfate")), crushedNetherrack, new Lootable(gem, 0.05));
+        registry.register(diamondMesh, crushedNetherrack, new Loot(gem, 0.01));
+        registry.register(carbonMesh, Registry.FLUID.get(new Identifier("techreborn:sodium_persulfate")), crushedNetherrack, new Loot(gem, 0.05));
 
         gem = Registry.ITEM.get(new Identifier("techreborn:peridot_gem"));
-        registry.register(goldMesh, crushedEndstone, new Lootable(gem, 0.01));
-        registry.register(carbonMesh, crushedEndstone, new Lootable(gem, 0.05));
+        registry.register(goldMesh, crushedEndstone, new Loot(gem, 0.01));
+        registry.register(carbonMesh, crushedEndstone, new Loot(gem, 0.05));
     }
 
     @Override

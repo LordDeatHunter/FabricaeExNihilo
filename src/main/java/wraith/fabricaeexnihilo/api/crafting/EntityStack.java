@@ -1,5 +1,7 @@
 package wraith.fabricaeexnihilo.api.crafting;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -10,6 +12,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 
 public class EntityStack {
+    public static final Codec<EntityStack> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Registry.ENTITY_TYPE.getCodec()
+                    .fieldOf("type")
+                    .forGetter(EntityStack::getType),
+            Codec.INT
+                    .fieldOf("size")
+                    .forGetter(EntityStack::getSize),
+            NbtCompound.CODEC
+                    .fieldOf("data")
+                    .forGetter(EntityStack::getData)
+    ).apply(instance, EntityStack::new));
+    
 
     private EntityType<?> type;
     private int size;
@@ -77,14 +91,6 @@ public class EntityStack {
         this.data = data;
     }
 
-    public NbtCompound toTag() {
-        var nbt = new NbtCompound();
-        nbt.putString("type", Registry.ENTITY_TYPE.getId(type).toString());
-        nbt.putInt("size", size);
-        nbt.put("data", data);
-        return nbt;
-    }
-
     public Entity getEntity(ServerWorld world, BlockPos pos, SpawnReason spawnType) {
         return type.create(world, data, null, null, pos, spawnType, true, true);
     }
@@ -94,7 +100,7 @@ public class EntityStack {
     }
 
     public EntityStack copy() {
-        return new EntityStack(this.type, this.size);
+        return new EntityStack(this.type, this.size, this.data.copy());
     }
 
     public static final EntityStack EMPTY = new EntityStack(EntityType.PIG, 0);

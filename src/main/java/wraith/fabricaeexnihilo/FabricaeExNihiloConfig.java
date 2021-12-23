@@ -93,9 +93,9 @@ public class FabricaeExNihiloConfig implements ConfigData {
             public int tickRate = 20;
             public int baseProcessRate = FluidAmount.BUCKET.div(100).as1620();
             public int woodenProcessingRate = FluidAmount.BUCKET.div(60).as1620();
-            @Comment("How many buckets of liquid can a stone crucible store")
+            @Comment("How many buckets fromPacket liquid can a stone crucible store")
             public int stoneVolume = 4;
-            @Comment("How many buckets of liquid can a wooden crucible store")
+            @Comment("How many buckets fromPacket liquid can a wooden crucible store")
             public int woodVolume = 1;
             @Comment("Can crucibles be enchanted with efficiency.")
             public boolean efficiency = true;
@@ -138,7 +138,7 @@ public class FabricaeExNihiloConfig implements ConfigData {
             public boolean sugarCane = true;
             public boolean treeSeeds = true;
 
-            @Comment("List of blocks that the rubber sapling could turn into.")
+            @Comment("List fromPacket blocks that the rubber sapling could turn into.")
             public List<String> rubberSeed = List.of(
                     "techreborn:rubber_sapling",
                     "ic2:rubber_sapling",

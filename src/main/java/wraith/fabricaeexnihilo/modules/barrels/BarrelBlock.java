@@ -1,12 +1,12 @@
 package wraith.fabricaeexnihilo.modules.barrels;
 
-import alexiil.mc.lib.attributes.AttributeList;
-import alexiil.mc.lib.attributes.AttributeProvider;
 import alexiil.mc.lib.attributes.Simulation;
-import alexiil.mc.lib.attributes.fluid.amount.FluidAmount;
-import alexiil.mc.lib.attributes.fluid.volume.FluidKeys;
 import net.devtech.arrp.json.recipe.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -19,17 +19,16 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.api.registry.FabricaeExNihiloRegistries;
@@ -37,9 +36,12 @@ import wraith.fabricaeexnihilo.modules.ModEffects;
 import wraith.fabricaeexnihilo.modules.barrels.modes.ItemMode;
 import wraith.fabricaeexnihilo.modules.base.EnchantmentContainer;
 import wraith.fabricaeexnihilo.modules.fluids.BloodFluid;
+import wraith.fabricaeexnihilo.modules.fluids.MilkFluid;
+import wraith.fabricaeexnihilo.recipe.barrel.MilkingRecipe;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
-public class BarrelBlock extends BlockWithEntity implements AttributeProvider, InventoryProvider {
+@SuppressWarnings("UnstableApiUsage")
+public class BarrelBlock extends BlockWithEntity {
 
     private static final VoxelShape SHAPE = createCuboidShape(1.0, 0.0, 1.0, 15.0, 16.0, 15.0);
 
@@ -47,17 +49,13 @@ public class BarrelBlock extends BlockWithEntity implements AttributeProvider, I
     private final Identifier craftIngredient1;
     private final Identifier craftIngredient2;
     public FabricBlockSettings settings;
-
+    
     public BarrelBlock(Identifier texture, Identifier craftIngredient1, Identifier craftIngredient2, FabricBlockSettings settings) {
         super(settings);
         this.texture = texture;
         this.craftIngredient1 = craftIngredient1;
         this.craftIngredient2 = craftIngredient2;
         this.settings = settings;
-    }
-
-    public BarrelBlock(Identifier texture, Identifier craftIngredient1, Identifier craftIngredient2) {
-        this(texture, craftIngredient1, craftIngredient2, FabricBlockSettings.of(Material.WOOD));
     }
 
     public Material getMaterial() {
@@ -81,21 +79,8 @@ public class BarrelBlock extends BlockWithEntity implements AttributeProvider, I
         }
         var blockEntity = world.getBlockEntity(pos);
         return blockEntity instanceof BarrelBlockEntity barrelBlock
-                ? barrelBlock.activate(state, player, hand, hitResult)
+                ? barrelBlock.activate(player, hand)
                 : ActionResult.PASS;
-    }
-
-    public void addAllAttributes(World world, BlockPos pos, BlockState state, AttributeList<?> attributes) {
-        var blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof BarrelBlockEntity barrelEntity) {
-            attributes.offer(barrelEntity.getItemTransferable());
-            attributes.offer(barrelEntity.getFluidTransferable());
-        }
-    }
-
-    @Override
-    public SidedInventory getInventory(BlockState state, WorldAccess world, BlockPos pos) {
-        return world != null && world.getBlockEntity(pos) instanceof BarrelBlockEntity barrelEntity ? barrelEntity.getInventory() : null;
     }
 
     @Override
@@ -122,21 +107,29 @@ public class BarrelBlock extends BlockWithEntity implements AttributeProvider, I
             if (FabricaeExNihilo.CONFIG.modules.barrels.enableBleeding && blockEntity instanceof BarrelBlockEntity barrelEntity) {
                 var thorns = barrelEntity.getEnchantmentContainer().getEnchantmentLevel(Enchantments.THORNS);
                 if (thorns > 0 && livingEntity.damage(DamageSource.CACTUS, thorns / 2F)) {
-                    var volume = FluidKeys.get(BloodFluid.STILL).withAmount(FluidAmount.of1620((int) (FluidAmount.BUCKET.as1620() * thorns / livingEntity.getMaxHealth())));
-                    barrelEntity.getFluidTransferable().attemptInsertion(volume, Simulation.ACTION);
+                    var amount = FluidConstants.BUCKET * thorns / livingEntity.getMaxHealth();
+                    var storage = FluidStorage.SIDED.find(world, pos, state, blockEntity, Direction.UP);
+                    if (storage != null) {
+                        try (Transaction t = Transaction.openOuter()) {
+                            storage.insert(FluidVariant.of(BloodFluid.STILL), (long) amount, t);
+                            t.commit();
+                        }
+                    }
                 }
             }
             if (!(livingEntity instanceof PlayerEntity) && !livingEntity.hasStatusEffect(ModEffects.MILKED)) {
-                var milkingResult = FabricaeExNihiloRegistries.BARREL_MILKING.getResult(entity);
-                if (milkingResult != null) {
-                    var volume = milkingResult.getLeft();
-                    var cooldown = milkingResult.getRight();
-                    var duration = 72000;
-                    if (blockEntity instanceof BarrelBlockEntity barrelEntity) {
-                        barrelEntity.getFluidTransferable().attemptInsertion(volume, Simulation.ACTION);
-                        duration = cooldown;
+                var recipe = MilkingRecipe.find(livingEntity.getType(), world);
+                if (recipe.isPresent()) {
+                    if (blockEntity instanceof BarrelBlockEntity barrel) {
+                        long inserted;
+                        try (Transaction t = Transaction.openOuter()) {
+                            inserted = barrel.fluidStorage.insert(FluidVariant.of(MilkFluid.STILL), recipe.get().getAmount(), t);
+                            t.commit();
+                        }
+                        if (inserted > 0) {
+                            livingEntity.addStatusEffect(new StatusEffectInstance(ModEffects.MILKED, recipe.get().getCooldown(), 1, false, false, false));
+                        }
                     }
-                    livingEntity.addStatusEffect(new StatusEffectInstance(ModEffects.MILKED, duration, 1, false, false, false));
                 }
             }
         }

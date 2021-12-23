@@ -4,7 +4,6 @@ import net.fabricmc.loader.api.FabricLoader;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.compatibility.modules.MetaModule;
 import wraith.fabricaeexnihilo.registry.ToolRecipeRegistryImpl;
-import wraith.fabricaeexnihilo.registry.barrel.*;
 import wraith.fabricaeexnihilo.registry.crucible.CrucibleHeatRecipeRegistryImpl;
 import wraith.fabricaeexnihilo.registry.crucible.CrucibleRecipeRegistryImpl;
 import wraith.fabricaeexnihilo.registry.sieve.MeshRecipeRegistryImpl;
@@ -21,6 +20,7 @@ public final class FabricaeExNihiloRegistries {
 
     public static OreRecipeRegistry ORES = new OreRecipeRegistryImpl();
     public static MeshRecipeRegistry MESH = new MeshRecipeRegistryImpl();
+    
     public static SieveRecipeRegistry SIEVE = new SieveRecipeRegistryImpl();
     public static WitchWaterWorldRecipeRegistry WITCHWATER_WORLD = new WitchWaterWorldRecipeRegistryImpl();
     public static WitchWaterEntityRecipeRegistry WITCHWATER_ENTITY = new WitchWaterEntityRecipeRegistryImpl();
@@ -29,12 +29,6 @@ public final class FabricaeExNihiloRegistries {
     public static CrucibleHeatRecipeRegistry CRUCIBLE_HEAT = new CrucibleHeatRecipeRegistryImpl();
     public static CrucibleRecipeRegistry CRUCIBLE_STONE = new CrucibleRecipeRegistryImpl();
     public static CrucibleRecipeRegistry CRUCIBLE_WOOD = new CrucibleRecipeRegistryImpl();
-    public static AlchemyRecipeRegistry BARREL_ALCHEMY = new AlchemyRecipeRegistryImpl();
-    public static CompostRecipeRegistry BARREL_COMPOST = new CompostRecipeRegistryImpl();
-    public static MilkingRecipeRegistry BARREL_MILKING = new MilkingRecipeRegistryImpl();
-    public static LeakingRecipeRegistry BARREL_LEAKING = new LeakingRecipeRegistryImpl();
-    public static FluidTransformRecipeRegistry BARREL_TRANSFORM = new FluidTransformRecipeRegistryImpl();
-    public static FluidOnTopRecipeRegistry BARREL_ON_TOP = new FluidOnTopRecipeRegistryImpl();
 
     private static final File CONFIG_DIR = new File(FabricLoader.getInstance().getConfigDir().toFile(), "fabricaeexnihilo");
 
@@ -61,23 +55,24 @@ public final class FabricaeExNihiloRegistries {
     }
 
     private static void loadBarrelRegistries() {
+        // TODO: Reimplement this thing...
         if(FabricaeExNihilo.CONFIG.modules.barrels.enableAlchemy) {
-            BARREL_ALCHEMY = AlchemyRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"barrel_alchemy.json"));
+            //BARREL_ALCHEMY = AlchemyRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"barrel_alchemy.json"));
         }
         if(FabricaeExNihilo.CONFIG.modules.barrels.enableCompost) {
-            BARREL_COMPOST = CompostRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"barrel_compost.json"));
-        }
-        if(FabricaeExNihilo.CONFIG.modules.barrels.enableLeaking) {
-            BARREL_MILKING = MilkingRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"barrel_milking.json"));
+            //BARREL_COMPOST = CompostRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"barrel_compost.json"));
         }
         if(FabricaeExNihilo.CONFIG.modules.barrels.enableMilking) {
-            BARREL_LEAKING = LeakingRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"barrel_leaking.json"));
+            //BARREL_MILKING = MilkingRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"barrel_milking.json"));
+        }
+        if(FabricaeExNihilo.CONFIG.modules.barrels.enableLeaking) {
+            //BARREL_LEAKING = LeakingRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"barrel_leaking.json"));
         }
         if(FabricaeExNihilo.CONFIG.modules.barrels.enableTransforming) {
-            BARREL_TRANSFORM = FluidTransformRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"barrel_transforming.json"));
+            //BARREL_TRANSFORM = FluidTransformRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"barrel_transforming.json"));
         }
         if(FabricaeExNihilo.CONFIG.modules.barrels.enableFluidOnTop) {
-            BARREL_ON_TOP = FluidOnTopRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"barrel_on_top.json"));
+            //BARREL_ON_TOP = FluidOnTopRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"barrel_on_top.json"));
         }
     }
 

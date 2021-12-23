@@ -1,31 +1,42 @@
 package wraith.fabricaeexnihilo.recipe.barrel;
 
 import com.google.gson.JsonObject;
-import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+import wraith.fabricaeexnihilo.api.crafting.BlockIngredient;
+import wraith.fabricaeexnihilo.api.crafting.ItemIngredient;
 import wraith.fabricaeexnihilo.modules.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
+import wraith.fabricaeexnihilo.recipe.RecipeContext;
 import wraith.fabricaeexnihilo.util.Color;
 
-public class CompostRecipe extends BaseRecipe<SimpleInventory> {
+import java.util.Optional;
+
+public class CompostRecipe extends BaseRecipe<CompostRecipe.CompostRecipeContext> {
     private final ItemStack result;
-    private final Ingredient input;
+    private final ItemIngredient input;
     private final double increment;
     private final Color color;
     
-    public CompostRecipe(Identifier id, ItemStack result, Ingredient input, double increment, Color color) {
+    public CompostRecipe(Identifier id, ItemStack result, ItemIngredient input, double increment, Color color) {
         super(id);
         this.result = result;
         this.input = input;
         this.increment = increment;
         this.color = color;
+    }
+    
+    public static Optional<CompostRecipe> find(ItemStack input, @Nullable World world) {
+        if (world == null) {
+            return Optional.empty();
+        }
+        return world.getRecipeManager().getFirstMatch(ModRecipes.COMPOST, new CompostRecipeContext(input), world);
     }
     
     public double getIncrement() {
@@ -36,13 +47,17 @@ public class CompostRecipe extends BaseRecipe<SimpleInventory> {
         return color;
     }
     
-    @Override
-    public boolean matches(SimpleInventory inventory, World world) {
-        return input.test(inventory.getStack(0));
+    public ItemStack getResult() {
+        return result;
     }
     
     @Override
-    public ItemStack getOutput() {
+    public boolean matches(CompostRecipeContext context, World world) {
+        return input.test(context.input);
+    }
+    
+    @Override
+    public ItemStack getDisplayStack() {
         return result;
     }
     
@@ -60,7 +75,7 @@ public class CompostRecipe extends BaseRecipe<SimpleInventory> {
         @Override
         public CompostRecipe read(Identifier id, JsonObject json) {
             ItemStack result = JsonHelper.getItem(json, "result").getDefaultStack();
-            Ingredient input = Ingredient.fromJson(JsonHelper.getObject(json, "input"));
+            ItemIngredient input = ItemIngredient.fromJson(json.get("input"));
             double increment = JsonHelper.getDouble(json, "increment");
             Color color = Color.fromJson(json.get("color"));
             
@@ -70,7 +85,7 @@ public class CompostRecipe extends BaseRecipe<SimpleInventory> {
         @Override
         public CompostRecipe read(Identifier id, PacketByteBuf buf) {
             ItemStack result = buf.readItemStack();
-            Ingredient input = Ingredient.fromPacket(buf);
+            ItemIngredient input = ItemIngredient.fromPacket(buf);
             double increment = buf.readDouble();
             Color color = new Color(buf.readInt());
     
@@ -80,9 +95,11 @@ public class CompostRecipe extends BaseRecipe<SimpleInventory> {
         @Override
         public void write(PacketByteBuf buf, CompostRecipe recipe) {
             buf.writeItemStack(recipe.result);
-            recipe.input.write(buf);
+            recipe.input.toPacket(buf);
             buf.writeDouble(recipe.increment);
             buf.writeInt(recipe.color.toInt());
         }
     }
+    
+    protected static record CompostRecipeContext(ItemStack input) implements RecipeContext { }
 }

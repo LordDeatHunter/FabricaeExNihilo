@@ -1,46 +1,79 @@
 package wraith.fabricaeexnihilo.modules.barrels.modes;
 
-import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
-import com.google.gson.reflect.TypeToken;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.Dynamic;
+import com.mojang.serialization.JsonOps;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.network.PacketByteBuf;
+import wraith.fabricaeexnihilo.FabricaeExNihilo;
+import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
+import wraith.fabricaeexnihilo.modules.barrels.BarrelModeStorage;
 
-public interface BarrelMode {
-
-    NbtCompound writeNbt();
-    String nbtKey();
-
-    static BarrelMode of(NbtCompound nbt) {
-        if (nbt.contains("item_mode")) {
-            return ItemMode.readNbt(nbt.getCompound("item_mode"));
-        }
-        if (nbt.contains("fluid_mode")) {
-            return FluidMode.readNbt(nbt.getCompound("fluid_mode"));
-        }
-        if (nbt.contains("alchemy_mode")) {
-            return AlchemyMode.readNbt(nbt.getCompound("alchemy_mode"));
-        }
-        if (nbt.contains("compost_mode")) {
-            return CompostMode.readNbt(nbt.getCompound("compost_mode"));
-        }
-        return new EmptyMode();
+public abstract class BarrelMode implements BarrelModeStorage {
+    // We really gotta do this? :concern:
+    // Yes, since we need to have the switch...
+    public static final Codec<BarrelMode> CODEC = Codec.PASSTHROUGH.xmap(dynamic -> {
+        var id = dynamic.get("id").flatMap(Dynamic::asString).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
+        return (switch(id) {
+            case "item" -> ItemMode.CODEC.decode(dynamic);
+            case "fluid" -> FluidMode.CODEC.decode(dynamic);
+            case "alchemy" -> AlchemyMode.CODEC.decode(dynamic);
+            case "compost" -> CompostMode.CODEC.decode(dynamic);
+            case "empty" -> EmptyMode.CODEC.decode(dynamic);
+            default -> throw new IllegalStateException("Unknown barrel mode!");
+    
+        }).getOrThrow(false, FabricaeExNihilo.LOGGER::warn).getFirst();
+    }, mode -> {
+        var nbt = (switch(mode.getId()) {
+            case "item" -> ItemMode.CODEC.encodeStart(NbtOps.INSTANCE, (ItemMode) mode);
+            case "fluid" -> FluidMode.CODEC.encodeStart(NbtOps.INSTANCE, (FluidMode) mode);
+            case "alchemy" -> AlchemyMode.CODEC.encodeStart(NbtOps.INSTANCE, (AlchemyMode) mode);
+            case "compost" -> CompostMode.CODEC.encodeStart(NbtOps.INSTANCE, (CompostMode) mode);
+            case "empty" -> EmptyMode.CODEC.encodeStart(NbtOps.INSTANCE, (EmptyMode) mode);
+            default -> throw new IllegalStateException("Unknown barrel mode!");
+        }).getOrThrow(false, error -> {
+            FabricaeExNihilo.LOGGER.warn(error);
+            FabricaeExNihilo.LOGGER.warn(mode);
+            FabricaeExNihilo.LOGGER.warn(mode.getId());
+        });
+        ((NbtCompound) nbt).putString("id", mode.getId());
+        return new Dynamic<>(NbtOps.INSTANCE, nbt);
+    });
+    
+    protected BarrelMode() {
     }
-
-    static BarrelMode of(JsonElement json, JsonDeserializationContext context) {
-        var obj = json.getAsJsonObject();
-        if (obj.has("fluid_mode")) {
-            return context.deserialize(obj.get("fluid_mode"), new TypeToken<FluidMode>(){}.getType());
-        }
-        if (obj.has("item_mode")) {
-            return context.deserialize(obj.get("item_mode"), new TypeToken<ItemMode>(){}.getType());
-        }
-        if (obj.has("alchemy_mode")) {
-            return context.deserialize(obj.get("alchemy_mode"), new TypeToken<AlchemyMode>(){}.getType());
-        }
-        if (obj.has("compost_mode")) {
-            return context.deserialize(obj.get("compost_mode"), new TypeToken<CompostMode>(){}.getType());
-        }
-        return new EmptyMode();
+    
+    public void toPacket(PacketByteBuf buf) {
+        // Should be safe to cast here
+        buf.writeNbt((NbtCompound) CODEC.encodeStart(NbtOps.INSTANCE, this).getOrThrow(false, FabricaeExNihilo.LOGGER::warn));
     }
-
+    
+    public NbtElement toNbt() {
+        return CODEC.encodeStart(NbtOps.INSTANCE, this).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
+    }
+    
+    public JsonElement toJson() {
+        return CODEC.encodeStart(JsonOps.INSTANCE, this).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
+    }
+    
+    public static BarrelMode fromPacket(PacketByteBuf buf) {
+        return fromNbt(buf.readNbt());
+    }
+    
+    public static BarrelMode fromNbt(NbtCompound nbt) {
+        return CODEC.parse(NbtOps.INSTANCE, nbt).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
+    }
+    
+    public static BarrelMode fromJson(JsonElement json) {
+        return CODEC.parse(JsonOps.INSTANCE, json).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
+    }
+    
+    public abstract String getId();
+    
+    public abstract BarrelMode copy();
+    
+    public void tick(BarrelBlockEntity barrel) {}
 }

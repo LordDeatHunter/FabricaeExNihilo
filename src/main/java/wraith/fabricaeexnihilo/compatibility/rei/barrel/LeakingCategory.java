@@ -59,7 +59,7 @@ public class LeakingCategory implements DisplayCategory<LeakingDisplay> {
 
         var targets = inputs.get(0);
         var fluids = inputs.get(1);
-        var loss = display.recipe().loss();
+        var loss = display.recipe().getAmount();
         var result = display.getOutputEntries();
 
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X, bounds.getMinY() + OUTPUT_Y)).entries(result.get(0)));
@@ -72,7 +72,7 @@ public class LeakingCategory implements DisplayCategory<LeakingDisplay> {
             var stack = ItemUtils.asStack((ItemConvertible) bucket);
             var key = bucket.libblockattributes__getFluid(stack);
             if (key != null && key.unitSet != null) {
-                label = key.unitSet.localizeAmount(loss);
+                label = String.valueOf(loss);
             } else {
                 label = "?";
             }

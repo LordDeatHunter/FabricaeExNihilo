@@ -175,7 +175,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
             return ActionResult.PASS;
         }
 
-        // Removing a bucket's worth of fluid
+        // Removing a bucket's worth fromPacket fluid
         if (held.getItem() instanceof IBucketItem bucket) {
             if (bucket.libblockattributes__getFluid(held) == FluidKeys.EMPTY) {
                 var amount = bucket.libblockattributes__getFluidVolumeAmount();

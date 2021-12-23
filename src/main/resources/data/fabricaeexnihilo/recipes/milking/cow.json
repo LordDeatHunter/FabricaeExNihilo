@@ -1,0 +1,7 @@
+{
+  "type": "fabricaeexnihilo:milking",
+  "entity": "minecraft:cow",
+  "fluid": "fabricaeexnihilo:milk",
+  "amount": 810,
+  "cooldown": 20
+}

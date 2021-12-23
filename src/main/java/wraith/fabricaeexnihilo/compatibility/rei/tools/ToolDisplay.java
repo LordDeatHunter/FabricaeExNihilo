@@ -22,7 +22,7 @@ public record ToolDisplay(ToolRecipe recipe, CategoryIdentifier<ToolDisplay> cat
 
     @Override
     public List<EntryIngredient> getOutputEntries() {
-        return Collections.singletonList(EntryIngredient.of(recipe.lootables()
+        return Collections.singletonList(EntryIngredient.of(recipe.loots()
                 .stream().map(loot -> ItemUtils.asREIEntry(loot.getStack()))
                 .toList())
         );

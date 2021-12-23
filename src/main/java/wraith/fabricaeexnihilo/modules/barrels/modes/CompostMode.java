@@ -1,79 +1,106 @@
 package wraith.fabricaeexnihilo.modules.barrels.modes;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
+import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
+import wraith.fabricaeexnihilo.FabricaeExNihilo;
+import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
+import wraith.fabricaeexnihilo.modules.barrels.BarrelItemStorage;
 import wraith.fabricaeexnihilo.recipe.barrel.CompostRecipe;
 import wraith.fabricaeexnihilo.util.Color;
+import wraith.fabricaeexnihilo.util.CodecUtils;
 
-public class CompostMode implements BarrelMode {
+@SuppressWarnings("UnstableApiUsage")
+public class CompostMode extends BarrelMode {
+    public static final Codec<CompostMode> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                    CodecUtils.ITEM_STACK
+                            .fieldOf("result")
+                            .forGetter(CompostMode::getResult),
+                    Codec.DOUBLE
+                            .fieldOf("amount")
+                            .forGetter(CompostMode::getAmount),
+                    Codec.DOUBLE
+                            .fieldOf("progress")
+                            .forGetter(CompostMode::getProgress),
+                    Color.CODEC
+                            .fieldOf("color")
+                            .forGetter(CompostMode::getColor)
+                    )
+            .apply(instance, CompostMode::new));
+    
+    private final ItemStack result;
     private double progress = 0;
-    private ItemStack result;
     private double amount;
     private Color color;
     
     public CompostMode(CompostRecipe recipe) {
-        this.result = recipe.getOutput();
-        this.color = recipe.getColor();
-        this.amount = recipe.getIncrement();
+        this(recipe.getResult(), recipe.getIncrement(), recipe.getColor());
     }
     
     public CompostMode(ItemStack result, double amount, Color color) {
+        this(result, amount, 0, color);
+    }
+    
+    private CompostMode(ItemStack result, double amount, double progress, Color color) {
         this.result = result;
         this.amount = amount;
         this.color = color;
+        this.progress = progress;
     }
     
     @Override
-    public String nbtKey() {
-        return "compost_mode";
+    public String getId() {
+        return "compost";
     }
     
     @Override
-    public NbtCompound writeNbt() {
-        var nbt = new NbtCompound();
-        nbt.put("result", result.writeNbt(new NbtCompound()));
-        nbt.putDouble("amount", amount);
-        nbt.putInt("color", color.toInt());
-        nbt.putDouble("progress", progress);
-        return nbt;
+    public BarrelMode copy() {
+        return new CompostMode(result.copy(), amount, progress, color);
     }
-
+    
+    @Override
+    public void tick(BarrelBlockEntity barrel) {
+        if (progress >= 1.0) {
+            barrel.setMode(new ItemMode(result.copy()));
+        } else if (amount >= 1.0) {
+            progress += FabricaeExNihilo.CONFIG.modules.barrels.compostRate * barrel.getEfficiencyMultiplier();
+            barrel.markDirty();
+        }
+    }
+    
     public double getProgress() {
         return progress;
     }
-
-    public void setProgress(double progress) {
-        this.progress = progress;
-    }
-
+    
     public ItemStack getResult() {
         return result;
     }
-
-    public void setResult(ItemStack result) {
-        this.result = result;
-    }
-
+    
     public double getAmount() {
         return amount;
     }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
+    
     public Color getColor() {
         return color;
     }
-
-    public void setColor(Color color) {
-        this.color = color;
+    
+    @Override
+    public long insertItem(ItemVariant item, long maxAmount, TransactionContext transaction, BarrelItemStorage storage) {
+        var recipe = CompostRecipe.find(item.toStack(), storage.barrel.getWorld());
+        storage.updateSnapshots(transaction);
+        if (recipe.isPresent() && amount < 1.0 && recipe.get().getResult().isItemEqual(result)) {
+            amount = Math.min(amount + recipe.get().getIncrement(), 1.0);
+            color = recipe.get().getColor();
+            progress = 0;
+            return 1;
+        }
+        return 0;
     }
-
-    public static CompostMode readNbt(NbtCompound nbt) {
-        var mode = new CompostMode(ItemStack.fromNbt(nbt.getCompound("result")), nbt.getDouble("amount"), new Color(nbt.getInt("color"), false));
-        mode.progress = nbt.getDouble("progress");
-        return mode;
+    
+    @Override
+    public long getItemCapacity() {
+        return 1;
     }
-
 }

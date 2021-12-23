@@ -1,0 +1,10 @@
+{
+  "type": "fabricaeexnihilo:alchemy",
+  "reactant": "#fabricaeexnihilo:true_water",
+  "catalyst": "#c:salt",
+  "result": {
+    "id": "fluid",
+    "fluid": "fabricaeexnihilo:brine",
+    "amount": 81000
+  }
+}

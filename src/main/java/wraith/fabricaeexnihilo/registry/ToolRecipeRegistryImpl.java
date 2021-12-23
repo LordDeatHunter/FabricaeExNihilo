@@ -4,7 +4,7 @@ import com.google.common.reflect.TypeToken;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import wraith.fabricaeexnihilo.api.crafting.Lootable;
+import wraith.fabricaeexnihilo.api.crafting.Loot;
 import wraith.fabricaeexnihilo.api.recipes.ToolRecipe;
 import wraith.fabricaeexnihilo.api.registry.ToolRecipeRegistry;
 import wraith.fabricaeexnihilo.compatibility.rei.tools.ToolCategory;
@@ -34,7 +34,7 @@ public class ToolRecipeRegistryImpl extends AbstractRegistry<List<ToolRecipe>> i
         if (match.isEmpty()) {
             return registry.add(recipe);
         } else
-            match.get().lootables().addAll(recipe.lootables());
+            match.get().loots().addAll(recipe.loots());
         // TODO use ToolManager to set break by tools
         return false;
     }
@@ -53,10 +53,10 @@ public class ToolRecipeRegistryImpl extends AbstractRegistry<List<ToolRecipe>> i
     }
 
     @Override
-    public @NotNull List<Lootable> getAllResults(@NotNull ItemConvertible target) {
+    public @NotNull List<Loot> getAllResults(@NotNull ItemConvertible target) {
         return registry.stream()
                 .filter(entry -> entry.ingredient().test(target.asItem()))
-                .map(ToolRecipe::lootables)
+                .map(ToolRecipe::loots)
                 .flatMap(List::stream)
                 .toList();
     }
@@ -65,7 +65,7 @@ public class ToolRecipeRegistryImpl extends AbstractRegistry<List<ToolRecipe>> i
     public void registerJson(File file) {
         try (var reader = new FileReader(file)) {
             List<ToolRecipe> json = gson.fromJson(reader, ToolRecipeRegistryImpl.SERIALIZATION_TYPE);
-            json.forEach(entry -> register(entry.ingredient(), entry.lootables()));
+            json.forEach(entry -> register(entry.ingredient(), entry.loots()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -82,9 +82,9 @@ public class ToolRecipeRegistryImpl extends AbstractRegistry<List<ToolRecipe>> i
             int i = 0;
 
             var toolRecipes = new ArrayList<ToolRecipe>();
-            var tempLootables = new ArrayList<Lootable>();
+            var tempLootables = new ArrayList<Loot>();
 
-            for (var lootable : recipe.lootables()) {
+            for (var lootable : recipe.loots()) {
                 if (i >= ToolCategory.MAX_OUTPUTS) {
                     toolRecipes.add(new ToolRecipe(recipe.ingredient(), tempLootables));
                     i = 0;

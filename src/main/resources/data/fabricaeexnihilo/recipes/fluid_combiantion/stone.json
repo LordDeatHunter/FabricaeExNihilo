@@ -1,0 +1,9 @@
+{
+  "type": "fabricaeexnihilo:fluid_combination",
+  "contained": "minecraft:water",
+  "other": "minecraft:lava",
+  "result": {
+    "id": "item",
+    "stack": "minecraft:stone"
+  }
+}

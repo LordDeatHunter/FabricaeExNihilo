@@ -1,0 +1,7 @@
+{
+  "type": "fabricaeexnihilo:leaking",
+  "block": "minecraft:gravel",
+  "fluid": "#c:blood",
+  "amount": 4050,
+  "result": "fabricaeexnihilo:crushed_netherrack"
+}

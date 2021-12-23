@@ -1,9 +1,7 @@
 {
   "type": "fabricaeexnihilo:compost",
   "result": "minecraft:dirt",
-  "input": {
-    "tag": "c:raw_meat"
-  },
+  "input": "#c:raw_meat",
   "increment": 0.125,
   "color": "FF5555"
 }

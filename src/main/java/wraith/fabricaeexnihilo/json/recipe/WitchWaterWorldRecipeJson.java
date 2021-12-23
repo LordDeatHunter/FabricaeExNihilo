@@ -17,7 +17,7 @@ public final class WitchWaterWorldRecipeJson extends BaseJson<WitchWaterWorldRec
     @Override
     public WitchWaterWorldRecipe deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         return new WitchWaterWorldRecipe(
-                FluidIngredient.fromJson(json.getAsJsonObject().get("fluid"), context),
+                FluidIngredient.fromJson(json.getAsJsonObject().get("fluid")),
                 WeightedListJson.INSTANCE.deserialize(json.getAsJsonObject().get("results"), WeightedListJson.INSTANCE.getTypeToken(), context)
         );
     }
@@ -25,7 +25,7 @@ public final class WitchWaterWorldRecipeJson extends BaseJson<WitchWaterWorldRec
     @Override
     public JsonElement serialize(WitchWaterWorldRecipe src, Type typeOfSrc, JsonSerializationContext context) {
         var obj = new JsonObject();
-        obj.add("fluid", src.fluid().toJson(context));
+        obj.add("fluid", src.fluid().toJson());
         obj.add("results", WeightedListJson.INSTANCE.serialize(src.results(), WeightedListJson.INSTANCE.getTypeToken(), context));
         return obj;
     }

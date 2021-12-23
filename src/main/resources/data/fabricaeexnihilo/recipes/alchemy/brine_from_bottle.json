@@ -1,0 +1,16 @@
+{
+  "type": "fabricaeexnihilo:alchemy",
+  "reactant": "#fabricaeexnihilo:true_water",
+  "catalyst": "fabricaeexnihilo:salt_bottle",
+  "byproduct": {
+    "stack": "minecraft:glass_bottle",
+    "chances": [
+      1.0
+    ]
+  },
+  "result": {
+    "id": "fluid",
+    "fluid": "fabricaeexnihilo:brine",
+    "amount": 81000
+  }
+}

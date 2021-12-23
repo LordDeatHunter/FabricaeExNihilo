@@ -150,7 +150,8 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
     }
 
     public void renderFluidMode(FluidMode mode, VertexConsumerProvider vertexConsumerProvider, MatrixStack matrices) {
-        renderFluidVolume(mode.getFluid(), (double) mode.getFluid().amount().as1620() / FluidAmount.BUCKET.as1620(), vertexConsumerProvider, matrices);
+        //TODO: reimplement rendering with fapi fluids
+        //renderFluidVolume(mode.getFluid(), (double) mode.getFluid().amount().as1620() / FluidAmount.BUCKET.as1620(), vertexConsumerProvider, matrices);
     }
 
     public void renderFluidVolume(FluidVolume volume, double level, VertexConsumerProvider vertexConsumerProvider, MatrixStack matrices) {

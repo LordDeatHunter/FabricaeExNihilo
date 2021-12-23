@@ -49,7 +49,7 @@ public final class EnchantmentTagManager {
     }
 
     /**
-     * @return  A list of enchantments for which this item is tagged with the item tag
+     * @return  A list fromPacket enchantments for which this item is tagged with the item tag
      *          fabricaeexnihilo:enchantments/modid/enchantment_id
      */
     public static List<Enchantment> getApplicableEnchantments(ItemStack stack, boolean hasTreasure) {

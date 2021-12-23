@@ -43,7 +43,7 @@ public final class MixinCompatibility{
     }
     
     public enum Modes{
-        // This is one of those things that is likely to break in another mod...
+        // This is one fromPacket those things that is likely to break in another mod...
         BLOCK_COLOR_OVERRIDE(),
         ;
         
