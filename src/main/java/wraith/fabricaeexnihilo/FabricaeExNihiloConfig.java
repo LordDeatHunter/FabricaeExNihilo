@@ -57,6 +57,7 @@ public class FabricaeExNihiloConfig implements ConfigData {
         public BarrelConfig barrels = new BarrelConfig();
 
         public static class BarrelConfig {
+            @ConfigEntry.Gui.RequiresRestart
             public boolean enabled = true;
             @Comment("How many ticks between updates")
             public int tickRate = 6;
@@ -64,18 +65,18 @@ public class FabricaeExNihiloConfig implements ConfigData {
             public boolean efficiency = true;
             @Comment("Can barrels be enchanted with thorns.")
             public boolean thorns = true;
-            public boolean enableAlchemy = true;
+            public boolean enableAlchemy = true; // Unsure if needed: Used to be used for the old json recipe system
             @Comment("Requires that thorns be enabled too.")
             public boolean enableBleeding = true;
-            public boolean enableCompost = true;
+            public boolean enableCompost = true; // Unsure if needed: Used to be used for the old json recipe system
             @Comment("How much progress to add each time the barrel ticks")
             public double compostRate = 0.01;
-            public boolean enableFluidOnTop = true;
-            public boolean enableLeaking = true;
+            public boolean enableFluidOnTop = true; // Unsure if needed: Used to be used for the old json recipe system
+            public boolean enableLeaking = true; // Unsure if needed: Used to be used for the old json recipe system
             @Comment("How far away can a block be and still be affected by wooden barrels leaking")
             public int leakRadius = 2;
-            public boolean enableMilking = true;
-            public boolean enableTransforming = true;
+            public boolean enableMilking = true; // Unsure if needed: Used to be used for the old json recipe system
+            public boolean enableTransforming = true; // Unsure if needed: Used to be used for the old json recipe system
             @Comment("How far away can a block be and still boost the transformation rate")
             public int transformBoostRadius = 2;
             @Comment("How many ticks does it take to fully transform")
@@ -88,6 +89,7 @@ public class FabricaeExNihiloConfig implements ConfigData {
         public CrucibleConfig crucibles = new CrucibleConfig();
 
         public static class CrucibleConfig {
+            @ConfigEntry.Gui.RequiresRestart
             public boolean enabled = true;
             @Comment("How many ticks between updates")
             public int tickRate = 20;
@@ -107,6 +109,7 @@ public class FabricaeExNihiloConfig implements ConfigData {
         public InfestedConfig silkworms = new InfestedConfig();
 
         public static class InfestedConfig {
+            @ConfigEntry.Gui.RequiresRestart
             public boolean enabled = true;
             @Comment("How much progress should by made during each infesting leaves update")
             public double progressPerUpdate = 0.015;
@@ -123,6 +126,7 @@ public class FabricaeExNihiloConfig implements ConfigData {
         }
 
         @ConfigEntry.Gui.CollapsibleObject
+        @ConfigEntry.Gui.RequiresRestart
         public SeedConfig seeds = new SeedConfig();
 
         public static class SeedConfig {
@@ -138,7 +142,7 @@ public class FabricaeExNihiloConfig implements ConfigData {
             public boolean sugarCane = true;
             public boolean treeSeeds = true;
 
-            @Comment("List fromPacket blocks that the rubber sapling could turn into.")
+            @Comment("List of blocks that the rubber sapling could turn into.")
             public List<String> rubberSeed = List.of(
                     "techreborn:rubber_sapling",
                     "ic2:rubber_sapling",
@@ -150,6 +154,7 @@ public class FabricaeExNihiloConfig implements ConfigData {
         public SieveConfig sieves = new SieveConfig();
 
         public static class SieveConfig {
+            @ConfigEntry.Gui.RequiresRestart
             public boolean enabled = true;
             @Comment("Do meshes use up durability (WIP)")
             public boolean meshDurability = false;
@@ -172,6 +177,7 @@ public class FabricaeExNihiloConfig implements ConfigData {
         public CrookConfig crooks = new CrookConfig();
 
         public static class CrookConfig {
+            @ConfigEntry.Gui.RequiresRestart
             public boolean enabled = true;
         }
 
@@ -179,6 +185,7 @@ public class FabricaeExNihiloConfig implements ConfigData {
         public HammerConfig hammers = new HammerConfig();
 
         public static class HammerConfig {
+            @ConfigEntry.Gui.RequiresRestart
             public boolean enabled = true;
         }
 
@@ -186,6 +193,7 @@ public class FabricaeExNihiloConfig implements ConfigData {
         public WitchWaterConfig witchwater = new WitchWaterConfig();
 
         public static class WitchWaterConfig {
+            @ConfigEntry.Gui.RequiresRestart
             public boolean enabled = true;
             @Comment("What effects should players get on contact")
             public Map<String, StatusEffectStats> effects = Map.of(
