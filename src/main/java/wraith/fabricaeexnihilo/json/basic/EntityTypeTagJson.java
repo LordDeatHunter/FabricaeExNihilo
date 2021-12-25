@@ -1,6 +1,9 @@
 package wraith.fabricaeexnihilo.json.basic;
 
-import com.google.gson.*;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
 import net.fabricmc.fabric.api.tag.TagFactory;
 import net.minecraft.entity.EntityType;
 import net.minecraft.tag.Tag;

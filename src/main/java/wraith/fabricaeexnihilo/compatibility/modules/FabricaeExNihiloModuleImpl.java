@@ -1,6 +1,5 @@
 package wraith.fabricaeexnihilo.compatibility.modules;
 
-import alexiil.mc.lib.attributes.fluid.amount.FluidAmount;
 import net.fabricmc.fabric.api.tag.TagFactory;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
@@ -43,125 +42,9 @@ public final class FabricaeExNihiloModuleImpl implements FabricaeExNihiloModule 
 
     public static final FabricaeExNihiloModuleImpl INSTANCE = new FabricaeExNihiloModuleImpl();
     
-    /*
-    @Override
-    public void registerAlchemy(AlchemyRecipeRegistry registry) {
-        registry.register(Fluids.WATER, ItemUtils.getExNihiloItem("seed_mycelium"), WitchWaterFluid.STILL);
-
-        registry.register(Fluids.LAVA, Items.GLOWSTONE_DUST, Blocks.END_STONE);
-        registry.register(Fluids.LAVA, Items.REDSTONE, Blocks.NETHERRACK);
-        registry.register(Fluids.WATER, ItemUtils.getExNihiloBlock("dust"), Blocks.CLAY);
-        registry.register(Fluids.WATER, ItemUtils.getExNihiloBlock("silt"), Blocks.CLAY);
-
-        registry.register(MilkFluid.TAG, Items.BROWN_MUSHROOM, Blocks.SLIME_BLOCK);
-        registry.register(MilkFluid.TAG, Items.RED_MUSHROOM, Blocks.SLIME_BLOCK);
-
-        registry.register(BloodFluid.TAG, Blocks.SAND, Blocks.RED_SAND);
-        registry.register(BloodFluid.TAG, Blocks.SANDSTONE, Blocks.RED_SANDSTONE);
-        registry.register(BloodFluid.TAG, Blocks.CHISELED_SANDSTONE, Blocks.CHISELED_RED_SANDSTONE);
-        registry.register(BloodFluid.TAG, Blocks.CUT_SANDSTONE, Blocks.CUT_RED_SANDSTONE);
-        registry.register(BloodFluid.TAG, Blocks.SMOOTH_SANDSTONE, Blocks.SMOOTH_RED_SANDSTONE);
-
-        registry.register(AlchemyRecipe.builder()
-                .withReactant(new FluidIngredient(Fluids.WATER))
-                .withCatalyst(new ItemIngredient(ItemUtils.getExNihiloItem("salt_bottle")))
-                .withProduct(new FluidMode(FluidVariant.of(BrineFluid.STILL), FluidConstants.BUCKET))
-                .withByproduct(new Loot(ItemUtils.asStack(Items.GLASS_BOTTLE), 1.0))
-                .build());
-
-        registry.register(AlchemyRecipe.builder()
-                .withReactant(new FluidIngredient(Fluids.WATER))
-                .withCatalyst(new ItemIngredient(TagFactory.ITEM.create(new Identifier("c:salt"))))
-                .withProduct(new FluidMode(FluidVariant.of(BrineFluid.STILL), FluidConstants.BUCKET))
-                .build());
-
-        registry.register(BrineFluid.TAG, Items.BLUE_DYE, Blocks.TUBE_CORAL_BLOCK);
-        registry.register(BrineFluid.TAG, Items.PINK_DYE, Blocks.BRAIN_CORAL_BLOCK);
-        registry.register(BrineFluid.TAG, Items.MAGENTA_DYE, Blocks.BUBBLE_CORAL_BLOCK);
-        registry.register(BrineFluid.TAG, Items.RED_DYE, Blocks.FIRE_CORAL_BLOCK);
-        registry.register(BrineFluid.TAG, Items.YELLOW_DYE, Blocks.HORN_CORAL_BLOCK);
-
-        registry.register(new FluidIngredient(BrineFluid.STILL), new ItemIngredient(ItemTags.WOOL), ItemUtils.asStack(Blocks.WET_SPONGE));
-
-        registry.register(FluidTags.LAVA, ItemUtils.getExNihiloItemStack("doll_blaze"), EntityType.BLAZE);
-        registry.register(WitchWaterFluid.TAG, ItemUtils.getExNihiloItemStack("doll_enderman"), EntityType.ENDERMAN);
-        registry.register(BrineFluid.TAG, ItemUtils.getExNihiloItemStack("doll_guardian"), EntityType.GUARDIAN);
-        registry.register(WitchWaterFluid.TAG, ItemUtils.getExNihiloItemStack("doll_shulker"), EntityType.SHULKER);
-    }
-
-    public void registerCompost() {
-        registry.register(ItemTags.LEAVES, Blocks.DIRT, 0.125, Color.DARK_GREEN);
-        registry.register(ItemTags.SAPLINGS, Blocks.DIRT, 0.0625, Color.DARK_GREEN);
-
-        registry.register(Items.CHORUS_FLOWER, Blocks.END_STONE, 0.25, Color.DARK_PURPLE);
-        registry.register(Items.POPPED_CHORUS_FRUIT, Blocks.END_STONE, 0.125, Color.LIGHT_PURPLE);
-        registry.register(Items.CHORUS_FRUIT, Blocks.END_STONE, 0.0625, Color.LIGHT_PURPLE);
-
-        registry.register(Items.COBWEB, Blocks.WHITE_WOOL, 0.5, Color.WHITE);
-
-        registry.register(Items.CACTUS, Blocks.DIRT, 0.0625, Color.DARK_GREEN);
-
-        registry.register(TagFactory.ITEM.create(new Identifier("c:seeds")), Blocks.DIRT, 0.0625, Color.GREEN);
-        registry.register(TagFactory.ITEM.create(new Identifier("c:veggies")), Blocks.DIRT, 0.0625, Color.YELLOW);
-        registry.register(ItemTags.SMALL_FLOWERS, Blocks.DIRT, 0.0625, Color.RED);
-        registry.register(TagFactory.ITEM.create(new Identifier("c:dyes")), Blocks.DIRT, 0.125, Color.RED);
-        registry.register(TagFactory.ITEM.create(new Identifier("c:raw_meat")), Blocks.DIRT, 0.125, Color.RED);
-        registry.register(TagFactory.ITEM.create(new Identifier("c:cooked_meat")), Blocks.DIRT, 0.25, Color.RED);
-        
-    }
-    
-
-    @Override
-    public void registerLeaking(LeakingRecipeRegistry registry) {
-        registry.register(Blocks.COBBLESTONE, Fluids.WATER, FluidConstants.BUCKET / 10, Blocks.MOSSY_COBBLESTONE);
-        registry.register(Blocks.STONE_BRICKS, Fluids.WATER, FluidAmount.BUCKET.as1620() / 10, Blocks.MOSSY_STONE_BRICKS);
-
-        registry.register(ItemTags.SAPLINGS, WitchWaterFluid.STILL, FluidAmount.BUCKET.as1620() / 10, Blocks.DEAD_BUSH);
-        registry.register(Blocks.GRAVEL, WitchWaterFluid.STILL, FluidAmount.BUCKET.as1620() / 10, ItemUtils.getExNihiloBlock("crushed_netherrack"));
-        registry.register(Blocks.SAND, WitchWaterFluid.STILL, FluidAmount.BUCKET.as1620() / 2, Blocks.SOUL_SAND);
-        registry.register(Blocks.PODZOL, WitchWaterFluid.STILL, FluidAmount.BUCKET.as1620() / 2, Blocks.MYCELIUM);
-        registry.register(ItemTags.SMALL_FLOWERS, WitchWaterFluid.STILL, FluidAmount.BUCKET.as1620() / 2, Blocks.BROWN_MUSHROOM);
-
-        registry.register(Blocks.COBBLESTONE, BloodFluid.TAG, FluidAmount.BUCKET.as1620() / 10, Blocks.NETHERRACK);
-        registry.register(Blocks.GRAVEL, BloodFluid.TAG, FluidAmount.BUCKET.as1620() / 20, ItemUtils.getExNihiloBlock("crushed_netherrack"));
-    }
-    
-    
-    @Override
-    public void registerMilking(MilkingRecipeRegistry registry) {
-        registry.register(EntityType.COW, MilkFluid.STILL, FluidConstants.BUCKET / 100, 20);
-        registry.register(EntityType.WITCH, WitchWaterFluid.STILL, FluidConstants.BUCKET / 100, 20);
-    }*/
-
-    @Override
-    public void registerCrucibleHeat(CrucibleHeatRecipeRegistry registry) {
-        registry.register(Blocks.TORCH, 1);
-        registry.register(FluidTags.LAVA, 4);
-        registry.register(Blocks.MAGMA_BLOCK, 3);
-        registry.register(Blocks.GLOWSTONE, 2);
-        registry.register(Blocks.FIRE, 5);
-    }
-
-    @Override
-    public void registerCrucibleStone(CrucibleRecipeRegistry registry) {
-        registry.register(Blocks.NETHERRACK, Fluids.LAVA,FluidAmount.BUCKET.as1620() / 2);
-        registry.register(Blocks.COBBLESTONE, Fluids.LAVA,FluidAmount.BUCKET.as1620() / 4);
-        registry.register(Blocks.GRAVEL, Fluids.LAVA,FluidAmount.BUCKET.as1620() / 8);
-        registry.register(ItemTags.SAND, Fluids.LAVA,FluidAmount.BUCKET.as1620() / 16);
-    }
-
-    @Override
-    public void registerCrucibleWood(CrucibleRecipeRegistry registry) {
-        registry.register(ItemTags.SAPLINGS, Fluids.WATER, FluidAmount.BUCKET.as1620() / 10);
-        registry.register(ItemTags.LEAVES, Fluids.WATER, FluidAmount.BUCKET.as1620() / 4);
-        registry.register(ItemTags.SMALL_FLOWERS, Fluids.WATER, FluidAmount.BUCKET.as1620() / 10);
-        registry.register(TagFactory.ITEM.create(new Identifier("c:seeds")), Fluids.WATER, FluidAmount.BUCKET.as1620() / 10);
-        registry.register(TagFactory.ITEM.create(new Identifier("c:veggies")), Fluids.WATER, FluidAmount.BUCKET.as1620() / 10);
-    }
-
     @Override
     public void registerOres(OreRecipeRegistry registry) {
-        // TODO("Implement tag checking to prevent creation fromPacket unnecessary ores")
+        // TODO: Implement tag checking to prevent creation of unnecessary ores
         // Vanilla Metals
         registry.register("iron", Color.IRON, PieceShape.NORMAL, ChunkShape.CHUNK, ChunkMaterial.GRANITE);
         registry.register("gold", Color.GOLD, PieceShape.FINE, ChunkShape.CHUNK, ChunkMaterial.STONE);

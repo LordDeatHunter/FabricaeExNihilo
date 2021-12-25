@@ -1,0 +1,7 @@
+{
+  "type": "fabricaeexnihilo:crucible",
+  "input": "minecraft:sand",
+  "amount": 6750,
+  "fluid": "minecraft:lava",
+  "isStone": true
+}

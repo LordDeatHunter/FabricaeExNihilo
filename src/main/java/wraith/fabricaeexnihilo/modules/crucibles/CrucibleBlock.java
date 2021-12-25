@@ -1,7 +1,5 @@
 package wraith.fabricaeexnihilo.modules.crucibles;
 
-import alexiil.mc.lib.attributes.AttributeList;
-import alexiil.mc.lib.attributes.AttributeProvider;
 import net.devtech.arrp.json.recipe.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
@@ -12,7 +10,6 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -22,13 +19,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.modules.base.EnchantmentContainer;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 import wraith.fabricaeexnihilo.util.VoxelShapeHelper;
 
-public class CrucibleBlock extends BlockWithEntity implements InventoryProvider, AttributeProvider {
+public class CrucibleBlock extends BlockWithEntity {
 
     private final Identifier texture;
     private final Identifier craftIngredient;
@@ -39,41 +35,15 @@ public class CrucibleBlock extends BlockWithEntity implements InventoryProvider,
         this.craftIngredient = craftIngredient;
     }
 
-    public CrucibleBlock(Identifier texture, Identifier craftIngredient) {
-        this(texture, craftIngredient, FabricBlockSettings.of(Material.WOOD));
-    }
-
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (world == null || world.isClient() || pos == null) {
             return ActionResult.SUCCESS;
         }
         if (world.getBlockEntity(pos) instanceof CrucibleBlockEntity crucible) {
-            return crucible.activate(state, player, hand, hit);
+            return crucible.activate(player, hand);
         }
         return super.onUse(state, world, pos, player, hand, hit);
-    }
-
-    @Override
-    public SidedInventory getInventory(BlockState state, WorldAccess world, BlockPos pos) {
-        if (world == null) {
-            return null;
-        }
-        if (world.getBlockEntity(pos) instanceof CrucibleBlockEntity crucible) {
-            return crucible.getInventory();
-        }
-        return null;
-    }
-
-    @Override
-    public void addAllAttributes(World world, BlockPos pos, BlockState state, AttributeList<?> attributeList) {
-        if (world == null) {
-            return;
-        }
-        if (world.getBlockEntity(pos) instanceof CrucibleBlockEntity crucible) {
-            attributeList.offer(crucible.getFluidExtractor());
-            attributeList.offer(crucible.getItemInserter());
-        }
     }
 
     @Override
@@ -113,7 +83,7 @@ public class CrucibleBlock extends BlockWithEntity implements InventoryProvider,
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new CrucibleBlockEntity(pos, state, this.material == Material.STONE);
+        return new CrucibleBlockEntity(pos, state);
     }
 
     @Override

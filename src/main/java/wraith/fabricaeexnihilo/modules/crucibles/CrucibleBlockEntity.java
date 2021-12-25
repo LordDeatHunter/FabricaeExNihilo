@@ -1,51 +1,51 @@
 package wraith.fabricaeexnihilo.modules.crucibles;
 
-import alexiil.mc.lib.attributes.Simulation;
-import alexiil.mc.lib.attributes.fluid.FluidExtractable;
-import alexiil.mc.lib.attributes.fluid.amount.FluidAmount;
-import alexiil.mc.lib.attributes.fluid.filter.FluidFilter;
-import alexiil.mc.lib.attributes.fluid.mixin.api.IBucketItem;
-import alexiil.mc.lib.attributes.fluid.volume.FluidKeys;
-import alexiil.mc.lib.attributes.fluid.volume.FluidVolume;
-import alexiil.mc.lib.attributes.item.ItemInsertable;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
+import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
+import net.fabricmc.fabric.api.transfer.v1.storage.base.ExtractionOnlyStorage;
+import net.fabricmc.fabric.api.transfer.v1.storage.base.InsertionOnlyStorage;
+import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage;
+import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
+import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
+import net.fabricmc.fabric.api.transfer.v1.transaction.base.SnapshotParticipant;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.FluidBlock;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.SidedInventory;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.base.BaseBlockEntity;
 import wraith.fabricaeexnihilo.modules.base.EnchantmentContainer;
-import wraith.fabricaeexnihilo.util.ItemUtils;
+import wraith.fabricaeexnihilo.recipe.crucible.CrucibleHeatRecipe;
+import wraith.fabricaeexnihilo.recipe.crucible.CrucibleRecipe;
+import wraith.fabricaeexnihilo.util.CodecUtils;
 
-import static alexiil.mc.lib.attributes.fluid.filter.ConstantFluidFilter.ANYTHING;
-import static wraith.fabricaeexnihilo.api.registry.FabricaeExNihiloRegistries.*;
-
+@SuppressWarnings("UnstableApiUsage")
 public class CrucibleBlockEntity extends BaseBlockEntity {
-
     private final boolean isStone;
-    // What stack should be rendered for the queued fluid
-    private ItemStack render = ItemStack.EMPTY;
-    // Fluid to be made
-    private FluidVolume queued = FluidKeys.EMPTY.withAmount(FluidAmount.ZERO);
-    // Fluid already made
-    private FluidVolume contents = FluidKeys.EMPTY.withAmount(FluidAmount.ZERO);
+    private final Storage<ItemVariant> itemStorage = new CrucibleItemStorage();
+    private final Storage<FluidVariant> fluidStorage = new CrucibleFluidStorage();
+    private ItemStack renderStack = ItemStack.EMPTY;
+    private long queued = 0;
+    private long contained = 0;
+    private FluidVariant fluid = FluidVariant.blank();
     private int heat = 0;
     private int tickCounter;
 
@@ -54,68 +54,39 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
             ModBlocks.CRUCIBLES.values().toArray(new CrucibleBlock[0])
     ).build(null);
     public static final Identifier BLOCK_ENTITY_ID = FabricaeExNihilo.id("crucible");
-
-
-    public CrucibleBlockEntity(BlockPos pos, BlockState state, boolean isStone) {
+    
+    static {
+        ItemStorage.SIDED.registerForBlockEntity((crucible, direction) -> crucible.itemStorage, TYPE);
+        FluidStorage.SIDED.registerForBlockEntity((crucible, direction) -> crucible.fluidStorage, TYPE);
+    }
+    
+    
+    public CrucibleBlockEntity(BlockPos pos, BlockState state) {
         super(TYPE, pos, state);
-        this.isStone = isStone;
+        this.isStone = state.getMaterial() == Material.STONE;
         tickCounter = world == null
                 ? FabricaeExNihilo.CONFIG.modules.crucibles.tickRate
                 : world.random.nextInt(FabricaeExNihilo.CONFIG.modules.crucibles.tickRate);
-        itemInserter = new ItemInserter(this);
-        fluidExtractor = new FluidExtractor(this);
-        inventory = new CrucibleInventory(this);
     }
-
-    public CrucibleBlockEntity(BlockPos pos, BlockState state) {
-        this(pos, state, state.getMaterial() == Material.STONE);
-    }
-
-    /**
-     * Inventories
-     */
-    private final ItemInserter itemInserter;
-    private final FluidExtractor fluidExtractor;
-    private final CrucibleInventory inventory;
 
     public boolean isStone() {
         return isStone;
     }
 
-    public ItemStack getRender() {
-        return render;
+    public ItemStack getRenderStack() {
+        return renderStack;
     }
 
-    public FluidVolume getQueued() {
+    public long getQueued() {
         return queued;
     }
-
-    public FluidVolume getContents() {
-        return contents;
+    
+    public FluidVariant getFluid() {
+        return fluid;
     }
-
-    public int getHeat() {
-        return heat;
-    }
-
-    public int getTickCounter() {
-        return tickCounter;
-    }
-
+    
     public EnchantmentContainer getEnchantments() {
         return enchantments;
-    }
-
-    public ItemInserter getItemInserter() {
-        return itemInserter;
-    }
-
-    public FluidExtractor getFluidExtractor() {
-        return fluidExtractor;
-    }
-
-    public CrucibleInventory getInventory() {
-        return inventory;
     }
 
     /**
@@ -123,25 +94,21 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
      */
     private final EnchantmentContainer enchantments = new EnchantmentContainer();
 
+    @SuppressWarnings("unused") // lambda stuff
     public static void ticker(World world, BlockPos blockPos, BlockState blockState, CrucibleBlockEntity crucibleEntity) {
         crucibleEntity.tick();
     }
 
     public void tick() {
-        if (queued.isEmpty() || contents.amount().isGreaterThanOrEqual(getMaxCapacity()) || (heat <= 0 && isStone)) {
+        if (queued == 0 || contained > getMaxCapacity() || (heat <= 0 && isStone)) {
             return;
         }
         if (--tickCounter <= 0) {
-            if (!queued.isEmpty()) {
-                var amt = Math.min(queued.amount().as1620(), getProcessingSpeed());
-                var fluid = FluidAmount.of1620(amt);
-                contents = queued.copy().fluidKey.withAmount(contents.copy().amount().add(fluid));
-                queued.split(fluid);
-                if (queued.amount().isLessThanOrEqual(FluidAmount.ZERO)) {
-                    queued = FluidKeys.EMPTY.withAmount(FluidAmount.ZERO);
-                }
-                markDirty();
-            }
+    
+            var amount = Math.min(queued, getProcessingSpeed());
+            contained += amount;
+            queued -= amount;
+            markDirty();
             tickCounter = FabricaeExNihilo.CONFIG.modules.crucibles.tickRate;
         }
     }
@@ -154,56 +121,41 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
         return enchantments.getEnchantmentLevel(Enchantments.FIRE_ASPECT);
     }
 
-    public int getProcessingSpeed() {
+    public long getProcessingSpeed() {
         return getEfficiencyMultiplier() * (isStone ? heat * FabricaeExNihilo.CONFIG.modules.crucibles.baseProcessRate : FabricaeExNihilo.CONFIG.modules.crucibles.woodenProcessingRate);
     }
 
-    public FluidAmount getMaxCapacity() {
-        return FluidAmount.BUCKET.mul((isStone ? FabricaeExNihilo.CONFIG.modules.crucibles.stoneVolume : FabricaeExNihilo.CONFIG.modules.crucibles.woodVolume));
+    public long getMaxCapacity() {
+        return FluidConstants.BUCKET * (isStone ? FabricaeExNihilo.CONFIG.modules.crucibles.stoneVolume : FabricaeExNihilo.CONFIG.modules.crucibles.woodVolume);
     }
 
-    public ActionResult activate(@Nullable BlockState state, @Nullable PlayerEntity player, @Nullable Hand hand, @Nullable BlockHitResult hitResult) {
+    public ActionResult activate(@Nullable PlayerEntity player, @Nullable Hand hand) {
         if (world == null || player == null) {
             return ActionResult.PASS;
         }
         var held = player.getStackInHand(hand == null ? player.getActiveHand() : hand);
-        if (held == null) {
-            held = ItemStack.EMPTY;
-        }
-
-        if (held.isEmpty()) {
+        if (held == null || held.isEmpty()) {
             return ActionResult.PASS;
         }
+    
+        var bucketFluidStorage = FluidStorage.ITEM.find(held, ContainerItemContext.ofPlayerHand(player, hand));
+        if (bucketFluidStorage != null) {
+            var amount = StorageUtil.move(fluidStorage, bucketFluidStorage, fluid -> true, Long.MAX_VALUE, null);
+            if (amount > 0)
+                return ActionResult.SUCCESS;
+        }
 
-        // Removing a bucket's worth fromPacket fluid
-        if (held.getItem() instanceof IBucketItem bucket) {
-            if (bucket.libblockattributes__getFluid(held) == FluidKeys.EMPTY) {
-                var amount = bucket.libblockattributes__getFluidVolumeAmount();
-                if (contents.amount().isGreaterThanOrEqual(amount)) {
-                    var drained = fluidExtractor.attemptExtraction(ANYTHING, amount, Simulation.SIMULATE);
-                    if (drained.amount().equals(amount)) {
-                        var returnStack = bucket.libblockattributes__withFluid(contents.fluidKey);
-                        if (!returnStack.isEmpty()) {
-                            fluidExtractor.attemptExtraction(ANYTHING, amount, Simulation.ACTION);
-                            if (!player.isCreative()) {
-                                held.decrement(1);
-                            }
-                            player.giveItemStack(returnStack);
-                            markDirty();
-                            return ActionResult.SUCCESS;
-                        }
-                    }
+        try (var t = Transaction.openOuter()) {
+            var amount = itemStorage.insert(ItemVariant.of(held), 1, t);
+            if (amount > 0) {
+                t.commit();
+                if (!player.isCreative()) {
+                    held.decrement((int) amount);
                 }
+                return ActionResult.SUCCESS;
             }
         }
-        // Adding a meltable item
-        var result = itemInserter.attemptInsertion(held, Simulation.ACTION);
-        if (result.getCount() != held.getCount()) {
-            if (!player.isCreative()) {
-                held.decrement(1);
-            }
-            return ActionResult.SUCCESS;
-        }
+        
         return ActionResult.PASS;
     }
 
@@ -211,17 +163,15 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
         if (world == null) {
             return;
         }
-        var oldheat = heat;
+        var oldHeat = heat;
         var state = world.getBlockState(pos.down());
         var block = state.getBlock();
+        heat = CrucibleHeatRecipe.find(block, world).map(CrucibleHeatRecipe::getHeat).orElse(0);
         if (block instanceof FluidBlock) {
-            var fluidState = state.getFluidState();
-            heat = Math.round(CRUCIBLE_HEAT.getHeat(fluidState.getFluid()) * fluidState.getFluid().getHeight(fluidState, world, pos.down()));
-        } else {
-            heat = CRUCIBLE_HEAT.getHeat(block);
+            heat *= state.getFluidState().getHeight();
         }
         heat += getFireAspectAdder();
-        if (heat != oldheat) {
+        if (heat != oldHeat) {
             markDirty();
         }
     }
@@ -247,17 +197,19 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
     }
 
     private void writeNbtWithoutWorldInfo(NbtCompound nbt) {
-        nbt.put("render", render.writeNbt(new NbtCompound()));
-        nbt.put("contents", contents.toTag());
-        nbt.put("queued", queued.toTag());
+        nbt.put("render", renderStack.writeNbt(new NbtCompound()));
+        nbt.put("fluid", CodecUtils.serializeNbt(CodecUtils.FLUID_VARIANT, fluid));
+        nbt.putLong("contained", contained);
+        nbt.putLong("queued", queued);
         nbt.putInt("heat", heat);
         nbt.put("enchantments", enchantments.writeNbt());
     }
 
     private void readNbtWithoutWorldInfo(NbtCompound nbt) {
-        render = ItemStack.fromNbt(nbt.getCompound("render"));
-        contents = FluidVolume.fromTag(nbt.getCompound("contents"));
-        queued = FluidVolume.fromTag(nbt.getCompound("queued"));
+        renderStack = ItemStack.fromNbt(nbt.getCompound("render"));
+        fluid = CodecUtils.deserializeNbt(CodecUtils.FLUID_VARIANT, nbt.get("fluid"));
+        contained = nbt.getLong("contained");
+        queued = nbt.getLong("queued");
         heat = nbt.getInt("heat");
         if (nbt.contains("enchantments")) {
             var readEnchantments = new EnchantmentContainer();
@@ -265,127 +217,111 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
             enchantments.setAllEnchantments(readEnchantments);
         }
     }
-
-    /**
-     * FluidHandling
-     */
-    static record FluidExtractor(CrucibleBlockEntity crucible) implements FluidExtractable {
-
-        @Override
-        public FluidVolume attemptExtraction(FluidFilter filter, FluidAmount maxAmount, Simulation simulation) {
-            if (!crucible.contents.isEmpty() && maxAmount.isGreaterThan(FluidAmount.ZERO) && filter != null && filter.matches(crucible.contents.fluidKey)) {
-                var toDrain = maxAmount.min(crucible.contents.amount());
-                if (simulation.isAction()) {
-                    var toReturn = crucible.contents.copy().split(toDrain);
-                    crucible.markDirty();
-                    return toReturn;
-                } else {
-                    return crucible.contents.copy().fluidKey.withAmount(toDrain);
-                }
-            } else {
-                return FluidKeys.EMPTY.withAmount(FluidAmount.ZERO);
-            }
-        }
-
+    
+    public long getContained() {
+        return contained;
     }
-
-    /**
-     * Item Handling
-     */
-    static record ItemInserter(CrucibleBlockEntity crucible) implements ItemInsertable {
-
+    
+    private class CrucibleFluidStorage extends SnapshotParticipant<CrucibleSnapshot> implements SingleSlotStorage<FluidVariant>, ExtractionOnlyStorage<FluidVariant> {
         @Override
-        public ItemStack attemptInsertion(ItemStack stack, Simulation simulation) {
-            var result = (crucible.isStone ? CRUCIBLE_STONE : CRUCIBLE_WOOD).getResult(stack.getItem());
-            if (result == null) {
-                return stack;
-            }
-            if ((crucible.contents.canMerge(result) || crucible.contents.isEmpty())
-                    && (crucible.queued.canMerge(result) || crucible.queued.isEmpty())
-                    && crucible.contents.copy().amount().add(crucible.queued.amount()).add(result.amount()).isLessThanOrEqual(crucible.getMaxCapacity())) {
-                if (simulation.isAction()) {
-                    crucible.queued = result.fluidKey.withAmount(crucible.queued.amount().add(result.amount()));
-                    if (stack.getItem() instanceof BlockItem) {
-                        crucible.render = stack.copy();
-                    } else if (crucible.isStone) {
-                        crucible.render = ItemUtils.asStack(Blocks.COBBLESTONE);
-                    } else {
-                        crucible.render = ItemUtils.asStack(Blocks.OAK_LEAVES);
-                    }
-                    crucible.markDirty();
-                }
-                return ItemUtils.ofSize(stack, stack.getCount() - 1);
-            }
-            return stack;
+        public long extract(FluidVariant resource, long maxAmount, TransactionContext transaction) {
+            if (!resource.equals(fluid))
+                return 0;
+            
+            var amount = Math.min(maxAmount, contained);
+            updateSnapshots(transaction);
+            contained -= amount;
+            return amount;
+        }
+    
+        @Override
+        public boolean isResourceBlank() {
+            return fluid.isBlank();
+        }
+    
+        @Override
+        public FluidVariant getResource() {
+            return fluid;
+        }
+    
+        @Override
+        public long getAmount() {
+            return contained + queued;
+        }
+    
+        @Override
+        public long getCapacity() {
+            return getMaxCapacity();
+        }
+    
+        @Override
+        protected CrucibleSnapshot createSnapshot() {
+            return new CrucibleSnapshot(contained, queued, fluid, renderStack);
+        }
+    
+        @Override
+        protected void readSnapshot(CrucibleSnapshot snapshot) {
+            contained = snapshot.contained;
+            queued = snapshot.queued;
+            fluid = snapshot.fluid;
+            renderStack = snapshot.renderStack.copy();
         }
     }
-
-    static record CrucibleInventory(CrucibleBlockEntity crucible) implements SidedInventory {
-
+    
+    private class CrucibleItemStorage extends SnapshotParticipant<CrucibleSnapshot> implements InsertionOnlyStorage<ItemVariant>, SingleSlotStorage<ItemVariant> {
         @Override
-        public ItemStack getStack(int slot) {
-            return ItemStack.EMPTY;
+        public long insert(ItemVariant resource, long maxAmount, TransactionContext transaction) {
+            var recipeOptional = CrucibleRecipe.find(resource.getItem(), isStone, world);
+            if (recipeOptional.isEmpty()) return 0;
+            var recipe = recipeOptional.get();
+            if (!recipe.getFluid().equals(fluid)) return 0;
+            
+            var amount = Math.min(recipe.getAmount(), getMaxCapacity() - contained - queued);
+            updateSnapshots(transaction);
+            queued += amount;
+            renderStack = resource.toStack();
+            return amount;
         }
-
+    
         @Override
-        public void markDirty() {
-            crucible.markDirty();
+        public boolean isResourceBlank() {
+            return true;
         }
-
+    
         @Override
-        public void clear() {
-
+        public ItemVariant getResource() {
+            return ItemVariant.blank();
         }
-
+    
         @Override
-        public void setStack(int slot, ItemStack stack) {
-            if (!stack.isEmpty()) {
-                crucible.itemInserter.attemptInsertion(stack, Simulation.ACTION);
-            }
+        public long getAmount() {
+            return 0;
         }
-
+    
         @Override
-        public ItemStack removeStack(int slot) {
-            return ItemStack.EMPTY;
-        }
-
-        @Override
-        public boolean canPlayerUse(PlayerEntity player) {
-            return false;
-        }
-
-        @Override
-        public int[] getAvailableSlots(Direction side) {
-            return new int[]{0};
-        }
-
-        @Override
-        public int size() {
+        public long getCapacity() {
             return 1;
         }
-
+    
         @Override
-        public boolean canExtract(int slot, ItemStack stack, Direction dir) {
-            return false;
+        protected CrucibleSnapshot createSnapshot() {
+            return new CrucibleSnapshot(contained, queued, fluid, renderStack.copy());
         }
-
+    
         @Override
-        public ItemStack removeStack(int slot, int amount) {
-            return ItemStack.EMPTY;
+        protected void readSnapshot(CrucibleSnapshot snapshot) {
+            contained = snapshot.contained;
+            queued = snapshot.queued;
+            fluid = snapshot.fluid;
+            renderStack = snapshot.renderStack.copy();
         }
-
+    
+        // Compiler dumb
         @Override
-        public boolean isEmpty() {
-            return crucible.contents.copy().amount().add(crucible.queued.amount()).isLessThan(crucible.getMaxCapacity());
-        }
-
-        @Override
-        public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
-            if (stack == null) {
-                return false;
-            }
-            return (crucible.itemInserter.attemptInsertion(stack, Simulation.SIMULATE).getCount() != stack.getCount());
+        public long extract(ItemVariant resource, long maxAmount, TransactionContext transaction) {
+            return InsertionOnlyStorage.super.extract(resource, maxAmount, transaction);
         }
     }
-
+    
+    private static record CrucibleSnapshot(long contained, long queued, FluidVariant fluid, ItemStack renderStack){}
 }

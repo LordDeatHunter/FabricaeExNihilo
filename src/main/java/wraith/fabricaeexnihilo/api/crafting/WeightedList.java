@@ -10,7 +10,10 @@ import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class WeightedList {
     public static final Codec<WeightedList> CODEC = Codec.unboundedMap(Registry.BLOCK.getCodec(), Codec.INT)

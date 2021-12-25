@@ -4,8 +4,8 @@ import net.minecraft.client.util.ModelIdentifier;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.modules.ore.ChunkMaterial;
 import wraith.fabricaeexnihilo.modules.ore.ChunkShape;
-import wraith.fabricaeexnihilo.modules.ore.PieceShape;
 import wraith.fabricaeexnihilo.modules.ore.OreProperties;
+import wraith.fabricaeexnihilo.modules.ore.PieceShape;
 import wraith.fabricaeexnihilo.util.Color;
 
 import java.util.List;

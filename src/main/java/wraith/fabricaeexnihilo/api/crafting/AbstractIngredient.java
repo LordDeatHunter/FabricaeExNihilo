@@ -1,18 +1,15 @@
 package wraith.fabricaeexnihilo.api.crafting;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 import com.google.gson.JsonElement;
 import com.mojang.datafixers.util.Either;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.tag.Tag;
-import net.minecraft.util.ActionResult;
 
-import java.util.*;
-import java.util.function.BiFunction;
+import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.StreamSupport;
 
 public abstract class AbstractIngredient<T> implements Predicate<T> {
     protected final Either<T, Tag<T>> value;

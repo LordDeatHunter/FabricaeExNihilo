@@ -1,0 +1,7 @@
+{
+  "type": "fabricaeexnihilo:crucible",
+  "input": "minecraft:netherrack",
+  "amount": 40500,
+  "fluid": "minecraft:lava",
+  "isStone": true
+}

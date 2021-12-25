@@ -1,6 +1,5 @@
 package wraith.fabricaeexnihilo.mixins.client;
 
-import java.util.List;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumer;
@@ -12,6 +11,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import wraith.fabricaeexnihilo.client.BlockModelRendererFlags;
+
+import java.util.List;
 
 @Environment(EnvType.CLIENT)
 @Mixin(BlockModelRenderer.class)

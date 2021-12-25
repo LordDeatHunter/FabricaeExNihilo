@@ -1,0 +1,5 @@
+{
+  "type": "fabricaeexnihilo:crucible_heat",
+  "block": "minecraft:torch",
+  "heat": 1
+}

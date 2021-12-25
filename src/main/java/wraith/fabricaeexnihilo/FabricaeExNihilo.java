@@ -27,8 +27,6 @@ import wraith.fabricaeexnihilo.api.crafting.ItemIngredient;
 import wraith.fabricaeexnihilo.api.crafting.WeightedList;
 import wraith.fabricaeexnihilo.api.recipes.SieveRecipe;
 import wraith.fabricaeexnihilo.api.recipes.ToolRecipe;
-import wraith.fabricaeexnihilo.api.recipes.crucible.CrucibleHeatRecipe;
-import wraith.fabricaeexnihilo.api.recipes.crucible.CrucibleRecipe;
 import wraith.fabricaeexnihilo.api.recipes.witchwater.WitchWaterEntityRecipe;
 import wraith.fabricaeexnihilo.api.recipes.witchwater.WitchWaterWorldRecipe;
 import wraith.fabricaeexnihilo.api.registry.FabricaeExNihiloRegistries;
@@ -39,7 +37,10 @@ import wraith.fabricaeexnihilo.json.ingredient.EntityTypeIngredientJson;
 import wraith.fabricaeexnihilo.json.ingredient.FluidIngredientJson;
 import wraith.fabricaeexnihilo.json.ingredient.ItemIngredientJson;
 import wraith.fabricaeexnihilo.json.other.*;
-import wraith.fabricaeexnihilo.json.recipe.*;
+import wraith.fabricaeexnihilo.json.recipe.SieveRecipeJson;
+import wraith.fabricaeexnihilo.json.recipe.ToolRecipeJson;
+import wraith.fabricaeexnihilo.json.recipe.WitchWaterEntityRecipeJson;
+import wraith.fabricaeexnihilo.json.recipe.WitchWaterWorldRecipeJson;
 import wraith.fabricaeexnihilo.modules.*;
 import wraith.fabricaeexnihilo.modules.sieves.MeshProperties;
 import wraith.fabricaeexnihilo.util.ARRPUtils;
@@ -136,9 +137,6 @@ public class FabricaeExNihilo implements ModInitializer {
                 /*
                  * Recipes
                  */
-                // Crucible
-                .registerTypeAdapter(CrucibleHeatRecipe.class, CrucibleHeatRecipeJson.INSTANCE)
-                .registerTypeAdapter(CrucibleRecipe.class, CrucibleRecipeJson.INSTANCE)
                 // Witchwater
                 .registerTypeAdapter(WitchWaterWorldRecipe.class, WitchWaterWorldRecipeJson.INSTANCE)
                 .registerTypeAdapter(WitchWaterEntityRecipe.class, WitchWaterEntityRecipeJson.INSTANCE)
@@ -167,9 +165,6 @@ public class FabricaeExNihilo implements ModInitializer {
                 /*
                  * Recipes
                  */
-                // Crucible
-                .registerTypeAdapter(CrucibleHeatRecipe.class, CrucibleHeatRecipeJson.INSTANCE)
-                .registerTypeAdapter(CrucibleRecipe.class, CrucibleRecipeJson.INSTANCE)
                 // Witchwater
                 .registerTypeAdapter(WitchWaterWorldRecipe.class, WitchWaterWorldRecipeJson.INSTANCE)
                 .registerTypeAdapter(WitchWaterEntityRecipe.class, WitchWaterEntityRecipeJson.INSTANCE)

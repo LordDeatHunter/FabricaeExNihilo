@@ -1,12 +1,12 @@
 package wraith.fabricaeexnihilo.mixins;
 
-import wraith.fabricaeexnihilo.impl.EnchantmentTagManager;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import wraith.fabricaeexnihilo.impl.EnchantmentTagManager;
 
 @Mixin(Enchantment.class)
 public abstract class EnchantmentMixin {

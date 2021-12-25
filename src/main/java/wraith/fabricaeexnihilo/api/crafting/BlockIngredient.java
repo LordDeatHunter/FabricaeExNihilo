@@ -5,14 +5,13 @@ import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.JsonOps;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.fabricmc.fabric.api.tag.TagFactory;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.network.PacketByteBuf;
@@ -22,7 +21,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 
-import java.util.*;
+import java.util.List;
+import java.util.function.Function;
 
 public class BlockIngredient extends AbstractIngredient<Block> {
     public static final Codec<BlockIngredient> CODEC = Codec.PASSTHROUGH
@@ -59,6 +59,10 @@ public class BlockIngredient extends AbstractIngredient<Block> {
     }
     
     public static BlockIngredient EMPTY = new BlockIngredient((Block)null);
+    
+    public ItemStack getDisplayStack() {
+        return value.map(Function.identity(), tag -> tag.values().get(0)).asItem().getDefaultStack();
+    }
     
     @Override
     public JsonElement toJson() {

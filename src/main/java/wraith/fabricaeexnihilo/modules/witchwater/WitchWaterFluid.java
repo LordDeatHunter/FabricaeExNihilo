@@ -4,7 +4,6 @@ import net.fabricmc.fabric.api.tag.TagFactory;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BucketItem;
 import net.minecraft.tag.Tag;
-import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.modules.ModFluids;
 import wraith.fabricaeexnihilo.modules.base.AbstractFluid;
 import wraith.fabricaeexnihilo.modules.base.FluidSettings;

@@ -4,12 +4,12 @@ import alexiil.mc.lib.attributes.fluid.amount.FluidAmount;
 import alexiil.mc.lib.attributes.fluid.mixin.api.IBucketItem;
 import alexiil.mc.lib.attributes.fluid.volume.FluidKey;
 import alexiil.mc.lib.attributes.fluid.volume.FluidKeys;
-import wraith.fabricaeexnihilo.modules.fluids.MilkFluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.MilkBucketItem;
 import org.spongepowered.asm.mixin.Mixin;
+import wraith.fabricaeexnihilo.modules.fluids.MilkFluid;
 
 @Mixin(MilkBucketItem.class)
 public class MilkBucketMixin extends Item implements IBucketItem {

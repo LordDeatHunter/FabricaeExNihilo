@@ -72,12 +72,9 @@ public class PluginEntry implements REIClientPlugin {
                 registry.add(new ToolDisplay(recipe, CROOK)));
         FabricaeExNihiloRegistries.HAMMER.getREIRecipes().forEach(recipe ->
                 registry.add(new ToolDisplay(recipe, HAMMER)));
-        FabricaeExNihiloRegistries.CRUCIBLE_HEAT.getREIRecipes().forEach(recipe ->
-                registry.add(new CrucibleHeatDisplay(recipe)));
-        FabricaeExNihiloRegistries.CRUCIBLE_WOOD.getREIRecipes().forEach(recipe ->
-                registry.add(new CrucibleDisplay(recipe, WOOD_CRUCIBLE)));
-        FabricaeExNihiloRegistries.CRUCIBLE_STONE.getREIRecipes().forEach(recipe ->
-                registry.add(new CrucibleDisplay(recipe, STONE_CRUCIBLE)));
+        //FabricaeExNihiloRegistries.CRUCIBLE_HEAT.getREIRecipes().forEach(recipe -> registry.add(new CrucibleHeatDisplay(recipe)));
+        //FabricaeExNihiloRegistries.CRUCIBLE_WOOD.getREIRecipes().forEach(recipe -> registry.add(new CrucibleDisplay(recipe, WOOD_CRUCIBLE)));
+        //FabricaeExNihiloRegistries.CRUCIBLE_STONE.getREIRecipes().forEach(recipe -> registry.add(new CrucibleDisplay(recipe, STONE_CRUCIBLE)));
         //FabricaeExNihiloRegistries.BARREL_ALCHEMY.getREIRecipes().forEach(recipe -> registry.add(new AlchemyDisplay(recipe)));
         //FabricaeExNihiloRegistries.BARREL_COMPOST.getREIRecipes().forEach(recipe -> registry.add(new CompostDisplay(recipe)));
         //FabricaeExNihiloRegistries.BARREL_LEAKING.getREIRecipes().forEach(recipe -> registry.add(new LeakingDisplay(recipe)));

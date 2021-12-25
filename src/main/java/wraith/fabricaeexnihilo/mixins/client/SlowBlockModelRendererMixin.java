@@ -1,6 +1,5 @@
 package wraith.fabricaeexnihilo.mixins.client;
 
-import java.util.List;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumer;
@@ -9,8 +8,11 @@ import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import wraith.fabricaeexnihilo.client.BlockModelRendererFlags;
+
+import java.util.List;
 
 @Environment(EnvType.CLIENT)
 @Mixin(BlockModelRenderer.class)

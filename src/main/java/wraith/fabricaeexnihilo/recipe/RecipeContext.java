@@ -1,6 +1,5 @@
 package wraith.fabricaeexnihilo.recipe;
 
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import wraith.fabricaeexnihilo.util.EmptyInventory;

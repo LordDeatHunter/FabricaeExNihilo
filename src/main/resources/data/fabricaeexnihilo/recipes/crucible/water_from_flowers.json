@@ -1,0 +1,7 @@
+{
+  "type": "fabricaeexnihilo:crucible",
+  "input": "#minecraft:small_flowers",
+  "amount": 8100,
+  "fluid": "minecraft:water",
+  "isStone": false
+}

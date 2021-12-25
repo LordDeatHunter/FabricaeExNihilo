@@ -1,12 +1,13 @@
 package wraith.fabricaeexnihilo.util;
 
-import java.util.Objects;
-import java.util.stream.Stream;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.api.VersionParsingException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
+import java.util.stream.Stream;
 
 // If a mod ever breaks a mixin you can setup an entry here and in Plugin with a slower, more compatible mixin.
 public final class MixinCompatibility{

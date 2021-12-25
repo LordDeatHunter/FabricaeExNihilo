@@ -1,0 +1,6 @@
+{
+  "type": "fabricaeexnihilo:crucible_heat",
+  "block": "techreborn:nitro_diesel",
+  "heat": 16,
+  "requiredMod": "techreborn"
+}

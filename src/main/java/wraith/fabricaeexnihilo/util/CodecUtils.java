@@ -33,7 +33,7 @@ public class CodecUtils {
                                     .forGetter(TransferVariant::getNbt)).apply(instance1, FluidVariant::of)),
                     Registry.FLUID.getCodec()
                             .xmap(FluidVariant::of, FluidVariant::getFluid))
-            .xmap(CodecUtils::flattenEither, variant -> variant.hasNbt() ? Either.left(variant) : Either.right(variant));
+            .xmap(CodecUtils::flattenEither, Either::left);
     
     public static final Codec<ItemStack> ITEM_STACK = Codec.either(RecordCodecBuilder.<ItemStack>create(instance1 -> instance1.group(
                             Registry.ITEM.getCodec()
@@ -52,7 +52,7 @@ public class CodecUtils {
                     })),
                     Registry.ITEM.getCodec()
                             .xmap(Item::getDefaultStack, ItemStack::getItem))
-            .xmap(CodecUtils::flattenEither, stack -> stack.hasNbt() ? Either.left(stack) : Either.right(stack));
+            .xmap(CodecUtils::flattenEither, Either::left);
     
     public static <T> T deserializeNbt(Codec<T> codec, NbtElement data) {
         return deserialize(codec, NbtOps.INSTANCE, data);

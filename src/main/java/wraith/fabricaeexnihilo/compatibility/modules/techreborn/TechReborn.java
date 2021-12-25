@@ -16,21 +16,7 @@ import static wraith.fabricaeexnihilo.util.ItemUtils.getExNihiloBlock;
 import static wraith.fabricaeexnihilo.util.ItemUtils.getExNihiloItem;
 
 public class TechReborn implements FabricaeExNihiloModule {
-    @Override
-    public void registerCrucibleHeat(CrucibleHeatRecipeRegistry registry) {
-        registry.register(Registry.FLUID.get(new Identifier("techreborn:nitro_diesel")), 16);
-    }
-
-    @Override
-    public void registerCrucibleStone(CrucibleRecipeRegistry registry) {
-
-    }
-
-    @Override
-    public void registerCrucibleWood(CrucibleRecipeRegistry registry) {
-
-    }
-
+    
     @Override
     public void registerMesh(MeshRecipeRegistry registry) {
         registry.register(

@@ -5,7 +5,6 @@ import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.JsonOps;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.fabricmc.fabric.api.tag.TagFactory;
@@ -24,7 +23,8 @@ import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
 
 public class EntityTypeIngredient extends AbstractIngredient<EntityType<?>> {
     public static final Codec<EntityTypeIngredient> CODEC = Codec.PASSTHROUGH

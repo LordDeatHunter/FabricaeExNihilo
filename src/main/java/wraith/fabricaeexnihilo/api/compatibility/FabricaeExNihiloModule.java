@@ -3,11 +3,6 @@ package wraith.fabricaeexnihilo.api.compatibility;
 import wraith.fabricaeexnihilo.api.registry.*;
 
 public interface FabricaeExNihiloModule {
-    // Crucible Registries
-    void registerCrucibleHeat(CrucibleHeatRecipeRegistry registry);
-    void registerCrucibleStone(CrucibleRecipeRegistry registry);
-    void registerCrucibleWood(CrucibleRecipeRegistry registry);
-
     // Sieve Registries
     void registerMesh(MeshRecipeRegistry registry);
     void registerSieve(SieveRecipeRegistry registry);

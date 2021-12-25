@@ -8,6 +8,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 import wraith.fabricaeexnihilo.util.ItemUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

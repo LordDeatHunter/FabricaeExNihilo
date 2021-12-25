@@ -4,8 +4,6 @@ import net.fabricmc.loader.api.FabricLoader;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.compatibility.modules.MetaModule;
 import wraith.fabricaeexnihilo.registry.ToolRecipeRegistryImpl;
-import wraith.fabricaeexnihilo.registry.crucible.CrucibleHeatRecipeRegistryImpl;
-import wraith.fabricaeexnihilo.registry.crucible.CrucibleRecipeRegistryImpl;
 import wraith.fabricaeexnihilo.registry.sieve.MeshRecipeRegistryImpl;
 import wraith.fabricaeexnihilo.registry.sieve.OreRecipeRegistryImpl;
 import wraith.fabricaeexnihilo.registry.sieve.SieveRecipeRegistryImpl;
@@ -26,10 +24,7 @@ public final class FabricaeExNihiloRegistries {
     public static WitchWaterEntityRecipeRegistry WITCHWATER_ENTITY = new WitchWaterEntityRecipeRegistryImpl();
     public static ToolRecipeRegistry HAMMER = new ToolRecipeRegistryImpl();
     public static ToolRecipeRegistry CROOK = new ToolRecipeRegistryImpl();
-    public static CrucibleHeatRecipeRegistry CRUCIBLE_HEAT = new CrucibleHeatRecipeRegistryImpl();
-    public static CrucibleRecipeRegistry CRUCIBLE_STONE = new CrucibleRecipeRegistryImpl();
-    public static CrucibleRecipeRegistry CRUCIBLE_WOOD = new CrucibleRecipeRegistryImpl();
-
+    
     private static final File CONFIG_DIR = new File(FabricLoader.getInstance().getConfigDir().toFile(), "fabricaeexnihilo");
 
     static {
@@ -38,41 +33,14 @@ public final class FabricaeExNihiloRegistries {
         }
     }
 
+    // TODO: Reimplement config for recipes. Could use a custom resource condition once they are added to fapi
     public static void loadRecipeRegistries() {
         loadToolRegistries();
-        if(FabricaeExNihilo.CONFIG.modules.crucibles.enabled) {
-            loadCrucibleRegistries();
-        }
         if(FabricaeExNihilo.CONFIG.modules.sieves.enabled) {
             loadSieveRegistry();
         }
         if(FabricaeExNihilo.CONFIG.modules.witchwater.enabled) {
             loadWitchWaterRegistries();
-        }
-        if(FabricaeExNihilo.CONFIG.modules.barrels.enabled) {
-            loadBarrelRegistries();
-        }
-    }
-
-    private static void loadBarrelRegistries() {
-        // TODO: Reimplement this thing...
-        if(FabricaeExNihilo.CONFIG.modules.barrels.enableAlchemy) {
-            //BARREL_ALCHEMY = AlchemyRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"barrel_alchemy.json"));
-        }
-        if(FabricaeExNihilo.CONFIG.modules.barrels.enableCompost) {
-            //BARREL_COMPOST = CompostRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"barrel_compost.json"));
-        }
-        if(FabricaeExNihilo.CONFIG.modules.barrels.enableMilking) {
-            //BARREL_MILKING = MilkingRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"barrel_milking.json"));
-        }
-        if(FabricaeExNihilo.CONFIG.modules.barrels.enableLeaking) {
-            //BARREL_LEAKING = LeakingRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"barrel_leaking.json"));
-        }
-        if(FabricaeExNihilo.CONFIG.modules.barrels.enableTransforming) {
-            //BARREL_TRANSFORM = FluidTransformRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"barrel_transforming.json"));
-        }
-        if(FabricaeExNihilo.CONFIG.modules.barrels.enableFluidOnTop) {
-            //BARREL_ON_TOP = FluidOnTopRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"barrel_on_top.json"));
         }
     }
 
@@ -111,27 +79,6 @@ public final class FabricaeExNihiloRegistries {
     private static void loadCrookRegistry() {
         CROOK = ToolRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"tool_crook.json"), MetaModule.INSTANCE::registerCrook);
         FabricaeExNihilo.LOGGER.info("Loaded Crook Registry.");
-    }
-
-    private static void loadCrucibleRegistries() {
-        loadCrucibleHeatRegistry();
-        loadCrucibleStoneRegistry();
-        loadCrucibleWoodRegistry();
-    }
-
-    private static void loadCrucibleHeatRegistry() {
-        CRUCIBLE_HEAT = CrucibleHeatRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"crucible_heat.json"));
-        FabricaeExNihilo.LOGGER.info("Loaded Heat Registry.");
-    }
-
-    private static void loadCrucibleStoneRegistry() {
-        CRUCIBLE_STONE = CrucibleRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"crucible_stone.json"), MetaModule.INSTANCE::registerCrucibleStone);
-        FabricaeExNihilo.LOGGER.info("Loaded Stone Crucible Registry.");
-    }
-
-    private static void loadCrucibleWoodRegistry() {
-        CRUCIBLE_WOOD = CrucibleRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"crucible_wood.json"), MetaModule.INSTANCE::registerCrucibleWood);
-        FabricaeExNihilo.LOGGER.info("Loaded Wood Crucible Registry.");
     }
 
     private static void loadSieveRegistry() {

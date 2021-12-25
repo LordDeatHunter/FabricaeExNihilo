@@ -16,21 +16,6 @@ public class MetaModule implements FabricaeExNihiloModule {
     public List<FabricaeExNihiloModule> modules = new ArrayList<>();
 
     @Override
-    public void registerCrucibleHeat(@NotNull CrucibleHeatRecipeRegistry registry) {
-        modules.forEach(module -> module.registerCrucibleHeat(registry));
-    }
-
-    @Override
-    public void registerCrucibleStone(@NotNull CrucibleRecipeRegistry registry) {
-        modules.forEach(module -> module.registerCrucibleStone(registry));
-    }
-
-    @Override
-    public void registerCrucibleWood(@NotNull CrucibleRecipeRegistry registry) {
-        modules.forEach(module -> module.registerCrucibleWood(registry));
-    }
-
-    @Override
     public void registerOres(@NotNull OreRecipeRegistry registry) {
         modules.forEach(module -> module.registerOres(registry));
     }

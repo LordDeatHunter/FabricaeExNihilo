@@ -52,7 +52,7 @@ public record CrucibleCategory(CategoryIdentifier<? extends CrucibleDisplay> cru
 
         var inputs = display.getInputEntries().get(0);
         var outputs = display.getOutputEntries().get(0);
-        var output = display.recipe().output();
+        var output = display.recipe().getAmount();
 
         // Input
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + INPUT_X, bounds.getMinY() + INPUT_Y)).entries(inputs));
@@ -64,7 +64,7 @@ public record CrucibleCategory(CategoryIdentifier<? extends CrucibleDisplay> cru
 
 
         // Amount Text Value
-        var text = Widgets.createLabel(new Point(0, 0), new LiteralText(output.localizeAmount()));
+        var text = Widgets.createLabel(new Point(0, 0), new LiteralText(String.valueOf(output)));
         text.setPoint(new Point(bounds.getMinX() + WIDTH - MARGIN - text.getBounds().getMaxX(), bounds.getMinY() + MARGIN + 18 - text.getBounds().getMaxY() - text.getBounds().getMaxY() / 2));
 
         widgets.add(text);

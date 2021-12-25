@@ -1,0 +1,5 @@
+{
+  "type": "fabricaeexnihilo:crucible_heat",
+  "block": "#fabricaeexnihilo:true_lava",
+  "heat": 4
+}

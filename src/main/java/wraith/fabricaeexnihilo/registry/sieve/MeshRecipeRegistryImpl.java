@@ -2,7 +2,6 @@ package wraith.fabricaeexnihilo.registry.sieve;
 
 import com.google.common.reflect.TypeToken;
 import net.minecraft.util.registry.Registry;
-import wraith.fabricaeexnihilo.api.recipes.crucible.CrucibleRecipe;
 import wraith.fabricaeexnihilo.api.registry.MeshRecipeRegistry;
 import wraith.fabricaeexnihilo.compatibility.modules.MetaModule;
 import wraith.fabricaeexnihilo.modules.sieves.MeshProperties;
@@ -66,7 +65,7 @@ public class MeshRecipeRegistryImpl extends AbstractRegistry<List<MeshProperties
         }
     }
 
-    private static final Type SERIALIZATION_TYPE = new TypeToken<List<CrucibleRecipe>>(){}.getType();
+    private static final Type SERIALIZATION_TYPE = new TypeToken<List<MeshProperties>>(){}.getType();
 
     public static MeshRecipeRegistry fromJson(File file) {
         return fromJson(file, MeshRecipeRegistryImpl::new, MetaModule.INSTANCE::registerMesh);
