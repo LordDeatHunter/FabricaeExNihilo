@@ -1,0 +1,7 @@
+{
+  "type": "fabricaeexnihilo:compost",
+  "result": "minecraft:dirt",
+  "input": "#c:veggies",
+  "increment": 0.0625,
+  "color": "FFFF55"
+}

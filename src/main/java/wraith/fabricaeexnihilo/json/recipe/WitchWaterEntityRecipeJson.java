@@ -18,7 +18,7 @@ public final class WitchWaterEntityRecipeJson extends BaseJson<WitchWaterEntityR
     @Override
     public WitchWaterEntityRecipe deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         var obj = json.getAsJsonObject();
-        return new WitchWaterEntityRecipe(EntityTypeIngredient.fromJson(obj.get("target"), context),
+        return new WitchWaterEntityRecipe(EntityTypeIngredient.fromJson(obj.get("target")),
                 obj.has("profession") ? VillagerProfessionJson.INSTANCE.deserialize(obj.get("profession"), VillagerProfessionJson.INSTANCE.getTypeToken(), context) : null,
                 context.deserialize(obj.get("spawn"), EntityTypeJson.INSTANCE.getTypeToken())
         );
@@ -27,7 +27,7 @@ public final class WitchWaterEntityRecipeJson extends BaseJson<WitchWaterEntityR
     @Override
     public JsonElement serialize(WitchWaterEntityRecipe src, Type typeOfSrc, JsonSerializationContext context) {
         var obj = new JsonObject();
-        obj.add("target", src.target().toJson(context));
+        obj.add("target", src.target().toJson());
         if (src.profession() != null) {
             obj.add("profession", context.serialize(src.profession()));
         }

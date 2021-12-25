@@ -78,18 +78,12 @@ public class PluginEntry implements REIClientPlugin {
                 registry.add(new CrucibleDisplay(recipe, WOOD_CRUCIBLE)));
         FabricaeExNihiloRegistries.CRUCIBLE_STONE.getREIRecipes().forEach(recipe ->
                 registry.add(new CrucibleDisplay(recipe, STONE_CRUCIBLE)));
-        FabricaeExNihiloRegistries.BARREL_ALCHEMY.getREIRecipes().forEach(recipe ->
-                registry.add(new AlchemyDisplay(recipe)));
-        FabricaeExNihiloRegistries.BARREL_COMPOST.getREIRecipes().forEach(recipe ->
-                registry.add(new CompostDisplay(recipe)));
-        FabricaeExNihiloRegistries.BARREL_LEAKING.getREIRecipes().forEach(recipe ->
-                registry.add(new LeakingDisplay(recipe)));
-        FabricaeExNihiloRegistries.BARREL_ON_TOP.getREIRecipes().forEach(recipe ->
-                registry.add(new FluidOnTopDisplay(recipe)));
-        FabricaeExNihiloRegistries.BARREL_MILKING.getREIRecipes().forEach(recipe ->
-                registry.add(new MilkingDisplay(recipe)));
-        FabricaeExNihiloRegistries.BARREL_TRANSFORM.getREIRecipes().forEach(recipe ->
-                registry.add(new TransformingDisplay(recipe)));
+        //FabricaeExNihiloRegistries.BARREL_ALCHEMY.getREIRecipes().forEach(recipe -> registry.add(new AlchemyDisplay(recipe)));
+        //FabricaeExNihiloRegistries.BARREL_COMPOST.getREIRecipes().forEach(recipe -> registry.add(new CompostDisplay(recipe)));
+        //FabricaeExNihiloRegistries.BARREL_LEAKING.getREIRecipes().forEach(recipe -> registry.add(new LeakingDisplay(recipe)));
+        //FabricaeExNihiloRegistries.BARREL_ON_TOP.getREIRecipes().forEach(recipe -> registry.add(new FluidOnTopDisplay(recipe)));
+        //FabricaeExNihiloRegistries.BARREL_MILKING.getREIRecipes().forEach(recipe -> registry.add(new MilkingDisplay(recipe)));
+        //FabricaeExNihiloRegistries.BARREL_TRANSFORM.getREIRecipes().forEach(recipe -> registry.add(new TransformingDisplay(recipe)));
         FabricaeExNihiloRegistries.WITCHWATER_ENTITY.getREIRecipes().forEach(recipe ->
                 registry.add(new WitchWaterEntityDisplay(recipe)));
         FabricaeExNihiloRegistries.WITCHWATER_WORLD.getREIRecipes().forEach(recipe ->

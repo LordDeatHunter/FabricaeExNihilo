@@ -1,0 +1,7 @@
+{
+  "type": "fabricaeexnihilo:leaking",
+  "block": "minecraft:podzol",
+  "fluid": "#fabricaeexnihilo:witchwater",
+  "amount": 40500,
+  "result": "minecraft:mycelium"
+}

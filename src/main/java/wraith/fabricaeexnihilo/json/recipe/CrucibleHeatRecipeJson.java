@@ -18,8 +18,8 @@ public final class CrucibleHeatRecipeJson extends BaseJson<CrucibleHeatRecipe> {
     public CrucibleHeatRecipe deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         var obj = json.getAsJsonObject();
         return new CrucibleHeatRecipe(
-            obj.has("block") ? BlockIngredient.fromJson(obj.get("block"), context) : BlockIngredient.EMPTY,
-            obj.has("fluid") ? FluidIngredient.fromJson(obj.get("fluid"), context) : FluidIngredient.EMPTY,
+            obj.has("block") ? BlockIngredient.fromJson(obj.get("block")) : BlockIngredient.EMPTY,
+            obj.has("fluid") ? FluidIngredient.fromJson(obj.get("fluid")) : FluidIngredient.EMPTY,
             obj.get("heat").getAsInt()
         );
     }
@@ -28,10 +28,10 @@ public final class CrucibleHeatRecipeJson extends BaseJson<CrucibleHeatRecipe> {
     public JsonElement serialize(CrucibleHeatRecipe src, Type typeOfSrc, JsonSerializationContext context) {
         var obj = new JsonObject();
         if(!src.ingredient().isEmpty()) {
-            obj.add("block", src.ingredient().toJson(context));
+            obj.add("block", src.ingredient().toJson());
         }
         if(!src.fluid().isEmpty()) {
-            obj.add("fluid", src.fluid().toJson(context));
+            obj.add("fluid", src.fluid().toJson());
         }
         obj.add("heat", context.serialize(src.value()));
         return obj;

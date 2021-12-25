@@ -1,16 +1,20 @@
 package wraith.fabricaeexnihilo.api.crafting;
 
 import com.google.common.collect.Streams;
+import com.mojang.serialization.Codec;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Pair;
+import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.util.*;
 
 public class WeightedList {
+    public static final Codec<WeightedList> CODEC = Codec.unboundedMap(Registry.BLOCK.getCodec(), Codec.INT)
+            .xmap(WeightedList::new, WeightedList::getValues);
 
     private final Map<Block, Integer> values;
     private int totalWeight;

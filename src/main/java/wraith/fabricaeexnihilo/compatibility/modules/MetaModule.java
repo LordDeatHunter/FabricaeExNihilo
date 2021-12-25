@@ -15,33 +15,6 @@ public class MetaModule implements FabricaeExNihiloModule {
 
     public List<FabricaeExNihiloModule> modules = new ArrayList<>();
 
-    public void registerAlchemy(@NotNull AlchemyRecipeRegistry registry) {
-        modules.forEach(module -> module.registerAlchemy(registry));
-    }
-
-    public void registerCompost(@NotNull CompostRecipeRegistry registry) {
-        modules.forEach(module -> module.registerCompost(registry));
-    }
-
-    public void registerLeaking(@NotNull LeakingRecipeRegistry registry) {
-        modules.forEach(module -> module.registerLeaking(registry));
-    }
-
-    @Override
-    public void registerFluidOnTop(@NotNull FluidOnTopRecipeRegistry registry) {
-        modules.forEach(module -> module.registerFluidOnTop(registry));
-    }
-
-    @Override
-    public void registerFluidTransform(@NotNull FluidTransformRecipeRegistry registry) {
-        modules.forEach(module -> module.registerFluidTransform(registry));
-    }
-
-    @Override
-    public void registerMilking(@NotNull MilkingRecipeRegistry registry) {
-        modules.forEach(module -> module.registerMilking(registry));
-    }
-
     @Override
     public void registerCrucibleHeat(@NotNull CrucibleHeatRecipeRegistry registry) {
         modules.forEach(module -> module.registerCrucibleHeat(registry));

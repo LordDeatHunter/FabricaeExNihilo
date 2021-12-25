@@ -1,51 +1,68 @@
 package wraith.fabricaeexnihilo.api.crafting;
 
 import alexiil.mc.lib.attributes.fluid.volume.FluidVolume;
-import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
+import com.mojang.datafixers.util.Either;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.Dynamic;
+import com.mojang.serialization.JsonOps;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.fabricmc.fabric.api.tag.TagFactory;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FluidBlock;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.NbtString;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.tag.ServerTagManagerHolder;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.util.ItemUtils;
-import wraith.fabricaeexnihilo.util.RegistryUtils;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
 
+@SuppressWarnings("UnstableApiUsage")
 public class FluidIngredient extends AbstractIngredient<Fluid> {
-
-    public FluidIngredient(Collection<Tag.Identified<Fluid>> tags, Set<Fluid> matches) {
-        super(tags, matches);
+    public static final Codec<FluidIngredient> CODEC = Codec.PASSTHROUGH
+            .xmap(dynamic -> {
+                var string = dynamic.asString().getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
+                if (string.startsWith("#")) {
+                    return new FluidIngredient(TagFactory.FLUID.create(new Identifier(string.substring(1))));
+                } else {
+                    return new FluidIngredient(Registry.FLUID.get(new Identifier(string)));
+                }
+            }, itemIngredient -> {
+                var string = itemIngredient.value.map(entry -> Registry.FLUID.getId(entry).toString(),
+                        tag -> "#" + ServerTagManagerHolder.getTagManager()
+                                .getOrCreateTagGroup(Registry.FLUID_KEY)
+                                .getUncheckedTagId(tag));
+                return new Dynamic<>(NbtOps.INSTANCE, NbtString.of(string));
+            });
+    
+    public FluidIngredient(Fluid value) {
+        super(value);
     }
-
-    @SafeVarargs
-    public FluidIngredient(Tag.Identified<Fluid>... tags) {
-        this(Arrays.asList(tags), new HashSet<>());
+    
+    public FluidIngredient(Tag<Fluid> value) {
+        super(value);
     }
-
-    public FluidIngredient(Fluid... matches) {
-        this(new ArrayList<>(), new HashSet<>(Arrays.asList(matches)));
+    
+    public FluidIngredient(Either<Fluid, Tag<Fluid>> value) {
+        super(value);
     }
-
-    public FluidIngredient(FluidVolume... matches) {
-        this(new ArrayList<>(), Arrays.stream(matches).map(FluidVolume::getRawFluid).collect(Collectors.toSet()));
+    
+    public FluidIngredient(FluidVariant variant) {
+        this(variant.getFluid());
     }
-
-    public FluidIngredient() {
-        this(new ArrayList<>(), new HashSet<>());
-    }
-
+    
     public boolean test(BlockState state) {
         return state.getBlock() instanceof FluidBlock fluidBlock && test(fluidBlock);
     }
@@ -67,6 +84,10 @@ public class FluidIngredient extends AbstractIngredient<Fluid> {
         return fluid != null && test(fluid);
     }
 
+    public boolean test(FluidVariant fluid) {
+        return test(fluid.getFluid());
+    }
+    
     public List<ItemStack> flattenListOfBuckets() {
         return flatten(fluid -> ItemUtils.asStack(fluid.getBucketItem())).stream().filter(fluid -> !fluid.isEmpty()).toList();
     }
@@ -74,40 +95,25 @@ public class FluidIngredient extends AbstractIngredient<Fluid> {
     public List<EntryIngredient> asREIEntries() {
         return flattenListOfBuckets().stream().map(EntryIngredients::of).toList();
     }
-
+    
+    public static FluidIngredient EMPTY = new FluidIngredient((Fluid) null);
+    
     @Override
-    public JsonElement serializeElement(Fluid fluid, JsonSerializationContext context) {
-        return new JsonPrimitive(RegistryUtils.getId(fluid).toString());
+    public JsonElement toJson() {
+        return CODEC.encodeStart(JsonOps.INSTANCE, this).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
     }
-
+    
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof FluidIngredient other) {
-            return this.tags.size() == other.tags.size() &&
-                    this.matches.size() == other.matches.size() &&
-                    this.tags.containsAll(other.tags) &&
-                    this.matches.containsAll(other.matches);
-        }
-        return false;
+    public void toPacket(PacketByteBuf buf) {
+        // Should be safe to cast here
+        buf.writeNbt((NbtCompound) CODEC.encodeStart(NbtOps.INSTANCE, this).getOrThrow(false, FabricaeExNihilo.LOGGER::warn));
     }
-
-    @Override
-    public int hashCode() {
-        return tags.hashCode() ^ matches.hashCode();
+    
+    public static FluidIngredient fromPacket(PacketByteBuf buf) {
+        return CODEC.parse(NbtOps.INSTANCE, buf.readNbt()).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
     }
-
-    public static FluidIngredient EMPTY = new FluidIngredient();
-
-    public static FluidIngredient fromJson(JsonElement json, JsonDeserializationContext context) {
-        return fromJson(json, context, val -> deserializeTag(val, context), val -> deserializeMatch(val, context), FluidIngredient::new);
+    
+    public static FluidIngredient fromJson(JsonElement json) {
+        return CODEC.parse(JsonOps.INSTANCE, json).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
     }
-
-    public static Tag.Identified<Fluid> deserializeTag(JsonElement json, JsonDeserializationContext context) {
-        return TagFactory.FLUID.create(new Identifier(json.getAsString().substring(1)));
-    }
-
-    public static Fluid deserializeMatch(JsonElement json, JsonDeserializationContext context) {
-        return Registry.FLUID.get(new Identifier(json.getAsString()));
-    }
-
 }

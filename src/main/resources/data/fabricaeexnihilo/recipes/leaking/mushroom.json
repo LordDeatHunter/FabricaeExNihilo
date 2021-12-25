@@ -1,0 +1,7 @@
+{
+  "type": "fabricaeexnihilo:leaking",
+  "block": "#minecraft:small_flowers",
+  "fluid": "#fabricaeexnihilo:witchwater",
+  "amount": 40500,
+  "result": "minecraft:brown_mushroom"
+}

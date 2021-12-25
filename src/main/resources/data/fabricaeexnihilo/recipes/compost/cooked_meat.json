@@ -1,0 +1,7 @@
+{
+  "type": "fabricaeexnihilo:compost",
+  "result": "minecraft:dirt",
+  "input": "#c:cooked_meat",
+  "increment": 0.25,
+  "color": "FF5555"
+}

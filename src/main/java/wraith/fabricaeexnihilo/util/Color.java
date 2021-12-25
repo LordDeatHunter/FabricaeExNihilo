@@ -1,9 +1,19 @@
 package wraith.fabricaeexnihilo.util;
 
 import com.google.common.base.Strings;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 public class Color {
-
+    public static final Codec<Color> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Codec.INT
+                    .fieldOf("value")
+                    .forGetter(Color::toInt)
+    ).apply(instance, Color::new));
+    
     public float r;
     public float g;
     public float b;
@@ -65,6 +75,18 @@ public class Color {
         return new Color(r, g, b, (float) a).toInt();
     }
 
+    public static Color fromJson(JsonElement json) {
+        if (!(json instanceof JsonPrimitive primitive) || !(primitive.isString() || primitive.isNumber())) {
+            throw new JsonParseException("Expected string or number but found " + json + "!");
+        }
+    
+        if (primitive.isString()) {
+            return new Color(primitive.getAsString());
+        } else {
+            return new Color(json.getAsInt());
+        }
+    }
+    
     public static int hexToInt(String hex) {
         var rgb = hex.length() < 8 ? hex : hex.substring(2);
         var a = hex.length() < 8 ? "FF" : hex.substring(0, 2);

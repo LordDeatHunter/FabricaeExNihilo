@@ -1,0 +1,7 @@
+{
+  "type": "fabricaeexnihilo:leaking",
+  "block": "minecraft:cobblestone",
+  "fluid": "minecraft:water",
+  "amount": 8100,
+  "result": "minecraft:mossy_cobblestone"
+}

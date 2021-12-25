@@ -2,7 +2,7 @@ package wraith.fabricaeexnihilo.json.recipe;
 
 import com.google.gson.*;
 import wraith.fabricaeexnihilo.api.crafting.ItemIngredient;
-import wraith.fabricaeexnihilo.api.crafting.Lootable;
+import wraith.fabricaeexnihilo.api.crafting.Loot;
 import wraith.fabricaeexnihilo.api.recipes.ToolRecipe;
 import wraith.fabricaeexnihilo.json.BaseJson;
 
@@ -19,16 +19,16 @@ public final class ToolRecipeJson extends BaseJson<ToolRecipe> {
     public ToolRecipe deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         var obj = json.getAsJsonObject();
         return new ToolRecipe(
-                ItemIngredient.fromJson(obj.get("ingredient"), context),
-                StreamSupport.stream(obj.get("loot").getAsJsonArray().spliterator(), false).map(loot -> context.<Lootable>deserialize(loot, LOOTABLE_TYPE_TOKEN)).toList()
+                ItemIngredient.fromJson(obj.get("ingredient")),
+                StreamSupport.stream(obj.get("loot").getAsJsonArray().spliterator(), false).map(loot -> context.<Loot>deserialize(loot, LOOTABLE_TYPE_TOKEN)).toList()
         );
     }
 
     @Override
     public JsonElement serialize(ToolRecipe src, Type typeOfSrc, JsonSerializationContext context) {
         var obj = new JsonObject();
-        obj.add("ingredient", src.ingredient().toJson(context));
-        obj.add("loot", context.serialize(src.lootables()));
+        obj.add("ingredient", src.ingredient().toJson());
+        obj.add("loot", context.serialize(src.loots()));
         return obj;
     }
 

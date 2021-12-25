@@ -1,19 +1,19 @@
 package wraith.fabricaeexnihilo.api.recipes;
 
 import wraith.fabricaeexnihilo.api.crafting.ItemIngredient;
-import wraith.fabricaeexnihilo.api.crafting.Lootable;
+import wraith.fabricaeexnihilo.api.crafting.Loot;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public record ToolRecipe(ItemIngredient ingredient, List<Lootable> lootables) {
+public record ToolRecipe(ItemIngredient ingredient, List<Loot> loots) {
 
     public ToolRecipe(ItemIngredient ingredient) {
         this(ingredient, new ArrayList<>());
     }
 
-    public ToolRecipe(List<Lootable> lootables) {
-        this(ItemIngredient.EMPTY, lootables);
+    public ToolRecipe(List<Loot> loots) {
+        this(ItemIngredient.EMPTY, loots);
     }
 
     public ToolRecipe() {

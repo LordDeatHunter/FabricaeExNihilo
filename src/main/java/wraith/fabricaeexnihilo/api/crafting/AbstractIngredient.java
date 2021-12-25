@@ -1,10 +1,12 @@
 package wraith.fabricaeexnihilo.api.crafting;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonSerializationContext;
+import com.mojang.datafixers.util.Either;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.tag.Tag;
+import net.minecraft.util.ActionResult;
 
 import java.util.*;
 import java.util.function.BiFunction;
@@ -13,58 +15,49 @@ import java.util.function.Predicate;
 import java.util.stream.StreamSupport;
 
 public abstract class AbstractIngredient<T> implements Predicate<T> {
-
-    protected final Set<T> matches;
-    protected final Collection<Tag.Identified<T>> tags;
-
-    public AbstractIngredient(Collection<Tag.Identified<T>> tags, Set<T> matches) {
-        this.tags = tags;
-        this.matches = matches;
+    protected final Either<T, Tag<T>> value;
+    
+    public AbstractIngredient(T value) {
+        this(Either.left(value));
     }
-
-    public AbstractIngredient(T... matches) {
-        this(new ArrayList<>(), new HashSet<>(Arrays.asList(matches)));
+    
+    public AbstractIngredient(Tag<T> value) {
+        this(Either.right(value));
     }
-
+    
+    public AbstractIngredient(Either<T, Tag<T>> value) {
+        this.value = value;
+    }
+    
     public boolean test(T value) {
-        return tags.stream().anyMatch(tag -> tag.contains(value)) || matches.contains(value);
+        return this.value.map(single -> single.equals(value), tag -> tag.contains(value));
     }
-
-    abstract JsonElement serializeElement(T value, JsonSerializationContext context);
-
-    public JsonElement toJson(JsonSerializationContext context) {
-        var arr = new JsonArray();
-        tags.forEach(tag -> arr.add("#" + tag.getId().toString()));
-        matches.forEach(value -> arr.add(serializeElement(value, context)));
-        return arr.size() > 1 ? arr : arr.get(0);
-    }
+    
+    public abstract JsonElement toJson();
+    
+    public abstract void toPacket(PacketByteBuf buf);
 
     public boolean isEmpty() {
-        return tags.isEmpty() && matches.isEmpty();
+        return this.value.map(Objects::isNull, tag -> tag.values().isEmpty());
     }
 
     public List<T> flatten() {
-        var ret = tags.stream().map(Tag::values).flatMap(Collection::stream).toList();
-        ret.addAll(matches);
-        return ret;
+        return this.value.map(ImmutableList::of, Tag::values);
     }
 
     public <U> List<U> flatten(Function<T, U> func) {
         return flatten().stream().map(func).toList();
     }
-
-    public static <T, U> U fromJson(JsonElement json, JsonDeserializationContext context, Function<JsonElement, Tag.Identified<T>> deserializeTag, Function<JsonElement, T> deserializeMatch, BiFunction<Collection<Tag.Identified<T>>, Set<T>, U> factory) {
-        var tags = new ArrayList<Tag.Identified<T>>();
-        var matches = new HashSet<T>();
-
-        StreamSupport.stream((json.isJsonArray() ? json.getAsJsonArray() : List.of(json)).spliterator(), false)
-                .filter(JsonElement::isJsonPrimitive)
-                .forEach(jsonElement -> {
-                    if (jsonElement.getAsString().startsWith("#"))
-                        tags.add(deserializeTag.apply(jsonElement));
-                    else
-                        matches.add(deserializeMatch.apply(jsonElement));
-                });
-        return factory.apply(tags, matches);
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof AbstractIngredient other) {
+            return this.getClass() == other.getClass() && this.value.equals(other.value);
+        }
+        return false;
+    }
+    
+    public int hashCode() {
+        return value.hashCode();
     }
 }

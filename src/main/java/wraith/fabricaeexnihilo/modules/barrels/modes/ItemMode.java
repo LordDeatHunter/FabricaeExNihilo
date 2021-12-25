@@ -1,38 +1,67 @@
 package wraith.fabricaeexnihilo.modules.barrels.modes;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
+import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions;
+import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
+import wraith.fabricaeexnihilo.modules.barrels.BarrelItemStorage;
+import wraith.fabricaeexnihilo.util.CodecUtils;
 
-public class ItemMode implements BarrelMode {
-
-    private ItemStack stack;
+@SuppressWarnings("UnstableApiUsage")
+public class ItemMode extends BarrelMode {
+    public static final Codec<ItemMode> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                    CodecUtils.ITEM_STACK
+                            .fieldOf("stack")
+                            .forGetter(ItemMode::getStack))
+            .apply(instance, ItemMode::new));
+    
+    private final ItemStack stack;
 
     public ItemMode(ItemStack stack) {
+        super();
         this.stack = stack == null ? ItemStack.EMPTY : stack;
     }
-
+    
     @Override
-    public NbtCompound writeNbt() {
-        var nbt = new NbtCompound();
-        nbt.put("item_mode", stack.writeNbt(new NbtCompound()));
-        return nbt;
+    public String getId() {
+        return "item";
     }
-
+    
     @Override
-    public String nbtKey() {
-        return "item_mode";
+    public BarrelMode copy() {
+        return new ItemMode(stack.copy());
     }
-
+    
     public ItemStack getStack() {
         return stack;
     }
-
-    public void setStack(ItemStack stack) {
-        this.stack = stack;
+    
+    @Override
+    public long extractItem(ItemVariant item, long maxAmount, TransactionContext transaction, BarrelItemStorage storage) {
+        StoragePreconditions.notBlankNotNegative(item, maxAmount);
+        if (!ItemVariant.of(stack).equals(item)) return 0;
+        
+        storage.updateSnapshots(transaction);
+        var amount = Math.min(maxAmount, stack.getCount());
+        stack.decrement((int)amount);
+        if (stack.isEmpty()) storage.barrel.setMode(new EmptyMode());
+        return amount;
     }
-
-    public static ItemMode readNbt(NbtCompound nbt) {
-        return new ItemMode(ItemStack.fromNbt(nbt.contains("item_mode") ? nbt.getCompound("item_mode") : nbt));
+    
+    @Override
+    public ItemVariant getItem() {
+        return ItemVariant.of(stack);
     }
-
+    
+    @Override
+    public long getItemAmount() {
+        return stack.getCount();
+    }
+    
+    @Override
+    public long getItemCapacity() {
+        return stack.getMaxCount();
+    }
 }

@@ -5,11 +5,11 @@ import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.minecraft.item.SpawnEggItem;
-import wraith.fabricaeexnihilo.api.recipes.barrel.AlchemyRecipe;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.barrels.modes.FluidMode;
 import wraith.fabricaeexnihilo.modules.barrels.modes.ItemMode;
+import wraith.fabricaeexnihilo.recipe.barrel.AlchemyRecipe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +24,8 @@ public record AlchemyDisplay(AlchemyRecipe recipe) implements Display {
     @Override
     public List<EntryIngredient> getInputEntries() {
         var inputs = new ArrayList<EntryIngredient>();
-        inputs.addAll(recipe.reactant().asREIEntries());
-        inputs.addAll(recipe.catalyst().asREIEntries());
+        inputs.addAll(recipe.getReactant().asREIEntries());
+        inputs.addAll(recipe.getCatalyst().asREIEntries());
         inputs.addAll(ModBlocks.BARRELS.values().stream().map(EntryIngredients::of).toList());
         return inputs;
     }
@@ -33,11 +33,11 @@ public record AlchemyDisplay(AlchemyRecipe recipe) implements Display {
     @Override
     public List<EntryIngredient> getOutputEntries() {
         var outputs = new ArrayList<EntryIngredient>();
-        var mode = recipe.product();
+        var mode = recipe.getResult();
         if (mode instanceof ItemMode itemMode) {
             outputs.add(EntryIngredients.of(itemMode.getStack()));
         } else if (mode instanceof FluidMode fluidMode) {
-            var fluid = fluidMode.getFluid().getRawFluid();
+            var fluid = fluidMode.getFluid().getFluid();
             if (fluid == null) {
                 outputs.add(EntryIngredient.empty());
             } else {
@@ -47,8 +47,8 @@ public record AlchemyDisplay(AlchemyRecipe recipe) implements Display {
         } else {
             outputs.add(EntryIngredient.empty());
         }
-        outputs.add(EntryIngredients.of(recipe.byproduct().getStack()));
-        outputs.add(!recipe.toSpawn().isEmpty() ? EntryIngredients.of(SpawnEggItem.forEntity(recipe.toSpawn().getType())) : EntryIngredient.empty());
+        outputs.add(EntryIngredients.of(recipe.getByproduct().getStack()));
+        outputs.add(!recipe.getToSpawn().isEmpty() ? EntryIngredients.of(SpawnEggItem.forEntity(recipe.getToSpawn().getType())) : EntryIngredient.empty());
         return outputs;
     }
 

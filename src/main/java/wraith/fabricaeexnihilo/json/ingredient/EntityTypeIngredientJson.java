@@ -17,12 +17,12 @@ public final class EntityTypeIngredientJson extends BaseJson<EntityTypeIngredien
 
     @Override
     public EntityTypeIngredient deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        return EntityTypeIngredient.fromJson(json, context);
+        return EntityTypeIngredient.fromJson(json);
     }
 
     @Override
     public JsonElement serialize(EntityTypeIngredient src, Type typeOfSrc, JsonSerializationContext context) {
-        return src.toJson(context);
+        return src.toJson();
     }
 
 }

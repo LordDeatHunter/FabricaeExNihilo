@@ -1,0 +1,7 @@
+{
+  "type": "fabricaeexnihilo:compost",
+  "result": "minecraft:dirt",
+  "input": "#c:dyes",
+  "increment": 0.125,
+  "color": "FF5555"
+}

@@ -18,7 +18,7 @@ public final class CrucibleRecipeJson extends BaseJson<CrucibleRecipe> {
     public CrucibleRecipe deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         var obj = json.getAsJsonObject();
         return new CrucibleRecipe(
-                ItemIngredient.fromJson(obj.get("input"), context),
+                ItemIngredient.fromJson(obj.get("input")),
                 FluidVolumeJson.INSTANCE.deserialize(obj.get("output"), FluidVolumeJson.INSTANCE.getTypeToken(), context)
         );
     }
@@ -26,7 +26,7 @@ public final class CrucibleRecipeJson extends BaseJson<CrucibleRecipe> {
     @Override
     public JsonElement serialize(CrucibleRecipe src, Type typeOfSrc, JsonSerializationContext context) {
         var obj = new JsonObject();
-        obj.add("input", src.input().toJson(context));
+        obj.add("input", src.input().toJson());
         obj.add("output", FluidVolumeJson.INSTANCE.serialize(src.output(), FluidVolumeJson.INSTANCE.getTypeToken(), context));
         return obj;
     }

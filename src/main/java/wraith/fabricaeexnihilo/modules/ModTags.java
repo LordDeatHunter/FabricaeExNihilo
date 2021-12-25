@@ -34,11 +34,11 @@ public final class ModTags {
     }
 
     public static void registerBlockAndItem(RuntimeResourcePack resourcePack, Tag.Identified<?> tag, Map<Identifier, ?> map) {
-        register(CATEGORY.BLOCKS, resourcePack, tag, map);
-        register(CATEGORY.ITEMS, resourcePack, tag, map);
+        register(Category.BLOCKS, resourcePack, tag, map);
+        register(Category.ITEMS, resourcePack, tag, map);
     }
 
-    public static void register(CATEGORY category, RuntimeResourcePack resourcePack, Tag.Identified<?> tag, Map<Identifier, ?> map) {
+    public static void register(Category category, RuntimeResourcePack resourcePack, Tag.Identified<?> tag, Map<Identifier, ?> map) {
         resourcePack.addTag(id(category.asString() + "/" + tag.getId().getPath()), ModTags.generateResourcePackTag(map.keySet()));
     }
 
@@ -49,13 +49,13 @@ public final class ModTags {
         return tag;
     }
 
-    public enum CATEGORY {
+    public enum Category {
         BLOCKS("blocks"),
         ITEMS("items");
 
         public final String type;
 
-        CATEGORY(String type) {
+        Category(String type) {
             this.type = type;
         }
 

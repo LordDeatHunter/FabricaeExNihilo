@@ -1,0 +1,7 @@
+{
+  "type": "fabricaeexnihilo:compost",
+  "result": "minecraft:dirt",
+  "input": "#minecraft:leaves",
+  "increment": 0.125,
+  "color": "00AA00"
+}

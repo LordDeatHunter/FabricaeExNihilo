@@ -1,0 +1,9 @@
+{
+  "type": "fabricaeexnihilo:alchemy",
+  "reactant": "#fabricaeexnihilo:true_lava",
+  "catalyst": "minecraft:redstone",
+  "result": {
+    "id": "item",
+    "stack": "minecraft:netherrack"
+  }
+}

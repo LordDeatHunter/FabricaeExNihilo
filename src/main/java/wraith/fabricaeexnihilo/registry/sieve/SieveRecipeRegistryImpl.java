@@ -8,7 +8,7 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
-import wraith.fabricaeexnihilo.api.crafting.Lootable;
+import wraith.fabricaeexnihilo.api.crafting.Loot;
 import wraith.fabricaeexnihilo.api.recipes.SieveRecipe;
 import wraith.fabricaeexnihilo.api.registry.SieveRecipeRegistry;
 import wraith.fabricaeexnihilo.compatibility.modules.MetaModule;
@@ -72,7 +72,7 @@ public class SieveRecipeRegistryImpl extends AbstractRegistry<List<SieveRecipe>>
     }
 
     @Override
-    public List<Lootable> getAllResults(ItemStack mesh, @Nullable Fluid fluid, ItemStack sievable) {
+    public List<Loot> getAllResults(ItemStack mesh, @Nullable Fluid fluid, ItemStack sievable) {
         return registry.stream()
                 .filter(recipe -> recipe.test(mesh, fluid, sievable))
                 .map(SieveRecipe::loot)
@@ -110,7 +110,7 @@ public class SieveRecipeRegistryImpl extends AbstractRegistry<List<SieveRecipe>>
     public Collection<SieveRecipe> getREIRecipes() {
         return registry.stream().map(recipe -> {
             var recipes = new ArrayList<SieveRecipe>();
-            var temporaryLootables = new ArrayList<Lootable>();
+            var temporaryLootables = new ArrayList<Loot>();
             int i = 0;
             for (var lootable : recipe.loot()) {
                 if (i >= SieveCategory.MAX_OUTPUTS) {

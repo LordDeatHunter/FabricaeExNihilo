@@ -4,7 +4,7 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
-import wraith.fabricaeexnihilo.api.recipes.barrel.MilkingRecipe;
+import wraith.fabricaeexnihilo.recipe.barrel.MilkingRecipe;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 
@@ -21,14 +21,14 @@ public record MilkingDisplay(MilkingRecipe recipe) implements Display {
 
     @Override
     public List<EntryIngredient> getInputEntries() {
-        var entity = recipe.entity().asREIEntries();
+        var entity = recipe.getEntity().asREIEntries();
         var barrels = ModBlocks.BARRELS.values().stream().map(EntryIngredients::of).toList();
         return Stream.of(entity, barrels).flatMap(List::stream).toList();
     }
 
     @Override
     public List<EntryIngredient> getOutputEntries() {
-        var fluid = recipe.getResult().getRawFluid();
+        var fluid = recipe.getFluid().getFluid();
         if (fluid != null) {
             var bucket = fluid.getBucketItem();
             if (bucket != null) {

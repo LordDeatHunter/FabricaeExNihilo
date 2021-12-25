@@ -1,0 +1,9 @@
+{
+  "type": "fabricaeexnihilo:alchemy",
+  "reactant": "#c:brine",
+  "catalyst": "minecraft:pink_dye",
+  "result": {
+    "id": "item",
+    "stack": "minecraft:brain_coral_block"
+  }
+}
