@@ -1,6 +1,5 @@
 package wraith.fabricaeexnihilo.api.crafting;
 
-import alexiil.mc.lib.attributes.fluid.volume.FluidVolume;
 import com.google.gson.JsonElement;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
@@ -78,12 +77,7 @@ public class FluidIngredient extends AbstractIngredient<Fluid> {
     public boolean test(FluidState state) {
         return test(state.getFluid());
     }
-
-    public boolean test(FluidVolume stack) {
-        var fluid = stack.getRawFluid();
-        return fluid != null && test(fluid);
-    }
-
+    
     public boolean test(FluidVariant fluid) {
         return test(fluid.getFluid());
     }

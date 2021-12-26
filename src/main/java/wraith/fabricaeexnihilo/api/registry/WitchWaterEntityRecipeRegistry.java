@@ -3,10 +3,10 @@ package wraith.fabricaeexnihilo.api.registry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.village.VillagerProfession;
+import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.api.crafting.EntityTypeIngredient;
 import wraith.fabricaeexnihilo.api.recipes.witchwater.WitchWaterEntityRecipe;
 
-import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.List;
 

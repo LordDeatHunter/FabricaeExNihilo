@@ -1,6 +1,10 @@
 package wraith.fabricaeexnihilo.modules.fluids;
 
 import net.fabricmc.fabric.api.tag.TagFactory;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -19,7 +23,13 @@ public class MilkFluid extends AbstractFluid {
     public static final MilkFluid FLOWING = new MilkFluid(false);
     public static final BaseFluidBlock BLOCK = new BaseFluidBlock(STILL, ModFluids.BLOCK_SETTINGS);
     public static final Item BUCKET = Items.MILK_BUCKET;
-
+    
+    static {
+        // Milk buckets
+        //noinspection UnstableApiUsage
+        FluidStorage.ITEM.registerForItems((stack, context) -> new FullItemFluidStorage(context, Items.BUCKET, FluidVariant.of(MilkFluid.STILL), FluidConstants.BUCKET), Items.MILK_BUCKET);
+    }
+    
     @Override
     public boolean matchesType(Fluid fluid) {
         return fluid == STILL || fluid == FLOWING;

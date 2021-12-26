@@ -16,6 +16,7 @@ import net.minecraft.nbt.NbtOps;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 
@@ -24,35 +25,38 @@ import java.util.function.Function;
  */
 @SuppressWarnings("UnstableApiUsage")
 public class CodecUtils {
-    public static final Codec<FluidVariant> FLUID_VARIANT = Codec.either(RecordCodecBuilder.<FluidVariant>create(instance1 -> instance1.group(
+    public static final Codec<FluidVariant> FLUID_VARIANT = magicCodec(Registry.FLUID.getCodec()
+                    .xmap(FluidVariant::of, FluidVariant::getFluid),
+            RecordCodecBuilder.create(instance1 -> instance1.group(
                             Registry.FLUID.getCodec()
                                     .fieldOf("type")
                                     .forGetter(FluidVariant::getFluid),
                             NbtCompound.CODEC
-                                    .fieldOf("nbt")
-                                    .forGetter(TransferVariant::getNbt)).apply(instance1, FluidVariant::of)),
-                    Registry.FLUID.getCodec()
-                            .xmap(FluidVariant::of, FluidVariant::getFluid))
-            .xmap(CodecUtils::flattenEither, Either::left);
+                                    .optionalFieldOf("nbt")
+                                    .forGetter(variant -> Optional.ofNullable(variant.getNbt())))
+                    .apply(instance1, (fluid, nbt) -> FluidVariant.of(fluid, nbt.orElse(null)))));
     
-    public static final Codec<ItemStack> ITEM_STACK = Codec.either(RecordCodecBuilder.<ItemStack>create(instance1 -> instance1.group(
-                            Registry.ITEM.getCodec()
-                                    .fieldOf("item")
-                                    .forGetter(ItemStack::getItem),
-                            Codec.INT
-                                    .fieldOf("count")
-                                    .forGetter(ItemStack::getCount),
-                            NbtCompound.CODEC
-                                    .fieldOf("nbt")
-                                    .forGetter(ItemStack::getNbt)).apply(instance1, (item, count, nbt) -> {
-                        var stack = new ItemStack(item);
-                        stack.setCount(count);
-                        stack.setNbt(nbt);
-                        return stack;
-                    })),
+    public static final Codec<ItemStack> ITEM_STACK = magicCodec(Registry.ITEM.getCodec()
+                    .xmap(Item::getDefaultStack, ItemStack::getItem),
+            RecordCodecBuilder.create(instance1 -> instance1.group(
                     Registry.ITEM.getCodec()
-                            .xmap(Item::getDefaultStack, ItemStack::getItem))
-            .xmap(CodecUtils::flattenEither, Either::left);
+                            .fieldOf("item")
+                            .forGetter(ItemStack::getItem),
+                    Codec.INT
+                            .fieldOf("count")
+                            .forGetter(ItemStack::getCount),
+                    NbtCompound.CODEC
+                            .optionalFieldOf("nbt")
+                            .forGetter(itemStack -> Optional.ofNullable(itemStack.getNbt()))).apply(instance1, (item, count, nbt) -> {
+                var stack = new ItemStack(item);
+                stack.setCount(count);
+                nbt.ifPresent(stack::setNbt);
+                return stack;
+            })));
+    
+    private static <T> Codec<T> magicCodec(Codec<T> simple, Codec<T> expanded) {
+        return Codec.either(simple, expanded).xmap(CodecUtils::flattenEither, Either::right);
+    }
     
     public static <T> T deserializeNbt(Codec<T> codec, NbtElement data) {
         return deserialize(codec, NbtOps.INSTANCE, data);

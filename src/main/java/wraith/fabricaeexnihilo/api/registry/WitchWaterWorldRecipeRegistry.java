@@ -2,11 +2,11 @@ package wraith.fabricaeexnihilo.api.registry;
 
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
+import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.api.crafting.FluidIngredient;
 import wraith.fabricaeexnihilo.api.crafting.WeightedList;
 import wraith.fabricaeexnihilo.api.recipes.witchwater.WitchWaterWorldRecipe;
 
-import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Random;
 

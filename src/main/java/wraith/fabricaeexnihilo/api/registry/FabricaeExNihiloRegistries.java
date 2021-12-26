@@ -53,12 +53,12 @@ public final class FabricaeExNihiloRegistries {
 
     private static void loadOreRegistry() {
         ORES = OreRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"ore.json"));
-        FabricaeExNihilo.LOGGER.info("Loaded Ore Registry.");
+        FabricaeExNihilo.LOGGER.debug("Loaded Ore Registry.");
     }
 
     private static void loadMeshRegistry() {
         MESH = MeshRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"sieve_mesh.json"));
-        FabricaeExNihilo.LOGGER.info("Loaded Mesh Registry.");
+        FabricaeExNihilo.LOGGER.debug("Loaded Mesh Registry.");
     }
 
     private static void loadToolRegistries() {
@@ -73,24 +73,24 @@ public final class FabricaeExNihiloRegistries {
 
     private static void loadHammerRegistry() {
         HAMMER = ToolRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"tool_hammer.json"), MetaModule.INSTANCE::registerHammer);
-        FabricaeExNihilo.LOGGER.info("Loaded Hammer Registry.");
+        FabricaeExNihilo.LOGGER.debug("Loaded Hammer Registry.");
     }
 
     private static void loadCrookRegistry() {
         CROOK = ToolRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"tool_crook.json"), MetaModule.INSTANCE::registerCrook);
-        FabricaeExNihilo.LOGGER.info("Loaded Crook Registry.");
+        FabricaeExNihilo.LOGGER.debug("Loaded Crook Registry.");
     }
 
     private static void loadSieveRegistry() {
         SIEVE = SieveRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"sieve_drops.json"));
-        FabricaeExNihilo.LOGGER.info("Loaded Sieve Registry.");
+        FabricaeExNihilo.LOGGER.debug("Loaded Sieve Registry.");
     }
 
     private static void loadWitchWaterRegistries() {
         WITCHWATER_WORLD = WitchWaterWorldRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"witchwater_world.json"));
-        FabricaeExNihilo.LOGGER.info("Loaded Witch Water World Registry.");
+        FabricaeExNihilo.LOGGER.debug("Loaded Witch Water World Registry.");
         WITCHWATER_ENTITY = WitchWaterEntityRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"witchwater_entity.json"));
-        FabricaeExNihilo.LOGGER.info("Loaded Witch Water Entity Registry.");
+        FabricaeExNihilo.LOGGER.debug("Loaded Witch Water Entity Registry.");
     }
 
 }

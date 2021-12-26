@@ -141,8 +141,10 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
         var bucketFluidStorage = FluidStorage.ITEM.find(held, ContainerItemContext.ofPlayerHand(player, hand));
         if (bucketFluidStorage != null) {
             var amount = StorageUtil.move(fluidStorage, bucketFluidStorage, fluid -> true, Long.MAX_VALUE, null);
-            if (amount > 0)
+            if (amount > 0) {
+                markDirty();
                 return ActionResult.SUCCESS;
+            }
         }
 
         try (var t = Transaction.openOuter()) {
@@ -152,6 +154,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
                 if (!player.isCreative()) {
                     held.decrement((int) amount);
                 }
+                markDirty();
                 return ActionResult.SUCCESS;
             }
         }
@@ -246,7 +249,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
     
         @Override
         public long getAmount() {
-            return contained + queued;
+            return contained;
         }
     
         @Override
@@ -274,13 +277,14 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
             var recipeOptional = CrucibleRecipe.find(resource.getItem(), isStone, world);
             if (recipeOptional.isEmpty()) return 0;
             var recipe = recipeOptional.get();
-            if (!recipe.getFluid().equals(fluid)) return 0;
+            if (!recipe.getFluid().equals(fluid) && !fluid.isBlank()) return 0;
             
             var amount = Math.min(recipe.getAmount(), getMaxCapacity() - contained - queued);
             updateSnapshots(transaction);
+            fluid = recipe.getFluid();
             queued += amount;
             renderStack = resource.toStack();
-            return amount;
+            return 1;
         }
     
         @Override

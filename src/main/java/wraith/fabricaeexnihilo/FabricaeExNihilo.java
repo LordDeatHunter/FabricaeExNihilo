@@ -1,6 +1,5 @@
 package wraith.fabricaeexnihilo;
 
-import alexiil.mc.lib.attributes.fluid.volume.FluidVolume;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import me.shedaniel.autoconfig.AutoConfig;
@@ -66,40 +65,40 @@ public class FabricaeExNihilo implements ModInitializer {
     public void onInitialize() {
         registerCompatModules();
         // Programmatically generate blocks and items
-        LOGGER.info("Generating Blocks/Items");
+        LOGGER.debug("Generating Blocks/Items");
 
         // Load the early registries that create items/blocks
         FabricaeExNihiloRegistries.loadEarlyRegistries();
 
         /* Register Status Effects */
-        LOGGER.info("Registering Status Effects");
+        LOGGER.debug("Registering Status Effects");
         ModEffects.registerEffects();
         /* Register Fluids*/
-        LOGGER.info("Registering Fluids");
+        LOGGER.debug("Registering Fluids");
         ModFluids.registerFluids();
         /* Register Blocks */
-        LOGGER.info("Registering Blocks");
+        LOGGER.debug("Registering Blocks");
         ModBlocks.registerBlocks();
         /* Register Items */
-        LOGGER.info("Registering Items");
+        LOGGER.debug("Registering Items");
         ModBlocks.registerBlockItems();
         ModItems.registerItems();
         ModTools.registerItems();
 
         /* Register Block Entities */
-        LOGGER.info("Registering Block Entities");
+        LOGGER.debug("Registering Block Entities");
         ModBlocks.registerBlockEntities();
 
-        /* Load the rest fromPacket the Fabricae Ex Nihilo registries */
-        LOGGER.info("Loading Fabricae Ex Nihilo Registries");
+        /* Load the rest of the Fabricae Ex Nihilo registries */
+        LOGGER.debug("Loading Fabricae Ex Nihilo Registries");
         FabricaeExNihiloRegistries.loadRecipeRegistries();
 
-        LOGGER.info("Creating Tags");
+        LOGGER.debug("Creating Tags");
         ARRPUtils.generateTags(RESOURCE_PACK);
-        LOGGER.info("Creating Recipes");
+        LOGGER.debug("Creating Recipes");
         ModRecipes.register();
         ARRPUtils.generateRecipes(RESOURCE_PACK);
-        LOGGER.info("Creating Loot Tables");
+        LOGGER.debug("Creating Loot Tables");
         ARRPUtils.generateLootTables(RESOURCE_PACK);
 
         if (CONFIG.dumpGeneratedResource) {
@@ -125,7 +124,6 @@ public class FabricaeExNihilo implements ModInitializer {
                 .registerTypeAdapter(Color.class, ColorJson.INSTANCE)
                 .registerTypeAdapter(EntityType.class, EntityTypeJson.INSTANCE)
                 .registerTypeAdapter(Fluid.class, FluidJson.INSTANCE)
-                .registerTypeAdapter(FluidVolume.class, FluidVolumeJson.INSTANCE)
                 .registerTypeAdapter(Identifier.class, IdentifierJson.INSTANCE)
                 .registerTypeAdapter(ItemStack.class, ItemStackJson.INSTANCE)
                 .registerTypeAdapter(MeshProperties.class, MeshPropertiesJson.INSTANCE)
@@ -144,34 +142,6 @@ public class FabricaeExNihilo implements ModInitializer {
                 .registerTypeAdapter(ToolRecipe.class, ToolRecipeJson.INSTANCE)
                 .registerTypeAdapter(SieveRecipe.class, SieveRecipeJson.INSTANCE)
         
-                .enableComplexMapKeySerialization()
-                .create();new GsonBuilder()
-                .setPrettyPrinting()
-                .setLenient()
-                .registerTypeAdapter(Item.class, ItemJson.INSTANCE)
-                .registerTypeAdapter(Block.class, BlockJson.INSTANCE)
-                .registerTypeAdapter(Color.class, ColorJson.INSTANCE)
-                .registerTypeAdapter(EntityType.class, EntityTypeJson.INSTANCE)
-                .registerTypeAdapter(Fluid.class, FluidJson.INSTANCE)
-                .registerTypeAdapter(FluidVolume.class, FluidVolumeJson.INSTANCE)
-                .registerTypeAdapter(Identifier.class, IdentifierJson.INSTANCE)
-                .registerTypeAdapter(ItemStack.class, ItemStackJson.INSTANCE)
-                .registerTypeAdapter(MeshProperties.class, MeshPropertiesJson.INSTANCE)
-                .registerTypeAdapter(VillagerProfession.class, VillagerProfessionJson.INSTANCE)
-                .registerTypeAdapter(WeightedList.class, WeightedListJson.INSTANCE)
-                .registerTypeAdapter(ItemIngredient.class, ItemIngredientJson.INSTANCE)
-                .registerTypeAdapter(FluidIngredient.class, FluidIngredientJson.INSTANCE)
-                .registerTypeAdapter(EntityTypeIngredient.class, EntityTypeIngredientJson.INSTANCE)
-                /*
-                 * Recipes
-                 */
-                // Witchwater
-                .registerTypeAdapter(WitchWaterWorldRecipe.class, WitchWaterWorldRecipeJson.INSTANCE)
-                .registerTypeAdapter(WitchWaterEntityRecipe.class, WitchWaterEntityRecipeJson.INSTANCE)
-                // Other
-                .registerTypeAdapter(ToolRecipe.class, ToolRecipeJson.INSTANCE)
-                .registerTypeAdapter(SieveRecipe.class, SieveRecipeJson.INSTANCE)
-            
                 .enableComplexMapKeySerialization()
                 .create();
     }

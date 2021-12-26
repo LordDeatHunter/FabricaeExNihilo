@@ -1,10 +1,10 @@
 package wraith.fabricaeexnihilo;
 
-import alexiil.mc.lib.attributes.fluid.amount.FluidAmount;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import wraith.fabricaeexnihilo.util.StatusEffectStats;
 
 import java.util.List;
@@ -88,13 +88,14 @@ public class FabricaeExNihiloConfig implements ConfigData {
         @ConfigEntry.Gui.CollapsibleObject
         public CrucibleConfig crucibles = new CrucibleConfig();
 
+        @SuppressWarnings("UnstableApiUsage")
         public static class CrucibleConfig {
             @ConfigEntry.Gui.RequiresRestart
             public boolean enabled = true;
             @Comment("How many ticks between updates")
             public int tickRate = 20;
-            public long baseProcessRate = FluidAmount.BUCKET.div(100).as1620();
-            public long woodenProcessingRate = FluidAmount.BUCKET.div(60).as1620();
+            public long baseProcessRate = FluidConstants.BUCKET / 100;
+            public long woodenProcessingRate = FluidConstants.BUCKET / 60;
             @Comment("How many buckets of liquid can a stone crucible store")
             public int stoneVolume = 4;
             @Comment("How many buckets of liquid can a wooden crucible store")

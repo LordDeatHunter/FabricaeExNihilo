@@ -1,6 +1,5 @@
 package wraith.fabricaeexnihilo.compatibility.rei.barrel;
 
-import alexiil.mc.lib.attributes.fluid.mixin.api.IBucketItem;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.Renderer;
@@ -8,8 +7,11 @@ import me.shedaniel.rei.api.client.gui.widgets.Widget;
 import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
+import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
 import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemConvertible;
+import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -21,6 +23,7 @@ import wraith.fabricaeexnihilo.util.ItemUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("UnstableApiUsage")
 public class LeakingCategory implements DisplayCategory<LeakingDisplay> {
 
     @Override
@@ -68,10 +71,10 @@ public class LeakingCategory implements DisplayCategory<LeakingDisplay> {
 
         var bucketStack = fluids.stream().findFirst().orElse(null);
         String label;
-        if (bucketStack != null && bucketStack.getValue() instanceof IBucketItem bucket) {
-            var stack = ItemUtils.asStack((ItemConvertible) bucket);
-            var key = bucket.libblockattributes__getFluid(stack);
-            if (key != null && key.unitSet != null) {
+        
+        if (bucketStack != null && bucketStack.getValue() instanceof ItemStack stack) {
+            var fluid = StorageUtil.findExtractableResource(FluidStorage.ITEM.find(stack, ContainerItemContext.withInitial(stack)), null);
+            if (fluid != null) {
                 label = String.valueOf(loss);
             } else {
                 label = "?";

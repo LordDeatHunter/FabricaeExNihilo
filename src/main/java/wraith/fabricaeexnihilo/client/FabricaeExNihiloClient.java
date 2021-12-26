@@ -40,7 +40,7 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
         BlockEntityRendererRegistry.register(CrucibleBlockEntity.TYPE, CrucibleBlockEntityRenderer::new);
         BlockEntityRendererRegistry.register(BarrelBlockEntity.TYPE, BarrelBlockEntityRenderer::new);
         BlockEntityRendererRegistry.register(InfestingLeavesBlockEntity.TYPE, InfestingLeavesBlockEntityRenderer::new);
-        FabricaeExNihilo.LOGGER.info("Registered BESR for Sieve");
+        FabricaeExNihilo.LOGGER.debug("Registered BESR for Sieve");
 
         // Item Colors
         FabricaeExNihiloRegistries.ORES.getAll().forEach(ore -> {
@@ -52,7 +52,7 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
             ColorProviderRegistry.ITEM.register(FabricaeExNihiloItemColorProvider.INSTANCE, leaves.asItem());
             ColorProviderRegistry.BLOCK.register(FabricaeExNihiloBlockColorProvider.INSTANCE, leaves);
         });
-        FabricaeExNihilo.LOGGER.info("Registered ItemColorProviders and BlockColorProviders");
+        FabricaeExNihilo.LOGGER.debug("Registered ItemColorProviders and BlockColorProviders");
         ModBlocks.SIEVES.forEach((identifier, sieve) -> BlockRenderLayerMap.INSTANCE.putBlock(sieve, RenderLayer.getCutout()));
         ModBlocks.CRUCIBLES.forEach((identifier, crucible) -> BlockRenderLayerMap.INSTANCE.putBlock(crucible, RenderLayer.getCutout()));
 
@@ -110,7 +110,7 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
                     id("item/" + ore.getPieceID().getPath()));
         }
 
-        FabricaeExNihilo.LOGGER.info("Created Resources");
+        FabricaeExNihilo.LOGGER.debug("Created Resources");
         if (FabricaeExNihilo.CONFIG.dumpGeneratedResource) {
             resourcePack.dump(Path.of("fabricaeexnihilo_generated"));
         }

@@ -20,7 +20,6 @@ import wraith.fabricaeexnihilo.modules.crucibles.CrucibleBlockEntity;
 
 @SuppressWarnings("UnstableApiUsage")
 public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<CrucibleBlockEntity> {
-
     private static final float XZ_SCALE = 12.0F / 16.0F;
     private static final float X_MIN = 2.0F / 16.0F;
     private static final float X_MAX = 14.0F / 16.0F;
@@ -67,7 +66,7 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
         // Idea stolen from Modern Industrialisation
     
         var emitter = RendererAccess.INSTANCE.getRenderer().meshBuilder().getEmitter();
-        emitter.square(Direction.UP, X_MIN, Z_MIN, X_MAX, Z_MAX, 1 - level);
+        emitter.square(Direction.UP, X_MIN, Z_MIN, X_MAX, Z_MAX, 1 - MathHelper.lerp(level, Y_MIN, Y_MAX));
         emitter.spriteBake(0, sprite, MutableQuadView.BAKE_LOCK_UV);
         vertexConsumers.getBuffer(RenderLayer.getTranslucent()).quad(matrices.peek(), emitter.toBakedQuad(0, sprite, false), r, g, b, light, overlay);
     }
@@ -75,13 +74,12 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
     public void renderQueued(ItemStack renderStack, float level, MatrixStack matrices, VertexConsumerProvider vertexConsumer, int light, int overlay, int seed) {
         // Some magic. Could probably be simplified
         var yScale = MathHelper.clamp((Y_MAX - Y_MIN) * level, 0, Y_MAX - Y_MIN);
-
+        
         matrices.push();
-        matrices.translate(0.5, Y_MIN + yScale, 0.5);
+        matrices.translate(0.5, Y_MIN + (yScale / 2), 0.5);
         matrices.scale(XZ_SCALE, yScale, XZ_SCALE);
         matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
         MinecraftClient.getInstance().getItemRenderer().renderItem(renderStack, ModelTransformation.Mode.NONE, light, overlay, matrices, vertexConsumer, seed);
         matrices.pop();
     }
-
 }

@@ -7,12 +7,12 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.api.crafting.FluidIngredient;
 import wraith.fabricaeexnihilo.api.crafting.ItemIngredient;
 import wraith.fabricaeexnihilo.api.crafting.Loot;
 import wraith.fabricaeexnihilo.api.recipes.SieveRecipe;
 
-import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;

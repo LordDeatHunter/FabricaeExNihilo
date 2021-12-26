@@ -24,7 +24,6 @@ public abstract class BarrelMode implements BarrelModeStorage {
             case "compost" -> CompostMode.CODEC.decode(dynamic);
             case "empty" -> EmptyMode.CODEC.decode(dynamic);
             default -> throw new IllegalStateException("Unknown barrel mode!");
-    
         }).getOrThrow(false, FabricaeExNihilo.LOGGER::warn).getFirst();
     }, mode -> {
         var nbt = (switch(mode.getId()) {
