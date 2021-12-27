@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 
@@ -58,19 +59,27 @@ public class CodecUtils {
         return Codec.either(simple, expanded).xmap(CodecUtils::flattenEither, Either::right);
     }
     
-    public static <T> T deserializeNbt(Codec<T> codec, NbtElement data) {
+    public static <T> T fromPacket(Codec<T> codec, PacketByteBuf buf) {
+        return fromNbt(codec, buf.readNbt());
+    }
+    
+    public static <T> void toPacket(Codec<T> codec, T data, PacketByteBuf buf) {
+        buf.writeNbt((NbtCompound) toNbt(codec, data));
+    }
+    
+    public static <T> T fromNbt(Codec<T> codec, NbtElement data) {
         return deserialize(codec, NbtOps.INSTANCE, data);
     }
     
-    public static <T> NbtElement serializeNbt(Codec<T> codec, T data) {
+    public static <T> NbtElement toNbt(Codec<T> codec, T data) {
         return serialize(codec, NbtOps.INSTANCE, data);
     }
     
-    public static <T> T deserializeJson(Codec<T> codec, JsonElement data) {
+    public static <T> T fromJson(Codec<T> codec, JsonElement data) {
         return deserialize(codec, JsonOps.INSTANCE, data);
     }
     
-    public static <T> JsonElement serializeJson(Codec<T> codec, T data) {
+    public static <T> JsonElement toJson(Codec<T> codec, T data) {
         return serialize(codec, JsonOps.INSTANCE, data);
     }
     

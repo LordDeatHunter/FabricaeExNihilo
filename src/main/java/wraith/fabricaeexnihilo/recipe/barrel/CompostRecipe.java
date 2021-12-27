@@ -17,7 +17,7 @@ import wraith.fabricaeexnihilo.util.Color;
 
 import java.util.Optional;
 
-public class CompostRecipe extends BaseRecipe<CompostRecipe.CompostRecipeContext> {
+public class CompostRecipe extends BaseRecipe<CompostRecipe.Context> {
     private final ItemStack result;
     private final ItemIngredient input;
     private final double increment;
@@ -35,7 +35,7 @@ public class CompostRecipe extends BaseRecipe<CompostRecipe.CompostRecipeContext
         if (world == null) {
             return Optional.empty();
         }
-        return world.getRecipeManager().getFirstMatch(ModRecipes.COMPOST, new CompostRecipeContext(input), world);
+        return world.getRecipeManager().getFirstMatch(ModRecipes.COMPOST, new Context(input), world);
     }
     
     public double getIncrement() {
@@ -51,7 +51,7 @@ public class CompostRecipe extends BaseRecipe<CompostRecipe.CompostRecipeContext
     }
     
     @Override
-    public boolean matches(CompostRecipeContext context, World world) {
+    public boolean matches(Context context, World world) {
         return input.test(context.input);
     }
     
@@ -100,5 +100,5 @@ public class CompostRecipe extends BaseRecipe<CompostRecipe.CompostRecipeContext
         }
     }
     
-    protected static record CompostRecipeContext(ItemStack input) implements RecipeContext { }
+    protected static record Context(ItemStack input) implements RecipeContext { }
 }

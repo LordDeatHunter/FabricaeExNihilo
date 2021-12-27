@@ -20,7 +20,7 @@ import wraith.fabricaeexnihilo.recipe.RecipeContext;
 import java.util.Optional;
 
 @SuppressWarnings("UnstableApiUsage")
-public class FluidTransformationRecipe extends BaseRecipe<FluidTransformationRecipe.FluidTransformationRecipeContext> {
+public class FluidTransformationRecipe extends BaseRecipe<FluidTransformationRecipe.Context> {
     private final FluidIngredient contained;
     private final BlockIngredient catalyst;
     private final BarrelMode result;
@@ -36,11 +36,11 @@ public class FluidTransformationRecipe extends BaseRecipe<FluidTransformationRec
         if (world == null) {
             return Optional.empty();
         }
-        return world.getRecipeManager().getFirstMatch(ModRecipes.FLUID_TRANSFORMATION, new FluidTransformationRecipeContext(contained, catalyst), world);
+        return world.getRecipeManager().getFirstMatch(ModRecipes.FLUID_TRANSFORMATION, new Context(contained, catalyst), world);
     }
     
     @Override
-    public boolean matches(FluidTransformationRecipeContext context, World world) {
+    public boolean matches(Context context, World world) {
         return contained.test(context.contained) && catalyst.test(context.catalyst);
     }
     
@@ -99,5 +99,5 @@ public class FluidTransformationRecipe extends BaseRecipe<FluidTransformationRec
         }
     }
     
-    protected static record FluidTransformationRecipeContext(FluidVariant contained, Block catalyst) implements RecipeContext { }
+    protected static record Context(FluidVariant contained, Block catalyst) implements RecipeContext { }
 }

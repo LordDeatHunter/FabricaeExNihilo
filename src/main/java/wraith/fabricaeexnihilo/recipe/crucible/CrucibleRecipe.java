@@ -21,7 +21,7 @@ import wraith.fabricaeexnihilo.util.CodecUtils;
 import java.util.Optional;
 
 @SuppressWarnings("UnstableApiUsage")
-public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.CrucibleRecipeContext> {
+public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
     private final ItemIngredient input;
     private final long amount;
     private final FluidVariant fluid;
@@ -40,11 +40,11 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.CrucibleRecipeCont
         if (world == null) {
             return Optional.empty();
         }
-        return world.getRecipeManager().getFirstMatch(ModRecipes.CRUCIBLE, new CrucibleRecipeContext(input, isStone), world);
+        return world.getRecipeManager().getFirstMatch(ModRecipes.CRUCIBLE, new Context(input, isStone), world);
     }
     
     @Override
-    public boolean matches(CrucibleRecipeContext context, World world) {
+    public boolean matches(Context context, World world) {
         return input.test(context.input) && isStone == context.isStone;
     }
     
@@ -80,7 +80,7 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.CrucibleRecipeCont
         public CrucibleRecipe read(Identifier id, JsonObject json) {
             var input = ItemIngredient.fromJson(json.get("input"));
             var amount = JsonHelper.getLong(json, "amount");
-            var fluid = CodecUtils.deserializeJson(CodecUtils.FLUID_VARIANT, json.get("fluid"));
+            var fluid = CodecUtils.fromJson(CodecUtils.FLUID_VARIANT, json.get("fluid"));
             var isStone = JsonHelper.getBoolean(json, "isStone");
             
             return new CrucibleRecipe(id, input, amount, fluid, isStone);
@@ -90,7 +90,7 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.CrucibleRecipeCont
         public CrucibleRecipe read(Identifier id, PacketByteBuf buf) {
             var input = ItemIngredient.fromPacket(buf);
             var amount = buf.readLong();
-            var fluid = CodecUtils.deserializeNbt(CodecUtils.FLUID_VARIANT, buf.readNbt());
+            var fluid = CodecUtils.fromNbt(CodecUtils.FLUID_VARIANT, buf.readNbt());
             var isStone = buf.readBoolean();
             
             return new CrucibleRecipe(id, input, amount, fluid, isStone);
@@ -100,10 +100,10 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.CrucibleRecipeCont
         public void write(PacketByteBuf buf, CrucibleRecipe recipe) {
             recipe.input.toPacket(buf);
             buf.writeLong(recipe.amount);
-            buf.writeNbt((NbtCompound) CodecUtils.serializeNbt(CodecUtils.FLUID_VARIANT, recipe.fluid));
+            buf.writeNbt((NbtCompound) CodecUtils.toNbt(CodecUtils.FLUID_VARIANT, recipe.fluid));
             buf.writeBoolean(recipe.isStone);
         }
     }
     
-    protected static record CrucibleRecipeContext(Item input, boolean isStone) implements RecipeContext { }
+    protected static record Context(Item input, boolean isStone) implements RecipeContext { }
 }

@@ -18,7 +18,7 @@ import wraith.fabricaeexnihilo.recipe.RecipeContext;
 import java.util.Optional;
 
 @SuppressWarnings("UnstableApiUsage")
-public class FluidCombinationRecipe extends BaseRecipe<FluidCombinationRecipe.FluidCombinationRecipeContext> {
+public class FluidCombinationRecipe extends BaseRecipe<FluidCombinationRecipe.Context> {
     private final FluidIngredient contained;
     private final FluidIngredient other;
     private final BarrelMode result;
@@ -34,11 +34,11 @@ public class FluidCombinationRecipe extends BaseRecipe<FluidCombinationRecipe.Fl
         if (world == null) {
             return Optional.empty();
         }
-        return world.getRecipeManager().getFirstMatch(ModRecipes.FLUID_COMBINATION, new FluidCombinationRecipe.FluidCombinationRecipeContext(contained, other), world);
+        return world.getRecipeManager().getFirstMatch(ModRecipes.FLUID_COMBINATION, new Context(contained, other), world);
     }
     
     @Override
-    public boolean matches(FluidCombinationRecipeContext context, World world) {
+    public boolean matches(Context context, World world) {
         return contained.test(context.contained) && other.test(context.other);
     }
     
@@ -97,5 +97,5 @@ public class FluidCombinationRecipe extends BaseRecipe<FluidCombinationRecipe.Fl
         }
     }
     
-    protected static record FluidCombinationRecipeContext(FluidVariant contained, FluidVariant other) implements RecipeContext { }
+    protected static record Context(FluidVariant contained, FluidVariant other) implements RecipeContext { }
 }

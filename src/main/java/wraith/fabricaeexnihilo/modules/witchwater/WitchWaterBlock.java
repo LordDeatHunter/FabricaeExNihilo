@@ -25,6 +25,8 @@ import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.api.registry.FabricaeExNihiloRegistries;
 import wraith.fabricaeexnihilo.modules.ModEffects;
 import wraith.fabricaeexnihilo.modules.base.BaseFluidBlock;
+import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterEntityRecipe;
+import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterWorldRecipe;
 
 public class WitchWaterBlock extends BaseFluidBlock {
 
@@ -69,9 +71,9 @@ public class WitchWaterBlock extends BaseFluidBlock {
                 );
                 return;
             }
-            var toSpawn = FabricaeExNihiloRegistries.WITCHWATER_ENTITY.getSpawn(livingEntity);
-            if (toSpawn != null) {
-                replaceMob(world, livingEntity, toSpawn);
+            var recipe = WitchWaterEntityRecipe.find(entity, world);
+            if (recipe.isPresent()) {
+                replaceMob(world, livingEntity, recipe.get().getResult());
                 return;
             }
             markEntity(livingEntity);
@@ -117,15 +119,15 @@ public class WitchWaterBlock extends BaseFluidBlock {
 
     public static boolean fluidInteraction(World world, BlockPos witchPos, BlockPos otherPos) {
         var fluidState = world.getFluidState(otherPos);
-        if (fluidState.isEmpty()) {
+        if (fluidState.isEmpty() || fluidState.isIn(WitchWaterFluid.TAG)) {
             return false;
         }
-        var block = FabricaeExNihiloRegistries.WITCHWATER_WORLD.getResult(fluidState.getFluid(), world.random);
-        if (block == null) {
+        var recipe = WitchWaterWorldRecipe.find(fluidState.getFluid(), world);
+        if (recipe.isEmpty()) {
             return false;
         }
         var changePos = witchPos.offset(Direction.DOWN) == otherPos ? otherPos : witchPos;
-        world.setBlockState(changePos, block.getDefaultState());
+        world.setBlockState(changePos, recipe.get().getResult().choose(world.random).getDefaultState());
         world.playSound(null, changePos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 0.7f, 0.8f + world.random.nextFloat() * 0.2f);
         return true;
     }

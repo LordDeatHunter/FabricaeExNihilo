@@ -13,6 +13,8 @@ import wraith.fabricaeexnihilo.recipe.DummyRecipe;
 import wraith.fabricaeexnihilo.recipe.barrel.*;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleHeatRecipe;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleRecipe;
+import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterEntityRecipe;
+import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterWorldRecipe;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
@@ -25,6 +27,8 @@ public class ModRecipes {
     public static final ModRecipeType<AlchemyRecipe> ALCHEMY = new ModRecipeType<>(id("alchemy"));
     public static final ModRecipeType<CrucibleRecipe> CRUCIBLE = new ModRecipeType<>(id("crucible"));
     public static final ModRecipeType<CrucibleHeatRecipe> CRUCIBLE_HEAT = new ModRecipeType<>(id("crucible_heat"));
+    public static final ModRecipeType<WitchWaterEntityRecipe> WITCH_WATER_ENTITY = new ModRecipeType<>(id("witch_water_entity"));
+    public static final ModRecipeType<WitchWaterWorldRecipe> WITCH_WATER_WORLD = new ModRecipeType<>(id("witch_water_world"));
     
     public static final RecipeSerializer<?> COMPOST_SERIALIZER = ProxySerializer.of(new CompostRecipe.Serializer());
     public static final RecipeSerializer<?> FLUID_COMBINATION_SERIALIZER = ProxySerializer.of(new FluidCombinationRecipe.Serializer());
@@ -34,6 +38,8 @@ public class ModRecipes {
     public static final RecipeSerializer<?> ALCHEMY_SERIALIZER = ProxySerializer.of(new AlchemyRecipe.Serializer());
     public static final RecipeSerializer<?> CRUCIBLE_SERIALIZER = ProxySerializer.of(new CrucibleRecipe.Serializer());
     public static final RecipeSerializer<?> CRUCIBLE_HEAT_SERIALIZER = ProxySerializer.of(new CrucibleHeatRecipe.Serializer());
+    public static final RecipeSerializer<?> WITCH_WATER_ENTITY_SERIALIZER = ProxySerializer.of(new WitchWaterEntityRecipe.Serializer());
+    public static final RecipeSerializer<?> WITCH_WATER_WORLD_SERIALIZER = ProxySerializer.of(new WitchWaterWorldRecipe.Serializer());
     
     public static void register() {
         register(COMPOST, COMPOST_SERIALIZER);
@@ -44,6 +50,7 @@ public class ModRecipes {
         register(ALCHEMY, ALCHEMY_SERIALIZER);
         register(CRUCIBLE, CRUCIBLE_SERIALIZER);
         register(CRUCIBLE_HEAT, CRUCIBLE_HEAT_SERIALIZER);
+        register(WITCH_WATER_ENTITY, WITCH_WATER_ENTITY_SERIALIZER);
     }
     
     private static void register(ModRecipeType<?> type, RecipeSerializer<?> serializer) {

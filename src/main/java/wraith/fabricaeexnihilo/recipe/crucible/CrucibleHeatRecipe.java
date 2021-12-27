@@ -17,7 +17,7 @@ import wraith.fabricaeexnihilo.recipe.RecipeContext;
 
 import java.util.Optional;
 
-public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.CrucibleHeatRecipeRecipeContext> {
+public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.Context> {
     private final BlockIngredient block;
     private final int heat;
     
@@ -31,11 +31,11 @@ public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.CrucibleHe
         if (world == null) {
             return Optional.empty();
         }
-        return world.getRecipeManager().getFirstMatch(ModRecipes.CRUCIBLE_HEAT, new CrucibleHeatRecipeRecipeContext(block), world);
+        return world.getRecipeManager().getFirstMatch(ModRecipes.CRUCIBLE_HEAT, new Context(block), world);
     }
     
     @Override
-    public boolean matches(CrucibleHeatRecipeRecipeContext context, World world) {
+    public boolean matches(Context context, World world) {
         return block.test(context.block);
     }
     
@@ -62,7 +62,7 @@ public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.CrucibleHe
         return heat;
     }
     
-    protected static record CrucibleHeatRecipeRecipeContext(Block block) implements RecipeContext {}
+    protected static record Context(Block block) implements RecipeContext {}
     
     public static class Serializer implements RecipeSerializer<CrucibleHeatRecipe> {
         @Override

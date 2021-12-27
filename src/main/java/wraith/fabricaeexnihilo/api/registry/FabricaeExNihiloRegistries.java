@@ -7,8 +7,6 @@ import wraith.fabricaeexnihilo.registry.ToolRecipeRegistryImpl;
 import wraith.fabricaeexnihilo.registry.sieve.MeshRecipeRegistryImpl;
 import wraith.fabricaeexnihilo.registry.sieve.OreRecipeRegistryImpl;
 import wraith.fabricaeexnihilo.registry.sieve.SieveRecipeRegistryImpl;
-import wraith.fabricaeexnihilo.registry.witchwater.WitchWaterEntityRecipeRegistryImpl;
-import wraith.fabricaeexnihilo.registry.witchwater.WitchWaterWorldRecipeRegistryImpl;
 
 import java.io.File;
 
@@ -20,8 +18,6 @@ public final class FabricaeExNihiloRegistries {
     public static MeshRecipeRegistry MESH = new MeshRecipeRegistryImpl();
     
     public static SieveRecipeRegistry SIEVE = new SieveRecipeRegistryImpl();
-    public static WitchWaterWorldRecipeRegistry WITCHWATER_WORLD = new WitchWaterWorldRecipeRegistryImpl();
-    public static WitchWaterEntityRecipeRegistry WITCHWATER_ENTITY = new WitchWaterEntityRecipeRegistryImpl();
     public static ToolRecipeRegistry HAMMER = new ToolRecipeRegistryImpl();
     public static ToolRecipeRegistry CROOK = new ToolRecipeRegistryImpl();
     
@@ -38,9 +34,6 @@ public final class FabricaeExNihiloRegistries {
         loadToolRegistries();
         if(FabricaeExNihilo.CONFIG.modules.sieves.enabled) {
             loadSieveRegistry();
-        }
-        if(FabricaeExNihilo.CONFIG.modules.witchwater.enabled) {
-            loadWitchWaterRegistries();
         }
     }
 
@@ -85,12 +78,4 @@ public final class FabricaeExNihiloRegistries {
         SIEVE = SieveRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"sieve_drops.json"));
         FabricaeExNihilo.LOGGER.debug("Loaded Sieve Registry.");
     }
-
-    private static void loadWitchWaterRegistries() {
-        WITCHWATER_WORLD = WitchWaterWorldRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"witchwater_world.json"));
-        FabricaeExNihilo.LOGGER.debug("Loaded Witch Water World Registry.");
-        WITCHWATER_ENTITY = WitchWaterEntityRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"witchwater_entity.json"));
-        FabricaeExNihilo.LOGGER.debug("Loaded Witch Water Entity Registry.");
-    }
-
 }

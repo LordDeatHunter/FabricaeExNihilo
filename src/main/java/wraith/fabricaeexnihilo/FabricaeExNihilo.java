@@ -26,8 +26,6 @@ import wraith.fabricaeexnihilo.api.crafting.ItemIngredient;
 import wraith.fabricaeexnihilo.api.crafting.WeightedList;
 import wraith.fabricaeexnihilo.api.recipes.SieveRecipe;
 import wraith.fabricaeexnihilo.api.recipes.ToolRecipe;
-import wraith.fabricaeexnihilo.api.recipes.witchwater.WitchWaterEntityRecipe;
-import wraith.fabricaeexnihilo.api.recipes.witchwater.WitchWaterWorldRecipe;
 import wraith.fabricaeexnihilo.api.registry.FabricaeExNihiloRegistries;
 import wraith.fabricaeexnihilo.compatibility.modules.FabricaeExNihiloModuleImpl;
 import wraith.fabricaeexnihilo.compatibility.modules.techreborn.TechReborn;
@@ -38,8 +36,6 @@ import wraith.fabricaeexnihilo.json.ingredient.ItemIngredientJson;
 import wraith.fabricaeexnihilo.json.other.*;
 import wraith.fabricaeexnihilo.json.recipe.SieveRecipeJson;
 import wraith.fabricaeexnihilo.json.recipe.ToolRecipeJson;
-import wraith.fabricaeexnihilo.json.recipe.WitchWaterEntityRecipeJson;
-import wraith.fabricaeexnihilo.json.recipe.WitchWaterWorldRecipeJson;
 import wraith.fabricaeexnihilo.modules.*;
 import wraith.fabricaeexnihilo.modules.sieves.MeshProperties;
 import wraith.fabricaeexnihilo.util.ARRPUtils;
@@ -135,9 +131,6 @@ public class FabricaeExNihilo implements ModInitializer {
                 /*
                  * Recipes
                  */
-                // Witchwater
-                .registerTypeAdapter(WitchWaterWorldRecipe.class, WitchWaterWorldRecipeJson.INSTANCE)
-                .registerTypeAdapter(WitchWaterEntityRecipe.class, WitchWaterEntityRecipeJson.INSTANCE)
                 // Other
                 .registerTypeAdapter(ToolRecipe.class, ToolRecipeJson.INSTANCE)
                 .registerTypeAdapter(SieveRecipe.class, SieveRecipeJson.INSTANCE)

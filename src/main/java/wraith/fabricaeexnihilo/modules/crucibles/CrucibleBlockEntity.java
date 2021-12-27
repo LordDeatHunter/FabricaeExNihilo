@@ -201,7 +201,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
 
     private void writeNbtWithoutWorldInfo(NbtCompound nbt) {
         nbt.put("render", renderStack.writeNbt(new NbtCompound()));
-        nbt.put("fluid", CodecUtils.serializeNbt(CodecUtils.FLUID_VARIANT, fluid));
+        nbt.put("fluid", CodecUtils.toNbt(CodecUtils.FLUID_VARIANT, fluid));
         nbt.putLong("contained", contained);
         nbt.putLong("queued", queued);
         nbt.putInt("heat", heat);
@@ -210,7 +210,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
 
     private void readNbtWithoutWorldInfo(NbtCompound nbt) {
         renderStack = ItemStack.fromNbt(nbt.getCompound("render"));
-        fluid = CodecUtils.deserializeNbt(CodecUtils.FLUID_VARIANT, nbt.get("fluid"));
+        fluid = CodecUtils.fromNbt(CodecUtils.FLUID_VARIANT, nbt.get("fluid"));
         contained = nbt.getLong("contained");
         queued = nbt.getLong("queued");
         heat = nbt.getInt("heat");

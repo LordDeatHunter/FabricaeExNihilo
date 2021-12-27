@@ -1,26 +1,18 @@
 package wraith.fabricaeexnihilo.compatibility.modules;
 
-import net.fabricmc.fabric.api.tag.TagFactory;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityType;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterials;
-import net.minecraft.tag.FluidTags;
 import net.minecraft.tag.ItemTags;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.village.VillagerProfession;
 import wraith.fabricaeexnihilo.api.compatibility.FabricaeExNihiloModule;
-import wraith.fabricaeexnihilo.api.crafting.FluidIngredient;
 import wraith.fabricaeexnihilo.api.crafting.Loot;
-import wraith.fabricaeexnihilo.api.crafting.WeightedList;
 import wraith.fabricaeexnihilo.api.registry.*;
 import wraith.fabricaeexnihilo.modules.ModItems;
 import wraith.fabricaeexnihilo.modules.ModTags;
-import wraith.fabricaeexnihilo.modules.fluids.BrineFluid;
 import wraith.fabricaeexnihilo.modules.ore.ChunkMaterial;
 import wraith.fabricaeexnihilo.modules.ore.ChunkShape;
 import wraith.fabricaeexnihilo.modules.ore.PieceShape;
@@ -384,102 +376,5 @@ public final class FabricaeExNihiloModuleImpl implements FabricaeExNihiloModule 
         registry.register(Blocks.FIRE_CORAL, Blocks.FIRE_CORAL_FAN, 1.0, 0.5);
         registry.register(Blocks.HORN_CORAL, Blocks.HORN_CORAL_FAN, 1.0, 0.5);
     }
-
-    @Override
-    public void registerWitchWaterWorld(WitchWaterWorldRecipeRegistry registry) {
-        registry.register(new FluidIngredient(FluidTags.WATER), new WeightedList(
-                new Pair<>(Blocks.DIRT, 51),
-                new Pair<>(Blocks.GRASS_BLOCK, 12),
-                new Pair<>(Blocks.COARSE_DIRT, 12),
-                new Pair<>(Blocks.MYCELIUM, 12),
-                new Pair<>(Blocks.PODZOL, 12)
-        ));
-        registry.register(new FluidIngredient(FluidTags.LAVA), new WeightedList(
-                new Pair<>(Blocks.COBBLESTONE, 3),
-                new Pair<>(Blocks.ANDESITE, 1),
-                new Pair<>(Blocks.DIORITE, 1),
-                new Pair<>(Blocks.GRANITE, 1)
-        ));
-        registry.register(new FluidIngredient(BrineFluid.TAG), new WeightedList(
-                new Pair<>(Blocks.DEAD_BRAIN_CORAL_BLOCK, 16),
-                new Pair<>(Blocks.DEAD_BUBBLE_CORAL_BLOCK, 16),
-                new Pair<>(Blocks.DEAD_FIRE_CORAL_BLOCK, 16),
-                new Pair<>(Blocks.DEAD_HORN_CORAL_BLOCK, 16),
-                new Pair<>(Blocks.DEAD_TUBE_CORAL_BLOCK, 16),
-                new Pair<>(Blocks.BRAIN_CORAL_BLOCK, 4),
-                new Pair<>(Blocks.BUBBLE_CORAL_BLOCK, 4),
-                new Pair<>(Blocks.FIRE_CORAL_BLOCK, 4),
-                new Pair<>(Blocks.HORN_CORAL_BLOCK, 4),
-                new Pair<>(Blocks.TUBE_CORAL_BLOCK, 4),
-                new Pair<>(Blocks.PRISMARINE, 1)
-        ));
-        registry.register(new FluidIngredient(TagFactory.FLUID.create(new Identifier("c:blood"))), new WeightedList(
-                new Pair<>(Blocks.NETHERRACK, 1),
-                new Pair<>(Blocks.RED_SAND, 16),
-                new Pair<>(Blocks.FIRE_CORAL_BLOCK, 4)
-        ));
-    }
-
-    @Override
-    public void registerWitchWaterEntity(WitchWaterEntityRecipeRegistry registry) {
-        registry.register(EntityType.SKELETON, EntityType.WITHER_SKELETON);
-        registry.register(EntityType.SLIME, EntityType.MAGMA_CUBE);
-        registry.register(EntityType.SPIDER, EntityType.CAVE_SPIDER);
-
-        registry.register(EntityType.COW, EntityType.MOOSHROOM);
-        registry.register(EntityType.PIG, EntityType.PIGLIN);
-        registry.register(EntityType.CHICKEN, EntityType.VEX);
-        registry.register(EntityType.SQUID, EntityType.GHAST);
-        registry.register(EntityType.PANDA, EntityType.RAVAGER);
-        registry.register(EntityType.POLAR_BEAR, EntityType.RAVAGER);
-        registry.register(EntityType.HORSE, EntityType.SKELETON_HORSE);
-        registry.register(EntityType.DONKEY, EntityType.ZOMBIE_HORSE);
-        registry.register(EntityType.MULE, EntityType.ZOMBIE_HORSE);
-        registry.register(EntityType.BAT, EntityType.PHANTOM);
-        registry.register(EntityType.PARROT, EntityType.PHANTOM);
-        registry.register(EntityType.TURTLE, EntityType.SHULKER);
-
-        registry.register(EntityType.PUFFERFISH, EntityType.GUARDIAN);
-        registry.register(EntityType.SALMON, EntityType.SILVERFISH);
-        registry.register(EntityType.TROPICAL_FISH, EntityType.SILVERFISH);
-        registry.register(EntityType.COD, EntityType.SILVERFISH);
-
-        /*
-         * Villagers
-         */
-        registry.register(EntityType.VILLAGER, VillagerProfession.ARMORER, EntityType.PILLAGER);
-        registry.register(EntityType.VILLAGER, VillagerProfession.BUTCHER, EntityType.VINDICATOR);
-        registry.register(EntityType.VILLAGER, VillagerProfession.CARTOGRAPHER, EntityType.PILLAGER);
-        registry.register(EntityType.VILLAGER, VillagerProfession.CLERIC, EntityType.EVOKER);
-        registry.register(EntityType.VILLAGER, VillagerProfession.FARMER, EntityType.HUSK);
-        registry.register(EntityType.VILLAGER, VillagerProfession.FISHERMAN, EntityType.DROWNED);
-        registry.register(EntityType.VILLAGER, VillagerProfession.FLETCHER, EntityType.STRAY);
-        registry.register(EntityType.VILLAGER, VillagerProfession.LEATHERWORKER, EntityType.PILLAGER);
-        registry.register(EntityType.VILLAGER, VillagerProfession.LIBRARIAN, EntityType.ILLUSIONER);
-        registry.register(EntityType.VILLAGER, VillagerProfession.MASON, EntityType.PILLAGER);
-        registry.register(EntityType.VILLAGER, VillagerProfession.NITWIT, EntityType.ZOMBIE_VILLAGER);
-        registry.register(EntityType.VILLAGER, VillagerProfession.SHEPHERD, EntityType.PILLAGER);
-        registry.register(EntityType.VILLAGER, VillagerProfession.TOOLSMITH, EntityType.PILLAGER);
-        registry.register(EntityType.VILLAGER, VillagerProfession.WEAPONSMITH, EntityType.PILLAGER);
-        // Do generic last.
-        registry.register(EntityType.VILLAGER, VillagerProfession.NONE, EntityType.ZOMBIE_VILLAGER);
-
-    }
     
-    /*
-    @Override
-    public void registerFluidOnTop(FluidOnTopRecipeRegistry registry) {
-        registry.register(Fluids.LAVA, Fluids.WATER, Blocks.OBSIDIAN);
-        registry.register(Fluids.WATER, Fluids.LAVA, Blocks.STONE);
-        registry.register(Fluids.WATER, BrineFluid.TAG, Blocks.ICE);
-    }
-
-    
-    @Override
-    public void registerFluidTransform(FluidTransformRecipeRegistry registry) {
-        registry.register(Fluids.WATER, Blocks.MYCELIUM, WitchWaterFluid.STILL);
-        registry.register(MilkFluid.STILL, Blocks.MYCELIUM, Blocks.SLIME_BLOCK);
-    }
-    
-     */
 }

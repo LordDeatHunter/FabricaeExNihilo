@@ -20,7 +20,7 @@ import wraith.fabricaeexnihilo.recipe.RecipeContext;
 import java.util.Optional;
 
 @SuppressWarnings("UnstableApiUsage")
-public class LeakingRecipe extends BaseRecipe<LeakingRecipe.LeakingRecipeContext> {
+public class LeakingRecipe extends BaseRecipe<LeakingRecipe.Context> {
     private final BlockIngredient block;
     private final FluidIngredient fluid;
     private final long amount;
@@ -39,12 +39,12 @@ public class LeakingRecipe extends BaseRecipe<LeakingRecipe.LeakingRecipeContext
         if (world == null) {
             return Optional.empty();
         }
-        return world.getRecipeManager().getFirstMatch(ModRecipes.LEAKING, new LeakingRecipeContext(block, fluid), world);
+        return world.getRecipeManager().getFirstMatch(ModRecipes.LEAKING, new Context(block, fluid), world);
     }
     
     
     @Override
-    public boolean matches(LeakingRecipeContext context, World world) {
+    public boolean matches(Context context, World world) {
         return block.test(context.block) && fluid.test(context.fluid);
     }
     
@@ -110,5 +110,5 @@ public class LeakingRecipe extends BaseRecipe<LeakingRecipe.LeakingRecipeContext
     
     }
     
-    protected static record LeakingRecipeContext(Block block, FluidVariant fluid) implements RecipeContext { }
+    protected static record Context(Block block, FluidVariant fluid) implements RecipeContext { }
 }

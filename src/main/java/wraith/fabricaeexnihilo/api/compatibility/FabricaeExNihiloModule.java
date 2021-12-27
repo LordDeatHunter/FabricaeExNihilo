@@ -10,12 +10,7 @@ public interface FabricaeExNihiloModule {
     // Tool Registries
     void registerCrook(ToolRecipeRegistry registry);
     void registerHammer(ToolRecipeRegistry registry);
-
-    // Witch Water Registries
-    void registerWitchWaterWorld(WitchWaterWorldRecipeRegistry registry);
-    void registerWitchWaterEntity(WitchWaterEntityRecipeRegistry registry);
-
+    
     // Ore Registry
     void registerOres(OreRecipeRegistry registry);
-
 }

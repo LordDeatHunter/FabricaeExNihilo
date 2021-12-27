@@ -64,17 +64,7 @@ public class TechReborn implements FabricaeExNihiloModule {
     public void registerHammer(ToolRecipeRegistry registry) {
 
     }
-
-    @Override
-    public void registerWitchWaterWorld(WitchWaterWorldRecipeRegistry registry) {
-
-    }
-
-    @Override
-    public void registerWitchWaterEntity(WitchWaterEntityRecipeRegistry registry) {
-
-    }
-
+    
     @Override
     public void registerOres(OreRecipeRegistry registry) {
 

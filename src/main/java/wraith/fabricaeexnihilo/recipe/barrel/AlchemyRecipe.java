@@ -26,7 +26,7 @@ import wraith.fabricaeexnihilo.util.CodecUtils;
 import java.util.Optional;
 
 @SuppressWarnings("UnstableApiUsage")
-public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.AlchemyRecipeContext> {
+public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.Context> {
     private final FluidIngredient reactant;
     private final ItemIngredient catalyst;
     private final Loot byproduct;
@@ -49,11 +49,11 @@ public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.AlchemyRecipeContext
         if (world == null) {
             return Optional.empty();
         }
-        return world.getRecipeManager().getFirstMatch(ModRecipes.ALCHEMY, new AlchemyRecipeContext(reactant, catalyst), world);
+        return world.getRecipeManager().getFirstMatch(ModRecipes.ALCHEMY, new Context(reactant, catalyst), world);
     }
     
     @Override
-    public boolean matches(AlchemyRecipeContext context, World world) {
+    public boolean matches(Context context, World world) {
         return reactant.test(context.reactant) && catalyst.test(context.catalyst);
     }
     
@@ -101,9 +101,9 @@ public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.AlchemyRecipeContext
         public AlchemyRecipe read(Identifier id, JsonObject json) {
             FluidIngredient reactant = FluidIngredient.fromJson(json.get("reactant"));
             ItemIngredient catalyst = ItemIngredient.fromJson(json.get("catalyst"));
-            Loot byproduct = json.has("byproduct") ? CodecUtils.deserializeJson(Loot.CODEC, json.get("byproduct")) : Loot.EMPTY;
+            Loot byproduct = json.has("byproduct") ? CodecUtils.fromJson(Loot.CODEC, json.get("byproduct")) : Loot.EMPTY;
             int delay = JsonHelper.getInt(json, "delay", 0);
-            EntityStack toSpawn = json.has("toSpawn") ? CodecUtils.deserializeJson(EntityStack.CODEC, json.get("toSpawn")) : EntityStack.EMPTY;
+            EntityStack toSpawn = json.has("toSpawn") ? CodecUtils.fromJson(EntityStack.CODEC, json.get("toSpawn")) : EntityStack.EMPTY;
             BarrelMode result = json.has("result") ? BarrelMode.fromJson(json.get("result")) : new EmptyMode();
             
             return new AlchemyRecipe(id, reactant, catalyst, byproduct, delay, toSpawn, result);
@@ -113,9 +113,9 @@ public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.AlchemyRecipeContext
         public AlchemyRecipe read(Identifier id, PacketByteBuf buf) {
             FluidIngredient reactant = FluidIngredient.fromPacket(buf);
             ItemIngredient catalyst = ItemIngredient.fromPacket(buf);
-            Loot byproduct = CodecUtils.deserializeNbt(Loot.CODEC, buf.readNbt());
+            Loot byproduct = CodecUtils.fromNbt(Loot.CODEC, buf.readNbt());
             int delay = buf.readInt();
-            EntityStack toSpawn = CodecUtils.deserializeNbt(EntityStack.CODEC, buf.readNbt());
+            EntityStack toSpawn = CodecUtils.fromNbt(EntityStack.CODEC, buf.readNbt());
             BarrelMode result = BarrelMode.fromPacket(buf);
     
             return new AlchemyRecipe(id, reactant, catalyst, byproduct, delay, toSpawn, result);
@@ -125,12 +125,12 @@ public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.AlchemyRecipeContext
         public void write(PacketByteBuf buf, AlchemyRecipe recipe) {
             recipe.reactant.toPacket(buf);
             recipe.catalyst.toPacket(buf);
-            buf.writeNbt((NbtCompound) CodecUtils.serializeNbt(Loot.CODEC, recipe.byproduct));
+            buf.writeNbt((NbtCompound) CodecUtils.toNbt(Loot.CODEC, recipe.byproduct));
             buf.writeInt(recipe.delay);
-            buf.writeNbt((NbtCompound) CodecUtils.serializeNbt(EntityStack.CODEC, recipe.toSpawn));
+            buf.writeNbt((NbtCompound) CodecUtils.toNbt(EntityStack.CODEC, recipe.toSpawn));
             recipe.result.toPacket(buf);
         }
     }
     
-    protected static record AlchemyRecipeContext(FluidVariant reactant, Item catalyst) implements RecipeContext { }
+    protected static record Context(FluidVariant reactant, Item catalyst) implements RecipeContext { }
 }

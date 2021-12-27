@@ -1,0 +1,6 @@
+{
+  "type": "fabricaeexnihilo:witch_water_entity",
+  "target": "minecraft:villager",
+  "profession": "minecraft:armorer",
+  "result": "minecraft:pillager"
+}

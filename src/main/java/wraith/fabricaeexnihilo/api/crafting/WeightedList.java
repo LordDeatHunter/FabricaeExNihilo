@@ -1,6 +1,6 @@
 package wraith.fabricaeexnihilo.api.crafting;
 
-import com.google.common.collect.Streams;
+import com.google.gson.JsonElement;
 import com.mojang.serialization.Codec;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
+import wraith.fabricaeexnihilo.util.CodecUtils;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.util.HashMap;
@@ -21,13 +22,7 @@ public class WeightedList {
 
     private final Map<Block, Integer> values;
     private int totalWeight;
-
-    public WeightedList(Iterable<Block> keys, Iterable<Integer> weights) {
-        this.values = new HashMap<>();
-        Streams.zip(Streams.stream(keys), Streams.stream(weights), Pair::new).forEach(pair -> this.values.put(pair.getLeft(), pair.getRight()));
-        setTotalWeight();
-    }
-
+    
     public WeightedList(Map<Block, Integer> values) {
         this.values = values;
         setTotalWeight();
@@ -83,5 +78,12 @@ public class WeightedList {
         totalWeight += other.totalWeight;
         other.values.forEach((key, value) -> values.put(key, value + values.getOrDefault(key, 0)));
     }
-
+    
+    public JsonElement toJson() {
+        return CodecUtils.toJson(CODEC, this);
+    }
+    
+    public static WeightedList fromJson(JsonElement json) {
+        return CodecUtils.fromJson(CODEC, json);
+    }
 }

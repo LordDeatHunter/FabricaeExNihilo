@@ -23,7 +23,7 @@ public abstract class BaseRecipe<T extends RecipeContext> implements Recipe<T> {
     }
     
     @Override
-    public final ItemStack craft(RecipeContext inventory) {
+    public final ItemStack craft(T inventory) {
         return getOutput().copy();
     }
     

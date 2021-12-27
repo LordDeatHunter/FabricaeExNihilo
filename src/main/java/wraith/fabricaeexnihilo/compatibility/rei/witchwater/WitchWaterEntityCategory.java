@@ -68,8 +68,8 @@ public class WitchWaterEntityCategory implements DisplayCategory<WitchWaterEntit
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + OUT_X, bounds.getMinY() + OUT_Y)).entries(eggOut));
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + FLUID_X, bounds.getMinY() + FLUID_Y)).entries(fluids));
 
-        if (display.recipe().target().test(EntityType.VILLAGER)) {
-            var profession = display.recipe().profession();
+        if (display.recipe().getTarget().test(EntityType.VILLAGER)) {
+            var profession = display.recipe().getProfession();
             var professionId = Registry.VILLAGER_PROFESSION.getId(profession == null ? VillagerProfession.NONE : profession);
             var text = Widgets.createLabel(new Point(0, 0), new TranslatableText("entity." + professionId.getNamespace() + ".villager." + professionId.getPath()));
             text.setPoint(new Point(bounds.getMinX() + MARGIN + text.getBounds().getMaxX(), bounds.getMinY() - MARGIN + text.getBounds().getMaxY()));

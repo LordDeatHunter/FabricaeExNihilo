@@ -81,11 +81,8 @@ public class PluginEntry implements REIClientPlugin {
         //FabricaeExNihiloRegistries.BARREL_ON_TOP.getREIRecipes().forEach(recipe -> registry.add(new FluidOnTopDisplay(recipe)));
         //FabricaeExNihiloRegistries.BARREL_MILKING.getREIRecipes().forEach(recipe -> registry.add(new MilkingDisplay(recipe)));
         //FabricaeExNihiloRegistries.BARREL_TRANSFORM.getREIRecipes().forEach(recipe -> registry.add(new TransformingDisplay(recipe)));
-        FabricaeExNihiloRegistries.WITCHWATER_ENTITY.getREIRecipes().forEach(recipe ->
-                registry.add(new WitchWaterEntityDisplay(recipe)));
-        FabricaeExNihiloRegistries.WITCHWATER_WORLD.getREIRecipes().forEach(recipe ->
-                registry.add(new WitchWaterWorldDisplay(recipe)));
-
+        //FabricaeExNihiloRegistries.WITCHWATER_ENTITY.getREIRecipes().forEach(recipe -> registry.add(new WitchWaterEntityDisplay(recipe)));
+        //FabricaeExNihiloRegistries.WITCHWATER_WORLD.getREIRecipes().forEach(recipe -> registry.add(new WitchWaterWorldDisplay(recipe)));
     }
 
     public static final CategoryIdentifier<SieveDisplay> SIEVE = CategoryIdentifier.of(FabricaeExNihilo.id("rei/sieve"));

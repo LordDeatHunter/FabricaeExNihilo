@@ -39,15 +39,5 @@ public class MetaModule implements FabricaeExNihiloModule {
     public void registerHammer(@NotNull ToolRecipeRegistry registry) {
         modules.forEach(module -> module.registerHammer(registry));
     }
-
-    @Override
-    public void registerWitchWaterWorld(@NotNull WitchWaterWorldRecipeRegistry registry) {
-        modules.forEach(module -> module.registerWitchWaterWorld(registry));
-    }
-
-    @Override
-    public void registerWitchWaterEntity(@NotNull WitchWaterEntityRecipeRegistry registry) {
-        modules.forEach(module -> module.registerWitchWaterEntity(registry));
-    }
-
+    
 }

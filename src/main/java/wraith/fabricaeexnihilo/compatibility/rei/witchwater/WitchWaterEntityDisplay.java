@@ -5,9 +5,9 @@ import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.minecraft.item.SpawnEggItem;
-import wraith.fabricaeexnihilo.api.recipes.witchwater.WitchWaterEntityRecipe;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 import wraith.fabricaeexnihilo.modules.witchwater.WitchWaterFluid;
+import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterEntityRecipe;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,13 +19,13 @@ public record WitchWaterEntityDisplay(WitchWaterEntityRecipe recipe) implements 
     public List<EntryIngredient> getInputEntries() {
         var list = new ArrayList<EntryIngredient>();
         list.add(EntryIngredients.of(WitchWaterFluid.BUCKET));
-        list.addAll(recipe.target().asREIEntries());
+        list.addAll(recipe.getTarget().asREIEntries());
         return list;
     }
 
     @Override
     public List<EntryIngredient> getOutputEntries() {
-        var egg = SpawnEggItem.forEntity(recipe.toSpawn());
+        var egg = SpawnEggItem.forEntity(recipe.getResult());
         if (egg == null) {
             return new ArrayList<>();
         }
