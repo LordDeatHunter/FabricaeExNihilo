@@ -1,0 +1,11 @@
+{
+  "type": "fabricaeexnihilo:hammer",
+  "block": "fabricaeexnihilo:silt",
+  "result": {
+    "stack": "fabricaeexnihilo:dust",
+    "chances": [
+      1.0,
+      0.25
+    ]
+  }
+}

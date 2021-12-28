@@ -1,0 +1,10 @@
+{
+  "type": "fabricaeexnihilo:hammer",
+  "block": "minecraft:white_concrete",
+  "result": {
+    "stack": "minecraft:white_concrete_powder",
+    "chances": [
+      1.0
+    ]
+  }
+}

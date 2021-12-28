@@ -11,6 +11,7 @@ import net.minecraft.network.PacketByteBuf;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelModeStorage;
+import wraith.fabricaeexnihilo.util.CodecUtils;
 
 public abstract class BarrelMode implements BarrelModeStorage {
     // We really gotta do this? :concern:
@@ -43,31 +44,6 @@ public abstract class BarrelMode implements BarrelModeStorage {
     });
     
     protected BarrelMode() {
-    }
-    
-    public void toPacket(PacketByteBuf buf) {
-        // Should be safe to cast here
-        buf.writeNbt((NbtCompound) CODEC.encodeStart(NbtOps.INSTANCE, this).getOrThrow(false, FabricaeExNihilo.LOGGER::warn));
-    }
-    
-    public NbtElement toNbt() {
-        return CODEC.encodeStart(NbtOps.INSTANCE, this).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
-    }
-    
-    public JsonElement toJson() {
-        return CODEC.encodeStart(JsonOps.INSTANCE, this).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
-    }
-    
-    public static BarrelMode fromPacket(PacketByteBuf buf) {
-        return fromNbt(buf.readNbt());
-    }
-    
-    public static BarrelMode fromNbt(NbtCompound nbt) {
-        return CODEC.parse(NbtOps.INSTANCE, nbt).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
-    }
-    
-    public static BarrelMode fromJson(JsonElement json) {
-        return CODEC.parse(JsonOps.INSTANCE, json).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
     }
     
     public abstract String getId();

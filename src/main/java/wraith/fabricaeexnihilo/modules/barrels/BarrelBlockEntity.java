@@ -27,11 +27,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
-import wraith.fabricaeexnihilo.api.crafting.EntityStack;
+import wraith.fabricaeexnihilo.recipe.util.EntityStack;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.barrels.modes.*;
 import wraith.fabricaeexnihilo.modules.base.BaseBlockEntity;
 import wraith.fabricaeexnihilo.modules.base.EnchantmentContainer;
+import wraith.fabricaeexnihilo.util.CodecUtils;
 
 @SuppressWarnings("UnstableApiUsage")
 public class BarrelBlockEntity extends BaseBlockEntity {
@@ -135,12 +136,12 @@ public class BarrelBlockEntity extends BaseBlockEntity {
     }
 
     private void writeNbtWithoutWorldInfo(NbtCompound nbt) {
-        nbt.put("mode", mode.toNbt());
+        nbt.put("mode", CodecUtils.toNbt(BarrelMode.CODEC, mode));
         nbt.put("enchantments", enchantments.writeNbt());
     }
 
     private void readNbtWithoutWorldInfo(NbtCompound nbt) {
-        mode = BarrelMode.fromNbt(nbt.getCompound("mode"));
+        mode = CodecUtils.fromNbt(BarrelMode.CODEC, nbt.getCompound("mode"));
         if (nbt.contains("enchantments")) {
             var readEnchantments = new EnchantmentContainer();
             readEnchantments.readNbt(nbt.getCompound("enchantments"));

@@ -1,8 +1,8 @@
 package wraith.fabricaeexnihilo.json.recipe;
 
 import com.google.gson.*;
-import wraith.fabricaeexnihilo.api.crafting.FluidIngredient;
-import wraith.fabricaeexnihilo.api.crafting.ItemIngredient;
+import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
+import wraith.fabricaeexnihilo.recipe.util.ItemIngredient;
 import wraith.fabricaeexnihilo.api.recipes.SieveRecipe;
 import wraith.fabricaeexnihilo.json.BaseJson;
 

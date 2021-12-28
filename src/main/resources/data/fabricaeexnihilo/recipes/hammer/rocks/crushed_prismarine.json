@@ -1,0 +1,11 @@
+{
+  "type": "fabricaeexnihilo:hammer",
+  "block": "fabricaeexnihilo:crushed_prismarine",
+  "result": {
+    "stack": "minecraft:cyan_concrete_powder",
+    "chances": [
+      1.0,
+      0.5
+    ]
+  }
+}

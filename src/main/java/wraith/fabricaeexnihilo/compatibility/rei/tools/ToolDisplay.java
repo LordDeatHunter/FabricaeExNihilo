@@ -4,9 +4,9 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
-import wraith.fabricaeexnihilo.api.recipes.ToolRecipe;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 import wraith.fabricaeexnihilo.modules.ModTools;
+import wraith.fabricaeexnihilo.recipe.ToolRecipe;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.util.Collections;
@@ -22,15 +22,12 @@ public record ToolDisplay(ToolRecipe recipe, CategoryIdentifier<ToolDisplay> cat
 
     @Override
     public List<EntryIngredient> getOutputEntries() {
-        return Collections.singletonList(EntryIngredient.of(recipe.loots()
-                .stream().map(loot -> ItemUtils.asREIEntry(loot.getStack()))
-                .toList())
-        );
+        return Collections.singletonList(EntryIngredient.of(List.of(ItemUtils.asREIEntry(recipe.getResult().stack()))));
     }
 
     @Override
     public List<EntryIngredient> getInputEntries() {
-        var ingredients = recipe.ingredient().asREIEntries();
+        var ingredients = recipe.getBlock().asREIEntries();
         var tools = (category == PluginEntry.HAMMER ? ModTools.HAMMERS : ModTools.CROOKS)
                 .values().stream()
                 .map(EntryIngredients::of)

@@ -1,0 +1,10 @@
+{
+  "type": "fabricaeexnihilo:hammer",
+  "block": "minecraft:lime_concrete",
+  "result": {
+    "stack": "minecraft:lime_concrete_powder",
+    "chances": [
+      1.0
+    ]
+  }
+}

@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
@@ -12,10 +11,10 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.api.crafting.EntityStack;
-import wraith.fabricaeexnihilo.api.crafting.FluidIngredient;
-import wraith.fabricaeexnihilo.api.crafting.ItemIngredient;
-import wraith.fabricaeexnihilo.api.crafting.Loot;
+import wraith.fabricaeexnihilo.recipe.util.EntityStack;
+import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
+import wraith.fabricaeexnihilo.recipe.util.ItemIngredient;
+import wraith.fabricaeexnihilo.recipe.util.Loot;
 import wraith.fabricaeexnihilo.modules.ModRecipes;
 import wraith.fabricaeexnihilo.modules.barrels.modes.BarrelMode;
 import wraith.fabricaeexnihilo.modules.barrels.modes.EmptyMode;
@@ -104,7 +103,7 @@ public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.Context> {
             Loot byproduct = json.has("byproduct") ? CodecUtils.fromJson(Loot.CODEC, json.get("byproduct")) : Loot.EMPTY;
             int delay = JsonHelper.getInt(json, "delay", 0);
             EntityStack toSpawn = json.has("toSpawn") ? CodecUtils.fromJson(EntityStack.CODEC, json.get("toSpawn")) : EntityStack.EMPTY;
-            BarrelMode result = json.has("result") ? BarrelMode.fromJson(json.get("result")) : new EmptyMode();
+            BarrelMode result = json.has("result") ? CodecUtils.fromJson(BarrelMode.CODEC, json.get("result")) : new EmptyMode();
             
             return new AlchemyRecipe(id, reactant, catalyst, byproduct, delay, toSpawn, result);
         }
@@ -113,10 +112,10 @@ public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.Context> {
         public AlchemyRecipe read(Identifier id, PacketByteBuf buf) {
             FluidIngredient reactant = FluidIngredient.fromPacket(buf);
             ItemIngredient catalyst = ItemIngredient.fromPacket(buf);
-            Loot byproduct = CodecUtils.fromNbt(Loot.CODEC, buf.readNbt());
+            Loot byproduct = CodecUtils.fromPacket(Loot.CODEC, buf);
             int delay = buf.readInt();
-            EntityStack toSpawn = CodecUtils.fromNbt(EntityStack.CODEC, buf.readNbt());
-            BarrelMode result = BarrelMode.fromPacket(buf);
+            EntityStack toSpawn = CodecUtils.fromPacket(EntityStack.CODEC, buf);
+            BarrelMode result = CodecUtils.fromPacket(BarrelMode.CODEC, buf);
     
             return new AlchemyRecipe(id, reactant, catalyst, byproduct, delay, toSpawn, result);
         }
@@ -125,10 +124,10 @@ public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.Context> {
         public void write(PacketByteBuf buf, AlchemyRecipe recipe) {
             recipe.reactant.toPacket(buf);
             recipe.catalyst.toPacket(buf);
-            buf.writeNbt((NbtCompound) CodecUtils.toNbt(Loot.CODEC, recipe.byproduct));
+            CodecUtils.toPacket(Loot.CODEC, recipe.byproduct, buf);
             buf.writeInt(recipe.delay);
-            buf.writeNbt((NbtCompound) CodecUtils.toNbt(EntityStack.CODEC, recipe.toSpawn));
-            recipe.result.toPacket(buf);
+            CodecUtils.toPacket(EntityStack.CODEC, recipe.toSpawn, buf);
+            CodecUtils.toPacket(BarrelMode.CODEC, recipe.result, buf);
         }
     }
     

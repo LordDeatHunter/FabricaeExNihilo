@@ -20,7 +20,7 @@ public record SieveDisplay(SieveRecipe recipe) implements Display {
 
     @Override
     public List<EntryIngredient> getOutputEntries() {
-        return recipe.loot().stream().map(loot -> EntryIngredients.of(loot.getStack())).toList();
+        return recipe.loot().stream().map(loot -> EntryIngredients.of(loot.stack())).toList();
     }
 
     @Override

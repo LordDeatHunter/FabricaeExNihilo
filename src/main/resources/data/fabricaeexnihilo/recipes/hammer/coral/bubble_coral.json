@@ -1,0 +1,11 @@
+{
+  "type": "fabricaeexnihilo:hammer",
+  "block": "minecraft:bubble_coral",
+  "result": {
+    "stack": "bubble_coral_fan",
+    "chances": [
+      1,
+      0.5
+    ]
+  }
+}

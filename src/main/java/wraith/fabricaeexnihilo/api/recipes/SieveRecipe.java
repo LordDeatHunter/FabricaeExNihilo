@@ -2,9 +2,9 @@ package wraith.fabricaeexnihilo.api.recipes;
 
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
-import wraith.fabricaeexnihilo.api.crafting.FluidIngredient;
-import wraith.fabricaeexnihilo.api.crafting.ItemIngredient;
-import wraith.fabricaeexnihilo.api.crafting.Loot;
+import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
+import wraith.fabricaeexnihilo.recipe.util.ItemIngredient;
+import wraith.fabricaeexnihilo.recipe.util.Loot;
 
 import java.util.List;
 

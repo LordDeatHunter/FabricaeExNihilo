@@ -1,0 +1,10 @@
+{
+  "type": "fabricaeexnihilo:hammer",
+  "block": "minecraft:purple_wool",
+  "result": {
+    "stack": "minecraft:purple_dye",
+    "chances": [
+      0.5
+    ]
+  }
+}

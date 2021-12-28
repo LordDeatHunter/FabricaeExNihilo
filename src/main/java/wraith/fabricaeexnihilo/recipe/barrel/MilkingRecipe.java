@@ -4,14 +4,13 @@ import com.google.gson.JsonObject;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.api.crafting.EntityTypeIngredient;
+import wraith.fabricaeexnihilo.recipe.util.EntityTypeIngredient;
 import wraith.fabricaeexnihilo.modules.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
@@ -91,7 +90,7 @@ public class MilkingRecipe extends BaseRecipe<MilkingRecipe.Context> {
         @Override
         public MilkingRecipe read(Identifier id, PacketByteBuf buf) {
             var entity = EntityTypeIngredient.fromPacket(buf);
-            var fluid = CodecUtils.fromNbt(CodecUtils.FLUID_VARIANT, buf.readNbt());
+            var fluid = CodecUtils.fromPacket(CodecUtils.FLUID_VARIANT, buf);
             var amount = buf.readLong();
             var cooldown = buf.readInt();
     
@@ -101,7 +100,7 @@ public class MilkingRecipe extends BaseRecipe<MilkingRecipe.Context> {
         @Override
         public void write(PacketByteBuf buf, MilkingRecipe recipe) {
             recipe.entity.toPacket(buf);
-            buf.writeNbt((NbtCompound) CodecUtils.toNbt(CodecUtils.FLUID_VARIANT, recipe.fluid));
+            CodecUtils.toPacket(CodecUtils.FLUID_VARIANT, recipe.fluid, buf);
             buf.writeLong(recipe.amount);
             buf.writeInt(recipe.cooldown);
         }

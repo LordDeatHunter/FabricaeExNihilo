@@ -1,7 +1,7 @@
 //package wraith.fabricaeexnihilo.compatibility.associations;
 
 /**
- * An association fromPacket identifiers to be used for generating Sieves/Crucibles/Barrels
+ * An association of identifiers to be used for generating Sieves/Crucibles/Barrels
  */
 /*
 data class WoodAssociation(val base:Identifier,

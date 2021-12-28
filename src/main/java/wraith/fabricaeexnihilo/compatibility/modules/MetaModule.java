@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MetaModule implements FabricaeExNihiloModule {
-
     public static MetaModule INSTANCE = new MetaModule();
 
     private MetaModule() {}
@@ -29,15 +28,4 @@ public class MetaModule implements FabricaeExNihiloModule {
     public void registerMesh(@NotNull MeshRecipeRegistry registry) {
         modules.forEach(module -> module.registerMesh(registry));
     }
-
-    @Override
-    public void registerCrook(@NotNull ToolRecipeRegistry registry) {
-        modules.forEach(module -> module.registerCrook(registry));
-    }
-
-    @Override
-    public void registerHammer(@NotNull ToolRecipeRegistry registry) {
-        modules.forEach(module -> module.registerHammer(registry));
-    }
-    
 }

@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
@@ -12,7 +11,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.api.crafting.ItemIngredient;
+import wraith.fabricaeexnihilo.recipe.util.ItemIngredient;
 import wraith.fabricaeexnihilo.modules.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
@@ -90,7 +89,7 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
         public CrucibleRecipe read(Identifier id, PacketByteBuf buf) {
             var input = ItemIngredient.fromPacket(buf);
             var amount = buf.readLong();
-            var fluid = CodecUtils.fromNbt(CodecUtils.FLUID_VARIANT, buf.readNbt());
+            var fluid = CodecUtils.fromPacket(CodecUtils.FLUID_VARIANT, buf);
             var isStone = buf.readBoolean();
             
             return new CrucibleRecipe(id, input, amount, fluid, isStone);
@@ -100,7 +99,7 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
         public void write(PacketByteBuf buf, CrucibleRecipe recipe) {
             recipe.input.toPacket(buf);
             buf.writeLong(recipe.amount);
-            buf.writeNbt((NbtCompound) CodecUtils.toNbt(CodecUtils.FLUID_VARIANT, recipe.fluid));
+            CodecUtils.toPacket(CodecUtils.FLUID_VARIANT, recipe.fluid, buf);
             buf.writeBoolean(recipe.isStone);
         }
     }

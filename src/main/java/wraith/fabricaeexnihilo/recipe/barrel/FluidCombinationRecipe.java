@@ -9,11 +9,12 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.api.crafting.FluidIngredient;
+import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
 import wraith.fabricaeexnihilo.modules.ModRecipes;
 import wraith.fabricaeexnihilo.modules.barrels.modes.BarrelMode;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
+import wraith.fabricaeexnihilo.util.CodecUtils;
 
 import java.util.Optional;
 
@@ -75,7 +76,7 @@ public class FluidCombinationRecipe extends BaseRecipe<FluidCombinationRecipe.Co
         public FluidCombinationRecipe read(Identifier id, JsonObject json) {
             FluidIngredient contained = FluidIngredient.fromJson(json.get("contained"));
             FluidIngredient other = FluidIngredient.fromJson(json.get("other"));
-            BarrelMode result = BarrelMode.fromJson(json.get("result"));
+            BarrelMode result = CodecUtils.fromJson(BarrelMode.CODEC, json.get("result"));
             
             return new FluidCombinationRecipe(id, contained, other, result);
         }
@@ -84,7 +85,7 @@ public class FluidCombinationRecipe extends BaseRecipe<FluidCombinationRecipe.Co
         public FluidCombinationRecipe read(Identifier id, PacketByteBuf buf) {
             FluidIngredient contained = FluidIngredient.fromPacket(buf);
             FluidIngredient other = FluidIngredient.fromPacket(buf);
-            BarrelMode result = BarrelMode.fromPacket(buf);
+            BarrelMode result = CodecUtils.fromPacket(BarrelMode.CODEC, buf);
             
             return new FluidCombinationRecipe(id, contained, other, result);
         }
@@ -93,7 +94,7 @@ public class FluidCombinationRecipe extends BaseRecipe<FluidCombinationRecipe.Co
         public void write(PacketByteBuf buf, FluidCombinationRecipe recipe) {
             recipe.contained.toPacket(buf);
             recipe.other.toPacket(buf);
-            recipe.result.toPacket(buf);
+            CodecUtils.toPacket(BarrelMode.CODEC, recipe.result, buf);
         }
     }
     

@@ -14,7 +14,7 @@ public class CrookLootCondition implements LootCondition {
         }
         var tool = lootContext.get(LootContextParameters.TOOL);
 
-        return tool != null && CrookTool.isCrook(tool);
+        return tool != null && CrookItem.isCrook(tool);
     }
 
     @Override

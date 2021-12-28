@@ -1,0 +1,10 @@
+{
+  "type": "fabricaeexnihilo:hammer",
+  "block": "minecraft:red_stained_glass",
+  "result": {
+    "stack": "minecraft:red_dye",
+    "chances": [
+      0.0625
+    ]
+  }
+}

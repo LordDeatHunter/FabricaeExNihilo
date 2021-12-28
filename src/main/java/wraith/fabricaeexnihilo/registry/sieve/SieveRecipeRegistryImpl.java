@@ -8,7 +8,7 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
-import wraith.fabricaeexnihilo.api.crafting.Loot;
+import wraith.fabricaeexnihilo.recipe.util.Loot;
 import wraith.fabricaeexnihilo.api.recipes.SieveRecipe;
 import wraith.fabricaeexnihilo.api.registry.SieveRecipeRegistry;
 import wraith.fabricaeexnihilo.compatibility.modules.MetaModule;
@@ -59,9 +59,9 @@ public class SieveRecipeRegistryImpl extends AbstractRegistry<List<SieveRecipe>>
         var results = new ArrayList<ItemStack>();
         for (int i = 0; i < tries; ++i) {
             allResults.forEach(loot -> {
-                var num = (int) loot.getChances().stream().filter(chance -> rand.nextDouble() < chance).count();
+                var num = (int) loot.chances().stream().filter(chance -> rand.nextDouble() < chance).count();
                 if (num > 0) {
-                    var stack = loot.getStack().copy();
+                    var stack = loot.stack().copy();
                     stack.setCount(num);
                     results.add(stack);
                 }

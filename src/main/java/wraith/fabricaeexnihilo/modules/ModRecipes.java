@@ -10,6 +10,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.recipe.DummyRecipe;
+import wraith.fabricaeexnihilo.recipe.ToolRecipe;
 import wraith.fabricaeexnihilo.recipe.barrel.*;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleHeatRecipe;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleRecipe;
@@ -29,6 +30,8 @@ public class ModRecipes {
     public static final ModRecipeType<CrucibleHeatRecipe> CRUCIBLE_HEAT = new ModRecipeType<>(id("crucible_heat"));
     public static final ModRecipeType<WitchWaterEntityRecipe> WITCH_WATER_ENTITY = new ModRecipeType<>(id("witch_water_entity"));
     public static final ModRecipeType<WitchWaterWorldRecipe> WITCH_WATER_WORLD = new ModRecipeType<>(id("witch_water_world"));
+    public static final ModRecipeType<ToolRecipe> HAMMER = new ModRecipeType<>(id("hammer"));
+    public static final ModRecipeType<ToolRecipe> CROOK = new ModRecipeType<>(id("crook"));
     
     public static final RecipeSerializer<?> COMPOST_SERIALIZER = ProxySerializer.of(new CompostRecipe.Serializer());
     public static final RecipeSerializer<?> FLUID_COMBINATION_SERIALIZER = ProxySerializer.of(new FluidCombinationRecipe.Serializer());
@@ -40,6 +43,8 @@ public class ModRecipes {
     public static final RecipeSerializer<?> CRUCIBLE_HEAT_SERIALIZER = ProxySerializer.of(new CrucibleHeatRecipe.Serializer());
     public static final RecipeSerializer<?> WITCH_WATER_ENTITY_SERIALIZER = ProxySerializer.of(new WitchWaterEntityRecipe.Serializer());
     public static final RecipeSerializer<?> WITCH_WATER_WORLD_SERIALIZER = ProxySerializer.of(new WitchWaterWorldRecipe.Serializer());
+    public static final RecipeSerializer<?> HAMMER_SERIALIZER = ProxySerializer.of(new ToolRecipe.Serializer());
+    public static final RecipeSerializer<?> CROOK_SERIALIZER = ProxySerializer.of(new ToolRecipe.Serializer());
     
     public static void register() {
         register(COMPOST, COMPOST_SERIALIZER);
@@ -51,6 +56,8 @@ public class ModRecipes {
         register(CRUCIBLE, CRUCIBLE_SERIALIZER);
         register(CRUCIBLE_HEAT, CRUCIBLE_HEAT_SERIALIZER);
         register(WITCH_WATER_ENTITY, WITCH_WATER_ENTITY_SERIALIZER);
+        register(HAMMER, HAMMER_SERIALIZER);
+        register(CROOK, CROOK_SERIALIZER);
     }
     
     private static void register(ModRecipeType<?> type, RecipeSerializer<?> serializer) {

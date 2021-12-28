@@ -15,14 +15,14 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.village.VillagerProfession;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.api.crafting.EntityTypeIngredient;
+import wraith.fabricaeexnihilo.recipe.util.EntityTypeIngredient;
 import wraith.fabricaeexnihilo.modules.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
 
 import java.util.Optional;
 
-public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.WitchWaterEntityRecipeContext> {
+public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.Context> {
     private final EntityTypeIngredient target;
     private final @Nullable VillagerProfession profession;
     private final EntityType<?> result;
@@ -38,11 +38,11 @@ public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.Wi
         if (world == null) {
             return Optional.empty();
         }
-        return world.getRecipeManager().getFirstMatch(ModRecipes.WITCH_WATER_ENTITY, new WitchWaterEntityRecipeContext(entity), world);
+        return world.getRecipeManager().getFirstMatch(ModRecipes.WITCH_WATER_ENTITY, new Context(entity), world);
     }
     
     @Override
-    public boolean matches(WitchWaterEntityRecipeContext context, World world) {
+    public boolean matches(Context context, World world) {
         if (!target.test(context.entity))
             return false;
         
@@ -77,7 +77,7 @@ public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.Wi
         return profession;
     }
     
-    protected static record WitchWaterEntityRecipeContext(Entity entity) implements RecipeContext {
+    protected static record Context(Entity entity) implements RecipeContext {
     }
     
     public static class Serializer implements RecipeSerializer<WitchWaterEntityRecipe> {

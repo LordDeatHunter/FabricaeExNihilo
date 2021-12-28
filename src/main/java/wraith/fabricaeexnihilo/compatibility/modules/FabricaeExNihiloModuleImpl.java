@@ -5,29 +5,24 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterials;
 import net.minecraft.tag.ItemTags;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.api.compatibility.FabricaeExNihiloModule;
-import wraith.fabricaeexnihilo.api.crafting.Loot;
+import wraith.fabricaeexnihilo.recipe.util.Loot;
 import wraith.fabricaeexnihilo.api.registry.*;
 import wraith.fabricaeexnihilo.modules.ModItems;
-import wraith.fabricaeexnihilo.modules.ModTags;
 import wraith.fabricaeexnihilo.modules.ore.ChunkMaterial;
 import wraith.fabricaeexnihilo.modules.ore.ChunkShape;
 import wraith.fabricaeexnihilo.modules.ore.PieceShape;
 import wraith.fabricaeexnihilo.modules.witchwater.WitchWaterFluid;
 import wraith.fabricaeexnihilo.util.Color;
 import wraith.fabricaeexnihilo.util.ItemUtils;
-import wraith.fabricaeexnihilo.util.VanillaWoodDefinitions;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
-import static wraith.fabricaeexnihilo.util.ColorUtils.*;
 
-@SuppressWarnings("UnstableApiUsage")
 public final class FabricaeExNihiloModuleImpl implements FabricaeExNihiloModule {
 
     private FabricaeExNihiloModuleImpl() {}
@@ -301,80 +296,4 @@ public final class FabricaeExNihiloModuleImpl implements FabricaeExNihiloModule 
         registry.register(goldMesh, Fluids.LAVA, crushedGranite, new Loot(Items.IRON_NUGGET, 0.2, 0.2));
         registry.register(diamondMesh, Fluids.LAVA, crushedGranite, new Loot(Items.IRON_NUGGET, 0.3, 0.3));
     }
-
-    @Override
-    public void registerCrook(ToolRecipeRegistry registry) {
-        registry.register(ItemTags.LEAVES, new Loot(Items.STICK, 0.01));
-        registry.register(ItemTags.LEAVES, new Loot(id("silkworm_raw"), 0.1, 0.2, 0.2));
-        if (ModTags.INFESTED_LEAVES != null) {
-            registry.register(ModTags.INFESTED_LEAVES, new Loot(ItemUtils.asStack(Items.STRING, 1), 1.0, 1.0, 0.5, 0.2, 0.1));
-        }
-        for(var wood : VanillaWoodDefinitions.values()) {
-            registry.register(wood.getLeafBlock(), new Loot(wood.getSeedItem(), 0.25));
-        }
-    }
-
-    @Override
-    public void registerHammer(ToolRecipeRegistry registry) {
-        // Stone
-        registry.register(Blocks.STONE, new Loot(Blocks.COBBLESTONE, 1.0));
-        registry.register(Blocks.COBBLESTONE, new Loot(Blocks.GRAVEL, 1.0, 0.25));
-        registry.register(Blocks.GRAVEL, new Loot(Blocks.SAND, 1.0, 0.25));
-        registry.register(Blocks.SAND, new Loot(id("silt"), 1.0, 0.25));
-        registry.register(id("silt"), new Loot(id("dust"), 1.0, 0.25));
-
-        // Andesite
-        registry.register(Blocks.ANDESITE, new Loot(id("crushed_andesite"), 1.0, 0.5));
-        registry.register(id("crushed_andesite"), new Loot(Blocks.LIGHT_GRAY_CONCRETE_POWDER, 1.0, 0.5));
-
-        // Diorite
-        registry.register(Blocks.DIORITE, new Loot(id("crushed_diorite"), 1.0, 0.5));
-        registry.register(id("crushed_diorite"), new Loot(Items.WHITE_CONCRETE_POWDER, 1.0, 0.5));
-
-        // Granite
-        registry.register(Blocks.GRANITE, new Loot(id("crushed_granite"), 1.0, 0.5));
-        registry.register(id("crushed_granite"), new Loot(Items.RED_SAND, 1.0, 0.5));
-
-        // Netherrack
-        registry.register(Blocks.NETHERRACK, new Loot(id("crushed_netherrack"), 1.0, 0.5));
-        registry.register(Blocks.NETHER_BRICKS, new Loot(id("crushed_netherrack"), 1.0, 0.5));
-        registry.register(id("crushed_netherrack"), new Loot(Blocks.RED_CONCRETE_POWDER, 1.0, 0.5));
-
-        // End Stone
-        registry.register(Blocks.END_STONE, new Loot(id("crushed_endstone"), 1.0));
-        registry.register(Blocks.END_STONE_BRICKS, new Loot(id("crushed_endstone"), 1.0, 0.5));
-        registry.register(id("crushed_endstone"), new Loot(Blocks.YELLOW_CONCRETE_POWDER, 1.0, 0.5));
-
-        // Prismarine
-        registry.register(Blocks.PRISMARINE, new Loot(id("crushed_prismarine"), 1.0));
-        registry.register(id("crushed_prismarine"), new Loot(Blocks.CYAN_CONCRETE_POWDER, 1.0, 0.5));
-
-        // Misc.
-        registry.register(ItemTags.WOOL, new Loot(ItemUtils.asStack(Items.STRING, 4), 1.0));
-        Arrays.stream(DyeColor.values()).forEach(color -> {
-            // Concrete Hammering
-            registry.register(getConcrete(color), new Loot(getConcretePowder(color), 1.0));
-            registry.register(getConcretePowder(color), new Loot(id("silt"), 1.0));
-            registry.register(getConcretePowder(color), new Loot(getDye(color), 0.0625));
-            // Wool Hammering
-            registry.register(getWool(color), new Loot(getDye(color), 0.5));
-            // Glass Hammering
-            registry.register(getGlass(color), new Loot(Blocks.SAND, 1.0));
-            registry.register(getGlass(color), new Loot(getDye(color), 0.0625));
-        });
-
-        // Corals
-        registry.register(Blocks.TUBE_CORAL_BLOCK, Blocks.TUBE_CORAL, 1.0, 1.0, 0.5, 0.1);
-        registry.register(Blocks.BRAIN_CORAL_BLOCK, Blocks.BRAIN_CORAL, 1.0, 1.0, 0.5, 0.1);
-        registry.register(Blocks.BUBBLE_CORAL_BLOCK, Blocks.BUBBLE_CORAL, 1.0, 1.0, 0.5, 0.1);
-        registry.register(Blocks.FIRE_CORAL_BLOCK, Blocks.FIRE_CORAL, 1.0, 1.0, 0.5, 0.1);
-        registry.register(Blocks.HORN_CORAL_BLOCK, Blocks.HORN_CORAL, 1.0, 1.0, 0.5, 0.1);
-
-        registry.register(Blocks.TUBE_CORAL, Blocks.TUBE_CORAL_FAN, 1.0, 0.5);
-        registry.register(Blocks.BRAIN_CORAL, Blocks.BRAIN_CORAL_FAN, 1.0, 0.5);
-        registry.register(Blocks.BUBBLE_CORAL, Blocks.BUBBLE_CORAL_FAN, 1.0, 0.5);
-        registry.register(Blocks.FIRE_CORAL, Blocks.FIRE_CORAL_FAN, 1.0, 0.5);
-        registry.register(Blocks.HORN_CORAL, Blocks.HORN_CORAL_FAN, 1.0, 0.5);
-    }
-    
 }

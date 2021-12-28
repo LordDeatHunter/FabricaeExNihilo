@@ -2,7 +2,7 @@ package wraith.fabricaeexnihilo.json.other;
 
 import com.google.gson.*;
 import net.minecraft.block.Block;
-import wraith.fabricaeexnihilo.api.crafting.WeightedList;
+import wraith.fabricaeexnihilo.recipe.util.WeightedList;
 import wraith.fabricaeexnihilo.json.BaseJson;
 import wraith.fabricaeexnihilo.json.basic.BlockJson;
 import wraith.fabricaeexnihilo.util.RegistryUtils;

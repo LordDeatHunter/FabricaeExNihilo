@@ -4,8 +4,8 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
 import net.minecraft.util.Identifier;
-import wraith.fabricaeexnihilo.api.crafting.EntityStack;
-import wraith.fabricaeexnihilo.api.crafting.Loot;
+import wraith.fabricaeexnihilo.recipe.util.EntityStack;
+import wraith.fabricaeexnihilo.recipe.util.Loot;
 
 import java.lang.reflect.Type;
 import java.util.List;

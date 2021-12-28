@@ -1,0 +1,11 @@
+{
+  "type": "fabricaeexnihilo:hammer",
+  "block": "minecraft:nether_bricks",
+  "result": {
+    "stack": "fabricaeexnihilo:crushed_netherrack",
+    "chances": [
+      1.0,
+      0.5
+    ]
+  }
+}

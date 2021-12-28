@@ -1,0 +1,10 @@
+{
+  "type": "fabricaeexnihilo:hammer",
+  "block": "minecraft:black_concrete_powder",
+  "result": {
+    "stack": "minecraft:black_dye",
+    "chances": [
+      0.0625
+    ]
+  }
+}

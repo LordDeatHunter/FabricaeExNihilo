@@ -1,0 +1,10 @@
+{
+  "type": "fabricaeexnihilo:hammer",
+  "block": "minecraft:prismarine",
+  "result": {
+    "stack": "fabricaeexnihilo:crushed_prismarine",
+    "chances": [
+      1.0
+    ]
+  }
+}

@@ -2,8 +2,6 @@ package wraith.fabricaeexnihilo.api.registry;
 
 import net.fabricmc.loader.api.FabricLoader;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
-import wraith.fabricaeexnihilo.compatibility.modules.MetaModule;
-import wraith.fabricaeexnihilo.registry.ToolRecipeRegistryImpl;
 import wraith.fabricaeexnihilo.registry.sieve.MeshRecipeRegistryImpl;
 import wraith.fabricaeexnihilo.registry.sieve.OreRecipeRegistryImpl;
 import wraith.fabricaeexnihilo.registry.sieve.SieveRecipeRegistryImpl;
@@ -18,8 +16,6 @@ public final class FabricaeExNihiloRegistries {
     public static MeshRecipeRegistry MESH = new MeshRecipeRegistryImpl();
     
     public static SieveRecipeRegistry SIEVE = new SieveRecipeRegistryImpl();
-    public static ToolRecipeRegistry HAMMER = new ToolRecipeRegistryImpl();
-    public static ToolRecipeRegistry CROOK = new ToolRecipeRegistryImpl();
     
     private static final File CONFIG_DIR = new File(FabricLoader.getInstance().getConfigDir().toFile(), "fabricaeexnihilo");
 
@@ -55,23 +51,7 @@ public final class FabricaeExNihiloRegistries {
     }
 
     private static void loadToolRegistries() {
-        if(FabricaeExNihilo.CONFIG.modules.hammers.enabled) {
-            loadHammerRegistry();
-        }
-        if(FabricaeExNihilo.CONFIG.modules.crooks.enabled) {
-            loadCrookRegistry();
-        }
         // TODO Wrench Item
-    }
-
-    private static void loadHammerRegistry() {
-        HAMMER = ToolRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"tool_hammer.json"), MetaModule.INSTANCE::registerHammer);
-        FabricaeExNihilo.LOGGER.debug("Loaded Hammer Registry.");
-    }
-
-    private static void loadCrookRegistry() {
-        CROOK = ToolRecipeRegistryImpl.fromJson(new File(CONFIG_DIR,"tool_crook.json"), MetaModule.INSTANCE::registerCrook);
-        FabricaeExNihilo.LOGGER.debug("Loaded Crook Registry.");
     }
 
     private static void loadSieveRegistry() {

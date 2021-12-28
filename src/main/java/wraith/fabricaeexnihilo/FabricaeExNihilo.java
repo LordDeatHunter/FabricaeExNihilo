@@ -20,12 +20,11 @@ import net.minecraft.village.VillagerProfession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import wraith.fabricaeexnihilo.api.FabricaeExNihiloAPI;
-import wraith.fabricaeexnihilo.api.crafting.EntityTypeIngredient;
-import wraith.fabricaeexnihilo.api.crafting.FluidIngredient;
-import wraith.fabricaeexnihilo.api.crafting.ItemIngredient;
-import wraith.fabricaeexnihilo.api.crafting.WeightedList;
+import wraith.fabricaeexnihilo.recipe.util.EntityTypeIngredient;
+import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
+import wraith.fabricaeexnihilo.recipe.util.ItemIngredient;
+import wraith.fabricaeexnihilo.recipe.util.WeightedList;
 import wraith.fabricaeexnihilo.api.recipes.SieveRecipe;
-import wraith.fabricaeexnihilo.api.recipes.ToolRecipe;
 import wraith.fabricaeexnihilo.api.registry.FabricaeExNihiloRegistries;
 import wraith.fabricaeexnihilo.compatibility.modules.FabricaeExNihiloModuleImpl;
 import wraith.fabricaeexnihilo.compatibility.modules.techreborn.TechReborn;
@@ -35,7 +34,6 @@ import wraith.fabricaeexnihilo.json.ingredient.FluidIngredientJson;
 import wraith.fabricaeexnihilo.json.ingredient.ItemIngredientJson;
 import wraith.fabricaeexnihilo.json.other.*;
 import wraith.fabricaeexnihilo.json.recipe.SieveRecipeJson;
-import wraith.fabricaeexnihilo.json.recipe.ToolRecipeJson;
 import wraith.fabricaeexnihilo.modules.*;
 import wraith.fabricaeexnihilo.modules.sieves.MeshProperties;
 import wraith.fabricaeexnihilo.util.ARRPUtils;
@@ -132,7 +130,6 @@ public class FabricaeExNihilo implements ModInitializer {
                  * Recipes
                  */
                 // Other
-                .registerTypeAdapter(ToolRecipe.class, ToolRecipeJson.INSTANCE)
                 .registerTypeAdapter(SieveRecipe.class, SieveRecipeJson.INSTANCE)
         
                 .enableComplexMapKeySerialization()

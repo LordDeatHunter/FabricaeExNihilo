@@ -1,0 +1,10 @@
+{
+  "type": "fabricaeexnihilo:hammer",
+  "block": "#c:glass",
+  "result": {
+    "stack": "minecraft:sand",
+    "chances": [
+      1.0
+    ]
+  }
+}

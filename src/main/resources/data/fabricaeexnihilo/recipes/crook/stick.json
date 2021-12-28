@@ -1,0 +1,10 @@
+{
+  "type": "fabricaeexnihilo:crook",
+  "block": "#minecraft:leaves",
+  "result": {
+    "stack": "minecraft:stick",
+    "chances": [
+      0.01
+    ]
+  }
+}

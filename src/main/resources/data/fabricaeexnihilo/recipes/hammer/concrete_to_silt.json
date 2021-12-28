@@ -1,0 +1,10 @@
+{
+  "type": "fabricaeexnihilo:hammer",
+  "block": "#c:concrete_powders",
+  "result": {
+    "stack": "fabricaeexnihilo:silt",
+    "chances": [
+      1.0
+    ]
+  }
+}

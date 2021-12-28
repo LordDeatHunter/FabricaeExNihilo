@@ -7,7 +7,7 @@ import net.minecraft.item.ToolMaterials;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.api.compatibility.FabricaeExNihiloModule;
-import wraith.fabricaeexnihilo.api.crafting.Loot;
+import wraith.fabricaeexnihilo.recipe.util.Loot;
 import wraith.fabricaeexnihilo.api.registry.*;
 import wraith.fabricaeexnihilo.util.Color;
 
@@ -53,16 +53,6 @@ public class TechReborn implements FabricaeExNihiloModule {
         gem = Registry.ITEM.get(new Identifier("techreborn:peridot_gem"));
         registry.register(goldMesh, crushedEndstone, new Loot(gem, 0.01));
         registry.register(carbonMesh, crushedEndstone, new Loot(gem, 0.05));
-    }
-
-    @Override
-    public void registerCrook(ToolRecipeRegistry registry) {
-
-    }
-
-    @Override
-    public void registerHammer(ToolRecipeRegistry registry) {
-
     }
     
     @Override

@@ -22,7 +22,9 @@ public final class ModTags {
     public static final Tag.Identified<Item> HAMMER_TAG = TagFactory.ITEM.create(FabricaeExNihilo.id("hammer"));
     public static final Tag.Identified<Item> INFESTED_LEAVES = TagFactory.ITEM.create(FabricaeExNihilo.id("infested_leaves"));
     public static final Tag.Identified<Block> INFESTED_LEAVES_BLOCK = TagFactory.BLOCK.create(FabricaeExNihilo.id("infested_leaves"));
-
+    public static final Tag.Identified<Block> HAMMERABLES = TagFactory.BLOCK.create(id("hammerables"));
+    public static final Tag.Identified<Block> CROOKABLES = TagFactory.BLOCK.create(id("crookables"));
+    
     public static JTag generateResourcePackTag(Collection<Identifier> identifiers) {
         return addAllTags(JTag.tag(), identifiers);
     }
