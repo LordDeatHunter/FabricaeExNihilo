@@ -11,10 +11,10 @@
       "item": "minecraft:stick"
     },
     "#": {
-      "tag": "minecraft:planks"
+      "item": "minecraft:diamond"
     }
   },
   "result": {
-    "item": "fabricaeexnihilo:hammer_wood"
+    "item": "fabricaeexnihilo:diamond_hammer"
   }
 }

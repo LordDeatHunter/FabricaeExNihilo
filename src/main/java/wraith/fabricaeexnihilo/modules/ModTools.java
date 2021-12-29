@@ -26,11 +26,12 @@ public class ModTools {
             CROOKS.put(identifier, item);
         }
 
-        HAMMERS.put(FabricaeExNihilo.id("hammer_wood"), new HammerItem(ToolMaterials.WOOD, tool_settings));
-        HAMMERS.put(FabricaeExNihilo.id("hammer_stone"), new HammerItem(ToolMaterials.STONE, tool_settings));
-        HAMMERS.put(FabricaeExNihilo.id("hammer_iron"), new HammerItem(ToolMaterials.IRON, tool_settings));
-        HAMMERS.put(FabricaeExNihilo.id("hammer_gold"), new HammerItem(ToolMaterials.GOLD, tool_settings));
-        HAMMERS.put(FabricaeExNihilo.id("hammer_diamond"), new HammerItem(ToolMaterials.DIAMOND, tool_settings));
+        HAMMERS.put(FabricaeExNihilo.id("wooden_hammer"), new HammerItem(ToolMaterials.WOOD, tool_settings));
+        HAMMERS.put(FabricaeExNihilo.id("stone_hammer"), new HammerItem(ToolMaterials.STONE, tool_settings));
+        HAMMERS.put(FabricaeExNihilo.id("iron_hammer"), new HammerItem(ToolMaterials.IRON, tool_settings));
+        HAMMERS.put(FabricaeExNihilo.id("golden_hammer"), new HammerItem(ToolMaterials.GOLD, tool_settings));
+        HAMMERS.put(FabricaeExNihilo.id("diamond_hammer"), new HammerItem(ToolMaterials.DIAMOND, tool_settings));
+        HAMMERS.put(FabricaeExNihilo.id("netherite_hammer"), new HammerItem(ToolMaterials.NETHERITE, tool_settings));
     }
 
     public static void registerItems() {

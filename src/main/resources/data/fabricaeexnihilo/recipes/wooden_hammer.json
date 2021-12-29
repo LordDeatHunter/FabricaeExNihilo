@@ -11,10 +11,10 @@
       "item": "minecraft:stick"
     },
     "#": {
-      "item": "minecraft:gold_ingot"
+      "tag": "minecraft:planks"
     }
   },
   "result": {
-    "item": "fabricaeexnihilo:hammer_gold"
+    "item": "fabricaeexnihilo:wooden_hammer"
   }
 }

@@ -30,7 +30,7 @@ public class PluginEntry implements REIClientPlugin {
         registry.add(new SieveCategory());
 
         registry.add(new ToolCategory(CROOK, ItemUtils.getExNihiloItemStack("crook_wood"), "Crook"));
-        registry.add(new ToolCategory(HAMMER, ItemUtils.getExNihiloItemStack("hammer_wood"), "Hammer"));
+        registry.add(new ToolCategory(HAMMER, ItemUtils.getExNihiloItemStack("wooden_hammer"), "Hammer"));
 
         registry.add(new CrucibleHeatCategory());
         registry.add(new CrucibleCategory(WOOD_CRUCIBLE, ItemUtils.getExNihiloItemStack("oak_crucible"), new LiteralText("Wood Crucible")));

@@ -2,7 +2,7 @@
   "parent": "fabricaeexnihilo:better_hammer",
   "display": {
     "icon": {
-      "item": "fabricaeexnihilo:hammer_diamond"
+      "item": "fabricaeexnihilo:diamond_hammer"
     },
     "title": {
       "translate": "advancements.fabricaeexnihilo.expensive_hammer.title"
@@ -22,7 +22,7 @@
         "items": [
           {
             "items": [
-              "fabricaeexnihilo:hammer_diamond"
+              "fabricaeexnihilo:diamond_hammer"
             ]
           }
         ]

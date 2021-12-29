@@ -11,10 +11,10 @@
       "item": "minecraft:stick"
     },
     "#": {
-      "item": "minecraft:diamond"
+      "item": "minecraft:gold_ingot"
     }
   },
   "result": {
-    "item": "fabricaeexnihilo:hammer_diamond"
+    "item": "fabricaeexnihilo:golden_hammer"
   }
 }
