@@ -29,7 +29,7 @@ public class PluginEntry implements REIClientPlugin {
         FabricaeExNihilo.LOGGER.info("Registering REI Categories");
         registry.add(new SieveCategory());
 
-        registry.add(new ToolCategory(CROOK, ItemUtils.getExNihiloItemStack("crook_wood"), "Crook"));
+        registry.add(new ToolCategory(CROOK, ItemUtils.getExNihiloItemStack("wooden_crook"), "Crook"));
         registry.add(new ToolCategory(HAMMER, ItemUtils.getExNihiloItemStack("wooden_hammer"), "Hammer"));
 
         registry.add(new CrucibleHeatCategory());

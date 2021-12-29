@@ -2,7 +2,7 @@
   "parent": "fabricaeexnihilo:root",
   "display": {
     "icon": {
-      "item": "fabricaeexnihilo:crook_wood"
+      "item": "fabricaeexnihilo:wooden_crook"
     },
     "title": {
       "translate": "advancements.fabricaeexnihilo.crook.title"
@@ -22,7 +22,7 @@
         "items": [
           {
             "items": [
-              "fabricaeexnihilo:crook_wood"
+              "fabricaeexnihilo:wooden_crook"
             ]
           }
         ]

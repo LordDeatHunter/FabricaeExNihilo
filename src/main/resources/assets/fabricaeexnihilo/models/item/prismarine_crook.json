@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "fabricaeexnihilo:item/tools/crook/prismarine_crook"
+  }
+}

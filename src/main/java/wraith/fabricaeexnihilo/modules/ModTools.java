@@ -21,7 +21,7 @@ public class ModTools {
 
     static {
         for (var toolMaterial : ModToolMaterials.values()) {
-            var identifier = FabricaeExNihilo.id("crook_" + toolMaterial.name().toLowerCase());
+            var identifier = FabricaeExNihilo.id(toolMaterial.name().toLowerCase() + "_crook");
             var item = new CrookItem(toolMaterial, new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP).maxCount(1).maxDamage(toolMaterial.getDurability()));
             CROOKS.put(identifier, item);
         }

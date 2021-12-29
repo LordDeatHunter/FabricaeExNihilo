@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "fabricaeexnihilo:crook",
+  "pattern": [
+    "##",
+    " #",
+    " #"
+  ],
+  "key": {
+    "#": {
+      "item": "fabricaeexnihilo:pebble_granite"
+    }
+  },
+  "result": {
+    "item": "fabricaeexnihilo:granite_crook"
+  }
+}

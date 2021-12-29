@@ -45,7 +45,7 @@ import java.nio.file.Path;
 public class FabricaeExNihilo implements ModInitializer {
 
     public static final String MODID = "fabricaeexnihilo";
-    public static final ItemGroup ITEM_GROUP = FabricItemGroupBuilder.create(new Identifier(MODID, "general")).icon(() -> ItemUtils.getExNihiloItemStack("crook_wood")).build();
+    public static final ItemGroup ITEM_GROUP = FabricItemGroupBuilder.create(new Identifier(MODID, "general")).icon(() -> ItemUtils.getExNihiloItemStack("wooden_crook")).build();
     public static final Logger LOGGER = LogManager.getLogger("Fabricae Ex Nihilo");
     private static final RuntimeResourcePack RESOURCE_PACK = RuntimeResourcePack.create(id("data"));
     public static final FabricaeExNihiloConfig CONFIG = AutoConfig.register(FabricaeExNihiloConfig.class, GsonConfigSerializer::new).get();
