@@ -10,10 +10,10 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.recipe.util.EntityTypeIngredient;
 import wraith.fabricaeexnihilo.modules.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
+import wraith.fabricaeexnihilo.recipe.util.EntityTypeIngredient;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
 import java.util.Optional;
@@ -79,7 +79,7 @@ public class MilkingRecipe extends BaseRecipe<MilkingRecipe.Context> {
     public static class Serializer implements RecipeSerializer<MilkingRecipe> {
         @Override
         public MilkingRecipe read(Identifier id, JsonObject json) {
-            var entity = EntityTypeIngredient.fromJson(json.get("entity"));
+            var entity = CodecUtils.fromJson(EntityTypeIngredient.CODEC, json.get("entity"));
             var fluid = CodecUtils.fromJson(CodecUtils.FLUID_VARIANT, json.get("fluid"));
             var amount = json.get("amount").getAsLong();
             var cooldown = json.get("cooldown").getAsInt();
@@ -89,7 +89,7 @@ public class MilkingRecipe extends BaseRecipe<MilkingRecipe.Context> {
         
         @Override
         public MilkingRecipe read(Identifier id, PacketByteBuf buf) {
-            var entity = EntityTypeIngredient.fromPacket(buf);
+            var entity = CodecUtils.fromPacket(EntityTypeIngredient.CODEC, buf);
             var fluid = CodecUtils.fromPacket(CodecUtils.FLUID_VARIANT, buf);
             var amount = buf.readLong();
             var cooldown = buf.readInt();
@@ -99,7 +99,7 @@ public class MilkingRecipe extends BaseRecipe<MilkingRecipe.Context> {
         
         @Override
         public void write(PacketByteBuf buf, MilkingRecipe recipe) {
-            recipe.entity.toPacket(buf);
+            CodecUtils.toPacket(EntityTypeIngredient.CODEC, recipe.entity, buf);
             CodecUtils.toPacket(CodecUtils.FLUID_VARIANT, recipe.fluid, buf);
             buf.writeLong(recipe.amount);
             buf.writeInt(recipe.cooldown);

@@ -7,10 +7,10 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import wraith.fabricaeexnihilo.modules.base.HasColor;
+import wraith.fabricaeexnihilo.modules.base.Colored;
 import wraith.fabricaeexnihilo.util.Color;
 
-public class InfestedLeavesItem extends BlockItem implements HasColor {
+public class InfestedLeavesItem extends BlockItem implements Colored {
 
     private final InfestedLeavesBlock leafBlock;
 

@@ -5,10 +5,10 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.nbt.NbtCompound;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.recipe.util.EntityStack;
-import wraith.fabricaeexnihilo.recipe.util.Loot;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
 import wraith.fabricaeexnihilo.recipe.barrel.AlchemyRecipe;
+import wraith.fabricaeexnihilo.recipe.util.EntityStack;
+import wraith.fabricaeexnihilo.recipe.util.Loot;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
 import java.util.Optional;

@@ -3,6 +3,6 @@
   "result": "fabricaeexnihilo:pebble_stone",
   "input": "minecraft:dirt",
   "rolls": {
-    "fabricaeexnihilo:mesh_string": [0.5]
+    "fabricaeexnihilo:string_mesh": [0.5]
   }
 }

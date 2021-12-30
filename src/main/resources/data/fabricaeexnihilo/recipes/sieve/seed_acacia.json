@@ -3,7 +3,7 @@
   "result": "fabricaeexnihilo:seed_acacia",
   "input": "minecraft:red_sand",
   "rolls": {
-    "fabricaeexnihilo:mesh_flint": [0.02]
+    "fabricaeexnihilo:flint_mesh": [0.02]
   },
   "fabricaeexnihilo:requiredItems": [
     "fabricaeexnihilo:seed_acacia"

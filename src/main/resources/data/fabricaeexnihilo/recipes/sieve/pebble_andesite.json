@@ -3,7 +3,7 @@
   "result": "fabricaeexnihilo:pebble_andesite",
   "input": "minecraft:dirt",
   "rolls": {
-    "fabricaeexnihilo:mesh_string": [0.05],
-    "fabricaeexnihilo:mesh_flint": [0.2]
+    "fabricaeexnihilo:string_mesh": [0.05],
+    "fabricaeexnihilo:flint_mesh": [0.2]
   }
 }

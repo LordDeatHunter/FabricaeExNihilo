@@ -3,7 +3,7 @@
   "result": "fabricaeexnihilo:seed_potato",
   "input": "minecraft:dirt",
   "rolls": {
-    "fabricaeexnihilo:mesh_flint": [0.01]
+    "fabricaeexnihilo:flint_mesh": [0.01]
   },
   "fabricaeexnihilo:requiredItems": [
     "fabricaeexnihilo:seed_cactus"

@@ -30,10 +30,6 @@ public abstract class AbstractIngredient<T> implements Predicate<T> {
         return this.value.map(single -> single.equals(value), tag -> tag.contains(value));
     }
     
-    public abstract JsonElement toJson();
-    
-    public abstract void toPacket(PacketByteBuf buf);
-
     public boolean isEmpty() {
         return this.value.map(Objects::isNull, tag -> tag.values().isEmpty());
     }

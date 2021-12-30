@@ -3,6 +3,6 @@
   "result": "minecraft:sweet_berries",
   "input": "minecraft:dirt",
   "rolls": {
-    "fabricaeexnihilo:mesh_iron": [0.02, 0.02, 0.01]
+    "fabricaeexnihilo:iron_mesh": [0.02, 0.02, 0.01]
   }
 }

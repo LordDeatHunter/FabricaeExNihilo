@@ -4,6 +4,6 @@
   "input": "minecraft:dirt",
   "fluid": "#fabricaeexnihilo:true_lava",
   "rolls": {
-    "fabricaeexnihilo:mesh_iron": [0.15]
+    "fabricaeexnihilo:iron_mesh": [0.15]
   }
 }

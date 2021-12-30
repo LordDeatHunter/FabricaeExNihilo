@@ -13,10 +13,10 @@ import net.minecraft.world.World;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.base.BaseBlockEntity;
-import wraith.fabricaeexnihilo.modules.base.HasColor;
+import wraith.fabricaeexnihilo.modules.base.Colored;
 import wraith.fabricaeexnihilo.util.Color;
 
-public class InfestingLeavesBlockEntity extends BaseBlockEntity implements HasColor {
+public class InfestingLeavesBlockEntity extends BaseBlockEntity implements Colored {
 
     private InfestedLeavesBlock infestedBlock = ModBlocks.INFESTED_LEAVES.values().stream().findFirst().get();
     private double progress = 0.0;

@@ -15,10 +15,11 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.village.VillagerProfession;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.recipe.util.EntityTypeIngredient;
 import wraith.fabricaeexnihilo.modules.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
+import wraith.fabricaeexnihilo.recipe.util.EntityTypeIngredient;
+import wraith.fabricaeexnihilo.util.CodecUtils;
 
 import java.util.Optional;
 
@@ -83,7 +84,7 @@ public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.Co
     public static class Serializer implements RecipeSerializer<WitchWaterEntityRecipe> {
         @Override
         public WitchWaterEntityRecipe read(Identifier id, JsonObject json) {
-            var target = EntityTypeIngredient.fromJson(json.get("target"));
+            var target = CodecUtils.fromJson(EntityTypeIngredient.CODEC, json.get("target"));
             var profession = json.has("profession") ? Registry.VILLAGER_PROFESSION.get(new Identifier(JsonHelper.getString(json, "profession"))) : null;
             var result = Registry.ENTITY_TYPE.get(new Identifier(JsonHelper.getString(json, "result")));
             
@@ -92,7 +93,7 @@ public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.Co
     
         @Override
         public WitchWaterEntityRecipe read(Identifier id, PacketByteBuf buf) {
-            var target = EntityTypeIngredient.fromPacket(buf);
+            var target = CodecUtils.fromPacket(EntityTypeIngredient.CODEC, buf);
             var profession = buf.readBoolean() ? Registry.VILLAGER_PROFESSION.get(buf.readIdentifier()) : null;
             var result = Registry.ENTITY_TYPE.get(buf.readIdentifier());
     
@@ -101,7 +102,7 @@ public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.Co
     
         @Override
         public void write(PacketByteBuf buf, WitchWaterEntityRecipe recipe) {
-            recipe.target.toPacket(buf);
+            CodecUtils.toPacket(EntityTypeIngredient.CODEC, recipe.target, buf);
             buf.writeBoolean(recipe.profession != null);
             if (recipe.profession != null) {
                 buf.writeIdentifier(Registry.VILLAGER_PROFESSION.getId(recipe.profession));

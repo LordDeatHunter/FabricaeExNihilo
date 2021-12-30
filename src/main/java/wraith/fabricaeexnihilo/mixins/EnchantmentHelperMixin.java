@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import wraith.fabricaeexnihilo.impl.EnchantmentTagManager;
+import wraith.fabricaeexnihilo.util.EnchantmentTagManager;
 
 import java.util.List;
 

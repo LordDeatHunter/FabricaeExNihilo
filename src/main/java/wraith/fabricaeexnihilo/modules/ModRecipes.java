@@ -1,17 +1,10 @@
 package wraith.fabricaeexnihilo.modules;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.JsonHelper;
 import net.minecraft.util.registry.Registry;
-import wraith.fabricaeexnihilo.recipe.BaseSerializer;
-import wraith.fabricaeexnihilo.recipe.DummyRecipe;
 import wraith.fabricaeexnihilo.recipe.SieveRecipe;
 import wraith.fabricaeexnihilo.recipe.ToolRecipe;
 import wraith.fabricaeexnihilo.recipe.barrel.*;
@@ -19,9 +12,6 @@ import wraith.fabricaeexnihilo.recipe.crucible.CrucibleHeatRecipe;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleRecipe;
 import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterEntityRecipe;
 import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterWorldRecipe;
-
-import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 

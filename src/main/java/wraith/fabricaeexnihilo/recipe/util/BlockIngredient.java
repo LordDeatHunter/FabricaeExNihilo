@@ -1,17 +1,14 @@
 package wraith.fabricaeexnihilo.recipe.util;
 
-import com.google.gson.JsonElement;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Dynamic;
-import com.mojang.serialization.JsonOps;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.fabricmc.fabric.api.tag.TagFactory;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.network.PacketByteBuf;
@@ -20,6 +17,7 @@ import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
+import wraith.fabricaeexnihilo.util.CodecUtils;
 
 import java.util.List;
 import java.util.function.Function;
@@ -64,24 +62,4 @@ public class BlockIngredient extends AbstractIngredient<Block> {
         return value.map(Function.identity(), tag -> tag.values().get(0)).asItem().getDefaultStack();
     }
     
-    // TODO: remove and use CodecUtils instead
-    
-    @Override
-    public JsonElement toJson() {
-        return CODEC.encodeStart(JsonOps.INSTANCE, this).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
-    }
-    
-    @Override
-    public void toPacket(PacketByteBuf buf) {
-        // Should be safe to cast here
-        buf.writeNbt((NbtCompound) CODEC.encodeStart(NbtOps.INSTANCE, this).getOrThrow(false, FabricaeExNihilo.LOGGER::warn));
-    }
-    
-    public static BlockIngredient fromPacket(PacketByteBuf buf) {
-        return CODEC.parse(NbtOps.INSTANCE, buf.readNbt()).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
-    }
-    
-    public static BlockIngredient fromJson(JsonElement json) {
-        return CODEC.parse(JsonOps.INSTANCE, json).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
-    }
 }

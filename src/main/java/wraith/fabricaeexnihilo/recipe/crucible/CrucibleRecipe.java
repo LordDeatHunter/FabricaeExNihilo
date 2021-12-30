@@ -11,10 +11,10 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.recipe.util.ItemIngredient;
 import wraith.fabricaeexnihilo.modules.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
+import wraith.fabricaeexnihilo.recipe.util.ItemIngredient;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
 import java.util.Optional;
@@ -77,7 +77,7 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
     public static class Serializer implements RecipeSerializer<CrucibleRecipe> {
         @Override
         public CrucibleRecipe read(Identifier id, JsonObject json) {
-            var input = ItemIngredient.fromJson(json.get("input"));
+            var input = CodecUtils.fromJson(ItemIngredient.CODEC, json.get("input"));
             var amount = JsonHelper.getLong(json, "amount");
             var fluid = CodecUtils.fromJson(CodecUtils.FLUID_VARIANT, json.get("fluid"));
             var isStone = JsonHelper.getBoolean(json, "isStone");
@@ -87,7 +87,7 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
     
         @Override
         public CrucibleRecipe read(Identifier id, PacketByteBuf buf) {
-            var input = ItemIngredient.fromPacket(buf);
+            var input = CodecUtils.fromPacket(ItemIngredient.CODEC, buf);
             var amount = buf.readLong();
             var fluid = CodecUtils.fromPacket(CodecUtils.FLUID_VARIANT, buf);
             var isStone = buf.readBoolean();
@@ -97,7 +97,7 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
     
         @Override
         public void write(PacketByteBuf buf, CrucibleRecipe recipe) {
-            recipe.input.toPacket(buf);
+            CodecUtils.toPacket(ItemIngredient.CODEC, recipe.input, buf);
             buf.writeLong(recipe.amount);
             CodecUtils.toPacket(CodecUtils.FLUID_VARIANT, recipe.fluid, buf);
             buf.writeBoolean(recipe.isStone);

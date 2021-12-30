@@ -2,7 +2,7 @@
   "parent": "fabricaeexnihilo:silkworm",
   "display": {
     "icon": {
-      "item": "fabricaeexnihilo:mesh_string"
+      "item": "fabricaeexnihilo:string_mesh"
     },
     "title": {
       "translate": "advancements.fabricaeexnihilo.mesh.title"
@@ -22,7 +22,7 @@
         "items": [
           {
             "items": [
-              "fabricaeexnihilo:mesh_string"
+              "fabricaeexnihilo:string_mesh"
             ]
           }
         ]

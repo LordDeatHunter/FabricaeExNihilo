@@ -10,12 +10,12 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
-import wraith.fabricaeexnihilo.modules.base.HasColor;
+import wraith.fabricaeexnihilo.modules.base.Colored;
 import wraith.fabricaeexnihilo.util.Color;
 
 import java.util.Random;
 
-public class InfestedLeavesBlock extends LeavesBlock implements HasColor, NonInfestableLeavesBlock {
+public class InfestedLeavesBlock extends LeavesBlock implements Colored, NonInfestableLeavesBlock {
     private final LeavesBlock leafBlock;
 
     public InfestedLeavesBlock(LeavesBlock leafBlock, FabricBlockSettings settings) {

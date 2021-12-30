@@ -4,8 +4,8 @@
   "input": "minecraft:sand",
   "fluid": "#fabricaeexnihilo:true_water",
   "rolls": {
-    "fabricaeexnihilo:mesh_string": [0.1],
-    "fabricaeexnihilo:mesh_flint": [0.15]
+    "fabricaeexnihilo:string_mesh": [0.1],
+    "fabricaeexnihilo:flint_mesh": [0.15]
   },
   "fabricaeexnihilo:requiredItems": [
     "fabricaeexnihilo:seed_sugarcane"

@@ -9,11 +9,11 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
-import wraith.fabricaeexnihilo.recipe.util.WeightedList;
 import wraith.fabricaeexnihilo.modules.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
+import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
+import wraith.fabricaeexnihilo.recipe.util.WeightedList;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
 import java.util.Optional;
@@ -69,7 +69,7 @@ public class WitchWaterWorldRecipe extends BaseRecipe<WitchWaterWorldRecipe.Cont
     public static class Serializer implements RecipeSerializer<WitchWaterWorldRecipe> {
         @Override
         public WitchWaterWorldRecipe read(Identifier id, JsonObject json) {
-            var target = FluidIngredient.fromJson(json.get("target"));
+            var target = CodecUtils.fromJson(FluidIngredient.CODEC, json.get("target"));
             var result = CodecUtils.fromJson(WeightedList.CODEC, json.get("result"));
             
             return new WitchWaterWorldRecipe(id, target, result);
@@ -77,7 +77,7 @@ public class WitchWaterWorldRecipe extends BaseRecipe<WitchWaterWorldRecipe.Cont
     
         @Override
         public WitchWaterWorldRecipe read(Identifier id, PacketByteBuf buf) {
-            var target = FluidIngredient.fromPacket(buf);
+            var target = CodecUtils.fromPacket(FluidIngredient.CODEC, buf);
             var result = CodecUtils.fromPacket(WeightedList.CODEC, buf);
     
             return new WitchWaterWorldRecipe(id, target, result);
@@ -85,7 +85,7 @@ public class WitchWaterWorldRecipe extends BaseRecipe<WitchWaterWorldRecipe.Cont
     
         @Override
         public void write(PacketByteBuf buf, WitchWaterWorldRecipe recipe) {
-            recipe.target.toPacket(buf);
+            CodecUtils.toPacket(FluidIngredient.CODEC, recipe.target, buf);
             CodecUtils.toPacket(WeightedList.CODEC, recipe.result, buf);
         }
     }

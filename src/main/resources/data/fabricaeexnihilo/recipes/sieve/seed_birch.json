@@ -3,7 +3,7 @@
   "result": "fabricaeexnihilo:seed_birch",
   "input": "minecraft:dirt",
   "rolls": {
-    "fabricaeexnihilo:mesh_string": [0.02]
+    "fabricaeexnihilo:string_mesh": [0.02]
   },
   "fabricaeexnihilo:requiredItems": [
     "fabricaeexnihilo:seed_birch"

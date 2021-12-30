@@ -1,4 +1,4 @@
-package wraith.fabricaeexnihilo.impl;
+package wraith.fabricaeexnihilo.util;
 
 import net.devtech.arrp.api.RuntimeResourcePack;
 import net.devtech.arrp.json.tags.JTag;
@@ -12,10 +12,8 @@ import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
-import wraith.fabricaeexnihilo.api.registry.FabricaeExNihiloRegistries;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModTags;
-import wraith.fabricaeexnihilo.modules.sieves.MeshProperties;
 import wraith.fabricaeexnihilo.util.RegistryUtils;
 
 import java.util.HashMap;
@@ -69,7 +67,7 @@ public final class EnchantmentTagManager {
             ModTags.addAllTags(tag, ModBlocks.BARRELS.keySet());
         }
         if(FabricaeExNihilo.CONFIG.modules.sieves.efficiency) {
-            ModTags.addAllTags(tag, FabricaeExNihiloRegistries.MESH.getAll().stream().map(MeshProperties::getIdentifier).toList());
+            ModTags.addAllTags(tag, FabricaeExNihilo.MESHES.keySet());
         }
         resourcePack.addTag(id("items/" + getTagIDForEnchantment(Enchantments.EFFICIENCY).getPath()), tag);
 
@@ -87,7 +85,7 @@ public final class EnchantmentTagManager {
 
         tag = JTag.tag();
         if(FabricaeExNihilo.CONFIG.modules.sieves.fortune) {
-            ModTags.addAllTags(tag, FabricaeExNihiloRegistries.MESH.getAll().stream().map(MeshProperties::getIdentifier).toList());
+            ModTags.addAllTags(tag, FabricaeExNihilo.MESHES.keySet());
         }
         resourcePack.addTag(id("items/" + getTagIDForEnchantment(Enchantments.FORTUNE).getPath()), tag);
     }

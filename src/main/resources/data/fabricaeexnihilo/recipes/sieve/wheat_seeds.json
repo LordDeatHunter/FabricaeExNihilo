@@ -3,6 +3,6 @@
   "result": "minecraft:wheat_seeds",
   "input": "minecraft:dirt",
   "rolls": {
-    "fabricaeexnihilo:mesh_string": [0.05, 0.05, 0.05]
+    "fabricaeexnihilo:string_mesh": [0.05, 0.05, 0.05]
   }
 }

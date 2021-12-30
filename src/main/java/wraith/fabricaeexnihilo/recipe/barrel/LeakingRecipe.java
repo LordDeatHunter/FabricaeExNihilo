@@ -11,11 +11,12 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.recipe.util.BlockIngredient;
-import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
 import wraith.fabricaeexnihilo.modules.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
+import wraith.fabricaeexnihilo.recipe.util.BlockIngredient;
+import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
+import wraith.fabricaeexnihilo.util.CodecUtils;
 
 import java.util.Optional;
 
@@ -82,8 +83,8 @@ public class LeakingRecipe extends BaseRecipe<LeakingRecipe.Context> {
     public static class Serializer implements RecipeSerializer<LeakingRecipe> {
         @Override
         public LeakingRecipe read(Identifier id, JsonObject json) {
-            BlockIngredient block = BlockIngredient.fromJson(json.get("block"));
-            FluidIngredient fluid = FluidIngredient.fromJson(json.get("fluid"));
+            BlockIngredient block = CodecUtils.fromJson(BlockIngredient.CODEC, json.get("block"));
+            FluidIngredient fluid = CodecUtils.fromJson(FluidIngredient.CODEC, json.get("fluid"));
             long amount = json.get("amount").getAsLong();
             Block result = Registry.BLOCK.get(new Identifier(json.get("result").getAsString()));
             
@@ -92,8 +93,8 @@ public class LeakingRecipe extends BaseRecipe<LeakingRecipe.Context> {
     
         @Override
         public LeakingRecipe read(Identifier id, PacketByteBuf buf) {
-            BlockIngredient block = BlockIngredient.fromPacket(buf);
-            FluidIngredient fluid = FluidIngredient.fromPacket(buf);
+            BlockIngredient block = CodecUtils.fromPacket(BlockIngredient.CODEC, buf);
+            FluidIngredient fluid = CodecUtils.fromPacket(FluidIngredient.CODEC, buf);
             long amount = buf.readLong();
             Block result = Registry.BLOCK.get(buf.readIdentifier());
     
@@ -102,8 +103,8 @@ public class LeakingRecipe extends BaseRecipe<LeakingRecipe.Context> {
     
         @Override
         public void write(PacketByteBuf buf, LeakingRecipe recipe) {
-            recipe.block.toPacket(buf);
-            recipe.fluid.toPacket(buf);
+            CodecUtils.toPacket(BlockIngredient.CODEC, recipe.block, buf);
+            CodecUtils.toPacket(FluidIngredient.CODEC, recipe.fluid, buf);
             buf.writeLong(recipe.amount);
             buf.writeIdentifier(Registry.BLOCK.getId(recipe.result));
         }

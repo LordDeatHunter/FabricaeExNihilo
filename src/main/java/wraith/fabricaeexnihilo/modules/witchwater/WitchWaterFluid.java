@@ -11,7 +11,6 @@ import wraith.fabricaeexnihilo.modules.base.FluidSettings;
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public class WitchWaterFluid extends AbstractFluid  {
-        // TODO: make tag
     private static final FluidSettings FLUID_SETTINGS = new FluidSettings("witchwater", false);
     public static final WitchWaterFluid STILL = new WitchWaterFluid(true);
     public static final Tag.Identified<Fluid> TAG = TagFactory.FLUID.create(id("witchwater"));

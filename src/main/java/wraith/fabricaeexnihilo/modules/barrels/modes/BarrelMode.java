@@ -1,17 +1,12 @@
 package wraith.fabricaeexnihilo.modules.barrels.modes;
 
-import com.google.gson.JsonElement;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Dynamic;
-import com.mojang.serialization.JsonOps;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtOps;
-import net.minecraft.network.PacketByteBuf;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelModeStorage;
-import wraith.fabricaeexnihilo.util.CodecUtils;
 
 public abstract class BarrelMode implements BarrelModeStorage {
     // We really gotta do this? :concern:

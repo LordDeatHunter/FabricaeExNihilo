@@ -22,7 +22,6 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
-import wraith.fabricaeexnihilo.api.registry.FabricaeExNihiloRegistries;
 import wraith.fabricaeexnihilo.modules.ModEffects;
 import wraith.fabricaeexnihilo.modules.base.BaseFluidBlock;
 import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterEntityRecipe;

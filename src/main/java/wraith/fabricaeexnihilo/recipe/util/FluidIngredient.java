@@ -24,6 +24,7 @@ import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
+import wraith.fabricaeexnihilo.util.CodecUtils;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.util.List;
@@ -91,23 +92,4 @@ public class FluidIngredient extends AbstractIngredient<Fluid> {
     }
     
     public static FluidIngredient EMPTY = new FluidIngredient((Fluid) null);
-    
-    @Override
-    public JsonElement toJson() {
-        return CODEC.encodeStart(JsonOps.INSTANCE, this).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
-    }
-    
-    @Override
-    public void toPacket(PacketByteBuf buf) {
-        // Should be safe to cast here
-        buf.writeNbt((NbtCompound) CODEC.encodeStart(NbtOps.INSTANCE, this).getOrThrow(false, FabricaeExNihilo.LOGGER::warn));
-    }
-    
-    public static FluidIngredient fromPacket(PacketByteBuf buf) {
-        return CODEC.parse(NbtOps.INSTANCE, buf.readNbt()).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
-    }
-    
-    public static FluidIngredient fromJson(JsonElement json) {
-        return CODEC.parse(JsonOps.INSTANCE, json).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
-    }
 }

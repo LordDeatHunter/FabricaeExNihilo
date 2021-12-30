@@ -10,9 +10,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import wraith.fabricaeexnihilo.modules.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.util.BlockIngredient;
 import wraith.fabricaeexnihilo.recipe.util.Loot;
-import wraith.fabricaeexnihilo.modules.ModRecipes;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
 import java.util.Optional;
@@ -72,7 +72,7 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
         @Override
         public ToolRecipe read(Identifier id, JsonObject json) {
             var tool = ToolType.fromRecipeType(JsonHelper.getString(json, "type"));
-            var block = BlockIngredient.fromJson(json.get("block"));
+            var block = CodecUtils.fromJson(BlockIngredient.CODEC, json.get("block"));
             var result = CodecUtils.fromJson(Loot.CODEC, json.get("result"));
             
             return new ToolRecipe(id, tool, block, result);
@@ -81,7 +81,7 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
         @Override
         public ToolRecipe read(Identifier id, PacketByteBuf buf) {
             var tool = buf.readEnumConstant(ToolType.class);
-            var block = BlockIngredient.fromPacket(buf);
+            var block = CodecUtils.fromPacket(BlockIngredient.CODEC, buf);
             var result = CodecUtils.fromPacket(Loot.CODEC, buf);
     
             return new ToolRecipe(id, tool, block, result);
@@ -90,7 +90,7 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
         @Override
         public void write(PacketByteBuf buf, ToolRecipe recipe) {
             buf.writeEnumConstant(recipe.tool);
-            recipe.block.toPacket(buf);
+            CodecUtils.toPacket(BlockIngredient.CODEC, recipe.block, buf);
             CodecUtils.toPacket(Loot.CODEC, recipe.result, buf);
         }
     }

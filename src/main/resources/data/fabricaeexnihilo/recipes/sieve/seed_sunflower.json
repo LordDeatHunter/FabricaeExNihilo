@@ -3,7 +3,7 @@
   "result": "fabricaeexnihilo:seed_sunflower",
   "input": "minecraft:dirt",
   "rolls": {
-    "fabricaeexnihilo:mesh_flint": [0.05]
+    "fabricaeexnihilo:flint_mesh": [0.05]
   },
   "fabricaeexnihilo:requiredItems": [
     "fabricaeexnihilo:seed_sunflower"

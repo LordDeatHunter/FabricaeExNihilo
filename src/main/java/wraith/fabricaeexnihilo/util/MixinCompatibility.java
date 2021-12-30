@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-// If a mod ever breaks a mixin you can setup an entry here and in Plugin with a slower, more compatible mixin.
+// If a mod ever breaks a mixin you can set up an entry here and in Plugin with a slower, more compatible mixin.
 public final class MixinCompatibility{
     private MixinCompatibility(){}
     

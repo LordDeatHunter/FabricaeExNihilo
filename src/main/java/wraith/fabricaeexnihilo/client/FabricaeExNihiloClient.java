@@ -10,10 +10,11 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
-import wraith.fabricaeexnihilo.api.registry.FabricaeExNihiloRegistries;
 import wraith.fabricaeexnihilo.client.renderers.BarrelBlockEntityRenderer;
 import wraith.fabricaeexnihilo.client.renderers.CrucibleBlockEntityRenderer;
 import wraith.fabricaeexnihilo.client.renderers.InfestingLeavesBlockEntityRenderer;
@@ -25,6 +26,7 @@ import wraith.fabricaeexnihilo.modules.infested.InfestingLeavesBlockEntity;
 import wraith.fabricaeexnihilo.modules.sieves.SieveBlockEntity;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
@@ -35,26 +37,29 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
     public void onInitializeClient() {
         // Fluid Rendering
         FluidRenderManager.setupClient();
-        // Register "BE"SRs
+        // Register BERs
         BlockEntityRendererRegistry.register(SieveBlockEntity.TYPE, SieveBlockEntityRenderer::new);
         BlockEntityRendererRegistry.register(CrucibleBlockEntity.TYPE, CrucibleBlockEntityRenderer::new);
         BlockEntityRendererRegistry.register(BarrelBlockEntity.TYPE, BarrelBlockEntityRenderer::new);
         BlockEntityRendererRegistry.register(InfestingLeavesBlockEntity.TYPE, InfestingLeavesBlockEntityRenderer::new);
-        FabricaeExNihilo.LOGGER.debug("Registered BESR for Sieve");
+        FabricaeExNihilo.LOGGER.debug("Registered BERs");
 
-        // Item Colors
-        FabricaeExNihiloRegistries.ORES.getAll().forEach(ore -> {
-            ColorProviderRegistry.ITEM.register(FabricaeExNihiloItemColorProvider.INSTANCE, ore.getChunkItem());
-            ColorProviderRegistry.ITEM.register(FabricaeExNihiloItemColorProvider.INSTANCE, ore.getPieceItem());
-        });
-        FabricaeExNihiloRegistries.MESH.getAll().forEach(mesh -> ColorProviderRegistry.ITEM.register(FabricaeExNihiloItemColorProvider.INSTANCE, mesh.getItem()));
-        ModBlocks.INFESTED_LEAVES.forEach((identifier, leaves) -> {
-            ColorProviderRegistry.ITEM.register(FabricaeExNihiloItemColorProvider.INSTANCE, leaves.asItem());
-            ColorProviderRegistry.BLOCK.register(FabricaeExNihiloBlockColorProvider.INSTANCE, leaves);
-        });
-        FabricaeExNihilo.LOGGER.debug("Registered ItemColorProviders and BlockColorProviders");
-        ModBlocks.SIEVES.forEach((identifier, sieve) -> BlockRenderLayerMap.INSTANCE.putBlock(sieve, RenderLayer.getCutout()));
-        ModBlocks.CRUCIBLES.forEach((identifier, crucible) -> BlockRenderLayerMap.INSTANCE.putBlock(crucible, RenderLayer.getCutout()));
+        // Color Providers
+        var coloredItems = new ArrayList<ItemConvertible>();
+    
+        FabricaeExNihilo.MESHES.keySet().stream().map(Registry.ITEM::get).forEach(coloredItems::add);
+        FabricaeExNihilo.ORES.keySet().stream().map(id1 -> id1 + "_chunk").map(FabricaeExNihilo::id).toList().stream().map(Registry.ITEM::get).forEach(coloredItems::add);
+        FabricaeExNihilo.ORES.keySet().stream().map(id1 -> id1 + "_piece").map(FabricaeExNihilo::id).toList().stream().map(Registry.ITEM::get).forEach(coloredItems::add);
+        coloredItems.addAll(ModBlocks.INFESTED_LEAVES.values());
+        
+        ColorProviderRegistry.ITEM.register(FabricaeExNihiloItemColorProvider.INSTANCE, coloredItems.toArray(ItemConvertible[]::new));
+        
+        ColorProviderRegistry.BLOCK.register(FabricaeExNihiloBlockColorProvider.INSTANCE, ModBlocks.INFESTED_LEAVES.values().toArray(Block[]::new));
+        FabricaeExNihilo.LOGGER.debug("Registered color providers");
+        
+        // RenderLAyers
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), ModBlocks.SIEVES.values().toArray(Block[]::new));
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), ModBlocks.CRUCIBLES.values().toArray(Block[]::new));
 
         // ARRP resource pack
         var resourcePack = RuntimeResourcePack.create(id("resources"));
@@ -77,8 +82,8 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
             resourcePack.addBlockState(JState.state(JState.variant(JState.model(id("block/" + identifier.getPath())))), identifier);
         });
         // Mesh models
-        for (var mesh : FabricaeExNihiloRegistries.MESH.getAll()) {
-            resourcePack.addModel(JModel.modelKeepElements(id("item/mesh")), id("item/" + mesh.getIdentifier().getPath()));
+        for (var mesh : FabricaeExNihilo.MESHES.keySet()) {
+            resourcePack.addModel(JModel.modelKeepElements(id("item/mesh")), id("item/" + mesh.getPath()));
         }
         // Infested Leaves models
         ModBlocks.INFESTED_LEAVES.forEach((identifier, infestedLeaves) -> {
@@ -88,27 +93,27 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
             resourcePack.addBlockState(JState.state(JState.variant(JState.model(id("block/" + identifier.getPath())))), identifier);
         });
         // Ore Chunks/Pieces
-        for (var ore : FabricaeExNihiloRegistries.ORES.getAll()) {
-            // Ore Chunk Model
-            var chunkShape = ore.getChunkShape().name().toLowerCase();
-            var material = ore.getChunkMaterial().name().toLowerCase();
+        // Ore Chunk Model
+        // Ore Piece Model
+        FabricaeExNihilo.ORES.forEach((id, ore) -> {
+            var chunkShape = ore.chunkShape().name().toLowerCase();
+            var material = ore.chunkMaterial().name().toLowerCase();
             resourcePack.addModel(
                     JModel.modelKeepElements("item/generated")
                             .textures(
                                     JModel.textures()
                                             .layer0(id("item/ore/chunks/" + chunkShape + "_" + material).toString())
                                             .layer1(id("item/ore/chunks/" + chunkShape + "_overlay").toString())),
-                    id("item/" + ore.getChunkID().getPath()));
-            // Ore Piece Model
-            var pieceShape = ore.getPieceShape().name().toLowerCase();
+                    id("item/" + id + "_chunk"));
+            var pieceShape = ore.pieceShape().name().toLowerCase();
             resourcePack.addModel(
                     JModel.modelKeepElements("item/generated")
                             .textures(
                                     JModel.textures()
                                             .layer0(id("item/ore/pieces/" + pieceShape + "_" + material).toString())
                                             .layer1(id("item/ore/pieces/" + pieceShape + "_overlay").toString())),
-                    id("item/" + ore.getPieceID().getPath()));
-        }
+                    id("item/" + id + "_piece"));
+        });
 
         FabricaeExNihilo.LOGGER.debug("Created Resources");
         if (FabricaeExNihilo.CONFIG.dumpGeneratedResource) {

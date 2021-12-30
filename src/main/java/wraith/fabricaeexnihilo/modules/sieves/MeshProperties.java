@@ -18,7 +18,7 @@ public class MeshProperties {
         this.displayName = displayName;
         this.color = color;
         this.keyIngredient = keyIngredient;
-        this.item = new MeshItem(color, enchantability, displayName);
+        this.item = new MeshItem(color, enchantability);
     }
 
     protected final MeshItem item;

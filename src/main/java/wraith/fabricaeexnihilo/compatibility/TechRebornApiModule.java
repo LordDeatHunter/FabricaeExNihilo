@@ -1,8 +1,10 @@
 package wraith.fabricaeexnihilo.compatibility;
 
 import net.fabricmc.loader.api.FabricLoader;
-import wraith.fabricaeexnihilo.api.newapi.FabricaeExNihiloApiModule;
-import wraith.fabricaeexnihilo.api.newapi.ores.OreDefinition;
+import net.minecraft.util.Identifier;
+import wraith.fabricaeexnihilo.api.FabricaeExNihiloApiModule;
+import wraith.fabricaeexnihilo.api.MeshDefinition;
+import wraith.fabricaeexnihilo.api.OreDefinition;
 import wraith.fabricaeexnihilo.modules.ore.ChunkMaterial;
 import wraith.fabricaeexnihilo.modules.ore.ChunkShape;
 import wraith.fabricaeexnihilo.modules.ore.PieceShape;
@@ -25,6 +27,11 @@ public class TechRebornApiModule implements FabricaeExNihiloApiModule {
         // End ores
         // TODO: add sheldonite and sodalite
         registry.accept("tungsten", new OreDefinition(Color.TUNGSTEN, PieceShape.COARSE, ChunkShape.CHUNK, ChunkMaterial.ENDSTONE));
+    }
+    
+    @Override
+    public void registerMeshes(BiConsumer<Identifier, MeshDefinition> registry) {
+        registry.accept(new Identifier("techreborn", "carbon_mesh"), new MeshDefinition(Color.BLACK, 14));
     }
     
     @Override

@@ -27,11 +27,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
-import wraith.fabricaeexnihilo.recipe.util.EntityStack;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.barrels.modes.*;
 import wraith.fabricaeexnihilo.modules.base.BaseBlockEntity;
 import wraith.fabricaeexnihilo.modules.base.EnchantmentContainer;
+import wraith.fabricaeexnihilo.recipe.util.EntityStack;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -211,7 +211,6 @@ public class BarrelBlockEntity extends BaseBlockEntity {
     }
 
     public ActionResult insertFromHand(PlayerEntity player, Hand hand) {
-        // TODO: Verify that it works
         var held = player.getStackInHand(hand);
         
         try (Transaction t = Transaction.openOuter()) {

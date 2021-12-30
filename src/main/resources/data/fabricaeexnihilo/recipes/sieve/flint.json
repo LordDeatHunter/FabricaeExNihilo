@@ -3,7 +3,7 @@
   "result": "minecraft:flint",
   "input": "minecraft:gravel",
   "rolls": {
-    "fabricaeexnihilo:mesh_string": [0.5],
-    "fabricaeexnihilo:mesh_flint": [0.3]
+    "fabricaeexnihilo:string_mesh": [0.5],
+    "fabricaeexnihilo:flint_mesh": [0.3]
   }
 }

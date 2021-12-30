@@ -97,8 +97,8 @@ public class SieveRecipe extends BaseRecipe<SieveRecipe.Context> {
         @Override
         public SieveRecipe read(Identifier id, JsonObject json) {
             var result = CodecUtils.fromJson(CodecUtils.ITEM_STACK, json.get("result"));
-            var input = ItemIngredient.fromJson(json.get("input"));
-            var fluid = json.has("fluid") ? FluidIngredient.fromJson(json.get("fluid")) : new FluidIngredient(Fluids.EMPTY);
+            var input = CodecUtils.fromJson(ItemIngredient.CODEC, json.get("input"));
+            var fluid = json.has("fluid") ? CodecUtils.fromJson(FluidIngredient.CODEC, json.get("fluid")) : new FluidIngredient(Fluids.EMPTY);
             var rolls = JsonHelper.getObject(json, "rolls")
                     .entrySet()
                     .stream()
@@ -116,8 +116,8 @@ public class SieveRecipe extends BaseRecipe<SieveRecipe.Context> {
         @Override
         public SieveRecipe read(Identifier id, PacketByteBuf buf) {
             var result = buf.readItemStack();
-            var input = ItemIngredient.fromPacket(buf);
-            var fluid = FluidIngredient.fromPacket(buf);
+            var input = CodecUtils.fromPacket(ItemIngredient.CODEC, buf);
+            var fluid = CodecUtils.fromPacket(FluidIngredient.CODEC, buf);
             var rolls = buf.readMap(PacketByteBuf::readIdentifier, buf1 -> buf1.readCollection(ArrayList::new, PacketByteBuf::readDouble));
             
             return new SieveRecipe(id, result, input, fluid, rolls);
@@ -126,8 +126,8 @@ public class SieveRecipe extends BaseRecipe<SieveRecipe.Context> {
         @Override
         public void write(PacketByteBuf buf, SieveRecipe recipe) {
             buf.writeItemStack(recipe.result);
-            recipe.input.toPacket(buf);
-            recipe.fluid.toPacket(buf);
+            CodecUtils.toPacket(ItemIngredient.CODEC, recipe.input, buf);
+            CodecUtils.toPacket(FluidIngredient.CODEC, recipe.fluid, buf);
             buf.writeMap(recipe.rolls, PacketByteBuf::writeIdentifier, (buf1, key) -> buf1.writeCollection(key, PacketByteBuf::writeDouble));
         }
     }

@@ -9,10 +9,11 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.recipe.util.ItemIngredient;
 import wraith.fabricaeexnihilo.modules.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
+import wraith.fabricaeexnihilo.recipe.util.ItemIngredient;
+import wraith.fabricaeexnihilo.util.CodecUtils;
 import wraith.fabricaeexnihilo.util.Color;
 
 import java.util.Optional;
@@ -74,7 +75,7 @@ public class CompostRecipe extends BaseRecipe<CompostRecipe.Context> {
         @Override
         public CompostRecipe read(Identifier id, JsonObject json) {
             ItemStack result = JsonHelper.getItem(json, "result").getDefaultStack();
-            ItemIngredient input = ItemIngredient.fromJson(json.get("input"));
+            ItemIngredient input = CodecUtils.fromJson(ItemIngredient.CODEC, json.get("input"));
             double increment = JsonHelper.getDouble(json, "increment");
             Color color = Color.fromJson(json.get("color"));
             
@@ -84,7 +85,7 @@ public class CompostRecipe extends BaseRecipe<CompostRecipe.Context> {
         @Override
         public CompostRecipe read(Identifier id, PacketByteBuf buf) {
             ItemStack result = buf.readItemStack();
-            ItemIngredient input = ItemIngredient.fromPacket(buf);
+            ItemIngredient input = CodecUtils.fromPacket(ItemIngredient.CODEC, buf);
             double increment = buf.readDouble();
             Color color = new Color(buf.readInt());
     
@@ -94,7 +95,7 @@ public class CompostRecipe extends BaseRecipe<CompostRecipe.Context> {
         @Override
         public void write(PacketByteBuf buf, CompostRecipe recipe) {
             buf.writeItemStack(recipe.result);
-            recipe.input.toPacket(buf);
+            CodecUtils.toPacket(ItemIngredient.CODEC, recipe.input, buf);
             buf.writeDouble(recipe.increment);
             buf.writeInt(recipe.color.toInt());
         }

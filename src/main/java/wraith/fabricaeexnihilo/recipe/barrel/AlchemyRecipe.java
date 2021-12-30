@@ -11,15 +11,15 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.recipe.util.EntityStack;
-import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
-import wraith.fabricaeexnihilo.recipe.util.ItemIngredient;
-import wraith.fabricaeexnihilo.recipe.util.Loot;
 import wraith.fabricaeexnihilo.modules.ModRecipes;
 import wraith.fabricaeexnihilo.modules.barrels.modes.BarrelMode;
 import wraith.fabricaeexnihilo.modules.barrels.modes.EmptyMode;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
+import wraith.fabricaeexnihilo.recipe.util.EntityStack;
+import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
+import wraith.fabricaeexnihilo.recipe.util.ItemIngredient;
+import wraith.fabricaeexnihilo.recipe.util.Loot;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
 import java.util.Optional;
@@ -98,8 +98,8 @@ public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.Context> {
     public static class Serializer implements RecipeSerializer<AlchemyRecipe> {
         @Override
         public AlchemyRecipe read(Identifier id, JsonObject json) {
-            FluidIngredient reactant = FluidIngredient.fromJson(json.get("reactant"));
-            ItemIngredient catalyst = ItemIngredient.fromJson(json.get("catalyst"));
+            FluidIngredient reactant = CodecUtils.fromJson(FluidIngredient.CODEC, json.get("reactant"));
+            ItemIngredient catalyst = CodecUtils.fromJson(ItemIngredient.CODEC, json.get("catalyst"));
             Loot byproduct = json.has("byproduct") ? CodecUtils.fromJson(Loot.CODEC, json.get("byproduct")) : Loot.EMPTY;
             int delay = JsonHelper.getInt(json, "delay", 0);
             EntityStack toSpawn = json.has("toSpawn") ? CodecUtils.fromJson(EntityStack.CODEC, json.get("toSpawn")) : EntityStack.EMPTY;
@@ -110,8 +110,8 @@ public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.Context> {
     
         @Override
         public AlchemyRecipe read(Identifier id, PacketByteBuf buf) {
-            FluidIngredient reactant = FluidIngredient.fromPacket(buf);
-            ItemIngredient catalyst = ItemIngredient.fromPacket(buf);
+            FluidIngredient reactant = CodecUtils.fromPacket(FluidIngredient.CODEC, buf);
+            ItemIngredient catalyst = CodecUtils.fromPacket(ItemIngredient.CODEC, buf);
             Loot byproduct = CodecUtils.fromPacket(Loot.CODEC, buf);
             int delay = buf.readInt();
             EntityStack toSpawn = CodecUtils.fromPacket(EntityStack.CODEC, buf);
@@ -122,8 +122,8 @@ public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.Context> {
     
         @Override
         public void write(PacketByteBuf buf, AlchemyRecipe recipe) {
-            recipe.reactant.toPacket(buf);
-            recipe.catalyst.toPacket(buf);
+            CodecUtils.toPacket(FluidIngredient.CODEC, recipe.reactant, buf);
+            CodecUtils.toPacket(ItemIngredient.CODEC, recipe.catalyst, buf);
             CodecUtils.toPacket(Loot.CODEC, recipe.byproduct, buf);
             buf.writeInt(recipe.delay);
             CodecUtils.toPacket(EntityStack.CODEC, recipe.toSpawn, buf);

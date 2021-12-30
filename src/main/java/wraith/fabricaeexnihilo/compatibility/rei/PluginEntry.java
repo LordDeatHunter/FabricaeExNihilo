@@ -6,7 +6,6 @@ import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import net.minecraft.text.LiteralText;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
-import wraith.fabricaeexnihilo.api.registry.FabricaeExNihiloRegistries;
 import wraith.fabricaeexnihilo.compatibility.rei.barrel.*;
 import wraith.fabricaeexnihilo.compatibility.rei.crucible.CrucibleCategory;
 import wraith.fabricaeexnihilo.compatibility.rei.crucible.CrucibleDisplay;

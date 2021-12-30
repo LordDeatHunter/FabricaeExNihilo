@@ -1,6 +1,6 @@
-package wraith.fabricaeexnihilo.api.newapi;
+package wraith.fabricaeexnihilo.api;
 
-import wraith.fabricaeexnihilo.api.newapi.ores.OreDefinition;
+import net.minecraft.util.Identifier;
 
 import java.util.function.BiConsumer;
 
@@ -13,6 +13,9 @@ public interface FabricaeExNihiloApiModule {
      * @param registry A consumer which accepts the simple name and a definition of the ores properties.
      */
     default void registerOres(BiConsumer<String, OreDefinition> registry) {}
+    
+    // TODO: Javadoc
+    default void registerMeshes(BiConsumer<Identifier, MeshDefinition> registry) {}
     
     /**
      * You can override this if you need to do additional checks before the module is used. Mostly used by integrated compatibility modules to check if the target mod is loaded.

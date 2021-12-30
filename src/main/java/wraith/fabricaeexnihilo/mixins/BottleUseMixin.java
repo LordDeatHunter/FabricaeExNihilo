@@ -1,6 +1,7 @@
 package wraith.fabricaeexnihilo.mixins;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.GlassBottleItem;
 import net.minecraft.item.Item;
@@ -18,7 +19,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import wraith.fabricaeexnihilo.impl.BottleHarvestingImpl;
+import wraith.fabricaeexnihilo.util.ItemUtils;
 
 @Mixin(GlassBottleItem.class)
 public abstract class BottleUseMixin extends Item {
@@ -39,7 +40,7 @@ public abstract class BottleUseMixin extends Item {
                 BlockPos blockPos = hitResult.getBlockPos();
                 if (world.canPlayerModifyAt(user, blockPos)) {
                     BlockState target = world.getBlockState(blockPos);
-                    ItemStack result = BottleHarvestingImpl.getResult(target);
+                    ItemStack result = target.getBlock() != Blocks.SAND ? ItemStack.EMPTY : new ItemStack(ItemUtils.getExNihiloItem("salt_bottle"));
                     if (!result.isEmpty()) {
                         cir.setReturnValue(new TypedActionResult<>(ActionResult.SUCCESS, this.fill(held, user, result)));
                         return;

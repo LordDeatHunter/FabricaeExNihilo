@@ -1,7 +1,5 @@
-package wraith.fabricaeexnihilo.api.newapi.ores;
+package wraith.fabricaeexnihilo.api;
 
-import net.minecraft.item.Item;
-import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.modules.ore.ChunkMaterial;
 import wraith.fabricaeexnihilo.modules.ore.ChunkShape;
 import wraith.fabricaeexnihilo.modules.ore.PieceShape;

@@ -10,10 +10,11 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.recipe.util.BlockIngredient;
 import wraith.fabricaeexnihilo.modules.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
+import wraith.fabricaeexnihilo.recipe.util.BlockIngredient;
+import wraith.fabricaeexnihilo.util.CodecUtils;
 
 import java.util.Optional;
 
@@ -67,7 +68,7 @@ public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.Context> {
     public static class Serializer implements RecipeSerializer<CrucibleHeatRecipe> {
         @Override
         public CrucibleHeatRecipe read(Identifier id, JsonObject json) {
-            var block = BlockIngredient.fromJson(json.get("block"));
+            var block = CodecUtils.fromJson(BlockIngredient.CODEC, json.get("block"));
             var heat = JsonHelper.getInt(json, "heat");
             
             return new CrucibleHeatRecipe(id, block, heat);
@@ -75,7 +76,7 @@ public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.Context> {
     
         @Override
         public CrucibleHeatRecipe read(Identifier id, PacketByteBuf buf) {
-            var block = BlockIngredient.fromPacket(buf);
+            var block = CodecUtils.fromPacket(BlockIngredient.CODEC, buf);
             var heat = buf.readInt();
     
             return new CrucibleHeatRecipe(id, block, heat);
@@ -83,7 +84,7 @@ public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.Context> {
     
         @Override
         public void write(PacketByteBuf buf, CrucibleHeatRecipe recipe) {
-            recipe.block.toPacket(buf);
+            CodecUtils.toPacket(BlockIngredient.CODEC, recipe.block, buf);
             buf.writeInt(recipe.heat);
         }
     }
