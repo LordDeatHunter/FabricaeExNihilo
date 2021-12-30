@@ -1,0 +1,9 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "minecraft:flint",
+  "input": "minecraft:gravel",
+  "rolls": {
+    "fabricaeexnihilo:mesh_string": [0.5],
+    "fabricaeexnihilo:mesh_flint": [0.3]
+  }
+}

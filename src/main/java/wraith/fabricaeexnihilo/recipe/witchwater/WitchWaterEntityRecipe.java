@@ -27,12 +27,12 @@ public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.Co
     private final @Nullable VillagerProfession profession;
     private final EntityType<?> result;
     
-    protected WitchWaterEntityRecipe(Identifier id, EntityTypeIngredient target, @Nullable VillagerProfession profession, EntityType<?> result) {
+    public WitchWaterEntityRecipe(Identifier id, EntityTypeIngredient target, @Nullable VillagerProfession profession, EntityType<?> result) {
         super(id);
         this.target = target;
         this.profession = profession;
         this.result = result;
-    }
+}
     
     public static Optional<WitchWaterEntityRecipe> find(Entity entity, @Nullable World world) {
         if (world == null) {

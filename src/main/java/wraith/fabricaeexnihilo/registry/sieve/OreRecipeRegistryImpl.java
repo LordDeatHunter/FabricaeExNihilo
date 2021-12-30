@@ -83,7 +83,7 @@ public class OreRecipeRegistryImpl extends AbstractRegistry<List<OreProperties>>
     public void registerJson(File file) {
         if (file.exists()) {
             try {
-                ArrayList<OreProperties> json = gson.fromJson(new FileReader(file), SERIALIZATION_TYPE);
+                ArrayList<OreProperties> json = FabricaeExNihilo.RECIPE_GSON.fromJson(new FileReader(file), SERIALIZATION_TYPE);
                 json.forEach(this::register);
             } catch (Exception e) {
                 e.printStackTrace();

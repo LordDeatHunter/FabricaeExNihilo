@@ -47,7 +47,7 @@ public class OreProperties {
 
     public boolean isVanillaMaterial() {
         // return Registry.ITEM.containsId(new Identifier(material + "_ingot")) || Registry.ITEM.containsId(new Identifier(material + "_nugget")) || Registry.ITEM.containsId(new Identifier("raw_" + material)); // generic
-        return material == "copper" || material == "iron" || material == "gold"; //fast
+        return material.equals("copper") || material.equals("iron") || material.equals("gold"); //fast
     }
 
     public Item getChunkItem() {

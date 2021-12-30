@@ -1,0 +1,13 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "minecraft:brown_mushroom",
+  "input": "minecraft:dirt",
+  "fluid": "fabricaeexnihilo:witchwater",
+  "rolls": {
+    "fabricaeexnihilo:mesh_string": [0.01],
+    "fabricaeexnihilo:mesh_flint": [0.02],
+    "fabricaeexnihilo:mesh_iron": [0.05],
+    "fabricaeexnihilo:mesh_gold": [0.1],
+    "fabricaeexnihilo:mesh_diamond": [0.2]
+  }
+}

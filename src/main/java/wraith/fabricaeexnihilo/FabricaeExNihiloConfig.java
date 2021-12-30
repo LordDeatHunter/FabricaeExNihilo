@@ -142,6 +142,7 @@ public class FabricaeExNihiloConfig implements ConfigData {
             public boolean seaPickle = true;
             public boolean sugarCane = true;
             public boolean treeSeeds = true;
+            public boolean flowerSeeds = true;
 
             @Comment("List of blocks that the rubber sapling could turn into.")
             public List<String> rubberSeed = List.of(

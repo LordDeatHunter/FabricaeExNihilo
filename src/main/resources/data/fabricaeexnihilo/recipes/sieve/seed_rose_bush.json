@@ -1,0 +1,11 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "fabricaeexnihilo:seed_rose_bush",
+  "input": "minecraft:dirt",
+  "rolls": {
+    "fabricaeexnihilo:mesh_flint": [0.05]
+  },
+  "fabricaeexnihilo:requiredItems": [
+    "fabricaeexnihilo:seed_rose_bush"
+  ]
+}

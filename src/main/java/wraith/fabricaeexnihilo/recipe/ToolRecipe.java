@@ -9,6 +9,7 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.recipe.util.BlockIngredient;
 import wraith.fabricaeexnihilo.recipe.util.Loot;
 import wraith.fabricaeexnihilo.modules.ModRecipes;
@@ -21,14 +22,17 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
     private final BlockIngredient block;
     private final Loot result;
     
-    protected ToolRecipe(Identifier id, ToolType tool, BlockIngredient block, Loot result) {
+    public ToolRecipe(Identifier id, ToolType tool, BlockIngredient block, Loot result) {
         super(id);
         this.tool = tool;
         this.block = block;
         this.result = result;
-    }
+}
     
-    public static Optional<ToolRecipe> find(ToolType type, Block block, World world) {
+    public static Optional<ToolRecipe> find(ToolType type, Block block, @Nullable World world) {
+        if (world == null) {
+            return Optional.empty();
+        }
         return world.getRecipeManager().getFirstMatch(type.type, new Context(block), world);
     }
     
@@ -67,7 +71,7 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
     public static class Serializer implements RecipeSerializer<ToolRecipe> {
         @Override
         public ToolRecipe read(Identifier id, JsonObject json) {
-            var tool = ToolType.valueOf(JsonHelper.getString(json, "tool"));
+            var tool = ToolType.fromRecipeType(JsonHelper.getString(json, "type"));
             var block = BlockIngredient.fromJson(json.get("block"));
             var result = CodecUtils.fromJson(Loot.CODEC, json.get("result"));
             
@@ -103,6 +107,14 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
         ToolType(RecipeType<ToolRecipe> type, RecipeSerializer<?> serializer) {
             this.type = type;
             this.serializer = serializer;
+        }
+        
+        public static ToolType fromRecipeType(String type) {
+            return switch (type) {
+                case "fabricaeexnihilo:hammer" -> HAMMER;
+                case "fabricaeexnihilo:crook" -> CROOK;
+                default -> throw new IllegalStateException("Tried to find tool type for unknown recipe type: " + type);
+            };
         }
     }
 }

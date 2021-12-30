@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 public abstract class BaseRecipe<T extends RecipeContext> implements Recipe<T> {
     protected final Identifier id;
     
-    protected BaseRecipe(Identifier id) {
+    public BaseRecipe(Identifier id) {
         this.id = id;
     }
     

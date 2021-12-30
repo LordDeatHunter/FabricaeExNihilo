@@ -1,0 +1,12 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "minecraft:prismarine_crystals",
+  "fluid": "#fabricaeexnihilo:true_water",
+  "input": "fabricaeexnihilo:crushed_prismarine",
+  "rolls": {
+    "fabricaeexnihilo:mesh_flint": [1.0, 0.2],
+    "fabricaeexnihilo:mesh_iron": [1.0, 0.3],
+    "fabricaeexnihilo:mesh_gold": [1.0, 0.4],
+    "fabricaeexnihilo:mesh_diamond": [1.0, 0.5]
+  }
+}

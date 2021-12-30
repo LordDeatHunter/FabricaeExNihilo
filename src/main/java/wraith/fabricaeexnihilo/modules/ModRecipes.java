@@ -1,5 +1,6 @@
 package wraith.fabricaeexnihilo.modules;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.PacketByteBuf;
@@ -9,13 +10,18 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.registry.Registry;
+import wraith.fabricaeexnihilo.recipe.BaseSerializer;
 import wraith.fabricaeexnihilo.recipe.DummyRecipe;
+import wraith.fabricaeexnihilo.recipe.SieveRecipe;
 import wraith.fabricaeexnihilo.recipe.ToolRecipe;
 import wraith.fabricaeexnihilo.recipe.barrel.*;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleHeatRecipe;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleRecipe;
 import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterEntityRecipe;
 import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterWorldRecipe;
+
+import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
@@ -32,19 +38,21 @@ public class ModRecipes {
     public static final ModRecipeType<WitchWaterWorldRecipe> WITCH_WATER_WORLD = new ModRecipeType<>(id("witch_water_world"));
     public static final ModRecipeType<ToolRecipe> HAMMER = new ModRecipeType<>(id("hammer"));
     public static final ModRecipeType<ToolRecipe> CROOK = new ModRecipeType<>(id("crook"));
+    public static final ModRecipeType<SieveRecipe> SIEVE = new ModRecipeType<>(id("sieve"));
     
-    public static final RecipeSerializer<?> COMPOST_SERIALIZER = ProxySerializer.of(new CompostRecipe.Serializer());
-    public static final RecipeSerializer<?> FLUID_COMBINATION_SERIALIZER = ProxySerializer.of(new FluidCombinationRecipe.Serializer());
-    public static final RecipeSerializer<?> FLUID_TRANSFORMATION_SERIALIZER = ProxySerializer.of(new FluidTransformationRecipe.Serializer());
-    public static final RecipeSerializer<?> MILKING_SERIALIZER = ProxySerializer.of(new MilkingRecipe.Serializer());
-    public static final RecipeSerializer<?> LEAKING_SERIALIZER = ProxySerializer.of(new LeakingRecipe.Serializer());
-    public static final RecipeSerializer<?> ALCHEMY_SERIALIZER = ProxySerializer.of(new AlchemyRecipe.Serializer());
-    public static final RecipeSerializer<?> CRUCIBLE_SERIALIZER = ProxySerializer.of(new CrucibleRecipe.Serializer());
-    public static final RecipeSerializer<?> CRUCIBLE_HEAT_SERIALIZER = ProxySerializer.of(new CrucibleHeatRecipe.Serializer());
-    public static final RecipeSerializer<?> WITCH_WATER_ENTITY_SERIALIZER = ProxySerializer.of(new WitchWaterEntityRecipe.Serializer());
-    public static final RecipeSerializer<?> WITCH_WATER_WORLD_SERIALIZER = ProxySerializer.of(new WitchWaterWorldRecipe.Serializer());
-    public static final RecipeSerializer<?> HAMMER_SERIALIZER = ProxySerializer.of(new ToolRecipe.Serializer());
-    public static final RecipeSerializer<?> CROOK_SERIALIZER = ProxySerializer.of(new ToolRecipe.Serializer());
+    public static final CompostRecipe.Serializer COMPOST_SERIALIZER = new CompostRecipe.Serializer();
+    public static final FluidCombinationRecipe.Serializer FLUID_COMBINATION_SERIALIZER = new FluidCombinationRecipe.Serializer();
+    public static final FluidTransformationRecipe.Serializer FLUID_TRANSFORMATION_SERIALIZER = new FluidTransformationRecipe.Serializer();
+    public static final MilkingRecipe.Serializer MILKING_SERIALIZER = new MilkingRecipe.Serializer();
+    public static final LeakingRecipe.Serializer LEAKING_SERIALIZER = new LeakingRecipe.Serializer();
+    public static final AlchemyRecipe.Serializer ALCHEMY_SERIALIZER = new AlchemyRecipe.Serializer();
+    public static final CrucibleRecipe.Serializer CRUCIBLE_SERIALIZER = new CrucibleRecipe.Serializer();
+    public static final CrucibleHeatRecipe.Serializer CRUCIBLE_HEAT_SERIALIZER = new CrucibleHeatRecipe.Serializer();
+    public static final WitchWaterEntityRecipe.Serializer WITCH_WATER_ENTITY_SERIALIZER = new WitchWaterEntityRecipe.Serializer();
+    public static final WitchWaterWorldRecipe.Serializer WITCH_WATER_WORLD_SERIALIZER = new WitchWaterWorldRecipe.Serializer();
+    public static final ToolRecipe.Serializer HAMMER_SERIALIZER = new ToolRecipe.Serializer();
+    public static final ToolRecipe.Serializer CROOK_SERIALIZER = new ToolRecipe.Serializer();
+    public static final SieveRecipe.Serializer SIEVE_SERIALIZER = new SieveRecipe.Serializer();
     
     public static void register() {
         register(COMPOST, COMPOST_SERIALIZER);
@@ -56,8 +64,10 @@ public class ModRecipes {
         register(CRUCIBLE, CRUCIBLE_SERIALIZER);
         register(CRUCIBLE_HEAT, CRUCIBLE_HEAT_SERIALIZER);
         register(WITCH_WATER_ENTITY, WITCH_WATER_ENTITY_SERIALIZER);
+        register(WITCH_WATER_WORLD, WITCH_WATER_WORLD_SERIALIZER);
         register(HAMMER, HAMMER_SERIALIZER);
         register(CROOK, CROOK_SERIALIZER);
+        register(SIEVE, SIEVE_SERIALIZER);
     }
     
     private static void register(ModRecipeType<?> type, RecipeSerializer<?> serializer) {
@@ -69,49 +79,6 @@ public class ModRecipes {
         @Override
         public String toString() {
             return id.toString();
-        }
-    }
-    
-    /**
-     * Allows us to skip recipes we don't want to use. Specifically exclude mod specific recipes included by default.
-     * Works by delegating the given serializer if conditions match. Otherwise, it produces a dummy recipe that (should) do nothing.
-     * @apiNote Should be replaced by resource conditions once they are added to fapi.
-     */
-    // TODO: Switch to recipe conditions from fapi once they are added and delete this mess
-    @SuppressWarnings("ClassCanBeRecord") // No!
-    private static class ProxySerializer implements RecipeSerializer<Recipe<?>> {
-        private final RecipeSerializer<?> delegate;
-    
-        private ProxySerializer(RecipeSerializer<?> delegate) {
-            this.delegate = delegate;
-        }
-    
-        public static ProxySerializer of(RecipeSerializer<?> delegate) {
-            return new ProxySerializer(delegate);
-        }
-        
-        @Override
-        public Recipe<?> read(Identifier id, JsonObject json) {
-            if (json.has("requiredMod") && !FabricLoader.getInstance().isModLoaded(JsonHelper.getString(json, "requiredMod"))) {
-                return DummyRecipe.SERIALIZER.read(id, json);
-            }
-            return delegate.read(id, json);
-        }
-    
-        @Override
-        public Recipe<?> read(Identifier id, PacketByteBuf buf) {
-            return delegate.read(id, buf);
-        }
-    
-        @Override
-        public void write(PacketByteBuf buf, Recipe<?> recipe) {
-            //Very concern, but should work... Unless someone misuses this
-            delegate.write(buf, hack(recipe));
-        }
-        
-        @SuppressWarnings("unchecked") // Hack
-        private <T extends Recipe<?>> T hack(Recipe<?> recipe) {
-            return (T) recipe;
         }
     }
 }

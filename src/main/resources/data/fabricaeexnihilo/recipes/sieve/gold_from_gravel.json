@@ -1,0 +1,10 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "fabricaeexnihilo:gold_piece",
+  "input": "minecraft:gravel",
+  "rolls": {
+    "fabricaeexnihilo:mesh_iron": [0.05],
+    "fabricaeexnihilo:mesh_gold": [0.075],
+    "fabricaeexnihilo:mesh_diamond": [0.1]
+  }
+}

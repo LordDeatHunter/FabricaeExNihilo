@@ -1,6 +1,5 @@
 package wraith.fabricaeexnihilo.registry;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 
@@ -10,13 +9,6 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public abstract class AbstractRegistry<T> {
-
-    public final Gson gson;
-
-    public AbstractRegistry() {
-        gson = FabricaeExNihilo.RECIPE_GSON;
-    }
-
     protected abstract void registerJson(File file);
 
     protected abstract T serializable();
@@ -30,7 +22,7 @@ public abstract class AbstractRegistry<T> {
             if (FabricaeExNihilo.CONFIG.useJsonRecipes) {
                 try {
                     var fw = new FileWriter(file);
-                    registry.gson.toJson(registry.serializable(), TypeToken.class, fw);
+                    FabricaeExNihilo.RECIPE_GSON.toJson(registry.serializable(), TypeToken.class, fw);
                     fw.close();
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -12,6 +12,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -24,12 +25,15 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
+import wraith.fabricaeexnihilo.modules.ModRecipes;
 import wraith.fabricaeexnihilo.modules.base.BaseBlockEntity;
+import wraith.fabricaeexnihilo.recipe.SieveRecipe;
 import wraith.fabricaeexnihilo.util.ItemUtils;
+import wraith.fabricaeexnihilo.util.RegistryUtils;
 
 import java.util.*;
 
-import static wraith.fabricaeexnihilo.api.registry.FabricaeExNihiloRegistries.SIEVE;
+//import static wraith.fabricaeexnihilo.api.registry.FabricaeExNihiloRegistries.SIEVE;
 
 public class SieveBlockEntity extends BaseBlockEntity {
 
@@ -73,7 +77,8 @@ public class SieveBlockEntity extends BaseBlockEntity {
         }
 
         // Remove/Swap a mesh
-        if (SIEVE.isValidMesh(held)) {
+        ItemStack finalHeld1 = held;
+        if (world.getRecipeManager().listAllOfType(ModRecipes.SIEVE).stream().anyMatch(recipe -> recipe.getRolls().containsKey(RegistryUtils.getId(finalHeld1.getItem())))) {
             // Removing mesh
             if (!mesh.isEmpty()) {
                 player.giveItemStack(mesh.copy());
@@ -97,7 +102,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
         }
 
         // Add a block
-        if (!held.isEmpty() && SIEVE.isValidRecipe(mesh, getFluid(), held)) {
+        if (!held.isEmpty() && !SieveRecipe.find(held.getItem(), getFluid(), RegistryUtils.getId(mesh.getItem()), world).isEmpty()) {
             ItemStack finalHeld = held;
             sieves.forEach(sieve -> sieve.setContents(finalHeld, !player.isCreative()));
             return ActionResult.SUCCESS;
@@ -147,8 +152,8 @@ public class SieveBlockEntity extends BaseBlockEntity {
         // TODO spawn some particles
         if (progress > 1.0) {
             // The utility method for multiple items is less neat to use
-            for (var result : SIEVE.getResult(mesh, getFluid(), contents, player, world.random)) {
-                ItemScatterer.spawn(world, pos.getX(), pos.getY() + 1, pos.getZ(), result);
+            for (var result : SieveRecipe.find(contents.getItem(), getFluid(), RegistryUtils.getId(mesh.getItem()), world)) {
+                ItemScatterer.spawn(world, pos.getX(), pos.getY() + 1, pos.getZ(), result.createStack(world.random));
             }
             progress = 0.0;
             contents = ItemStack.EMPTY;

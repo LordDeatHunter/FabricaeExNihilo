@@ -3,7 +3,7 @@
   "block": "#minecraft:wool",
   "result": {
     "stack": {
-      "id": "minecraft:string",
+      "item": "minecraft:string",
       "count": 4
     },
     "chances": [

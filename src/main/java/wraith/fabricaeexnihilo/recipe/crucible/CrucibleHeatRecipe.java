@@ -21,11 +21,11 @@ public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.Context> {
     private final BlockIngredient block;
     private final int heat;
     
-    protected CrucibleHeatRecipe(Identifier id, BlockIngredient block, int heat) {
+    public CrucibleHeatRecipe(Identifier id, BlockIngredient block, int heat) {
         super(id);
         this.block = block;
         this.heat = heat;
-    }
+}
     
     public static Optional<CrucibleHeatRecipe> find(Block block, @Nullable World world) {
         if (world == null) {

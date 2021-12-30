@@ -20,11 +20,8 @@ import net.minecraft.village.VillagerProfession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import wraith.fabricaeexnihilo.api.FabricaeExNihiloAPI;
-import wraith.fabricaeexnihilo.recipe.util.EntityTypeIngredient;
-import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
-import wraith.fabricaeexnihilo.recipe.util.ItemIngredient;
-import wraith.fabricaeexnihilo.recipe.util.WeightedList;
-import wraith.fabricaeexnihilo.api.recipes.SieveRecipe;
+import wraith.fabricaeexnihilo.api.newapi.FabricaeExNihiloApiModule;
+import wraith.fabricaeexnihilo.api.newapi.ores.OreRegistry;
 import wraith.fabricaeexnihilo.api.registry.FabricaeExNihiloRegistries;
 import wraith.fabricaeexnihilo.compatibility.modules.FabricaeExNihiloModuleImpl;
 import wraith.fabricaeexnihilo.compatibility.modules.techreborn.TechReborn;
@@ -33,9 +30,12 @@ import wraith.fabricaeexnihilo.json.ingredient.EntityTypeIngredientJson;
 import wraith.fabricaeexnihilo.json.ingredient.FluidIngredientJson;
 import wraith.fabricaeexnihilo.json.ingredient.ItemIngredientJson;
 import wraith.fabricaeexnihilo.json.other.*;
-import wraith.fabricaeexnihilo.json.recipe.SieveRecipeJson;
 import wraith.fabricaeexnihilo.modules.*;
 import wraith.fabricaeexnihilo.modules.sieves.MeshProperties;
+import wraith.fabricaeexnihilo.recipe.util.EntityTypeIngredient;
+import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
+import wraith.fabricaeexnihilo.recipe.util.ItemIngredient;
+import wraith.fabricaeexnihilo.recipe.util.WeightedList;
 import wraith.fabricaeexnihilo.util.ARRPUtils;
 import wraith.fabricaeexnihilo.util.Color;
 import wraith.fabricaeexnihilo.util.ItemUtils;
@@ -58,6 +58,9 @@ public class FabricaeExNihilo implements ModInitializer {
     @Override
     public void onInitialize() {
         registerCompatModules();
+        var entrypoints = FabricLoader.getInstance().getEntrypoints("fabricaeexnihilo:api", FabricaeExNihiloApiModule.class).stream().filter(FabricaeExNihiloApiModule::shouldLoad);
+        entrypoints.forEach(entrypoint -> entrypoint.registerOres(OreRegistry::register));
+        
         // Programmatically generate blocks and items
         LOGGER.debug("Generating Blocks/Items");
 
@@ -126,12 +129,6 @@ public class FabricaeExNihilo implements ModInitializer {
                 .registerTypeAdapter(ItemIngredient.class, ItemIngredientJson.INSTANCE)
                 .registerTypeAdapter(FluidIngredient.class, FluidIngredientJson.INSTANCE)
                 .registerTypeAdapter(EntityTypeIngredient.class, EntityTypeIngredientJson.INSTANCE)
-                /*
-                 * Recipes
-                 */
-                // Other
-                .registerTypeAdapter(SieveRecipe.class, SieveRecipeJson.INSTANCE)
-        
                 .enableComplexMapKeySerialization()
                 .create();
     }

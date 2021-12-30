@@ -1,0 +1,8 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "minecraft:beetroot_seeds",
+  "input": "minecraft:dirt",
+  "rolls": {
+    "fabricaeexnihilo:mesh_string": [0.05, 0.02, 0.02]
+  }
+}

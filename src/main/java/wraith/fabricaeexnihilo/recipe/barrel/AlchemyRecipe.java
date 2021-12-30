@@ -33,7 +33,7 @@ public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.Context> {
     private final EntityStack toSpawn;
     private final BarrelMode result;
     
-    protected AlchemyRecipe(Identifier id, FluidIngredient reactant, ItemIngredient catalyst, Loot byproduct, int delay, EntityStack toSpawn, BarrelMode result) {
+    public AlchemyRecipe(Identifier id, FluidIngredient reactant, ItemIngredient catalyst, Loot byproduct, int delay, EntityStack toSpawn, BarrelMode result) {
         super(id);
         this.reactant = reactant;
         this.catalyst = catalyst;
@@ -41,7 +41,7 @@ public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.Context> {
         this.delay = delay;
         this.toSpawn = toSpawn;
         this.result = result;
-    }
+}
     
     
     public static Optional<AlchemyRecipe> find(FluidVariant reactant, Item catalyst, @Nullable World world) {

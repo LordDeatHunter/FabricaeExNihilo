@@ -66,8 +66,7 @@ public class PluginEntry implements REIClientPlugin {
     @Override
     public void registerDisplays(DisplayRegistry registry) {
         FabricaeExNihilo.LOGGER.info("Registering REI Displays");
-        FabricaeExNihiloRegistries.SIEVE.getREIRecipes().forEach(recipe ->
-                registry.add(new SieveDisplay(recipe)));
+        //FabricaeExNihiloRegistries.SIEVE.getREIRecipes().forEach(recipe -> registry.add(new SieveDisplay(recipe)));
         //FabricaeExNihiloRegistries.CROOK.getREIRecipes().forEach(recipe -> registry.add(new ToolDisplay(recipe, CROOK)));
         //FabricaeExNihiloRegistries.HAMMER.getREIRecipes().forEach(recipe -> registry.add(new ToolDisplay(recipe, HAMMER)));
         //FabricaeExNihiloRegistries.CRUCIBLE_HEAT.getREIRecipes().forEach(recipe -> registry.add(new CrucibleHeatDisplay(recipe)));

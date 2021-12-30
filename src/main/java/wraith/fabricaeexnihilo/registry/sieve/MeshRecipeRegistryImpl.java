@@ -2,6 +2,7 @@ package wraith.fabricaeexnihilo.registry.sieve;
 
 import com.google.common.reflect.TypeToken;
 import net.minecraft.util.registry.Registry;
+import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.api.registry.MeshRecipeRegistry;
 import wraith.fabricaeexnihilo.compatibility.modules.MetaModule;
 import wraith.fabricaeexnihilo.modules.sieves.MeshProperties;
@@ -54,7 +55,7 @@ public class MeshRecipeRegistryImpl extends AbstractRegistry<List<MeshProperties
     public void registerJson(File file) {
         if (file.exists()){
             try (var reader = new FileReader(file)) {
-                List<MeshProperties> json = gson.fromJson(
+                List<MeshProperties> json = FabricaeExNihilo.RECIPE_GSON.fromJson(
                         reader,
                         SERIALIZATION_TYPE
                 );

@@ -37,11 +37,6 @@ public final class ModItems {
     public static final List<Identifier> DOLLS = new ArrayList<>();
 
     static {
-        FLOWER_SEEDS.put(FabricaeExNihilo.id("seed_sunflower"), new TallPlantableItem((TallPlantBlock) Blocks.SUNFLOWER, BASE_SETTINGS));
-        FLOWER_SEEDS.put(FabricaeExNihilo.id("seed_lilac"), new TallPlantableItem((TallPlantBlock) Blocks.LILAC, BASE_SETTINGS));
-        FLOWER_SEEDS.put(FabricaeExNihilo.id("seed_rose_bush"), new TallPlantableItem((TallPlantBlock) Blocks.ROSE_BUSH, BASE_SETTINGS));
-        FLOWER_SEEDS.put(FabricaeExNihilo.id("seed_peony"), new TallPlantableItem((TallPlantBlock) Blocks.PEONY, BASE_SETTINGS));
-
         RESOURCES.put(FabricaeExNihilo.id("pebble_andesite"), new Item(BASE_SETTINGS));
         RESOURCES.put(FabricaeExNihilo.id("pebble_diorite"), new Item(BASE_SETTINGS));
         RESOURCES.put(FabricaeExNihilo.id("pebble_granite"), new Item(BASE_SETTINGS));
@@ -102,6 +97,12 @@ public final class ModItems {
                         return context.getWorld().getFluidState(context.getBlockPos().offset(context.getSide())).getFluid() == Fluids.WATER;
                     }
                 });
+            }
+            if (FabricaeExNihilo.CONFIG.modules.seeds.flowerSeeds) {
+                FLOWER_SEEDS.put(FabricaeExNihilo.id("seed_sunflower"), new TallPlantableItem((TallPlantBlock) Blocks.SUNFLOWER, BASE_SETTINGS));
+                FLOWER_SEEDS.put(FabricaeExNihilo.id("seed_lilac"), new TallPlantableItem((TallPlantBlock) Blocks.LILAC, BASE_SETTINGS));
+                FLOWER_SEEDS.put(FabricaeExNihilo.id("seed_rose_bush"), new TallPlantableItem((TallPlantBlock) Blocks.ROSE_BUSH, BASE_SETTINGS));
+                FLOWER_SEEDS.put(FabricaeExNihilo.id("seed_peony"), new TallPlantableItem((TallPlantBlock) Blocks.PEONY, BASE_SETTINGS));
             }
             if (FabricaeExNihilo.CONFIG.modules.seeds.mycelium) {
                 OTHER_SEEDS.put(FabricaeExNihilo.id("seed_mycelium"), new TransformingItem(Blocks.DIRT, Blocks.MYCELIUM, BASE_SETTINGS));

@@ -22,11 +22,11 @@ public class WitchWaterWorldRecipe extends BaseRecipe<WitchWaterWorldRecipe.Cont
     private final FluidIngredient target;
     private final WeightedList result;
     
-    protected WitchWaterWorldRecipe(Identifier id, FluidIngredient target, WeightedList result) {
+    public WitchWaterWorldRecipe(Identifier id, FluidIngredient target, WeightedList result) {
         super(id);
         this.target = target;
         this.result = result;
-    }
+}
     
     public static Optional<WitchWaterWorldRecipe> find(Fluid fluid, @Nullable World world) {
         if (world == null) {

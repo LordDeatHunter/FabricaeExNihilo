@@ -129,7 +129,7 @@ public class SieveRecipeRegistryImpl extends AbstractRegistry<List<SieveRecipe>>
     public void registerJson(File file) {
         if (file.exists()) {
             try {
-                ArrayList<SieveRecipe> json = gson.fromJson(new FileReader(file), SERIALIZATION_TYPE);
+                ArrayList<SieveRecipe> json = FabricaeExNihilo.RECIPE_GSON.fromJson(new FileReader(file), SERIALIZATION_TYPE);
                 json.forEach(this::register);
             } catch (Exception e) {
                 e.printStackTrace();
