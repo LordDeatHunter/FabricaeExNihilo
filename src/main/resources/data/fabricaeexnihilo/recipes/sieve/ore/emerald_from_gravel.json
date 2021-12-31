@@ -1,0 +1,11 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "minecraft:emerald",
+  "input": "minecraft:gravel",
+  "rolls": {
+    "fabricaeexnihilo:iron_mesh": [0.008],
+    "fabricaeexnihilo:gold_mesh": [0.002],
+    "fabricaeexnihilo:diamond_mesh": [0.016],
+    "fabricaeexnihilo:netherite_mesh": [0.032]
+  }
+}

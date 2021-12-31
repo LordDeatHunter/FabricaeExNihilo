@@ -13,7 +13,7 @@ public class Color {
                     .fieldOf("value")
                     .forGetter(Color::toInt)
     ).apply(instance, Color::new));
-    
+
     public float r;
     public float g;
     public float b;
@@ -79,14 +79,14 @@ public class Color {
         if (!(json instanceof JsonPrimitive primitive) || !(primitive.isString() || primitive.isNumber())) {
             throw new JsonParseException("Expected string or number but found " + json + "!");
         }
-    
+
         if (primitive.isString()) {
             return new Color(primitive.getAsString());
         } else {
             return new Color(json.getAsInt());
         }
     }
-    
+
     public static int hexToInt(String hex) {
         var rgb = hex.length() < 8 ? hex : hex.substring(2);
         var a = hex.length() < 8 ? "FF" : hex.substring(0, 2);
@@ -139,10 +139,12 @@ public class Color {
     public static final Color BORON = new Color("939393");
     public static final Color COBALT = new Color("3333FF");
     public static final Color COPPER = new Color("FF9933");
+    public static final Color IRIDIUM = new Color("B1DEC6");
     public static final Color LEAD = new Color("330066");
     public static final Color LITHIUM = new Color("EDEDED");
     public static final Color MAGNESIUM = new Color("F8DEF8");
     public static final Color NICKEL = new Color("FFFFCC");
+    public static final Color PLATINUM = new Color("DAF0ED");
     public static final Color SILVER = new Color("F2F2F2");
     public static final Color TIN = new Color("E6FFF2");
     public static final Color TITANIUM = new Color("BD87CA");

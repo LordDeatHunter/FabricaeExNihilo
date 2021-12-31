@@ -1,0 +1,14 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "fabricaeexnihilo:lead_piece",
+  "input": "fabricaeexnihilo:crushed_andesite",
+  "rolls": {
+    "fabricaeexnihilo:flint_mesh": [0.05],
+    "fabricaeexnihilo:iron_mesh": [0.1, 0.1],
+    "fabricaeexnihilo:gold_mesh": [0.025, 0.025],
+    "fabricaeexnihilo:diamond_mesh": [0.2, 0.2]
+  },
+  "fabricaeexnihilo:requiredItems": [
+    "fabricaeexnihilo:lead_piece"
+  ]
+}

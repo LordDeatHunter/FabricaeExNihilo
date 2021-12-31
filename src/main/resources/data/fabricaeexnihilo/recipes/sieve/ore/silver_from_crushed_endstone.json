@@ -1,0 +1,13 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "fabricaeexnihilo:silver_piece",
+  "input": "fabricaeexnihilo:crushed_endstone",
+  "rolls": {
+    "fabricaeexnihilo:iron_mesh": [0.1, 0.1],
+    "fabricaeexnihilo:gold_mesh": [0.05, 0.05],
+    "fabricaeexnihilo:diamond_mesh": [0.2, 0.2]
+  },
+  "fabricaeexnihilo:requiredItems": [
+    "fabricaeexnihilo:silver_piece"
+  ]
+}

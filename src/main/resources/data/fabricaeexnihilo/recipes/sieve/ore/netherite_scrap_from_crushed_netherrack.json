@@ -1,0 +1,10 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "minecraft:netherite_scrap",
+  "input": "fabricaeexnihilo:crushed_netherrack",
+  "rolls": {
+    "fabricaeexnihilo:iron_mesh": [0.004],
+    "fabricaeexnihilo:gold_mesh": [0.008],
+    "fabricaeexnihilo:netherite_mesh": [0.016]
+  }
+}
