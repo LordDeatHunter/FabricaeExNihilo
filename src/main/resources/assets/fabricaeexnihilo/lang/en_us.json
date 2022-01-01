@@ -68,6 +68,9 @@
   "item.fabricaeexnihilo.uncooked_clay_crook": "Clay Crook (Uncooked)",
   "item.fabricaeexnihilo.purpur_crook": "Purpur Crook",
   "item.fabricaeexnihilo.prismarine_crook": "Prismarine Crook",
+  "item.fabricaeexnihilo.blackstone_crook": "Blackstone Crook",
+  "item.fabricaeexnihilo.basalt_crook": "Basalt Crook",
+  "item.fabricaeexnihilo.deepslate_crook": "Deepslate Crook",
 
   "item.fabricaeexnihilo.wooden_hammer": "Wood Hammer",
   "item.fabricaeexnihilo.stone_hammer": "Stone Hammer",
@@ -112,10 +115,13 @@
   "item.fabricaeexnihilo.blood_bucket": "Bucket o' Blood",
   "item.fabricaeexnihilo.brine_bucket": "Brine Bucket",
 
-  "item.fabricaeexnihilo.pebble_stone": "Stone Pebble",
-  "item.fabricaeexnihilo.pebble_andesite": "Andesite Pebble",
-  "item.fabricaeexnihilo.pebble_diorite": "Diorite Pebble",
-  "item.fabricaeexnihilo.pebble_granite": "Granite Pebble",
+  "item.fabricaeexnihilo.stone_pebble": "Stone Pebble",
+  "item.fabricaeexnihilo.andesite_pebble": "Andesite Pebble",
+  "item.fabricaeexnihilo.diorite_pebble": "Diorite Pebble",
+  "item.fabricaeexnihilo.granite_pebble": "Granite Pebble",
+  "item.fabricaeexnihilo.blackstone_pebble": "Blackstone Pebble",
+  "item.fabricaeexnihilo.basalt_pebble": "Basalt Pebble",
+  "item.fabricaeexnihilo.deepslate_pebble": "Deepslate Pebble",
   "item.fabricaeexnihilo.porcelain": "Porcelain",
   "item.fabricaeexnihilo.salt_bottle": "Salt",
 

@@ -40,10 +40,14 @@ public final class ModItems {
     public static final List<Identifier> DOLLS = new ArrayList<>();
 
     static {
-        RESOURCES.put(id("pebble_andesite"), new Item(BASE_SETTINGS));
-        RESOURCES.put(id("pebble_diorite"), new Item(BASE_SETTINGS));
-        RESOURCES.put(id("pebble_granite"), new Item(BASE_SETTINGS));
-        RESOURCES.put(id("pebble_stone"), new Item(BASE_SETTINGS));
+        RESOURCES.put(id("andesite_pebble"), new Item(BASE_SETTINGS));
+        RESOURCES.put(id("diorite_pebble"), new Item(BASE_SETTINGS));
+        RESOURCES.put(id("granite_pebble"), new Item(BASE_SETTINGS));
+        RESOURCES.put(id("stone_pebble"), new Item(BASE_SETTINGS));
+        RESOURCES.put(id("blackstone_pebble"), new Item(BASE_SETTINGS));
+        RESOURCES.put(id("basalt_pebble"), new Item(BASE_SETTINGS));
+        RESOURCES.put(id("deepslate_pebble"), new Item(BASE_SETTINGS));
+
         RESOURCES.put(id("porcelain"), new Item(BASE_SETTINGS));
         RESOURCES.put(id("unfired_crucible"), new Item(BASE_SETTINGS));
         RESOURCES.put(id("salt_bottle"), new Item(BASE_SETTINGS));

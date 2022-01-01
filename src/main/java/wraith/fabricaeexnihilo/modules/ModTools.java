@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ModTools {
-    public static final FabricItemSettings tool_settings = new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP).maxCount(1);
+    public static final FabricItemSettings TOOL_SETTINGS = new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP).maxCount(1);
 
     public static final Map<Identifier, Item> CROOKS = new HashMap<>();
     public static final Map<Identifier, Item> HAMMERS = new HashMap<>();
@@ -26,12 +26,12 @@ public class ModTools {
             CROOKS.put(identifier, item);
         }
 
-        HAMMERS.put(FabricaeExNihilo.id("wooden_hammer"), new HammerItem(ToolMaterials.WOOD, tool_settings));
-        HAMMERS.put(FabricaeExNihilo.id("stone_hammer"), new HammerItem(ToolMaterials.STONE, tool_settings));
-        HAMMERS.put(FabricaeExNihilo.id("iron_hammer"), new HammerItem(ToolMaterials.IRON, tool_settings));
-        HAMMERS.put(FabricaeExNihilo.id("golden_hammer"), new HammerItem(ToolMaterials.GOLD, tool_settings));
-        HAMMERS.put(FabricaeExNihilo.id("diamond_hammer"), new HammerItem(ToolMaterials.DIAMOND, tool_settings));
-        HAMMERS.put(FabricaeExNihilo.id("netherite_hammer"), new HammerItem(ToolMaterials.NETHERITE, tool_settings));
+        HAMMERS.put(FabricaeExNihilo.id("wooden_hammer"), new HammerItem(ToolMaterials.WOOD, TOOL_SETTINGS));
+        HAMMERS.put(FabricaeExNihilo.id("stone_hammer"), new HammerItem(ToolMaterials.STONE, TOOL_SETTINGS));
+        HAMMERS.put(FabricaeExNihilo.id("iron_hammer"), new HammerItem(ToolMaterials.IRON, TOOL_SETTINGS));
+        HAMMERS.put(FabricaeExNihilo.id("golden_hammer"), new HammerItem(ToolMaterials.GOLD, TOOL_SETTINGS));
+        HAMMERS.put(FabricaeExNihilo.id("diamond_hammer"), new HammerItem(ToolMaterials.DIAMOND, TOOL_SETTINGS));
+        HAMMERS.put(FabricaeExNihilo.id("netherite_hammer"), new HammerItem(ToolMaterials.NETHERITE, TOOL_SETTINGS));
     }
 
     public static void registerItems() {

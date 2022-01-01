@@ -12,6 +12,8 @@ import wraith.fabricaeexnihilo.util.Color;
 
 import java.util.function.BiConsumer;
 
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
+
 public class TechRebornApiModule implements FabricaeExNihiloApiModule {
     @Override
     public void registerOres(BiConsumer<String, OreDefinition> registry) {
@@ -32,7 +34,7 @@ public class TechRebornApiModule implements FabricaeExNihiloApiModule {
     
     @Override
     public void registerMeshes(BiConsumer<Identifier, MeshDefinition> registry) {
-        registry.accept(new Identifier("techreborn", "carbon_mesh"), new MeshDefinition(Color.BLACK, 14));
+        registry.accept(id("carbon_mesh"), new MeshDefinition(Color.BLACK, 14));
     }
     
     @Override

@@ -2,7 +2,7 @@
   "parent": "fabricaeexnihilo:mesh",
   "display": {
     "icon": {
-      "item": "fabricaeexnihilo:pebble_stone"
+      "item": "fabricaeexnihilo:stone_pebble"
     },
     "title": {
       "translate": "advancements.fabricaeexnihilo.pebbles.title"
@@ -22,7 +22,7 @@
         "items": [
           {
             "items": [
-              "fabricaeexnihilo:pebble_stone"
+              "fabricaeexnihilo:stone_pebble"
             ]
           }
         ]

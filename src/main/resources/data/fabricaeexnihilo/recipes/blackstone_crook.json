@@ -8,10 +8,10 @@
   ],
   "key": {
     "#": {
-      "item": "fabricaeexnihilo:granite_pebble"
+      "item": "fabricaeexnihilo:blackstone_pebble"
     }
   },
   "result": {
-    "item": "fabricaeexnihilo:granite_crook"
+    "item": "fabricaeexnihilo:blackstone_crook"
   }
 }
