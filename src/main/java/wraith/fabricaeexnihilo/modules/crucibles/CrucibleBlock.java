@@ -1,7 +1,5 @@
 package wraith.fabricaeexnihilo.modules.crucibles;
 
-import net.devtech.arrp.json.recipe.*;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -13,7 +11,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
@@ -25,16 +22,10 @@ import wraith.fabricaeexnihilo.util.ItemUtils;
 import wraith.fabricaeexnihilo.util.VoxelShapeHelper;
 
 public class CrucibleBlock extends BlockWithEntity {
-
-    private final Identifier texture;
-    private final Identifier craftIngredient;
-
-    public CrucibleBlock(Identifier texture, Identifier craftIngredient, FabricBlockSettings settings) {
+    public CrucibleBlock(Settings settings) {
         super(settings);
-        this.texture = texture;
-        this.craftIngredient = craftIngredient;
     }
-
+    
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (world == null || world.isClient() || pos == null) {
@@ -111,23 +102,7 @@ public class CrucibleBlock extends BlockWithEntity {
         }
         super.onBreak(world, pos, state, player);
     }
-
-    public JRecipe generateRecipe() {
-        return JRecipe.shaped(
-                JPattern.pattern(
-                        "x x",
-                        "x x",
-                        "xxx"
-                ),
-                JKeys.keys()
-                        .key("x",
-                                JIngredient.ingredient()
-                                        .item(craftIngredient.toString())
-                        ),
-                JResult.item(asItem())
-        );
-    }
-
+    
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
@@ -149,9 +124,5 @@ public class CrucibleBlock extends BlockWithEntity {
     public Material getMaterial() {
         return this.material;
     }
-
-    public Identifier getTexture() {
-        return texture;
-    }
-
+    
 }

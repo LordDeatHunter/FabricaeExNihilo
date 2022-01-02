@@ -8,8 +8,10 @@ import wraith.fabricaeexnihilo.modules.ore.ChunkMaterial;
 import wraith.fabricaeexnihilo.modules.ore.ChunkShape;
 import wraith.fabricaeexnihilo.modules.ore.PieceShape;
 import wraith.fabricaeexnihilo.util.Color;
+import wraith.fabricaeexnihilo.util.VanillaWoodDefinitions;
 
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
@@ -23,6 +25,16 @@ public class DefaultApiModule implements FabricaeExNihiloApiModule {
     public void registerOres(BiConsumer<String, OreDefinition> registry) {
         registry.accept("iron", new OreDefinition(Color.IRON, PieceShape.NORMAL, ChunkShape.CHUNK, ChunkMaterial.GRANITE));
         registry.accept("gold", new OreDefinition(Color.GOLD, PieceShape.FINE, ChunkShape.CHUNK, ChunkMaterial.STONE));
+    }
+    
+    @Override
+    public void registerWoods(Consumer<Identifier> registry) {
+        registry.accept(id("oak"));
+        registry.accept(id("birch"));
+        registry.accept(id("spruce"));
+        registry.accept(id("acacia"));
+        registry.accept(id("dark_oak"));
+        registry.accept(id("jungle"));
     }
     
     @Override

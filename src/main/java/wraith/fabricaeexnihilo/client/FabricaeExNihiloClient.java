@@ -32,7 +32,6 @@ import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 @Environment(EnvType.CLIENT)
 public class FabricaeExNihiloClient implements ClientModInitializer {
-
     @Override
     public void onInitializeClient() {
         // Fluid Rendering
@@ -63,24 +62,6 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
 
         // ARRP resource pack
         var resourcePack = RuntimeResourcePack.create(id("resources"));
-        // Barrel models
-        ModBlocks.BARRELS.forEach((identifier, barrel) -> {
-            resourcePack.addModel(JModel.modelKeepElements(id("block/barrel")).textures(JModel.textures().var("all", barrel.getTexture().toString())), id("block/" + identifier.getPath()));
-            resourcePack.addModel(JModel.modelKeepElements(id("block/" + identifier.getPath())), id("item/" + identifier.getPath()));
-            resourcePack.addBlockState(JState.state(JState.variant(JState.model(id("block/" + identifier.getPath())))), identifier);
-        });
-        // Crucible models
-        ModBlocks.CRUCIBLES.forEach((identifier, crucible) -> {
-            resourcePack.addModel(JModel.modelKeepElements(id("block/crucible")).textures(JModel.textures().var("all", crucible.getTexture().toString())), id("block/" + identifier.getPath()));
-            resourcePack.addModel(JModel.modelKeepElements(id("block/" + identifier.getPath())), id("item/" + identifier.getPath()));
-            resourcePack.addBlockState(JState.state(JState.variant(JState.model(id("block/" + identifier.getPath())))), identifier);
-        });
-        // Sieve models
-        ModBlocks.SIEVES.forEach((identifier, sieve) -> {
-            resourcePack.addModel(JModel.modelKeepElements(id("block/sieve")).textures(JModel.textures().var("all", sieve.getTexture().toString())), id("block/" + identifier.getPath()));
-            resourcePack.addModel(JModel.modelKeepElements(id("block/" + identifier.getPath())), id("item/" + identifier.getPath()));
-            resourcePack.addBlockState(JState.state(JState.variant(JState.model(id("block/" + identifier.getPath())))), identifier);
-        });
         // Mesh models
         for (var mesh : FabricaeExNihilo.MESHES.keySet()) {
             resourcePack.addModel(JModel.modelKeepElements(id("item/mesh")), id("item/" + mesh.getPath()));

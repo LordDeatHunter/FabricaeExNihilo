@@ -31,7 +31,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class ModBlocks {
-
     public static final FabricBlockSettings WOOD_SETTINGS = FabricBlockSettings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD).breakByHand(true);
     public static final FabricBlockSettings STONE_SETTINGS = FabricBlockSettings.of(Material.STONE).strength(2.0f, 6.0f).sounds(BlockSoundGroup.STONE);
     public static final FabricBlockSettings CRUSHED_GRAVELY_SETTINGS = FabricBlockSettings.of(Material.AGGREGATE).strength(0.6f).sounds(BlockSoundGroup.GRAVEL).breakByHand(true);
@@ -53,7 +52,7 @@ public final class ModBlocks {
         BARRELS.forEach((identifier, block) -> Registry.register(Registry.BLOCK, identifier, block));
         CRUSHED.forEach((identifier, block) -> Registry.register(Registry.BLOCK, identifier, block));
         INFESTED_LEAVES.forEach((identifier, block) -> Registry.register(Registry.BLOCK, identifier, block));
-
+        
         Registry.register(Registry.BLOCK, FabricaeExNihilo.id("infesting_leaves"), INFESTING_LEAVES);
 
         ModFluids.registerFluidBlocks();
@@ -85,20 +84,6 @@ public final class ModBlocks {
         Registry.register(Registry.BLOCK_ENTITY_TYPE, InfestingLeavesBlockEntity.BLOCK_ENTITY_ID, InfestingLeavesBlockEntity.TYPE);
     }
 
-    public static void generateDerivedBlocks() {
-        Arrays.stream(VanillaWoodDefinitions.values()).forEach(wood -> {
-            var planksID = wood.getPlanksID();
-            var slabID = wood.getSlabID();
-            var logID = wood.getLogID();
-            var leafBlock = wood.getLeafBlock();
-
-            BlockGenerator.INSTANCE.createInfestedLeavesBlock((LeavesBlock) leafBlock);
-            BlockGenerator.INSTANCE.createSieveBlock(planksID, slabID);
-            BlockGenerator.INSTANCE.createWoodBarrelBlock(planksID, slabID);
-            BlockGenerator.INSTANCE.createWoodCrucibleBlock(logID);
-        });
-    }
-
     static {
         CRUSHED.put(FabricaeExNihilo.id("dust"), new FallingBlock(CRUSHED_SANDY_SETTINGS));
         CRUSHED.put(FabricaeExNihilo.id("silt"), new FallingBlock(CRUSHED_SANDY_SETTINGS));
@@ -110,9 +95,8 @@ public final class ModBlocks {
         CRUSHED.put(FabricaeExNihilo.id("crushed_netherrack"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
         //CRUSHED.put(FabricaeExNihilo.id("crushed_skystone"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
 
-        CRUCIBLES.put(FabricaeExNihilo.id("stone_crucible"), new CrucibleBlock(FabricaeExNihilo.id("block/stone_crucible"), FabricaeExNihilo.id("porcelain"), STONE_SETTINGS));
+        CRUCIBLES.put(FabricaeExNihilo.id("stone_crucible"), new CrucibleBlock(STONE_SETTINGS));
 
-        BARRELS.put(FabricaeExNihilo.id("stone_barrel"), new BarrelBlock(new Identifier("block/stone"), new Identifier("stone"), new Identifier("stone_slab"), STONE_SETTINGS));
+        BARRELS.put(FabricaeExNihilo.id("stone_barrel"), new BarrelBlock(STONE_SETTINGS));
     }
-
 }

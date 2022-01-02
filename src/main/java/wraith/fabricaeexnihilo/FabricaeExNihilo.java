@@ -6,16 +6,15 @@ import net.devtech.arrp.api.RRPCallback;
 import net.devtech.arrp.api.RuntimeResourcePack;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import wraith.fabricaeexnihilo.api.FabricaeExNihiloApiModule;
 import wraith.fabricaeexnihilo.api.MeshDefinition;
 import wraith.fabricaeexnihilo.api.OreDefinition;
 import wraith.fabricaeexnihilo.modules.*;
 import wraith.fabricaeexnihilo.util.ARRPUtils;
+import wraith.fabricaeexnihilo.util.EntrypointHelper;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.nio.file.Path;
@@ -39,9 +38,7 @@ public class FabricaeExNihilo implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        var entrypoints = FabricLoader.getInstance().getEntrypoints("fabricaeexnihilo:api", FabricaeExNihiloApiModule.class).stream().filter(FabricaeExNihiloApiModule::shouldLoad).toList();
-        entrypoints.forEach(entrypoint -> entrypoint.registerOres(ORES::putIfAbsent));
-        entrypoints.forEach(entrypoint -> entrypoint.registerMeshes(MESHES::putIfAbsent));
+        EntrypointHelper.callEntrypoints();
         
         /* Register Status Effects */
         LOGGER.debug("Registering Status Effects");
@@ -66,14 +63,13 @@ public class FabricaeExNihilo implements ModInitializer {
         ARRPUtils.generateTags(RESOURCE_PACK);
         LOGGER.debug("Creating Recipes");
         ModRecipes.register();
-        ARRPUtils.generateRecipes(RESOURCE_PACK);
         LOGGER.debug("Creating Loot Tables");
         ARRPUtils.generateLootTables(RESOURCE_PACK);
 
         if (CONFIG.dumpGeneratedResource) {
             RESOURCE_PACK.dump(Path.of("fabricaeexnihilo_generated"));
         }
-
+        
         RRPCallback.BEFORE_VANILLA.register(a -> a.add(RESOURCE_PACK));
     }
     

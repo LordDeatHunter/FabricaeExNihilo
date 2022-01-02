@@ -1,6 +1,5 @@
 package wraith.fabricaeexnihilo.modules.barrels;
 
-import net.devtech.arrp.json.recipe.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
@@ -21,7 +20,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -40,19 +38,12 @@ import wraith.fabricaeexnihilo.util.ItemUtils;
 
 @SuppressWarnings("UnstableApiUsage")
 public class BarrelBlock extends BlockWithEntity {
-
     private static final VoxelShape SHAPE = createCuboidShape(1.0, 0.0, 1.0, 15.0, 16.0, 15.0);
-
-    private final Identifier texture;
-    private final Identifier craftIngredient1;
-    private final Identifier craftIngredient2;
+    
     public FabricBlockSettings settings;
     
-    public BarrelBlock(Identifier texture, Identifier craftIngredient1, Identifier craftIngredient2, FabricBlockSettings settings) {
+    public BarrelBlock(FabricBlockSettings settings) {
         super(settings);
-        this.texture = texture;
-        this.craftIngredient1 = craftIngredient1;
-        this.craftIngredient2 = craftIngredient2;
         this.settings = settings;
     }
 
@@ -152,29 +143,5 @@ public class BarrelBlock extends BlockWithEntity {
             EnchantmentHelper.get(itemStack).forEach((enchantment, level) -> barrelEntity.enchantments.setEnchantmentLevel(enchantment, level));
         }
     }
-
-    public JRecipe generateRecipe() {
-        return JRecipe.shaped(
-                JPattern.pattern(
-                        "x x",
-                        "x x",
-                        "xyx"
-                ),
-                JKeys.keys()
-                        .key("x",
-                                JIngredient.ingredient()
-                                        .item(craftIngredient1.toString())
-                        )
-                        .key("y",
-                                JIngredient.ingredient()
-                                        .item(craftIngredient2.toString())
-                        ),
-                JResult.item(asItem())
-        );
-    }
-
-    public Identifier getTexture() {
-        return texture;
-    }
-
+    
 }

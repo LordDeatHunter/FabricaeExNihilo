@@ -14,16 +14,6 @@ public final class ARRPUtils {
     private ARRPUtils() {
     }
 
-    public static void generateRecipes(RuntimeResourcePack resourcePack) {
-        // Sieve Crafting
-        ModBlocks.SIEVES.forEach((identifier, sieve) -> resourcePack.addRecipe(identifier, sieve.generateRecipe()));
-        // Crucible Crafting
-        ModBlocks.CRUCIBLES.entrySet().stream().filter(entry -> !entry.getKey().getPath().equals("unfired_crucible"))
-                .forEach(entry -> resourcePack.addRecipe(entry.getKey(), entry.getValue().generateRecipe()));
-        // Barrel Crafting
-        ModBlocks.BARRELS.forEach((identifier, barrel) -> resourcePack.addRecipe(identifier, barrel.generateRecipe()));
-    }
-
     public static void generateLootTables(RuntimeResourcePack resourcePack) {
         // Block Breaking
 //        ModBlocks.SIEVES.keys.forEach { k ->
