@@ -51,6 +51,14 @@ public interface FabricaeExNihiloApiModule {
     }
     
     /**
+     * Allows for registering infested leaves.
+     * @param registry A consumer which accepts the id of the base leaves and the id under which the leaves are to be registered after {@code infested_} or {@code infesting_} is prepended to the path.
+     */
+    default void registerInfestedLeaves(BiConsumer<Identifier, Identifier> registry) {
+    
+    }
+    
+    /**
      * You can override this if you need to do additional checks before the module is used. Mostly used by integrated compatibility modules to check if the target mod is loaded.
      * @return Whether the module should be loaded.
      */

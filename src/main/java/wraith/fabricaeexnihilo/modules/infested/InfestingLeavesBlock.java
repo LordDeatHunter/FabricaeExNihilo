@@ -8,23 +8,25 @@ import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.mixins.BlockWithEntityInvoker;
+import wraith.fabricaeexnihilo.modules.base.Colored;
+import wraith.fabricaeexnihilo.util.Color;
 
 public class InfestingLeavesBlock extends LeavesBlock implements BlockEntityProvider, NonInfestableLeavesBlock {
-
-    public InfestingLeavesBlock(FabricBlockSettings settings) {
+    
+    private final InfestedLeavesBlock target;
+    
+    public InfestingLeavesBlock(FabricBlockSettings settings, InfestedLeavesBlock target) {
         super(settings);
-    }
-
-    @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
+        this.target = target;
     }
 
     @Nullable
@@ -33,25 +35,13 @@ public class InfestingLeavesBlock extends LeavesBlock implements BlockEntityProv
         return new InfestingLeavesBlockEntity(pos, state);
     }
 
-    @Override
-    public VoxelShape getSidesShape(BlockState state, BlockView world, BlockPos pos) {
-        return VoxelShapes.empty();
-    }
-
-    @Override
-    public int getOpacity(BlockState state, BlockView world, BlockPos pos) {
-        return 1;
-    }
-
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         return world.isClient ? null : BlockWithEntityInvoker.checkType(type, InfestingLeavesBlockEntity.TYPE, InfestingLeavesBlockEntity::ticker);
     }
-
-    @Override
-    public String getTranslationKey() {
-        return "block.fabricaeexnihilo.infesting";
+    
+    public InfestedLeavesBlock getTarget() {
+        return target;
     }
-
 }

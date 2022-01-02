@@ -3,7 +3,6 @@ package wraith.fabricaeexnihilo.modules;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.FallingBlock;
-import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.Material;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
@@ -23,10 +22,7 @@ import wraith.fabricaeexnihilo.modules.infested.InfestingLeavesBlock;
 import wraith.fabricaeexnihilo.modules.infested.InfestingLeavesBlockEntity;
 import wraith.fabricaeexnihilo.modules.sieves.SieveBlock;
 import wraith.fabricaeexnihilo.modules.sieves.SieveBlockEntity;
-import wraith.fabricaeexnihilo.util.BlockGenerator;
-import wraith.fabricaeexnihilo.util.VanillaWoodDefinitions;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,19 +38,18 @@ public final class ModBlocks {
     public static final Map<Identifier, BarrelBlock> BARRELS = new HashMap<>();
 
     public static final Map<Identifier, Block> CRUSHED = new HashMap<>();
-
-    public static final InfestingLeavesBlock INFESTING_LEAVES = new InfestingLeavesBlock(INFESTED_LEAVES_SETTINGS);
+    
     public static final Map<Identifier, InfestedLeavesBlock> INFESTED_LEAVES = new HashMap<>();
-
+    public static final Map<Identifier, InfestingLeavesBlock> INFESTING_LEAVES = new HashMap<>();
+    
     public static void registerBlocks() {
         SIEVES.forEach((identifier, block) -> Registry.register(Registry.BLOCK, identifier, block));
         CRUCIBLES.forEach((identifier, block) -> Registry.register(Registry.BLOCK, identifier, block));
         BARRELS.forEach((identifier, block) -> Registry.register(Registry.BLOCK, identifier, block));
         CRUSHED.forEach((identifier, block) -> Registry.register(Registry.BLOCK, identifier, block));
         INFESTED_LEAVES.forEach((identifier, block) -> Registry.register(Registry.BLOCK, identifier, block));
+        INFESTING_LEAVES.forEach((identifier, block) -> Registry.register(Registry.BLOCK, identifier, block));
         
-        Registry.register(Registry.BLOCK, FabricaeExNihilo.id("infesting_leaves"), INFESTING_LEAVES);
-
         ModFluids.registerFluidBlocks();
     }
 
@@ -74,7 +69,6 @@ public final class ModBlocks {
         });
         CRUSHED.forEach((identifier, block) -> Registry.register(Registry.ITEM, identifier, new BlockItem(block, ModItems.BASE_SETTINGS)));
         INFESTED_LEAVES.forEach((identifier, block) -> Registry.register(Registry.ITEM, identifier, new InfestedLeavesItem(block, ModItems.BASE_SETTINGS)));
-        BlockGenerator.INSTANCE.initRegistryCallBack();
     }
 
     public static void registerBlockEntities() {

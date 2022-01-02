@@ -8,7 +8,6 @@ import wraith.fabricaeexnihilo.modules.ore.ChunkMaterial;
 import wraith.fabricaeexnihilo.modules.ore.ChunkShape;
 import wraith.fabricaeexnihilo.modules.ore.PieceShape;
 import wraith.fabricaeexnihilo.util.Color;
-import wraith.fabricaeexnihilo.util.VanillaWoodDefinitions;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -48,5 +47,15 @@ public class DefaultApiModule implements FabricaeExNihiloApiModule {
         
         registry.accept(id("diamond_mesh"), new MeshDefinition(Color.DARK_AQUA, 10));
         registry.accept(id("netherite_mesh"), new MeshDefinition(Color.DARK_GRAY, 15));
+    }
+    
+    @Override
+    public void registerInfestedLeaves(BiConsumer<Identifier, Identifier> registry) {
+        registry.accept(new Identifier("minecraft:oak_leaves"), id("oak_leaves"));
+        registry.accept(new Identifier("minecraft:birch_leaves"), id("birch_leaves"));
+        registry.accept(new Identifier("minecraft:spruce_leaves"), id("spruce_leaves"));
+        registry.accept(new Identifier("minecraft:acacia_leaves"), id("acacia_leaves"));
+        registry.accept(new Identifier("minecraft:dark_oak_leaves"), id("dark_oak_leaves"));
+        registry.accept(new Identifier("minecraft:jungle_leaves"), id("jungle_leaves"));
     }
 }

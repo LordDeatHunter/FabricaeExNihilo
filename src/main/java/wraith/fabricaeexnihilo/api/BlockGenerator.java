@@ -1,6 +1,5 @@
 package wraith.fabricaeexnihilo.api;
 
-import net.minecraft.block.LeavesBlock;
 import net.minecraft.util.Identifier;
 
 /**
@@ -18,6 +17,6 @@ public interface BlockGenerator {
     /**
      * Generated Identifier = exnihilofabric:infested_<blockID.namespace>_<blockID.path>
      */
-    void createInfestedLeavesBlock(LeavesBlock block);
+    void createInfestedLeavesBlock(Identifier block);
     
 }
