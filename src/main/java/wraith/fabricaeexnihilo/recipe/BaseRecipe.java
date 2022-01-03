@@ -37,6 +37,7 @@ public abstract class BaseRecipe<T extends RecipeContext> implements Recipe<T> {
     
     /**
      * Get an itemstack that represents the result of this recipe
+     *
      * @return An itemstack representing the output of the recipe. Only used for visuals.
      */
     public abstract ItemStack getDisplayStack();

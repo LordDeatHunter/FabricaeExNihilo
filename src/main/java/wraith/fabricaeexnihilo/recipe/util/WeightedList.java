@@ -17,7 +17,7 @@ import java.util.Random;
 public class WeightedList {
     public static final Codec<WeightedList> CODEC = Codec.unboundedMap(Registry.BLOCK.getCodec(), Codec.INT)
             .xmap(WeightedList::new, WeightedList::getValues);
-
+    
     private final Map<Block, Integer> values;
     private int totalWeight;
     
@@ -25,7 +25,7 @@ public class WeightedList {
         this.values = values;
         setTotalWeight();
     }
-
+    
     @SafeVarargs
     public WeightedList(Pair<Block, Integer>... values) {
         this.values = new HashMap<>();
@@ -34,20 +34,20 @@ public class WeightedList {
         }
         setTotalWeight();
     }
-
+    
     public WeightedList() {
         this.values = new HashMap<>();
         setTotalWeight();
     }
-
+    
     public Map<Block, Integer> getValues() {
         return values;
     }
-
+    
     private void setTotalWeight() {
         this.totalWeight = this.values.values().stream().mapToInt(Integer::intValue).sum();
     }
-
+    
     public Block choose(Random random) {
         var rem = random.nextInt(totalWeight);
         Block block = null;
@@ -60,15 +60,15 @@ public class WeightedList {
         }
         return block;
     }
-
+    
     public List<ItemStack> asListOfStacks() {
         return values.entrySet().stream().map(item -> ItemUtils.asStack(item.getKey(), item.getValue())).toList();
     }
-
+    
     public List<EntryIngredient> asEntryList() {
         return values.keySet().stream().map(EntryIngredients::of).toList();
     }
-
+    
     /**
      * Takes another weighted list and adds all its entries to this WeightedList.
      */

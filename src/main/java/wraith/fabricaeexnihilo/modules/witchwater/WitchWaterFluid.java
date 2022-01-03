@@ -10,19 +10,19 @@ import wraith.fabricaeexnihilo.modules.base.FluidSettings;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
-public class WitchWaterFluid extends AbstractFluid  {
+public class WitchWaterFluid extends AbstractFluid {
     private static final FluidSettings FLUID_SETTINGS = new FluidSettings("witchwater", false);
     public static final WitchWaterFluid STILL = new WitchWaterFluid(true);
     public static final Tag.Identified<Fluid> TAG = TagFactory.FLUID.create(id("witchwater"));
     public static final BucketItem BUCKET = new BucketItem(STILL, ModFluids.BUCKET_ITEM_SETTINGS);
     public static final WitchWaterFluid FLOWING = new WitchWaterFluid(false);
     public static final WitchWaterBlock BLOCK = new WitchWaterBlock(STILL, ModFluids.BLOCK_SETTINGS);
-
+    
     @Override
     public boolean matchesType(Fluid fluid) {
         return fluid == STILL || fluid == FLOWING;
     }
-
+    
     public WitchWaterFluid(boolean isStill) {
         super(isStill, FLUID_SETTINGS,
                 () -> BLOCK,
@@ -31,5 +31,5 @@ public class WitchWaterFluid extends AbstractFluid  {
                 () -> STILL
         );
     }
-
+    
 }

@@ -11,24 +11,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record CompostDisplay(REICompostRecipe recipe) implements Display {
-
-        @Override
-        public CategoryIdentifier<?> getCategoryIdentifier() {
-                return PluginEntry.COMPOSTING;
-        }
-
-        @Override
-        public List<EntryIngredient> getInputEntries() {
-                var inputs = new ArrayList<EntryIngredient>();
-                inputs.addAll(recipe.reiInputs());
-                inputs.addAll(ModBlocks.BARRELS.values().stream().map(EntryIngredients::of).toList());
-                return inputs;
-        }
-
-        @Override
-        public List<EntryIngredient> getOutputEntries() {
-                return recipe.reiOutput();
-        }
-
-
+    
+    @Override
+    public CategoryIdentifier<?> getCategoryIdentifier() {
+        return PluginEntry.COMPOSTING;
+    }
+    
+    @Override
+    public List<EntryIngredient> getInputEntries() {
+        var inputs = new ArrayList<EntryIngredient>();
+        inputs.addAll(recipe.reiInputs());
+        inputs.addAll(ModBlocks.BARRELS.values().stream().map(EntryIngredients::of).toList());
+        return inputs;
+    }
+    
+    @Override
+    public List<EntryIngredient> getOutputEntries() {
+        return recipe.reiOutput();
+    }
+    
+    
 }

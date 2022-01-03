@@ -23,14 +23,14 @@ import wraith.fabricaeexnihilo.util.ItemUtils;
 
 @Mixin(GlassBottleItem.class)
 public abstract class BottleUseMixin extends Item {
-
+    
     public BottleUseMixin(Settings settings) {
         super(settings);
     }
-
+    
     @Shadow
     native protected ItemStack fill(ItemStack emptyBottle, PlayerEntity player, ItemStack filledBottle);
-
+    
     @Inject(at = @At("RETURN"), method = "use", cancellable = true)
     public void use(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
         ItemStack held = cir.getReturnValue().getValue();

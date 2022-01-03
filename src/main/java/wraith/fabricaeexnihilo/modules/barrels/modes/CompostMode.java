@@ -27,7 +27,7 @@ public class CompostMode extends BarrelMode {
                     Color.CODEC
                             .fieldOf("color")
                             .forGetter(CompostMode::getColor)
-                    )
+            )
             .apply(instance, CompostMode::new));
     
     private final ItemStack result;

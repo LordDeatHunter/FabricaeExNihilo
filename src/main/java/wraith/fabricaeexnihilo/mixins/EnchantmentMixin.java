@@ -10,18 +10,19 @@ import wraith.fabricaeexnihilo.util.EnchantmentTagManager;
 
 @Mixin(Enchantment.class)
 public abstract class EnchantmentMixin {
-
+    
     /**
      * This call is used (through super calls) by each enchantment instance and is invoked by anvils.
+     *
      * @param stack Stack to be enchanted
-     * @param cir Callback
+     * @param cir   Callback
      */
-    @Inject(method = "isAcceptableItem", at=@At(value = "RETURN"), cancellable = true)
+    @Inject(method = "isAcceptableItem", at = @At(value = "RETURN"), cancellable = true)
     private void isAcceptableItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-        if(cir.getReturnValue())
+        if (cir.getReturnValue())
             cir.cancel();
         else
-            cir.setReturnValue(EnchantmentTagManager.itemIsAcceptableForEnchantment(stack, (Enchantment) (Object) this) );
+            cir.setReturnValue(EnchantmentTagManager.itemIsAcceptableForEnchantment(stack, (Enchantment) (Object) this));
     }
-
+    
 }

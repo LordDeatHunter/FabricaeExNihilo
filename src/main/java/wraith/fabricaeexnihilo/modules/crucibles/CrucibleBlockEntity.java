@@ -48,7 +48,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
     private FluidVariant fluid = FluidVariant.blank();
     private int heat = 0;
     private int tickCounter;
-
+    
     public static final BlockEntityType<CrucibleBlockEntity> TYPE = FabricBlockEntityTypeBuilder.create(
             CrucibleBlockEntity::new,
             ModBlocks.CRUCIBLES.values().toArray(new CrucibleBlock[0])
@@ -68,15 +68,15 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
                 ? FabricaeExNihilo.CONFIG.modules.crucibles.tickRate
                 : world.random.nextInt(FabricaeExNihilo.CONFIG.modules.crucibles.tickRate);
     }
-
+    
     public boolean isStone() {
         return isStone;
     }
-
+    
     public ItemStack getRenderStack() {
         return renderStack;
     }
-
+    
     public long getQueued() {
         return queued;
     }
@@ -88,23 +88,23 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
     public EnchantmentContainer getEnchantments() {
         return enchantments;
     }
-
+    
     /**
      * Enchantments
      */
     private final EnchantmentContainer enchantments = new EnchantmentContainer();
-
+    
     @SuppressWarnings("unused") // lambda stuff
     public static void ticker(World world, BlockPos blockPos, BlockState blockState, CrucibleBlockEntity crucibleEntity) {
         crucibleEntity.tick();
     }
-
+    
     public void tick() {
         if (queued == 0 || contained > getMaxCapacity() || (heat <= 0 && isStone)) {
             return;
         }
         if (--tickCounter <= 0) {
-    
+            
             var amount = Math.min(queued, getProcessingSpeed());
             contained += amount;
             queued -= amount;
@@ -112,23 +112,23 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
             tickCounter = FabricaeExNihilo.CONFIG.modules.crucibles.tickRate;
         }
     }
-
+    
     private int getEfficiencyMultiplier() {
         return 1 + enchantments.getEnchantmentLevel(Enchantments.EFFICIENCY);
     }
-
+    
     private int getFireAspectAdder() {
         return enchantments.getEnchantmentLevel(Enchantments.FIRE_ASPECT);
     }
-
+    
     public long getProcessingSpeed() {
         return getEfficiencyMultiplier() * (isStone ? heat * FabricaeExNihilo.CONFIG.modules.crucibles.baseProcessRate : FabricaeExNihilo.CONFIG.modules.crucibles.woodenProcessingRate);
     }
-
+    
     public long getMaxCapacity() {
         return FluidConstants.BUCKET * (isStone ? FabricaeExNihilo.CONFIG.modules.crucibles.stoneVolume : FabricaeExNihilo.CONFIG.modules.crucibles.woodVolume);
     }
-
+    
     public ActionResult activate(@Nullable PlayerEntity player, @Nullable Hand hand) {
         if (world == null || player == null) {
             return ActionResult.PASS;
@@ -137,7 +137,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
         if (held == null || held.isEmpty()) {
             return ActionResult.PASS;
         }
-    
+        
         var bucketFluidStorage = FluidStorage.ITEM.find(held, ContainerItemContext.ofPlayerHand(player, hand));
         if (bucketFluidStorage != null) {
             var amount = StorageUtil.move(fluidStorage, bucketFluidStorage, fluid -> true, Long.MAX_VALUE, null);
@@ -146,7 +146,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
                 return ActionResult.SUCCESS;
             }
         }
-
+        
         try (var t = Transaction.openOuter()) {
             var amount = itemStorage.insert(ItemVariant.of(held), 1, t);
             if (amount > 0) {
@@ -161,7 +161,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
         
         return ActionResult.PASS;
     }
-
+    
     public void updateHeat() {
         if (world == null) {
             return;
@@ -178,17 +178,17 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
             markDirty();
         }
     }
-
+    
     /**
      * NBT Serialization section
      */
-
+    
     @Override
     public void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         writeNbtWithoutWorldInfo(nbt);
     }
-
+    
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
@@ -198,7 +198,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
         }
         readNbtWithoutWorldInfo(nbt);
     }
-
+    
     private void writeNbtWithoutWorldInfo(NbtCompound nbt) {
         nbt.put("render", renderStack.writeNbt(new NbtCompound()));
         nbt.put("fluid", CodecUtils.toNbt(CodecUtils.FLUID_VARIANT, fluid));
@@ -207,13 +207,14 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
         nbt.putInt("heat", heat);
         nbt.put("enchantments", enchantments.writeNbt());
     }
-
+    
     private void readNbtWithoutWorldInfo(NbtCompound nbt) {
         renderStack = ItemStack.fromNbt(nbt.getCompound("render"));
         fluid = CodecUtils.fromNbt(CodecUtils.FLUID_VARIANT, nbt.get("fluid"));
         contained = nbt.getLong("contained");
         queued = nbt.getLong("queued");
         heat = nbt.getInt("heat");
+        // Why? It always exists...
         if (nbt.contains("enchantments")) {
             var readEnchantments = new EnchantmentContainer();
             readEnchantments.readNbt(nbt.getCompound("enchantments"));
@@ -236,32 +237,32 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
             contained -= amount;
             return amount;
         }
-    
+        
         @Override
         public boolean isResourceBlank() {
             return fluid.isBlank();
         }
-    
+        
         @Override
         public FluidVariant getResource() {
             return fluid;
         }
-    
+        
         @Override
         public long getAmount() {
             return contained;
         }
-    
+        
         @Override
         public long getCapacity() {
             return getMaxCapacity();
         }
-    
+        
         @Override
         protected CrucibleSnapshot createSnapshot() {
             return new CrucibleSnapshot(contained, queued, fluid, renderStack);
         }
-    
+        
         @Override
         protected void readSnapshot(CrucibleSnapshot snapshot) {
             contained = snapshot.contained;
@@ -286,32 +287,32 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
             renderStack = resource.toStack();
             return 1;
         }
-    
+        
         @Override
         public boolean isResourceBlank() {
             return true;
         }
-    
+        
         @Override
         public ItemVariant getResource() {
             return ItemVariant.blank();
         }
-    
+        
         @Override
         public long getAmount() {
             return 0;
         }
-    
+        
         @Override
         public long getCapacity() {
             return 1;
         }
-    
+        
         @Override
         protected CrucibleSnapshot createSnapshot() {
             return new CrucibleSnapshot(contained, queued, fluid, renderStack.copy());
         }
-    
+        
         @Override
         protected void readSnapshot(CrucibleSnapshot snapshot) {
             contained = snapshot.contained;
@@ -319,7 +320,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
             fluid = snapshot.fluid;
             renderStack = snapshot.renderStack.copy();
         }
-    
+        
         // Compiler dumb
         @Override
         public long extract(ItemVariant resource, long maxAmount, TransactionContext transaction) {
@@ -327,5 +328,6 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
         }
     }
     
-    private static record CrucibleSnapshot(long contained, long queued, FluidVariant fluid, ItemStack renderStack){}
+    private static record CrucibleSnapshot(long contained, long queued, FluidVariant fluid, ItemStack renderStack) {
+    }
 }

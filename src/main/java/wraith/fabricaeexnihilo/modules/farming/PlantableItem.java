@@ -12,18 +12,18 @@ import java.util.Collections;
 import java.util.List;
 
 public class PlantableItem extends Item {
-
+    
     private final List<BlockState> plants;
-
+    
     public PlantableItem(Block plant, FabricItemSettings settings) {
         this(Collections.singletonList(plant.getDefaultState()), settings);
     }
-
+    
     public PlantableItem(List<BlockState> plants, FabricItemSettings settings) {
         super(settings);
         this.plants = plants;
     }
-
+    
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         var world = context.getWorld();
@@ -45,9 +45,9 @@ public class PlantableItem extends Item {
         }
         return super.useOnBlock(context);
     }
-
+    
     public boolean placementCheck(ItemUsageContext context) {
         return true;
     }
-
+    
 }

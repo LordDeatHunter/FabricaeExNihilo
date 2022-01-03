@@ -52,7 +52,7 @@ public class FluidMode extends BarrelMode {
         var config = FabricaeExNihilo.CONFIG.modules.barrels;
         var world = barrel.getWorld();
         var pos = barrel.getPos();
-    
+        
         if (amount >= FluidConstants.BUCKET) {
             var fluidState = world.getFluidState(pos.up());
             if (!fluidState.isEmpty()) {
@@ -117,7 +117,7 @@ public class FluidMode extends BarrelMode {
     public long insertFluid(FluidVariant fluid, long maxAmount, TransactionContext transaction, BarrelFluidStorage storage) {
         StoragePreconditions.notBlankNotNegative(fluid, maxAmount);
         if (!this.fluid.equals(fluid)) return 0;
-    
+        
         var amount = Math.min(FluidConstants.BUCKET - FluidMode.this.amount, maxAmount);
         storage.updateSnapshots(transaction);
         this.amount += amount;
@@ -128,7 +128,7 @@ public class FluidMode extends BarrelMode {
     public long extractFluid(FluidVariant fluid, long maxAmount, TransactionContext transaction, BarrelFluidStorage storage) {
         StoragePreconditions.notBlankNotNegative(fluid, maxAmount);
         if (!this.fluid.equals(fluid)) return 0;
-    
+        
         var amount = Math.min(maxAmount, FluidMode.this.amount);
         storage.updateSnapshots(transaction);
         FluidMode.this.amount -= amount;

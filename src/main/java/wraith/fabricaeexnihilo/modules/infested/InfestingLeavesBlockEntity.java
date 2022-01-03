@@ -18,20 +18,20 @@ import wraith.fabricaeexnihilo.util.Color;
 
 public class InfestingLeavesBlockEntity extends BaseBlockEntity implements Colored {
     private double progress = 0.0;
-
+    
     private int tickCounter;
-
+    
     public static Identifier BLOCK_ENTITY_ID = FabricaeExNihilo.id("infesting");
     public static final BlockEntityType<InfestingLeavesBlockEntity> TYPE = FabricBlockEntityTypeBuilder.create(
             InfestingLeavesBlockEntity::new,
             ModBlocks.INFESTING_LEAVES.values().toArray(new InfestingLeavesBlock[0])
     ).build(null);
-
+    
     public InfestingLeavesBlockEntity(BlockPos pos, BlockState state) {
         super(TYPE, pos, state);
         tickCounter = world == null ? 0 : world.random.nextInt(FabricaeExNihilo.CONFIG.modules.barrels.tickRate);
     }
-
+    
     public static void ticker(World world, BlockPos blockPos, BlockState blockState, InfestingLeavesBlockEntity infestedLeavesEntity) {
         // Don't update every single tick
         if (++infestedLeavesEntity.tickCounter % FabricaeExNihilo.CONFIG.modules.silkworms.updateFrequency != 0) {
@@ -39,7 +39,7 @@ public class InfestingLeavesBlockEntity extends BaseBlockEntity implements Color
         }
         // Advance
         infestedLeavesEntity.progress += FabricaeExNihilo.CONFIG.modules.silkworms.progressPerUpdate;
-
+        
         if (infestedLeavesEntity.progress < 1f) {
             infestedLeavesEntity.markDirty();
             if (infestedLeavesEntity.progress > FabricaeExNihilo.CONFIG.modules.silkworms.minimumSpreadPercent && world != null) {
@@ -47,7 +47,7 @@ public class InfestingLeavesBlockEntity extends BaseBlockEntity implements Color
             }
             return;
         }
-
+        
         // Done Transforming
         if (world == null) {
             return;
@@ -58,7 +58,7 @@ public class InfestingLeavesBlockEntity extends BaseBlockEntity implements Color
                 .with(LeavesBlock.PERSISTENT, curState.get(LeavesBlock.PERSISTENT));
         world.setBlockState(blockPos, newState);
     }
-
+    
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
@@ -68,17 +68,17 @@ public class InfestingLeavesBlockEntity extends BaseBlockEntity implements Color
         }
         readNbtWithoutWorldInfo(nbt);
     }
-
+    
     @Override
     public void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         toNBTWithoutWorldInfo(nbt);
     }
-
+    
     public void toNBTWithoutWorldInfo(NbtCompound nbt) {
         nbt.putDouble("progress", progress);
     }
-
+    
     public void readNbtWithoutWorldInfo(NbtCompound nbt) {
         progress = nbt.getDouble("progress");
     }

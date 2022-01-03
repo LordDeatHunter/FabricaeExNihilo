@@ -31,30 +31,30 @@ public record Loot(ItemStack stack, List<Double> chances) {
             this.chances.add(chance);
         }
     }
-
+    
     public Loot(ItemConvertible result, double... chances) {
         this(ItemUtils.asStack(result), chances);
     }
-
+    
     public Loot(ItemConvertible result, List<Double> chances) {
         this(ItemUtils.asStack(result), chances);
     }
-
+    
     public Loot(Identifier result, List<Double> chances) {
         this(ItemUtils.asStack(Registry.ITEM.get(result)), chances);
     }
-
+    
     public Loot(Identifier result, double... chances) {
         this(ItemUtils.asStack(Registry.ITEM.get(result)), chances);
     }
-
+    
     public boolean isEmpty() {
         return stack.isEmpty() || chances.isEmpty();
     }
     
     public ItemStack createStack(Random random) {
         var stack = this.stack.copy();
-        stack.setCount((int)chances.stream()
+        stack.setCount((int) chances.stream()
                 .filter(chance -> chance > random.nextDouble())
                 .count());
         return stack;

@@ -26,7 +26,7 @@ public class WitchWaterWorldRecipe extends BaseRecipe<WitchWaterWorldRecipe.Cont
         super(id);
         this.target = target;
         this.result = result;
-}
+    }
     
     public static Optional<WitchWaterWorldRecipe> find(Fluid fluid, @Nullable World world) {
         if (world == null) {
@@ -74,15 +74,15 @@ public class WitchWaterWorldRecipe extends BaseRecipe<WitchWaterWorldRecipe.Cont
             
             return new WitchWaterWorldRecipe(id, target, result);
         }
-    
+        
         @Override
         public WitchWaterWorldRecipe read(Identifier id, PacketByteBuf buf) {
             var target = CodecUtils.fromPacket(FluidIngredient.CODEC, buf);
             var result = CodecUtils.fromPacket(WeightedList.CODEC, buf);
-    
+            
             return new WitchWaterWorldRecipe(id, target, result);
         }
-    
+        
         @Override
         public void write(PacketByteBuf buf, WitchWaterWorldRecipe recipe) {
             CodecUtils.toPacket(FluidIngredient.CODEC, recipe.target, buf);

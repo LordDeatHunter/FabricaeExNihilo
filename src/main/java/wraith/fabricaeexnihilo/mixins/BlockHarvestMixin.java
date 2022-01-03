@@ -17,14 +17,14 @@ import java.util.List;
 
 @Mixin(AbstractBlock.class)
 public abstract class BlockHarvestMixin {
-
+    
     /**
      * Injects calls to the Hammer and Crook registries if the tool used is identified as a Hammer or Crook
      */
     @Inject(at = @At("RETURN"), method = "getDroppedStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/loot/context/LootContext$Builder;)Ljava/util/List;", cancellable = true)
     public void getDroppedStacks(BlockState state, LootContext.Builder builder, CallbackInfoReturnable<List<ItemStack>> info) {
         ItemStack tool = builder.get(LootContextParameters.TOOL);
-        if(CrookItem.isCrook(tool)){
+        if (CrookItem.isCrook(tool)) {
             var recipe = ToolRecipe.find(ToolRecipe.ToolType.CROOK, state.getBlock(), builder.getWorld());
             recipe.ifPresent(toolRecipe -> info.setReturnValue(List.of(toolRecipe.getResult().createStack(builder.getWorld().random))));
         } else if (HammerItem.isHammer(tool)) {

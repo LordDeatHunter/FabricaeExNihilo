@@ -19,45 +19,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CompostCategory implements DisplayCategory<CompostDisplay> {
-
+    
     @Override
     public CategoryIdentifier<? extends CompostDisplay> getCategoryIdentifier() {
         return PluginEntry.COMPOSTING;
     }
-
+    
     @Override
     public Renderer getIcon() {
         return ItemUtils.asREIEntry("oak_barrel");
     }
-
+    
     @Override
     public Text getTitle() {
         return new TranslatableText("Barrel Composting");
     }
-
+    
     @Override
     public int getDisplayHeight() {
         return HEIGHT;
     }
-
+    
     @Override
     public int getDisplayWidth(CompostDisplay display) {
         return WIDTH;
     }
-
+    
     @Override
     public List<Widget> setupDisplay(CompostDisplay display, Rectangle bounds) {
         var widgets = new ArrayList<Widget>();
         widgets.add(Widgets.createRecipeBase(bounds));
-
+        
         widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW_OFFSET_X, bounds.getMinY() + ARROW_OFFSET_Y, ARROW_WIDTH, ARROW_HEIGHT, ARROW, ARROW_U, ARROW_V));
-
+        
         var inputs = display.getInputEntries().get(0);
         var outputs = display.getOutputEntries();
-
+        
         // Output
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BLOCK_X, bounds.getMinY() + BLOCK_Y)).entries(outputs.get(0)));
-
+        
         // Input
         for (int i = 0; i < inputs.size(); i++) {
             var output = inputs.get(i);
@@ -65,9 +65,9 @@ public class CompostCategory implements DisplayCategory<CompostDisplay> {
                     Widgets.createSlot(new Point(
                             bounds.getMinX() + INPUT_X + (i % INPUT_SLOTS_X) * 18,
                             bounds.getMinY() + INPUT_Y + (i / INPUT_SLOTS_X) * 18)).entry(output));
-
+            
         }
-
+        
         // Fill in the empty spots
         for (int i = 0; i < inputs.size() && i < MAX_INPUT; i++) {
             widgets.add(
@@ -77,30 +77,30 @@ public class CompostCategory implements DisplayCategory<CompostDisplay> {
         }
         return widgets;
     }
-
+    
     public static Identifier ARROW = FabricaeExNihilo.id("textures/gui/rei/glyphs.png");
-
+    
     public static int INPUT_SLOTS_X = Math.max(FabricaeExNihilo.CONFIG.modules.REI.compostNumCols, 1);
     public static int INPUT_SLOTS_Y = Math.max(FabricaeExNihilo.CONFIG.modules.REI.compostNumRows, 1);
-
+    
     public static int MARGIN = 6;
-
+    
     public static int WIDTH = 2 * 18 + INPUT_SLOTS_X * 18 + MARGIN * 2;
     public static int HEIGHT = INPUT_SLOTS_Y * 18 + MARGIN * 2;
-
+    
     public static int BLOCK_X = MARGIN;
     public static int ARROW_OFFSET_X = BLOCK_X + 18;
     public static int INPUT_X = ARROW_OFFSET_X + 18;
-
+    
     public static int BLOCK_Y = MARGIN + (HEIGHT - 2 * MARGIN) / 2 - 9;
     public static int ARROW_OFFSET_Y = BLOCK_Y;
     public static int INPUT_Y = MARGIN;
-
+    
     public static int ARROW_WIDTH = 16;
     public static int ARROW_HEIGHT = 16;
     public static int ARROW_U = 0;
     public static int ARROW_V = 16;
-
+    
     public static int MAX_INPUT = INPUT_SLOTS_X * INPUT_SLOTS_Y;
-
+    
 }

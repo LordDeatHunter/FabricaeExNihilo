@@ -1,9 +1,7 @@
 package wraith.fabricaeexnihilo.recipe.util;
 
 import com.google.common.collect.ImmutableList;
-import com.google.gson.JsonElement;
 import com.mojang.datafixers.util.Either;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.tag.Tag;
 
 import java.util.List;
@@ -33,11 +31,11 @@ public abstract class AbstractIngredient<T> implements Predicate<T> {
     public boolean isEmpty() {
         return this.value.map(Objects::isNull, tag -> tag.values().isEmpty());
     }
-
+    
     public List<T> flatten() {
         return this.value.map(ImmutableList::of, Tag::values);
     }
-
+    
     public <U> List<U> flatten(Function<T, U> func) {
         return flatten().stream().map(func).toList();
     }

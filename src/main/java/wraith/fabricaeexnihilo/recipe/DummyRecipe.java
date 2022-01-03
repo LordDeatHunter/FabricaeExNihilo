@@ -19,12 +19,12 @@ public record DummyRecipe<T extends Inventory>(Identifier id) implements Recipe<
         public DummyRecipe<?> read(Identifier id, JsonObject json) {
             return new DummyRecipe<>(id);
         }
-    
+        
         @Override
         public DummyRecipe<?> read(Identifier id, PacketByteBuf buf) {
             return new DummyRecipe<>(id);
         }
-    
+        
         @Override
         public void write(PacketByteBuf buf, DummyRecipe<?> recipe) {
         

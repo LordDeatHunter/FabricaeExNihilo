@@ -28,11 +28,11 @@ import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterEntityRecipe;
 import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterWorldRecipe;
 
 public class WitchWaterBlock extends BaseFluidBlock {
-
+    
     public WitchWaterBlock(FlowableFluid fluid, Settings settings) {
         super(fluid, settings);
     }
-
+    
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         if (world == null || entity == null || !entity.isAlive() || entity.isRemoved()) {
@@ -89,7 +89,7 @@ public class WitchWaterBlock extends BaseFluidBlock {
         }
         // TODO item changes
     }
-
+    
     public static boolean receiveNeighborFluids(WitchWaterBlock witchWaterBlock, World world, BlockPos pos, BlockState state) {
         if (world == null || pos == null || state == null) {
             return true;
@@ -105,17 +105,17 @@ public class WitchWaterBlock extends BaseFluidBlock {
         }
         return true;
     }
-
+    
     // A status effect is used to mark entities that have been processed so that they are no longer processed.
     public static boolean isMarked(LivingEntity entity) {
         return entity.hasStatusEffect(ModEffects.WITCH_WATERED);
     }
-
+    
     public static void markEntity(LivingEntity entity) {
         applyStatusEffect(entity, ModEffects.WITCH_WATERED.getInstance());
     }
-
-
+    
+    
     public static boolean fluidInteraction(World world, BlockPos witchPos, BlockPos otherPos) {
         var fluidState = world.getFluidState(otherPos);
         if (fluidState.isEmpty() || fluidState.isIn(WitchWaterFluid.TAG)) {
@@ -130,7 +130,7 @@ public class WitchWaterBlock extends BaseFluidBlock {
         world.playSound(null, changePos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 0.7f, 0.8f + world.random.nextFloat() * 0.2f);
         return true;
     }
-
+    
     public static void replaceMob(World world, LivingEntity toKill, EntityType<?> spawnType) {
         var toSpawn = spawnType.create(world);
         if (toSpawn instanceof LivingEntity livingEntity) {
@@ -138,18 +138,18 @@ public class WitchWaterBlock extends BaseFluidBlock {
             livingEntity.refreshPositionAndAngles(toKill.getBlockPos(), toKill.getYaw(), toKill.getPitch());
             livingEntity.setVelocity(toKill.getVelocity());
             livingEntity.headYaw = toKill.headYaw;
-
+            
             // Slime -> Magma Slime
             if (toKill instanceof SlimeEntity slimeEntity && livingEntity instanceof MagmaCubeEntity magmaCubeEntity) {
                 //TODO mixin for setting slime size
             }
-
+            
             // Set Health
             livingEntity.setHealth(livingEntity.getMaxHealth() * toKill.getHealth() / toKill.getMaxHealth());
         }
         replaceMob(world, toKill, toSpawn);
     }
-
+    
     public static void replaceMob(World world, Entity toKill, @Nullable Entity toSpawn) {
         toKill.remove(Entity.RemovalReason.DISCARDED);
         if (toSpawn != null) {
@@ -159,7 +159,7 @@ public class WitchWaterBlock extends BaseFluidBlock {
             world.spawnEntity(toSpawn);
         }
     }
-
+    
     public static void applyStatusEffect(LivingEntity entity, StatusEffectInstance statusEffect) {
         // Grab the potion effect on the entity (null if not active) compare its duration (defaulting to 0) to the new duration
         boolean hasEffect = entity.getActiveStatusEffects().containsKey(statusEffect.getEffectType());
@@ -168,5 +168,5 @@ public class WitchWaterBlock extends BaseFluidBlock {
             entity.addStatusEffect(statusEffect);
         }
     }
-
+    
 }

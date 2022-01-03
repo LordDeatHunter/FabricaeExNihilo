@@ -41,7 +41,7 @@ public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.Context> {
         this.delay = delay;
         this.toSpawn = toSpawn;
         this.result = result;
-}
+    }
     
     
     public static Optional<AlchemyRecipe> find(FluidVariant reactant, Item catalyst, @Nullable World world) {
@@ -107,7 +107,7 @@ public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.Context> {
             
             return new AlchemyRecipe(id, reactant, catalyst, byproduct, delay, toSpawn, result);
         }
-    
+        
         @Override
         public AlchemyRecipe read(Identifier id, PacketByteBuf buf) {
             FluidIngredient reactant = CodecUtils.fromPacket(FluidIngredient.CODEC, buf);
@@ -116,10 +116,10 @@ public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.Context> {
             int delay = buf.readInt();
             EntityStack toSpawn = CodecUtils.fromPacket(EntityStack.CODEC, buf);
             BarrelMode result = CodecUtils.fromPacket(BarrelMode.CODEC, buf);
-    
+            
             return new AlchemyRecipe(id, reactant, catalyst, byproduct, delay, toSpawn, result);
         }
-    
+        
         @Override
         public void write(PacketByteBuf buf, AlchemyRecipe recipe) {
             CodecUtils.toPacket(FluidIngredient.CODEC, recipe.reactant, buf);
@@ -131,5 +131,6 @@ public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.Context> {
         }
     }
     
-    protected static record Context(FluidVariant reactant, Item catalyst) implements RecipeContext { }
+    protected static record Context(FluidVariant reactant, Item catalyst) implements RecipeContext {
+    }
 }

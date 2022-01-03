@@ -81,17 +81,17 @@ public class CompostRecipe extends BaseRecipe<CompostRecipe.Context> {
             
             return new CompostRecipe(id, result, input, increment, color);
         }
-    
+        
         @Override
         public CompostRecipe read(Identifier id, PacketByteBuf buf) {
             ItemStack result = buf.readItemStack();
             ItemIngredient input = CodecUtils.fromPacket(ItemIngredient.CODEC, buf);
             double increment = buf.readDouble();
             Color color = new Color(buf.readInt());
-    
+            
             return new CompostRecipe(id, result, input, increment, color);
         }
-    
+        
         @Override
         public void write(PacketByteBuf buf, CompostRecipe recipe) {
             buf.writeItemStack(recipe.result);
@@ -101,5 +101,6 @@ public class CompostRecipe extends BaseRecipe<CompostRecipe.Context> {
         }
     }
     
-    protected static record Context(ItemStack input) implements RecipeContext { }
+    protected static record Context(ItemStack input) implements RecipeContext {
+    }
 }

@@ -20,81 +20,81 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransformingCategory implements DisplayCategory<TransformingDisplay> {
-
+    
     @Override
     public CategoryIdentifier<? extends TransformingDisplay> getCategoryIdentifier() {
         return PluginEntry.TRANSFORMING;
     }
-
+    
     @Override
     public Renderer getIcon() {
         return ItemUtils.asREIEntry(Blocks.MYCELIUM);
     }
-
+    
     @Override
     public Text getTitle() {
         return new TranslatableText("Transformation");
     }
-
+    
     @Override
     public int getDisplayHeight() {
         return HEIGHT;
     }
-
+    
     @Override
     public int getDisplayWidth(TransformingDisplay display) {
         return WIDTH;
     }
-
+    
     @Override
     public List<Widget> setupDisplay(TransformingDisplay display, Rectangle bounds) {
         var widgets = new ArrayList<Widget>();
         widgets.add(Widgets.createRecipeBase(bounds));
-
+        
         widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW1_X, bounds.getMinY() + ARROW1_Y, ARROW_WIDTH, ARROW_HEIGHT, ARROW, ARROW_U, ARROW_V));
         widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW2_X, bounds.getMinY() + ARROW2_Y, ARROW_WIDTH, ARROW_HEIGHT, ARROW, ARROW_U, ARROW_V));
-
+        
         var inputs = display.getInputEntries();
         var inBarrel = inputs.get(0);
         var below = inputs.get(1);
         var barrels = inputs.get(2);
         var outputs = display.getOutputEntries().get(0);
-
+        
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + INPUT_X, bounds.getMinY() + INPUT_Y)).entries(inBarrel));
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BELOW_X, bounds.getMinY() + BELOW_Y)).entries(below));
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BARRELS_X, bounds.getMinY() + BARRELS_Y)).entries(barrels));
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X, bounds.getMinY() + OUTPUT_Y)).entries(outputs));
-
+        
         return widgets;
     }
-
+    
     public static final Identifier ARROW = FabricaeExNihilo.id("textures/gui/rei/glyphs.png");
-
+    
     public static final int MARGIN = 6;
-
+    
     public static final int WIDTH = 8 * 18 + MARGIN * 2;
     public static final int HEIGHT = 2 * 18 + MARGIN * 2;
-
+    
     public static final int BARRELS_X = WIDTH / 2 - 9;
     public static final int BARRELS_Y = MARGIN;
-
+    
     public static final int ARROW1_X = BARRELS_X - 18;
     public static final int ARROW1_Y = BARRELS_Y;
     public static final int ARROW2_X = BARRELS_X + 18;
     public static final int ARROW2_Y = BARRELS_Y;
-
+    
     public static final int BELOW_X = BARRELS_X;
     public static final int BELOW_Y = BARRELS_Y + 18;
-
+    
     public static final int INPUT_X = BARRELS_X - 2 * 18;
     public static final int INPUT_Y = BARRELS_Y;
-
+    
     public static final int OUTPUT_X = BARRELS_X + 2 * 18;
     public static final int OUTPUT_Y = BARRELS_Y;
-
+    
     public static final int ARROW_WIDTH = 16;
     public static final int ARROW_HEIGHT = 16;
     public static final int ARROW_U = 0;
     public static final int ARROW_V = 0;
-
+    
 }

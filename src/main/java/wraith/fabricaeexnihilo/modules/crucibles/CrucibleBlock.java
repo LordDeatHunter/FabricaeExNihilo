@@ -36,7 +36,7 @@ public class CrucibleBlock extends BlockWithEntity {
         }
         return super.onUse(state, world, pos, player, hand, hit);
     }
-
+    
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
         if (fromPos == null || !fromPos.equals(pos == null ? null : pos.down()) || world == null) {
@@ -46,7 +46,7 @@ public class CrucibleBlock extends BlockWithEntity {
             crucible.updateHeat();
         }
     }
-
+    
     @Override
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
         if (world == null || world.isClient() || pos == null) {
@@ -56,27 +56,27 @@ public class CrucibleBlock extends BlockWithEntity {
             crucible.updateHeat();
         }
     }
-
+    
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPE;
     }
-
+    
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }
-
+    
     /**
      * BlockEntity functions
      */
-
+    
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new CrucibleBlockEntity(pos, state);
     }
-
+    
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         if (world == null) {
@@ -86,7 +86,7 @@ public class CrucibleBlock extends BlockWithEntity {
             EnchantmentHelper.get(itemStack).forEach(crucible.getEnchantments()::setEnchantmentLevel);
         }
     }
-
+    
     @Override
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         if (player == null) {
@@ -108,9 +108,9 @@ public class CrucibleBlock extends BlockWithEntity {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         return world.isClient ? null : checkType(type, CrucibleBlockEntity.TYPE, CrucibleBlockEntity::ticker);
     }
-
+    
     private static final VoxelShape SHAPE;
-
+    
     static {
         SHAPE = VoxelShapeHelper.union(
                 createCuboidShape(0.0, 0.0, 0.0, 3.0, 3.0, 3.0),
@@ -120,7 +120,7 @@ public class CrucibleBlock extends BlockWithEntity {
                 createCuboidShape(0.0, 3.0, 0.0, 16.0, 16.0, 16.0)
         );
     }
-
+    
     public Material getMaterial() {
         return this.material;
     }

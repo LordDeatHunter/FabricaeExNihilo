@@ -12,22 +12,22 @@ import java.util.Collections;
 import java.util.List;
 
 public class TallPlantableItem extends Item {
-
+    
     private final List<TallPlantBlock> plants;
-
+    
     public TallPlantableItem(TallPlantBlock plant, FabricItemSettings settings) {
         this(Collections.singletonList(plant), settings);
     }
-
+    
     public TallPlantableItem(List<TallPlantBlock> plants, FabricItemSettings settings) {
         super(settings);
         this.plants = plants;
     }
-
+    
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         var world = context.getWorld();
-        if(world.isClient) {
+        if (world.isClient) {
             return ActionResult.SUCCESS;
         }
         var plantPos = context.getBlockPos().offset(context.getSide());
@@ -48,9 +48,9 @@ public class TallPlantableItem extends Item {
         }
         return super.useOnBlock(context);
     }
-
+    
     public boolean placementCheck(ItemUsageContext context) {
         return true;
     }
-
+    
 }

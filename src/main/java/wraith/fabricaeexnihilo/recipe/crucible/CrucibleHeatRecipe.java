@@ -26,7 +26,7 @@ public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.Context> {
         super(id);
         this.block = block;
         this.heat = heat;
-}
+    }
     
     public static Optional<CrucibleHeatRecipe> find(Block block, @Nullable World world) {
         if (world == null) {
@@ -63,7 +63,8 @@ public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.Context> {
         return heat;
     }
     
-    protected static record Context(Block block) implements RecipeContext {}
+    protected static record Context(Block block) implements RecipeContext {
+    }
     
     public static class Serializer implements RecipeSerializer<CrucibleHeatRecipe> {
         @Override
@@ -73,15 +74,15 @@ public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.Context> {
             
             return new CrucibleHeatRecipe(id, block, heat);
         }
-    
+        
         @Override
         public CrucibleHeatRecipe read(Identifier id, PacketByteBuf buf) {
             var block = CodecUtils.fromPacket(BlockIngredient.CODEC, buf);
             var heat = buf.readInt();
-    
+            
             return new CrucibleHeatRecipe(id, block, heat);
         }
-    
+        
         @Override
         public void write(PacketByteBuf buf, CrucibleHeatRecipe recipe) {
             CodecUtils.toPacket(BlockIngredient.CODEC, recipe.block, buf);

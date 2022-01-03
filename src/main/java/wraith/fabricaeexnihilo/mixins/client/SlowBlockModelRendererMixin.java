@@ -16,46 +16,46 @@ import java.util.List;
 
 @Environment(EnvType.CLIENT)
 @Mixin(BlockModelRenderer.class)
-public class SlowBlockModelRendererMixin{
+public class SlowBlockModelRendererMixin {
     @ModifyVariable(
-        method = "renderQuad(Lnet/minecraft/client/util/math/MatrixStack$Entry;Lnet/minecraft/client/render/VertexConsumer;FFFLjava/util/List;II)V",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/client/render/VertexConsumer;quad(Lnet/minecraft/client/util/math/MatrixStack$Entry;Lnet/minecraft/client/render/model/BakedQuad;FFFII)V",
-            shift = At.Shift.BY,
-            by = -8
-        ),
-        index = 10
+            method = "renderQuad(Lnet/minecraft/client/util/math/MatrixStack$Entry;Lnet/minecraft/client/render/VertexConsumer;FFFLjava/util/List;II)V",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/render/VertexConsumer;quad(Lnet/minecraft/client/util/math/MatrixStack$Entry;Lnet/minecraft/client/render/model/BakedQuad;FFFII)V",
+                    shift = At.Shift.BY,
+                    by = -8
+            ),
+            index = 10
     )
-    private static float renderQuad$red(float original, MatrixStack.Entry entry, VertexConsumer consumer, float red, float green, float blue, List<BakedQuad> quads, int lighting, int overlay){
+    private static float renderQuad$red(float original, MatrixStack.Entry entry, VertexConsumer consumer, float red, float green, float blue, List<BakedQuad> quads, int lighting, int overlay) {
         return BlockModelRendererFlags.isColorOverriden() ? MathHelper.clamp(red, 0, 1) : original;
     }
     
     @ModifyVariable(
-        method = "renderQuad(Lnet/minecraft/client/util/math/MatrixStack$Entry;Lnet/minecraft/client/render/VertexConsumer;FFFLjava/util/List;II)V",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/client/render/VertexConsumer;quad(Lnet/minecraft/client/util/math/MatrixStack$Entry;Lnet/minecraft/client/render/model/BakedQuad;FFFII)V",
-            shift = At.Shift.BY,
-            by = -8
-        ),
-        index = 11
+            method = "renderQuad(Lnet/minecraft/client/util/math/MatrixStack$Entry;Lnet/minecraft/client/render/VertexConsumer;FFFLjava/util/List;II)V",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/render/VertexConsumer;quad(Lnet/minecraft/client/util/math/MatrixStack$Entry;Lnet/minecraft/client/render/model/BakedQuad;FFFII)V",
+                    shift = At.Shift.BY,
+                    by = -8
+            ),
+            index = 11
     )
-    private static float renderQuad$green(float original, MatrixStack.Entry entry, VertexConsumer consumer, float red, float green, float blue, List<BakedQuad> quads, int lighting, int overlay){
+    private static float renderQuad$green(float original, MatrixStack.Entry entry, VertexConsumer consumer, float red, float green, float blue, List<BakedQuad> quads, int lighting, int overlay) {
         return BlockModelRendererFlags.isColorOverriden() ? MathHelper.clamp(green, 0, 1) : original;
     }
     
     @ModifyVariable(
-        method = "renderQuad(Lnet/minecraft/client/util/math/MatrixStack$Entry;Lnet/minecraft/client/render/VertexConsumer;FFFLjava/util/List;II)V",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/client/render/VertexConsumer;quad(Lnet/minecraft/client/util/math/MatrixStack$Entry;Lnet/minecraft/client/render/model/BakedQuad;FFFII)V",
-            shift = At.Shift.BY,
-            by = -8
-        ),
-        index = 12
+            method = "renderQuad(Lnet/minecraft/client/util/math/MatrixStack$Entry;Lnet/minecraft/client/render/VertexConsumer;FFFLjava/util/List;II)V",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/render/VertexConsumer;quad(Lnet/minecraft/client/util/math/MatrixStack$Entry;Lnet/minecraft/client/render/model/BakedQuad;FFFII)V",
+                    shift = At.Shift.BY,
+                    by = -8
+            ),
+            index = 12
     )
-    private static float renderQuad$blue(float original, MatrixStack.Entry entry, VertexConsumer consumer, float red, float green, float blue, List<BakedQuad> quads, int lighting, int overlay){
+    private static float renderQuad$blue(float original, MatrixStack.Entry entry, VertexConsumer consumer, float red, float green, float blue, List<BakedQuad> quads, int lighting, int overlay) {
         return BlockModelRendererFlags.isColorOverriden() ? MathHelper.clamp(blue, 0, 1) : original;
     }
 }

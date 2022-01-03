@@ -30,7 +30,7 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
         super(FabricBlockSettings.of(Material.WOOD));
         setDefaultState(getStateManager().getDefaultState().with(WATERLOGGED, false));
     }
-
+    
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         /*
@@ -40,7 +40,7 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
         */
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
-
+    
     @Override
     public FluidState getFluidState(BlockState state) {
         if (state.get(WATERLOGGED)) {
@@ -48,24 +48,24 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
         }
         return super.getFluidState(state);
     }
-
+    
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         return super.getPlacementState(ctx).with(WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER);
     }
-
+    
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPE;
     }
-
+    
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
         builder.add(WATERLOGGED);
     }
-
+    
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (world.isClient() || pos == null) {
@@ -76,18 +76,18 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
         }
         return ActionResult.PASS;
     }
-
+    
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new SieveBlockEntity(pos, state);
     }
-
+    
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }
-
+    
     @Override
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         if (!player.isCreative()) {
@@ -106,7 +106,7 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
     }
     
     private static final VoxelShape SHAPE;
-
+    
     static {
         SHAPE = VoxelShapeHelper.union(
                 createCuboidShape(0.0, 0.0, 0.0, 2.0, 12.0, 2.0),

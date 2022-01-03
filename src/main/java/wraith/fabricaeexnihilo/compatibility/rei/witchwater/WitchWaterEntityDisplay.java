@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 public record WitchWaterEntityDisplay(WitchWaterEntityRecipe recipe) implements Display {
-
+    
     @Override
     public List<EntryIngredient> getInputEntries() {
         var list = new ArrayList<EntryIngredient>();
@@ -22,7 +22,7 @@ public record WitchWaterEntityDisplay(WitchWaterEntityRecipe recipe) implements 
         list.addAll(recipe.getTarget().asREIEntries());
         return list;
     }
-
+    
     @Override
     public List<EntryIngredient> getOutputEntries() {
         var egg = SpawnEggItem.forEntity(recipe.getResult());
@@ -31,10 +31,10 @@ public record WitchWaterEntityDisplay(WitchWaterEntityRecipe recipe) implements 
         }
         return Collections.singletonList(EntryIngredients.of(egg));
     }
-
+    
     @Override
     public CategoryIdentifier<?> getCategoryIdentifier() {
         return PluginEntry.WITCH_WATER_ENTITY;
     }
-
+    
 }

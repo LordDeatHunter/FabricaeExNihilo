@@ -1,26 +1,21 @@
 package wraith.fabricaeexnihilo.recipe.util;
 
-import com.google.gson.JsonElement;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Dynamic;
-import com.mojang.serialization.JsonOps;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.fabricmc.fabric.api.tag.TagFactory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.NbtString;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.tag.ServerTagManagerHolder;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
-import wraith.fabricaeexnihilo.util.CodecUtils;
 
 import java.util.List;
 
@@ -57,14 +52,14 @@ public class ItemIngredient extends AbstractIngredient<Item> {
     public boolean test(ItemStack stack) {
         return test(stack.getItem());
     }
-
+    
     public boolean test(ItemConvertible item) {
         return test(item.asItem());
     }
-
+    
     public List<EntryIngredient> asREIEntries() {
         return flatten(EntryIngredients::of);
     }
     
-    public static ItemIngredient EMPTY = new ItemIngredient((Item)null);
+    public static ItemIngredient EMPTY = new ItemIngredient((Item) null);
 }

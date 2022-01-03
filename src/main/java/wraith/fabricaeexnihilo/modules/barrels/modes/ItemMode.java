@@ -18,7 +18,7 @@ public class ItemMode extends BarrelMode {
             .apply(instance, ItemMode::new));
     
     private final ItemStack stack;
-
+    
     public ItemMode(ItemStack stack) {
         super();
         this.stack = stack == null ? ItemStack.EMPTY : stack;
@@ -45,7 +45,7 @@ public class ItemMode extends BarrelMode {
         
         storage.updateSnapshots(transaction);
         var amount = Math.min(maxAmount, stack.getCount());
-        stack.decrement((int)amount);
+        stack.decrement((int) amount);
         if (stack.isEmpty()) storage.barrel.setMode(new EmptyMode());
         return amount;
     }

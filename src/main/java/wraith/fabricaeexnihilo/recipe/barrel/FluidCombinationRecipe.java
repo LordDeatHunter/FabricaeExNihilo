@@ -98,5 +98,6 @@ public class FluidCombinationRecipe extends BaseRecipe<FluidCombinationRecipe.Co
         }
     }
     
-    protected static record Context(FluidVariant contained, FluidVariant other) implements RecipeContext { }
+    protected static record Context(FluidVariant contained, FluidVariant other) implements RecipeContext {
+    }
 }

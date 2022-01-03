@@ -14,17 +14,17 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public record ToolDisplay(ToolRecipe recipe, CategoryIdentifier<ToolDisplay> category) implements Display {
-
+    
     @Override
     public CategoryIdentifier<ToolDisplay> getCategoryIdentifier() {
         return category;
     }
-
+    
     @Override
     public List<EntryIngredient> getOutputEntries() {
         return Collections.singletonList(EntryIngredient.of(List.of(ItemUtils.asREIEntry(recipe.getResult().stack()))));
     }
-
+    
     @Override
     public List<EntryIngredient> getInputEntries() {
         var ingredients = recipe.getBlock().asREIEntries();
@@ -34,5 +34,5 @@ public record ToolDisplay(ToolRecipe recipe, CategoryIdentifier<ToolDisplay> cat
                 .toList();
         return Stream.of(ingredients, tools).flatMap(List::stream).toList();
     }
-
+    
 }

@@ -16,7 +16,7 @@ import wraith.fabricaeexnihilo.modules.base.BaseFluidBlock;
 import wraith.fabricaeexnihilo.modules.base.FluidSettings;
 
 public class MilkFluid extends AbstractFluid {
-
+    
     private static final FluidSettings FLUID_SETTINGS = new FluidSettings("milk", false);
     public static final Tag.Identified<Fluid> TAG = TagFactory.FLUID.create(new Identifier("c:milk"));
     public static final MilkFluid STILL = new MilkFluid(true);
@@ -34,7 +34,7 @@ public class MilkFluid extends AbstractFluid {
     public boolean matchesType(Fluid fluid) {
         return fluid == STILL || fluid == FLOWING;
     }
-
+    
     public MilkFluid(boolean isStill) {
         super(isStill, FLUID_SETTINGS,
                 () -> BLOCK,

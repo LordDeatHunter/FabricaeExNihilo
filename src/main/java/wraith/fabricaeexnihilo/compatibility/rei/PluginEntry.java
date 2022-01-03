@@ -22,29 +22,29 @@ import wraith.fabricaeexnihilo.compatibility.rei.witchwater.WitchWaterWorldDispl
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
 public class PluginEntry implements REIClientPlugin {
-
+    
     @Override
     public void registerCategories(CategoryRegistry registry) {
         FabricaeExNihilo.LOGGER.info("Registering REI Categories");
         registry.add(new SieveCategory());
-
+        
         registry.add(new ToolCategory(CROOK, ItemUtils.getExNihiloItemStack("wooden_crook"), "Crook"));
         registry.add(new ToolCategory(HAMMER, ItemUtils.getExNihiloItemStack("wooden_hammer"), "Hammer"));
-
+        
         registry.add(new CrucibleHeatCategory());
         registry.add(new CrucibleCategory(WOOD_CRUCIBLE, ItemUtils.getExNihiloItemStack("oak_crucible"), new LiteralText("Wood Crucible")));
         registry.add(new CrucibleCategory(STONE_CRUCIBLE, ItemUtils.getExNihiloItemStack("stone_crucible"), new LiteralText("Stone Crucible")));
-
+        
         registry.add(new CompostCategory());
         registry.add(new LeakingCategory());
         registry.add(new FluidOnTopCategory());
         registry.add(new MilkingCategory());
         registry.add(new TransformingCategory());
         registry.add(new AlchemyCategory());
-
+        
         registry.add(new WitchWaterEntityCategory());
         registry.add(new WitchWaterWorldCategory());
-
+        
         // Hackishly Remove the autocrafting button
         registry.removePlusButton(SIEVE);
         registry.removePlusButton(CROOK);
@@ -61,7 +61,7 @@ public class PluginEntry implements REIClientPlugin {
         registry.removePlusButton(WITCH_WATER_WORLD);
         registry.removePlusButton(ALCHEMY);
     }
-
+    
     @Override
     public void registerDisplays(DisplayRegistry registry) {
         FabricaeExNihilo.LOGGER.info("Registering REI Displays");
@@ -80,24 +80,24 @@ public class PluginEntry implements REIClientPlugin {
         //FabricaeExNihiloRegistries.WITCHWATER_ENTITY.getREIRecipes().forEach(recipe -> registry.add(new WitchWaterEntityDisplay(recipe)));
         //FabricaeExNihiloRegistries.WITCHWATER_WORLD.getREIRecipes().forEach(recipe -> registry.add(new WitchWaterWorldDisplay(recipe)));
     }
-
+    
     public static final CategoryIdentifier<SieveDisplay> SIEVE = CategoryIdentifier.of(FabricaeExNihilo.id("rei/sieve"));
-
+    
     public static final CategoryIdentifier<AlchemyDisplay> ALCHEMY = CategoryIdentifier.of(FabricaeExNihilo.id("rei/barrel/alchemy"));
-    public static final CategoryIdentifier<CompostDisplay> COMPOSTING= CategoryIdentifier.of(FabricaeExNihilo.id("rei/barrel/composting"));
-    public static final CategoryIdentifier<LeakingDisplay> LEAKING= CategoryIdentifier.of(FabricaeExNihilo.id("rei/barrel/leaking"));
-    public static final CategoryIdentifier<MilkingDisplay> MILKING= CategoryIdentifier.of(FabricaeExNihilo.id("rei/barrel/milking"));
-    public static final CategoryIdentifier<TransformingDisplay> TRANSFORMING= CategoryIdentifier.of(FabricaeExNihilo.id("rei/barrel/transforming"));
-    public static final CategoryIdentifier<FluidOnTopDisplay> ON_TOP= CategoryIdentifier.of(FabricaeExNihilo.id("rei/barrel/fluid_on_top"));
-
+    public static final CategoryIdentifier<CompostDisplay> COMPOSTING = CategoryIdentifier.of(FabricaeExNihilo.id("rei/barrel/composting"));
+    public static final CategoryIdentifier<LeakingDisplay> LEAKING = CategoryIdentifier.of(FabricaeExNihilo.id("rei/barrel/leaking"));
+    public static final CategoryIdentifier<MilkingDisplay> MILKING = CategoryIdentifier.of(FabricaeExNihilo.id("rei/barrel/milking"));
+    public static final CategoryIdentifier<TransformingDisplay> TRANSFORMING = CategoryIdentifier.of(FabricaeExNihilo.id("rei/barrel/transforming"));
+    public static final CategoryIdentifier<FluidOnTopDisplay> ON_TOP = CategoryIdentifier.of(FabricaeExNihilo.id("rei/barrel/fluid_on_top"));
+    
     public static final CategoryIdentifier<CrucibleDisplay> WOOD_CRUCIBLE = CategoryIdentifier.of(FabricaeExNihilo.id("rei/crucible/wood"));
     public static final CategoryIdentifier<CrucibleDisplay> STONE_CRUCIBLE = CategoryIdentifier.of(FabricaeExNihilo.id("rei/crucible/stone"));
     public static final CategoryIdentifier<CrucibleHeatDisplay> CRUCIBLE_HEAT = CategoryIdentifier.of(FabricaeExNihilo.id("rei/crucible/heat"));
-
+    
     public static final CategoryIdentifier<WitchWaterWorldDisplay> WITCH_WATER_WORLD = CategoryIdentifier.of(FabricaeExNihilo.id("rei/witchwater/world"));
     public static final CategoryIdentifier<WitchWaterEntityDisplay> WITCH_WATER_ENTITY = CategoryIdentifier.of(FabricaeExNihilo.id("rei/witchwater/entity"));
-
+    
     public static final CategoryIdentifier<ToolDisplay> CROOK = CategoryIdentifier.of(FabricaeExNihilo.id("rei/tools/crook"));
     public static final CategoryIdentifier<ToolDisplay> HAMMER = CategoryIdentifier.of(FabricaeExNihilo.id("rei/tools/hammer"));
-
+    
 }

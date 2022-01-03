@@ -33,7 +33,7 @@ public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.Co
         this.target = target;
         this.profession = profession;
         this.result = result;
-}
+    }
     
     public static Optional<WitchWaterEntityRecipe> find(Entity entity, @Nullable World world) {
         if (world == null) {
@@ -90,16 +90,16 @@ public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.Co
             
             return new WitchWaterEntityRecipe(id, target, profession, result);
         }
-    
+        
         @Override
         public WitchWaterEntityRecipe read(Identifier id, PacketByteBuf buf) {
             var target = CodecUtils.fromPacket(EntityTypeIngredient.CODEC, buf);
             var profession = buf.readBoolean() ? Registry.VILLAGER_PROFESSION.get(buf.readIdentifier()) : null;
             var result = Registry.ENTITY_TYPE.get(buf.readIdentifier());
-    
+            
             return new WitchWaterEntityRecipe(id, target, profession, result);
         }
-    
+        
         @Override
         public void write(PacketByteBuf buf, WitchWaterEntityRecipe recipe) {
             CodecUtils.toPacket(EntityTypeIngredient.CODEC, recipe.target, buf);

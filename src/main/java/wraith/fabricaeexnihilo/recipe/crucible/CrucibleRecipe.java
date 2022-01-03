@@ -30,7 +30,7 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
         super(id);
         this.input = input;
         this.amount = amount;
-    
+        
         this.fluid = fluid;
         this.isStone = isStone;
     }
@@ -84,7 +84,7 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
             
             return new CrucibleRecipe(id, input, amount, fluid, isStone);
         }
-    
+        
         @Override
         public CrucibleRecipe read(Identifier id, PacketByteBuf buf) {
             var input = CodecUtils.fromPacket(ItemIngredient.CODEC, buf);
@@ -94,7 +94,7 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
             
             return new CrucibleRecipe(id, input, amount, fluid, isStone);
         }
-    
+        
         @Override
         public void write(PacketByteBuf buf, CrucibleRecipe recipe) {
             CodecUtils.toPacket(ItemIngredient.CODEC, recipe.input, buf);
@@ -104,5 +104,6 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
         }
     }
     
-    protected static record Context(Item input, boolean isStone) implements RecipeContext { }
+    protected static record Context(Item input, boolean isStone) implements RecipeContext {
+    }
 }

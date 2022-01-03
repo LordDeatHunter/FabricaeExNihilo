@@ -11,13 +11,11 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.NbtString;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.tag.ServerTagManagerHolder;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
-import wraith.fabricaeexnihilo.util.CodecUtils;
 
 import java.util.List;
 import java.util.function.Function;
@@ -51,12 +49,12 @@ public class BlockIngredient extends AbstractIngredient<Block> {
     public boolean test(BlockItem block) {
         return test(block.getBlock());
     }
-
+    
     public List<EntryIngredient> asREIEntries() {
         return flatten(EntryIngredients::of);
     }
     
-    public static BlockIngredient EMPTY = new BlockIngredient((Block)null);
+    public static BlockIngredient EMPTY = new BlockIngredient((Block) null);
     
     public ItemStack getDisplayStack() {
         return value.map(Function.identity(), tag -> tag.values().get(0)).asItem().getDefaultStack();

@@ -100,5 +100,6 @@ public class FluidTransformationRecipe extends BaseRecipe<FluidTransformationRec
         }
     }
     
-    protected static record Context(FluidVariant contained, Block catalyst) implements RecipeContext { }
+    protected static record Context(FluidVariant contained, Block catalyst) implements RecipeContext {
+    }
 }

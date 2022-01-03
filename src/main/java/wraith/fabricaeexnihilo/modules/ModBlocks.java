@@ -32,11 +32,11 @@ public final class ModBlocks {
     public static final FabricBlockSettings CRUSHED_GRAVELY_SETTINGS = FabricBlockSettings.of(Material.AGGREGATE).strength(0.6f).sounds(BlockSoundGroup.GRAVEL).breakByHand(true);
     public static final FabricBlockSettings CRUSHED_SANDY_SETTINGS = FabricBlockSettings.of(Material.AGGREGATE).strength(0.4f).sounds(BlockSoundGroup.SAND).breakByHand(true);
     public static final FabricBlockSettings INFESTED_LEAVES_SETTINGS = FabricBlockSettings.of(Material.LEAVES).nonOpaque().suffocates((state, world, pos) -> false).allowsSpawning((state, world, pos, type) -> type == EntityType.OCELOT || type == EntityType.PARROT).strength(0.2F).ticksRandomly().sounds(BlockSoundGroup.GRASS);
-
+    
     public static final Map<Identifier, SieveBlock> SIEVES = new HashMap<>();
     public static final Map<Identifier, CrucibleBlock> CRUCIBLES = new HashMap<>();
     public static final Map<Identifier, BarrelBlock> BARRELS = new HashMap<>();
-
+    
     public static final Map<Identifier, Block> CRUSHED = new HashMap<>();
     
     public static final Map<Identifier, InfestedLeavesBlock> INFESTED_LEAVES = new HashMap<>();
@@ -52,7 +52,7 @@ public final class ModBlocks {
         
         ModFluids.registerFluidBlocks();
     }
-
+    
     public static void registerBlockItems() {
         SIEVES.forEach((identifier, block) -> Registry.register(Registry.ITEM, identifier, new BlockItem(block, ModItems.BASE_SETTINGS)));
         CRUCIBLES.forEach((identifier, block) -> {
@@ -70,14 +70,14 @@ public final class ModBlocks {
         CRUSHED.forEach((identifier, block) -> Registry.register(Registry.ITEM, identifier, new BlockItem(block, ModItems.BASE_SETTINGS)));
         INFESTED_LEAVES.forEach((identifier, block) -> Registry.register(Registry.ITEM, identifier, new InfestedLeavesItem(block, ModItems.BASE_SETTINGS)));
     }
-
+    
     public static void registerBlockEntities() {
         Registry.register(Registry.BLOCK_ENTITY_TYPE, SieveBlockEntity.BLOCK_ENTITY_ID, SieveBlockEntity.TYPE);
         Registry.register(Registry.BLOCK_ENTITY_TYPE, CrucibleBlockEntity.BLOCK_ENTITY_ID, CrucibleBlockEntity.TYPE);
         Registry.register(Registry.BLOCK_ENTITY_TYPE, BarrelBlockEntity.BLOCK_ENTITY_ID, BarrelBlockEntity.TYPE);
         Registry.register(Registry.BLOCK_ENTITY_TYPE, InfestingLeavesBlockEntity.BLOCK_ENTITY_ID, InfestingLeavesBlockEntity.TYPE);
     }
-
+    
     static {
         CRUSHED.put(FabricaeExNihilo.id("dust"), new FallingBlock(CRUSHED_SANDY_SETTINGS));
         CRUSHED.put(FabricaeExNihilo.id("silt"), new FallingBlock(CRUSHED_SANDY_SETTINGS));
@@ -88,9 +88,9 @@ public final class ModBlocks {
         CRUSHED.put(FabricaeExNihilo.id("crushed_endstone"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
         CRUSHED.put(FabricaeExNihilo.id("crushed_netherrack"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
         //CRUSHED.put(FabricaeExNihilo.id("crushed_skystone"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
-
+        
         CRUCIBLES.put(FabricaeExNihilo.id("stone_crucible"), new CrucibleBlock(STONE_SETTINGS));
-
+        
         BARRELS.put(FabricaeExNihilo.id("stone_barrel"), new BarrelBlock(STONE_SETTINGS));
     }
 }

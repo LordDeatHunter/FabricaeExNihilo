@@ -15,12 +15,12 @@ public class CrookItem extends ToolItem {
     public CrookItem(ToolMaterial material, FabricItemSettings settings) {
         super(material, settings);
     }
-
+    
     @Override
     public boolean isSuitableFor(BlockState state) {
         return state.isIn(ModTags.CROOKABLES);
     }
-
+    
     public static boolean isCrook(ItemStack stack) {
         return stack.getItem() instanceof CrookItem || ModTags.CROOK_TAG.contains(stack.getItem());
     }

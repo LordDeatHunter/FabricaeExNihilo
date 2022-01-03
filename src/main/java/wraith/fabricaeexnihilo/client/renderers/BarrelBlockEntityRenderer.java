@@ -24,7 +24,7 @@ import wraith.fabricaeexnihilo.util.Color;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBlockEntity> {
-
+    
     private static final float XZ_SCALE = 12f / 16f;
     private static final float X_MIN = 2f / 16f;
     private static final float X_MAX = 14f / 16f;
@@ -32,10 +32,10 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
     private static final float Z_MAX = 14f / 16f;
     private static final float Y_MIN = 3f / 16f;
     private static final float Y_MAX = 15f / 16f;
-
+    
     public BarrelBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
     }
-
+    
     @Override
     public void render(@Nullable BarrelBlockEntity barrel, float tickDelta, @Nullable MatrixStack matrices, @Nullable VertexConsumerProvider vertexConsumers, int light, int overlays) {
         if (matrices == null || vertexConsumers == null || barrel == null || barrel.getMode() == null) {
@@ -47,7 +47,7 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
     
     private void renderMode(BarrelMode mode, BlockPos pos, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlays) {
         if (mode instanceof FluidMode fluidMode) {
-            renderFluid(fluidMode, pos, tickDelta,  matrices, vertexConsumers, light, overlays);
+            renderFluid(fluidMode, pos, tickDelta, matrices, vertexConsumers, light, overlays);
         } else if (mode instanceof ItemMode itemMode) {
             renderItem(itemMode, pos, tickDelta, matrices, vertexConsumers, light, overlays);
         } else if (mode instanceof AlchemyMode alchemyMode) {
@@ -56,7 +56,7 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
             renderCompost(compostMode, pos, tickDelta, matrices, vertexConsumers, light, overlays);
         }
     }
-
+    
     @SuppressWarnings("UnstableApiUsage")
     private void renderFluid(FluidMode mode, BlockPos pos, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlays) {
         var sprite = FluidVariantRendering.getSprite(mode.getFluid());
@@ -66,7 +66,7 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
         var b = (color & 255) / 256f;
         
         if (sprite == null) return;
-    
+        
         RenderSystem.enableDepthTest();
         
         // Idea stolen from Modern Industrialisation
@@ -79,7 +79,7 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
     
     private void renderItem(ItemMode mode, BlockPos pos, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlays) {
         var yScale = Y_MAX - Y_MIN;
-    
+        
         matrices.push();
         matrices.translate(0.5, Y_MIN + yScale / 2, 0.5);
         matrices.scale(XZ_SCALE, yScale, XZ_SCALE);
@@ -98,12 +98,12 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
         var g = color.g;
         var b = color.b;
         var a = color.a;
-
+        
         matrices.push();
-
+        
         var amount = mode.getAmount();
         var yScale = MathHelper.clamp((float) ((Y_MAX - Y_MIN) * Math.min(amount, 1.0f)), 0, 1);
-
+        
         var result = mode.getResult();
         if (result.getItem() instanceof BlockItem blockItem) {
             var block = blockItem.getBlock().getDefaultState();

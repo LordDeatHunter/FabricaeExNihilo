@@ -15,12 +15,12 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public record TransformingDisplay(FluidTransformationRecipe recipe) implements Display {
-
+    
     @Override
     public CategoryIdentifier<?> getCategoryIdentifier() {
         return PluginEntry.TRANSFORMING;
     }
-
+    
     @Override
     public List<EntryIngredient> getInputEntries() {
         var inBarrel = recipe.getContained().asREIEntries();
@@ -28,7 +28,7 @@ public record TransformingDisplay(FluidTransformationRecipe recipe) implements D
         var barrels = ModBlocks.BARRELS.values().stream().map(EntryIngredients::of).toList();
         return Stream.of(inBarrel, catalyst, barrels).flatMap(List::stream).toList();
     }
-
+    
     @Override
     public List<EntryIngredient> getOutputEntries() {
         var result = recipe.getResult();
@@ -45,5 +45,5 @@ public record TransformingDisplay(FluidTransformationRecipe recipe) implements D
         }
         return Collections.singletonList(EntryIngredient.empty());
     }
-
+    
 }

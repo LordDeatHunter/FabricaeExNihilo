@@ -13,7 +13,7 @@ public abstract class BarrelMode implements BarrelModeStorage {
     // Yes, since we need to have the switch...
     public static final Codec<BarrelMode> CODEC = Codec.PASSTHROUGH.xmap(dynamic -> {
         var id = dynamic.get("id").flatMap(Dynamic::asString).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
-        return (switch(id) {
+        return (switch (id) {
             case "item" -> ItemMode.CODEC.decode(dynamic);
             case "fluid" -> FluidMode.CODEC.decode(dynamic);
             case "alchemy" -> AlchemyMode.CODEC.decode(dynamic);
@@ -22,7 +22,7 @@ public abstract class BarrelMode implements BarrelModeStorage {
             default -> throw new IllegalStateException("Unknown barrel mode!");
         }).getOrThrow(false, FabricaeExNihilo.LOGGER::warn).getFirst();
     }, mode -> {
-        var nbt = (switch(mode.getId()) {
+        var nbt = (switch (mode.getId()) {
             case "item" -> ItemMode.CODEC.encodeStart(NbtOps.INSTANCE, (ItemMode) mode);
             case "fluid" -> FluidMode.CODEC.encodeStart(NbtOps.INSTANCE, (FluidMode) mode);
             case "alchemy" -> AlchemyMode.CODEC.encodeStart(NbtOps.INSTANCE, (AlchemyMode) mode);
@@ -45,5 +45,6 @@ public abstract class BarrelMode implements BarrelModeStorage {
     
     public abstract BarrelMode copy();
     
-    public void tick(BarrelBlockEntity barrel) {}
+    public void tick(BarrelBlockEntity barrel) {
+    }
 }

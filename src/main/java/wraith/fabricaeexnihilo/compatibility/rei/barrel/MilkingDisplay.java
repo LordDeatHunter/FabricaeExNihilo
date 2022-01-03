@@ -13,19 +13,19 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public record MilkingDisplay(MilkingRecipe recipe) implements Display {
-
+    
     @Override
     public CategoryIdentifier<?> getCategoryIdentifier() {
         return PluginEntry.MILKING;
     }
-
+    
     @Override
     public List<EntryIngredient> getInputEntries() {
         var entity = recipe.getEntity().asREIEntries();
         var barrels = ModBlocks.BARRELS.values().stream().map(EntryIngredients::of).toList();
         return Stream.of(entity, barrels).flatMap(List::stream).toList();
     }
-
+    
     @Override
     public List<EntryIngredient> getOutputEntries() {
         var fluid = recipe.getFluid().getFluid();
@@ -37,5 +37,5 @@ public record MilkingDisplay(MilkingRecipe recipe) implements Display {
         }
         return Collections.singletonList(EntryIngredient.empty());
     }
-
+    
 }

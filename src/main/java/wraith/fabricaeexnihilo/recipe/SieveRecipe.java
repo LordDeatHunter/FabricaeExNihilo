@@ -91,7 +91,8 @@ public class SieveRecipe extends BaseRecipe<SieveRecipe.Context> {
         return rolls.get(mesh);
     }
     
-    public static record Context(Item input, Fluid fluid) implements RecipeContext {}
+    public static record Context(Item input, Fluid fluid) implements RecipeContext {
+    }
     
     public static class Serializer implements RecipeSerializer<SieveRecipe> {
         @Override
@@ -112,7 +113,7 @@ public class SieveRecipe extends BaseRecipe<SieveRecipe.Context> {
             
             return new SieveRecipe(id, result, input, fluid, rolls);
         }
-    
+        
         @Override
         public SieveRecipe read(Identifier id, PacketByteBuf buf) {
             var result = buf.readItemStack();
@@ -122,7 +123,7 @@ public class SieveRecipe extends BaseRecipe<SieveRecipe.Context> {
             
             return new SieveRecipe(id, result, input, fluid, rolls);
         }
-    
+        
         @Override
         public void write(PacketByteBuf buf, SieveRecipe recipe) {
             buf.writeItemStack(recipe.result);

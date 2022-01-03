@@ -18,6 +18,7 @@ import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 // TODO: Should be replaced by resource conditions once they are added to fapi.
+
 /**
  * Allows us to skip recipes we don't want to use. Specifically exclude mod specific recipes included by default.
  * Works by intercepting any unwanted recipe and producing a dummy recipe that does nothing.

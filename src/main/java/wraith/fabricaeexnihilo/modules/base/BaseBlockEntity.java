@@ -11,11 +11,11 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 
 public abstract class BaseBlockEntity extends BlockEntity {
-
+    
     public BaseBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
-
+    
     @Override
     public void markDirty() {
         super.markDirty();
@@ -26,12 +26,12 @@ public abstract class BaseBlockEntity extends BlockEntity {
             }
         }
     }
-
+    
     @Override
     public Packet<ClientPlayPacketListener> toUpdatePacket() {
         return BlockEntityUpdateS2CPacket.create(this);
     }
-
+    
     @Override
     public NbtCompound toInitialChunkDataNbt() {
         return createNbt();

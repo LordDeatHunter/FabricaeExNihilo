@@ -54,11 +54,11 @@ public class AlchemyMode extends BarrelMode {
         this.toSpawn = toSpawn;
         this.countdown = countdown;
     }
-
+    
     public AlchemyMode(BarrelMode before, BarrelMode after, int countdown) {
         this(before, after, EntityStack.EMPTY, countdown);
     }
-
+    
     @Override
     public @NotNull String getId() {
         return "alchemy";
@@ -82,7 +82,7 @@ public class AlchemyMode extends BarrelMode {
             barrel.setMode(after);
         }
     }
-
+    
     public BarrelMode getBefore() {
         return before;
     }
@@ -102,5 +102,5 @@ public class AlchemyMode extends BarrelMode {
     public static AlchemyMode readNbt(NbtCompound nbt) {
         return new AlchemyMode(CodecUtils.fromNbt(CODEC, nbt.getCompound("before")), CodecUtils.fromNbt(CODEC, nbt.getCompound("after")), new EntityStack(nbt.getCompound("toSpawn")), nbt.getInt("countdown"));
     }
-
+    
 }

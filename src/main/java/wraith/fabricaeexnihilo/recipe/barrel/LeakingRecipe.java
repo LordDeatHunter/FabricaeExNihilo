@@ -90,17 +90,17 @@ public class LeakingRecipe extends BaseRecipe<LeakingRecipe.Context> {
             
             return new LeakingRecipe(id, block, fluid, amount, result);
         }
-    
+        
         @Override
         public LeakingRecipe read(Identifier id, PacketByteBuf buf) {
             BlockIngredient block = CodecUtils.fromPacket(BlockIngredient.CODEC, buf);
             FluidIngredient fluid = CodecUtils.fromPacket(FluidIngredient.CODEC, buf);
             long amount = buf.readLong();
             Block result = Registry.BLOCK.get(buf.readIdentifier());
-    
+            
             return new LeakingRecipe(id, block, fluid, amount, result);
         }
-    
+        
         @Override
         public void write(PacketByteBuf buf, LeakingRecipe recipe) {
             CodecUtils.toPacket(BlockIngredient.CODEC, recipe.block, buf);
@@ -108,8 +108,9 @@ public class LeakingRecipe extends BaseRecipe<LeakingRecipe.Context> {
             buf.writeLong(recipe.amount);
             buf.writeIdentifier(Registry.BLOCK.getId(recipe.result));
         }
-    
+        
     }
     
-    protected static record Context(Block block, FluidVariant fluid) implements RecipeContext { }
+    protected static record Context(Block block, FluidVariant fluid) implements RecipeContext {
+    }
 }

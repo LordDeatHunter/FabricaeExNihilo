@@ -9,19 +9,19 @@ import wraith.fabricaeexnihilo.recipe.SieveRecipe;
 import java.util.List;
 
 public record SieveDisplay(SieveRecipe recipe) implements Display {
-
+    
     @Override
     public CategoryIdentifier<?> getCategoryIdentifier() {
         return PluginEntry.SIEVE;
     }
-
+    
     @Override
     public List<EntryIngredient> getOutputEntries() {
         return List.of();
         // TODO: not easy fix: we need to reformat these...
         //return recipe.getRolls().entrySet().stream().map(loot -> EntryIngredients.of(loot.)).toList();
     }
-
+    
     @Override
     public List<EntryIngredient> getInputEntries() {
         return List.of();
@@ -35,5 +35,5 @@ public record SieveDisplay(SieveRecipe recipe) implements Display {
         
          */
     }
-
+    
 }

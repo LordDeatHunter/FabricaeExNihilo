@@ -46,21 +46,21 @@ public class BarrelBlock extends BlockWithEntity {
         super(settings);
         this.settings = settings;
     }
-
+    
     public Material getMaterial() {
         return this.material;
     }
-
+    
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPE;
     }
-
+    
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }
-
+    
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hitResult) {
         if (world == null || world.isClient || pos == null) {
@@ -71,7 +71,7 @@ public class BarrelBlock extends BlockWithEntity {
                 ? barrelBlock.activate(player, hand)
                 : ActionResult.PASS;
     }
-
+    
     @Override
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         if (player != null && !player.isCreative() && world.getBlockEntity(pos) instanceof BarrelBlockEntity barrelEntity) {
@@ -87,7 +87,7 @@ public class BarrelBlock extends BlockWithEntity {
         }
         super.onBreak(world, pos, state, player);
     }
-
+    
     // Milking
     @Override
     public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
@@ -124,19 +124,19 @@ public class BarrelBlock extends BlockWithEntity {
         }
         super.onSteppedOn(world, pos, state, entity);
     }
-
+    
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         return world.isClient ? null : checkType(type, BarrelBlockEntity.TYPE, BarrelBlockEntity::ticker);
     }
-
+    
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new BarrelBlockEntity(pos, state, this.material == Material.STONE);
     }
-
+    
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         if (world.getBlockEntity(pos) instanceof BarrelBlockEntity barrelEntity) {

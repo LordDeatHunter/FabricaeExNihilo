@@ -9,14 +9,15 @@ import wraith.fabricaeexnihilo.modules.base.Colored;
 import wraith.fabricaeexnihilo.util.Color;
 
 public final class FabricaeExNihiloBlockColorProvider implements BlockColorProvider {
-
-    private FabricaeExNihiloBlockColorProvider() {}
-
+    
+    private FabricaeExNihiloBlockColorProvider() {
+    }
+    
     public static final FabricaeExNihiloBlockColorProvider INSTANCE = new FabricaeExNihiloBlockColorProvider();
-
+    
     @Override
     public int getColor(BlockState state, @Nullable BlockRenderView world, @Nullable BlockPos pos, int tintIndex) {
         return state.getBlock() instanceof Colored colored ? colored.getColor(tintIndex) : Color.WHITE.toInt();
     }
-
+    
 }

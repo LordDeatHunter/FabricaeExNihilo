@@ -19,20 +19,20 @@ public abstract class EnchantmentHelperMixin {
      * Enchantment$isAcceptableItem and goes straight for the EnchantmentType's member ... which are all overridden
      * with anonymous functions ....
      *
-     * @param power Enchantment setup power
-     * @param stack Stack to be enchanted
+     * @param power       Enchantment setup power
+     * @param stack       Stack to be enchanted
      * @param hasTreasure Include treasure enchantments?
-     * @param cir Callback info.
+     * @param cir         Callback info.
      */
-    @Inject(method = "getPossibleEntries", at=@At(value = "RETURN"), cancellable = true)
+    @Inject(method = "getPossibleEntries", at = @At(value = "RETURN"), cancellable = true)
     private static void getHighestApplicableEnchantmentsAtPower(int power, ItemStack stack, boolean hasTreasure, CallbackInfoReturnable<List<EnchantmentLevelEntry>> cir) {
         List<EnchantmentLevelEntry> taggedEnchantments = EnchantmentTagManager.getHighestApplicableEnchantmentsAtPower(power, stack, hasTreasure);
-
-        if(taggedEnchantments.isEmpty())
+        
+        if (taggedEnchantments.isEmpty())
             cir.cancel();
         else
             cir.setReturnValue(EnchantmentTagManager.mergeInfoLists(taggedEnchantments, cir.getReturnValue()));
-
+        
     }
-
+    
 }

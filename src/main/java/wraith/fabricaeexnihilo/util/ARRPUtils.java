@@ -10,10 +10,10 @@ import wraith.fabricaeexnihilo.modules.ModTools;
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public final class ARRPUtils {
-
+    
     private ARRPUtils() {
     }
-
+    
     public static void generateLootTables(RuntimeResourcePack resourcePack) {
         // Block Breaking
 //        ModBlocks.SIEVES.keys.forEach { k ->
@@ -27,7 +27,7 @@ public final class ARRPUtils {
 //        }
         ModBlocks.INFESTED_LEAVES.forEach((identifier, block) -> generateInfestedLeavesBlockLootTable(identifier, resourcePack));
     }
-
+    
     public static void generateTags(RuntimeResourcePack resourcePack) {
         // fabricaeexnihilo:infested_leaves tag
         ModTags.registerBlockAndItem(resourcePack, ModTags.INFESTED_LEAVES_BLOCK, ModBlocks.INFESTED_LEAVES);
@@ -36,7 +36,7 @@ public final class ARRPUtils {
         
         EnchantmentTagManager.generateDefaultTags(resourcePack);
     }
-
+    
     public static void generateBlockEntityLootTable(Identifier identifier, RuntimeResourcePack resourcePack) {
         resourcePack.addLootTable(id("blocks/" + identifier.getPath()),
                 JLootTable.loot("minecraft:block")
@@ -53,7 +53,7 @@ public final class ARRPUtils {
                         )
         );
     }
-
+    
     public static void generateInfestedLeavesBlockLootTable(Identifier identifier, RuntimeResourcePack resourcePack) {
         resourcePack.addLootTable(id("blocks/" + identifier.getPath()),
                 JLootTable.loot("minecraft:block")
@@ -65,5 +65,5 @@ public final class ARRPUtils {
                         )
         );
     }
-
+    
 }

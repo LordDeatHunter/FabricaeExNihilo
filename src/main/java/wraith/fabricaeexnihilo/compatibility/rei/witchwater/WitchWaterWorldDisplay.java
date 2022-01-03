@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record WitchWaterWorldDisplay(WitchWaterWorldRecipe recipe) implements Display {
-
+    
     @Override
     public List<EntryIngredient> getInputEntries() {
         var list = new ArrayList<EntryIngredient>();
@@ -20,15 +20,15 @@ public record WitchWaterWorldDisplay(WitchWaterWorldRecipe recipe) implements Di
         list.addAll(recipe.getTarget().asREIEntries());
         return list;
     }
-
+    
     @Override
     public List<EntryIngredient> getOutputEntries() {
         return recipe.getResult().asEntryList();
     }
-
+    
     @Override
     public CategoryIdentifier<?> getCategoryIdentifier() {
         return PluginEntry.WITCH_WATER_WORLD;
     }
-
+    
 }

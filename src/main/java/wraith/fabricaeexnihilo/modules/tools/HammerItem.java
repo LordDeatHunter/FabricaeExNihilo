@@ -15,12 +15,12 @@ public class HammerItem extends ToolItem {
     public HammerItem(ToolMaterial material, FabricItemSettings settings) {
         super(material, settings);
     }
-
+    
     @Override
     public boolean isSuitableFor(BlockState state) {
         return state.isIn(ModTags.HAMMERABLES);
     }
-
+    
     public static boolean isHammer(ItemStack stack) {
         return stack.getItem() instanceof HammerItem || ModTags.HAMMER_TAG.contains(stack.getItem());
     }

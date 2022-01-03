@@ -27,7 +27,7 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
         this.tool = tool;
         this.block = block;
         this.result = result;
-}
+    }
     
     public static Optional<ToolRecipe> find(ToolType type, Block block, @Nullable World world) {
         if (world == null) {
@@ -77,16 +77,16 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
             
             return new ToolRecipe(id, tool, block, result);
         }
-    
+        
         @Override
         public ToolRecipe read(Identifier id, PacketByteBuf buf) {
             var tool = buf.readEnumConstant(ToolType.class);
             var block = CodecUtils.fromPacket(BlockIngredient.CODEC, buf);
             var result = CodecUtils.fromPacket(Loot.CODEC, buf);
-    
+            
             return new ToolRecipe(id, tool, block, result);
         }
-    
+        
         @Override
         public void write(PacketByteBuf buf, ToolRecipe recipe) {
             buf.writeEnumConstant(recipe.tool);
@@ -95,7 +95,8 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
         }
     }
     
-    public static record Context(Block block) implements RecipeContext {}
+    public static record Context(Block block) implements RecipeContext {
+    }
     
     public enum ToolType {
         HAMMER(ModRecipes.HAMMER, ModRecipes.HAMMER_SERIALIZER),
@@ -103,7 +104,7 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
         
         public final RecipeType<ToolRecipe> type;
         public final RecipeSerializer<?> serializer;
-    
+        
         ToolType(RecipeType<ToolRecipe> type, RecipeSerializer<?> serializer) {
             this.type = type;
             this.serializer = serializer;

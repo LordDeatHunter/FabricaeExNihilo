@@ -6,14 +6,15 @@ import wraith.fabricaeexnihilo.modules.base.Colored;
 import wraith.fabricaeexnihilo.util.Color;
 
 public final class FabricaeExNihiloItemColorProvider implements ItemColorProvider {
-
-    private FabricaeExNihiloItemColorProvider() {}
-
+    
+    private FabricaeExNihiloItemColorProvider() {
+    }
+    
     public static final FabricaeExNihiloItemColorProvider INSTANCE = new FabricaeExNihiloItemColorProvider();
-
+    
     @Override
     public int getColor(ItemStack stack, int tintIndex) {
         return stack.getItem() instanceof Colored colored ? colored.getColor(tintIndex) : Color.WHITE.toIntIgnoreAlpha();
     }
-
+    
 }

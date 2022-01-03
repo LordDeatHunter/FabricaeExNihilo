@@ -93,7 +93,7 @@ public class MilkingRecipe extends BaseRecipe<MilkingRecipe.Context> {
             var fluid = CodecUtils.fromPacket(CodecUtils.FLUID_VARIANT, buf);
             var amount = buf.readLong();
             var cooldown = buf.readInt();
-    
+            
             return new MilkingRecipe(id, entity, fluid, amount, cooldown);
         }
         

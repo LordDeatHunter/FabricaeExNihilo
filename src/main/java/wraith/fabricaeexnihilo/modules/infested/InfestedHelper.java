@@ -15,11 +15,12 @@ import wraith.fabricaeexnihilo.util.RegistryUtils;
 import java.util.HashMap;
 
 public final class InfestedHelper {
-
-    private InfestedHelper() {}
-
+    
+    private InfestedHelper() {
+    }
+    
     public static final HashMap<Identifier, InfestedLeavesBlock> LEAF_TO_INFESTED = new HashMap<>();
-
+    
     public static ActionResult tryToInfest(World world, BlockPos pos) {
         if (world.isClient) {
             return ActionResult.PASS;
@@ -38,20 +39,20 @@ public final class InfestedHelper {
                 .getDefaultState()
                 .with(LeavesBlock.DISTANCE, originalState.get(LeavesBlock.DISTANCE))
                 .with(LeavesBlock.PERSISTENT, originalState.get(LeavesBlock.PERSISTENT));
-
+        
         world.setBlockState(pos, newState);
-
+        
         if (!(world.getBlockEntity(pos) instanceof InfestingLeavesBlockEntity blockEntity)) {
             return ActionResult.PASS;
         }
-
+        
         return ActionResult.SUCCESS;
     }
-
+    
     public static void tryToSpreadFrom(World world, BlockPos pos) {
         tryToSpreadFrom(world, pos, 1);
     }
-
+    
     public static void tryToSpreadFrom(World world, BlockPos pos, int tries) {
         for (var attempt = 0; attempt < tries; ++attempt) {
             if ((world.random.nextFloat()) < FabricaeExNihilo.CONFIG.modules.silkworms.spreadChance) {
@@ -65,15 +66,15 @@ public final class InfestedHelper {
             }
         }
     }
-
+    
     private static InfestedLeavesBlock getInfestedLeavesBlock(Block block) {
         return LEAF_TO_INFESTED.getOrDefault(Registry.BLOCK.getId(block), ModBlocks.INFESTED_LEAVES.values().stream().findFirst().orElse(null));
     }
-
+    
     static {
         for (var entry : ModBlocks.INFESTED_LEAVES.values()) {
             LEAF_TO_INFESTED.put(entry.getLeafBlock(), entry);
         }
     }
-
+    
 }
