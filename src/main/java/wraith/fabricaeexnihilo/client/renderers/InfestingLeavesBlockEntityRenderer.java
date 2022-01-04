@@ -22,7 +22,7 @@ public class InfestingLeavesBlockEntityRenderer implements BlockEntityRenderer<I
             return;
         }
         var color = infesting.getColor(0) | 0xff000000;
-        var state = Registry.BLOCK.get(((InfestingLeavesBlock) infesting.getCachedState().getBlock()).getTarget().getLeafBlock()).getDefaultState();
+        var state = Registry.BLOCK.get(infesting.getTarget().getLeafBlock()).getDefaultState();
         var model = MinecraftClient.getInstance().getBakedModelManager().getBlockModels().getModel(state);
         
         matrices.push();

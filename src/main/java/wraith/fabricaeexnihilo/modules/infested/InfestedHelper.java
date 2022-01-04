@@ -31,11 +31,7 @@ public final class InfestedHelper {
         }
         var infestedBlock = getInfestedLeavesBlock(originalState.getBlock());
         
-        var newState = ModBlocks.INFESTING_LEAVES.values()
-                .stream()
-                .filter(leaves -> leaves.getTarget() == infestedBlock)
-                .findFirst()
-                .orElseThrow()
+        var newState = ModBlocks.INFESTING_LEAVES
                 .getDefaultState()
                 .with(LeavesBlock.DISTANCE, originalState.get(LeavesBlock.DISTANCE))
                 .with(LeavesBlock.PERSISTENT, originalState.get(LeavesBlock.PERSISTENT));
@@ -45,6 +41,8 @@ public final class InfestedHelper {
         if (!(world.getBlockEntity(pos) instanceof InfestingLeavesBlockEntity blockEntity)) {
             return ActionResult.PASS;
         }
+        
+        blockEntity.setTarget(infestedBlock);
         
         return ActionResult.SUCCESS;
     }

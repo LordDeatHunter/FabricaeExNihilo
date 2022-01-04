@@ -56,15 +56,9 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
         ColorProviderRegistry.ITEM.register(FabricaeExNihiloItemColorProvider.INSTANCE, coloredItems.toArray(ItemConvertible[]::new));
         
         ColorProviderRegistry.BLOCK.register(FabricaeExNihiloBlockColorProvider.INSTANCE, ModBlocks.INFESTED_LEAVES.values().toArray(Block[]::new));
-        ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> {
-            if (world != null && world.getBlockEntity(pos) instanceof Colored colored)
-                return colored.getColor(tintIndex);
-            else
-                return Color.WHITE.toInt();
-        }), ModBlocks.INFESTING_LEAVES.values().toArray(Block[]::new));
         FabricaeExNihilo.LOGGER.debug("Registered color providers");
         
-        // RenderLAyers
+        // Render Layers
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), ModBlocks.SIEVES.values().toArray(Block[]::new));
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), ModBlocks.CRUCIBLES.values().toArray(Block[]::new));
         

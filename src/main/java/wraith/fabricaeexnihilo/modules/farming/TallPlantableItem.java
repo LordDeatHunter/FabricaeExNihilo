@@ -27,9 +27,6 @@ public class TallPlantableItem extends Item {
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         var world = context.getWorld();
-        if (world.isClient) {
-            return ActionResult.SUCCESS;
-        }
         var plantPos = context.getBlockPos().offset(context.getSide());
         var shuffledPlants = new ArrayList<>(plants);
         Collections.shuffle(shuffledPlants);

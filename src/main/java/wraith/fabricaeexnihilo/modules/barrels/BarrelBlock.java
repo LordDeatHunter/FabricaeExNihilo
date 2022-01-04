@@ -64,7 +64,7 @@ public class BarrelBlock extends BlockWithEntity {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hitResult) {
         if (world == null || world.isClient || pos == null) {
-            return ActionResult.SUCCESS;
+            return ActionResult.PASS;
         }
         var blockEntity = world.getBlockEntity(pos);
         return blockEntity instanceof BarrelBlockEntity barrelBlock

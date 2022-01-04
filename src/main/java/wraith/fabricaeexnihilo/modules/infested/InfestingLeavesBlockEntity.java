@@ -15,16 +15,19 @@ import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.base.BaseBlockEntity;
 import wraith.fabricaeexnihilo.modules.base.Colored;
 import wraith.fabricaeexnihilo.util.Color;
+import wraith.fabricaeexnihilo.util.RegistryUtils;
+
+import java.util.Optional;
 
 public class InfestingLeavesBlockEntity extends BaseBlockEntity implements Colored {
     private double progress = 0.0;
-    
     private int tickCounter;
+    private InfestedLeavesBlock target;
     
     public static Identifier BLOCK_ENTITY_ID = FabricaeExNihilo.id("infesting");
     public static final BlockEntityType<InfestingLeavesBlockEntity> TYPE = FabricBlockEntityTypeBuilder.create(
             InfestingLeavesBlockEntity::new,
-            ModBlocks.INFESTING_LEAVES.values().toArray(new InfestingLeavesBlock[0])
+            ModBlocks.INFESTING_LEAVES
     ).build(null);
     
     public InfestingLeavesBlockEntity(BlockPos pos, BlockState state) {
@@ -53,7 +56,7 @@ public class InfestingLeavesBlockEntity extends BaseBlockEntity implements Color
             return;
         }
         var curState = world.getBlockState(blockPos);
-        var newState = ((InfestingLeavesBlock) curState.getBlock()).getTarget().getDefaultState()
+        var newState = infestedLeavesEntity.target.getDefaultState()
                 .with(LeavesBlock.DISTANCE, curState.get(LeavesBlock.DISTANCE))
                 .with(LeavesBlock.PERSISTENT, curState.get(LeavesBlock.PERSISTENT));
         world.setBlockState(blockPos, newState);
@@ -77,15 +80,27 @@ public class InfestingLeavesBlockEntity extends BaseBlockEntity implements Color
     
     public void toNBTWithoutWorldInfo(NbtCompound nbt) {
         nbt.putDouble("progress", progress);
+        nbt.putString("target", RegistryUtils.getId(target).toString());
     }
     
     public void readNbtWithoutWorldInfo(NbtCompound nbt) {
         progress = nbt.getDouble("progress");
+        target = Registry.BLOCK.getOrEmpty(new Identifier(nbt.getString("target")))
+                .flatMap(block -> block instanceof InfestedLeavesBlock infested ? Optional.of(infested) : Optional.empty())
+                .orElse(ModBlocks.INFESTED_LEAVES.values().stream().findFirst().orElseThrow());
     }
     
     @Override
     public int getColor(int index) {
-        var originalColor = MinecraftClient.getInstance().getBlockColors().getColor(Registry.BLOCK.get(((InfestingLeavesBlock) getCachedState().getBlock()).getTarget().getLeafBlock()).getDefaultState(), world, pos, 0);
+        var originalColor = MinecraftClient.getInstance().getBlockColors().getColor(Registry.BLOCK.get(target.getLeafBlock()).getDefaultState(), world, pos, 0);
         return Color.average(Color.WHITE, new Color(originalColor), progress).toInt();
+    }
+    
+    public InfestedLeavesBlock getTarget() {
+        return target;
+    }
+    
+    public void setTarget(InfestedLeavesBlock target) {
+        this.target = target;
     }
 }

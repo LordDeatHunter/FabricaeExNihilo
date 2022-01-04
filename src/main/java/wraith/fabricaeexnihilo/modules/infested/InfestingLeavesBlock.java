@@ -14,11 +14,8 @@ import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.mixins.BlockWithEntityInvoker;
 
 public class InfestingLeavesBlock extends LeavesBlock implements BlockEntityProvider, NonInfestableLeavesBlock {
-    private final InfestedLeavesBlock target;
-    
-    public InfestingLeavesBlock(FabricBlockSettings settings, InfestedLeavesBlock target) {
+    public InfestingLeavesBlock(FabricBlockSettings settings) {
         super(settings);
-        this.target = target;
     }
     
     @Override
@@ -36,9 +33,5 @@ public class InfestingLeavesBlock extends LeavesBlock implements BlockEntityProv
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         return world.isClient ? null : BlockWithEntityInvoker.checkType(type, InfestingLeavesBlockEntity.TYPE, InfestingLeavesBlockEntity::ticker);
-    }
-    
-    public InfestedLeavesBlock getTarget() {
-        return target;
     }
 }

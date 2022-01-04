@@ -25,9 +25,6 @@ public class TransformingItem extends Item {
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         var world = context.getWorld();
-        if (world.isClient) {
-            return ActionResult.SUCCESS;
-        }
         var blockPos = context.getBlockPos();
         var target = world.getBlockState(blockPos).getBlock();
         // TODO make this work if someone overrides a block

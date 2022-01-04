@@ -17,8 +17,6 @@ import wraith.fabricaeexnihilo.modules.sieves.SieveBlock;
 import java.util.List;
 import java.util.function.BiConsumer;
 
-import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
-
 public class EntrypointHelper {
     public static void callEntrypoints() {
         var entrypoints = FabricLoader.getInstance().getEntrypoints("fabricaeexnihilo:api", FabricaeExNihiloApiModule.class).stream().filter(FabricaeExNihiloApiModule::shouldLoad).toList();
@@ -31,11 +29,7 @@ public class EntrypointHelper {
         handle(entrypoints, FabricaeExNihiloApiModule::registerSieves, id -> ModBlocks.SIEVES.put(id, new SieveBlock()));
         handle(entrypoints, FabricaeExNihiloApiModule::registerWoodenCrucibles, id -> ModBlocks.CRUCIBLES.put(id, new CrucibleBlock(ModBlocks.WOOD_SETTINGS)));
         handle(entrypoints, FabricaeExNihiloApiModule::registerWoodenBarrels, id -> ModBlocks.BARRELS.put(id, new BarrelBlock(ModBlocks.WOOD_SETTINGS)));
-        handle(entrypoints, FabricaeExNihiloApiModule::registerInfestedLeaves, (base, id) -> {
-            var infested = new InfestedLeavesBlock(base, ModBlocks.INFESTED_LEAVES_SETTINGS);
-            ModBlocks.INFESTED_LEAVES.put(new Identifier(id.getNamespace(), "infested_" + id.getPath()), infested);
-            ModBlocks.INFESTING_LEAVES.put(new Identifier(id.getNamespace(), "infesting_" + id.getPath()), new InfestingLeavesBlock(ModBlocks.INFESTED_LEAVES_SETTINGS, infested));
-        });
+        handle(entrypoints, FabricaeExNihiloApiModule::registerInfestedLeaves, (base, id) -> ModBlocks.INFESTED_LEAVES.put(modifyId(id, "infested_", null), new InfestedLeavesBlock(base, ModBlocks.INFESTED_LEAVES_SETTINGS)));
     }
     
     private static Identifier modifyId(Identifier id, @Nullable String prefix, @Nullable String suffix) {

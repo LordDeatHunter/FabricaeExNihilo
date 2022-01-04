@@ -62,7 +62,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
     }
     
     public ActionResult activate(@Nullable BlockState state, @Nullable PlayerEntity player, @Nullable Hand hand, @Nullable BlockHitResult hitResult) {
-        if (world == null || world.isClient() || player == null) {
+        if (world == null || player == null) {
             return ActionResult.PASS;
         }
         
@@ -73,6 +73,13 @@ public class SieveBlockEntity extends BaseBlockEntity {
         
         if (held.getItem() instanceof BucketItem) {
             return ActionResult.PASS; // Done for fluid logging
+        }
+    
+        var sieves = getConnectedSieves();
+        // Make Progress
+        if (!contents.isEmpty()) {
+            sieves.forEach(sieve -> sieve.doProgress(player));
+            return ActionResult.SUCCESS;
         }
         
         // Remove/Swap a mesh
@@ -93,13 +100,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
             markDirty();
             return ActionResult.SUCCESS;
         }
-        var sieves = getConnectedSieves();
-        // Make Progress
-        if (!contents.isEmpty()) {
-            sieves.forEach(sieve -> sieve.doProgress(player));
-            return ActionResult.SUCCESS;
-        }
-        
+
         // Add a block
         if (!held.isEmpty() && !SieveRecipe.find(held.getItem(), getFluid(), RegistryUtils.getId(mesh.getItem()), world).isEmpty()) {
             ItemStack finalHeld = held;
