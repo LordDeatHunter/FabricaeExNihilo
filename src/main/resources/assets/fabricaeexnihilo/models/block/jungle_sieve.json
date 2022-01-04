@@ -1,0 +1,6 @@
+{
+  "parent": "fabricaeexnihilo:block/sieve",
+  "textures": {
+    "all": "minecraft:block/jungle_planks"
+  }
+}

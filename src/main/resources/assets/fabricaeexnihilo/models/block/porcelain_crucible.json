@@ -1,0 +1,6 @@
+{
+  "parent": "fabricaeexnihilo:block/crucible",
+  "textures": {
+    "all": "fabricaeexnihilo:block/porcelain_crucible"
+  }
+}

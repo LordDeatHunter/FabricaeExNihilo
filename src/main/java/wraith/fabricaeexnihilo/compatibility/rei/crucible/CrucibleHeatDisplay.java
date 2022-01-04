@@ -23,7 +23,7 @@ public record CrucibleHeatDisplay(CrucibleHeatRecipe recipe) implements Display 
     @Override
     public List<EntryIngredient> getInputEntries() {
         var recipes = recipe.getBlock().asREIEntries();
-        var crucible = Collections.singletonList(EntryIngredients.of(ItemUtils.getExNihiloItemStack("stone_crucible")));
+        var crucible = Collections.singletonList(EntryIngredients.of(ItemUtils.getExNihiloItemStack("porcelain_crucible")));
         return Stream.of(recipes, crucible).flatMap(List::stream).toList();
     }
     

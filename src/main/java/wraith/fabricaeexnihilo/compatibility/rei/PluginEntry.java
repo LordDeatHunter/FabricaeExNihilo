@@ -33,7 +33,7 @@ public class PluginEntry implements REIClientPlugin {
         
         registry.add(new CrucibleHeatCategory());
         registry.add(new CrucibleCategory(WOOD_CRUCIBLE, ItemUtils.getExNihiloItemStack("oak_crucible"), new LiteralText("Wood Crucible")));
-        registry.add(new CrucibleCategory(STONE_CRUCIBLE, ItemUtils.getExNihiloItemStack("stone_crucible"), new LiteralText("Stone Crucible")));
+        registry.add(new CrucibleCategory(PORCELAIN_CRUCIBLE, ItemUtils.getExNihiloItemStack("porcelain_crucible"), new LiteralText("Stone Crucible")));
         
         registry.add(new CompostCategory());
         registry.add(new LeakingCategory());
@@ -51,7 +51,7 @@ public class PluginEntry implements REIClientPlugin {
         registry.removePlusButton(HAMMER);
         registry.removePlusButton(CRUCIBLE_HEAT);
         registry.removePlusButton(WOOD_CRUCIBLE);
-        registry.removePlusButton(STONE_CRUCIBLE);
+        registry.removePlusButton(PORCELAIN_CRUCIBLE);
         registry.removePlusButton(COMPOSTING);
         registry.removePlusButton(LEAKING);
         registry.removePlusButton(ON_TOP);
@@ -70,7 +70,7 @@ public class PluginEntry implements REIClientPlugin {
         //FabricaeExNihiloRegistries.HAMMER.getREIRecipes().forEach(recipe -> registry.add(new ToolDisplay(recipe, HAMMER)));
         //FabricaeExNihiloRegistries.CRUCIBLE_HEAT.getREIRecipes().forEach(recipe -> registry.add(new CrucibleHeatDisplay(recipe)));
         //FabricaeExNihiloRegistries.CRUCIBLE_WOOD.getREIRecipes().forEach(recipe -> registry.add(new CrucibleDisplay(recipe, WOOD_CRUCIBLE)));
-        //FabricaeExNihiloRegistries.CRUCIBLE_STONE.getREIRecipes().forEach(recipe -> registry.add(new CrucibleDisplay(recipe, STONE_CRUCIBLE)));
+        //FabricaeExNihiloRegistries.CRUCIBLE_STONE.getREIRecipes().forEach(recipe -> registry.add(new CrucibleDisplay(recipe, PORCELAIN_CRUCIBLE)));
         //FabricaeExNihiloRegistries.BARREL_ALCHEMY.getREIRecipes().forEach(recipe -> registry.add(new AlchemyDisplay(recipe)));
         //FabricaeExNihiloRegistries.BARREL_COMPOST.getREIRecipes().forEach(recipe -> registry.add(new CompostDisplay(recipe)));
         //FabricaeExNihiloRegistries.BARREL_LEAKING.getREIRecipes().forEach(recipe -> registry.add(new LeakingDisplay(recipe)));
@@ -91,7 +91,7 @@ public class PluginEntry implements REIClientPlugin {
     public static final CategoryIdentifier<FluidOnTopDisplay> ON_TOP = CategoryIdentifier.of(FabricaeExNihilo.id("rei/barrel/fluid_on_top"));
     
     public static final CategoryIdentifier<CrucibleDisplay> WOOD_CRUCIBLE = CategoryIdentifier.of(FabricaeExNihilo.id("rei/crucible/wood"));
-    public static final CategoryIdentifier<CrucibleDisplay> STONE_CRUCIBLE = CategoryIdentifier.of(FabricaeExNihilo.id("rei/crucible/stone"));
+    public static final CategoryIdentifier<CrucibleDisplay> PORCELAIN_CRUCIBLE = CategoryIdentifier.of(FabricaeExNihilo.id("rei/crucible/stone"));
     public static final CategoryIdentifier<CrucibleHeatDisplay> CRUCIBLE_HEAT = CategoryIdentifier.of(FabricaeExNihilo.id("rei/crucible/heat"));
     
     public static final CategoryIdentifier<WitchWaterWorldDisplay> WITCH_WATER_WORLD = CategoryIdentifier.of(FabricaeExNihilo.id("rei/witchwater/world"));

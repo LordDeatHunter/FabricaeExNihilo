@@ -24,7 +24,7 @@ public class CrucibleHeatCategory implements DisplayCategory<CrucibleHeatDisplay
     
     @Override
     public Renderer getIcon() {
-        return ItemUtils.asREIEntry(ItemUtils.getExNihiloItemStack("stone_crucible"));
+        return ItemUtils.asREIEntry(ItemUtils.getExNihiloItemStack("porcelain_crucible"));
     }
     
     @Override

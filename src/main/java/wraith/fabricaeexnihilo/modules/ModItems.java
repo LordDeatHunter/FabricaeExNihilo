@@ -54,7 +54,7 @@ public final class ModItems {
         RESOURCES.put(id("deepslate_pebble"), new Item(BASE_SETTINGS));
         
         RESOURCES.put(id("porcelain"), new Item(BASE_SETTINGS));
-        RESOURCES.put(id("unfired_crucible"), new Item(BASE_SETTINGS));
+        RESOURCES.put(id("unfired_porcelain_crucible"), new Item(BASE_SETTINGS));
         RESOURCES.put(id("salt_bottle"), new Item(BASE_SETTINGS));
         
         DOLLS.add(id("doll"));
