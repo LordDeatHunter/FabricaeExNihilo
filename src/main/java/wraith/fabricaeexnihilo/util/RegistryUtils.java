@@ -10,6 +10,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.village.VillagerProfession;
 
+// TODO: Should probably be inlined
 public class RegistryUtils {
     
     public static Identifier getId(Item item) {

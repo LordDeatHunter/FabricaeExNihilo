@@ -15,8 +15,7 @@ import wraith.fabricaeexnihilo.modules.farming.PlantableItem;
 import wraith.fabricaeexnihilo.modules.farming.TallPlantableItem;
 import wraith.fabricaeexnihilo.modules.farming.TransformingItem;
 import wraith.fabricaeexnihilo.modules.infested.SilkWormItem;
-import wraith.fabricaeexnihilo.modules.ore.ColoredItem;
-import wraith.fabricaeexnihilo.modules.sieves.MeshItem;
+import wraith.fabricaeexnihilo.modules.ores.OreItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,18 +26,24 @@ import java.util.stream.IntStream;
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public final class ModItems {
-
+    
     public static final FabricItemSettings BASE_SETTINGS = new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP).maxCount(64);
-
+    
     public static final Map<Identifier, Item> TREE_SEEDS = new HashMap<>();
     public static final Map<Identifier, Item> CROP_SEEDS = new HashMap<>();
     public static final Map<Identifier, Item> FLOWER_SEEDS = new HashMap<>();
     public static final Map<Identifier, Item> OTHER_SEEDS = new HashMap<>();
-
+    
     public static final Map<Identifier, Item> RESOURCES = new HashMap<>();
-
+    
+    public static final Map<Identifier, Item> MESHES = new HashMap<>();
+    
+    public static final Map<Identifier, OreItem> ORE_CHUNKS = new HashMap<>();
+    public static final Map<Identifier, OreItem> ORE_PIECES = new HashMap<>();
+    
     public static final List<Identifier> DOLLS = new ArrayList<>();
-
+    
+    
     static {
         RESOURCES.put(id("andesite_pebble"), new Item(BASE_SETTINGS));
         RESOURCES.put(id("diorite_pebble"), new Item(BASE_SETTINGS));
@@ -47,18 +52,18 @@ public final class ModItems {
         RESOURCES.put(id("blackstone_pebble"), new Item(BASE_SETTINGS));
         RESOURCES.put(id("basalt_pebble"), new Item(BASE_SETTINGS));
         RESOURCES.put(id("deepslate_pebble"), new Item(BASE_SETTINGS));
-
+        
         RESOURCES.put(id("porcelain"), new Item(BASE_SETTINGS));
         RESOURCES.put(id("unfired_crucible"), new Item(BASE_SETTINGS));
         RESOURCES.put(id("salt_bottle"), new Item(BASE_SETTINGS));
-
+        
         DOLLS.add(id("doll"));
         DOLLS.add(id("doll_blaze"));
         DOLLS.add(id("doll_enderman"));
         DOLLS.add(id("doll_guardian"));
         DOLLS.add(id("doll_shulker"));
     }
-
+    
     public static void registerItems() {
         // Setup Conditional Items.
         setup();
@@ -67,23 +72,18 @@ public final class ModItems {
         CROP_SEEDS.forEach((identifier, item) -> Registry.register(Registry.ITEM, identifier, item));
         OTHER_SEEDS.forEach((identifier, item) -> Registry.register(Registry.ITEM, identifier, item));
         FLOWER_SEEDS.forEach((identifier, item) -> Registry.register(Registry.ITEM, identifier, item));
-
-        // Register Meshes
-        FabricaeExNihilo.MESHES.forEach((id, def) -> Registry.register(Registry.ITEM, id, new MeshItem(def.color(), def.enchantability())));
-
+        
         // Register Others
         RESOURCES.forEach((identifier, item) -> Registry.register(Registry.ITEM, identifier, item));
         DOLLS.forEach(doll -> Registry.register(Registry.ITEM, doll, new Item(BASE_SETTINGS)));
-
+        
         // Register Ores
-        FabricaeExNihilo.ORES.forEach((id, def) -> {
-            Registry.register(Registry.ITEM, id(id + "_piece"), new ColoredItem(def.color(), BASE_SETTINGS));
-            Registry.register(Registry.ITEM, id(id + "_chunk"), new ColoredItem(def.color(), BASE_SETTINGS));
-        });
+        ORE_PIECES.forEach((identifier, item) -> Registry.register(Registry.ITEM, identifier, item));
+        ORE_CHUNKS.forEach((identifier, item) -> Registry.register(Registry.ITEM, identifier, item));
         
         ModFluids.registerBuckets();
     }
-
+    
     public static void setup() {
         if (FabricaeExNihilo.CONFIG.modules.silkworms.enabled) {
             RESOURCES.put(id("silkworm_raw"), new SilkWormItem(new FabricItemSettings().maxCount(64).food(FoodComponents.COD).group(FabricaeExNihilo.ITEM_GROUP)));

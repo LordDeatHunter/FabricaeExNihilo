@@ -9,7 +9,7 @@ import net.minecraft.util.registry.Registry;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EnchantmentContainer implements NBTSerializable {
+public class EnchantmentContainer {
     
     private final Map<Identifier, Integer> enchantments = new HashMap<>();
     

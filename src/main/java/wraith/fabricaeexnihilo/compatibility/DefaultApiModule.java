@@ -4,9 +4,9 @@ import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.api.FabricaeExNihiloApiModule;
 import wraith.fabricaeexnihilo.api.MeshDefinition;
 import wraith.fabricaeexnihilo.api.OreDefinition;
-import wraith.fabricaeexnihilo.modules.ore.ChunkMaterial;
-import wraith.fabricaeexnihilo.modules.ore.ChunkShape;
-import wraith.fabricaeexnihilo.modules.ore.PieceShape;
+import wraith.fabricaeexnihilo.api.OreDefinition.ChunkMaterial;
+import wraith.fabricaeexnihilo.api.OreDefinition.ChunkShape;
+import wraith.fabricaeexnihilo.api.OreDefinition.PieceShape;
 import wraith.fabricaeexnihilo.util.Color;
 
 import java.util.function.BiConsumer;

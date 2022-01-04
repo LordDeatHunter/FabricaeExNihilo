@@ -12,6 +12,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.ItemConvertible;
+import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.client.renderers.BarrelBlockEntityRenderer;
 import wraith.fabricaeexnihilo.client.renderers.CrucibleBlockEntityRenderer;
@@ -64,6 +65,7 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), ModBlocks.SIEVES.values().toArray(Block[]::new));
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), ModBlocks.CRUCIBLES.values().toArray(Block[]::new));
         
+        // TODO: Get rid of this needless arrp code. Every addon can do this themselves
         // ARRP resource pack
         var resourcePack = RuntimeResourcePack.create(id("resources"));
         // Mesh models
@@ -81,7 +83,7 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
                                     JModel.textures()
                                             .layer0(id("item/ore/chunks/" + shape + "_" + material).toString())
                                             .layer1(id("item/ore/chunks/" + shape + "_overlay").toString())),
-                    id("item/" + id + "_chunk"));
+                    new Identifier(id.getNamespace(), "item/" + id.getPath()));
         });
         
         // Ore Piece Model
@@ -94,7 +96,7 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
                                     JModel.textures()
                                             .layer0(id("item/ore/pieces/" + shape + "_" + material).toString())
                                             .layer1(id("item/ore/pieces/" + shape + "_overlay").toString())),
-                    id("item/" + id + "_piece"));
+                    new Identifier(id.getNamespace(), "item/" + id.getPath()));
         });
         
         FabricaeExNihilo.LOGGER.debug("Created Resources");
