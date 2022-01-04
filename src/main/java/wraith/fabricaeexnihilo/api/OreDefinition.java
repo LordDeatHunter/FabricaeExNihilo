@@ -5,7 +5,7 @@ import wraith.fabricaeexnihilo.util.Color;
 public record OreDefinition(Color color,
                             PieceShape pieceShape,
                             ChunkShape chunkShape,
-                            ChunkMaterial chunkMaterial) {
+                            BaseMaterial baseMaterial) {
     public enum ChunkShape {
         CHUNK, FLINT, LUMP
     }
@@ -14,7 +14,7 @@ public record OreDefinition(Color color,
         COARSE, NORMAL, FINE
     }
     
-    public enum ChunkMaterial {
+    public enum BaseMaterial {
         ANDESITE, DIORITE, ENDSTONE, GRANITE, NETHERRACK, PRISMARINE, REDSAND, SAND, SOULSAND, STONE
     }
 }

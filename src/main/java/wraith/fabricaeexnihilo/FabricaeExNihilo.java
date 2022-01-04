@@ -10,16 +10,12 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import wraith.fabricaeexnihilo.api.MeshDefinition;
-import wraith.fabricaeexnihilo.api.OreDefinition;
 import wraith.fabricaeexnihilo.modules.*;
 import wraith.fabricaeexnihilo.util.ARRPUtils;
 import wraith.fabricaeexnihilo.util.EntrypointHelper;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
 
 public class FabricaeExNihilo implements ModInitializer {
     public static final String MODID = "fabricaeexnihilo";
@@ -27,10 +23,6 @@ public class FabricaeExNihilo implements ModInitializer {
     public static final Logger LOGGER = LogManager.getLogger("Fabricae Ex Nihilo");
     private static final RuntimeResourcePack RESOURCE_PACK = RuntimeResourcePack.create(id("data"));
     public static final FabricaeExNihiloConfig CONFIG = AutoConfig.register(FabricaeExNihiloConfig.class, GsonConfigSerializer::new).get();
-    
-    // TODO: Move somewhere else (ModItems?)
-    public static final Map<String, OreDefinition> ORES = new HashMap<>();
-    public static final Map<Identifier, MeshDefinition> MESHES = new HashMap<>();
 
     public static Identifier id(String path) {
         return new Identifier(MODID, path);

@@ -46,7 +46,6 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
         
         coloredItems.addAll(ModItems.MESHES.values());
         coloredItems.addAll(ModItems.ORE_PIECES.values());
-        coloredItems.addAll(ModItems.ORE_CHUNKS.values());
         coloredItems.addAll(ModBlocks.INFESTED_LEAVES.values());
         
         ColorProviderRegistry.ITEM.register(FabricaeExNihiloItemColorProvider.INSTANCE, coloredItems.toArray(ItemConvertible[]::new));
@@ -74,27 +73,27 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
         // Ore Chunk Model
         ModItems.ORE_CHUNKS.forEach((id, item) -> {
             var shape = item.getDefinition().chunkShape().name().toLowerCase();
-            var material = item.getDefinition().chunkMaterial().name().toLowerCase();
+            var material = item.getDefinition().baseMaterial().name().toLowerCase();
             resourcePack.addModel(
                     JModel.modelKeepElements("item/generated")
                             .textures(
                                     JModel.textures()
                                             .layer0(id("item/ore/chunks/" + shape + "_" + material).toString())
                                             .layer1(id("item/ore/chunks/" + shape + "_overlay").toString())),
-                    id("item/" + id + "_chunk"));
+                    id("item/" + id.getPath()));
         });
         
         // Ore Piece Model
         ModItems.ORE_PIECES.forEach((id, item) -> {
             var shape = item.getDefinition().pieceShape().name().toLowerCase();
-            var material = item.getDefinition().chunkMaterial().name().toLowerCase();
+            var material = item.getDefinition().baseMaterial().name().toLowerCase();
             resourcePack.addModel(
                     JModel.modelKeepElements("item/generated")
                             .textures(
                                     JModel.textures()
                                             .layer0(id("item/ore/pieces/" + shape + "_" + material).toString())
                                             .layer1(id("item/ore/pieces/" + shape + "_overlay").toString())),
-                    id("item/" + id + "_piece"));
+                    id("item/" + id.getPath()));
         });
         
         FabricaeExNihilo.LOGGER.debug("Created Resources");

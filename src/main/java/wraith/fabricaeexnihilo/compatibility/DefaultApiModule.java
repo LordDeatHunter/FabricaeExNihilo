@@ -4,15 +4,15 @@ import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.api.FabricaeExNihiloApiModule;
 import wraith.fabricaeexnihilo.api.MeshDefinition;
 import wraith.fabricaeexnihilo.api.OreDefinition;
-import wraith.fabricaeexnihilo.modules.ore.ChunkMaterial;
-import wraith.fabricaeexnihilo.modules.ore.ChunkShape;
-import wraith.fabricaeexnihilo.modules.ore.PieceShape;
+import wraith.fabricaeexnihilo.api.OreDefinition.PieceShape;
 import wraith.fabricaeexnihilo.util.Color;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
+import static wraith.fabricaeexnihilo.api.OreDefinition.BaseMaterial;
+import static wraith.fabricaeexnihilo.api.OreDefinition.ChunkShape;
 
 public class DefaultApiModule implements FabricaeExNihiloApiModule {
     /* TODO: More api modules:
@@ -22,8 +22,8 @@ public class DefaultApiModule implements FabricaeExNihiloApiModule {
      */
     @Override
     public void registerOres(BiConsumer<String, OreDefinition> registry) {
-        registry.accept("iron", new OreDefinition(Color.IRON, PieceShape.NORMAL, ChunkShape.CHUNK, ChunkMaterial.GRANITE));
-        registry.accept("gold", new OreDefinition(Color.GOLD, PieceShape.FINE, ChunkShape.CHUNK, ChunkMaterial.STONE));
+        registry.accept("iron", new OreDefinition(Color.IRON, PieceShape.NORMAL, ChunkShape.CHUNK, BaseMaterial.GRANITE));
+        registry.accept("gold", new OreDefinition(Color.GOLD, PieceShape.FINE, ChunkShape.CHUNK, BaseMaterial.STONE));
     }
     
     @Override
