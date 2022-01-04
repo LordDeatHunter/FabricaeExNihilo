@@ -16,6 +16,7 @@ import wraith.fabricaeexnihilo.modules.farming.TallPlantableItem;
 import wraith.fabricaeexnihilo.modules.farming.TransformingItem;
 import wraith.fabricaeexnihilo.modules.infested.SilkWormItem;
 import wraith.fabricaeexnihilo.modules.ores.OreItem;
+import wraith.fabricaeexnihilo.modules.sieves.MeshItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,12 +36,11 @@ public final class ModItems {
     public static final Map<Identifier, Item> OTHER_SEEDS = new HashMap<>();
     
     public static final Map<Identifier, Item> RESOURCES = new HashMap<>();
-    
-    public static final Map<Identifier, Item> MESHES = new HashMap<>();
-    
+
     public static final Map<Identifier, OreItem> ORE_CHUNKS = new HashMap<>();
     public static final Map<Identifier, OreItem> ORE_PIECES = new HashMap<>();
-    
+    public static final Map<Identifier, MeshItem> MESHES = new HashMap<>();
+
     public static final List<Identifier> DOLLS = new ArrayList<>();
     
     
@@ -72,7 +72,10 @@ public final class ModItems {
         CROP_SEEDS.forEach((identifier, item) -> Registry.register(Registry.ITEM, identifier, item));
         OTHER_SEEDS.forEach((identifier, item) -> Registry.register(Registry.ITEM, identifier, item));
         FLOWER_SEEDS.forEach((identifier, item) -> Registry.register(Registry.ITEM, identifier, item));
-        
+
+        // Register Meshes
+        MESHES.forEach((identifier, item) -> Registry.register(Registry.ITEM, identifier, item));
+
         // Register Others
         RESOURCES.forEach((identifier, item) -> Registry.register(Registry.ITEM, identifier, item));
         DOLLS.forEach(doll -> Registry.register(Registry.ITEM, doll, new Item(BASE_SETTINGS)));
@@ -80,7 +83,6 @@ public final class ModItems {
         // Register Ores
         ORE_PIECES.forEach((identifier, item) -> Registry.register(Registry.ITEM, identifier, item));
         ORE_CHUNKS.forEach((identifier, item) -> Registry.register(Registry.ITEM, identifier, item));
-        
         ModFluids.registerBuckets();
     }
     

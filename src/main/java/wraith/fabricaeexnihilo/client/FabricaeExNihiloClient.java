@@ -76,7 +76,7 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
         // Ore Chunk Model
         ModItems.ORE_CHUNKS.forEach((id, item) -> {
             var shape = item.getDefinition().chunkShape().name().toLowerCase();
-            var material = item.getDefinition().chunkMaterial().name().toLowerCase();
+            var material = item.getDefinition().baseMaterial().name().toLowerCase();
             resourcePack.addModel(
                     JModel.modelKeepElements("item/generated")
                             .textures(
@@ -89,7 +89,7 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
         // Ore Piece Model
         ModItems.ORE_PIECES.forEach((id, item) -> {
             var shape = item.getDefinition().pieceShape().name().toLowerCase();
-            var material = item.getDefinition().chunkMaterial().name().toLowerCase();
+            var material = item.getDefinition().baseMaterial().name().toLowerCase();
             resourcePack.addModel(
                     JModel.modelKeepElements("item/generated")
                             .textures(
