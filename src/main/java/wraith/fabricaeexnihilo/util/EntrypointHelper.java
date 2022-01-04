@@ -2,6 +2,7 @@ package wraith.fabricaeexnihilo.util;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.api.FabricaeExNihiloApiModule;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModItems;
@@ -23,8 +24,8 @@ public class EntrypointHelper {
         var entrypoints = FabricLoader.getInstance().getEntrypoints("fabricaeexnihilo:api", FabricaeExNihiloApiModule.class).stream().filter(FabricaeExNihiloApiModule::shouldLoad).toList();
         
         handle(entrypoints, FabricaeExNihiloApiModule::registerOres, (id, def) -> {
-            ModItems.ORE_CHUNKS.put(id(id + "_chunk"), new OreItem(def));
-            ModItems.ORE_PIECES.put(id(id + "_piece"), new OreItem(def));
+            ModItems.ORE_CHUNKS.put(modifyId(id, null, "_chunk"), new OreItem(def));
+            ModItems.ORE_PIECES.put(modifyId(id, null, "_piece"), new OreItem(def));
         });
         handle(entrypoints, FabricaeExNihiloApiModule::registerMeshes, (id, def) -> ModItems.MESHES.put(id, new MeshItem(def)));
         handle(entrypoints, FabricaeExNihiloApiModule::registerSieves, id -> ModBlocks.SIEVES.put(id, new SieveBlock()));
@@ -35,6 +36,10 @@ public class EntrypointHelper {
             ModBlocks.INFESTED_LEAVES.put(new Identifier(id.getNamespace(), "infested_" + id.getPath()), infested);
             ModBlocks.INFESTING_LEAVES.put(new Identifier(id.getNamespace(), "infesting_" + id.getPath()), new InfestingLeavesBlock(ModBlocks.INFESTED_LEAVES_SETTINGS, infested));
         });
+    }
+    
+    private static Identifier modifyId(Identifier id, @Nullable String prefix, @Nullable String suffix) {
+        return new Identifier(id.getNamespace(), (prefix == null ? "" : prefix) + id.getPath() + (suffix == null ? "" : suffix));
     }
     
     private static <R> void handle(List<FabricaeExNihiloApiModule> entrypoints, BiConsumer<FabricaeExNihiloApiModule, R> function, R registry) {

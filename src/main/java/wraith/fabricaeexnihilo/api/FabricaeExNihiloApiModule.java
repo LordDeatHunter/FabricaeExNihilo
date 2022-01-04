@@ -10,14 +10,17 @@ import java.util.function.Consumer;
  */
 public interface FabricaeExNihiloApiModule {
     /**
-     * Allows the module to register ores for which chunks and pisces will be added. You need to manually add recipes for them. They should be registered with a simple name. For example: {@code tin}
+     * Allows the module to register ores for which chunks and pisces will be added. You need to manually add recipes for them.
      *
-     * @param registry A consumer which accepts the simple name and a definition of the ores properties.
+     * @param registry A consumer which accepts the id and a definition of the ores properties.
      */
-    default void registerOres(BiConsumer<String, OreDefinition> registry) {
+    default void registerOres(BiConsumer<Identifier, OreDefinition> registry) {
     }
     
-    // TODO: Javadoc
+    /**
+     * Allows modules to add meshes. You need to manually add recipes and models for them. Coloring is handled by Fabricae Ex Nihilo al long as you specify the tintindex.
+     * @param registry A consumer which accepts an id and definition of the mesh.
+     */
     default void registerMeshes(BiConsumer<Identifier, MeshDefinition> registry) {
     }
     

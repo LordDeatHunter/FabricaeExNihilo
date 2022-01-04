@@ -2,6 +2,7 @@ package wraith.fabricaeexnihilo.modules.infested;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.BlockEntityProvider;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.entity.BlockEntity;
@@ -13,12 +14,16 @@ import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.mixins.BlockWithEntityInvoker;
 
 public class InfestingLeavesBlock extends LeavesBlock implements BlockEntityProvider, NonInfestableLeavesBlock {
-    
     private final InfestedLeavesBlock target;
     
     public InfestingLeavesBlock(FabricBlockSettings settings, InfestedLeavesBlock target) {
         super(settings);
         this.target = target;
+    }
+    
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.INVISIBLE;
     }
     
     @Nullable

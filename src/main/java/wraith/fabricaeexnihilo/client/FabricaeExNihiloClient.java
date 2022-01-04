@@ -16,12 +16,14 @@ import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.client.renderers.BarrelBlockEntityRenderer;
 import wraith.fabricaeexnihilo.client.renderers.CrucibleBlockEntityRenderer;
+import wraith.fabricaeexnihilo.client.renderers.InfestingLeavesBlockEntityRenderer;
 import wraith.fabricaeexnihilo.client.renderers.SieveBlockEntityRenderer;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModItems;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
 import wraith.fabricaeexnihilo.modules.base.Colored;
 import wraith.fabricaeexnihilo.modules.crucibles.CrucibleBlockEntity;
+import wraith.fabricaeexnihilo.modules.infested.InfestingLeavesBlockEntity;
 import wraith.fabricaeexnihilo.modules.sieves.SieveBlockEntity;
 import wraith.fabricaeexnihilo.util.Color;
 
@@ -40,6 +42,7 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
         BlockEntityRendererRegistry.register(SieveBlockEntity.TYPE, SieveBlockEntityRenderer::new);
         BlockEntityRendererRegistry.register(CrucibleBlockEntity.TYPE, CrucibleBlockEntityRenderer::new);
         BlockEntityRendererRegistry.register(BarrelBlockEntity.TYPE, BarrelBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.register(InfestingLeavesBlockEntity.TYPE, InfestingLeavesBlockEntityRenderer::new);
         FabricaeExNihilo.LOGGER.debug("Registered BERs");
         
         // Color Providers

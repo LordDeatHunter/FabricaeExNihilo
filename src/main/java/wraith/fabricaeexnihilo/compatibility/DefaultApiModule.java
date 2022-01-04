@@ -21,9 +21,9 @@ public class DefaultApiModule implements FabricaeExNihiloApiModule {
         + any other mods that add ores or trees...
      */
     @Override
-    public void registerOres(BiConsumer<String, OreDefinition> registry) {
-        registry.accept("iron", new OreDefinition(Color.IRON, PieceShape.NORMAL, ChunkShape.CHUNK, BaseMaterial.GRANITE));
-        registry.accept("gold", new OreDefinition(Color.GOLD, PieceShape.FINE, ChunkShape.CHUNK, BaseMaterial.STONE));
+    public void registerOres(BiConsumer<Identifier, OreDefinition> registry) {
+        registry.accept(id("iron"), new OreDefinition(Color.IRON, PieceShape.NORMAL, ChunkShape.CHUNK, BaseMaterial.GRANITE));
+        registry.accept(id("gold"), new OreDefinition(Color.GOLD, PieceShape.FINE, ChunkShape.CHUNK, BaseMaterial.STONE));
     }
     
     @Override
