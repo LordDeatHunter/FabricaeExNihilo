@@ -2,7 +2,7 @@
   "parent": "fabricaeexnihilo:porcelain",
   "display": {
     "icon": {
-      "item": "fabricaeexnihilo:stone_crucible"
+      "item": "fabricaeexnihilo:porcelain_crucible"
     },
     "title": {
       "translate": "advancements.fabricaeexnihilo.crucible.title"
@@ -16,13 +16,13 @@
     "hidden": false
   },
   "criteria": {
-    "stone_crucible": {
+    "porcelain_crucible": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "fabricaeexnihilo:stone_crucible"
+              "fabricaeexnihilo:porcelain_crucible"
             ]
           }
         ]
@@ -31,7 +31,7 @@
   },
   "requirements": [
     [
-      "stone_crucible"
+      "porcelain_crucible"
     ]
   ]
 }

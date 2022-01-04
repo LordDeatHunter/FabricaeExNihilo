@@ -1,0 +1,6 @@
+{
+  "parent": "fabricaeexnihilo:block/crucible",
+  "textures": {
+    "all": "minecraft:block/dark_oak_log"
+  }
+}

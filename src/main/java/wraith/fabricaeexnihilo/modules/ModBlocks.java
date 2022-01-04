@@ -89,7 +89,7 @@ public final class ModBlocks {
         CRUSHED.put(FabricaeExNihilo.id("crushed_netherrack"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
         //CRUSHED.put(FabricaeExNihilo.id("crushed_skystone"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
         
-        CRUCIBLES.put(FabricaeExNihilo.id("stone_crucible"), new CrucibleBlock(STONE_SETTINGS));
+        CRUCIBLES.put(FabricaeExNihilo.id("porcelain_crucible"), new CrucibleBlock(STONE_SETTINGS));
         
         BARRELS.put(FabricaeExNihilo.id("stone_barrel"), new BarrelBlock(STONE_SETTINGS));
     }

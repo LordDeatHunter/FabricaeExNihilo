@@ -19,7 +19,7 @@ public final class ARRPUtils {
 //        ModBlocks.SIEVES.keys.forEach { k ->
 //            generateBlockEntityLootTable(k, builder)
 //        }
-//        ModBlocks.CRUCIBLES.filter{ it.key.path != "unfired_crucible" }.keys.forEach { k ->
+//        ModBlocks.CRUCIBLES.filter{ it.key.path != "unfired_porcelain_crucible" }.keys.forEach { k ->
 //            generateBlockEntityLootTable(k, builder)
 //        }
 //        ModBlocks.BARRELS.keys.forEach { k ->

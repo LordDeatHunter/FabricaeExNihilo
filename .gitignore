@@ -23,3 +23,7 @@ bin/
 # fabric
 
 run/
+
+# datagen
+datagen/assets/
+datagen/__pycache__/
