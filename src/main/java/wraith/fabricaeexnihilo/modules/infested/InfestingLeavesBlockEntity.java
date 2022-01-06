@@ -22,7 +22,7 @@ import java.util.Optional;
 public class InfestingLeavesBlockEntity extends BaseBlockEntity implements Colored {
     private double progress = 0.0;
     private int tickCounter;
-    private InfestedLeavesBlock target;
+    private InfestedLeavesBlock target = ModBlocks.INFESTED_LEAVES.values().stream().findFirst().orElseThrow();
     
     public static Identifier BLOCK_ENTITY_ID = FabricaeExNihilo.id("infesting");
     public static final BlockEntityType<InfestingLeavesBlockEntity> TYPE = FabricBlockEntityTypeBuilder.create(

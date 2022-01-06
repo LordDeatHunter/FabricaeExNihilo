@@ -22,9 +22,6 @@ public final class InfestedHelper {
     public static final HashMap<Identifier, InfestedLeavesBlock> LEAF_TO_INFESTED = new HashMap<>();
     
     public static ActionResult tryToInfest(World world, BlockPos pos) {
-        if (world.isClient) {
-            return ActionResult.PASS;
-        }
         var originalState = world.getBlockState(pos);
         if (!LEAF_TO_INFESTED.containsKey(RegistryUtils.getId(originalState.getBlock()))) {
             return ActionResult.PASS;
@@ -39,6 +36,7 @@ public final class InfestedHelper {
         world.setBlockState(pos, newState);
         
         if (!(world.getBlockEntity(pos) instanceof InfestingLeavesBlockEntity blockEntity)) {
+            FabricaeExNihilo.LOGGER.warn("Placed block doesn't have a blockentity! (InfestedHelper)");
             return ActionResult.PASS;
         }
         
