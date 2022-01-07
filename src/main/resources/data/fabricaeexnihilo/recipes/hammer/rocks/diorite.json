@@ -1,0 +1,11 @@
+{
+  "type": "fabricaeexnihilo:hammer",
+  "block": "minecraft:diorite",
+  "result": {
+    "stack": "fabricaeexnihilo:crushed_diorite",
+    "chances": [
+      1.0,
+      0.5
+    ]
+  }
+}

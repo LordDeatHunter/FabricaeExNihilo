@@ -1,10 +1,10 @@
 package wraith.fabricaeexnihilo;
 
-import alexiil.mc.lib.attributes.fluid.amount.FluidAmount;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import wraith.fabricaeexnihilo.util.StatusEffectStats;
 
 import java.util.List;
@@ -12,28 +12,28 @@ import java.util.Map;
 
 @Config(name = "fabricaeexnihilo")
 public class FabricaeExNihiloConfig implements ConfigData {
-
+    
     @Comment("Load json files from <config>/fabricaeexnihilo/*.json")
     public boolean useJsonRecipes = false;
     @Comment("Dump generated json files to <minecraft>/fabricaeexnihilo_generated")
     public boolean dumpGeneratedResource = false;
-
+    
     @ConfigEntry.Gui.CollapsibleObject
     public ModuleConfig modules = new ModuleConfig();
-
+    
     public static class ModuleConfig {
-
+        
         @ConfigEntry.Gui.CollapsibleObject
         public Generator generator = new Generator();
-
+        
         public static class Generator {
             @Comment("Blocks to be ignored as triggers for the block generator (i.e. makes sieves/barrels/crucibles)")
             public List<String> blackList = List.of("terrestria:sakura_log");
         }
-
+        
         @ConfigEntry.Gui.CollapsibleObject
         public REIConfig REI = new REIConfig();
-
+        
         public static class REIConfig {
             @Comment("How many rows should show up for the compost inputs, min = 1")
             public int compostNumRows = 5;
@@ -52,10 +52,10 @@ public class FabricaeExNihiloConfig implements ConfigData {
             @Comment("How many columns should show up for the Witch Water fluid interactions outputs, min = 1")
             public int witchwaterworldCols = 8;
         }
-
+        
         @ConfigEntry.Gui.CollapsibleObject
         public BarrelConfig barrels = new BarrelConfig();
-
+        
         public static class BarrelConfig {
             @ConfigEntry.Gui.RequiresRestart
             public boolean enabled = true;
@@ -84,30 +84,31 @@ public class FabricaeExNihiloConfig implements ConfigData {
             @Comment("How many ticks does each block below remove")
             public int transformBoost = 15;
         }
-
+        
         @ConfigEntry.Gui.CollapsibleObject
         public CrucibleConfig crucibles = new CrucibleConfig();
-
+        
+        @SuppressWarnings("UnstableApiUsage")
         public static class CrucibleConfig {
             @ConfigEntry.Gui.RequiresRestart
             public boolean enabled = true;
             @Comment("How many ticks between updates")
             public int tickRate = 20;
-            public int baseProcessRate = FluidAmount.BUCKET.div(100).as1620();
-            public int woodenProcessingRate = FluidAmount.BUCKET.div(60).as1620();
-            @Comment("How many buckets fromPacket liquid can a stone crucible store")
+            public long baseProcessRate = FluidConstants.BUCKET / 100;
+            public long woodenProcessingRate = FluidConstants.BUCKET / 60;
+            @Comment("How many buckets of liquid can a stone crucible store")
             public int stoneVolume = 4;
-            @Comment("How many buckets fromPacket liquid can a wooden crucible store")
+            @Comment("How many buckets of liquid can a wooden crucible store")
             public int woodVolume = 1;
             @Comment("Can crucibles be enchanted with efficiency.")
             public boolean efficiency = true;
             @Comment("Can stone crucibles be enchanted with fire aspect.")
             public boolean fireAspect = true;
         }
-
+        
         @ConfigEntry.Gui.CollapsibleObject
         public InfestedConfig silkworms = new InfestedConfig();
-
+        
         public static class InfestedConfig {
             @ConfigEntry.Gui.RequiresRestart
             public boolean enabled = true;
@@ -124,11 +125,11 @@ public class FabricaeExNihiloConfig implements ConfigData {
             @Comment("How many attempts should infested leaves make to spread each time they check.")
             public int infestedSpreadAttempts = 4;
         }
-
+        
         @ConfigEntry.Gui.CollapsibleObject
         @ConfigEntry.Gui.RequiresRestart
         public SeedConfig seeds = new SeedConfig();
-
+        
         public static class SeedConfig {
             public boolean enabled = true;
             public boolean cactus = true;
@@ -141,7 +142,8 @@ public class FabricaeExNihiloConfig implements ConfigData {
             public boolean seaPickle = true;
             public boolean sugarCane = true;
             public boolean treeSeeds = true;
-
+            public boolean flowerSeeds = true;
+            
             @Comment("List of blocks that the rubber sapling could turn into.")
             public List<String> rubberSeed = List.of(
                     "techreborn:rubber_sapling",
@@ -149,10 +151,10 @@ public class FabricaeExNihiloConfig implements ConfigData {
                     "terrestria:rubber_sapling"
             );
         }
-
+        
         @ConfigEntry.Gui.CollapsibleObject
         public SieveConfig sieves = new SieveConfig();
-
+        
         public static class SieveConfig {
             @ConfigEntry.Gui.RequiresRestart
             public boolean enabled = true;
@@ -172,26 +174,26 @@ public class FabricaeExNihiloConfig implements ConfigData {
             @Comment("Do haste beacons/potions affect sieving speed")
             public boolean haste = true;
         }
-
+        
         @ConfigEntry.Gui.CollapsibleObject
         public CrookConfig crooks = new CrookConfig();
-
+        
         public static class CrookConfig {
             @ConfigEntry.Gui.RequiresRestart
             public boolean enabled = true;
         }
-
+        
         @ConfigEntry.Gui.CollapsibleObject
         public HammerConfig hammers = new HammerConfig();
-
+        
         public static class HammerConfig {
             @ConfigEntry.Gui.RequiresRestart
             public boolean enabled = true;
         }
-
+        
         @ConfigEntry.Gui.CollapsibleObject
         public WitchWaterConfig witchwater = new WitchWaterConfig();
-
+        
         public static class WitchWaterConfig {
             @ConfigEntry.Gui.RequiresRestart
             public boolean enabled = true;
@@ -204,7 +206,7 @@ public class FabricaeExNihiloConfig implements ConfigData {
                     "wither", new StatusEffectStats(210, 0)
             );
         }
-
+        
     }
-
+    
 }

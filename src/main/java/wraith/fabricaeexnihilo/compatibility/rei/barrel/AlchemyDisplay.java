@@ -15,12 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record AlchemyDisplay(AlchemyRecipe recipe) implements Display {
-
+    
     @Override
     public CategoryIdentifier<?> getCategoryIdentifier() {
         return PluginEntry.ALCHEMY;
     }
-
+    
     @Override
     public List<EntryIngredient> getInputEntries() {
         var inputs = new ArrayList<EntryIngredient>();
@@ -29,7 +29,7 @@ public record AlchemyDisplay(AlchemyRecipe recipe) implements Display {
         inputs.addAll(ModBlocks.BARRELS.values().stream().map(EntryIngredients::of).toList());
         return inputs;
     }
-
+    
     @Override
     public List<EntryIngredient> getOutputEntries() {
         var outputs = new ArrayList<EntryIngredient>();
@@ -47,9 +47,9 @@ public record AlchemyDisplay(AlchemyRecipe recipe) implements Display {
         } else {
             outputs.add(EntryIngredient.empty());
         }
-        outputs.add(EntryIngredients.of(recipe.getByproduct().getStack()));
+        outputs.add(EntryIngredients.of(recipe.getByproduct().stack()));
         outputs.add(!recipe.getToSpawn().isEmpty() ? EntryIngredients.of(SpawnEggItem.forEntity(recipe.getToSpawn().getType())) : EntryIngredient.empty());
         return outputs;
     }
-
+    
 }

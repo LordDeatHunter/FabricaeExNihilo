@@ -1,0 +1,11 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "fabricaeexnihilo:seed_birch",
+  "input": "minecraft:dirt",
+  "rolls": {
+    "fabricaeexnihilo:string_mesh": [0.02]
+  },
+  "fabricaeexnihilo:requiredItems": [
+    "fabricaeexnihilo:seed_birch"
+  ]
+}

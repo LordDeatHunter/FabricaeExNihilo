@@ -3,9 +3,6 @@ package wraith.fabricaeexnihilo.modules.barrels;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
-import wraith.fabricaeexnihilo.modules.barrels.modes.BarrelMode;
-
-import java.util.function.Consumer;
 
 @SuppressWarnings("UnstableApiUsage")
 public interface BarrelModeStorage {

@@ -1,0 +1,11 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "minecraft:cod",
+  "input": "minecraft:dirt",
+  "fluid": "#fabricaeexnihilo:true_water",
+  "rolls": {
+    "fabricaeexnihilo:string_mesh": [0.05],
+    "fabricaeexnihilo:flint_mesh": [0.1],
+    "fabricaeexnihilo:iron_mesh": [0.15]
+  }
+}

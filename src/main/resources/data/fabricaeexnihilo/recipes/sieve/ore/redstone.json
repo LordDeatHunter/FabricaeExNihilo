@@ -1,0 +1,10 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "minecraft:redstone",
+  "input": "fabricaeexnihilo:dust",
+  "rolls": {
+    "fabricaeexnihilo:iron_mesh": [0.125],
+    "fabricaeexnihilo:gold_mesh": [0.075],
+    "fabricaeexnihilo:diamond_mesh": [0.25]
+  }
+}

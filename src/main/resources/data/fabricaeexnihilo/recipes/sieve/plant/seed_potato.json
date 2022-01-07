@@ -1,0 +1,11 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "fabricaeexnihilo:seed_potato",
+  "input": "minecraft:dirt",
+  "rolls": {
+    "fabricaeexnihilo:string_mesh": [0.03]
+  },
+  "fabricaeexnihilo:requiredItems": [
+    "fabricaeexnihilo:seed_potato"
+  ]
+}

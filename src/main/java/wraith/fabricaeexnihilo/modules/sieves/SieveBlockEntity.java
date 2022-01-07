@@ -17,7 +17,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -25,15 +24,18 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
+import wraith.fabricaeexnihilo.modules.ModRecipes;
 import wraith.fabricaeexnihilo.modules.base.BaseBlockEntity;
+import wraith.fabricaeexnihilo.recipe.SieveRecipe;
 import wraith.fabricaeexnihilo.util.ItemUtils;
+import wraith.fabricaeexnihilo.util.RegistryUtils;
 
 import java.util.*;
 
-import static wraith.fabricaeexnihilo.api.registry.FabricaeExNihiloRegistries.SIEVE;
+//import static wraith.fabricaeexnihilo.api.registry.FabricaeExNihiloRegistries.SIEVE;
 
 public class SieveBlockEntity extends BaseBlockEntity {
-
+    
     private ItemStack mesh = ItemStack.EMPTY;
     private ItemStack contents = ItemStack.EMPTY;
     double progress = 0.0;
@@ -42,39 +44,47 @@ public class SieveBlockEntity extends BaseBlockEntity {
             ModBlocks.SIEVES.values().toArray(new SieveBlock[0])
     ).build(null);
     public static final Identifier BLOCK_ENTITY_ID = FabricaeExNihilo.id("sieve");
-
+    
     public SieveBlockEntity(BlockPos pos, BlockState state) {
         super(TYPE, pos, state);
     }
-
+    
     public ItemStack getMesh() {
         return mesh;
     }
-
+    
     public ItemStack getContents() {
         return contents;
     }
-
+    
     public double getProgress() {
         return progress;
     }
-
+    
     public ActionResult activate(@Nullable BlockState state, @Nullable PlayerEntity player, @Nullable Hand hand, @Nullable BlockHitResult hitResult) {
-        if (world == null || world.isClient() || player == null) {
+        if (world == null || player == null) {
             return ActionResult.PASS;
         }
-
+        
         var held = player.getStackInHand(hand == null ? player.getActiveHand() : hand);
         if (held == null) {
             held = ItemStack.EMPTY;
         }
-
+        
         if (held.getItem() instanceof BucketItem) {
             return ActionResult.PASS; // Done for fluid logging
         }
-
+    
+        var sieves = getConnectedSieves();
+        // Make Progress
+        if (!contents.isEmpty()) {
+            sieves.forEach(sieve -> sieve.doProgress(player));
+            return ActionResult.SUCCESS;
+        }
+        
         // Remove/Swap a mesh
-        if (SIEVE.isValidMesh(held)) {
+        ItemStack finalHeld1 = held;
+        if (world.getRecipeManager().listAllOfType(ModRecipes.SIEVE).stream().anyMatch(recipe -> recipe.getRolls().containsKey(RegistryUtils.getId(finalHeld1.getItem())))) {
             // Removing mesh
             if (!mesh.isEmpty()) {
                 player.giveItemStack(mesh.copy());
@@ -90,22 +100,16 @@ public class SieveBlockEntity extends BaseBlockEntity {
             markDirty();
             return ActionResult.SUCCESS;
         }
-        var sieves = getConnectedSieves();
-        // Make Progress
-        if (!contents.isEmpty()) {
-            sieves.forEach(sieve -> sieve.doProgress(player));
-            return ActionResult.SUCCESS;
-        }
 
         // Add a block
-        if (!held.isEmpty() && SIEVE.isValidRecipe(mesh, getFluid(), held)) {
+        if (!held.isEmpty() && !SieveRecipe.find(held.getItem(), getFluid(), RegistryUtils.getId(mesh.getItem()), world).isEmpty()) {
             ItemStack finalHeld = held;
             sieves.forEach(sieve -> sieve.setContents(finalHeld, !player.isCreative()));
             return ActionResult.SUCCESS;
         }
         return ActionResult.PASS;
     }
-
+    
     public void setContents(ItemStack stack, boolean doDrain) {
         if (stack.isEmpty() || !contents.isEmpty()) {
             return;
@@ -117,7 +121,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
         progress = 0.0;
         markDirty();
     }
-
+    
     @Nullable
     public Fluid getFluid() {
         if (world == null) {
@@ -132,7 +136,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
         }
         return state.getFluidState().getFluid();
     }
-
+    
     public void doProgress(PlayerEntity player) {
         if (world == null) {
             return;
@@ -140,50 +144,50 @@ public class SieveBlockEntity extends BaseBlockEntity {
         var haste = player.getActiveStatusEffects().get(StatusEffects.HASTE);
         var efficiency = FabricaeExNihilo.CONFIG.modules.sieves.efficiency ? EnchantmentHelper.getLevel(Enchantments.EFFICIENCY, mesh) : 0;
         var hasteLevel = FabricaeExNihilo.CONFIG.modules.sieves.haste ? (haste == null ? -1 : haste.getAmplifier()) + 1 : 0;
-
+        
         progress += FabricaeExNihilo.CONFIG.modules.sieves.baseProgress
                 + FabricaeExNihilo.CONFIG.modules.sieves.efficiencyScaleFactor * efficiency
                 + FabricaeExNihilo.CONFIG.modules.sieves.hasteScaleFactor * hasteLevel;
-
+        
         // TODO spawn some particles
         if (progress > 1.0) {
             // The utility method for multiple items is less neat to use
-            for (var result : SIEVE.getResult(mesh, getFluid(), contents, player, world.random)) {
-                ItemScatterer.spawn(world, pos.getX(), pos.getY() + 1, pos.getZ(), result);
+            for (var result : SieveRecipe.find(contents.getItem(), getFluid(), RegistryUtils.getId(mesh.getItem()), world)) {
+                ItemScatterer.spawn(world, pos.getX(), pos.getY() + 1, pos.getZ(), result.createStack(world.random));
             }
             progress = 0.0;
             contents = ItemStack.EMPTY;
         }
         markDirty();
     }
-
+    
     public void dropInventory() {
         dropMesh();
         dropContents();
     }
-
+    
     public void dropMesh() {
         ItemScatterer.spawn(world, pos.getX(), pos.getY() + 1, pos.getZ(), mesh);
         mesh = ItemStack.EMPTY;
     }
-
-
+    
+    
     public void dropContents() {
         ItemScatterer.spawn(world, pos.getX(), pos.getY() + 1, pos.getZ(), contents);
         contents = ItemStack.EMPTY;
     }
-
+    
     public List<SieveBlockEntity> getConnectedSieves() {
         var sieves = new ArrayList<SieveBlockEntity>();
-
+        
         if (world == null) {
             return sieves;
         }
-
+        
         var tested = new HashSet<BlockPos>();
         var stack = new Stack<BlockPos>();
         stack.add(this.pos);
-
+        
         while (!stack.empty()) {
             var popped = stack.pop();
             // Record that this one has been tested
@@ -203,15 +207,15 @@ public class SieveBlockEntity extends BaseBlockEntity {
                         .filter(dir -> !tested.contains(dir) && !stack.contains(dir))
                         // Remove positions too far away
                         .filter(dir -> Math.abs(this.pos.getX() - dir.getX()) <= FabricaeExNihilo.CONFIG.modules.sieves.sieveRadius &&
-                                       Math.abs(this.pos.getZ() - dir.getZ()) <= FabricaeExNihilo.CONFIG.modules.sieves.sieveRadius)
+                                Math.abs(this.pos.getZ() - dir.getZ()) <= FabricaeExNihilo.CONFIG.modules.sieves.sieveRadius)
                         // Add to the stack to be processed
                         .forEach(stack::add);
             }
         }
-
+        
         return sieves;
     }
-
+    
     private boolean matchingSieveAt(@Nullable World world, BlockPos pos) {
         if (world == null) {
             return false;
@@ -221,17 +225,17 @@ public class SieveBlockEntity extends BaseBlockEntity {
         }
         return false;
     }
-
+    
     /**
      * NBT Serialization section
      */
-
+    
     @Override
     public void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         writeNbtWithoutWorldInfo(nbt);
     }
-
+    
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
@@ -241,17 +245,17 @@ public class SieveBlockEntity extends BaseBlockEntity {
         }
         readNbtWithoutWorldInfo(nbt);
     }
-
+    
     public void writeNbtWithoutWorldInfo(NbtCompound nbt) {
         nbt.put("mesh", mesh.writeNbt(new NbtCompound()));
         nbt.put("contents", contents.writeNbt(new NbtCompound()));
         nbt.putDouble("progress", progress);
     }
-
+    
     public void readNbtWithoutWorldInfo(NbtCompound nbt) {
         mesh = ItemStack.fromNbt(nbt.getCompound("mesh"));
         contents = ItemStack.fromNbt(nbt.getCompound("contents"));
         progress = nbt.getDouble("progress");
     }
-
+    
 }

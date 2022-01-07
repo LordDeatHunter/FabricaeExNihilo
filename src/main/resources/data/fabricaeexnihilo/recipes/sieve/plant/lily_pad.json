@@ -1,0 +1,11 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "minecraft:lily_pad",
+  "input": "fabricaeexnihilo:silt",
+  "fluid": "#fabricaeexnihilo:true_water",
+  "rolls": {
+    "fabricaeexnihilo:string_mesh": [0.1],
+    "fabricaeexnihilo:flint_mesh": [0.2],
+    "fabricaeexnihilo:iron_mesh": [0.4]
+  }
+}

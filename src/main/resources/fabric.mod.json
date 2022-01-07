@@ -14,6 +14,10 @@
     ],
     "client": [
       "wraith.fabricaeexnihilo.client.FabricaeExNihiloClient"
+    ],
+    "fabricaeexnihilo:api": [
+      "wraith.fabricaeexnihilo.compatibility.DefaultApiModule",
+      "wraith.fabricaeexnihilo.compatibility.TechRebornApiModule"
     ]
   },
   "mixins": [
@@ -24,7 +28,6 @@
     "fabric": "*",
     "minecraft": "1.18.x",
     "java": ">=17",
-    "libblockattributes": ">=0.10.0",
 	"cloth-config": ">=6.0.42"
   }
 }

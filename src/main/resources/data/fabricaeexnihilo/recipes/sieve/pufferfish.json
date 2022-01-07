@@ -1,0 +1,12 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "minecraft:cod",
+  "input": "minecraft:mycelium",
+  "fluid": "#fabricaeexnihilo:true_water",
+  "rolls": {
+    "fabricaeexnihilo:string_mesh": [0.01],
+    "fabricaeexnihilo:flint_mesh": [0.01],
+    "fabricaeexnihilo:gold_mesh": [0.02],
+    "fabricaeexnihilo:diamond_mesh": [0.05]
+  }
+}

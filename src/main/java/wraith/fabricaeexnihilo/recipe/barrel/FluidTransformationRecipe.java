@@ -3,7 +3,6 @@ package wraith.fabricaeexnihilo.recipe.barrel;
 import com.google.gson.JsonObject;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
@@ -11,18 +10,18 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.api.crafting.BlockIngredient;
-import wraith.fabricaeexnihilo.api.crafting.FluidIngredient;
-import wraith.fabricaeexnihilo.api.crafting.ItemIngredient;
 import wraith.fabricaeexnihilo.modules.ModRecipes;
 import wraith.fabricaeexnihilo.modules.barrels.modes.BarrelMode;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
+import wraith.fabricaeexnihilo.recipe.util.BlockIngredient;
+import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
+import wraith.fabricaeexnihilo.util.CodecUtils;
 
 import java.util.Optional;
 
 @SuppressWarnings("UnstableApiUsage")
-public class FluidTransformationRecipe extends BaseRecipe<FluidTransformationRecipe.FluidTransformationRecipeContext> {
+public class FluidTransformationRecipe extends BaseRecipe<FluidTransformationRecipe.Context> {
     private final FluidIngredient contained;
     private final BlockIngredient catalyst;
     private final BarrelMode result;
@@ -38,11 +37,11 @@ public class FluidTransformationRecipe extends BaseRecipe<FluidTransformationRec
         if (world == null) {
             return Optional.empty();
         }
-        return world.getRecipeManager().getFirstMatch(ModRecipes.FLUID_TRANSFORMATION, new FluidTransformationRecipeContext(contained, catalyst), world);
+        return world.getRecipeManager().getFirstMatch(ModRecipes.FLUID_TRANSFORMATION, new Context(contained, catalyst), world);
     }
     
     @Override
-    public boolean matches(FluidTransformationRecipeContext context, World world) {
+    public boolean matches(Context context, World world) {
         return contained.test(context.contained) && catalyst.test(context.catalyst);
     }
     
@@ -77,29 +76,30 @@ public class FluidTransformationRecipe extends BaseRecipe<FluidTransformationRec
     public static class Serializer implements RecipeSerializer<FluidTransformationRecipe> {
         @Override
         public FluidTransformationRecipe read(Identifier id, JsonObject json) {
-            FluidIngredient contained = FluidIngredient.fromJson(json.get("contained"));
-            BlockIngredient catalyst = BlockIngredient.fromJson(json.get("catalyst"));
-            BarrelMode result = BarrelMode.fromJson(json.get("result"));
+            FluidIngredient contained = CodecUtils.fromJson(FluidIngredient.CODEC, json.get("contained"));
+            BlockIngredient catalyst = CodecUtils.fromJson(BlockIngredient.CODEC, json.get("catalyst"));
+            BarrelMode result = CodecUtils.fromJson(BarrelMode.CODEC, json.get("result"));
             
             return new FluidTransformationRecipe(id, contained, catalyst, result);
         }
         
         @Override
         public FluidTransformationRecipe read(Identifier id, PacketByteBuf buf) {
-            FluidIngredient contained = FluidIngredient.fromPacket(buf);
-            BlockIngredient catalyst = BlockIngredient.fromPacket(buf);
-            BarrelMode result = BarrelMode.fromPacket(buf);
+            FluidIngredient contained = CodecUtils.fromPacket(FluidIngredient.CODEC, buf);
+            BlockIngredient catalyst = CodecUtils.fromPacket(BlockIngredient.CODEC, buf);
+            BarrelMode result = CodecUtils.fromPacket(BarrelMode.CODEC, buf);
             
             return new FluidTransformationRecipe(id, contained, catalyst, result);
         }
         
         @Override
         public void write(PacketByteBuf buf, FluidTransformationRecipe recipe) {
-            recipe.contained.toPacket(buf);
-            recipe.catalyst.toPacket(buf);
-            recipe.result.toPacket(buf);
+            CodecUtils.toPacket(FluidIngredient.CODEC, recipe.contained, buf);
+            CodecUtils.toPacket(BlockIngredient.CODEC, recipe.catalyst, buf);
+            CodecUtils.toPacket(BarrelMode.CODEC, recipe.result, buf);
         }
     }
     
-    protected static record FluidTransformationRecipeContext(FluidVariant contained, Block catalyst) implements RecipeContext { }
+    protected static record Context(FluidVariant contained, Block catalyst) implements RecipeContext {
+    }
 }

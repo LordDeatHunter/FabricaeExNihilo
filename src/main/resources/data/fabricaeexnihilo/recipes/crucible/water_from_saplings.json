@@ -1,0 +1,7 @@
+{
+  "type": "fabricaeexnihilo:crucible",
+  "input": "#minecraft:saplings",
+  "amount": 8100,
+  "fluid": "minecraft:water",
+  "isStone": false
+}

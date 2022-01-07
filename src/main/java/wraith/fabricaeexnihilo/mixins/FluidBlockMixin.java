@@ -12,7 +12,7 @@ import wraith.fabricaeexnihilo.modules.witchwater.WitchWaterBlock;
 
 @Mixin(FluidBlock.class)
 public class FluidBlockMixin {
-
+    
     @Inject(method = "receiveNeighborFluids", at = @At("HEAD"), cancellable = true)
     public void receiveNeighborFluids(World world, BlockPos pos, BlockState state, CallbackInfoReturnable<Boolean> cir) {
         if (_this() instanceof WitchWaterBlock witchWaterBlock) {
@@ -20,9 +20,9 @@ public class FluidBlockMixin {
             cir.cancel();
         }
     }
-
+    
     public FluidBlock _this() {
-        return (FluidBlock)(Object)this;
+        return (FluidBlock) (Object) this;
     }
-
+    
 }

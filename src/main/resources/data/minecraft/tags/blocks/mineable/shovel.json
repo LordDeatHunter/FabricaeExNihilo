@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "fabricaeexnihilo:dust",
+    "fabricaeexnihilo:silt",
+    "fabricaeexnihilo:crushed_andesite",
+    "fabricaeexnihilo:crushed_diorite",
+    "fabricaeexnihilo:crushed_granite",
+    "fabricaeexnihilo:crushed_prismarine",
+    "fabricaeexnihilo:crushed_netherrack",
+    "fabricaeexnihilo:crushed_endstone"
+  ]
+}

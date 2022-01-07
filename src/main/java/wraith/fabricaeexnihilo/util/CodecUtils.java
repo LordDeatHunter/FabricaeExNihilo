@@ -7,15 +7,16 @@ import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.fabricmc.fabric.api.transfer.v1.storage.TransferVariant;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 
@@ -24,49 +25,60 @@ import java.util.function.Function;
  */
 @SuppressWarnings("UnstableApiUsage")
 public class CodecUtils {
-    public static final Codec<FluidVariant> FLUID_VARIANT = Codec.either(RecordCodecBuilder.<FluidVariant>create(instance1 -> instance1.group(
+    public static final Codec<FluidVariant> FLUID_VARIANT = magicCodec(Registry.FLUID.getCodec()
+                    .xmap(FluidVariant::of, FluidVariant::getFluid),
+            RecordCodecBuilder.create(instance1 -> instance1.group(
                             Registry.FLUID.getCodec()
                                     .fieldOf("type")
                                     .forGetter(FluidVariant::getFluid),
                             NbtCompound.CODEC
-                                    .fieldOf("nbt")
-                                    .forGetter(TransferVariant::getNbt)).apply(instance1, FluidVariant::of)),
-                    Registry.FLUID.getCodec()
-                            .xmap(FluidVariant::of, FluidVariant::getFluid))
-            .xmap(CodecUtils::flattenEither, variant -> variant.hasNbt() ? Either.left(variant) : Either.right(variant));
+                                    .optionalFieldOf("nbt")
+                                    .forGetter(variant -> Optional.ofNullable(variant.getNbt())))
+                    .apply(instance1, (fluid, nbt) -> FluidVariant.of(fluid, nbt.orElse(null)))));
     
-    public static final Codec<ItemStack> ITEM_STACK = Codec.either(RecordCodecBuilder.<ItemStack>create(instance1 -> instance1.group(
-                            Registry.ITEM.getCodec()
-                                    .fieldOf("item")
-                                    .forGetter(ItemStack::getItem),
-                            Codec.INT
-                                    .fieldOf("count")
-                                    .forGetter(ItemStack::getCount),
-                            NbtCompound.CODEC
-                                    .fieldOf("nbt")
-                                    .forGetter(ItemStack::getNbt)).apply(instance1, (item, count, nbt) -> {
-                        var stack = new ItemStack(item);
-                        stack.setCount(count);
-                        stack.setNbt(nbt);
-                        return stack;
-                    })),
+    public static final Codec<ItemStack> ITEM_STACK = magicCodec(Registry.ITEM.getCodec()
+                    .xmap(Item::getDefaultStack, ItemStack::getItem),
+            RecordCodecBuilder.create(instance1 -> instance1.group(
                     Registry.ITEM.getCodec()
-                            .xmap(Item::getDefaultStack, ItemStack::getItem))
-            .xmap(CodecUtils::flattenEither, stack -> stack.hasNbt() ? Either.left(stack) : Either.right(stack));
+                            .fieldOf("item")
+                            .forGetter(ItemStack::getItem),
+                    Codec.INT
+                            .fieldOf("count")
+                            .forGetter(ItemStack::getCount),
+                    NbtCompound.CODEC
+                            .optionalFieldOf("nbt")
+                            .forGetter(itemStack -> Optional.ofNullable(itemStack.getNbt()))).apply(instance1, (item, count, nbt) -> {
+                var stack = new ItemStack(item);
+                stack.setCount(count);
+                nbt.ifPresent(stack::setNbt);
+                return stack;
+            })));
     
-    public static <T> T deserializeNbt(Codec<T> codec, NbtElement data) {
+    private static <T> Codec<T> magicCodec(Codec<T> simple, Codec<T> expanded) {
+        return Codec.either(simple, expanded).xmap(CodecUtils::flattenEither, Either::right);
+    }
+    
+    public static <T> T fromPacket(Codec<T> codec, PacketByteBuf buf) {
+        return fromNbt(codec, buf.readNbt());
+    }
+    
+    public static <T> void toPacket(Codec<T> codec, T data, PacketByteBuf buf) {
+        buf.writeNbt((NbtCompound) toNbt(codec, data));
+    }
+    
+    public static <T> T fromNbt(Codec<T> codec, NbtElement data) {
         return deserialize(codec, NbtOps.INSTANCE, data);
     }
     
-    public static <T> NbtElement serializeNbt(Codec<T> codec, T data) {
+    public static <T> NbtElement toNbt(Codec<T> codec, T data) {
         return serialize(codec, NbtOps.INSTANCE, data);
     }
     
-    public static <T> T deserializeJson(Codec<T> codec, JsonElement data) {
+    public static <T> T fromJson(Codec<T> codec, JsonElement data) {
         return deserialize(codec, JsonOps.INSTANCE, data);
     }
     
-    public static <T> JsonElement serializeJson(Codec<T> codec, T data) {
+    public static <T> JsonElement toJson(Codec<T> codec, T data) {
         return serialize(codec, JsonOps.INSTANCE, data);
     }
     

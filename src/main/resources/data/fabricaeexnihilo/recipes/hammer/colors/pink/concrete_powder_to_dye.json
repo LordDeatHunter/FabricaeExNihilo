@@ -1,0 +1,10 @@
+{
+  "type": "fabricaeexnihilo:hammer",
+  "block": "minecraft:pink_concrete_powder",
+  "result": {
+    "stack": "minecraft:pink_dye",
+    "chances": [
+      0.0625
+    ]
+  }
+}

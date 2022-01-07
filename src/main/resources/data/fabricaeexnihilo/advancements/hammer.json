@@ -2,7 +2,7 @@
   "parent": "fabricaeexnihilo:pebbles",
   "display": {
     "icon": {
-      "item": "fabricaeexnihilo:hammer_wood"
+      "item": "fabricaeexnihilo:wooden_hammer"
     },
     "title": {
       "translate": "advancements.fabricaeexnihilo.hammer.title"
@@ -22,7 +22,7 @@
         "items": [
           {
             "items": [
-              "fabricaeexnihilo:hammer_wood"
+              "fabricaeexnihilo:wooden_hammer"
             ]
           }
         ]

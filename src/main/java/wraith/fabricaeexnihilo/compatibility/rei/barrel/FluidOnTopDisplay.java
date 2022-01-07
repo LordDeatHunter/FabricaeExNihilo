@@ -15,12 +15,12 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public record FluidOnTopDisplay(FluidCombinationRecipe recipe) implements Display {
-
+    
     @Override
     public CategoryIdentifier<?> getCategoryIdentifier() {
         return PluginEntry.ON_TOP;
     }
-
+    
     @Override
     public List<EntryIngredient> getOutputEntries() {
         var result = recipe.getResult();
@@ -37,7 +37,7 @@ public record FluidOnTopDisplay(FluidCombinationRecipe recipe) implements Displa
         }
         return Collections.singletonList(EntryIngredient.empty());
     }
-
+    
     @Override
     public List<EntryIngredient> getInputEntries() {
         var inBarrel = recipe.getContained().asREIEntries();
@@ -45,5 +45,5 @@ public record FluidOnTopDisplay(FluidCombinationRecipe recipe) implements Displa
         var barrels = ModBlocks.BARRELS.values().stream().map(EntryIngredients::of).toList();
         return Stream.of(inBarrel, onTop, barrels).flatMap(List::stream).toList();
     }
-
+    
 }

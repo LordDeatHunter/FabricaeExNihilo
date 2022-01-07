@@ -1,0 +1,10 @@
+{
+  "type": "fabricaeexnihilo:hammer",
+  "block": "minecraft:stone",
+  "result": {
+    "stack": "minecraft:cobblestone",
+    "chances": [
+      1.0
+    ]
+  }
+}

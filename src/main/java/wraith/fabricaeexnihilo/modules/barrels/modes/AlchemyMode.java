@@ -5,10 +5,11 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.nbt.NbtCompound;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.api.crafting.EntityStack;
-import wraith.fabricaeexnihilo.api.crafting.Loot;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
 import wraith.fabricaeexnihilo.recipe.barrel.AlchemyRecipe;
+import wraith.fabricaeexnihilo.recipe.util.EntityStack;
+import wraith.fabricaeexnihilo.recipe.util.Loot;
+import wraith.fabricaeexnihilo.util.CodecUtils;
 
 import java.util.Optional;
 
@@ -53,11 +54,11 @@ public class AlchemyMode extends BarrelMode {
         this.toSpawn = toSpawn;
         this.countdown = countdown;
     }
-
+    
     public AlchemyMode(BarrelMode before, BarrelMode after, int countdown) {
         this(before, after, EntityStack.EMPTY, countdown);
     }
-
+    
     @Override
     public @NotNull String getId() {
         return "alchemy";
@@ -81,7 +82,7 @@ public class AlchemyMode extends BarrelMode {
             barrel.setMode(after);
         }
     }
-
+    
     public BarrelMode getBefore() {
         return before;
     }
@@ -99,7 +100,7 @@ public class AlchemyMode extends BarrelMode {
     }
     
     public static AlchemyMode readNbt(NbtCompound nbt) {
-        return new AlchemyMode(BarrelMode.fromNbt(nbt.getCompound("before")), BarrelMode.fromNbt(nbt.getCompound("after")), new EntityStack(nbt.getCompound("toSpawn")), nbt.getInt("countdown"));
+        return new AlchemyMode(CodecUtils.fromNbt(CODEC, nbt.getCompound("before")), CodecUtils.fromNbt(CODEC, nbt.getCompound("after")), new EntityStack(nbt.getCompound("toSpawn")), nbt.getInt("countdown"));
     }
-
+    
 }

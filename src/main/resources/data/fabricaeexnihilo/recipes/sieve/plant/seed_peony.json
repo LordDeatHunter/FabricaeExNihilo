@@ -1,0 +1,11 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "fabricaeexnihilo:seed_peony",
+  "input": "minecraft:dirt",
+  "rolls": {
+    "fabricaeexnihilo:flint_mesh": [0.05]
+  },
+  "fabricaeexnihilo:requiredItems": [
+    "fabricaeexnihilo:seed_peony"
+  ]
+}

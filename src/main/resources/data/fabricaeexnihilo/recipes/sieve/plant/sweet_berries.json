@@ -1,0 +1,8 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "minecraft:sweet_berries",
+  "input": "minecraft:dirt",
+  "rolls": {
+    "fabricaeexnihilo:iron_mesh": [0.02, 0.02, 0.01]
+  }
+}

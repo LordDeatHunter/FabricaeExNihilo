@@ -1,0 +1,5 @@
+{
+  "type": "fabricaeexnihilo:witch_water_entity",
+  "target": "minecraft:polar_bear",
+  "result": "minecraft:ravager"
+}

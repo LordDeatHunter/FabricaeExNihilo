@@ -9,8 +9,8 @@ import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelItemStorage;
 import wraith.fabricaeexnihilo.recipe.barrel.CompostRecipe;
-import wraith.fabricaeexnihilo.util.Color;
 import wraith.fabricaeexnihilo.util.CodecUtils;
+import wraith.fabricaeexnihilo.util.Color;
 
 @SuppressWarnings("UnstableApiUsage")
 public class CompostMode extends BarrelMode {
@@ -27,7 +27,7 @@ public class CompostMode extends BarrelMode {
                     Color.CODEC
                             .fieldOf("color")
                             .forGetter(CompostMode::getColor)
-                    )
+            )
             .apply(instance, CompostMode::new));
     
     private final ItemStack result;

@@ -27,15 +27,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
-import wraith.fabricaeexnihilo.api.crafting.EntityStack;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.barrels.modes.*;
 import wraith.fabricaeexnihilo.modules.base.BaseBlockEntity;
+import wraith.fabricaeexnihilo.modules.base.EnchantableBlockEntity;
 import wraith.fabricaeexnihilo.modules.base.EnchantmentContainer;
+import wraith.fabricaeexnihilo.recipe.util.EntityStack;
+import wraith.fabricaeexnihilo.util.CodecUtils;
 
 @SuppressWarnings("UnstableApiUsage")
-public class BarrelBlockEntity extends BaseBlockEntity {
-
+public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlockEntity {
+    
     public static final Identifier BLOCK_ENTITY_ID = FabricaeExNihilo.id("barrel");
     public static final BlockEntityType<BarrelBlockEntity> TYPE = FabricBlockEntityTypeBuilder.create(
             BarrelBlockEntity::new,
@@ -46,13 +48,13 @@ public class BarrelBlockEntity extends BaseBlockEntity {
         ItemStorage.SIDED.registerForBlockEntity((barrel, direction) -> barrel.itemStorage, TYPE);
         FluidStorage.SIDED.registerForBlockEntity((barrel, direction) -> barrel.fluidStorage, TYPE);
     }
-
+    
     private int tickCounter;
     private BarrelMode mode;
     private final boolean isStone;
     public final Storage<ItemVariant> itemStorage;
     public final Storage<FluidVariant> fluidStorage;
-    EnchantmentContainer enchantments = new EnchantmentContainer();
+    private final EnchantmentContainer enchantments = new EnchantmentContainer();
     
     public BarrelBlockEntity(BlockPos pos, BlockState state, boolean isStone) {
         super(TYPE, pos, state);
@@ -64,7 +66,7 @@ public class BarrelBlockEntity extends BaseBlockEntity {
                 ? FabricaeExNihilo.CONFIG.modules.barrels.tickRate
                 : world.random.nextInt(FabricaeExNihilo.CONFIG.modules.barrels.tickRate);
     }
-
+    
     public BarrelBlockEntity(BlockPos pos, BlockState state) {
         this(pos, state, false);
     }
@@ -81,11 +83,11 @@ public class BarrelBlockEntity extends BaseBlockEntity {
     public EnchantmentContainer getEnchantmentContainer() {
         return enchantments;
     }
-
+    
     public static void ticker(World world, BlockPos blockPos, BlockState blockState, BarrelBlockEntity barrelEntity) {
         barrelEntity.tick();
     }
-
+    
     public void tick() {
         if (tickCounter <= 0) {
             tickCounter = FabricaeExNihilo.CONFIG.modules.barrels.tickRate;
@@ -96,11 +98,11 @@ public class BarrelBlockEntity extends BaseBlockEntity {
             markDirty();
         }
     }
-
+    
     public int getEfficiencyMultiplier() {
         return 1 + enchantments.getEnchantmentLevel(Enchantments.EFFICIENCY);
     }
-
+    
     public int countBelow(Block block, int radius) {
         var count = 0;
         if (world == null) {
@@ -115,15 +117,15 @@ public class BarrelBlockEntity extends BaseBlockEntity {
         }
         return count;
     }
-
+    
     // NBT Serialization section
-
+    
     @Override
     public void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         writeNbtWithoutWorldInfo(nbt);
     }
-
+    
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
@@ -133,28 +135,28 @@ public class BarrelBlockEntity extends BaseBlockEntity {
         }
         readNbtWithoutWorldInfo(nbt);
     }
-
+    
     private void writeNbtWithoutWorldInfo(NbtCompound nbt) {
-        nbt.put("mode", mode.toNbt());
+        nbt.put("mode", CodecUtils.toNbt(BarrelMode.CODEC, mode));
         nbt.put("enchantments", enchantments.writeNbt());
     }
-
+    
     private void readNbtWithoutWorldInfo(NbtCompound nbt) {
-        mode = BarrelMode.fromNbt(nbt.getCompound("mode"));
+        mode = CodecUtils.fromNbt(BarrelMode.CODEC, nbt.getCompound("mode"));
         if (nbt.contains("enchantments")) {
             var readEnchantments = new EnchantmentContainer();
             readEnchantments.readNbt(nbt.getCompound("enchantments"));
             enchantments.setAllEnchantments(readEnchantments);
         }
     }
-
+    
     public void spawnByproduct(ItemStack stack) {
         if (stack.isEmpty() || world == null) {
             return;
         }
         ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), stack);
     }
-
+    
     public void spawnEntity(EntityStack entityStack) {
         if (entityStack.isEmpty() || world == null || world.isClient) {
             return;
@@ -167,7 +169,7 @@ public class BarrelBlockEntity extends BaseBlockEntity {
         // TODO play some particles
         entityStack.setSize(entityStack.getSize() - 1);
     }
-
+    
     /**
      * Returns a valid BlockPos or null
      */
@@ -180,7 +182,7 @@ public class BarrelBlockEntity extends BaseBlockEntity {
         var leakPos = pos.add(rand.nextInt(2 * r + 1) - r, -rand.nextInt(2), rand.nextInt(2 * r + 1) - r);
         return World.isValid(leakPos) ? leakPos : null;
     }
-
+    
     public ActionResult activate(@Nullable PlayerEntity player, @Nullable Hand hand) {
         if (world == null || player == null || hand == null) {
             return ActionResult.PASS;
@@ -195,7 +197,7 @@ public class BarrelBlockEntity extends BaseBlockEntity {
             return ActionResult.PASS;
         }
     }
-
+    
     public void dropInventoryAtPlayer(PlayerEntity player) {
         if (world == null || !(mode instanceof ItemMode itemMode)) {
             return;
@@ -208,9 +210,8 @@ public class BarrelBlockEntity extends BaseBlockEntity {
         mode = new EmptyMode();
         markDirty();
     }
-
+    
     public ActionResult insertFromHand(PlayerEntity player, Hand hand) {
-        // TODO: Verify that it works
         var held = player.getStackInHand(hand);
         
         try (Transaction t = Transaction.openOuter()) {
@@ -229,7 +230,7 @@ public class BarrelBlockEntity extends BaseBlockEntity {
         
         try (Transaction t = Transaction.openOuter()) {
             var amount = StorageUtil.findExtractableContent(bucketFluidStorage, t);
-        
+            
             // TODO: Bucket shouldn't lose contents in creative (hard to fix)
             long moved;
             if (amount == null) {

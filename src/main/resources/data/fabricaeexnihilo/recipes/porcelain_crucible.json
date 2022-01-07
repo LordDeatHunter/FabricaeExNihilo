@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "fabricaeexnihilo:unfired_porcelain_crucible"
+  },
+  "result": "fabricaeexnihilo:porcelain_crucible",
+  "experience": 0.15,
+  "cookingtime": 200
+}

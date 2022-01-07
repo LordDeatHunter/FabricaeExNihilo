@@ -1,0 +1,11 @@
+{
+  "type": "fabricaeexnihilo:hammer",
+  "block": "minecraft:tube_coral",
+  "result": {
+    "stack": "tube_coral_fan",
+    "chances": [
+      1,
+      0.5
+    ]
+  }
+}

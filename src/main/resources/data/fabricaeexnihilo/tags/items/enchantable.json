@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "#fabricaeexnihilo:enchantments/minecraft/efficiency",
+    "#fabricaeexnihilo:enchantments/minecraft/fire_aspect",
+    "#fabricaeexnihilo:enchantments/minecraft/thorns",
+    "#fabricaeexnihilo:enchantments/minecraft/fortune"
+  ]
+}

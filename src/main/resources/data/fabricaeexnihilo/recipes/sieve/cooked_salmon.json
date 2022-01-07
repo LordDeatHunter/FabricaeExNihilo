@@ -1,0 +1,9 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "minecraft:cooked_salmon",
+  "input": "minecraft:dirt",
+  "fluid": "#fabricaeexnihilo:true_lava",
+  "rolls": {
+    "fabricaeexnihilo:iron_mesh": [0.15]
+  }
+}

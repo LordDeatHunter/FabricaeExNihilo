@@ -1,0 +1,8 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "fabricaeexnihilo:stone_pebble",
+  "input": "minecraft:dirt",
+  "rolls": {
+    "fabricaeexnihilo:string_mesh": [0.5]
+  }
+}

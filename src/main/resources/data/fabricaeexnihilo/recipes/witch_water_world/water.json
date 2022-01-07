@@ -1,0 +1,11 @@
+{
+  "type": "fabricaeexnihilo:witch_water_world",
+  "target": "#fabricaeexnihilo:true_water",
+  "result": {
+    "minecraft:dirt": 51,
+    "minecraft:grass_block": 12,
+    "minecraft:coarse_dirt": 12,
+    "minecraft:mycelium": 12,
+    "minecraft:podzol": 12
+  }
+}

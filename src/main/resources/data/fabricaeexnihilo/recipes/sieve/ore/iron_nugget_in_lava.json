@@ -1,0 +1,13 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "minecraft:iron_nugget",
+  "input": "fabricaeexnihilo:crushed_granite",
+  "fluid": "#fabricaeexnihilo:true_lava",
+  "rolls": {
+    "fabricaeexnihilo:string_mesh": [0.1],
+    "fabricaeexnihilo:flint_mesh": [0.2],
+    "fabricaeexnihilo:iron_mesh": [0.1, 0.1],
+    "fabricaeexnihilo:gold_mesh": [0.2, 0.2],
+    "fabricaeexnihilo:diamond_mesh": [0.3, 0.3]
+  }
+}

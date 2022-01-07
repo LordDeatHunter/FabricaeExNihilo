@@ -1,0 +1,10 @@
+{
+  "type": "fabricaeexnihilo:hammer",
+  "block": "minecraft:end_stone",
+  "result": {
+    "stack": "fabricaeexnihilo:crushed_endstone",
+    "chances": [
+      1.0
+    ]
+  }
+}

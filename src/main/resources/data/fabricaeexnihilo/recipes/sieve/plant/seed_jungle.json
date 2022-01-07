@@ -1,0 +1,11 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "fabricaeexnihilo:seed_jungle",
+  "input": "minecraft:dirt",
+  "rolls": {
+    "fabricaeexnihilo:flint_mesh": [0.01]
+  },
+  "fabricaeexnihilo:requiredItems": [
+    "fabricaeexnihilo:seed_jungle"
+  ]
+}

@@ -1,6 +1,5 @@
 package wraith.fabricaeexnihilo.modules.sieves;
 
-import net.devtech.arrp.json.recipe.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -13,7 +12,6 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -26,23 +24,13 @@ import wraith.fabricaeexnihilo.util.ItemUtils;
 import wraith.fabricaeexnihilo.util.VoxelShapeHelper;
 
 public class SieveBlock extends Block implements BlockEntityProvider, Waterloggable {
-
-    private final Identifier texture;
-    private final Identifier craftIngredient1;
-    private final Identifier craftIngredient2;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
-
-    public SieveBlock(Identifier texture, Identifier craftIngredient1, Identifier craftIngredient2, Settings settings) {
-        super(settings);
-        this.texture = texture;
-        this.craftIngredient1 = craftIngredient1;
-        this.craftIngredient2 = craftIngredient2;
+    
+    public SieveBlock() {
+        super(FabricBlockSettings.of(Material.WOOD));
         setDefaultState(getStateManager().getDefaultState().with(WATERLOGGED, false));
     }
-    public SieveBlock(Identifier texture, Identifier craftIngredient1, Identifier craftIngredient2) {
-        this(texture, craftIngredient1, craftIngredient2, FabricBlockSettings.of(Material.WOOD));
-    }
-
+    
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         /*
@@ -52,7 +40,7 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
         */
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
-
+    
     @Override
     public FluidState getFluidState(BlockState state) {
         if (state.get(WATERLOGGED)) {
@@ -60,89 +48,55 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
         }
         return super.getFluidState(state);
     }
-
+    
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         return super.getPlacementState(ctx).with(WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER);
     }
-
+    
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPE;
     }
-
+    
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
         builder.add(WATERLOGGED);
     }
-
+    
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (world.isClient() || pos == null) {
-            return ActionResult.SUCCESS;
+        if (pos == null) {
+            return ActionResult.PASS;
         }
         if (world.getBlockEntity(pos) instanceof SieveBlockEntity sieve) {
             return sieve.activate(state, player, hand, hit);
         }
         return ActionResult.PASS;
     }
-
+    
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new SieveBlockEntity(pos, state);
     }
-
+    
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }
-
+    
     @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        if (!player.isCreative()) {
-            if (world.getBlockEntity(pos) instanceof SieveBlockEntity sieve) {
-                var stack = ItemUtils.asStack(this);
-                world.spawnEntity(ItemUtils.asEntity(stack, world, pos));
-                if (!sieve.getMesh().isEmpty()) {
-                    world.spawnEntity(ItemUtils.asEntity(sieve.getMesh(), world, pos));
-                }
-                if (!sieve.getContents().isEmpty()) {
-                    world.spawnEntity(ItemUtils.asEntity(sieve.getContents(), world, pos));
-                }
-            }
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        if (!state.isOf(newState.getBlock()) && world.getBlockEntity(pos) instanceof SieveBlockEntity sieve) {
+            sieve.dropContents();
         }
-        super.onBreak(world, pos, state, player);
     }
-
-    public JRecipe generateRecipe() {
-        return JRecipe.shaped(
-                JPattern.pattern(
-                        "x x",
-                        "xyx",
-                        "z z"
-                ),
-                JKeys.keys()
-                        .key("x",
-                                JIngredient.ingredient()
-                                        .item(craftIngredient1.toString())
-                        )
-                        .key("y",
-                                JIngredient.ingredient()
-                                        .item(craftIngredient2.toString())
-                        )
-                        .key("z",
-                                JIngredient.ingredient()
-                                        .item("minecraft:stick")
-                        ),
-                JResult.item(asItem())
-        );
-    }
-
+    
     private static final VoxelShape SHAPE;
-
+    
     static {
         SHAPE = VoxelShapeHelper.union(
                 createCuboidShape(0.0, 0.0, 0.0, 2.0, 12.0, 2.0),
@@ -152,9 +106,5 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
                 createCuboidShape(0.0, 8.0, 0.0, 16.0, 12.0, 16.0)
         );
     }
-
-    public Identifier getTexture() {
-        return texture;
-    }
-
+    
 }

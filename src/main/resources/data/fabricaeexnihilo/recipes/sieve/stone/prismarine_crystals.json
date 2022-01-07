@@ -1,0 +1,8 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "minecraft:prismarine_crystals",
+  "input": "fabricaeexnihilo:crushed_prismarine",
+  "rolls": {
+    "fabricaeexnihilo:diamond_mesh": [0.01]
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "type": "fabricaeexnihilo:witch_water_entity",
+  "target": "minecraft:cow",
+  "result": "minecraft:mooshroom"
+}

@@ -6,11 +6,11 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;
 
 public class SilkWormItem extends Item {
-
+    
     public SilkWormItem(FabricItemSettings settings) {
         super(settings);
     }
-
+    
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         if (context == null || context.getWorld().isClient) {
@@ -22,5 +22,5 @@ public class SilkWormItem extends Item {
         }
         return result;
     }
-
+    
 }

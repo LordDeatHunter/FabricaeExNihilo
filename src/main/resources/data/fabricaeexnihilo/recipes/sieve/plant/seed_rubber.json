@@ -1,0 +1,11 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "fabricaeexnihilo:seed_rubber",
+  "input": "minecraft:dirt",
+  "rolls": {
+    "fabricaeexnihilo:iron_mesh": [0.02, 0.02, 0.01]
+  },
+  "fabricaeexnihilo:requiredItems": [
+    "fabricaeexnihilo:seed_rubber"
+  ]
+}

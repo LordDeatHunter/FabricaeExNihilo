@@ -1,0 +1,10 @@
+{
+  "type": "fabricaeexnihilo:hammer",
+  "block": "minecraft:white_wool",
+  "result": {
+    "stack": "minecraft:white_dye",
+    "chances": [
+      0.5
+    ]
+  }
+}
