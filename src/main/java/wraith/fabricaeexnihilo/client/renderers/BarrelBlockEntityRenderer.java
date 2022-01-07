@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
 import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView;
 import net.fabricmc.fabric.api.transfer.v1.client.fluid.FluidVariantRendering;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.TexturedRenderLayers;
@@ -72,7 +73,7 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
         // Idea stolen from Modern Industrialisation
         
         var emitter = RendererAccess.INSTANCE.getRenderer().meshBuilder().getEmitter();
-        emitter.square(Direction.UP, X_MIN, Z_MIN, X_MAX, Z_MAX, 1 - Y_MAX);
+        emitter.square(Direction.UP, X_MIN, Z_MIN, X_MAX, Z_MAX, 1 - MathHelper.lerp(mode.getAmount() / (float)FluidConstants.BUCKET, Y_MIN, Y_MAX));
         emitter.spriteBake(0, sprite, MutableQuadView.BAKE_LOCK_UV);
         vertexConsumers.getBuffer(RenderLayer.getTranslucent()).quad(matrices.peek(), emitter.toBakedQuad(0, sprite, false), r, g, b, light, overlays);
     }
