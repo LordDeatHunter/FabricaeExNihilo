@@ -32,13 +32,14 @@ import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.base.BaseBlockEntity;
+import wraith.fabricaeexnihilo.modules.base.EnchantableBlockEntity;
 import wraith.fabricaeexnihilo.modules.base.EnchantmentContainer;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleHeatRecipe;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleRecipe;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
 @SuppressWarnings("UnstableApiUsage")
-public class CrucibleBlockEntity extends BaseBlockEntity {
+public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableBlockEntity {
     private final boolean isStone;
     private final Storage<ItemVariant> itemStorage = new CrucibleItemStorage();
     private final Storage<FluidVariant> fluidStorage = new CrucibleFluidStorage();
@@ -48,12 +49,17 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
     private FluidVariant fluid = FluidVariant.blank();
     private int heat = 0;
     private int tickCounter;
+    /**
+     * Enchantments
+     */
+    private final EnchantmentContainer enchantments = new EnchantmentContainer();
     
     public static final BlockEntityType<CrucibleBlockEntity> TYPE = FabricBlockEntityTypeBuilder.create(
             CrucibleBlockEntity::new,
             ModBlocks.CRUCIBLES.values().toArray(new CrucibleBlock[0])
     ).build(null);
     public static final Identifier BLOCK_ENTITY_ID = FabricaeExNihilo.id("crucible");
+    
     
     static {
         ItemStorage.SIDED.registerForBlockEntity((crucible, direction) -> crucible.itemStorage, TYPE);
@@ -88,11 +94,6 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
     public EnchantmentContainer getEnchantments() {
         return enchantments;
     }
-    
-    /**
-     * Enchantments
-     */
-    private final EnchantmentContainer enchantments = new EnchantmentContainer();
     
     @SuppressWarnings("unused") // lambda stuff
     public static void ticker(World world, BlockPos blockPos, BlockState blockState, CrucibleBlockEntity crucibleEntity) {
@@ -224,6 +225,11 @@ public class CrucibleBlockEntity extends BaseBlockEntity {
     
     public long getContained() {
         return contained;
+    }
+    
+    @Override
+    public EnchantmentContainer getEnchantmentContainer() {
+        return enchantments;
     }
     
     private class CrucibleFluidStorage extends SnapshotParticipant<CrucibleSnapshot> implements SingleSlotStorage<FluidVariant>, ExtractionOnlyStorage<FluidVariant> {

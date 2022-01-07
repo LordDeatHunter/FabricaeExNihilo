@@ -30,12 +30,13 @@ import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.barrels.modes.*;
 import wraith.fabricaeexnihilo.modules.base.BaseBlockEntity;
+import wraith.fabricaeexnihilo.modules.base.EnchantableBlockEntity;
 import wraith.fabricaeexnihilo.modules.base.EnchantmentContainer;
 import wraith.fabricaeexnihilo.recipe.util.EntityStack;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
 @SuppressWarnings("UnstableApiUsage")
-public class BarrelBlockEntity extends BaseBlockEntity {
+public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlockEntity {
     
     public static final Identifier BLOCK_ENTITY_ID = FabricaeExNihilo.id("barrel");
     public static final BlockEntityType<BarrelBlockEntity> TYPE = FabricBlockEntityTypeBuilder.create(
@@ -53,7 +54,7 @@ public class BarrelBlockEntity extends BaseBlockEntity {
     private final boolean isStone;
     public final Storage<ItemVariant> itemStorage;
     public final Storage<FluidVariant> fluidStorage;
-    EnchantmentContainer enchantments = new EnchantmentContainer();
+    private final EnchantmentContainer enchantments = new EnchantmentContainer();
     
     public BarrelBlockEntity(BlockPos pos, BlockState state, boolean isStone) {
         super(TYPE, pos, state);

@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EnchantmentContainer {
-    
     private final Map<Identifier, Integer> enchantments = new HashMap<>();
     
     public Map<Identifier, Integer> getEnchantments() {

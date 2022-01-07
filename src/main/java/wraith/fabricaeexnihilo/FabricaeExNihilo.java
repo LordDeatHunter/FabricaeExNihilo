@@ -10,8 +10,10 @@ import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import wraith.fabricaeexnihilo.loot.CopyEnchantmentsLootFunction;
 import wraith.fabricaeexnihilo.modules.*;
 import wraith.fabricaeexnihilo.util.ARRPUtils;
 import wraith.fabricaeexnihilo.util.EntrypointHelper;
@@ -36,6 +38,8 @@ public class FabricaeExNihilo implements ModInitializer {
     @Override
     public void onInitialize() {
         EntrypointHelper.callEntrypoints();
+    
+        Registry.register(Registry.LOOT_FUNCTION_TYPE, id("copy_enchantments"), CopyEnchantmentsLootFunction.TYPE);
         
         /* Register Status Effects */
         LOGGER.debug("Registering Status Effects");

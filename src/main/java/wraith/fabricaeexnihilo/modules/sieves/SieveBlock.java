@@ -89,20 +89,10 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
     }
     
     @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        if (!player.isCreative()) {
-            if (world.getBlockEntity(pos) instanceof SieveBlockEntity sieve) {
-                var stack = ItemUtils.asStack(this);
-                world.spawnEntity(ItemUtils.asEntity(stack, world, pos));
-                if (!sieve.getMesh().isEmpty()) {
-                    world.spawnEntity(ItemUtils.asEntity(sieve.getMesh(), world, pos));
-                }
-                if (!sieve.getContents().isEmpty()) {
-                    world.spawnEntity(ItemUtils.asEntity(sieve.getContents(), world, pos));
-                }
-            }
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        if (!state.isOf(newState.getBlock()) && world.getBlockEntity(pos) instanceof SieveBlockEntity sieve) {
+            sieve.dropContents();
         }
-        super.onBreak(world, pos, state, player);
     }
     
     private static final VoxelShape SHAPE;

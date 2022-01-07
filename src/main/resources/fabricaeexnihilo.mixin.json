@@ -4,6 +4,7 @@
   "package": "wraith.fabricaeexnihilo.mixins",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AnvilScreenHandlerMixin",
     "BlockHarvestMixin",
     "BlockWithEntityInvoker",
     "BottleUseMixin",

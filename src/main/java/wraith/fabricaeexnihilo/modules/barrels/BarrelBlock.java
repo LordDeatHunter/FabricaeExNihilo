@@ -20,6 +20,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -73,19 +74,10 @@ public class BarrelBlock extends BlockWithEntity {
     }
     
     @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        if (player != null && !player.isCreative() && world.getBlockEntity(pos) instanceof BarrelBlockEntity barrelEntity) {
-            var x = pos.getX();
-            var y = pos.getY();
-            var z = pos.getZ();
-            var stack = ItemUtils.asStack(this);
-            EnchantmentContainer.addEnchantments(stack, barrelEntity.getEnchantmentContainer());
-            world.spawnEntity(new ItemEntity(world, x, y, z, stack));
-            if (barrelEntity.getMode() instanceof ItemMode itemMode) {
-                world.spawnEntity(new ItemEntity(world, x, y, z, itemMode.getStack()));
-            }
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        if (!state.isOf(newState.getBlock()) && world.getBlockEntity(pos) instanceof BarrelBlockEntity barrel && barrel.getMode() instanceof ItemMode mode) {
+            ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), mode.getStack());
         }
-        super.onBreak(world, pos, state, player);
     }
     
     // Milking
@@ -140,7 +132,7 @@ public class BarrelBlock extends BlockWithEntity {
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         if (world.getBlockEntity(pos) instanceof BarrelBlockEntity barrelEntity) {
-            EnchantmentHelper.get(itemStack).forEach((enchantment, level) -> barrelEntity.enchantments.setEnchantmentLevel(enchantment, level));
+            EnchantmentHelper.get(itemStack).forEach((enchantment, level) -> barrelEntity.getEnchantmentContainer().setEnchantmentLevel(enchantment, level));
         }
     }
     

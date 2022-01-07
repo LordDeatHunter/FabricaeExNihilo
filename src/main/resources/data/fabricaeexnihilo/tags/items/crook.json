@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "fabricaeexnihilo:stone_crook",
+    "fabricaeexnihilo:diorite_crook",
+    "fabricaeexnihilo:blackstone_crook",
+    "fabricaeexnihilo:wooden_crook",
+    "fabricaeexnihilo:clay_crook",
+    "fabricaeexnihilo:deepslate_crook",
+    "fabricaeexnihilo:prismarine_crook",
+    "fabricaeexnihilo:basalt_crook",
+    "fabricaeexnihilo:granite_crook",
+    "fabricaeexnihilo:uncooked_clay_crook",
+    "fabricaeexnihilo:purpur_crook",
+    "fabricaeexnihilo:andesite_crook",
+    "fabricaeexnihilo:bone_crook",
+    "fabricaeexnihilo:blaze_crook"
+  ]
+}

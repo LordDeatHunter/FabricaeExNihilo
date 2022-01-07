@@ -16,8 +16,10 @@ import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModItems;
 import wraith.fabricaeexnihilo.modules.ModTags;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
@@ -59,7 +61,7 @@ public final class EnchantmentTagManager {
     }
     
     public static void generateDefaultTags(RuntimeResourcePack resourcePack) {
-        
+        // TODO: hardcode and deconcernify this
         JTag tag = JTag.tag();
         if (FabricaeExNihilo.CONFIG.modules.crucibles.efficiency) {
             ModTags.addAllTags(tag, ModBlocks.CRUCIBLES.keySet());
@@ -95,11 +97,11 @@ public final class EnchantmentTagManager {
         var mapping = new HashMap<Enchantment, Integer>();
         first.forEach(enchantment -> mapping.put(enchantment.enchantment, Math.max(mapping.getOrDefault(enchantment.enchantment, 0), enchantment.level)));
         second.forEach(enchantment -> mapping.put(enchantment.enchantment, Math.max(mapping.getOrDefault(enchantment.enchantment, 0), enchantment.level)));
-        return mapping.entrySet().stream().map(entry -> new EnchantmentLevelEntry(entry.getKey(), entry.getValue())).toList();
+        return mapping.entrySet().stream().map(entry -> new EnchantmentLevelEntry(entry.getKey(), entry.getValue())).collect(Collectors.toCollection(ArrayList::new));
     }
     
     public static EnchantmentLevelEntry getHighestLevelAtPower(Enchantment enchantment, int power) {
-        for (var level = enchantment.getMaxLevel(); level >= enchantment.getMinLevel() - 1; level--) {
+        for (var level = enchantment.getMaxLevel(); level > enchantment.getMinLevel() - 1; level--) {
             if (power >= enchantment.getMinPower(level) && power <= enchantment.getMaxPower(level)) {
                 return new EnchantmentLevelEntry(enchantment, level);
             }

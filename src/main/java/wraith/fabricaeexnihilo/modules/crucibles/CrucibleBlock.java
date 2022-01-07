@@ -87,22 +87,6 @@ public class CrucibleBlock extends BlockWithEntity {
         }
     }
     
-    @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        if (player == null) {
-            return;
-        }
-        if (!player.isCreative()) {
-            if (world.getBlockEntity(pos) instanceof CrucibleBlockEntity crucible) {
-                var stack = ItemUtils.asStack(this);
-                EnchantmentContainer.addEnchantments(stack, crucible.getEnchantments());
-                var itemEntity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), stack);
-                world.spawnEntity(itemEntity);
-            }
-        }
-        super.onBreak(world, pos, state, player);
-    }
-    
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {

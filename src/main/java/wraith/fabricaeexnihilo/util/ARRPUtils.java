@@ -29,11 +29,6 @@ public final class ARRPUtils {
     }
     
     public static void generateTags(RuntimeResourcePack resourcePack) {
-        // fabricaeexnihilo:infested_leaves tag
-        ModTags.registerBlockAndItem(resourcePack, ModTags.INFESTED_LEAVES_BLOCK, ModBlocks.INFESTED_LEAVES);
-        ModTags.register(ModTags.Category.ITEMS, resourcePack, ModTags.HAMMER_TAG, ModTools.HAMMERS);
-        ModTags.register(ModTags.Category.ITEMS, resourcePack, ModTags.CROOK_TAG, ModTools.CROOKS);
-        
         EnchantmentTagManager.generateDefaultTags(resourcePack);
     }
     

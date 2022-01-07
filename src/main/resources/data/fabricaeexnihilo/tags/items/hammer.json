@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "fabricaeexnihilo:wooden_hammer",
+    "fabricaeexnihilo:stone_hammer",
+    "fabricaeexnihilo:iron_hammer",
+    "fabricaeexnihilo:diamond_hammer",
+    "fabricaeexnihilo:netherite_hammer"
+  ]
+}
