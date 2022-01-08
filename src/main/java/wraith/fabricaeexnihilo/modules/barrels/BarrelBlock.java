@@ -12,7 +12,6 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -31,11 +30,9 @@ import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.ModEffects;
 import wraith.fabricaeexnihilo.modules.barrels.modes.ItemMode;
-import wraith.fabricaeexnihilo.modules.base.EnchantmentContainer;
 import wraith.fabricaeexnihilo.modules.fluids.BloodFluid;
 import wraith.fabricaeexnihilo.modules.fluids.MilkFluid;
 import wraith.fabricaeexnihilo.recipe.barrel.MilkingRecipe;
-import wraith.fabricaeexnihilo.util.ItemUtils;
 
 @SuppressWarnings("UnstableApiUsage")
 public class BarrelBlock extends BlockWithEntity {

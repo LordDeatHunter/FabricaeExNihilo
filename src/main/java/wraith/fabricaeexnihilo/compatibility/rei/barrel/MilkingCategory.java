@@ -11,13 +11,14 @@ import net.minecraft.item.Items;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.compatibility.rei.GlyphWidget;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public class MilkingCategory implements DisplayCategory<MilkingDisplay> {
     
@@ -76,7 +77,7 @@ public class MilkingCategory implements DisplayCategory<MilkingDisplay> {
         return widgets;
     }
     
-    public static final Identifier ARROW = FabricaeExNihilo.id("textures/gui/rei/glyphs.png");
+    public static final Identifier ARROW = id("textures/gui/rei/glyphs.png");
     
     public static final int MARGIN = 6;
     

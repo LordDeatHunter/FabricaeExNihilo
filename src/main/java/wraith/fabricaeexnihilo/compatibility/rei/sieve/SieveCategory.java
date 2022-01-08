@@ -18,6 +18,8 @@ import wraith.fabricaeexnihilo.util.ItemUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
+
 public class SieveCategory implements DisplayCategory<SieveDisplay> {
     
     @Override
@@ -87,7 +89,7 @@ public class SieveCategory implements DisplayCategory<SieveDisplay> {
         return widgets;
     }
     
-    public static Identifier ARROW = FabricaeExNihilo.id("textures/gui/rei/glyphs.png");
+    public static Identifier ARROW = id("textures/gui/rei/glyphs.png");
     
     public static int OUTPUT_SLOTS_X = Math.max(FabricaeExNihilo.CONFIG.modules.REI.sieveNumCols, 1);
     public static int OUTPUT_SLOTS_Y = Math.max(FabricaeExNihilo.CONFIG.modules.REI.sieveNumRows, 3);

@@ -4,8 +4,6 @@ import net.devtech.arrp.api.RuntimeResourcePack;
 import net.devtech.arrp.json.loot.JLootTable;
 import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
-import wraith.fabricaeexnihilo.modules.ModTags;
-import wraith.fabricaeexnihilo.modules.ModTools;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 

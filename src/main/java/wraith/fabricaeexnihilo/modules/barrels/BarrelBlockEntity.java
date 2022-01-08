@@ -35,10 +35,12 @@ import wraith.fabricaeexnihilo.modules.base.EnchantmentContainer;
 import wraith.fabricaeexnihilo.recipe.util.EntityStack;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
+
 @SuppressWarnings("UnstableApiUsage")
 public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlockEntity {
     
-    public static final Identifier BLOCK_ENTITY_ID = FabricaeExNihilo.id("barrel");
+    public static final Identifier BLOCK_ENTITY_ID = id("barrel");
     public static final BlockEntityType<BarrelBlockEntity> TYPE = FabricBlockEntityTypeBuilder.create(
             BarrelBlockEntity::new,
             ModBlocks.BARRELS.values().toArray(new BarrelBlock[0])

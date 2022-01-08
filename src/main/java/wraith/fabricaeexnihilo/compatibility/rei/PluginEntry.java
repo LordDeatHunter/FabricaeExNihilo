@@ -21,6 +21,8 @@ import wraith.fabricaeexnihilo.compatibility.rei.witchwater.WitchWaterWorldCateg
 import wraith.fabricaeexnihilo.compatibility.rei.witchwater.WitchWaterWorldDisplay;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
+
 public class PluginEntry implements REIClientPlugin {
     
     @Override
@@ -81,23 +83,23 @@ public class PluginEntry implements REIClientPlugin {
         //FabricaeExNihiloRegistries.WITCHWATER_WORLD.getREIRecipes().forEach(recipe -> registry.add(new WitchWaterWorldDisplay(recipe)));
     }
     
-    public static final CategoryIdentifier<SieveDisplay> SIEVE = CategoryIdentifier.of(FabricaeExNihilo.id("rei/sieve"));
+    public static final CategoryIdentifier<SieveDisplay> SIEVE = CategoryIdentifier.of(id("rei/sieve"));
     
-    public static final CategoryIdentifier<AlchemyDisplay> ALCHEMY = CategoryIdentifier.of(FabricaeExNihilo.id("rei/barrel/alchemy"));
-    public static final CategoryIdentifier<CompostDisplay> COMPOSTING = CategoryIdentifier.of(FabricaeExNihilo.id("rei/barrel/composting"));
-    public static final CategoryIdentifier<LeakingDisplay> LEAKING = CategoryIdentifier.of(FabricaeExNihilo.id("rei/barrel/leaking"));
-    public static final CategoryIdentifier<MilkingDisplay> MILKING = CategoryIdentifier.of(FabricaeExNihilo.id("rei/barrel/milking"));
-    public static final CategoryIdentifier<TransformingDisplay> TRANSFORMING = CategoryIdentifier.of(FabricaeExNihilo.id("rei/barrel/transforming"));
-    public static final CategoryIdentifier<FluidOnTopDisplay> ON_TOP = CategoryIdentifier.of(FabricaeExNihilo.id("rei/barrel/fluid_on_top"));
+    public static final CategoryIdentifier<AlchemyDisplay> ALCHEMY = CategoryIdentifier.of(id("rei/barrel/alchemy"));
+    public static final CategoryIdentifier<CompostDisplay> COMPOSTING = CategoryIdentifier.of(id("rei/barrel/composting"));
+    public static final CategoryIdentifier<LeakingDisplay> LEAKING = CategoryIdentifier.of(id("rei/barrel/leaking"));
+    public static final CategoryIdentifier<MilkingDisplay> MILKING = CategoryIdentifier.of(id("rei/barrel/milking"));
+    public static final CategoryIdentifier<TransformingDisplay> TRANSFORMING = CategoryIdentifier.of(id("rei/barrel/transforming"));
+    public static final CategoryIdentifier<FluidOnTopDisplay> ON_TOP = CategoryIdentifier.of(id("rei/barrel/fluid_on_top"));
     
-    public static final CategoryIdentifier<CrucibleDisplay> WOOD_CRUCIBLE = CategoryIdentifier.of(FabricaeExNihilo.id("rei/crucible/wood"));
-    public static final CategoryIdentifier<CrucibleDisplay> PORCELAIN_CRUCIBLE = CategoryIdentifier.of(FabricaeExNihilo.id("rei/crucible/stone"));
-    public static final CategoryIdentifier<CrucibleHeatDisplay> CRUCIBLE_HEAT = CategoryIdentifier.of(FabricaeExNihilo.id("rei/crucible/heat"));
+    public static final CategoryIdentifier<CrucibleDisplay> WOOD_CRUCIBLE = CategoryIdentifier.of(id("rei/crucible/wood"));
+    public static final CategoryIdentifier<CrucibleDisplay> PORCELAIN_CRUCIBLE = CategoryIdentifier.of(id("rei/crucible/stone"));
+    public static final CategoryIdentifier<CrucibleHeatDisplay> CRUCIBLE_HEAT = CategoryIdentifier.of(id("rei/crucible/heat"));
     
-    public static final CategoryIdentifier<WitchWaterWorldDisplay> WITCH_WATER_WORLD = CategoryIdentifier.of(FabricaeExNihilo.id("rei/witchwater/world"));
-    public static final CategoryIdentifier<WitchWaterEntityDisplay> WITCH_WATER_ENTITY = CategoryIdentifier.of(FabricaeExNihilo.id("rei/witchwater/entity"));
+    public static final CategoryIdentifier<WitchWaterWorldDisplay> WITCH_WATER_WORLD = CategoryIdentifier.of(id("rei/witchwater/world"));
+    public static final CategoryIdentifier<WitchWaterEntityDisplay> WITCH_WATER_ENTITY = CategoryIdentifier.of(id("rei/witchwater/entity"));
     
-    public static final CategoryIdentifier<ToolDisplay> CROOK = CategoryIdentifier.of(FabricaeExNihilo.id("rei/tools/crook"));
-    public static final CategoryIdentifier<ToolDisplay> HAMMER = CategoryIdentifier.of(FabricaeExNihilo.id("rei/tools/hammer"));
+    public static final CategoryIdentifier<ToolDisplay> CROOK = CategoryIdentifier.of(id("rei/tools/crook"));
+    public static final CategoryIdentifier<ToolDisplay> HAMMER = CategoryIdentifier.of(id("rei/tools/hammer"));
     
 }

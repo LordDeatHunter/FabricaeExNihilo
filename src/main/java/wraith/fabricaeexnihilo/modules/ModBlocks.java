@@ -10,7 +10,6 @@ import net.minecraft.item.ToolMaterials;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlock;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
 import wraith.fabricaeexnihilo.modules.base.EnchantableBlockItem;
@@ -89,7 +88,7 @@ public final class ModBlocks {
         CRUSHED.put(id("crushed_prismarine"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
         CRUSHED.put(id("crushed_endstone"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
         CRUSHED.put(id("crushed_netherrack"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
-        //CRUSHED.put(FabricaeExNihilo.id("crushed_skystone"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
+        //CRUSHED.put(id("crushed_skystone"), new FallingBlock(CRUSHED_GRAVELY_SETTINGS));
         
         CRUCIBLES.put(id("porcelain_crucible"), new CrucibleBlock(STONE_SETTINGS));
         

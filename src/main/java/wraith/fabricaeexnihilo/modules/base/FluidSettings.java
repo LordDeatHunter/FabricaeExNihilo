@@ -1,7 +1,8 @@
 package wraith.fabricaeexnihilo.modules.base;
 
 import net.minecraft.util.Identifier;
-import wraith.fabricaeexnihilo.FabricaeExNihilo;
+
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public class FluidSettings {
     private final Identifier flowingTexture;
@@ -12,8 +13,8 @@ public class FluidSettings {
     public FluidSettings(String basePath, boolean infinite) {
         this.basePath = basePath;
         this.infinite = infinite;
-        this.flowingTexture = FabricaeExNihilo.id("block/fluid/" + basePath + "_flow");
-        this.stillTexture = FabricaeExNihilo.id("block/fluid/" + basePath + "_still");
+        this.flowingTexture = id("block/fluid/" + basePath + "_flow");
+        this.stillTexture = id("block/fluid/" + basePath + "_still");
     }
     
     public Identifier getFlowingTexture() {

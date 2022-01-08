@@ -15,13 +15,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.compatibility.rei.GlyphWidget;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 @SuppressWarnings("UnstableApiUsage")
 public class LeakingCategory implements DisplayCategory<LeakingDisplay> {
@@ -90,7 +91,7 @@ public class LeakingCategory implements DisplayCategory<LeakingDisplay> {
         return widgets;
     }
     
-    public static final Identifier ARROW = FabricaeExNihilo.id("textures/gui/rei/glyphs.png");
+    public static final Identifier ARROW = id("textures/gui/rei/glyphs.png");
     public static final int ARROW_WIDTH = 16;
     public static final int ARROW_HEIGHT = 16;
     public static final int ARROW_U = 0;

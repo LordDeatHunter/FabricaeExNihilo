@@ -18,6 +18,8 @@ import wraith.fabricaeexnihilo.util.ItemUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
+
 public class CompostCategory implements DisplayCategory<CompostDisplay> {
     
     @Override
@@ -78,7 +80,7 @@ public class CompostCategory implements DisplayCategory<CompostDisplay> {
         return widgets;
     }
     
-    public static Identifier ARROW = FabricaeExNihilo.id("textures/gui/rei/glyphs.png");
+    public static Identifier ARROW = id("textures/gui/rei/glyphs.png");
     
     public static int INPUT_SLOTS_X = Math.max(FabricaeExNihilo.CONFIG.modules.REI.compostNumCols, 1);
     public static int INPUT_SLOTS_Y = Math.max(FabricaeExNihilo.CONFIG.modules.REI.compostNumRows, 1);

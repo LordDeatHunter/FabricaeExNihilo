@@ -7,8 +7,6 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.registry.Registry;
-import wraith.fabricaeexnihilo.modules.infested.InfestedLeavesBlock;
-import wraith.fabricaeexnihilo.modules.infested.InfestingLeavesBlock;
 import wraith.fabricaeexnihilo.modules.infested.InfestingLeavesBlockEntity;
 
 public class InfestingLeavesBlockEntityRenderer implements BlockEntityRenderer<InfestingLeavesBlockEntity> {

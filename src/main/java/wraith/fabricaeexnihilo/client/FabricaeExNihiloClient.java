@@ -21,11 +21,9 @@ import wraith.fabricaeexnihilo.client.renderers.SieveBlockEntityRenderer;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModItems;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
-import wraith.fabricaeexnihilo.modules.base.Colored;
 import wraith.fabricaeexnihilo.modules.crucibles.CrucibleBlockEntity;
 import wraith.fabricaeexnihilo.modules.infested.InfestingLeavesBlockEntity;
 import wraith.fabricaeexnihilo.modules.sieves.SieveBlockEntity;
-import wraith.fabricaeexnihilo.util.Color;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
