@@ -1,9 +1,17 @@
 {
-  "type": "minecraft:smelting",
-  "ingredient": {
-    "item": "fabricaeexnihilo:uncooked_clay_crook"
+  "type": "minecraft:crafting_shaped",
+  "group": "fabricaeexnihilo:crook",
+  "pattern": [
+    "##",
+    " #",
+    " #"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:clay_ball"
+    }
   },
-  "result": "fabricaeexnihilo:clay_crook",
-  "experience": 0.15,
-  "cookingtime": 200
+  "result": {
+    "item": "fabricaeexnihilo:clay_crook"
+  }
 }
