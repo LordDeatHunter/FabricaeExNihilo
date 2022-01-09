@@ -11,6 +11,7 @@
     "EnchantmentHelperMixin",
     "EnchantmentMixin",
     "FluidBlockMixin",
+    "ItemMixin",
     "RecipeManagerMixin",
     "client.FastBlockModelRendererMixin",
     "client.SlowBlockModelRendererMixin"

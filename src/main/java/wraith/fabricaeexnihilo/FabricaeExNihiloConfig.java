@@ -12,25 +12,10 @@ import java.util.Map;
 
 @Config(name = "fabricaeexnihilo")
 public class FabricaeExNihiloConfig implements ConfigData {
-    
-    @Comment("Load json files from <config>/fabricaeexnihilo/*.json")
-    public boolean useJsonRecipes = false;
-    @Comment("Dump generated json files to <minecraft>/fabricaeexnihilo_generated")
-    public boolean dumpGeneratedResource = false;
-    
     @ConfigEntry.Gui.CollapsibleObject
     public ModuleConfig modules = new ModuleConfig();
     
     public static class ModuleConfig {
-        
-        @ConfigEntry.Gui.CollapsibleObject
-        public Generator generator = new Generator();
-        
-        public static class Generator {
-            @Comment("Blocks to be ignored as triggers for the block generator (i.e. makes sieves/barrels/crucibles)")
-            public List<String> blackList = List.of("terrestria:sakura_log");
-        }
-        
         @ConfigEntry.Gui.CollapsibleObject
         public REIConfig REI = new REIConfig();
         

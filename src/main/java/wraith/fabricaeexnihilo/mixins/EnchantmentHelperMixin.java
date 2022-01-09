@@ -3,12 +3,14 @@ package wraith.fabricaeexnihilo.mixins;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.registry.Registry;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import wraith.fabricaeexnihilo.util.EnchantmentTagManager;
+import wraith.fabricaeexnihilo.util.BonusEnchantingManager;
 
+import java.util.Collections;
 import java.util.List;
 
 @Mixin(EnchantmentHelper.class)
@@ -26,13 +28,18 @@ public abstract class EnchantmentHelperMixin {
      */
     @Inject(method = "getPossibleEntries", at = @At(value = "RETURN"), cancellable = true)
     private static void getHighestApplicableEnchantmentsAtPower(int power, ItemStack stack, boolean hasTreasure, CallbackInfoReturnable<List<EnchantmentLevelEntry>> cir) {
-        List<EnchantmentLevelEntry> taggedEnchantments = EnchantmentTagManager.getHighestApplicableEnchantmentsAtPower(power, stack, hasTreasure);
-        
-        if (taggedEnchantments.isEmpty())
-            cir.cancel();
-        else
-            cir.setReturnValue(EnchantmentTagManager.mergeInfoLists(taggedEnchantments, cir.getReturnValue()));
-        
+        var list = cir.getReturnValue();
+        Registry.ENCHANTMENT.stream()
+                .filter(enchantment -> (hasTreasure || !enchantment.isTreasure()) && BonusEnchantingManager.DATA.getOrDefault(enchantment, Collections.emptyList()).contains(stack.getItem()))
+                .map(enchantmentLevelEntry -> {
+                    for (var level = enchantmentLevelEntry.getMaxLevel(); level > enchantmentLevelEntry.getMinLevel() - 1; level--) {
+                        if (power >= enchantmentLevelEntry.getMinPower(level) && power <= enchantmentLevelEntry.getMaxPower(level)) {
+                            return new EnchantmentLevelEntry(enchantmentLevelEntry, level);
+                        }
+                    }
+                    return new EnchantmentLevelEntry(enchantmentLevelEntry, 1);
+                })
+                .filter(tag -> list.stream().noneMatch(entry -> entry.enchantment == tag.enchantment && entry.level == tag.level))
+                .forEach(list::add);
     }
-    
 }

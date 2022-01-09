@@ -6,7 +6,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import wraith.fabricaeexnihilo.util.EnchantmentTagManager;
+import wraith.fabricaeexnihilo.util.BonusEnchantingManager;
+
+import java.util.Collections;
 
 @Mixin(Enchantment.class)
 public abstract class EnchantmentMixin {
@@ -19,10 +21,8 @@ public abstract class EnchantmentMixin {
      */
     @Inject(method = "isAcceptableItem", at = @At(value = "RETURN"), cancellable = true)
     private void isAcceptableItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-        if (cir.getReturnValue())
-            cir.cancel();
-        else
-            cir.setReturnValue(EnchantmentTagManager.itemIsAcceptableForEnchantment(stack, (Enchantment) (Object) this));
+        if (!cir.getReturnValueZ() && BonusEnchantingManager.DATA.getOrDefault((Enchantment) (Object) this, Collections.emptyList()).contains(stack.getItem())) {
+            cir.setReturnValue(true);
+        }
     }
-    
 }

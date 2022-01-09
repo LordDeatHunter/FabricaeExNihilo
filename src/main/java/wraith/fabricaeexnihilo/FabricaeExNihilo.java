@@ -15,21 +15,19 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import wraith.fabricaeexnihilo.loot.CopyEnchantmentsLootFunction;
 import wraith.fabricaeexnihilo.modules.*;
-import wraith.fabricaeexnihilo.util.EnchantmentTagManager;
+import wraith.fabricaeexnihilo.util.BonusEnchantingManager;
 import wraith.fabricaeexnihilo.util.EntrypointHelper;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 
 public class FabricaeExNihilo implements ModInitializer {
     public static final String MODID = "fabricaeexnihilo";
     public static final ItemGroup ITEM_GROUP = FabricItemGroupBuilder.create(new Identifier(MODID, "general")).icon(() -> ItemUtils.getExNihiloItemStack("wooden_crook")).build();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().setLenient().create();
     public static final Logger LOGGER = LogManager.getLogger("Fabricae Ex Nihilo");
-    private static final RuntimeResourcePack RESOURCE_PACK = RuntimeResourcePack.create(id("data"));
-    public static final FabricaeExNihiloConfig CONFIG = init();
+    public static final FabricaeExNihiloConfig CONFIG = initConfig();
     
     public static Identifier id(String path) {
         return new Identifier(MODID, path);
@@ -61,18 +59,12 @@ public class FabricaeExNihilo implements ModInitializer {
         ModBlocks.registerBlockEntities();
         
         LOGGER.debug("Creating Tags");
-        EnchantmentTagManager.generateDefaultTags(RESOURCE_PACK);
+        BonusEnchantingManager.generateDefaultTags();
         LOGGER.debug("Creating Recipes");
         ModRecipes.register();
-        
-        if (CONFIG.dumpGeneratedResource) {
-            RESOURCE_PACK.dump(Path.of("fabricaeexnihilo_generated"));
-        }
-        
-        RRPCallback.BEFORE_VANILLA.register(a -> a.add(RESOURCE_PACK));
     }
     
-    public static FabricaeExNihiloConfig init() {
+    public static FabricaeExNihiloConfig initConfig() {
         var file = FabricLoader.getInstance().getConfigDir().resolve("fabricaeexnihilo.json");
         
         try {

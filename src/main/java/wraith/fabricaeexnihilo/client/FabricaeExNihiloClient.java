@@ -95,9 +95,6 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
         });
         
         FabricaeExNihilo.LOGGER.debug("Created Resources");
-        if (FabricaeExNihilo.CONFIG.dumpGeneratedResource) {
-            resourcePack.dump(Path.of("fabricaeexnihilo_generated"));
-        }
         
         RRPCallback.BEFORE_VANILLA.register(a -> a.add(resourcePack));
     }

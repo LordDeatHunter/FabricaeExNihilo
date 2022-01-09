@@ -21,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
+//TODO: Replace by UseBlockCallback
 @Mixin(GlassBottleItem.class)
 public abstract class BottleUseMixin extends Item {
     
@@ -29,7 +30,7 @@ public abstract class BottleUseMixin extends Item {
     }
     
     @Shadow
-    native protected ItemStack fill(ItemStack emptyBottle, PlayerEntity player, ItemStack filledBottle);
+    abstract protected ItemStack fill(ItemStack emptyBottle, PlayerEntity player, ItemStack filledBottle);
     
     @Inject(at = @At("RETURN"), method = "use", cancellable = true)
     public void use(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
