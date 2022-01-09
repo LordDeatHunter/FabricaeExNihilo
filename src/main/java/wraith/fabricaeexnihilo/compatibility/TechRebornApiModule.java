@@ -35,6 +35,16 @@ public class TechRebornApiModule implements FabricaeExNihiloApiModule {
     }
 
     @Override
+    public void registerWoods(Consumer<Identifier> registry) {
+        registry.accept(id("rubber"));
+    }
+
+    @Override
+    public void registerInfestedLeaves(BiConsumer<Identifier, Identifier> registry) {
+        registry.accept(new Identifier("techreborn:rubber_leaves"), id("rubber_leaves"));
+    }
+
+    @Override
     public boolean shouldLoad() {
         return FabricLoader.getInstance().isModLoaded("techreborn");
     }

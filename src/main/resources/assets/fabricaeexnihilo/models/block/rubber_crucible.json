@@ -1,0 +1,6 @@
+{
+  "parent": "fabricaeexnihilo:block/crucible",
+  "textures": {
+    "all": "techreborn:block/rubber_log_side"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "fabricaeexnihilo:block/barrel",
+  "textures": {
+    "all": "techreborn:block/rubber_planks"
+  }
+}

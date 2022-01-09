@@ -24,7 +24,7 @@ public class DefaultApiModule implements FabricaeExNihiloApiModule {
         registry.accept("iron", new OreDefinition(Color.IRON, PieceShape.NORMAL, BaseMaterial.GRANITE));
         registry.accept("gold", new OreDefinition(Color.GOLD, PieceShape.FINE, BaseMaterial.STONE));
     }
-    
+
     @Override
     public void registerWoods(Consumer<Identifier> registry) {
         registry.accept(id("oak"));
@@ -34,20 +34,20 @@ public class DefaultApiModule implements FabricaeExNihiloApiModule {
         registry.accept(id("dark_oak"));
         registry.accept(id("jungle"));
     }
-    
+
     @Override
     public void registerMeshes(BiConsumer<Identifier, MeshDefinition> registry) {
         registry.accept(id("string_mesh"), new MeshDefinition(Color.WHITE, 10));
         registry.accept(id("flint_mesh"), new MeshDefinition(Color.GRAY, 12));
         registry.accept(id("iron_mesh"), new MeshDefinition(new Color("777777"), 14));
-        
+
         registry.accept(id("gold_mesh"), new MeshDefinition(Color.GOLDEN, 22));
         registry.accept(id("emerald_mesh"), new MeshDefinition(Color.DARK_GREEN, 24));
-        
+
         registry.accept(id("diamond_mesh"), new MeshDefinition(Color.DARK_AQUA, 10));
         registry.accept(id("netherite_mesh"), new MeshDefinition(Color.DARK_GRAY, 15));
     }
-    
+
     @Override
     public void registerInfestedLeaves(BiConsumer<Identifier, Identifier> registry) {
         registry.accept(new Identifier("minecraft:oak_leaves"), id("oak_leaves"));
@@ -57,4 +57,5 @@ public class DefaultApiModule implements FabricaeExNihiloApiModule {
         registry.accept(new Identifier("minecraft:dark_oak_leaves"), id("dark_oak_leaves"));
         registry.accept(new Identifier("minecraft:jungle_leaves"), id("jungle_leaves"));
     }
+
 }

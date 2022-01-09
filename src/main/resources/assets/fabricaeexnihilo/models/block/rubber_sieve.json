@@ -1,0 +1,6 @@
+{
+  "parent": "fabricaeexnihilo:block/sieve",
+  "textures": {
+    "all": "techreborn:block/rubber_planks"
+  }
+}
