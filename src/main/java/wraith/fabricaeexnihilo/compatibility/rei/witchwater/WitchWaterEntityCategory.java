@@ -14,7 +14,6 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.village.VillagerProfession;
-import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.compatibility.rei.GlyphWidget;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 import wraith.fabricaeexnihilo.modules.witchwater.WitchWaterFluid;
@@ -22,6 +21,8 @@ import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public class WitchWaterEntityCategory implements DisplayCategory<WitchWaterEntityDisplay> {
     
@@ -79,7 +80,7 @@ public class WitchWaterEntityCategory implements DisplayCategory<WitchWaterEntit
         return widgets;
     }
     
-    public static final Identifier ARROW = FabricaeExNihilo.id("textures/gui/rei/glyphs.png");
+    public static final Identifier ARROW = id("textures/gui/rei/glyphs.png");
     
     public static final int MARGIN = 6;
     

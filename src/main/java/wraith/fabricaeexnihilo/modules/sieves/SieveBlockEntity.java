@@ -32,6 +32,8 @@ import wraith.fabricaeexnihilo.util.RegistryUtils;
 
 import java.util.*;
 
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
+
 //import static wraith.fabricaeexnihilo.api.registry.FabricaeExNihiloRegistries.SIEVE;
 
 public class SieveBlockEntity extends BaseBlockEntity {
@@ -43,7 +45,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
             SieveBlockEntity::new,
             ModBlocks.SIEVES.values().toArray(new SieveBlock[0])
     ).build(null);
-    public static final Identifier BLOCK_ENTITY_ID = FabricaeExNihilo.id("sieve");
+    public static final Identifier BLOCK_ENTITY_ID = id("sieve");
     
     public SieveBlockEntity(BlockPos pos, BlockState state) {
         super(TYPE, pos, state);

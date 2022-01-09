@@ -11,12 +11,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.compatibility.rei.GlyphWidget;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public record CrucibleCategory(CategoryIdentifier<? extends CrucibleDisplay> crucible, ItemStack icon,
                                Text name) implements DisplayCategory<CrucibleDisplay> {
@@ -73,7 +74,7 @@ public record CrucibleCategory(CategoryIdentifier<? extends CrucibleDisplay> cru
         return widgets;
     }
     
-    public static final Identifier GLYPH = FabricaeExNihilo.id("textures/gui/rei/glyphs.png");
+    public static final Identifier GLYPH = id("textures/gui/rei/glyphs.png");
     
     public static final int MARGIN = 6;
     public static final int WIDTH = MARGIN * 2 + 18 * 9;

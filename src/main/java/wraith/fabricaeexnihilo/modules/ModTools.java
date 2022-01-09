@@ -13,6 +13,8 @@ import wraith.fabricaeexnihilo.modules.tools.HammerItem;
 import java.util.HashMap;
 import java.util.Map;
 
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
+
 public class ModTools {
     public static final FabricItemSettings TOOL_SETTINGS = new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP).maxCount(1);
     
@@ -21,17 +23,17 @@ public class ModTools {
     
     static {
         for (var toolMaterial : ModToolMaterials.values()) {
-            var identifier = FabricaeExNihilo.id(toolMaterial.name().toLowerCase() + "_crook");
+            var identifier = id(toolMaterial.name().toLowerCase() + "_crook");
             var item = new CrookItem(toolMaterial, new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP).maxCount(1).maxDamage(toolMaterial.getDurability()));
             CROOKS.put(identifier, item);
         }
         
-        HAMMERS.put(FabricaeExNihilo.id("wooden_hammer"), new HammerItem(ToolMaterials.WOOD, TOOL_SETTINGS));
-        HAMMERS.put(FabricaeExNihilo.id("stone_hammer"), new HammerItem(ToolMaterials.STONE, TOOL_SETTINGS));
-        HAMMERS.put(FabricaeExNihilo.id("iron_hammer"), new HammerItem(ToolMaterials.IRON, TOOL_SETTINGS));
-        HAMMERS.put(FabricaeExNihilo.id("golden_hammer"), new HammerItem(ToolMaterials.GOLD, TOOL_SETTINGS));
-        HAMMERS.put(FabricaeExNihilo.id("diamond_hammer"), new HammerItem(ToolMaterials.DIAMOND, TOOL_SETTINGS));
-        HAMMERS.put(FabricaeExNihilo.id("netherite_hammer"), new HammerItem(ToolMaterials.NETHERITE, TOOL_SETTINGS));
+        HAMMERS.put(id("wooden_hammer"), new HammerItem(ToolMaterials.WOOD, TOOL_SETTINGS));
+        HAMMERS.put(id("stone_hammer"), new HammerItem(ToolMaterials.STONE, TOOL_SETTINGS));
+        HAMMERS.put(id("iron_hammer"), new HammerItem(ToolMaterials.IRON, TOOL_SETTINGS));
+        HAMMERS.put(id("golden_hammer"), new HammerItem(ToolMaterials.GOLD, TOOL_SETTINGS));
+        HAMMERS.put(id("diamond_hammer"), new HammerItem(ToolMaterials.DIAMOND, TOOL_SETTINGS));
+        HAMMERS.put(id("netherite_hammer"), new HammerItem(ToolMaterials.NETHERITE, TOOL_SETTINGS));
     }
     
     public static void registerItems() {

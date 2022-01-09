@@ -19,12 +19,14 @@ import wraith.fabricaeexnihilo.util.RegistryUtils;
 
 import java.util.Optional;
 
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
+
 public class InfestingLeavesBlockEntity extends BaseBlockEntity implements Colored {
     private double progress = 0.0;
     private int tickCounter;
     private InfestedLeavesBlock target = ModBlocks.INFESTED_LEAVES.values().stream().findFirst().orElseThrow();
     
-    public static Identifier BLOCK_ENTITY_ID = FabricaeExNihilo.id("infesting");
+    public static Identifier BLOCK_ENTITY_ID = id("infesting");
     public static final BlockEntityType<InfestingLeavesBlockEntity> TYPE = FabricBlockEntityTypeBuilder.create(
             InfestingLeavesBlockEntity::new,
             ModBlocks.INFESTING_LEAVES

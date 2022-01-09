@@ -38,6 +38,8 @@ import wraith.fabricaeexnihilo.recipe.crucible.CrucibleHeatRecipe;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleRecipe;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
+
 @SuppressWarnings("UnstableApiUsage")
 public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableBlockEntity {
     private final boolean isStone;
@@ -58,7 +60,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
             CrucibleBlockEntity::new,
             ModBlocks.CRUCIBLES.values().toArray(new CrucibleBlock[0])
     ).build(null);
-    public static final Identifier BLOCK_ENTITY_ID = FabricaeExNihilo.id("crucible");
+    public static final Identifier BLOCK_ENTITY_ID = id("crucible");
     
     
     static {

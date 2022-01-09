@@ -18,8 +18,8 @@ public enum ModToolMaterials implements ToolMaterial {
     STONE(ToolMaterials.STONE),
     BONE(1, 131, 4.0f, 1.0f, 5, () -> Ingredient.ofItems(Items.BONE)),
     BLAZE(3, 1561, 6.0f, 2.0f, 22, () -> Ingredient.ofItems(Items.BLAZE_ROD)),
-    CLAY(1, 250, 6.0f, 2.0f, 14, () -> Ingredient.ofItems(Items.BRICK)),
-    UNCOOKED_CLAY(2, 1, 1.0f, 0.1f, 0, () -> Ingredient.ofItems(Items.CLAY_BALL)),
+    TERRACOTTA(1, 250, 6.0f, 2.0f, 14, () -> Ingredient.ofItems(Items.BRICK)),
+    CLAY(2, 1, 1.0f, 0.1f, 0, () -> Ingredient.ofItems(Items.CLAY_BALL)),
     PURPUR(3, 1561, 8.0f, 3.0f, 10, () -> Ingredient.ofItems(Items.POPPED_CHORUS_FRUIT, Items.CHORUS_FRUIT)),
     PRISMARINE(1, 131, 4.0f, 1.0f, 5, () -> Ingredient.ofItems(Items.PRISMARINE, Items.PRISMARINE_SHARD));
     
