@@ -14,7 +14,7 @@ public interface FabricaeExNihiloApiModule {
      *
      * @param registry A consumer which accepts the id and a definition of the ores properties.
      */
-    default void registerOres(BiConsumer<Identifier, OreDefinition> registry) {
+    default void registerOres(BiConsumer<String, OreDefinition> registry) {
     }
     
     /**

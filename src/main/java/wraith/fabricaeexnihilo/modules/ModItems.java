@@ -27,23 +27,21 @@ import java.util.stream.IntStream;
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public final class ModItems {
-    
+
     public static final FabricItemSettings BASE_SETTINGS = new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP).maxCount(64);
-    
+
     public static final Map<Identifier, Item> TREE_SEEDS = new HashMap<>();
     public static final Map<Identifier, Item> CROP_SEEDS = new HashMap<>();
     public static final Map<Identifier, Item> FLOWER_SEEDS = new HashMap<>();
     public static final Map<Identifier, Item> OTHER_SEEDS = new HashMap<>();
-    
+
     public static final Map<Identifier, Item> RESOURCES = new HashMap<>();
 
-    public static final Map<Identifier, OreItem> ORE_CHUNKS = new HashMap<>();
     public static final Map<Identifier, OreItem> ORE_PIECES = new HashMap<>();
     public static final Map<Identifier, MeshItem> MESHES = new HashMap<>();
 
     public static final List<Identifier> DOLLS = new ArrayList<>();
-    
-    
+
     static {
         RESOURCES.put(id("andesite_pebble"), new Item(BASE_SETTINGS));
         RESOURCES.put(id("diorite_pebble"), new Item(BASE_SETTINGS));
@@ -52,18 +50,18 @@ public final class ModItems {
         RESOURCES.put(id("blackstone_pebble"), new Item(BASE_SETTINGS));
         RESOURCES.put(id("basalt_pebble"), new Item(BASE_SETTINGS));
         RESOURCES.put(id("deepslate_pebble"), new Item(BASE_SETTINGS));
-        
+
         RESOURCES.put(id("porcelain"), new Item(BASE_SETTINGS));
         RESOURCES.put(id("unfired_porcelain_crucible"), new Item(BASE_SETTINGS));
         RESOURCES.put(id("salt_bottle"), new Item(BASE_SETTINGS));
-        
+
         DOLLS.add(id("doll"));
         DOLLS.add(id("doll_blaze"));
         DOLLS.add(id("doll_enderman"));
         DOLLS.add(id("doll_guardian"));
         DOLLS.add(id("doll_shulker"));
     }
-    
+
     public static void registerItems() {
         // Setup Conditional Items.
         setup();
@@ -79,13 +77,12 @@ public final class ModItems {
         // Register Others
         RESOURCES.forEach((identifier, item) -> Registry.register(Registry.ITEM, identifier, item));
         DOLLS.forEach(doll -> Registry.register(Registry.ITEM, doll, new Item(BASE_SETTINGS)));
-        
+
         // Register Ores
         ORE_PIECES.forEach((identifier, item) -> Registry.register(Registry.ITEM, identifier, item));
-        ORE_CHUNKS.forEach((identifier, item) -> Registry.register(Registry.ITEM, identifier, item));
         ModFluids.registerBuckets();
     }
-    
+
     public static void setup() {
         if (FabricaeExNihilo.CONFIG.modules.silkworms.enabled) {
             RESOURCES.put(id("silkworm_raw"), new SilkWormItem(new FabricItemSettings().maxCount(64).food(FoodComponents.COD).group(FabricaeExNihilo.ITEM_GROUP)));

@@ -16,14 +16,13 @@ import wraith.fabricaeexnihilo.modules.sieves.SieveBlock;
 import java.util.List;
 import java.util.function.BiConsumer;
 
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
+
 public class EntrypointHelper {
     public static void callEntrypoints() {
         var entrypoints = FabricLoader.getInstance().getEntrypoints("fabricaeexnihilo:api", FabricaeExNihiloApiModule.class).stream().filter(FabricaeExNihiloApiModule::shouldLoad).toList();
         
-        handle(entrypoints, FabricaeExNihiloApiModule::registerOres, (id, def) -> {
-            ModItems.ORE_CHUNKS.put(modifyId(id, null, "_chunk"), new OreItem(def));
-            ModItems.ORE_PIECES.put(modifyId(id, null, "_piece"), new OreItem(def));
-        });
+        handle(entrypoints, FabricaeExNihiloApiModule::registerOres, (id, def) -> ModItems.ORE_PIECES.put(modifyId(id, null, "_piece"), new OreItem(def)));
         handle(entrypoints, FabricaeExNihiloApiModule::registerMeshes, (id, def) -> ModItems.MESHES.put(id, new MeshItem(def)));
         handle(entrypoints, FabricaeExNihiloApiModule::registerSieves, id -> ModBlocks.SIEVES.put(id, new SieveBlock()));
         handle(entrypoints, FabricaeExNihiloApiModule::registerWoodenCrucibles, id -> ModBlocks.CRUCIBLES.put(id, new CrucibleBlock(ModBlocks.WOOD_SETTINGS)));
@@ -34,7 +33,11 @@ public class EntrypointHelper {
     private static Identifier modifyId(Identifier id, @Nullable String prefix, @Nullable String suffix) {
         return new Identifier(id.getNamespace(), (prefix == null ? "" : prefix) + id.getPath() + (suffix == null ? "" : suffix));
     }
-    
+
+    private static Identifier modifyId(String ore, @Nullable String prefix, @Nullable String suffix) {
+        return id((prefix == null ? "" : prefix) + ore + (suffix == null ? "" : suffix));
+    }
+
     private static <R> void handle(List<FabricaeExNihiloApiModule> entrypoints, BiConsumer<FabricaeExNihiloApiModule, R> function, R registry) {
         entrypoints.forEach(entrypoint -> function.accept(entrypoint, registry));
     }
