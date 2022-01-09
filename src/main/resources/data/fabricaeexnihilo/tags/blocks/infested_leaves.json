@@ -1,5 +1,11 @@
 {
-  "#": "Populated dynamically with arrp. Exists to make sure it exists",
   "replace": false,
-  "values": []
+  "values": [
+    "fabricaeexnihilo:infested_oak_leaves",
+    "fabricaeexnihilo:infested_spruce_leaves",
+    "fabricaeexnihilo:infested_dark_oak_leaves",
+    "fabricaeexnihilo:infested_birch_leaves",
+    "fabricaeexnihilo:infested_jungle_leaves",
+    "fabricaeexnihilo:infested_acacia_leaves"
+  ]
 }

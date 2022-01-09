@@ -15,7 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import wraith.fabricaeexnihilo.loot.CopyEnchantmentsLootFunction;
 import wraith.fabricaeexnihilo.modules.*;
-import wraith.fabricaeexnihilo.util.ARRPUtils;
+import wraith.fabricaeexnihilo.util.EnchantmentTagManager;
 import wraith.fabricaeexnihilo.util.EntrypointHelper;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
@@ -61,11 +61,9 @@ public class FabricaeExNihilo implements ModInitializer {
         ModBlocks.registerBlockEntities();
         
         LOGGER.debug("Creating Tags");
-        ARRPUtils.generateTags(RESOURCE_PACK);
+        EnchantmentTagManager.generateDefaultTags(RESOURCE_PACK);
         LOGGER.debug("Creating Recipes");
         ModRecipes.register();
-        LOGGER.debug("Creating Loot Tables");
-        ARRPUtils.generateLootTables(RESOURCE_PACK);
         
         if (CONFIG.dumpGeneratedResource) {
             RESOURCE_PACK.dump(Path.of("fabricaeexnihilo_generated"));

@@ -78,6 +78,7 @@ public class BarrelBlock extends BlockWithEntity {
         if (!state.isOf(newState.getBlock()) && world.getBlockEntity(pos) instanceof BarrelBlockEntity barrel && barrel.getMode() instanceof ItemMode mode) {
             ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), mode.getStack());
         }
+        super.onStateReplaced(state, world, pos, newState, moved);
     }
     
     // Milking

@@ -92,6 +92,7 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (!state.isOf(newState.getBlock()) && world.getBlockEntity(pos) instanceof SieveBlockEntity sieve) {
             sieve.dropContents();
+            super.onStateReplaced(state, world, pos, newState, moved);
         }
     }
     
