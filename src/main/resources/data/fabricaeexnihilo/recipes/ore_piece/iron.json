@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "fabricaeexnihilo:iron_piece"
+    }
+  },
+  "result": {
+    "item": "fabricaeexnihilo:iron_chunk",
+    "count": 1
+  }
+}
