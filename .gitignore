@@ -25,5 +25,7 @@ bin/
 run/
 
 # datagen
-datagen/assets/
+datagen/generated/assets/
+datagen/data/
+datagen/generated/
 datagen/__pycache__/
