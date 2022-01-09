@@ -39,22 +39,20 @@ public class FabricaeExNihilo implements ModInitializer {
     
         Registry.register(Registry.LOOT_FUNCTION_TYPE, id("copy_enchantments"), CopyEnchantmentsLootFunction.TYPE);
         
-        /* Register Status Effects */
         LOGGER.debug("Registering Status Effects");
         ModEffects.registerEffects();
-        /* Register Fluids*/
+
         LOGGER.debug("Registering Fluids");
         ModFluids.registerFluids();
-        /* Register Blocks */
+
         LOGGER.debug("Registering Blocks");
         ModBlocks.registerBlocks();
-        /* Register Items */
+        
         LOGGER.debug("Registering Items");
         ModBlocks.registerBlockItems();
         ModItems.registerItems();
         ModTools.registerItems();
         
-        /* Register Block Entities */
         LOGGER.debug("Registering Block Entities");
         ModBlocks.registerBlockEntities();
         

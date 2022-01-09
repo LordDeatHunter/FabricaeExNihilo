@@ -1,118 +1,103 @@
 package wraith.fabricaeexnihilo;
 
-import me.shedaniel.autoconfig.ConfigData;
-import me.shedaniel.autoconfig.annotation.Config;
-import me.shedaniel.autoconfig.annotation.ConfigEntry;
-import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import wraith.fabricaeexnihilo.util.StatusEffectStats;
 
 import java.util.List;
 import java.util.Map;
 
-@Config(name = "fabricaeexnihilo")
-public class FabricaeExNihiloConfig implements ConfigData {
-    @ConfigEntry.Gui.CollapsibleObject
+public class FabricaeExNihiloConfig {
     public ModuleConfig modules = new ModuleConfig();
     
     public static class ModuleConfig {
-        @ConfigEntry.Gui.CollapsibleObject
         public REIConfig REI = new REIConfig();
         
         public static class REIConfig {
-            @Comment("How many rows should show up for the compost inputs, min = 1")
+            // How many rows should show up for the compost inputs, min = 1
             public int compostNumRows = 5;
-            @Comment("How many columns should show up for the compost inputs, min = 1")
+            // How many columns should show up for the compost inputs, min = 1
             public int compostNumCols = 8;
-            @Comment("How many rows should show up for the sieve outputs, min = 3")
+            // How many rows should show up for the sieve outputs, min = 3
             public int sieveNumRows = 3;
-            @Comment("How many columns should show up for the sieve outputs, min = 1")
+            // How many columns should show up for the sieve outputs, min = 1
             public int sieveNumCols = 8;
-            @Comment("How many rows should show up for the crook/hammer outputs, min = 2")
+            // How many rows should show up for the crook/hammer outputs, min = 2
             public int toolNumRows = 3;
-            @Comment("How many columns should show up for the crook/hammer outputs, min = 1")
+            // How many columns should show up for the crook/hammer outputs, min = 1
             public int toolNumCols = 8;
-            @Comment("How many rows should show up for the Witch Water fluid interactions outputs, min = 3")
+            // How many rows should show up for the Witch Water fluid interactions outputs, min = 3
             public int witchwaterworldRows = 3;
-            @Comment("How many columns should show up for the Witch Water fluid interactions outputs, min = 1")
+            // How many columns should show up for the Witch Water fluid interactions outputs, min = 1
             public int witchwaterworldCols = 8;
         }
         
-        @ConfigEntry.Gui.CollapsibleObject
         public BarrelConfig barrels = new BarrelConfig();
         
         public static class BarrelConfig {
-            @ConfigEntry.Gui.RequiresRestart
             public boolean enabled = true;
-            @Comment("How many ticks between updates")
+            // How many ticks between updates
             public int tickRate = 6;
-            @Comment("Can barrels be enchanted with efficiency.")
+            // Can barrels be enchanted with efficiency.
             public boolean efficiency = true;
-            @Comment("Can barrels be enchanted with thorns.")
+            // Can barrels be enchanted with thorns.
             public boolean thorns = true;
             public boolean enableAlchemy = true; // Unsure if needed: Used to be used for the old json recipe system
-            @Comment("Requires that thorns be enabled too.")
+            // Requires that thorns be enabled too.
             public boolean enableBleeding = true;
             public boolean enableCompost = true; // Unsure if needed: Used to be used for the old json recipe system
-            @Comment("How much progress to add each time the barrel ticks")
+            // How much progress to add each time the barrel ticks
             public double compostRate = 0.01;
             public boolean enableFluidOnTop = true; // Unsure if needed: Used to be used for the old json recipe system
             public boolean enableLeaking = true; // Unsure if needed: Used to be used for the old json recipe system
-            @Comment("How far away can a block be and still be affected by wooden barrels leaking")
+            // How far away can a block be and still be affected by wooden barrels leaking
             public int leakRadius = 2;
             public boolean enableMilking = true; // Unsure if needed: Used to be used for the old json recipe system
             public boolean enableTransforming = true; // Unsure if needed: Used to be used for the old json recipe system
-            @Comment("How far away can a block be and still boost the transformation rate")
+            // How far away can a block be and still boost the transformation rate
             public int transformBoostRadius = 2;
-            @Comment("How many ticks does it take to fully transform")
+            // How many ticks does it take to fully transform
             public int transformRate = 600;
-            @Comment("How many ticks does each block below remove")
+            // How many ticks does each block below remove
             public int transformBoost = 15;
         }
         
-        @ConfigEntry.Gui.CollapsibleObject
         public CrucibleConfig crucibles = new CrucibleConfig();
         
         @SuppressWarnings("UnstableApiUsage")
         public static class CrucibleConfig {
-            @ConfigEntry.Gui.RequiresRestart
             public boolean enabled = true;
-            @Comment("How many ticks between updates")
+            // How many ticks between updates
             public int tickRate = 20;
             public long baseProcessRate = FluidConstants.BUCKET / 100;
             public long woodenProcessingRate = FluidConstants.BUCKET / 60;
-            @Comment("How many buckets of liquid can a stone crucible store")
+            // How many buckets of liquid can a stone crucible store
             public int stoneVolume = 4;
-            @Comment("How many buckets of liquid can a wooden crucible store")
+            // How many buckets of liquid can a wooden crucible store
             public int woodVolume = 1;
-            @Comment("Can crucibles be enchanted with efficiency.")
+            // Can crucibles be enchanted with efficiency.
             public boolean efficiency = true;
-            @Comment("Can stone crucibles be enchanted with fire aspect.")
+            // Can stone crucibles be enchanted with fire aspect.
             public boolean fireAspect = true;
         }
         
-        @ConfigEntry.Gui.CollapsibleObject
         public InfestedConfig silkworms = new InfestedConfig();
         
         public static class InfestedConfig {
-            @ConfigEntry.Gui.RequiresRestart
             public boolean enabled = true;
-            @Comment("How much progress should by made during each infesting leaves update")
+            // How much progress should by made during each infesting leaves update
             public double progressPerUpdate = 0.015;
-            @Comment("How many ticks between infesting leaves updates")
+            // How many ticks between infesting leaves updates
             public int updateFrequency = 10;
-            @Comment("How much progress do infesting leaves need to make before they start trying to spread.")
+            // How much progress do infesting leaves need to make before they start trying to spread.
             public double minimumSpreadPercent = 0.15;
-            @Comment("How likely are leaves to succeed at spreading.")
+            // How likely are leaves to succeed at spreading.
             public double spreadChance = 0.5;
-            @Comment("How many attempts should infesting leaves make to spread each time they check.")
+            // How many attempts should infesting leaves make to spread each time they check.
             public int infestingSpreadAttempts = 1;
-            @Comment("How many attempts should infested leaves make to spread each time they check.")
+            // How many attempts should infested leaves make to spread each time they check.
             public int infestedSpreadAttempts = 4;
         }
         
-        @ConfigEntry.Gui.CollapsibleObject
-        @ConfigEntry.Gui.RequiresRestart
         public SeedConfig seeds = new SeedConfig();
         
         public static class SeedConfig {
@@ -129,7 +114,7 @@ public class FabricaeExNihiloConfig implements ConfigData {
             public boolean treeSeeds = true;
             public boolean flowerSeeds = true;
             
-            @Comment("List of blocks that the rubber sapling could turn into.")
+            // List of blocks that the rubber sapling could turn into.
             public List<String> rubberSeed = List.of(
                     "techreborn:rubber_sapling",
                     "ic2:rubber_sapling",
@@ -137,52 +122,44 @@ public class FabricaeExNihiloConfig implements ConfigData {
             );
         }
         
-        @ConfigEntry.Gui.CollapsibleObject
         public SieveConfig sieves = new SieveConfig();
         
         public static class SieveConfig {
-            @ConfigEntry.Gui.RequiresRestart
             public boolean enabled = true;
-            @Comment("Do meshes use up durability (WIP)")
+            // Do meshes use up durability (WIP)
             public boolean meshDurability = false;
             public int meshStackSize = 16;
-            @Comment("How far can sieves be connected")
+            // How far can sieves be connected
             public int sieveRadius = 2;
-            @Comment("Progress per click = baseProgress + efficiencyScaleFactor*efficientLevel + hasteScaleFactor*hasteLevel")
+            // Progress per click = baseProgress + efficiencyScaleFactor*efficientLevel + hasteScaleFactor*hasteLevel
             public double baseProgress = 0.1;
             public double efficiencyScaleFactor = 0.05;
             public double hasteScaleFactor = 1.0;
-            @Comment("Can meshes be enchanted with efficiency")
+            // Can meshes be enchanted with efficiency
             public boolean efficiency = true;
-            @Comment("Can meshes be enchanted with fortune")
+            // Can meshes be enchanted with fortune
             public boolean fortune = true;
-            @Comment("Do haste beacons/potions affect sieving speed")
+            // Do haste beacons/potions affect sieving speed
             public boolean haste = true;
         }
         
-        @ConfigEntry.Gui.CollapsibleObject
         public CrookConfig crooks = new CrookConfig();
         
         public static class CrookConfig {
-            @ConfigEntry.Gui.RequiresRestart
             public boolean enabled = true;
         }
         
-        @ConfigEntry.Gui.CollapsibleObject
         public HammerConfig hammers = new HammerConfig();
         
         public static class HammerConfig {
-            @ConfigEntry.Gui.RequiresRestart
             public boolean enabled = true;
         }
         
-        @ConfigEntry.Gui.CollapsibleObject
         public WitchWaterConfig witchwater = new WitchWaterConfig();
         
         public static class WitchWaterConfig {
-            @ConfigEntry.Gui.RequiresRestart
             public boolean enabled = true;
-            @Comment("What effects should players get on contact")
+            // What effects should players get on contact
             public Map<String, StatusEffectStats> effects = Map.of(
                     "blindness", new StatusEffectStats(210, 0),
                     "hunger", new StatusEffectStats(210, 2),
@@ -191,7 +168,5 @@ public class FabricaeExNihiloConfig implements ConfigData {
                     "wither", new StatusEffectStats(210, 0)
             );
         }
-        
     }
-    
 }
