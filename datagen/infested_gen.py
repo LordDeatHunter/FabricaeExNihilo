@@ -17,6 +17,7 @@ def generate():
         namespace, path = leaf.split(':')
         proper_path = 'infested_' + path.split('/')[-1]
         save_blockstate(f'{proper_path}', f'{namespace}:block/{path}')
+        save_block_item_model(f'{proper_path}', f'{namespace}:block/{path}')
         add_to_lang_file(f'block.fabricaeexnihilo.{proper_path}', get_name(proper_path))
 
 
