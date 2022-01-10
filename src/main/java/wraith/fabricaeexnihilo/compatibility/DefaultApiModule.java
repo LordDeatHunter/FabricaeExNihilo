@@ -1,61 +1,43 @@
 package wraith.fabricaeexnihilo.compatibility;
 
 import net.minecraft.util.Identifier;
+import wraith.fabricaeexnihilo.api.FENRegistries;
 import wraith.fabricaeexnihilo.api.FabricaeExNihiloApiModule;
-import wraith.fabricaeexnihilo.api.MeshDefinition;
-import wraith.fabricaeexnihilo.api.OreDefinition;
-import wraith.fabricaeexnihilo.api.OreDefinition.BaseMaterial;
-import wraith.fabricaeexnihilo.api.OreDefinition.PieceShape;
+import wraith.fabricaeexnihilo.api.ore.OreMaterial;
+import wraith.fabricaeexnihilo.api.ore.OreShape;
 import wraith.fabricaeexnihilo.util.Color;
 
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-
-import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
-
-public class DefaultApiModule implements FabricaeExNihiloApiModule {
     /* TODO: More api modules:
-        Modern Industrialisation: https://github.com/AztechMC/Modern-Industrialization/blob/master/src/main/java/aztech/modern_industrialization/materials/MIMaterials.java
-        Industrial Revolution
-        + any other mods that add ores or trees...
-     */
+            Modern Industrialisation: https://github.com/AztechMC/Modern-Industrialization/blob/master/src/main/java/aztech/modern_industrialization/materials/MIMaterials.java
+            Industrial Revolution
+            + any other mods that add ores or trees...
+         */
+public class DefaultApiModule implements FabricaeExNihiloApiModule {
     @Override
-    public void registerOres(BiConsumer<String, OreDefinition> registry) {
-        registry.accept("iron", new OreDefinition(Color.IRON, PieceShape.NORMAL, BaseMaterial.GRANITE));
-        registry.accept("gold", new OreDefinition(Color.GOLD, PieceShape.FINE, BaseMaterial.STONE));
+    public void register(FENRegistries registries) {
+        registries.registerOre("iron", Color.IRON, OreShape.NORMAL, OreMaterial.GRANITE);
+        registries.registerOre("gold", Color.GOLD, OreShape.FINE, OreMaterial.STONE);
+        
+        registries.registerWood("oak");
+        registries.registerWood("birch");
+        registries.registerWood("spruce");
+        registries.registerWood("acacia");
+        registries.registerWood("dark_oak");
+        registries.registerWood("jungle");
+        
+        registries.registerMesh("string", Color.WHITE, 10);
+        registries.registerMesh("flint", Color.GRAY, 12);
+        registries.registerMesh("iron", new Color("777777"), 14);
+        registries.registerMesh("gold", Color.GOLDEN, 22);
+        registries.registerMesh("emerald", Color.DARK_GREEN, 24);
+        registries.registerMesh("diamond", Color.DARK_AQUA, 10);
+        registries.registerMesh("netherite", Color.BLACK, 15);
+        
+        registries.registerInfestedLeaves("oak", new Identifier("minecraft:oak_leaves"));
+        registries.registerInfestedLeaves("birch", new Identifier("minecraft:birch_leaves"));
+        registries.registerInfestedLeaves("spruce", new Identifier("minecraft:spruce_leaves"));
+        registries.registerInfestedLeaves("acacia", new Identifier("minecraft:acacia_leaves"));
+        registries.registerInfestedLeaves("dark_oak", new Identifier("minecraft:dark_oak_leaves"));
+        registries.registerInfestedLeaves("jungle", new Identifier("minecraft:jungle_leaves"));
     }
-
-    @Override
-    public void registerWoods(Consumer<Identifier> registry) {
-        registry.accept(id("oak"));
-        registry.accept(id("birch"));
-        registry.accept(id("spruce"));
-        registry.accept(id("acacia"));
-        registry.accept(id("dark_oak"));
-        registry.accept(id("jungle"));
-    }
-
-    @Override
-    public void registerMeshes(BiConsumer<Identifier, MeshDefinition> registry) {
-        registry.accept(id("string_mesh"), new MeshDefinition(Color.WHITE, 10));
-        registry.accept(id("flint_mesh"), new MeshDefinition(Color.GRAY, 12));
-        registry.accept(id("iron_mesh"), new MeshDefinition(new Color("777777"), 14));
-
-        registry.accept(id("gold_mesh"), new MeshDefinition(Color.GOLDEN, 22));
-        registry.accept(id("emerald_mesh"), new MeshDefinition(Color.DARK_GREEN, 24));
-
-        registry.accept(id("diamond_mesh"), new MeshDefinition(Color.DARK_AQUA, 10));
-        registry.accept(id("netherite_mesh"), new MeshDefinition(Color.DARK_GRAY, 15));
-    }
-
-    @Override
-    public void registerInfestedLeaves(BiConsumer<Identifier, Identifier> registry) {
-        registry.accept(new Identifier("minecraft:oak_leaves"), id("oak_leaves"));
-        registry.accept(new Identifier("minecraft:birch_leaves"), id("birch_leaves"));
-        registry.accept(new Identifier("minecraft:spruce_leaves"), id("spruce_leaves"));
-        registry.accept(new Identifier("minecraft:acacia_leaves"), id("acacia_leaves"));
-        registry.accept(new Identifier("minecraft:dark_oak_leaves"), id("dark_oak_leaves"));
-        registry.accept(new Identifier("minecraft:jungle_leaves"), id("jungle_leaves"));
-    }
-
 }

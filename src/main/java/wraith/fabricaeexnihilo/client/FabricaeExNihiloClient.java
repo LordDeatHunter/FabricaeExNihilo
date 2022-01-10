@@ -70,8 +70,8 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
         // Ore Pieces
         // Ore Piece Model
         ModItems.ORE_PIECES.forEach((id, item) -> {
-            var shape = item.getDefinition().pieceShape().name().toLowerCase();
-            var material = item.getDefinition().baseMaterial().name().toLowerCase();
+            var shape = item.getShape().name().toLowerCase();
+            var material = item.getMaterial().name().toLowerCase();
             resourcePack.addModel(
                     JModel.modelKeepElements("item/generated")
                             .textures(

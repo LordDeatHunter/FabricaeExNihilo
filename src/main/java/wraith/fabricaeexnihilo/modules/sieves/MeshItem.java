@@ -5,7 +5,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
-import wraith.fabricaeexnihilo.api.MeshDefinition;
 import wraith.fabricaeexnihilo.modules.base.Colored;
 import wraith.fabricaeexnihilo.util.Color;
 
@@ -15,10 +14,10 @@ public class MeshItem extends Item implements Colored {
     private final Color color;
     private final int enchantability;
     
-    public MeshItem(MeshDefinition definition) {
+    public MeshItem(Color color, int enchantability) {
         super(ITEM_SETTINGS);
-        this.color = definition.color();
-        this.enchantability = definition.enchantability();
+        this.color = color;
+        this.enchantability = enchantability;
     }
     
     @Override

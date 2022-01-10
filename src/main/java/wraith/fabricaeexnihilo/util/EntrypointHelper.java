@@ -3,7 +3,11 @@ package wraith.fabricaeexnihilo.util;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
+import wraith.fabricaeexnihilo.FabricaeExNihilo;
+import wraith.fabricaeexnihilo.api.FENRegistries;
 import wraith.fabricaeexnihilo.api.FabricaeExNihiloApiModule;
+import wraith.fabricaeexnihilo.api.ore.OreMaterial;
+import wraith.fabricaeexnihilo.api.ore.OreShape;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModItems;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlock;
@@ -13,32 +17,46 @@ import wraith.fabricaeexnihilo.modules.ores.OreItem;
 import wraith.fabricaeexnihilo.modules.sieves.MeshItem;
 import wraith.fabricaeexnihilo.modules.sieves.SieveBlock;
 
-import java.util.List;
-import java.util.function.BiConsumer;
-
-import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
-
 public class EntrypointHelper {
     public static void callEntrypoints() {
         var entrypoints = FabricLoader.getInstance().getEntrypoints("fabricaeexnihilo:api", FabricaeExNihiloApiModule.class).stream().filter(FabricaeExNihiloApiModule::shouldLoad).toList();
+        var registries = new FENRegistriesImpl();
         
-        handle(entrypoints, FabricaeExNihiloApiModule::registerOres, (id, def) -> ModItems.ORE_PIECES.put(modifyId(id, null, "_piece"), new OreItem(def)));
-        handle(entrypoints, FabricaeExNihiloApiModule::registerMeshes, (id, def) -> ModItems.MESHES.put(id, new MeshItem(def)));
-        handle(entrypoints, FabricaeExNihiloApiModule::registerSieves, id -> ModBlocks.SIEVES.put(id, new SieveBlock()));
-        handle(entrypoints, FabricaeExNihiloApiModule::registerWoodenCrucibles, id -> ModBlocks.CRUCIBLES.put(id, new CrucibleBlock(ModBlocks.WOOD_SETTINGS)));
-        handle(entrypoints, FabricaeExNihiloApiModule::registerWoodenBarrels, id -> ModBlocks.BARRELS.put(id, new BarrelBlock(ModBlocks.WOOD_SETTINGS)));
-        handle(entrypoints, FabricaeExNihiloApiModule::registerInfestedLeaves, (base, id) -> ModBlocks.INFESTED_LEAVES.put(modifyId(id, "infested_", null), new InfestedLeavesBlock(base, ModBlocks.INFESTED_LEAVES_SETTINGS)));
+        entrypoints.forEach(entrypoint -> entrypoint.register(registries));}
+    
+    private static Identifier id(String ore, @Nullable String prefix, @Nullable String suffix) {
+        return FabricaeExNihilo.id((prefix == null ? "" : prefix) + ore + (suffix == null ? "" : suffix));
     }
     
-    private static Identifier modifyId(Identifier id, @Nullable String prefix, @Nullable String suffix) {
-        return new Identifier(id.getNamespace(), (prefix == null ? "" : prefix) + id.getPath() + (suffix == null ? "" : suffix));
-    }
-
-    private static Identifier modifyId(String ore, @Nullable String prefix, @Nullable String suffix) {
-        return id((prefix == null ? "" : prefix) + ore + (suffix == null ? "" : suffix));
-    }
-
-    private static <R> void handle(List<FabricaeExNihiloApiModule> entrypoints, BiConsumer<FabricaeExNihiloApiModule, R> function, R registry) {
-        entrypoints.forEach(entrypoint -> function.accept(entrypoint, registry));
+    private static final class FENRegistriesImpl implements FENRegistries {
+        @Override
+        public void registerOre(String name, Color color, OreShape oreShape, OreMaterial baseMaterial) {
+            ModItems.ORE_PIECES.put(id(name, null, "_piece"), new OreItem(color, baseMaterial, oreShape));
+        }
+        
+        @Override
+        public void registerMesh(String name, Color color, int enchantability) {
+            ModItems.MESHES.put(id(name, null, "_mesh"), new MeshItem(color, enchantability));
+        }
+        
+        @Override
+        public void registerSieve(String name) {
+            ModBlocks.SIEVES.put(id(name, null, "_sieve"), new SieveBlock());
+        }
+        
+        @Override
+        public void registerCrucible(String name, boolean isStone) {
+            ModBlocks.CRUCIBLES.put(id(name, null, "_crucible"), new CrucibleBlock(isStone ? ModBlocks.STONE_SETTINGS : ModBlocks.WOOD_SETTINGS));
+        }
+        
+        @Override
+        public void registerBarrel(String name, boolean isStone) {
+            ModBlocks.BARRELS.put(id(name, null, "_barrel"), new BarrelBlock(isStone ? ModBlocks.STONE_SETTINGS : ModBlocks.WOOD_SETTINGS));
+        }
+        
+        @Override
+        public void registerInfestedLeaves(String name, Identifier source) {
+            ModBlocks.INFESTED_LEAVES.put(id(name, "infested_", "_leaves"), new InfestedLeavesBlock(source, ModBlocks.INFESTED_LEAVES_SETTINGS));
+        }
     }
 }
