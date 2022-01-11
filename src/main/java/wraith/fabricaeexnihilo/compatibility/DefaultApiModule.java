@@ -31,7 +31,7 @@ public class DefaultApiModule implements FabricaeExNihiloApiModule {
         registries.registerMesh("gold", Color.GOLDEN, 22);
         registries.registerMesh("emerald", Color.DARK_GREEN, 24);
         registries.registerMesh("diamond", Color.DARK_AQUA, 10);
-        registries.registerMesh("netherite", Color.BLACK, 15);
+        registries.registerMesh("netherite", Color.DARK_GRAY, 15);
         
         registries.registerInfestedLeaves("oak", new Identifier("minecraft:oak_leaves"));
         registries.registerInfestedLeaves("birch", new Identifier("minecraft:birch_leaves"));

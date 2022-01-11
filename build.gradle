@@ -15,7 +15,6 @@ repositories {
 
     maven { url = "https://maven.fabricmc.net/" }
     maven { url = "https://maven.shedaniel.me/" }
-    maven { url = "https://storage.googleapis.com/devan-maven/" }
     maven { url = "https://www.cursemaven.com" }
     maven { url = "https://jitpack.io" }
     maven { url = "https://maven.terraformersmc.com/" }
@@ -33,10 +32,6 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-    // Other mods
-    modImplementation "net.devtech:arrp:${project.arrp_version}"
-    include "net.devtech:arrp:${project.arrp_version}"
 
     // Roughly Enough Items
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"

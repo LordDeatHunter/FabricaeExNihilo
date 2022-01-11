@@ -3,6 +3,7 @@ import crucible_gen
 import sieve_gen
 import ore_gen
 import infested_gen
+import mesh_gen
 
 
 def main():
@@ -11,6 +12,7 @@ def main():
     crucible_gen.generate()
     sieve_gen.generate()
     ore_gen.generate()
+    mesh_gen.generate()
     infested_gen.generate()
     print("Done!")
 
