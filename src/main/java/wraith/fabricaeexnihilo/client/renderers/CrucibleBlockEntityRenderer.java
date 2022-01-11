@@ -64,7 +64,7 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
         RenderSystem.enableDepthTest();
         
         // Idea stolen from Modern Industrialisation
-        
+
         var emitter = RendererAccess.INSTANCE.getRenderer().meshBuilder().getEmitter();
         emitter.square(Direction.UP, X_MIN, Z_MIN, X_MAX, Z_MAX, 1 - MathHelper.lerp(level, Y_MIN, Y_MAX));
         emitter.spriteBake(0, sprite, MutableQuadView.BAKE_LOCK_UV);
@@ -76,7 +76,7 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
         var yScale = MathHelper.clamp((Y_MAX - Y_MIN) * level, 0, Y_MAX - Y_MIN);
         
         matrices.push();
-        matrices.translate(0.5, Y_MIN + (yScale / 2), 0.5);
+        matrices.translate(0.5, Y_MIN + yScale, 0.5);
         matrices.scale(XZ_SCALE, yScale, XZ_SCALE);
         matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
         MinecraftClient.getInstance().getItemRenderer().renderItem(renderStack, ModelTransformation.Mode.NONE, light, overlay, matrices, vertexConsumer, seed);
