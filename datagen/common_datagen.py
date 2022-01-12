@@ -39,12 +39,23 @@ def save_blockstate(file_name, model):
         }, indent=2))
 
 
-def save_block_model(file_name, parent_model, textures):
-    with open(f'{block_model_path}{file_name}.json', 'w') as f:
-        f.write(json.dumps({
-            'parent': parent_model,
-            'textures': textures
-        }, indent=2))
+def save_model(model_type, file_name, parent_model, textures={}):
+    path = block_model_path if model_type.lower() == 'block' else item_model_path
+    with open(f'{path}{file_name}.json', 'w') as f:
+        data = {
+            'parent': parent_model
+        }
+        if len(textures) > 0:
+            data['textures'] = textures
+        f.write(json.dumps(data, indent=2))
+
+
+def save_block_model(file_name, parent_model, textures={}):
+    save_model('block', file_name, parent_model, textures)
+
+
+def save_item_model(file_name, parent_model, textures={}):
+    save_model('item', file_name, parent_model, textures)
 
 
 def save_ore_piece_recipe(material, raw_ore):
@@ -66,7 +77,7 @@ def add_to_lang_file(key, value):
     data = {}
     with open(default_lang_file, 'r') as f:
         try:
-            data = json.load(f)
+            data = json.loads(f.read())
         except:
             pass
         data[key] = value

@@ -3,5 +3,5 @@
   "result": "minecraft:dirt",
   "input": "#minecraft:saplings",
   "increment": 0.0625,
-  "color": "AA0000"
+  "color": "00FF00"
 }

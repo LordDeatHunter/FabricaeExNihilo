@@ -1,8 +1,5 @@
 package wraith.fabricaeexnihilo.client;
 
-import net.devtech.arrp.api.RRPCallback;
-import net.devtech.arrp.api.RuntimeResourcePack;
-import net.devtech.arrp.json.models.JModel;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -12,7 +9,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.ItemConvertible;
-import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.client.renderers.BarrelBlockEntityRenderer;
 import wraith.fabricaeexnihilo.client.renderers.CrucibleBlockEntityRenderer;
@@ -25,10 +21,7 @@ import wraith.fabricaeexnihilo.modules.crucibles.CrucibleBlockEntity;
 import wraith.fabricaeexnihilo.modules.infested.InfestingLeavesBlockEntity;
 import wraith.fabricaeexnihilo.modules.sieves.SieveBlockEntity;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
-
-import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 @Environment(EnvType.CLIENT)
 public class FabricaeExNihiloClient implements ClientModInitializer {
@@ -59,31 +52,6 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
         // Render Layers
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), ModBlocks.SIEVES.values().toArray(Block[]::new));
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), ModBlocks.CRUCIBLES.values().toArray(Block[]::new));
-
-        // TODO: Get rid of this needless arrp code. Every addon can do this themselves
-        // ARRP resource pack
-        var resourcePack = RuntimeResourcePack.create(id("resources"));
-        // Mesh models
-        for (var mesh : ModItems.MESHES.keySet()) {
-            resourcePack.addModel(JModel.modelKeepElements(id("item/mesh")), id("item/" + mesh.getPath()));
-        }
-        // Ore Pieces
-        // Ore Piece Model
-        ModItems.ORE_PIECES.forEach((id, item) -> {
-            var shape = item.getShape().name().toLowerCase();
-            var material = item.getMaterial().name().toLowerCase();
-            resourcePack.addModel(
-                    JModel.modelKeepElements("item/generated")
-                            .textures(
-                                    JModel.textures()
-                                            .layer0(id("item/ore/pieces/" + shape + "_" + material).toString())
-                                            .layer1(id("item/ore/pieces/" + shape + "_overlay").toString())),
-                    new Identifier(id.getNamespace(), "item/" + id.getPath()));
-        });
-
-        FabricaeExNihilo.LOGGER.debug("Created Resources");
-
-        RRPCallback.BEFORE_VANILLA.register(a -> a.add(resourcePack));
     }
 
 }
