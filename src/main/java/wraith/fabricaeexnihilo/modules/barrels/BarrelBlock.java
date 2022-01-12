@@ -61,7 +61,7 @@ public class BarrelBlock extends BlockWithEntity {
     
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hitResult) {
-        if (world == null || world.isClient || pos == null) {
+        if (world == null || pos == null) {
             return ActionResult.PASS;
         }
         var blockEntity = world.getBlockEntity(pos);
@@ -82,32 +82,29 @@ public class BarrelBlock extends BlockWithEntity {
     @Override
     public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
         var blockEntity = world.getBlockEntity(pos);
-        if (blockEntity != null && entity instanceof LivingEntity livingEntity) {
-            if (FabricaeExNihilo.CONFIG.modules.barrels.enableBleeding && blockEntity instanceof BarrelBlockEntity barrelEntity) {
-                var thorns = barrelEntity.getEnchantmentContainer().getEnchantmentLevel(Enchantments.THORNS);
-                if (thorns > 0 && livingEntity.damage(DamageSource.CACTUS, thorns / 2F)) {
+        if (blockEntity instanceof BarrelBlockEntity barrel && entity instanceof LivingEntity livingEntity) {
+            if (FabricaeExNihilo.CONFIG.modules.barrels.enableBleeding) {
+                var thorns = barrel.getEnchantmentContainer().getEnchantmentLevel(Enchantments.THORNS);
+                if (thorns > 0
+                        && barrel.fluidStorage.simulateInsert(FluidVariant.of(BloodFluid.STILL), 1, null) >= 1
+                        && livingEntity.damage(DamageSource.CACTUS, thorns / 2F)) {
                     var amount = FluidConstants.BUCKET * thorns / livingEntity.getMaxHealth();
-                    var storage = FluidStorage.SIDED.find(world, pos, state, blockEntity, Direction.UP);
-                    if (storage != null) {
-                        try (Transaction t = Transaction.openOuter()) {
-                            storage.insert(FluidVariant.of(BloodFluid.STILL), (long) amount, t);
-                            t.commit();
-                        }
+                    try (Transaction t = Transaction.openOuter()) {
+                        barrel.fluidStorage.insert(FluidVariant.of(BloodFluid.STILL), (long) amount, t);
+                        t.commit();
                     }
                 }
             }
-            if (!(livingEntity instanceof PlayerEntity) && !livingEntity.hasStatusEffect(ModEffects.MILKED)) {
+            if (!(livingEntity instanceof PlayerEntity) && !livingEntity.hasStatusEffect(ModEffects.MILKED) && FabricaeExNihilo.CONFIG.modules.barrels.enableMilking) {
                 var recipe = MilkingRecipe.find(livingEntity.getType(), world);
                 if (recipe.isPresent()) {
-                    if (blockEntity instanceof BarrelBlockEntity barrel) {
-                        long inserted;
-                        try (Transaction t = Transaction.openOuter()) {
-                            inserted = barrel.fluidStorage.insert(FluidVariant.of(MilkFluid.STILL), recipe.get().getAmount(), t);
-                            t.commit();
-                        }
-                        if (inserted > 0) {
-                            livingEntity.addStatusEffect(new StatusEffectInstance(ModEffects.MILKED, recipe.get().getCooldown(), 1, false, false, false));
-                        }
+                    long inserted;
+                    try (Transaction t = Transaction.openOuter()) {
+                        inserted = barrel.fluidStorage.insert(recipe.get().getFluid(), recipe.get().getAmount(), t);
+                        t.commit();
+                    }
+                    if (inserted > 0) {
+                        livingEntity.addStatusEffect(new StatusEffectInstance(ModEffects.MILKED, recipe.get().getCooldown(), 1, false, false, false));
                     }
                 }
             }

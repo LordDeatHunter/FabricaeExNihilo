@@ -34,38 +34,57 @@ public class FabricaeExNihiloConfig {
         public BarrelConfig barrels = new BarrelConfig();
         
         public static class BarrelConfig {
-            public boolean enabled = true;
             // How many ticks between updates
             public int tickRate = 6;
-            // Can barrels be enchanted with efficiency.
-            public boolean efficiency = true;
-            // Can barrels be enchanted with thorns.
-            public boolean thorns = true;
-            public boolean enableAlchemy = true; // Unsure if needed: Used to be used for the old json recipe system
+            
+            public EnchantmentConfig enchantments = new EnchantmentConfig();
+            
+            public static class EnchantmentConfig {
+                // Can barrels be enchanted with efficiency.
+                public boolean efficiency = true;
+                // Can barrels be enchanted with thorns.
+                public boolean thorns = true;
+            }
+    
+            public boolean enableAlchemy = true;
             // Requires that thorns be enabled too.
             public boolean enableBleeding = true;
-            public boolean enableCompost = true; // Unsure if needed: Used to be used for the old json recipe system
-            // How much progress to add each time the barrel ticks
-            public double compostRate = 0.01;
-            public boolean enableFluidOnTop = true; // Unsure if needed: Used to be used for the old json recipe system
-            public boolean enableLeaking = true; // Unsure if needed: Used to be used for the old json recipe system
-            // How far away can a block be and still be affected by wooden barrels leaking
-            public int leakRadius = 2;
-            public boolean enableMilking = true; // Unsure if needed: Used to be used for the old json recipe system
-            public boolean enableTransforming = true; // Unsure if needed: Used to be used for the old json recipe system
-            // How far away can a block be and still boost the transformation rate
-            public int transformBoostRadius = 2;
-            // How many ticks does it take to fully transform
-            public int transformRate = 600;
-            // How many ticks does each block below remove
-            public int transformBoost = 15;
+            public boolean enableMilking = true;
+            public boolean enableFluidCombination = true;
+    
+            public CompostConfig compost = new CompostConfig();
+    
+            public static class CompostConfig {
+                public boolean enabled = true;
+                // How much progress to add each time the barrel ticks
+                public double rate = 0.01;
+    
+            }
+            public LeakingConfig leaking = new LeakingConfig();
+    
+            public static class LeakingConfig {
+                public boolean enabled = true;
+                // How much progress to add each time the barrel ticks
+                public int radius = 2;
+    
+            }
+            public TransformingConfig transforming = new TransformingConfig();
+            
+            public static class TransformingConfig {
+                public boolean enabled = true;
+                // How far away can a block be and still boost the transformation rate
+                public int boostRadius = 2;
+                // How many ticks does it take to fully transform
+                public int rate = 600;
+                // How many ticks does each block below remove
+                public int boost = 15;
+            }
         }
         
         public CrucibleConfig crucibles = new CrucibleConfig();
         
         @SuppressWarnings("UnstableApiUsage")
         public static class CrucibleConfig {
-            public boolean enabled = true;
             // How many ticks between updates
             public int tickRate = 20;
             public long baseProcessRate = FluidConstants.BUCKET / 100;
@@ -84,7 +103,7 @@ public class FabricaeExNihiloConfig {
         
         public static class InfestedConfig {
             public boolean enabled = true;
-            // How much progress should by made during each infesting leaves update
+            // How much progress should be made during each infesting leaves update
             public double progressPerUpdate = 0.015;
             // How many ticks between infesting leaves updates
             public int updateFrequency = 10;
@@ -125,13 +144,12 @@ public class FabricaeExNihiloConfig {
         public SieveConfig sieves = new SieveConfig();
         
         public static class SieveConfig {
-            public boolean enabled = true;
             // Do meshes use up durability (WIP)
-            public boolean meshDurability = false;
+            //public boolean meshDurability = false;
             public int meshStackSize = 16;
             // How far can sieves be connected
             public int sieveRadius = 2;
-            // Progress per click = baseProgress + efficiencyScaleFactor*efficientLevel + hasteScaleFactor*hasteLevel
+            // Progress per click = baseProgress + efficiencyScaleFactor*efficiencyLevel + hasteScaleFactor*hasteLevel
             public double baseProgress = 0.1;
             public double efficiencyScaleFactor = 0.05;
             public double hasteScaleFactor = 1.0;
@@ -142,23 +160,10 @@ public class FabricaeExNihiloConfig {
             // Do haste beacons/potions affect sieving speed
             public boolean haste = true;
         }
-        
-        public CrookConfig crooks = new CrookConfig();
-        
-        public static class CrookConfig {
-            public boolean enabled = true;
-        }
-        
-        public HammerConfig hammers = new HammerConfig();
-        
-        public static class HammerConfig {
-            public boolean enabled = true;
-        }
-        
+    
         public WitchWaterConfig witchwater = new WitchWaterConfig();
         
         public static class WitchWaterConfig {
-            public boolean enabled = true;
             // What effects should players get on contact
             public Map<String, StatusEffectStats> effects = Map.of(
                     "blindness", new StatusEffectStats(210, 0),

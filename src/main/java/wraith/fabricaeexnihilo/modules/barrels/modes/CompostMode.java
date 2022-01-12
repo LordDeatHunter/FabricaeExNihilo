@@ -65,7 +65,7 @@ public class CompostMode extends BarrelMode {
         if (progress >= 1.0) {
             barrel.setMode(new ItemMode(result.copy()));
         } else if (amount >= 1.0) {
-            progress += FabricaeExNihilo.CONFIG.modules.barrels.compostRate * barrel.getEfficiencyMultiplier();
+            progress += FabricaeExNihilo.CONFIG.modules.barrels.compost.rate * barrel.getEfficiencyMultiplier();
             barrel.markDirty();
         }
     }

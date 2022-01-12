@@ -180,7 +180,7 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
             return null;
         }
         var rand = world.random;
-        var r = FabricaeExNihilo.CONFIG.modules.barrels.leakRadius;
+        var r = FabricaeExNihilo.CONFIG.modules.barrels.leaking.radius;
         var leakPos = pos.add(rand.nextInt(2 * r + 1) - r, -rand.nextInt(2), rand.nextInt(2 * r + 1) - r);
         return World.isValid(leakPos) ? leakPos : null;
     }
@@ -215,6 +215,7 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
     
     public ActionResult insertFromHand(PlayerEntity player, Hand hand) {
         var held = player.getStackInHand(hand);
+        if (held.isEmpty()) return ActionResult.PASS;
         
         try (Transaction t = Transaction.openOuter()) {
             var inserted = (int) itemStorage.insert(ItemVariant.of(held), held.getCount(), t);

@@ -7,10 +7,10 @@ import wraith.fabricaeexnihilo.api.ore.OreMaterial;
 import wraith.fabricaeexnihilo.api.ore.OreShape;
 import wraith.fabricaeexnihilo.util.Color;
 
-    /* TODO: More api modules:
-            Modern Industrialisation: https://github.com/AztechMC/Modern-Industrialization/blob/master/src/main/java/aztech/modern_industrialization/materials/MIMaterials.java
-            Industrial Revolution
-            + any other mods that add ores or trees...
+/* TODO: More api modules:
+    Modern Industrialisation: https://github.com/AztechMC/Modern-Industrialization/blob/master/src/main/java/aztech/modern_industrialization/materials/MIMaterials.java
+    Industrial Revolution
+    + any other mods that add ores or trees...
          */
 public class DefaultApiModule implements FabricaeExNihiloApiModule {
     @Override

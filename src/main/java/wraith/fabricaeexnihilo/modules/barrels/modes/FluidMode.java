@@ -55,29 +55,32 @@ public class FluidMode extends BarrelMode {
         
         if (amount >= FluidConstants.BUCKET) {
             var fluidState = world.getFluidState(pos.up());
-            if (!fluidState.isEmpty()) {
+            if (!fluidState.isEmpty() && config.enableFluidCombination) {
                 var fluid = fluidState.getFluid();
                 var recipe = FluidCombinationRecipe.find(this.fluid, FluidVariant.of(fluid), world);
                 recipe.ifPresent(fluidCombinationRecipe -> barrel.setMode(fluidCombinationRecipe.getResult().copy()));
             }
             var blockState = world.getBlockState(pos.down());
-            if (!blockState.isAir()) {
+            if (!blockState.isAir() && config.transforming.enabled) {
                 var block = blockState.getBlock();
                 var recipe = FluidTransformationRecipe.find(this.fluid, block, world);
                 if (recipe.isPresent()) {
-                    var num = barrel.countBelow(block, config.transformBoostRadius);
-                    barrel.setMode(new AlchemyMode(this, recipe.get().getResult(), config.transformRate - (num - 1) * config.transformBoost));
+                    var num = barrel.countBelow(block, config.transforming.boostRadius);
+                    barrel.setMode(new AlchemyMode(this, recipe.get().getResult(), config.transforming.rate - (num - 1) * config.transforming.boost));
                 }
             }
         }
+        if (!config.leaking.enabled)
+            return;
+        
         var leakPos = barrel.getLeakPos();
-        if (leakPos == null) {
+        if (leakPos == null)
             return;
-        }
+        
         var recipe = LeakingRecipe.find(world.getBlockState(leakPos).getBlock(), this.fluid, world);
-        if (recipe.isEmpty()) {
+        if (recipe.isEmpty())
             return;
-        }
+        
         var leakAmount = recipe.get().getAmount();
         world.setBlockState(leakPos, recipe.get().getResult().getDefaultState());
         if (amount >= leakAmount) {
@@ -85,7 +88,6 @@ public class FluidMode extends BarrelMode {
         } else {
             barrel.setMode(new EmptyMode());
         }
-        barrel.markDirty();
     }
     
     public long getAmount() {
@@ -105,7 +107,7 @@ public class FluidMode extends BarrelMode {
     public long insertItem(ItemVariant item, long maxAmount, TransactionContext transaction, BarrelItemStorage storage) {
         StoragePreconditions.notBlankNotNegative(item, maxAmount);
         var result = AlchemyRecipe.find(fluid, item.getItem(), storage.barrel.getWorld());
-        if (result.isEmpty()) {
+        if (result.isEmpty() || !FabricaeExNihilo.CONFIG.modules.barrels.enableAlchemy) {
             return 0;
         }
         storage.updateSnapshots(transaction);

@@ -164,18 +164,9 @@ public class SieveBlockEntity extends BaseBlockEntity {
     }
     
     public void dropInventory() {
-        dropMesh();
-        dropContents();
-    }
-    
-    public void dropMesh() {
         ItemScatterer.spawn(world, pos.getX(), pos.getY() + 1, pos.getZ(), mesh);
-        mesh = ItemStack.EMPTY;
-    }
-    
-    
-    public void dropContents() {
         ItemScatterer.spawn(world, pos.getX(), pos.getY() + 1, pos.getZ(), contents);
+        mesh = ItemStack.EMPTY;
         contents = ItemStack.EMPTY;
     }
     

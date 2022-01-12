@@ -73,7 +73,9 @@ public class FabricaeExNihilo implements ModInitializer {
             } else if (!Files.exists(file)) {
                 LOGGER.info("Missing config file, writing defaults!");
                 Files.createFile(file);
-                GSON.toJson(new FabricaeExNihiloConfig(), Files.newBufferedWriter(file));
+                try (var writer = Files.newBufferedWriter(file)) {
+                    GSON.toJson(new FabricaeExNihiloConfig(), writer);
+                }
                 return new FabricaeExNihiloConfig();
             } else {
                 throw new IllegalStateException("Config file " + file + " is not a file! Please delete whatever it is.");

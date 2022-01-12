@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
+import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelFluidStorage;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelItemStorage;
 import wraith.fabricaeexnihilo.recipe.barrel.CompostRecipe;
@@ -32,7 +33,7 @@ public class EmptyMode extends BarrelMode {
     public long insertItem(ItemVariant item, long maxAmount, TransactionContext transaction, BarrelItemStorage storage) {
         StoragePreconditions.notBlankNotNegative(item, maxAmount);
         var recipe = CompostRecipe.find(item.toStack(), storage.barrel.getWorld());
-        if (recipe.isEmpty()) {
+        if (recipe.isEmpty() || !FabricaeExNihilo.CONFIG.modules.barrels.compost.enabled) {
             return 0;
         }
         storage.updateSnapshots(transaction);
