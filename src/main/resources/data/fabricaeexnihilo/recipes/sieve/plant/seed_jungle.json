@@ -5,7 +5,12 @@
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.01]
   },
-  "fabricaeexnihilo:requiredItems": [
-    "fabricaeexnihilo:jungle_seeds"
+  "fabric:conditions": [
+    {
+      "condition": "fabricaeexnihilo:all_items_present",
+      "values": [
+        "fabricaeexnihilo:jungle_seeds"
+      ]
+    }
   ]
 }

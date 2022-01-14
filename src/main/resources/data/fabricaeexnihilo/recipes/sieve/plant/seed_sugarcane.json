@@ -7,7 +7,12 @@
     "fabricaeexnihilo:string_mesh": [0.1],
     "fabricaeexnihilo:flint_mesh": [0.15]
   },
-  "fabricaeexnihilo:requiredItems": [
-    "fabricaeexnihilo:sugarcane_seeds"
+  "fabric:conditions": [
+    {
+      "condition": "fabricaeexnihilo:all_items_present",
+      "values": [
+        "fabricaeexnihilo:sugarcane_seeds",
+      ]
+    }
   ]
 }

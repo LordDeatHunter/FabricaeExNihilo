@@ -5,7 +5,12 @@
   "rolls": {
     "fabricaeexnihilo:string_mesh": [0.02]
   },
-  "fabricaeexnihilo:requiredItems": [
-    "fabricaeexnihilo:birch_seeds"
+  "fabric:conditions": [
+    {
+      "condition": "fabricaeexnihilo:all_items_present",
+      "values": [
+        "fabricaeexnihilo:birch_seeds"
+      ]
+    }
   ]
 }
