@@ -9,6 +9,8 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import static com.ibm.icu.impl.locale.KeyTypeData.ValueType.single;
+
 public abstract class AbstractIngredient<T> implements Predicate<T> {
     protected final Either<T, Tag<T>> value;
     
@@ -46,6 +48,15 @@ public abstract class AbstractIngredient<T> implements Predicate<T> {
             return this.getClass() == other.getClass() && this.value.equals(other.value);
         }
         return false;
+    }
+    
+    public Either<T, Tag<T>> getValue() {
+        return value;
+    }
+    
+    @Override
+    public String toString() {
+        return value.map(Object::toString, tag -> "#" + tag.toString());
     }
     
     public int hashCode() {

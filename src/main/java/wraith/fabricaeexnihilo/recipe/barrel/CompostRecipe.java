@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.modules.ModRecipes;
+import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
 import wraith.fabricaeexnihilo.recipe.util.ItemIngredient;
@@ -74,20 +74,20 @@ public class CompostRecipe extends BaseRecipe<CompostRecipe.Context> {
     public static class Serializer implements RecipeSerializer<CompostRecipe> {
         @Override
         public CompostRecipe read(Identifier id, JsonObject json) {
-            ItemStack result = JsonHelper.getItem(json, "result").getDefaultStack();
-            ItemIngredient input = CodecUtils.fromJson(ItemIngredient.CODEC, json.get("input"));
-            double increment = JsonHelper.getDouble(json, "increment");
-            Color color = Color.fromJson(json.get("color"));
+            var result = CodecUtils.fromJson(CodecUtils.ITEM_STACK, json.get("result"));
+            var input = CodecUtils.fromJson(ItemIngredient.CODEC, json.get("input"));
+            var increment = JsonHelper.getDouble(json, "increment");
+            var color = Color.fromJson(json.get("color"));
             
             return new CompostRecipe(id, result, input, increment, color);
         }
         
         @Override
         public CompostRecipe read(Identifier id, PacketByteBuf buf) {
-            ItemStack result = buf.readItemStack();
-            ItemIngredient input = CodecUtils.fromPacket(ItemIngredient.CODEC, buf);
-            double increment = buf.readDouble();
-            Color color = new Color(buf.readInt());
+            var result = buf.readItemStack();
+            var input = CodecUtils.fromPacket(ItemIngredient.CODEC, buf);
+            var increment = buf.readDouble();
+            var color = new Color(buf.readInt());
             
             return new CompostRecipe(id, result, input, increment, color);
         }

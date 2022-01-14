@@ -1,12 +1,10 @@
-package wraith.fabricaeexnihilo.modules;
+package wraith.fabricaeexnihilo.recipe;
 
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import wraith.fabricaeexnihilo.recipe.SieveRecipe;
-import wraith.fabricaeexnihilo.recipe.ToolRecipe;
 import wraith.fabricaeexnihilo.recipe.barrel.*;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleHeatRecipe;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleRecipe;
@@ -65,7 +63,7 @@ public class ModRecipes {
         Registry.register(Registry.RECIPE_SERIALIZER, type.id, serializer);
     }
     
-    private static record ModRecipeType<T extends Recipe<?>>(Identifier id) implements RecipeType<T> {
+    public static final record ModRecipeType<T extends Recipe<?>>(Identifier id) implements RecipeType<T> {
         @Override
         public String toString() {
             return id.toString();

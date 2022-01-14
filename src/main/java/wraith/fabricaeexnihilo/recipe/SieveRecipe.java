@@ -11,19 +11,17 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
-import net.minecraft.util.Pair;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.modules.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
 import wraith.fabricaeexnihilo.recipe.util.ItemIngredient;
 import wraith.fabricaeexnihilo.recipe.util.Loot;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class SieveRecipe extends BaseRecipe<SieveRecipe.Context> {
@@ -100,16 +98,15 @@ public class SieveRecipe extends BaseRecipe<SieveRecipe.Context> {
             var result = CodecUtils.fromJson(CodecUtils.ITEM_STACK, json.get("result"));
             var input = CodecUtils.fromJson(ItemIngredient.CODEC, json.get("input"));
             var fluid = json.has("fluid") ? CodecUtils.fromJson(FluidIngredient.CODEC, json.get("fluid")) : new FluidIngredient(Fluids.EMPTY);
-            var rolls = JsonHelper.getObject(json, "rolls")
-                    .entrySet()
-                    .stream()
-                    .map(entry -> new Pair<>(new Identifier(entry.getKey()),
-                            StreamSupport.stream(entry.getValue()
-                                            .getAsJsonArray()
-                                            .spliterator(), false)
-                                    .map(JsonElement::getAsDouble)
-                                    .toList()))
-                    .collect(Collectors.toUnmodifiableMap(Pair::getLeft, Pair::getRight));
+            var rolls = new HashMap<Identifier, List<Double>>();
+            JsonHelper.getObject(json, "rolls").entrySet().forEach(entry -> {
+                var meshJson = entry.getKey();
+                var chancesJson = entry.getValue();
+                rolls.put(new Identifier(meshJson),
+                        StreamSupport.stream(chancesJson.getAsJsonArray().spliterator(), false)
+                                .map(JsonElement::getAsDouble)
+                                .toList());
+            });
             
             return new SieveRecipe(id, result, input, fluid, rolls);
         }

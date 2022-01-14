@@ -2,12 +2,8 @@ package wraith.fabricaeexnihilo.recipe.util;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.util.CodecUtils;
-import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,22 +26,6 @@ public record Loot(ItemStack stack, List<Double> chances) {
         for (var chance : chances) {
             this.chances.add(chance);
         }
-    }
-    
-    public Loot(ItemConvertible result, double... chances) {
-        this(ItemUtils.asStack(result), chances);
-    }
-    
-    public Loot(ItemConvertible result, List<Double> chances) {
-        this(ItemUtils.asStack(result), chances);
-    }
-    
-    public Loot(Identifier result, List<Double> chances) {
-        this(ItemUtils.asStack(Registry.ITEM.get(result)), chances);
-    }
-    
-    public Loot(Identifier result, double... chances) {
-        this(ItemUtils.asStack(Registry.ITEM.get(result)), chances);
     }
     
     public boolean isEmpty() {
