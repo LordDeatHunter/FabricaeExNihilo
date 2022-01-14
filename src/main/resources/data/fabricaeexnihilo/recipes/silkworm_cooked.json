@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
   "ingredient": {
-    "item": "fabricaeexnihilo:silkworm_raw"
+    "item": "fabricaeexnihilo:raw_silkworm"
   },
-  "result": "fabricaeexnihilo:silkworm_cooked",
+  "result": "fabricaeexnihilo:cooked_silkworm",
   "experience": 0.35,
   "cookingtime": 200
 }

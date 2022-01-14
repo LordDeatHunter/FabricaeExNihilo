@@ -2,7 +2,7 @@
   "type": "fabricaeexnihilo:crook",
   "block": "minecraft:acacia_leaves",
   "result": {
-    "stack": "fabricaeexnihilo:seed_acacia",
+    "stack": "fabricaeexnihilo:acacia_seeds",
     "chances": [
       0.25
     ]

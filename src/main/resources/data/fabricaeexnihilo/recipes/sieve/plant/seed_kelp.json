@@ -1,6 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:seed_kelp",
+  "result": "fabricaeexnihilo:kelp_seeds",
   "input": "minecraft:sand",
   "fluid": "#fabricaeexnihilo:true_water",
   "rolls": {
@@ -8,6 +8,6 @@
     "fabricaeexnihilo:flint_mesh": [0.1]
   },
   "fabricaeexnihilo:requiredItems": [
-    "fabricaeexnihilo:seed_kelp"
+    "fabricaeexnihilo:kelp_seeds"
   ]
 }

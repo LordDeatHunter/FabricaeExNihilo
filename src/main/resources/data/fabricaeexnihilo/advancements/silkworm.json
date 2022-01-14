@@ -2,7 +2,7 @@
   "parent": "fabricaeexnihilo:crook",
   "display": {
     "icon": {
-      "item": "fabricaeexnihilo:silkworm_raw"
+      "item": "fabricaeexnihilo:raw_silkworm"
     },
     "title": {
       "translate": "advancements.fabricaeexnihilo.silkworm.title"
@@ -22,7 +22,7 @@
         "items": [
           {
             "items": [
-              "fabricaeexnihilo:silkworm_raw"
+              "fabricaeexnihilo:raw_silkworm"
             ]
           }
         ]

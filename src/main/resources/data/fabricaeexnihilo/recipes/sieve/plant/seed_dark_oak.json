@@ -1,11 +1,11 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:seed_dark_oak",
+  "result": "fabricaeexnihilo:dark_oak_seeds",
   "input": "minecraft:dirt",
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.01]
   },
   "fabricaeexnihilo:requiredItems": [
-    "fabricaeexnihilo:seed_dark_oak"
+    "fabricaeexnihilo:dark_oak_seeds"
   ]
 }

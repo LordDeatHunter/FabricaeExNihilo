@@ -2,7 +2,7 @@
   "type": "fabricaeexnihilo:crook",
   "block": "minecraft:oak_leaves",
   "result": {
-    "stack": "fabricaeexnihilo:seed_oak",
+    "stack": "fabricaeexnihilo:oak_seeds",
     "chances": [
       0.25
     ]

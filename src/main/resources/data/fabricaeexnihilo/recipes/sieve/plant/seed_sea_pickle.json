@@ -1,12 +1,12 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:seed_sea_pickle",
+  "result": "fabricaeexnihilo:sea_pickle_seeds",
   "input": "minecraft:sand",
   "fluid": "#fabricaeexnihilo:true_water",
   "rolls": {
     "fabricaeexnihilo:iron_mesh": [0.1]
   },
   "fabricaeexnihilo:requiredItems": [
-    "fabricaeexnihilo:seed_sea_pickle"
+    "fabricaeexnihilo:sea_pickle_seeds"
   ]
 }

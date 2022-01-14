@@ -2,7 +2,7 @@
   "type": "fabricaeexnihilo:crook",
   "block": "minecraft:jungle_leaves",
   "result": {
-    "stack": "fabricaeexnihilo:seed_jungle",
+    "stack": "fabricaeexnihilo:jungle_seeds",
     "chances": [
       0.25
     ]

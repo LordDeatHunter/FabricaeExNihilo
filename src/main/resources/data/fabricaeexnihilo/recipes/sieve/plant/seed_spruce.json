@@ -1,11 +1,11 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:seed_spruce",
+  "result": "fabricaeexnihilo:spruce_seeds",
   "input": "minecraft:dirt",
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.05]
   },
   "fabricaeexnihilo:requiredItems": [
-    "fabricaeexnihilo:seed_spruce"
+    "fabricaeexnihilo:spruce_seeds"
   ]
 }

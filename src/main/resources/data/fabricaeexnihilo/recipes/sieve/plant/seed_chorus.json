@@ -1,6 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:seed_chorus",
+  "result": "fabricaeexnihilo:chorus_seeds",
   "input": "minecraft:dirt",
   "rolls": {
     "fabricaeexnihilo:string_mesh": [0.01],
@@ -10,6 +10,6 @@
     "fabricaeexnihilo:diamond_mesh": [0.1]
   },
   "fabricaeexnihilo:requiredItems": [
-    "fabricaeexnihilo:seed_chorus"
+    "fabricaeexnihilo:chorus_seeds"
   ]
 }

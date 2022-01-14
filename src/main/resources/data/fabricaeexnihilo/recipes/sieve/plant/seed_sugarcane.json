@@ -1,6 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:seed_sugarcane",
+  "result": "fabricaeexnihilo:sugarcane_seeds",
   "input": "minecraft:sand",
   "fluid": "#fabricaeexnihilo:true_water",
   "rolls": {
@@ -8,6 +8,6 @@
     "fabricaeexnihilo:flint_mesh": [0.15]
   },
   "fabricaeexnihilo:requiredItems": [
-    "fabricaeexnihilo:seed_sugarcane"
+    "fabricaeexnihilo:sugarcane_seeds"
   ]
 }

@@ -1,11 +1,11 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:seed_acacia",
+  "result": "fabricaeexnihilo:acacia_seeds",
   "input": "minecraft:red_sand",
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.02]
   },
   "fabricaeexnihilo:requiredItems": [
-    "fabricaeexnihilo:seed_acacia"
+    "fabricaeexnihilo:acacia_seeds"
   ]
 }

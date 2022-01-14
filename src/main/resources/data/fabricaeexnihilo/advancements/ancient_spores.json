@@ -2,7 +2,7 @@
   "parent": "fabricaeexnihilo:mesh",
   "display": {
     "icon": {
-      "item": "fabricaeexnihilo:seed_mycelium"
+      "item": "fabricaeexnihilo:mycelium_seeds"
     },
     "title": {
       "translate": "advancements.fabricaeexnihilo.ancient_spores.title"
@@ -22,7 +22,7 @@
         "items": [
           {
             "items": [
-              "fabricaeexnihilo:seed_mycelium"
+              "fabricaeexnihilo:mycelium_seeds"
             ]
           }
         ]
