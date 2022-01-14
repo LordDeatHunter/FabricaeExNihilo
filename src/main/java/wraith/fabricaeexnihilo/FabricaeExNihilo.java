@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.JsonHelper;
 import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,7 +34,17 @@ public class FabricaeExNihilo implements ModInitializer {
     @Override
     public void onInitialize() {
         EntrypointHelper.callEntrypoints();
-
+    
+        ResourceConditions.register(id("all_items_present"), json -> {
+            var values = JsonHelper.getArray(json, "values");
+            
+            for (var value : values) {
+                if (!Registry.ITEM.containsId(new Identifier(value.getAsString()))) {
+                    return false;
+                }
+            }
+            return true;
+        });
         Registry.register(Registry.LOOT_FUNCTION_TYPE, id("copy_enchantments"), CopyEnchantmentsLootFunction.TYPE);
 
         LOGGER.debug("Registering Status Effects");

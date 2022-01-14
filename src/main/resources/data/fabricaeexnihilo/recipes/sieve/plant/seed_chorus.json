@@ -9,7 +9,12 @@
     "fabricaeexnihilo:gold_mesh": [0.2],
     "fabricaeexnihilo:diamond_mesh": [0.1]
   },
-  "fabricaeexnihilo:requiredItems": [
-    "fabricaeexnihilo:chorus_seeds"
+  "fabric:conditions": [
+    {
+      "condition": "fabricaeexnihilo:all_items_present",
+      "values": [
+        "fabricaeexnihilo:chorus_seeds"
+      ]
+    }
   ]
 }

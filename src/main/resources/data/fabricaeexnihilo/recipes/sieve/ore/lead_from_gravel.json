@@ -8,7 +8,12 @@
     "fabricaeexnihilo:gold_mesh": [0.01],
     "fabricaeexnihilo:diamond_mesh": [0.1]
   },
-  "fabricaeexnihilo:requiredItems": [
-    "fabricaeexnihilo:lead_piece"
+  "fabric:conditions": [
+    {
+      "condition": "fabric:any_mods_loaded",
+      "values": [
+        "techreborn"
+      ]
+    }
   ]
 }

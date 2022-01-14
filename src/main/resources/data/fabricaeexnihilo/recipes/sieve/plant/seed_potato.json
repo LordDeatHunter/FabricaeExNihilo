@@ -5,7 +5,12 @@
   "rolls": {
     "fabricaeexnihilo:string_mesh": [0.03]
   },
-  "fabricaeexnihilo:requiredItems": [
-    "fabricaeexnihilo:potato_seeds"
+  "fabric:conditions": [
+    {
+      "condition": "fabricaeexnihilo:all_items_present",
+      "values": [
+        "fabricaeexnihilo:potato_seeds"
+      ]
+    }
   ]
 }

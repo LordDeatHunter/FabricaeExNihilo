@@ -10,7 +10,12 @@
     "fabricaeexnihilo:gold_mesh": [0.1],
     "fabricaeexnihilo:diamond_mesh": [0.2]
   },
-  "fabricaeexnihilo:requiredItems": [
-    "fabricaeexnihilo:mycelium_seeds"
+  "fabric:conditions": [
+    {
+      "condition": "fabricaeexnihilo:all_items_present",
+      "values": [
+        "fabricaeexnihilo:mycelium_seeds"
+      ]
+    }
   ]
 }

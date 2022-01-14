@@ -2,5 +2,12 @@
   "type": "fabricaeexnihilo:crucible_heat",
   "block": "techreborn:nitro_diesel",
   "heat": 16,
-  "fabricaeexnihilo:requiredMod": "techreborn"
+  "fabric:conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "techreborn"
+      ]
+    }
+  ]
 }
