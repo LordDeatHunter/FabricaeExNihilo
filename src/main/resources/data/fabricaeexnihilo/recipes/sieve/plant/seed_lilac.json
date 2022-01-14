@@ -1,11 +1,11 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:seed_lilac",
+  "result": "fabricaeexnihilo:lilac_seeds",
   "input": "minecraft:dirt",
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.05]
   },
   "fabricaeexnihilo:requiredItems": [
-    "fabricaeexnihilo:seed_lilac"
+    "fabricaeexnihilo:lilac_seeds"
   ]
 }

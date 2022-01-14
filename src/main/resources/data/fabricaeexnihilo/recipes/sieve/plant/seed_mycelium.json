@@ -1,11 +1,11 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:seed_mycelium",
+  "result": "fabricaeexnihilo:mycelium_seeds",
   "input": "minecraft:dirt",
   "rolls": {
     "fabricaeexnihilo:iron_mesh": [0.02]
   },
   "fabricaeexnihilo:requiredItems": [
-    "fabricaeexnihilo:seed_mycelium"
+    "fabricaeexnihilo:mycelium_seeds"
   ]
 }

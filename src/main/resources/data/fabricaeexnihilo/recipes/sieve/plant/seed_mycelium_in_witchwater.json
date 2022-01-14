@@ -1,6 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:seed_mycelium",
+  "result": "fabricaeexnihilo:mycelium_seeds",
   "input": "minecraft:dirt",
   "fluid": "fabricaeexnihilo:witchwater",
   "rolls": {
@@ -11,6 +11,6 @@
     "fabricaeexnihilo:diamond_mesh": [0.2]
   },
   "fabricaeexnihilo:requiredItems": [
-    "fabricaeexnihilo:seed_mycelium"
+    "fabricaeexnihilo:mycelium_seeds"
   ]
 }

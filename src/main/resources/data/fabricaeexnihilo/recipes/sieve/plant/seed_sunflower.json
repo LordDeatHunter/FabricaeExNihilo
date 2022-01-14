@@ -1,11 +1,11 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:seed_sunflower",
+  "result": "fabricaeexnihilo:sunflower_seeds",
   "input": "minecraft:dirt",
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.05]
   },
   "fabricaeexnihilo:requiredItems": [
-    "fabricaeexnihilo:seed_sunflower"
+    "fabricaeexnihilo:sunflower_seeds"
   ]
 }

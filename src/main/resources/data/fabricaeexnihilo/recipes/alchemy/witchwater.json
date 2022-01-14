@@ -1,7 +1,7 @@
 {
   "type": "fabricaeexnihilo:alchemy",
   "reactant": "#fabricaeexnihilo:true_water",
-  "catalyst": "fabricaeexnihilo:seed_mycelium",
+  "catalyst": "fabricaeexnihilo:mycelium_seeds",
   "result": {
     "id": "fluid",
     "fluid": "fabricaeexnihilo:witchwater",
