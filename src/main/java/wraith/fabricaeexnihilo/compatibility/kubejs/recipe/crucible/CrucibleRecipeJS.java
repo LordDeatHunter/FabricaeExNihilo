@@ -11,9 +11,9 @@ import wraith.fabricaeexnihilo.util.CodecUtils;
 
 @SuppressWarnings("UnstableApiUsage")
 public class CrucibleRecipeJS extends RecipeJS {
-    private ItemIngredient input;
     private long amount;
     private FluidVariant fluid;
+    private ItemIngredient input;
     private boolean isStone = true;
     
     @Override
@@ -21,7 +21,7 @@ public class CrucibleRecipeJS extends RecipeJS {
         var fluid = FluidStackJS.of(listJS.get(0));
         this.fluid = FluidVariant.of(fluid.getFluid(), fluid.getNbt());
         this.amount = fluid.getAmount();
-        input = CodecUtils.fromJson(ItemIngredient.CODEC, new JsonPrimitive(listJS.get(3).toString()));
+        input = CodecUtils.fromJson(ItemIngredient.CODEC, new JsonPrimitive(listJS.get(1).toString()));
     }
     
     @SuppressWarnings("unused") // Used from js

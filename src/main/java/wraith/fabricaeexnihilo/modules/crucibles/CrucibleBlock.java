@@ -25,7 +25,7 @@ public class CrucibleBlock extends BlockWithEntity {
     
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (world == null || world.isClient() || pos == null) {
+        if (world == null || pos == null) {
             return ActionResult.PASS;
         }
         if (world.getBlockEntity(pos) instanceof CrucibleBlockEntity crucible) {
