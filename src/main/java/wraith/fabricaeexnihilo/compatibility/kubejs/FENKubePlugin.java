@@ -1,9 +1,7 @@
 package wraith.fabricaeexnihilo.compatibility.kubejs;
 
 import dev.latvian.mods.kubejs.KubeJSPlugin;
-import dev.latvian.mods.kubejs.block.custom.BlockTypes;
 import dev.latvian.mods.kubejs.recipe.RegisterRecipeHandlersEvent;
-import dev.latvian.mods.kubejs.script.BindingsEvent;
 import wraith.fabricaeexnihilo.compatibility.kubejs.recipe.SieveRecipeJS;
 import wraith.fabricaeexnihilo.compatibility.kubejs.recipe.ToolRecipeJS;
 import wraith.fabricaeexnihilo.compatibility.kubejs.recipe.barrel.*;
@@ -21,7 +19,6 @@ public class FENKubePlugin extends KubeJSPlugin {
     
     @Override
     public void addRecipes(RegisterRecipeHandlersEvent event) {
-        // TODO: Test
         event.register(ModRecipes.SIEVE.id(), SieveRecipeJS::new);
         event.register(ModRecipes.CROOK.id(), ToolRecipeJS::new);
         event.register(ModRecipes.HAMMER.id(), ToolRecipeJS::new);

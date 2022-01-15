@@ -11,17 +11,17 @@ import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
 public class LeakingRecipeJS extends RecipeJS {
+    private Block result;
     private BlockIngredient block;
     private FluidIngredient fluid;
     private long amount;
-    private Block result;
     
     @Override
     public void create(ListJS listJS) {
         result = Registry.BLOCK.get(new Identifier(listJS.get(0).toString()));
         block = CodecUtils.fromJson(BlockIngredient.CODEC, new JsonPrimitive(listJS.get(1).toString()));
         fluid = CodecUtils.fromJson(FluidIngredient.CODEC, new JsonPrimitive(listJS.get(2).toString()));
-        amount = (long) listJS.get(3);
+        amount = (long)(double) listJS.get(3);
     }
     
     @Override

@@ -13,8 +13,8 @@ import wraith.fabricaeexnihilo.recipe.util.WeightedList;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
 public class WitchWaterWorldRecipeJS extends RecipeJS {
-    private FluidIngredient target;
     private WeightedList result;
+    private FluidIngredient target;
     
     @Override
     public void create(ListJS listJS) {

@@ -9,9 +9,9 @@ import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
 public class FluidCombinationRecipeJS extends RecipeJS {
+    private BarrelMode result;
     private FluidIngredient contained;
     private FluidIngredient other;
-    private BarrelMode result;
     
     @Override
     public void create(ListJS listJS) {

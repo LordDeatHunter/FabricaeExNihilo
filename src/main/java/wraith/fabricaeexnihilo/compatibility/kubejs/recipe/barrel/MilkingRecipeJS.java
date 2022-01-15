@@ -10,8 +10,8 @@ import wraith.fabricaeexnihilo.util.CodecUtils;
 
 @SuppressWarnings("UnstableApiUsage")
 public class MilkingRecipeJS extends RecipeJS {
-    private EntityTypeIngredient entity;
     private FluidVariant fluid;
+    private EntityTypeIngredient entity;
     private long amount;
     private int cooldown;
     
@@ -20,8 +20,8 @@ public class MilkingRecipeJS extends RecipeJS {
         var fluidJS = FluidStackJS.of(listJS.get(0));
         fluid = FluidVariant.of(fluidJS.getFluid(), fluidJS.getNbt());
         entity = CodecUtils.fromJson(EntityTypeIngredient.CODEC, new JsonPrimitive(listJS.get(1).toString()));
-        amount = (long) listJS.get(2);
-        cooldown = (int) listJS.get(3);
+        amount = (long)(double) listJS.get(2);
+        cooldown = (int)(double) listJS.get(3);
     }
     
     @Override

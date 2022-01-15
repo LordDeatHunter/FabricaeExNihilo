@@ -14,7 +14,7 @@ public class CrucibleHeatRecipeJS extends RecipeJS {
     @Override
     public void create(ListJS listJS) {
         block = CodecUtils.fromJson(BlockIngredient.CODEC, new JsonPrimitive(listJS.get(0).toString()));
-        heat = (int)listJS.get(1);
+        heat = (int)(double) listJS.get(1);
     }
     
     @Override
