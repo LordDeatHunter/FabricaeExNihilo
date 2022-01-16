@@ -1,6 +1,10 @@
 package wraith.fabricaeexnihilo.util;
 
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.TallPlantBlock;
+import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
@@ -12,10 +16,15 @@ import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModItems;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlock;
 import wraith.fabricaeexnihilo.modules.crucibles.CrucibleBlock;
+import wraith.fabricaeexnihilo.modules.farming.PlantableItem;
+import wraith.fabricaeexnihilo.modules.farming.TallPlantableItem;
+import wraith.fabricaeexnihilo.modules.farming.TransformingItem;
 import wraith.fabricaeexnihilo.modules.infested.InfestedLeavesBlock;
 import wraith.fabricaeexnihilo.modules.ores.OreItem;
 import wraith.fabricaeexnihilo.modules.sieves.MeshItem;
 import wraith.fabricaeexnihilo.modules.sieves.SieveBlock;
+
+import java.util.function.Predicate;
 
 public class EntrypointHelper {
     public static void callEntrypoints() {
@@ -57,6 +66,31 @@ public class EntrypointHelper {
         @Override
         public void registerInfestedLeaves(String name, Identifier source) {
             ModBlocks.INFESTED_LEAVES.put(id(name, "infested_", "_leaves"), new InfestedLeavesBlock(source, ModBlocks.INFESTED_LEAVES_SETTINGS));
+        }
+    
+        @Override
+        public void registerTransformingSeed(String name, Lazy<Block> from, Lazy<BlockState> to) {
+            ModItems.SEEDS.put(id(name, null, "_seeds"), new TransformingItem(from, to, ModItems.BASE_SETTINGS));
+        }
+    
+        @Override
+        public void registerTallPlantSeed(String name, Lazy<TallPlantBlock[]> plants) {
+            ModItems.SEEDS.put(id(name, null, "_seeds"), new TallPlantableItem(plants, ModItems.BASE_SETTINGS));
+        }
+    
+        @Override
+        public void registerSeed(String name, Lazy<BlockState[]> plants) {
+            ModItems.SEEDS.put(id(name, null, "_seeds"), new PlantableItem(plants, ModItems.BASE_SETTINGS));
+        }
+    
+        @Override
+        public void registerSeed(String name, Lazy<BlockState[]> plants, Predicate<ItemUsageContext> placementCheck) {
+            ModItems.SEEDS.put(id(name, null, "_seeds"), new PlantableItem(plants, ModItems.BASE_SETTINGS) {
+                @Override
+                public boolean placementCheck(ItemUsageContext context) {
+                    return placementCheck.test(context);
+                }
+            });
         }
     }
 }

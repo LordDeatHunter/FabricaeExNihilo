@@ -6,6 +6,7 @@ import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;
+import wraith.fabricaeexnihilo.util.Lazy;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,13 +14,9 @@ import java.util.List;
 
 public class TallPlantableItem extends Item {
     
-    private final List<TallPlantBlock> plants;
+    private final Lazy<TallPlantBlock[]> plants;
     
-    public TallPlantableItem(TallPlantBlock plant, FabricItemSettings settings) {
-        this(Collections.singletonList(plant), settings);
-    }
-    
-    public TallPlantableItem(List<TallPlantBlock> plants, FabricItemSettings settings) {
+    public TallPlantableItem(Lazy<TallPlantBlock[]> plants, FabricItemSettings settings) {
         super(settings);
         this.plants = plants;
     }
@@ -28,7 +25,7 @@ public class TallPlantableItem extends Item {
     public ActionResult useOnBlock(ItemUsageContext context) {
         var world = context.getWorld();
         var plantPos = context.getBlockPos().offset(context.getSide());
-        var shuffledPlants = new ArrayList<>(plants);
+        var shuffledPlants = new ArrayList<>(List.of(plants.get()));
         Collections.shuffle(shuffledPlants);
         for (var plant : shuffledPlants) {
             var lower = plant.getDefaultState().with(TallPlantBlock.HALF, DoubleBlockHalf.LOWER);

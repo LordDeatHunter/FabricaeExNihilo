@@ -1,25 +1,20 @@
 package wraith.fabricaeexnihilo.modules.farming;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;
+import wraith.fabricaeexnihilo.util.Lazy;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class PlantableItem extends Item {
+    private final Lazy<BlockState[]> plants;
     
-    private final List<BlockState> plants;
-    
-    public PlantableItem(Block plant, FabricItemSettings settings) {
-        this(Collections.singletonList(plant.getDefaultState()), settings);
-    }
-    
-    public PlantableItem(List<BlockState> plants, FabricItemSettings settings) {
+    public PlantableItem(Lazy<BlockState[]> plants, FabricItemSettings settings) {
         super(settings);
         this.plants = plants;
     }
@@ -28,7 +23,7 @@ public class PlantableItem extends Item {
     public ActionResult useOnBlock(ItemUsageContext context) {
         var world = context.getWorld();
         var plantPos = context.getBlockPos().offset(context.getSide());
-        var shuffledPlants = new ArrayList<>(plants);
+        var shuffledPlants = new ArrayList<>(List.of(plants.get()));
         Collections.shuffle(shuffledPlants);
         for (var plant : shuffledPlants) {
             if (placementCheck(context) && plant.canPlaceAt(world, plantPos)) {

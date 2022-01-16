@@ -94,7 +94,7 @@ public class InfestingLeavesBlockEntity extends BaseBlockEntity implements Color
     
     @Override
     public int getColor(int index) {
-        var originalColor = MinecraftClient.getInstance().getBlockColors().getColor(Registry.BLOCK.get(target.getLeafBlock()).getDefaultState(), world, pos, 0);
+        var originalColor = MinecraftClient.getInstance().getBlockColors().getColor(Registry.BLOCK.get(target.getOld()).getDefaultState(), world, pos, 0);
         return Color.average(Color.WHITE, new Color(originalColor), progress).toInt();
     }
     

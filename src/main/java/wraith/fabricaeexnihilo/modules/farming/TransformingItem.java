@@ -6,20 +6,17 @@ import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;
+import wraith.fabricaeexnihilo.util.Lazy;
 
 public class TransformingItem extends Item {
     
-    private final Block fromBlock;
-    private final BlockState toBlockState;
+    private final Lazy<Block> from;
+    private final Lazy<BlockState> to;
     
-    public TransformingItem(Block fromBlock, Block toBlock, FabricItemSettings settings) {
-        this(fromBlock, toBlock.getDefaultState(), settings);
-    }
-    
-    public TransformingItem(Block fromBlock, BlockState toBlockState, FabricItemSettings settings) {
+    public TransformingItem(Lazy<Block> from, Lazy<BlockState> to, FabricItemSettings settings) {
         super(settings);
-        this.fromBlock = fromBlock;
-        this.toBlockState = toBlockState;
+        this.from = from;
+        this.to = to;
     }
     
     @Override
@@ -28,8 +25,8 @@ public class TransformingItem extends Item {
         var blockPos = context.getBlockPos();
         var target = world.getBlockState(blockPos).getBlock();
         // TODO make this work if someone overrides a block
-        if (target == fromBlock) {
-            world.setBlockState(blockPos, toBlockState);
+        if (target == from.get()) {
+            world.setBlockState(blockPos, to.get());
             return ActionResult.SUCCESS;
         }
         return super.useOnBlock(context);
