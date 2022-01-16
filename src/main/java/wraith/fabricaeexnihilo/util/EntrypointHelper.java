@@ -23,7 +23,6 @@ import wraith.fabricaeexnihilo.modules.infested.InfestedLeavesBlock;
 import wraith.fabricaeexnihilo.modules.ores.OreItem;
 import wraith.fabricaeexnihilo.modules.sieves.MeshItem;
 import wraith.fabricaeexnihilo.modules.sieves.SieveBlock;
-import wraith.fabricaeexnihilo.recipe.util.Lazy;
 
 import java.util.function.Predicate;
 

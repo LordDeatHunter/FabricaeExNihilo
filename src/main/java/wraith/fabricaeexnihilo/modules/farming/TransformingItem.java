@@ -6,7 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;
-import wraith.fabricaeexnihilo.recipe.util.Lazy;
+import wraith.fabricaeexnihilo.util.Lazy;
 
 public class TransformingItem extends Item {
     

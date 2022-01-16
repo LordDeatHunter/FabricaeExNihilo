@@ -1,4 +1,4 @@
-package wraith.fabricaeexnihilo.recipe.util;
+package wraith.fabricaeexnihilo.util;
 
 import java.util.function.Supplier;
 

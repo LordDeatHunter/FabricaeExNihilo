@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.api.ore.OreMaterial;
 import wraith.fabricaeexnihilo.api.ore.OreShape;
-import wraith.fabricaeexnihilo.recipe.util.Lazy;
+import wraith.fabricaeexnihilo.util.Lazy;
 import wraith.fabricaeexnihilo.util.Color;
 
 import java.util.Arrays;

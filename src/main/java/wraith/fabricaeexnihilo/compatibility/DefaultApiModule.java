@@ -3,26 +3,17 @@ package wraith.fabricaeexnihilo.compatibility;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.KelpBlock;
-import net.minecraft.block.TallPlantBlock;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.api.FENRegistries;
 import wraith.fabricaeexnihilo.api.FabricaeExNihiloApiModule;
 import wraith.fabricaeexnihilo.api.ore.OreMaterial;
 import wraith.fabricaeexnihilo.api.ore.OreShape;
-import wraith.fabricaeexnihilo.modules.farming.PlantableItem;
-import wraith.fabricaeexnihilo.modules.farming.TallPlantableItem;
-import wraith.fabricaeexnihilo.modules.farming.TransformingItem;
-import wraith.fabricaeexnihilo.recipe.util.Lazy;
+import wraith.fabricaeexnihilo.util.Lazy;
 import wraith.fabricaeexnihilo.util.Color;
 
 import java.util.stream.IntStream;
-
-import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 /* TODO: More api modules:
     Modern Industrialisation: https://github.com/AztechMC/Modern-Industrialization/blob/master/src/main/java/aztech/modern_industrialization/materials/MIMaterials.java

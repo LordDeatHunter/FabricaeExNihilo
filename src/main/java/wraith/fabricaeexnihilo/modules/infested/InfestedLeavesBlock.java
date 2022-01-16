@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.base.Colored;
-import wraith.fabricaeexnihilo.recipe.util.Lazy;
+import wraith.fabricaeexnihilo.util.Lazy;
 import wraith.fabricaeexnihilo.util.Color;
 
 import java.util.Random;
