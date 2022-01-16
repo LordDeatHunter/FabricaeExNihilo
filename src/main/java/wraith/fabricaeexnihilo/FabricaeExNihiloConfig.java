@@ -119,6 +119,7 @@ public class FabricaeExNihiloConfig {
         
         public SeedConfig seeds = new SeedConfig();
         
+        //TODO: Probably should remove many of these
         public static class SeedConfig {
             public boolean enabled = true;
             public boolean cactus = true;

@@ -1,6 +1,7 @@
 package wraith.fabricaeexnihilo.modules.infested;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
@@ -10,6 +11,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
+import wraith.fabricaeexnihilo.recipe.util.Lazy;
 import wraith.fabricaeexnihilo.util.RegistryUtils;
 
 import java.util.HashMap;
@@ -19,14 +21,20 @@ public final class InfestedHelper {
     private InfestedHelper() {
     }
     
-    public static final HashMap<Identifier, InfestedLeavesBlock> LEAF_TO_INFESTED = new HashMap<>();
+    private static final Lazy<HashMap<Block, InfestedLeavesBlock>> LEAF_TO_INFESTED = new Lazy<>(() -> {
+        HashMap<Block, InfestedLeavesBlock> map = new HashMap<>();
+        for (var entry : ModBlocks.INFESTED_LEAVES.values()) {
+            map.put(entry.getLeafBlock(), entry);
+        }
+        return map;
+    });
     
     public static ActionResult tryToInfest(World world, BlockPos pos) {
         var originalState = world.getBlockState(pos);
-        if (!LEAF_TO_INFESTED.containsKey(RegistryUtils.getId(originalState.getBlock()))) {
+        var infestedBlock = LEAF_TO_INFESTED.get().get(originalState.getBlock());
+        if (infestedBlock == null) {
             return ActionResult.PASS;
         }
-        var infestedBlock = getInfestedLeavesBlock(originalState.getBlock());
         
         var newState = ModBlocks.INFESTING_LEAVES
                 .getDefaultState()
@@ -36,17 +44,13 @@ public final class InfestedHelper {
         world.setBlockState(pos, newState);
         
         if (!(world.getBlockEntity(pos) instanceof InfestingLeavesBlockEntity blockEntity)) {
-            FabricaeExNihilo.LOGGER.warn("Placed block doesn't have a blockentity! (InfestedHelper)");
+            FabricaeExNihilo.LOGGER.warn("Placed block doesn't have a block entity! (InfestedHelper)");
             return ActionResult.PASS;
         }
         
         blockEntity.setTarget(infestedBlock);
         
         return ActionResult.SUCCESS;
-    }
-    
-    public static void tryToSpreadFrom(World world, BlockPos pos) {
-        tryToSpreadFrom(world, pos, 1);
     }
     
     public static void tryToSpreadFrom(World world, BlockPos pos, int tries) {
@@ -62,15 +66,4 @@ public final class InfestedHelper {
             }
         }
     }
-    
-    private static InfestedLeavesBlock getInfestedLeavesBlock(Block block) {
-        return LEAF_TO_INFESTED.getOrDefault(Registry.BLOCK.getId(block), ModBlocks.INFESTED_LEAVES.values().stream().findFirst().orElse(null));
-    }
-    
-    static {
-        for (var entry : ModBlocks.INFESTED_LEAVES.values()) {
-            LEAF_TO_INFESTED.put(entry.getLeafBlock(), entry);
-        }
-    }
-    
 }

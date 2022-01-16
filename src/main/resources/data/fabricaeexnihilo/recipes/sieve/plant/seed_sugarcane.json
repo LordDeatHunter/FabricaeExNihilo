@@ -11,7 +11,7 @@
     {
       "condition": "fabricaeexnihilo:all_items_present",
       "values": [
-        "fabricaeexnihilo:sugarcane_seeds",
+        "fabricaeexnihilo:sugarcane_seeds"
       ]
     }
   ]

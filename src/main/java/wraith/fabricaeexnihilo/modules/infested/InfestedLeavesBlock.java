@@ -1,23 +1,28 @@
 package wraith.fabricaeexnihilo.modules.infested;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.base.Colored;
+import wraith.fabricaeexnihilo.recipe.util.Lazy;
 import wraith.fabricaeexnihilo.util.Color;
 
 import java.util.Random;
 
 public class InfestedLeavesBlock extends LeavesBlock implements Colored, NonInfestableLeavesBlock {
-    private final Identifier leafBlock;
+    private final Identifier old;
+    private final Lazy<Block> leafBlock;
     
     public InfestedLeavesBlock(Identifier leafBlock, FabricBlockSettings settings) {
         super(settings);
-        this.leafBlock = leafBlock;
+        this.old = leafBlock;
+        this.leafBlock = new Lazy<>(() -> Registry.BLOCK.get(leafBlock));
     }
     
     @Override
@@ -25,8 +30,12 @@ public class InfestedLeavesBlock extends LeavesBlock implements Colored, NonInfe
         return Color.WHITE.toInt();
     }
     
-    public Identifier getLeafBlock() {
-        return leafBlock;
+    public Identifier getOld() {
+        return old;
+    }
+    
+    public Block getLeafBlock() {
+        return leafBlock.get();
     }
     
     @Override

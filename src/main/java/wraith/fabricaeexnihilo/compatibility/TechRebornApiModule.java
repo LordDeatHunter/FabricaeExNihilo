@@ -24,6 +24,7 @@ public class TechRebornApiModule implements FabricaeExNihiloApiModule {
         registries.registerMesh("carbon", Color.BLACK, 14);
         registries.registerWood("rubber");
         registries.registerInfestedLeaves("rubber", new Identifier("techreborn:rubber_leaves"));
+        registries.registerSeed("rubber", new Identifier("techreborn:rubber_sapling"));
     }
 
     @Override
