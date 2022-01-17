@@ -1,15 +1,15 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:birch_seeds",
+  "result": "fabricaeexnihilo:mycelium_seeds",
   "input": "minecraft:dirt",
   "rolls": {
-    "fabricaeexnihilo:string_mesh": [0.02]
+    "fabricaeexnihilo:copper_mesh": [0.03]
   },
   "fabric:conditions": [
     {
       "condition": "fabricaeexnihilo:all_items_present",
       "values": [
-        "fabricaeexnihilo:birch_seeds"
+        "fabricaeexnihilo:mycelium_seeds"
       ]
     }
   ]

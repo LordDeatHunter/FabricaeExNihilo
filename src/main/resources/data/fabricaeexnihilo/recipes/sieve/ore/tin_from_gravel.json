@@ -1,6 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:lead_piece",
+  "result": "fabricaeexnihilo:tin_piece",
   "input": "minecraft:gravel",
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.05],

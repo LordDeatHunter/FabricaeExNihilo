@@ -6,7 +6,7 @@
     "fabricaeexnihilo:string_mesh": [0.01],
     "fabricaeexnihilo:flint_mesh": [0.05],
     "fabricaeexnihilo:iron_mesh": [0.15],
-    "fabricaeexnihilo:gold_mesh": [0.2],
-    "fabricaeexnihilo:diamond_mesh": [0.15]
+    "fabricaeexnihilo:diamond_mesh": [0.2],
+    "fabricaeexnihilo:netherite_mesh": [0.3, 0.1]
   }
 }

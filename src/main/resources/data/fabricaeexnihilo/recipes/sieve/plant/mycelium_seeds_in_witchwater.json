@@ -4,11 +4,10 @@
   "input": "minecraft:dirt",
   "fluid": "fabricaeexnihilo:witchwater",
   "rolls": {
-    "fabricaeexnihilo:string_mesh": [0.01],
-    "fabricaeexnihilo:flint_mesh": [0.02],
-    "fabricaeexnihilo:iron_mesh": [0.05],
-    "fabricaeexnihilo:gold_mesh": [0.1],
-    "fabricaeexnihilo:diamond_mesh": [0.2]
+    "fabricaeexnihilo:string_mesh": [0.05],
+    "fabricaeexnihilo:copper_mesh": [0.12],
+    "fabricaeexnihilo:gold_mesh": [0.2],
+    "fabricaeexnihilo:emerald_mesh": [0.3, 0.3]
   },
   "fabric:conditions": [
     {

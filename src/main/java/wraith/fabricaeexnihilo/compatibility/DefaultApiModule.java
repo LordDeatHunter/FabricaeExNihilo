@@ -37,6 +37,7 @@ public class DefaultApiModule implements FabricaeExNihiloApiModule {
         registries.registerMesh("flint", Color.GRAY, 12);
         registries.registerMesh("iron", new Color("777777"), 14);
         registries.registerMesh("gold", Color.GOLDEN, 22);
+        registries.registerMesh("copper", Color.COPPER, 13);
         registries.registerMesh("emerald", Color.DARK_GREEN, 24);
         registries.registerMesh("diamond", Color.DARK_AQUA, 10);
         registries.registerMesh("netherite", Color.DARK_GRAY, 15);

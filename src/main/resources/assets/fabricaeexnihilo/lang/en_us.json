@@ -80,6 +80,7 @@
 
   "item.fabricaeexnihilo.string_mesh": "String Mesh",
   "item.fabricaeexnihilo.flint_mesh": "Flint Mesh",
+  "item.fabricaeexnihilo.copper_mesh": "Copper Mesh",
   "item.fabricaeexnihilo.iron_mesh": "Iron Mesh",
   "item.fabricaeexnihilo.diamond_mesh": "Diamond Mesh",
   "item.fabricaeexnihilo.netherite_mesh": "Netherite Mesh",
@@ -103,7 +104,7 @@
   "block.fabricaeexnihilo.infested_dark_oak_leaves": "Infested Dark Oak Leaves",
   "block.fabricaeexnihilo.infested_rubber_leaves": "Infested Rubber Leaves",
 
-  "block.fabricaeexnihilo.infesting": "Infesting Leaves",
+  "block.fabricaeexnihilo.infesting_leaves": "Infesting Leaves",
 
   "item.fabricaeexnihilo.cooked_silkworm": "Cooked Silkworm",
   "item.fabricaeexnihilo.raw_silkworm": "Silkworm",

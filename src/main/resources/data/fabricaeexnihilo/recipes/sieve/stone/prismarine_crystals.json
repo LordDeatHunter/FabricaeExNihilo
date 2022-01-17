@@ -3,6 +3,7 @@
   "result": "minecraft:prismarine_crystals",
   "input": "fabricaeexnihilo:crushed_prismarine",
   "rolls": {
-    "fabricaeexnihilo:diamond_mesh": [0.01]
+    "fabricaeexnihilo:diamond_mesh": [0.01],
+    "fabricaeexnihilo:netherite_mesh": [0.025]
   }
 }

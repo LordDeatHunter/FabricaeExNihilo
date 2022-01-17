@@ -1,12 +1,10 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:lead_piece",
+  "result": "fabricaeexnihilo:iridium_piece",
   "input": "minecraft:gravel",
   "rolls": {
-    "fabricaeexnihilo:flint_mesh": [0.05],
-    "fabricaeexnihilo:iron_mesh": [0.075],
     "fabricaeexnihilo:diamond_mesh": [0.1],
-    "fabricaeexnihilo:netherite_mesh": [0.2, 0.1]
+    "fabricaeexnihilo:netherite_mesh": [0.15]
   },
   "fabric:conditions": [
     {

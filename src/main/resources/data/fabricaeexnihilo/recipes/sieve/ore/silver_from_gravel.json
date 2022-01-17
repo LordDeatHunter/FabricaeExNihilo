@@ -1,11 +1,12 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "fabricaeexnihilo:silver_piece",
-  "input": "fabricaeexnihilo:crushed_endstone",
+  "input": "minecraft:gravel",
   "rolls": {
-    "fabricaeexnihilo:iron_mesh": [0.1, 0.1],
-    "fabricaeexnihilo:diamond_mesh": [0.2, 0.2],
-    "fabricaeexnihilo:netherite_mesh": [0.3, 0.3]
+    "fabricaeexnihilo:flint_mesh": [0.05],
+    "fabricaeexnihilo:iron_mesh": [0.075],
+    "fabricaeexnihilo:diamond_mesh": [0.1],
+    "fabricaeexnihilo:netherite_mesh": [0.2, 0.1]
   },
   "fabric:conditions": [
     {

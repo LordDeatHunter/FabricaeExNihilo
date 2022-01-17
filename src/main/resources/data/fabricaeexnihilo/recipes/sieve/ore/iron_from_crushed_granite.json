@@ -4,9 +4,9 @@
   "input": "fabricaeexnihilo:crushed_granite",
   "rolls": {
     "fabricaeexnihilo:string_mesh": [0.02],
-    "fabricaeexnihilo:flint_mesh": [0.05],
-    "fabricaeexnihilo:iron_mesh": [0.1, 0.1],
-    "fabricaeexnihilo:gold_mesh": [0.6, 0.6],
-    "fabricaeexnihilo:diamond_mesh": [1.0, 0.5]
+    "fabricaeexnihilo:flint_mesh": [0.075],
+    "fabricaeexnihilo:iron_mesh": [0.15, 0.15],
+    "fabricaeexnihilo:diamond_mesh": [0.5, 0.5],
+    "fabricaeexnihilo:netherite_mesh": [1.0, 0.75]
   }
 }

@@ -3,6 +3,7 @@ from common_datagen import *
 meshes = [
     'string',
     'flint',
+    'copper',
     'iron',
     'gold',
     'emerald',
