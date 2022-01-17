@@ -32,7 +32,21 @@ public class DefaultApiModule implements FabricaeExNihiloApiModule {
         registries.registerWood("acacia");
         registries.registerWood("dark_oak");
         registries.registerWood("jungle");
-        
+
+        registries.registerSandyCrushed("dust");
+        registries.registerSandyCrushed("sand");
+
+        registries.registerGravelyCrushed("crushed_andesite");
+        registries.registerGravelyCrushed("crushed_diorite");
+        registries.registerGravelyCrushed("crushed_granite");
+        registries.registerGravelyCrushed("crushed_prismarine");
+        registries.registerGravelyCrushed("crushed_endstone");
+        registries.registerGravelyCrushed("crushed_netherrack");
+
+        registries.registerCrucible("porcelain_crucible", true);
+
+        registries.registerBarrel("stone_barrel", true);
+
         registries.registerMesh("string", Color.WHITE, 10);
         registries.registerMesh("flint", Color.GRAY, 12);
         registries.registerMesh("iron", new Color("777777"), 14);
@@ -40,7 +54,7 @@ public class DefaultApiModule implements FabricaeExNihiloApiModule {
         registries.registerMesh("copper", Color.COPPER, 13);
         registries.registerMesh("emerald", Color.DARK_GREEN, 24);
         registries.registerMesh("diamond", Color.DARK_AQUA, 10);
-        registries.registerMesh("netherite", Color.DARK_GRAY, 15);
+        registries.registerMesh("netherite", new Color("3B393B"), 15);
         
         registries.registerInfestedLeaves("oak", new Identifier("minecraft:oak_leaves"));
         registries.registerInfestedLeaves("birch", new Identifier("minecraft:birch_leaves"));
