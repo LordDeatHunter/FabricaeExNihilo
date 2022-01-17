@@ -4,7 +4,7 @@
   "input": "minecraft:gravel",
   "rolls": {
     "fabricaeexnihilo:iron_mesh": [0.05],
-    "fabricaeexnihilo:gold_mesh": [0.075],
-    "fabricaeexnihilo:diamond_mesh": [0.1]
+    "fabricaeexnihilo:diamond_mesh": [0.08],
+    "fabricaeexnihilo:netherite_mesh": [0.12]
   }
 }

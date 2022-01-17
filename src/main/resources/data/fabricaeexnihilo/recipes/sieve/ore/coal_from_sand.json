@@ -1,0 +1,10 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "minecraft:coal",
+  "input": "minecraft:sand",
+  "rolls": {
+    "fabricaeexnihilo:iron_mesh": [0.05],
+    "fabricaeexnihilo:diamond_mesh": [0.1],
+    "fabricaeexnihilo:netherite_mesh": [0.2]
+  }
+}

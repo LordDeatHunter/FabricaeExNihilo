@@ -1,4 +1,6 @@
 {
   "parent": "item/generated",
-  "textures": {"layer0": "fabricaeexnihilo:item/cooked_silkworm"}
+  "textures": {
+    "layer0": "fabricaeexnihilo:item/cooked_silkworm"
+  }
 }

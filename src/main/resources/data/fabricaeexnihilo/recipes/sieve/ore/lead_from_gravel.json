@@ -5,8 +5,8 @@
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.05],
     "fabricaeexnihilo:iron_mesh": [0.075],
-    "fabricaeexnihilo:gold_mesh": [0.01],
-    "fabricaeexnihilo:diamond_mesh": [0.1]
+    "fabricaeexnihilo:diamond_mesh": [0.1],
+    "fabricaeexnihilo:netherite_mesh": [0.2, 0.1]
   },
   "fabric:conditions": [
     {

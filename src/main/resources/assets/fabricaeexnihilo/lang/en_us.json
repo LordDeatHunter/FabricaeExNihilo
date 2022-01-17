@@ -30,13 +30,14 @@
 
   "block.fabricaeexnihilo.dust": "Dust",
   "block.fabricaeexnihilo.silt": "Silt",
+
   "block.fabricaeexnihilo.crushed_andesite": "Crushed Andesite",
   "block.fabricaeexnihilo.crushed_diorite": "Crushed Diorite",
   "block.fabricaeexnihilo.crushed_granite": "Crushed Granite",
   "block.fabricaeexnihilo.crushed_endstone": "Crushed Endstone",
   "block.fabricaeexnihilo.crushed_netherrack": "Crushed Netherrack",
   "block.fabricaeexnihilo.crushed_prismarine": "Crushed Prismarine",
-  "block.fabricaeexnihilo.crushed_skystone": "Crushed Skystone",
+
   "item.fabricaeexnihilo.acacia_seeds": "Acacia Seed",
   "item.fabricaeexnihilo.birch_seeds": "Birch Seed",
   "item.fabricaeexnihilo.cactus_seeds": "Cactus Seed",
@@ -57,6 +58,7 @@
   "item.fabricaeexnihilo.lilac_seeds": "Lilac Seeds",
   "item.fabricaeexnihilo.rose_bush_seeds": "Rose Seeds",
   "item.fabricaeexnihilo.peony_seeds": "Peony Seeds",
+
   "item.fabricaeexnihilo.wooden_crook": "Wood Crook",
   "item.fabricaeexnihilo.bone_crook": "Bone Crook",
   "item.fabricaeexnihilo.stone_crook": "Stone Crook",
@@ -71,6 +73,7 @@
   "item.fabricaeexnihilo.blackstone_crook": "Blackstone Crook",
   "item.fabricaeexnihilo.basalt_crook": "Basalt Crook",
   "item.fabricaeexnihilo.deepslate_crook": "Deepslate Crook",
+
   "item.fabricaeexnihilo.wooden_hammer": "Wood Hammer",
   "item.fabricaeexnihilo.stone_hammer": "Stone Hammer",
   "item.fabricaeexnihilo.iron_hammer": "Iron Hammer",
@@ -80,6 +83,7 @@
 
   "item.fabricaeexnihilo.string_mesh": "String Mesh",
   "item.fabricaeexnihilo.flint_mesh": "Flint Mesh",
+  "item.fabricaeexnihilo.copper_mesh": "Copper Mesh",
   "item.fabricaeexnihilo.iron_mesh": "Iron Mesh",
   "item.fabricaeexnihilo.diamond_mesh": "Diamond Mesh",
   "item.fabricaeexnihilo.netherite_mesh": "Netherite Mesh",
@@ -103,13 +107,15 @@
   "block.fabricaeexnihilo.infested_dark_oak_leaves": "Infested Dark Oak Leaves",
   "block.fabricaeexnihilo.infested_rubber_leaves": "Infested Rubber Leaves",
 
-  "block.fabricaeexnihilo.infesting": "Infesting Leaves",
+  "block.fabricaeexnihilo.infesting_leaves": "Infesting Leaves",
 
   "item.fabricaeexnihilo.cooked_silkworm": "Cooked Silkworm",
   "item.fabricaeexnihilo.raw_silkworm": "Silkworm",
+
   "item.fabricaeexnihilo.witchwater_bucket": "Witchwater Bucket",
   "item.fabricaeexnihilo.blood_bucket": "Bucket o' Blood",
   "item.fabricaeexnihilo.brine_bucket": "Brine Bucket",
+
   "item.fabricaeexnihilo.stone_pebble": "Stone Pebble",
   "item.fabricaeexnihilo.andesite_pebble": "Andesite Pebble",
   "item.fabricaeexnihilo.diorite_pebble": "Diorite Pebble",
@@ -117,18 +123,22 @@
   "item.fabricaeexnihilo.blackstone_pebble": "Blackstone Pebble",
   "item.fabricaeexnihilo.basalt_pebble": "Basalt Pebble",
   "item.fabricaeexnihilo.deepslate_pebble": "Deepslate Pebble",
+
   "item.fabricaeexnihilo.porcelain": "Porcelain",
   "item.fabricaeexnihilo.salt_bottle": "Salt",
+
   "item.fabricaeexnihilo.doll": "Porcelain Doll",
   "item.fabricaeexnihilo.doll_blaze": "Blazing Doll",
   "item.fabricaeexnihilo.doll_enderman": "Creeping Doll",
   "item.fabricaeexnihilo.doll_guardian": "Protecting Doll",
   "item.fabricaeexnihilo.doll_shulker": "Floating Doll",
+
   "text.autoconfig.fabricaeexnihilo.title": "Fabricae Ex Nihilo Config",
   "text.autoconfig.fabricaeexnihilo.category.client": "Client",
   "text.autoconfig.fabricaeexnihilo.category.misc": "Misc.",
   "text.autoconfig.fabricaeexnihilo.category.compat": "Compatibility",
   "text.autoconfig.fabricaeexnihilo.category.modules": "Modules",
+
   "advancements.fabricaeexnihilo.root.title": "Ex Nihilo",
   "advancements.fabricaeexnihilo.root.description": "Fabricate from Nothing",
   "advancements.fabricaeexnihilo.crook.title": "I am not a crook.",

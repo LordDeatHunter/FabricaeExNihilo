@@ -1,0 +1,20 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "fabricaeexnihilo:kelp_seeds",
+  "input": "minecraft:sand",
+  "fluid": "#fabricaeexnihilo:true_water",
+  "rolls": {
+    "fabricaeexnihilo:string_mesh": [0.05],
+    "fabricaeexnihilo:copper_mesh": [0.12],
+    "fabricaeexnihilo:gold_mesh": [0.2],
+    "fabricaeexnihilo:emerald_mesh": [0.3, 0.3]
+  },
+  "fabric:conditions": [
+    {
+      "condition": "fabricaeexnihilo:all_items_present",
+      "values": [
+        "fabricaeexnihilo:kelp_seeds"
+      ]
+    }
+  ]
+}

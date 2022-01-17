@@ -6,6 +6,7 @@
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.01],
     "fabricaeexnihilo:iron_mesh": [0.02],
-    "fabricaeexnihilo:diamond_mesh": [0.4]
+    "fabricaeexnihilo:diamond_mesh": [0.3],
+    "fabricaeexnihilo:netherite_mesh": [0.4]
   }
 }

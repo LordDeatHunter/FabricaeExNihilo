@@ -1,0 +1,17 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "fabricaeexnihilo:iridium_piece",
+  "input": "minecraft:gravel",
+  "rolls": {
+    "fabricaeexnihilo:diamond_mesh": [0.1],
+    "fabricaeexnihilo:netherite_mesh": [0.15]
+  },
+  "fabric:conditions": [
+    {
+      "condition": "fabric:any_mods_loaded",
+      "values": [
+        "techreborn"
+      ]
+    }
+  ]
+}

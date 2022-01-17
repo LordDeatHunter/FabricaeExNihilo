@@ -1,13 +1,12 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "fabricaeexnihilo:chorus_seeds",
-  "input": "minecraft:dirt",
+  "input": "fabricaeexnihilo:crushed_endstone",
   "rolls": {
     "fabricaeexnihilo:string_mesh": [0.01],
-    "fabricaeexnihilo:flint_mesh": [0.02],
-    "fabricaeexnihilo:iron_mesh": [0.05],
-    "fabricaeexnihilo:gold_mesh": [0.2],
-    "fabricaeexnihilo:diamond_mesh": [0.1]
+    "fabricaeexnihilo:copper_mesh": [0.05],
+    "fabricaeexnihilo:gold_mesh": [0.1],
+    "fabricaeexnihilo:emerald_mesh": [0.2]
   },
   "fabric:conditions": [
     {
