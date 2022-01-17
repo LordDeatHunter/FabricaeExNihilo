@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "# #",
+    "#S#",
+    "I I"
+  ],
+  "key": {
+    "#": {
+      "item": "techreborn:rubber_planks"
+    },
+    "S": {
+      "item": "techreborn:rubber_plank_slab"
+    },
+    "I": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "fabricaeexnihilo:rubber_sieve",
+    "count": 1
+  }
+}

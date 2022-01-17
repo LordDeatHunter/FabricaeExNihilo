@@ -91,3 +91,92 @@ def get_name(string):
 
 def capitalize_word(word):
     return word[0].upper() + word[1:]
+
+
+def item_or_tag(entry):
+    if entry.startswith('#'):
+        return {'tag': entry[1:]}
+    return {'item': entry}
+
+
+def save_crafting_recipe(file_name, result, pattern=[], key={}, amount=1):
+    if not pattern or not key:
+        return
+    with open(f'{recipes_path}{file_name}.json', 'w') as f:
+        f.write(json.dumps({
+            'type': 'minecraft:crafting_shaped',
+            'pattern': pattern,
+            'key': key,
+            'result': {
+                'item': result,
+                'count': amount
+            }
+        }, indent=2))
+
+
+def save_smithing_recipe(file_name, result, input='', output=''):
+    if not input or not output:
+        return
+    with open(f'{recipes_path}{file_name}.json', 'w') as f:
+        f.write(json.dumps({
+            'type': 'minecraft:smithing',
+            'base': item_or_tag(input),
+            'addition': item_or_tag(output),
+            'result': {'item': result}
+        }, indent=2))
+
+
+def save_barrel_recipe(file_name, plank, slab):
+    pattern = [
+        '# #',
+        '# #',
+        '#S#'
+    ]
+    key = {
+        '#': item_or_tag(plank),
+        'S': item_or_tag(slab)
+    }
+    save_crafting_recipe(file_name, f'fabricaeexnihilo:{file_name}', pattern, key, 1)
+
+
+def save_sieve_recipe(file_name, plank, slab):
+    pattern = [
+        '# #',
+        '#S#',
+        'I I'
+    ]
+    key = {
+        '#': item_or_tag(plank),
+        'S': item_or_tag(slab),
+        'I': {'item': 'minecraft:stick'}
+    }
+    save_crafting_recipe(file_name, f'fabricaeexnihilo:{file_name}', pattern, key, 1)
+
+
+def save_crucible_recipe(file_name, material, slab):
+    pattern = [
+        '# #',
+        '#S#',
+        'I I'
+    ]
+    key = {
+        '#': item_or_tag(material),
+        'S': item_or_tag(slab),
+        'I': {'item': 'minecraft:stick'}
+    }
+    save_crafting_recipe(file_name, f'fabricaeexnihilo:{file_name}', pattern, key, 1)
+
+
+def save_mesh_crafting_recipe(new_mesh, material, old_mesh):
+    if material == '' and old_mesh == '':
+        return
+    pattern = [
+        '# #',
+        '#O#',
+        '# #'
+    ]
+    key = {
+        '#': item_or_tag(material),
+        'O': item_or_tag(old_mesh)
+    }
+    save_crafting_recipe(new_mesh, f'fabricaeexnihilo:{new_mesh}', pattern, key, 1)

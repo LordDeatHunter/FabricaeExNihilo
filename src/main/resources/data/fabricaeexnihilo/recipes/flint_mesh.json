@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "# #",
+    "#O#",
+    "# #"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:flint"
+    },
+    "O": {
+      "item": "fabricaeexnihilo:string_mesh"
+    }
+  },
+  "result": {
+    "item": "fabricaeexnihilo:flint_mesh",
+    "count": 1
+  }
+}

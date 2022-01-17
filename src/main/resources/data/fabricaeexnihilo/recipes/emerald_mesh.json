@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "# #",
+    "#O#",
+    "# #"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:emerald"
+    },
+    "O": {
+      "item": "fabricaeexnihilo:gold_mesh"
+    }
+  },
+  "result": {
+    "item": "fabricaeexnihilo:emerald_mesh",
+    "count": 1
+  }
+}
