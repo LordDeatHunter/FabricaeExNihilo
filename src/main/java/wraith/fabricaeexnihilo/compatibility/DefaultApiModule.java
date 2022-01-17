@@ -34,7 +34,7 @@ public class DefaultApiModule implements FabricaeExNihiloApiModule {
         registries.registerWood("jungle");
 
         registries.registerSandyCrushed("dust");
-        registries.registerSandyCrushed("sand");
+        registries.registerSandyCrushed("silt");
 
         registries.registerGravelyCrushed("crushed_andesite");
         registries.registerGravelyCrushed("crushed_diorite");
@@ -43,9 +43,9 @@ public class DefaultApiModule implements FabricaeExNihiloApiModule {
         registries.registerGravelyCrushed("crushed_endstone");
         registries.registerGravelyCrushed("crushed_netherrack");
 
-        registries.registerCrucible("porcelain_crucible", true);
+        registries.registerCrucible("porcelain", true);
 
-        registries.registerBarrel("stone_barrel", true);
+        registries.registerBarrel("stone", true);
 
         registries.registerMesh("string", Color.WHITE, 10);
         registries.registerMesh("flint", Color.GRAY, 12);

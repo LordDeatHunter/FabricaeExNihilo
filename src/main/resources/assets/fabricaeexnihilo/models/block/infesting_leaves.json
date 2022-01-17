@@ -1,4 +1,6 @@
 {
   "parent": "block/air",
-  "textures": {"particle": "minecraft:block/oak_leaves"}
+  "textures": {
+    "particle": "minecraft:block/oak_leaves"
+  }
 }
