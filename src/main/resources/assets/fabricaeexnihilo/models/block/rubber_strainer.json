@@ -1,0 +1,6 @@
+{
+  "parent": "fabricaeexnihilo:block/strainer",
+  "textures": {
+    "pilar": "techreborn:block/rubber_log"
+  }
+}

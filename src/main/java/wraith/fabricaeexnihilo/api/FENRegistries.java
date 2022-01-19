@@ -16,7 +16,6 @@ import java.util.function.Predicate;
 
 //TODO: Document
 public interface FENRegistries {
-
     void registerOre(String name, Color color, OreShape oreShape, OreMaterial baseMaterial);
 
     void registerMesh(String name, Color color, int enchantability);
@@ -27,11 +26,14 @@ public interface FENRegistries {
 
     default void registerWood(String name) {
         registerSieve(name);
+        registerStrainer(name);
         registerBarrel(name, false);
         registerCrucible(name, false);
     }
 
     void registerSieve(String name);
+    
+    void registerStrainer(String name);
 
     void registerCrucible(String name, boolean isStone);
 

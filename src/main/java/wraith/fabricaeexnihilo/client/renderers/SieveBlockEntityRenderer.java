@@ -12,12 +12,11 @@ import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.modules.sieves.SieveBlockEntity;
 
-@SuppressWarnings("FieldCanBeLocal")
 public class SieveBlockEntityRenderer implements BlockEntityRenderer<SieveBlockEntity> {
     
-    private final float xzScale = 0.875F;
-    private final float yMin = 0.0625F;
-    private final float yMax = 0.3750F;
+    private static final float XZ_SCALE = 0.875F;
+    private static final float Y_MIN = 0.0625F;
+    private static final float Y_MAX = 0.3750F;
     
     public SieveBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
     }
@@ -51,11 +50,11 @@ public class SieveBlockEntityRenderer implements BlockEntityRenderer<SieveBlockE
         if (contents.isEmpty()) {
             return;
         }
-        var yScale = yMax - (yMax - yMin) * progress;
+        var yScale = Y_MAX - (Y_MAX - Y_MIN) * progress;
         
         matrixStack.push();
         matrixStack.translate(0.5, 0.625 + yScale / 2, 0.5);
-        matrixStack.scale(xzScale, yScale, xzScale);
+        matrixStack.scale(XZ_SCALE, yScale, XZ_SCALE);
         MinecraftClient.getInstance().getItemRenderer().renderItem(contents, ModelTransformation.Mode.NONE, light, overlays, matrixStack, vertexConsumerProvider, (int) pos.asLong());
         matrixStack.pop();
     }

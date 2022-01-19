@@ -31,6 +31,13 @@ public class FabricaeExNihiloConfig {
             public int witchwaterworldCols = 8;
         }
         
+        public StrainerConfig strainers = new StrainerConfig();
+        
+        public static class StrainerConfig {
+            public int minWaitTime = 600; // Half minute
+            public int maxWaitTime = 1200; // One minute
+        }
+        
         public BarrelConfig barrels = new BarrelConfig();
         
         public static class BarrelConfig {

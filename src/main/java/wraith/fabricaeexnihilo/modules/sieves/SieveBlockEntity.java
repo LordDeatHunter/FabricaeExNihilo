@@ -34,8 +34,6 @@ import java.util.*;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
-//import static wraith.fabricaeexnihilo.api.registry.FabricaeExNihiloRegistries.SIEVE;
-
 public class SieveBlockEntity extends BaseBlockEntity {
     
     private ItemStack mesh = ItemStack.EMPTY;

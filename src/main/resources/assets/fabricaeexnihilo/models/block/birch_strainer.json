@@ -1,0 +1,6 @@
+{
+  "parent": "fabricaeexnihilo:block/strainer",
+  "textures": {
+    "pilar": "minecraft:block/birch_log"
+  }
+}

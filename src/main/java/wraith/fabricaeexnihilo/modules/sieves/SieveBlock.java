@@ -48,7 +48,12 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
         }
         return super.getFluidState(state);
     }
-
+    
+    @Override
+    public boolean isTranslucent(BlockState state, BlockView world, BlockPos pos) {
+        return true;
+    }
+    
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
