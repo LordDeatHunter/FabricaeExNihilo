@@ -42,7 +42,7 @@ public class StrainerBlockEntity extends BaseBlockEntity {
     
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(8, ItemStack.EMPTY);
     private final StrainerItemStorage storage = new StrainerItemStorage();
-    private int timeUntilCatch = FabricaeExNihilo.CONFIG.modules.strainers.minWaitTime;
+    private int timeUntilCatch = FabricaeExNihilo.CONFIG.modules.strainers.maxWaitTime;
     
     static {
         ItemStorage.SIDED.registerForBlockEntity((entity, dir) -> entity.storage, TYPE);

@@ -14,9 +14,13 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
@@ -25,10 +29,26 @@ import wraith.fabricaeexnihilo.modules.ModBlocks;
 
 public class StrainerBlock extends BlockWithEntity implements Waterloggable {
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+    public static final VoxelShape SHAPE = VoxelShapes.union(
+            createCuboidShape(0, 0, 0, 2, 16, 2),
+            createCuboidShape(14, 0, 14, 16, 16, 16),
+            createCuboidShape(0, 0, 14, 2, 16, 16),
+            createCuboidShape(14, 0, 0, 16, 16, 2),
+            VoxelShapes.combineAndSimplify(
+                    createCuboidShape(0.5, 2, 0.5, 15.5, 15, 15.5),
+                    createCuboidShape(1.5, 2, 1.5, 14.5, 15, 14.5),
+                    BooleanBiFunction.ONLY_FIRST
+            )
+    );
     
     public StrainerBlock() {
         super(ModBlocks.WOOD_SETTINGS.nonOpaque());
         setDefaultState(this.stateManager.getDefaultState().with(WATERLOGGED, false));
+    }
+    
+    @Override
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return SHAPE;
     }
     
     @Override

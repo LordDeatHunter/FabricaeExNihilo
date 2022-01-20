@@ -34,8 +34,8 @@ public class FabricaeExNihiloConfig {
         public StrainerConfig strainers = new StrainerConfig();
         
         public static class StrainerConfig {
-            public int minWaitTime = 600; // Half minute
-            public int maxWaitTime = 1200; // One minute
+            public int minWaitTime = 1200; // One minute
+            public int maxWaitTime = 6000; // Five minutes
         }
         
         public BarrelConfig barrels = new BarrelConfig();
