@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#S#",
+    "SSS",
+    "#S#"
+  ],
+  "key": {
+    "#": {
+      "item": "techreborn:rubber_log"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "result": {
+    "item": "fabricaeexnihilo:rubber_strainer",
+    "count": 1
+  }
+}

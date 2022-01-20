@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#S#",
+    "SSS",
+    "#S#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:spruce_log"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "result": {
+    "item": "fabricaeexnihilo:spruce_strainer",
+    "count": 1
+  }
+}

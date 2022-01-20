@@ -162,7 +162,7 @@ def save_crucible_recipe(file_name, material, slab):
     key = {
         '#': item_or_tag(material),
         'S': item_or_tag(slab),
-        'I': {'item': 'minecraft:stick'}
+        'I': item_or_tag('minecraft:stick')
     }
     save_crafting_recipe(file_name, f'fabricaeexnihilo:{file_name}', pattern, key, 1)
 
@@ -180,3 +180,18 @@ def save_mesh_crafting_recipe(new_mesh, material, old_mesh):
         'O': item_or_tag(old_mesh)
     }
     save_crafting_recipe(new_mesh, f'fabricaeexnihilo:{new_mesh}', pattern, key, 1)
+
+
+def save_strainer_recipe(strainer, wood):
+    if wood == '':
+        return
+    pattern = [
+        '#S#',
+        'SSS',
+        '#S#'
+    ]
+    key = {
+        '#': item_or_tag(wood),
+        'S': item_or_tag('minecraft:string')
+    }
+    save_crafting_recipe(f'{strainer}', f'fabricaeexnihilo:{strainer}', pattern, key, 1)
