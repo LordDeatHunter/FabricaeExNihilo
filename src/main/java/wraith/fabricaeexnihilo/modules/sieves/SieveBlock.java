@@ -27,7 +27,7 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
     public SieveBlock() {
-        super(ModBlocks.WOOD_SETTINGS);
+        super(ModBlocks.WOOD_SETTINGS.nonOpaque());
         setDefaultState(getStateManager().getDefaultState().with(WATERLOGGED, false));
     }
 

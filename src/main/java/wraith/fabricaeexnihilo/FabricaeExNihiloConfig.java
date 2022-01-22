@@ -52,7 +52,10 @@ public class FabricaeExNihiloConfig {
                 // Can barrels be enchanted with thorns.
                 public boolean thorns = true;
             }
-    
+            
+            public String[] woodenFluidFilter = {"minecraft:lava"};
+            public boolean isFilterWhitelist = false;
+            
             public boolean enableAlchemy = true;
             // Requires that thorns be enabled too.
             public boolean enableBleeding = true;

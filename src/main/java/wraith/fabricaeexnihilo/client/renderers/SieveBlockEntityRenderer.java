@@ -31,9 +31,8 @@ public class SieveBlockEntityRenderer implements BlockEntityRenderer<SieveBlockE
         
         // Render the Mesh
         var pos = sieve.getPos();
-        int lightAbove = WorldRenderer.getLightmapCoordinates(sieve.getWorld(), pos.up());
-        renderMesh(matrixStack, pos, mesh, lightAbove, overlays, vertexConsumerProvider);
-        renderContents(matrixStack, pos, contents, (float) progress, lightAbove, overlays, vertexConsumerProvider);
+        renderMesh(matrixStack, pos, mesh, light, overlays, vertexConsumerProvider);
+        renderContents(matrixStack, pos, contents, (float) progress, light, overlays, vertexConsumerProvider);
     }
     
     public void renderMesh(MatrixStack matrixStack, BlockPos pos, ItemStack mesh, int light, int overlays, @Nullable VertexConsumerProvider vertexConsumerProvider) {

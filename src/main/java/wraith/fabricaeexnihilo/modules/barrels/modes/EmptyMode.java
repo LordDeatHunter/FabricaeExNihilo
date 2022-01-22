@@ -6,10 +6,15 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
+import net.minecraft.util.registry.Registry;
+import org.apache.commons.lang3.ArrayUtils;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
+import wraith.fabricaeexnihilo.FabricaeExNihiloConfig;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelFluidStorage;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelItemStorage;
 import wraith.fabricaeexnihilo.recipe.barrel.CompostRecipe;
+
+import java.util.Arrays;
 
 @SuppressWarnings("UnstableApiUsage")
 public class EmptyMode extends BarrelMode {
@@ -49,6 +54,9 @@ public class EmptyMode extends BarrelMode {
     @Override
     public long insertFluid(FluidVariant fluid, long maxAmount, TransactionContext transaction, BarrelFluidStorage storage) {
         StoragePreconditions.notBlankNotNegative(fluid, maxAmount);
+        var config = FabricaeExNihilo.CONFIG.modules.barrels;
+        if (ArrayUtils.contains(config.woodenFluidFilter, Registry.FLUID.getId(fluid.getFluid()).toString()) != config.isFilterWhitelist)
+            return 0;
         var amount = Math.min(maxAmount, FluidConstants.BUCKET);
         storage.updateSnapshots(transaction);
         storage.barrel.setMode(new FluidMode(fluid, amount));
