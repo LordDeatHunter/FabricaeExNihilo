@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "# #",
+    "#S#",
+    "I I"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:birch_log"
+    },
+    "S": {
+      "item": "minecraft:birch_slab"
+    },
+    "I": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "fabricaeexnihilo:birch_crucible",
+    "count": 1
+  }
+}

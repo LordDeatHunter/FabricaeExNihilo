@@ -15,19 +15,19 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
-import wraith.fabricaeexnihilo.util.VoxelShapeHelper;
 
 public class SieveBlock extends Block implements BlockEntityProvider, Waterloggable {
 
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
     public SieveBlock() {
-        super(ModBlocks.WOOD_SETTINGS);
+        super(ModBlocks.WOOD_SETTINGS.nonOpaque());
         setDefaultState(getStateManager().getDefaultState().with(WATERLOGGED, false));
     }
 
@@ -48,7 +48,12 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
         }
         return super.getFluidState(state);
     }
-
+    
+    @Override
+    public boolean isTranslucent(BlockState state, BlockView world, BlockPos pos) {
+        return true;
+    }
+    
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
@@ -99,7 +104,7 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
     private static final VoxelShape SHAPE;
 
     static {
-        SHAPE = VoxelShapeHelper.union(
+        SHAPE = VoxelShapes.union(
                 createCuboidShape(0.0, 0.0, 0.0, 2.0, 12.0, 2.0),
                 createCuboidShape(14.0, 0.0, 0.0, 16.0, 12.0, 2.0),
                 createCuboidShape(0.0, 0.0, 14.0, 2.0, 12.0, 16.0),

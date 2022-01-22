@@ -35,7 +35,8 @@ public class FabricaeExNihilo implements ModInitializer {
     @Override
     public void onInitialize() {
         EntrypointHelper.callEntrypoints();
-    
+        
+        ModLootContextTypes.register();
         ResourceConditions.register(id("all_items_present"), json -> {
             var values = JsonHelper.getArray(json, "values");
             

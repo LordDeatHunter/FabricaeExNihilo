@@ -13,10 +13,10 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.util.VoxelShapeHelper;
 
 public class CrucibleBlock extends BlockWithEntity {
     public CrucibleBlock(Settings settings) {
@@ -93,7 +93,7 @@ public class CrucibleBlock extends BlockWithEntity {
     private static final VoxelShape SHAPE;
     
     static {
-        SHAPE = VoxelShapeHelper.union(
+        SHAPE = VoxelShapes.union(
                 createCuboidShape(0.0, 0.0, 0.0, 3.0, 3.0, 3.0),
                 createCuboidShape(0.0, 0.0, 13.0, 3.0, 3.0, 16.0),
                 createCuboidShape(13.0, 0.0, 0.0, 16.0, 3.0, 3.0),

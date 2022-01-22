@@ -24,6 +24,7 @@ import wraith.fabricaeexnihilo.modules.infested.InfestedLeavesBlock;
 import wraith.fabricaeexnihilo.modules.ores.OreItem;
 import wraith.fabricaeexnihilo.modules.sieves.MeshItem;
 import wraith.fabricaeexnihilo.modules.sieves.SieveBlock;
+import wraith.fabricaeexnihilo.modules.strainer.StrainerBlock;
 
 import java.util.function.Predicate;
 
@@ -66,7 +67,12 @@ public class EntrypointHelper {
         public void registerSieve(String name) {
             ModBlocks.SIEVES.put(id(name, null, "_sieve"), new SieveBlock());
         }
-
+    
+        @Override
+        public void registerStrainer(String name) {
+            ModBlocks.STRAINERS.put(id(name, null, "_strainer"), new StrainerBlock());
+        }
+    
         @Override
         public void registerCrucible(String name, boolean isStone) {
             ModBlocks.CRUCIBLES.put(id(name, null, "_crucible"), new CrucibleBlock(isStone ? ModBlocks.STONE_SETTINGS : ModBlocks.WOOD_SETTINGS));

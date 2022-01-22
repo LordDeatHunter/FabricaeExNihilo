@@ -12,6 +12,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
@@ -45,7 +46,6 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
             renderFluidVolume(fluid, contained / (float) crucible.getMaxCapacity(), matrices, vertexConsumers, light, overlay);
         }
         
-        
         if (queued > 0 && !stack.isEmpty()) {
             renderQueued(stack, queued / (float) crucible.getMaxCapacity(), matrices, vertexConsumers, light, overlay, (int) crucible.getPos().asLong());
         }
@@ -76,7 +76,7 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
         var yScale = MathHelper.clamp((Y_MAX - Y_MIN) * level, 0, Y_MAX - Y_MIN);
         
         matrices.push();
-        matrices.translate(0.5, Y_MIN + yScale, 0.5);
+        matrices.translate(0.5, Y_MIN + yScale / 2, 0.5);
         matrices.scale(XZ_SCALE, yScale, XZ_SCALE);
         matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
         MinecraftClient.getInstance().getItemRenderer().renderItem(renderStack, ModelTransformation.Mode.NONE, light, overlay, matrices, vertexConsumer, seed);

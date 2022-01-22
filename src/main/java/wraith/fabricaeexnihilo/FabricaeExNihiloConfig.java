@@ -31,6 +31,13 @@ public class FabricaeExNihiloConfig {
             public int witchwaterworldCols = 8;
         }
         
+        public StrainerConfig strainers = new StrainerConfig();
+        
+        public static class StrainerConfig {
+            public int minWaitTime = 1200; // One minute
+            public int maxWaitTime = 6000; // Five minutes
+        }
+        
         public BarrelConfig barrels = new BarrelConfig();
         
         public static class BarrelConfig {
@@ -45,7 +52,10 @@ public class FabricaeExNihiloConfig {
                 // Can barrels be enchanted with thorns.
                 public boolean thorns = true;
             }
-    
+            
+            public String[] woodenFluidFilter = {"minecraft:lava"};
+            public boolean isFilterWhitelist = false;
+            
             public boolean enableAlchemy = true;
             // Requires that thorns be enabled too.
             public boolean enableBleeding = true;

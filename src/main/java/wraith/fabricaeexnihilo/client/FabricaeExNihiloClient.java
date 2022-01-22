@@ -10,16 +10,14 @@ import net.minecraft.block.Block;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.ItemConvertible;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
-import wraith.fabricaeexnihilo.client.renderers.BarrelBlockEntityRenderer;
-import wraith.fabricaeexnihilo.client.renderers.CrucibleBlockEntityRenderer;
-import wraith.fabricaeexnihilo.client.renderers.InfestingLeavesBlockEntityRenderer;
-import wraith.fabricaeexnihilo.client.renderers.SieveBlockEntityRenderer;
+import wraith.fabricaeexnihilo.client.renderers.*;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModItems;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
 import wraith.fabricaeexnihilo.modules.crucibles.CrucibleBlockEntity;
 import wraith.fabricaeexnihilo.modules.infested.InfestingLeavesBlockEntity;
 import wraith.fabricaeexnihilo.modules.sieves.SieveBlockEntity;
+import wraith.fabricaeexnihilo.modules.strainer.StrainerBlockEntity;
 
 import java.util.ArrayList;
 
@@ -35,6 +33,7 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
         BlockEntityRendererRegistry.register(CrucibleBlockEntity.TYPE, CrucibleBlockEntityRenderer::new);
         BlockEntityRendererRegistry.register(BarrelBlockEntity.TYPE, BarrelBlockEntityRenderer::new);
         BlockEntityRendererRegistry.register(InfestingLeavesBlockEntity.TYPE, InfestingLeavesBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.register(StrainerBlockEntity.TYPE, StrainerBlockEntityRenderer::new);
         FabricaeExNihilo.LOGGER.debug("Registered BERs");
 
         // Color Providers
@@ -52,6 +51,7 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
         // Render Layers
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), ModBlocks.SIEVES.values().toArray(Block[]::new));
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), ModBlocks.CRUCIBLES.values().toArray(Block[]::new));
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), ModBlocks.STRAINERS.values().toArray(Block[]::new));
     }
 
 }
