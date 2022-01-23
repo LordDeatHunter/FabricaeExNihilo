@@ -1,5 +1,6 @@
 package wraith.fabricaeexnihilo.compatibility;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.KelpBlock;
@@ -65,10 +66,10 @@ public class DefaultApiModule implements FabricaeExNihiloApiModule {
     
         if (FabricaeExNihilo.CONFIG.modules.seeds.enabled) {
             if (FabricaeExNihilo.CONFIG.modules.seeds.carrot) {
-                registries.registerSeed("carrot", new Identifier("minecraft", "carrot"));
+                registries.registerSeed("carrot", new Identifier("minecraft", "carrots"));
             }
             if (FabricaeExNihilo.CONFIG.modules.seeds.potato) {
-                registries.registerSeed("potato", new Identifier("minecraft", "potato"));
+                registries.registerSeed("potato", new Identifier("minecraft", "potatoes"));
             }
             if (FabricaeExNihilo.CONFIG.modules.seeds.chorus) {
                 registries.registerSeed("chorus", new Identifier("minecraft", "chorus_flower"));
@@ -77,7 +78,7 @@ public class DefaultApiModule implements FabricaeExNihiloApiModule {
                 registries.registerSeed("sea_pickle", new Identifier("minecraft", "sea_pickle"));
             }
             if (FabricaeExNihilo.CONFIG.modules.seeds.sugarCane) {
-                registries.registerSeed("sugarcane", new Identifier("minecraft", "sugarcane"));
+                registries.registerSeed("sugarcane", new Identifier("minecraft", "sugar_cane"));
             }
             if (FabricaeExNihilo.CONFIG.modules.seeds.cactus) {
                 registries.registerSeed("cactus", new Identifier("minecraft", "cactus"));
@@ -89,10 +90,7 @@ public class DefaultApiModule implements FabricaeExNihiloApiModule {
                 registries.registerTransformingSeed("mycelium", new Identifier("minecraft", "dirt"), new Identifier("minecraft", "mycelium"));
             }
             if (FabricaeExNihilo.CONFIG.modules.seeds.kelp) {
-                registries.registerSeed("kelp", new Lazy<>(() -> IntStream.range(0, 25)
-                                .mapToObj(age -> Blocks.KELP.getDefaultState().with(KelpBlock.AGE, age))
-                                .toArray(BlockState[]::new)),
-                        context -> context.getWorld().getFluidState(context.getBlockPos().offset(context.getSide())).getFluid() == Fluids.WATER);
+                registries.registerSeed("kelp", new Identifier("minecraft", "kelp"));
             }
             if (FabricaeExNihilo.CONFIG.modules.seeds.flowerSeeds) {
                 registries.registerTallPlantSeed("sunflower", new Identifier("minecraft", "sunflower"));
