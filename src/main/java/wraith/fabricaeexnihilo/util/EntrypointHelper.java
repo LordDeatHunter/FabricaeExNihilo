@@ -2,10 +2,8 @@ package wraith.fabricaeexnihilo.util;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.FallingBlock;
 import net.minecraft.block.TallPlantBlock;
-import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
@@ -25,8 +23,6 @@ import wraith.fabricaeexnihilo.modules.ores.OreItem;
 import wraith.fabricaeexnihilo.modules.sieves.MeshItem;
 import wraith.fabricaeexnihilo.modules.sieves.SieveBlock;
 import wraith.fabricaeexnihilo.modules.strainer.StrainerBlock;
-
-import java.util.function.Predicate;
 
 public class EntrypointHelper {
 
@@ -89,7 +85,7 @@ public class EntrypointHelper {
         }
 
         @Override
-        public void registerTransformingSeed(String name, Lazy<Block> from, Lazy<BlockState> to) {
+        public void registerTransformingSeed(String name, Lazy<Block> from, Lazy<Block> to) {
             ModItems.SEEDS.put(id(name, null, "_seeds"), new TransformingItem(from, to, ModItems.BASE_SETTINGS));
         }
 
@@ -99,19 +95,10 @@ public class EntrypointHelper {
         }
 
         @Override
-        public void registerSeed(String name, Lazy<BlockState[]> plants) {
+        public void registerSeed(String name, Lazy<Block[]> plants) {
             ModItems.SEEDS.put(id(name, null, "_seeds"), new PlantableItem(plants, ModItems.BASE_SETTINGS));
         }
-
-        @Override
-        public void registerSeed(String name, Lazy<BlockState[]> plants, Predicate<ItemUsageContext> placementCheck) {
-            ModItems.SEEDS.put(id(name, null, "_seeds"), new PlantableItem(plants, ModItems.BASE_SETTINGS) {
-                @Override
-                public boolean placementCheck(ItemUsageContext context) {
-                    return placementCheck.test(context);
-                }
-            });
-        }
+    
     }
 
 }

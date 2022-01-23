@@ -10,7 +10,7 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.modules.ModRecipes;
+import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.modules.barrels.modes.BarrelMode;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
@@ -76,9 +76,9 @@ public class FluidTransformationRecipe extends BaseRecipe<FluidTransformationRec
     public static class Serializer implements RecipeSerializer<FluidTransformationRecipe> {
         @Override
         public FluidTransformationRecipe read(Identifier id, JsonObject json) {
-            FluidIngredient contained = CodecUtils.fromJson(FluidIngredient.CODEC, json.get("contained"));
-            BlockIngredient catalyst = CodecUtils.fromJson(BlockIngredient.CODEC, json.get("catalyst"));
-            BarrelMode result = CodecUtils.fromJson(BarrelMode.CODEC, json.get("result"));
+            var contained = CodecUtils.fromJson(FluidIngredient.CODEC, json.get("contained"));
+            var catalyst = CodecUtils.fromJson(BlockIngredient.CODEC, json.get("catalyst"));
+            var result = CodecUtils.fromJson(BarrelMode.CODEC, json.get("result"));
             
             return new FluidTransformationRecipe(id, contained, catalyst, result);
         }

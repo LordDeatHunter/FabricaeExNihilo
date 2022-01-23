@@ -1,8 +1,9 @@
 package wraith.fabricaeexnihilo.modules.farming;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.block.BlockState;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;
 import wraith.fabricaeexnihilo.util.Lazy;
@@ -12,9 +13,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class PlantableItem extends Item {
-    private final Lazy<BlockState[]> plants;
+    private final Lazy<Block[]> plants;
     
-    public PlantableItem(Lazy<BlockState[]> plants, FabricItemSettings settings) {
+    public PlantableItem(Lazy<Block[]> plants, FabricItemSettings settings) {
         super(settings);
         this.plants = plants;
     }
@@ -26,8 +27,12 @@ public class PlantableItem extends Item {
         var shuffledPlants = new ArrayList<>(List.of(plants.get()));
         Collections.shuffle(shuffledPlants);
         for (var plant : shuffledPlants) {
-            if (placementCheck(context) && plant.canPlaceAt(world, plantPos)) {
-                world.setBlockState(plantPos, plant);
+            var state = plant.getPlacementState(new ItemPlacementContext(context));
+            if (state == null)
+                return ActionResult.PASS;
+    
+            if (state.canPlaceAt(world, plantPos)) {
+                world.setBlockState(plantPos, state);
                 var player = context.getPlayer();
                 if (player != null && !player.isCreative()) {
                     context.getStack().decrement(1);
@@ -36,10 +41,6 @@ public class PlantableItem extends Item {
             }
         }
         return super.useOnBlock(context);
-    }
-    
-    public boolean placementCheck(ItemUsageContext context) {
-        return true;
     }
     
 }

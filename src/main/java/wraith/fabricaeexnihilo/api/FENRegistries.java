@@ -41,10 +41,10 @@ public interface FENRegistries {
 
     void registerInfestedLeaves(String name, Identifier source);
 
-    void registerTransformingSeed(String name, Lazy<Block> from, Lazy<BlockState> to);
+    void registerTransformingSeed(String name, Lazy<Block> from, Lazy<Block> to);
 
     default void registerTransformingSeed(String name, Identifier from, Identifier to) {
-        registerTransformingSeed(name, new Lazy<>(() -> Registry.BLOCK.get(from)), new Lazy<>(() -> Registry.BLOCK.get(to).getDefaultState()));
+        registerTransformingSeed(name, new Lazy<>(() -> Registry.BLOCK.get(from)), new Lazy<>(() -> Registry.BLOCK.get(to)));
     }
 
     void registerTallPlantSeed(String name, Lazy<TallPlantBlock[]> plants);
@@ -56,14 +56,12 @@ public interface FENRegistries {
                 .toArray(TallPlantBlock[]::new)));
     }
 
-    void registerSeed(String name, Lazy<BlockState[]> plants);
-
-    void registerSeed(String name, Lazy<BlockState[]> plants, Predicate<ItemUsageContext> placementCheck);
-
+    void registerSeed(String name, Lazy<Block[]> plants);
+    
     default void registerSeed(String name, Identifier... plants) {
         registerSeed(name, new Lazy<>(() -> Arrays.stream(plants)
-                .map(plant -> Registry.BLOCK.get(plant).getDefaultState())
-                .toArray(BlockState[]::new)));
+                .map(Registry.BLOCK::get)
+                .toArray(Block[]::new)));
     }
 
 }

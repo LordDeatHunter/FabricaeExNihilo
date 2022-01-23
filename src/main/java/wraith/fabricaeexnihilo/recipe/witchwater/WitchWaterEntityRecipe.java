@@ -15,7 +15,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.village.VillagerProfession;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.modules.ModRecipes;
+import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
 import wraith.fabricaeexnihilo.recipe.util.EntityTypeIngredient;

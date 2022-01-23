@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.modules.ModRecipes;
+import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
 import wraith.fabricaeexnihilo.recipe.util.BlockIngredient;
@@ -83,20 +83,20 @@ public class LeakingRecipe extends BaseRecipe<LeakingRecipe.Context> {
     public static class Serializer implements RecipeSerializer<LeakingRecipe> {
         @Override
         public LeakingRecipe read(Identifier id, JsonObject json) {
-            BlockIngredient block = CodecUtils.fromJson(BlockIngredient.CODEC, json.get("block"));
-            FluidIngredient fluid = CodecUtils.fromJson(FluidIngredient.CODEC, json.get("fluid"));
-            long amount = json.get("amount").getAsLong();
-            Block result = Registry.BLOCK.get(new Identifier(json.get("result").getAsString()));
+            var block = CodecUtils.fromJson(BlockIngredient.CODEC, json.get("block"));
+            var fluid = CodecUtils.fromJson(FluidIngredient.CODEC, json.get("fluid"));
+            var amount = json.get("amount").getAsLong();
+            var result = Registry.BLOCK.get(new Identifier(json.get("result").getAsString()));
             
             return new LeakingRecipe(id, block, fluid, amount, result);
         }
         
         @Override
         public LeakingRecipe read(Identifier id, PacketByteBuf buf) {
-            BlockIngredient block = CodecUtils.fromPacket(BlockIngredient.CODEC, buf);
-            FluidIngredient fluid = CodecUtils.fromPacket(FluidIngredient.CODEC, buf);
-            long amount = buf.readLong();
-            Block result = Registry.BLOCK.get(buf.readIdentifier());
+            var block = CodecUtils.fromPacket(BlockIngredient.CODEC, buf);
+            var fluid = CodecUtils.fromPacket(FluidIngredient.CODEC, buf);
+            var amount = buf.readLong();
+            var result = Registry.BLOCK.get(buf.readIdentifier());
             
             return new LeakingRecipe(id, block, fluid, amount, result);
         }

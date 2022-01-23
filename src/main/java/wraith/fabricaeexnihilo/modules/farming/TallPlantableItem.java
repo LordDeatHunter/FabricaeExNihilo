@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.TallPlantBlock;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;
 import wraith.fabricaeexnihilo.util.Lazy;
@@ -28,9 +29,12 @@ public class TallPlantableItem extends Item {
         var shuffledPlants = new ArrayList<>(List.of(plants.get()));
         Collections.shuffle(shuffledPlants);
         for (var plant : shuffledPlants) {
-            var lower = plant.getDefaultState().with(TallPlantBlock.HALF, DoubleBlockHalf.LOWER);
-            var upper = plant.getDefaultState().with(TallPlantBlock.HALF, DoubleBlockHalf.UPPER);
-            if (placementCheck(context) && lower.canPlaceAt(world, plantPos) && world.isAir(plantPos.up())) {
+            var state = plant.getPlacementState(new ItemPlacementContext(context));
+            if (state == null)
+                return ActionResult.PASS;
+            var lower = state.with(TallPlantBlock.HALF, DoubleBlockHalf.LOWER);
+            var upper = state.with(TallPlantBlock.HALF, DoubleBlockHalf.UPPER);
+            if (lower.canPlaceAt(world, plantPos) && world.isAir(plantPos.up())) {
                 world.setBlockState(plantPos, lower);
                 world.setBlockState(plantPos.up(), upper);
                 var player = context.getPlayer();
@@ -40,11 +44,7 @@ public class TallPlantableItem extends Item {
                 return ActionResult.SUCCESS;
             }
         }
-        return super.useOnBlock(context);
-    }
-    
-    public boolean placementCheck(ItemUsageContext context) {
-        return true;
+        return ActionResult.PASS;
     }
     
 }

@@ -22,7 +22,9 @@ bin/
 
 # fabric
 
-run/
+run/*
+!run/kubejs/
+run/kubejs/exported
 
 # datagen
 datagen/generated/assets/

@@ -26,17 +26,11 @@ public class WeightedList {
         setTotalWeight();
     }
     
-    @SafeVarargs
-    public WeightedList(Pair<Block, Integer>... values) {
+    public WeightedList(List<Pair<Block, Integer>> values) {
         this.values = new HashMap<>();
         for (var value : values) {
             this.values.put(value.getLeft(), value.getRight());
         }
-        setTotalWeight();
-    }
-    
-    public WeightedList() {
-        this.values = new HashMap<>();
         setTotalWeight();
     }
     
