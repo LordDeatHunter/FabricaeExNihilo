@@ -12,7 +12,9 @@
     {
       "condition": "fabric:any_mods_loaded",
       "values": [
-        "techreborn"
+        "techreborn",
+        "indrev",
+        "modern_industrialization"
       ]
     }
   ]

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "fabricaeexnihilo:lead_piece"
+    }
+  },
+  "result": {
+    "item": "modern_industrialization:raw_lead",
+    "count": 1
+  },
+  "fabric:conditions": [
+    {
+      "condition": "fabric:any_mods_loaded",
+      "values": [
+        "modern_industrialization"
+      ]
+    }
+  ]
+}

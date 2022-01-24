@@ -10,7 +10,15 @@
     }
   },
   "result": {
-    "item": "techreborn:raw_tin",
+    "item": "indrev:raw_tin",
     "count": 1
-  }
+  },
+  "fabric:conditions": [
+    {
+      "condition": "fabric:any_mods_loaded",
+      "values": [
+        "indrev"
+      ]
+    }
+  ]
 }

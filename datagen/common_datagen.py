@@ -59,18 +59,29 @@ def save_item_model(file_name, parent_model, textures={}):
 
 
 def save_ore_piece_recipe(material, raw_ore):
-    with open(f'{ore_piece_recipes_path}{material}.json', 'w') as f:
-        f.write(json.dumps({
-            'type': 'minecraft:crafting_shaped',
-            'pattern': ['##', '##'],
-            'key': {
-                '#': {'item': f'fabricaeexnihilo:{material}_piece'}
-            },
-            'result': {
-                'item': raw_ore,
-                'count': 1
+    raw_ore_namespace, raw_ore_path = raw_ore.split(':')
+    data = {
+        'type': 'minecraft:crafting_shaped',
+        'pattern': ['##', '##'],
+        'key': {
+            '#': {'item': f'fabricaeexnihilo:{material}_piece'}
+        },
+        'result': {
+            'item': raw_ore,
+            'count': 1
+        }
+    }
+    file_name = material
+    if raw_ore_namespace != 'minecraft':
+        file_name = f'{raw_ore_namespace}_{file_name}'
+        data['fabric:conditions'] = [
+            {
+                'condition': 'fabric:any_mods_loaded',
+                'values': [raw_ore_namespace]
             }
-        }, indent=2))
+        ]
+    with open(f'{ore_piece_recipes_path}{file_name}.json', 'w') as f:
+        f.write(json.dumps(data, indent=2))
 
 
 def add_to_lang_file(key, value):

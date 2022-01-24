@@ -13,7 +13,7 @@ public class Color {
                     .fieldOf("value")
                     .forGetter(Color::toInt)
     ).apply(instance, Color::new));
-    
+
     public float r;
     public float g;
     public float b;
@@ -88,9 +88,12 @@ public class Color {
     }
     
     public static int hexToInt(String hex) {
+        if (hex.startsWith("#")) {
+            hex = hex.substring(1);
+        }
         var rgb = hex.length() < 8 ? hex : hex.substring(2);
         var a = hex.length() < 8 ? "FF" : hex.substring(0, 2);
-        
+
         return (Integer.parseInt(a, 16) << 24) | Integer.parseInt(rgb, 16);
     }
     

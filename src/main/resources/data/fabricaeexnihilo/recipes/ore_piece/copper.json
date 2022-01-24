@@ -6,11 +6,11 @@
   ],
   "key": {
     "#": {
-      "item": "fabricaeexnihilo:lead_piece"
+      "item": "fabricaeexnihilo:copper_piece"
     }
   },
   "result": {
-    "item": "techreborn:raw_lead",
+    "item": "minecraft:raw_copper",
     "count": 1
   }
 }

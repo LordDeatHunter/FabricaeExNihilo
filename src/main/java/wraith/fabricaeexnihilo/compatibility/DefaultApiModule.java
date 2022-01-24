@@ -1,20 +1,12 @@
 package wraith.fabricaeexnihilo.compatibility;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.KelpBlock;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.api.FENRegistries;
 import wraith.fabricaeexnihilo.api.FabricaeExNihiloApiModule;
 import wraith.fabricaeexnihilo.api.ore.OreMaterial;
 import wraith.fabricaeexnihilo.api.ore.OreShape;
-import wraith.fabricaeexnihilo.util.Lazy;
 import wraith.fabricaeexnihilo.util.Color;
-
-import java.util.stream.IntStream;
 
 /* TODO: More api modules:
     Modern Industrialisation: https://github.com/AztechMC/Modern-Industrialization/blob/master/src/main/java/aztech/modern_industrialization/materials/MIMaterials.java
@@ -25,8 +17,9 @@ public class DefaultApiModule implements FabricaeExNihiloApiModule {
     @Override
     public void register(FENRegistries registries) {
         registries.registerOre("iron", Color.IRON, OreShape.NORMAL, OreMaterial.GRANITE);
+        registries.registerOre("copper", Color.COPPER, OreShape.NORMAL, OreMaterial.DIORITE);
         registries.registerOre("gold", Color.GOLD, OreShape.FINE, OreMaterial.STONE);
-        
+
         registries.registerWood("oak");
         registries.registerWood("birch");
         registries.registerWood("spruce");

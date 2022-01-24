@@ -8,7 +8,7 @@ import wraith.fabricaeexnihilo.api.ore.OreShape;
 import wraith.fabricaeexnihilo.util.Color;
 
 public class TechRebornApiModule implements FabricaeExNihiloApiModule {
-    
+
     @Override
     public void register(FENRegistries registries) {
         registries.registerOre("tin", Color.TIN, OreShape.NORMAL, OreMaterial.DIORITE);
@@ -19,8 +19,8 @@ public class TechRebornApiModule implements FabricaeExNihiloApiModule {
         // No raw ores
         // registry.accept("aluminum", new OreDefinition(Color.ALUMINUM, OreDefinition.PieceShape.FINE, OreDefinition.BaseMaterial.SAND));
         // registry.accept("zinc", new OreDefinition(Color.ZINC, OreDefinition.PieceShape.FINE, OreDefinition.BaseMaterial.NETHERRACK));
-        // registry.accept("platinum", new OreDefinition(Color.PLATINUM, OreDefinition.PieceShape.COARSE, OreDefinition.BaseMaterial.ENDSTONE));
-    
+        // registries.registerOre("platinum", Color.PLATINUM, OreShape.COARSE, OreMaterial.ENDSTONE);
+
         registries.registerMesh("carbon", Color.BLACK, 14);
         registries.registerWood("rubber");
         registries.registerInfestedLeaves("rubber", new Identifier("techreborn:rubber_leaves"));

@@ -17,7 +17,9 @@
     ],
     "fabricaeexnihilo:api": [
       "wraith.fabricaeexnihilo.compatibility.DefaultApiModule",
-      "wraith.fabricaeexnihilo.compatibility.TechRebornApiModule"
+      "wraith.fabricaeexnihilo.compatibility.TechRebornApiModule",
+      "wraith.fabricaeexnihilo.compatibility.IndustrialRevolutionApiModule",
+      "wraith.fabricaeexnihilo.compatibility.ModernIndustrializationApiModule"
     ]
   },
   "mixins": [

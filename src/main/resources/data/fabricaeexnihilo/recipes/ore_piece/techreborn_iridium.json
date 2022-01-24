@@ -12,5 +12,13 @@
   "result": {
     "item": "techreborn:raw_iridium",
     "count": 1
-  }
+  },
+  "fabric:conditions": [
+    {
+      "condition": "fabric:any_mods_loaded",
+      "values": [
+        "techreborn"
+      ]
+    }
+  ]
 }

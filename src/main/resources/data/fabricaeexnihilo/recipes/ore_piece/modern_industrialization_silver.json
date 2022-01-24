@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "fabricaeexnihilo:silver_piece"
+    }
+  },
+  "result": {
+    "item": "modern_industrialization:raw_silver",
+    "count": 1
+  },
+  "fabric:conditions": [
+    {
+      "condition": "fabric:any_mods_loaded",
+      "values": [
+        "modern_industrialization"
+      ]
+    }
+  ]
+}

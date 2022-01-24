@@ -1,6 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:iridium_piece",
+  "result": "fabricaeexnihilo:uranium_piece",
   "input": "minecraft:gravel",
   "rolls": {
     "fabricaeexnihilo:diamond_mesh": [0.1],
@@ -10,7 +10,6 @@
     {
       "condition": "fabric:any_mods_loaded",
       "values": [
-        "techreborn",
         "modern_industrialization"
       ]
     }

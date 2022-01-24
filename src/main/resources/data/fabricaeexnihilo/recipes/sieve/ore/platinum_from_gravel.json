@@ -1,18 +1,15 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:silver_piece",
+  "result": "fabricaeexnihilo:platinum_piece",
   "input": "fabricaeexnihilo:crushed_endstone",
   "rolls": {
-    "fabricaeexnihilo:iron_mesh": [0.1, 0.1],
-    "fabricaeexnihilo:diamond_mesh": [0.2, 0.2],
-    "fabricaeexnihilo:netherite_mesh": [0.3, 0.3]
+    "fabricaeexnihilo:diamond_mesh": [0.1, 0.1],
+    "fabricaeexnihilo:netherite_mesh": [0.25, 0.25]
   },
   "fabric:conditions": [
     {
       "condition": "fabric:any_mods_loaded",
       "values": [
-        "techreborn",
-        "indrev",
         "modern_industrialization"
       ]
     }
