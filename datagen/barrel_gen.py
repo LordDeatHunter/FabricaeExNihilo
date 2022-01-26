@@ -7,6 +7,8 @@ barrels = {
     ('fabricaeexnihilo:jungle_barrel', 'minecraft:jungle_planks', 'minecraft:jungle_slab'),
     ('fabricaeexnihilo:acacia_barrel', 'minecraft:acacia_planks', 'minecraft:acacia_slab'),
     ('fabricaeexnihilo:dark_oak_barrel', 'minecraft:dark_oak_planks', 'minecraft:dark_oak_slab'),
+    ('fabricaeexnihilo:warped_barrel', 'minecraft:warped_planks', 'minecraft:warped_slab'),
+    ('fabricaeexnihilo:crimson_barrel', 'minecraft:crimson_planks', 'minecraft:crimson_slab'),
     ('fabricaeexnihilo:rubber_barrel', 'techreborn:rubber_planks', 'techreborn:rubber_plank_slab'),
     ('fabricaeexnihilo:stone_barrel', 'minecraft:stone', 'minecraft:stone_slab')
 }

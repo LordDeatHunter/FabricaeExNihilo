@@ -2,6 +2,7 @@ package wraith.fabricaeexnihilo.compatibility;
 
 import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
+import wraith.fabricaeexnihilo.FabricaeExNihiloConfig;
 import wraith.fabricaeexnihilo.api.FENRegistries;
 import wraith.fabricaeexnihilo.api.FENApiModule;
 import wraith.fabricaeexnihilo.util.Color;
@@ -18,7 +19,9 @@ public class DefaultApiModule implements FENApiModule {
         registries.registerWood("acacia");
         registries.registerWood("dark_oak");
         registries.registerWood("jungle");
-    
+        registries.registerWood("warped");
+        registries.registerWood("crimson");
+        
         registries.registerCrushedBlock("dust", true);
         registries.registerCrushedBlock("silt", true);
     
@@ -49,41 +52,46 @@ public class DefaultApiModule implements FENApiModule {
         registries.registerInfestedLeaves("dark_oak", new Identifier("minecraft:dark_oak_leaves"));
         registries.registerInfestedLeaves("jungle", new Identifier("minecraft:jungle_leaves"));
     
-        if (FabricaeExNihilo.CONFIG.modules.seeds.enabled) {
-            if (FabricaeExNihilo.CONFIG.modules.seeds.carrot) {
+        var seedConfig = FabricaeExNihilo.CONFIG.modules.seeds;
+        if (seedConfig.enabled) {
+            if (seedConfig.carrot) {
                 registries.registerSeed("carrot", new Identifier("minecraft", "carrots"));
             }
-            if (FabricaeExNihilo.CONFIG.modules.seeds.potato) {
+            if (seedConfig.potato) {
                 registries.registerSeed("potato", new Identifier("minecraft", "potatoes"));
             }
-            if (FabricaeExNihilo.CONFIG.modules.seeds.chorus) {
+            if (seedConfig.chorus) {
                 registries.registerSeed("chorus", new Identifier("minecraft", "chorus_flower"));
             }
-            if (FabricaeExNihilo.CONFIG.modules.seeds.seaPickle) {
+            if (seedConfig.seaPickle) {
                 registries.registerSeed("sea_pickle", new Identifier("minecraft", "sea_pickle"));
             }
-            if (FabricaeExNihilo.CONFIG.modules.seeds.sugarCane) {
+            if (seedConfig.sugarCane) {
                 registries.registerSeed("sugarcane", new Identifier("minecraft", "sugar_cane"));
             }
-            if (FabricaeExNihilo.CONFIG.modules.seeds.cactus) {
+            if (seedConfig.cactus) {
                 registries.registerSeed("cactus", new Identifier("minecraft", "cactus"));
             }
-            if (FabricaeExNihilo.CONFIG.modules.seeds.grass) {
+            if (seedConfig.grass) {
                 registries.registerTransformingSeed("grass", new Identifier("minecraft", "dirt"), new Identifier("minecraft", "grass_block"));
             }
-            if (FabricaeExNihilo.CONFIG.modules.seeds.mycelium) {
+            if (seedConfig.mycelium) {
                 registries.registerTransformingSeed("mycelium", new Identifier("minecraft", "dirt"), new Identifier("minecraft", "mycelium"));
             }
-            if (FabricaeExNihilo.CONFIG.modules.seeds.kelp) {
+            if (seedConfig.kelp) {
                 registries.registerSeed("kelp", new Identifier("minecraft", "kelp"));
             }
-            if (FabricaeExNihilo.CONFIG.modules.seeds.flowerSeeds) {
+            if (seedConfig.netherSpores) {
+                registries.registerTransformingSeed("warped", new Identifier("minecraft", "netherrack"), new Identifier("minecraft", "warped_nylium"));
+                registries.registerTransformingSeed("crimson", new Identifier("minecraft", "netherrack"), new Identifier("minecraft", "crimson_nylium"));
+            }
+            if (seedConfig.flowerSeeds) {
                 registries.registerTallPlantSeed("sunflower", new Identifier("minecraft", "sunflower"));
                 registries.registerTallPlantSeed("lilac", new Identifier("minecraft", "lilac"));
                 registries.registerTallPlantSeed("rose_bush", new Identifier("minecraft", "rose_bush"));
                 registries.registerTallPlantSeed("peony", new Identifier("minecraft", "peony"));
             }
-            if (FabricaeExNihilo.CONFIG.modules.seeds.treeSeeds) {
+            if (seedConfig.treeSeeds) {
                 registries.registerSeed("oak", new Identifier("minecraft", "oak_sapling"));
                 registries.registerSeed("birch", new Identifier("minecraft", "birch_sapling"));
                 registries.registerSeed("spruce", new Identifier("minecraft", "spruce_sapling"));

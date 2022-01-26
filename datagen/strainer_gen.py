@@ -7,6 +7,8 @@ strainers = [
     ('fabricaeexnihilo:jungle_strainer', 'minecraft:jungle_log', 'minecraft:jungle_log'),
     ('fabricaeexnihilo:acacia_strainer', 'minecraft:acacia_log', 'minecraft:acacia_log'),
     ('fabricaeexnihilo:dark_oak_strainer', 'minecraft:dark_oak_log', 'minecraft:dark_oak_log'),
+    ('fabricaeexnihilo:warped_strainer', 'minecraft:warped_stem', 'minecraft:warped_stem'),
+    ('fabricaeexnihilo:crimson_strainer', 'minecraft:crimson_stem', 'minecraft:crimson_stem'),
     ('fabricaeexnihilo:rubber_strainer', 'techreborn:rubber_log', 'techreborn:rubber_log_side')
 ]
 

@@ -143,13 +143,7 @@ public class FabricaeExNihiloConfig {
             public boolean sugarCane = true;
             public boolean treeSeeds = true;
             public boolean flowerSeeds = true;
-            
-            // List of blocks that the rubber sapling could turn into.
-            public List<String> rubberSeed = List.of(
-                    "techreborn:rubber_sapling",
-                    "ic2:rubber_sapling",
-                    "terrestria:rubber_sapling"
-            );
+            public boolean netherSpores = true;
         }
         
         public SieveConfig sieves = new SieveConfig();

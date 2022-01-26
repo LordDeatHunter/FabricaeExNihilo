@@ -7,6 +7,8 @@
   "block.fabricaeexnihilo.jungle_barrel": "Jungle Barrel",
   "block.fabricaeexnihilo.acacia_barrel": "Acacia Barrel",
   "block.fabricaeexnihilo.dark_oak_barrel": "Dark Oak Barrel",
+  "block.fabricaeexnihilo.warped_barrel": "Warped Barrel",
+  "block.fabricaeexnihilo.crimson_barrel": "Crimson Barrel",
   "block.fabricaeexnihilo.rubber_barrel": "Rubber Barrel",
   "block.fabricaeexnihilo.stone_barrel": "Stone Barrel",
 
@@ -16,6 +18,8 @@
   "block.fabricaeexnihilo.jungle_crucible": "Jungle Crucible",
   "block.fabricaeexnihilo.acacia_crucible": "Acacia Crucible",
   "block.fabricaeexnihilo.dark_oak_crucible": "Dark Oak Crucible",
+  "block.fabricaeexnihilo.warped_crucible": "Warped Crucible",
+  "block.fabricaeexnihilo.crimson_crucible": "Crimson Crucible",
   "block.fabricaeexnihilo.rubber_crucible": "Rubber Crucible",
   "block.fabricaeexnihilo.porcelain_crucible": "Porcelain Crucible",
   "item.fabricaeexnihilo.unfired_porcelain_crucible": "Unfired Porcelain Crucible",
@@ -25,6 +29,8 @@
   "block.fabricaeexnihilo.birch_sieve": "Birch Sieve",
   "block.fabricaeexnihilo.jungle_sieve": "Jungle Sieve",
   "block.fabricaeexnihilo.acacia_sieve": "Acacia Sieve",
+  "block.fabricaeexnihilo.warped_sieve": "Warped Sieve",
+  "block.fabricaeexnihilo.crimson_sieve": "Crimson Sieve",
   "block.fabricaeexnihilo.dark_oak_sieve": "Dark Oak Sieve",
   "block.fabricaeexnihilo.rubber_sieve": "Rubber Sieve",
 
@@ -34,6 +40,8 @@
   "block.fabricaeexnihilo.jungle_strainer": "Jungle Strainer",
   "block.fabricaeexnihilo.acacia_strainer": "Acacia Strainer",
   "block.fabricaeexnihilo.dark_oak_strainer": "Dark Oak Strainer",
+  "block.fabricaeexnihilo.warped_strainer": "Warped Strainer",
+  "block.fabricaeexnihilo.crimson_strainer": "Crimson Strainer",
   "block.fabricaeexnihilo.rubber_strainer": "Rubber Strainer",
 
   "block.fabricaeexnihilo.dust": "Dust",
@@ -46,6 +54,7 @@
   "block.fabricaeexnihilo.crushed_netherrack": "Crushed Netherrack",
   "block.fabricaeexnihilo.crushed_prismarine": "Crushed Prismarine",
 
+
   "item.fabricaeexnihilo.acacia_seeds": "Acacia Seed",
   "item.fabricaeexnihilo.birch_seeds": "Birch Seed",
   "item.fabricaeexnihilo.cactus_seeds": "Cactus Seed",
@@ -56,6 +65,8 @@
   "item.fabricaeexnihilo.jungle_seeds": "Jungle Tree Seed",
   "item.fabricaeexnihilo.kelp_seeds": "Kelp Sporophyte",
   "item.fabricaeexnihilo.mycelium_seeds": "Ancient Spores",
+  "item.fabricaeexnihilo.warped_seeds": "Warped Spores",
+  "item.fabricaeexnihilo.crimson_seeds": "Crimson Spores",
   "item.fabricaeexnihilo.oak_seeds": "Oak Acorn",
   "item.fabricaeexnihilo.potato_seeds": "Potato Sprout",
   "item.fabricaeexnihilo.rubber_seeds": "Rubber Tree Seed",
