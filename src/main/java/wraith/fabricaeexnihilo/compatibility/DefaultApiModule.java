@@ -3,40 +3,32 @@ package wraith.fabricaeexnihilo.compatibility;
 import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.api.FENRegistries;
-import wraith.fabricaeexnihilo.api.FabricaeExNihiloApiModule;
-import wraith.fabricaeexnihilo.api.ore.OreMaterial;
-import wraith.fabricaeexnihilo.api.ore.OreShape;
+import wraith.fabricaeexnihilo.api.FENApiModule;
 import wraith.fabricaeexnihilo.util.Color;
 
-/* TODO: More api modules:
-    Modern Industrialisation: https://github.com/AztechMC/Modern-Industrialization/blob/master/src/main/java/aztech/modern_industrialization/materials/MIMaterials.java
-    Industrial Revolution
-    + any other mods that add ores or trees...
-         */
-public class DefaultApiModule implements FabricaeExNihiloApiModule {
+public class DefaultApiModule implements FENApiModule {
     @Override
     public void register(FENRegistries registries) {
-        registries.registerOre("iron", Color.IRON, OreShape.NORMAL, OreMaterial.GRANITE);
-        registries.registerOre("copper", Color.COPPER, OreShape.NORMAL, OreMaterial.DIORITE);
-        registries.registerOre("gold", Color.GOLD, OreShape.FINE, OreMaterial.STONE);
-
+        registries.registerOrePiece("iron", Color.IRON);
+        registries.registerOrePiece("copper", Color.COPPER);
+        registries.registerOrePiece("gold", Color.GOLD);
         registries.registerWood("oak");
         registries.registerWood("birch");
         registries.registerWood("spruce");
         registries.registerWood("acacia");
         registries.registerWood("dark_oak");
         registries.registerWood("jungle");
-
-        registries.registerSandyCrushed("dust");
-        registries.registerSandyCrushed("silt");
-
-        registries.registerGravelyCrushed("crushed_andesite");
-        registries.registerGravelyCrushed("crushed_diorite");
-        registries.registerGravelyCrushed("crushed_granite");
-        registries.registerGravelyCrushed("crushed_prismarine");
-        registries.registerGravelyCrushed("crushed_endstone");
-        registries.registerGravelyCrushed("crushed_netherrack");
-
+    
+        registries.registerCrushedBlock("dust", true);
+        registries.registerCrushedBlock("silt", true);
+    
+        registries.registerCrushedBlock("crushed_andesite", false);
+        registries.registerCrushedBlock("crushed_diorite", false);
+        registries.registerCrushedBlock("crushed_granite", false);
+        registries.registerCrushedBlock("crushed_prismarine", false);
+        registries.registerCrushedBlock("crushed_endstone", false);
+        registries.registerCrushedBlock("crushed_netherrack", false);
+    
         registries.registerCrucible("porcelain", true);
 
         registries.registerBarrel("stone", true);

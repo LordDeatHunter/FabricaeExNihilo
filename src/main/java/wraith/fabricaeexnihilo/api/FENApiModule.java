@@ -1,9 +1,17 @@
 package wraith.fabricaeexnihilo.api;
 
+import org.jetbrains.annotations.ApiStatus;
+
 /**
  * An entrypoint that allows mods to add their own resources to Fabricae Ex Nihilo.
  */
-public interface FabricaeExNihiloApiModule {
+@FunctionalInterface
+@ApiStatus.OverrideOnly
+public interface FENApiModule {
+    /**
+     * The main entrypoint for FEN plugins.
+     * @param registries An object with methods that allows registering to internal registries.
+     */
     void register(FENRegistries registries);
     
     /**

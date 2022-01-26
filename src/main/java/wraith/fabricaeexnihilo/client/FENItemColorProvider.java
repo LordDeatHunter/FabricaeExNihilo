@@ -5,12 +5,12 @@ import net.minecraft.item.ItemStack;
 import wraith.fabricaeexnihilo.modules.base.Colored;
 import wraith.fabricaeexnihilo.util.Color;
 
-public final class FabricaeExNihiloItemColorProvider implements ItemColorProvider {
+public final class FENItemColorProvider implements ItemColorProvider {
     
-    private FabricaeExNihiloItemColorProvider() {
+    private FENItemColorProvider() {
     }
     
-    public static final FabricaeExNihiloItemColorProvider INSTANCE = new FabricaeExNihiloItemColorProvider();
+    public static final FENItemColorProvider INSTANCE = new FENItemColorProvider();
     
     @Override
     public int getColor(ItemStack stack, int tintIndex) {

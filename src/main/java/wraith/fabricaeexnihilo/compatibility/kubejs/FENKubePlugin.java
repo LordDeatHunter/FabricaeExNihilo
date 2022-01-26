@@ -13,11 +13,6 @@ import wraith.fabricaeexnihilo.recipe.ModRecipes;
 
 public class FENKubePlugin extends KubeJSPlugin {
     @Override
-    public void init() {
-        // TODO: Block and Item types.
-    }
-    
-    @Override
     public void addRecipes(RegisterRecipeHandlersEvent event) {
         event.register(ModRecipes.SIEVE.id(), SieveRecipeJS::new);
         event.register(ModRecipes.CROOK.id(), ToolRecipeJS::new);

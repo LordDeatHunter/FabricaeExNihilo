@@ -1,28 +1,19 @@
 package wraith.fabricaeexnihilo.modules;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.KelpBlock;
-import net.minecraft.block.TallPlantBlock;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.item.FoodComponents;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
-import wraith.fabricaeexnihilo.modules.farming.PlantableItem;
-import wraith.fabricaeexnihilo.modules.farming.TallPlantableItem;
-import wraith.fabricaeexnihilo.modules.farming.TransformingItem;
+import wraith.fabricaeexnihilo.modules.base.ColoredItem;
 import wraith.fabricaeexnihilo.modules.infested.SilkWormItem;
-import wraith.fabricaeexnihilo.modules.ores.OreItem;
 import wraith.fabricaeexnihilo.modules.sieves.MeshItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
@@ -34,7 +25,7 @@ public final class ModItems {
 
     public static final Map<Identifier, Item> RESOURCES = new HashMap<>();
 
-    public static final Map<Identifier, OreItem> ORE_PIECES = new HashMap<>();
+    public static final Map<Identifier, ColoredItem> ORE_PIECES = new HashMap<>();
     public static final Map<Identifier, MeshItem> MESHES = new HashMap<>();
 
     public static final List<Identifier> DOLLS = new ArrayList<>();

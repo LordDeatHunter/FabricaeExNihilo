@@ -8,18 +8,16 @@ import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.api.FENRegistries;
-import wraith.fabricaeexnihilo.api.FabricaeExNihiloApiModule;
-import wraith.fabricaeexnihilo.api.ore.OreMaterial;
-import wraith.fabricaeexnihilo.api.ore.OreShape;
+import wraith.fabricaeexnihilo.api.FENApiModule;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModItems;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlock;
+import wraith.fabricaeexnihilo.modules.base.ColoredItem;
 import wraith.fabricaeexnihilo.modules.crucibles.CrucibleBlock;
 import wraith.fabricaeexnihilo.modules.farming.PlantableItem;
 import wraith.fabricaeexnihilo.modules.farming.TallPlantableItem;
 import wraith.fabricaeexnihilo.modules.farming.TransformingItem;
 import wraith.fabricaeexnihilo.modules.infested.InfestedLeavesBlock;
-import wraith.fabricaeexnihilo.modules.ores.OreItem;
 import wraith.fabricaeexnihilo.modules.sieves.MeshItem;
 import wraith.fabricaeexnihilo.modules.sieves.SieveBlock;
 import wraith.fabricaeexnihilo.modules.strainer.StrainerBlock;
@@ -27,7 +25,7 @@ import wraith.fabricaeexnihilo.modules.strainer.StrainerBlock;
 public class EntrypointHelper {
 
     public static void callEntrypoints() {
-        var entrypoints = FabricLoader.getInstance().getEntrypoints("fabricaeexnihilo:api", FabricaeExNihiloApiModule.class).stream().filter(FabricaeExNihiloApiModule::shouldLoad).toList();
+        var entrypoints = FabricLoader.getInstance().getEntrypoints("fabricaeexnihilo:api", FENApiModule.class).stream().filter(FENApiModule::shouldLoad).toList();
         var registries = new FENRegistriesImpl();
 
         entrypoints.forEach(entrypoint -> entrypoint.register(registries));
@@ -40,25 +38,20 @@ public class EntrypointHelper {
     private static final class FENRegistriesImpl implements FENRegistries {
 
         @Override
-        public void registerSandyCrushed(String name) {
-            ModBlocks.CRUSHED.put(id(name, null, null), new FallingBlock(ModBlocks.CRUSHED_SANDY_SETTINGS));
-        }
-
-        @Override
-        public void registerGravelyCrushed(String name) {
-            ModBlocks.CRUSHED.put(id(name, null, null), new FallingBlock(ModBlocks.CRUSHED_GRAVELY_SETTINGS));
-        }
-
-        @Override
-        public void registerOre(String name, Color color, OreShape oreShape, OreMaterial baseMaterial) {
-            ModItems.ORE_PIECES.put(id(name, null, "_piece"), new OreItem(color, baseMaterial, oreShape));
+        public void registerOrePiece(String name, Color color) {
+            ModItems.ORE_PIECES.put(id(name, null, "_piece"), new ColoredItem(color, ModItems.BASE_SETTINGS));
         }
 
         @Override
         public void registerMesh(String name, Color color, int enchantability) {
             ModItems.MESHES.put(id(name, null, "_mesh"), new MeshItem(color, enchantability));
         }
-
+    
+        @Override
+        public void registerCrushedBlock(String name, boolean isSandy) {
+            ModBlocks.CRUSHED.put(id(name, null, null), new FallingBlock(isSandy ? ModBlocks.CRUSHED_SANDY_SETTINGS : ModBlocks.CRUSHED_GRAVELY_SETTINGS));
+        }
+    
         @Override
         public void registerSieve(String name) {
             ModBlocks.SIEVES.put(id(name, null, "_sieve"), new SieveBlock());
