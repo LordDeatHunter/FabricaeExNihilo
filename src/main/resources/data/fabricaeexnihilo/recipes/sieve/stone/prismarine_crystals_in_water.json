@@ -4,8 +4,8 @@
   "fluid": "#fabricaeexnihilo:true_water",
   "input": "fabricaeexnihilo:crushed_prismarine",
   "rolls": {
-    "fabricaeexnihilo:iron_mesh": [0.5, 0.01],
-    "fabricaeexnihilo:diamond_mesh": [0.66, 0.05],
-    "fabricaeexnihilo:netherite_mesh": [0.75, 0.1]
+    "fabricaeexnihilo:copper_mesh": [0.5, 0.01],
+    "fabricaeexnihilo:gold_mesh": [0.66, 0.05],
+    "fabricaeexnihilo:emerald_mesh": [0.75, 0.1]
   }
 }

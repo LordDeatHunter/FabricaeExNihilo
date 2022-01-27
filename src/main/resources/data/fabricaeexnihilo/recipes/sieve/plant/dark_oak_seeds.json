@@ -3,7 +3,7 @@
   "result": "fabricaeexnihilo:dark_oak_seeds",
   "input": "minecraft:dirt",
   "rolls": {
-    "fabricaeexnihilo:string_mesh": [0.05],
+    "fabricaeexnihilo:flint_mesh": [0.08],
     "fabricaeexnihilo:copper_mesh": [0.12],
     "fabricaeexnihilo:gold_mesh": [0.2],
     "fabricaeexnihilo:emerald_mesh": [0.3, 0.3]

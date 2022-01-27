@@ -1,9 +1,8 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "minecraft:bamboo",
-  "input": "minecraft:oak_leaves",
+  "input": "minecraft:jungle_leaves",
   "rolls": {
-    "fabricaeexnihilo:string_mesh": [0.05],
     "fabricaeexnihilo:copper_mesh": [0.12],
     "fabricaeexnihilo:gold_mesh": [0.2],
     "fabricaeexnihilo:emerald_mesh": [0.3, 0.3]

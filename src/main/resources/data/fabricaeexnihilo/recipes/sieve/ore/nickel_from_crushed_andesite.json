@@ -3,7 +3,6 @@
   "result": "fabricaeexnihilo:nickel_piece",
   "input": "fabricaeexnihilo:crushed_andesite",
   "rolls": {
-    "fabricaeexnihilo:flint_mesh": [0.05],
     "fabricaeexnihilo:iron_mesh": [0.1, 0.1],
     "fabricaeexnihilo:diamond_mesh": [0.2, 0.2],
     "fabricaeexnihilo:netherite_mesh": [0.3, 0.3]

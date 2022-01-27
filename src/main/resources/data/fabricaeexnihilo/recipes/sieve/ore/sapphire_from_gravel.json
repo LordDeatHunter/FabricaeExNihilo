@@ -3,7 +3,6 @@
   "result": "techreborn:sapphire_gem",
   "input": "minecraft:gravel",
   "rolls": {
-    "fabricaeexnihilo:iron_mesh": [0.016],
     "fabricaeexnihilo:gold_mesh": [0.004],
     "fabricaeexnihilo:diamond_mesh": [0.032],
     "fabricaeexnihilo:netherite_mesh": [0.064],
