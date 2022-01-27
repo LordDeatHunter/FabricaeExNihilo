@@ -22,39 +22,40 @@ public class StrainerBlockEntityRenderer implements BlockEntityRenderer<Strainer
         var count = items.size();
         if (items.isEmpty()) return;
         
-        // TODO: Clean up, maybe move the translation to renderItem and use coordinates relative to the block
-        
         matrices.push();
         matrices.translate(0.5, -0.1, 0.5);
-        // First layer
-        matrices.translate(count == 1 ? 0 : 0.25, count < 5 ? 0.5 : 0.25, count == 1 ? 0 : 0.25);
-        renderItem(items.get(0), entity, tickDelta, matrices, vertexConsumers, light, overlay, itemRenderer);
-        if (count > 1) {
+        
+        block: {
+            // First layer
+            matrices.translate(count == 1 ? 0 : 0.25, count < 5 ? 0.5 : 0.25, count == 1 ? 0 : 0.25);
+            renderItem(items.get(0), entity, tickDelta, matrices, vertexConsumers, light, overlay, itemRenderer);
+            
+            if (count < 2) break block;
             matrices.translate(-0.5, 0, -0.5);
             renderItem(items.get(1), entity, tickDelta, matrices, vertexConsumers, light, overlay, itemRenderer);
-        }
-        if (count > 2) {
+            
+            if (count < 3) break block;
             matrices.translate(0, 0, 0.5);
             renderItem(items.get(2), entity, tickDelta, matrices, vertexConsumers, light, overlay, itemRenderer);
-        }
-        if (count > 3) {
+            
+            if (count < 4) break block;
             matrices.translate(0.5, 0, -0.5);
             renderItem(items.get(3), entity, tickDelta, matrices, vertexConsumers, light, overlay, itemRenderer);
-        }
-        // Second layer
-        if (count > 4) {
+            
+            // Second layer
+            if (count < 5) break block;
             matrices.translate(count == 5 ? -0.25 : 0, 0.5, count == 5 ? 0.25 : 0.5);
             renderItem(items.get(4), entity, tickDelta, matrices, vertexConsumers, light, overlay, itemRenderer);
-        }
-        if (count > 5) {
+    
+            if (count < 6) break block;
             matrices.translate(-0.5, 0, -0.5);
             renderItem(items.get(5), entity, tickDelta, matrices, vertexConsumers, light, overlay, itemRenderer);
-        }
-        if (count > 6) {
+    
+            if (count < 7) break block;
             matrices.translate(0, 0, 0.5);
             renderItem(items.get(6), entity, tickDelta, matrices, vertexConsumers, light, overlay, itemRenderer);
-        }
-        if (count == 8) {
+    
+            if (count < 8) break block;
             matrices.translate(0.5, 0, -0.5);
             renderItem(items.get(7), entity, tickDelta, matrices, vertexConsumers, light, overlay, itemRenderer);
         }
