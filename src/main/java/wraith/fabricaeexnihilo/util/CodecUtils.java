@@ -43,13 +43,13 @@ public class CodecUtils {
                             .fieldOf("item")
                             .forGetter(ItemStack::getItem),
                     Codec.INT
-                            .fieldOf("count")
-                            .forGetter(ItemStack::getCount),
+                            .optionalFieldOf("count")
+                            .forGetter(stack -> Optional.of(stack.getCount())),
                     NbtCompound.CODEC
                             .optionalFieldOf("nbt")
                             .forGetter(itemStack -> Optional.ofNullable(itemStack.getNbt()))).apply(instance1, (item, count, nbt) -> {
                 var stack = new ItemStack(item);
-                stack.setCount(count);
+                count.ifPresent(stack::setCount);
                 nbt.ifPresent(stack::setNbt);
                 return stack;
             })));

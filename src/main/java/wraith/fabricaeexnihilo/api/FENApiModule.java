@@ -12,7 +12,7 @@ public interface FENApiModule {
      * The main entrypoint for FEN plugins.
      * @param registries An object with methods that allows registering to internal registries.
      */
-    void register(FENRegistries registries);
+    void onInit(FENRegistries registries);
     
     /**
      * You can override this if you need to do additional checks before the module is used. Mostly used by integrated compatibility modules to check if the target mod is loaded.

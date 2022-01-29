@@ -8,7 +8,7 @@ import wraith.fabricaeexnihilo.util.Color;
 public class IndustrialRevolutionApiModule implements FENApiModule {
 
     @Override
-    public void register(FENRegistries registries) {
+    public void onInit(FENRegistries registries) {
         registries.registerOrePiece("tin", Color.TIN);
         registries.registerOrePiece("silver", Color.SILVER);
         registries.registerOrePiece("lead", Color.LEAD);

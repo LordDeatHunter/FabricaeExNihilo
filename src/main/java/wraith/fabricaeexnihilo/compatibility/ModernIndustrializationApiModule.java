@@ -8,7 +8,7 @@ import wraith.fabricaeexnihilo.util.Color;
 public class ModernIndustrializationApiModule implements FENApiModule {
 
     @Override
-    public void register(FENRegistries registries) {
+    public void onInit(FENRegistries registries) {
         registries.registerOrePiece("antimony", new Color("#C5C5D6"));
         registries.registerOrePiece("iridium", Color.IRIDIUM);
         registries.registerOrePiece("tin", Color.TIN);

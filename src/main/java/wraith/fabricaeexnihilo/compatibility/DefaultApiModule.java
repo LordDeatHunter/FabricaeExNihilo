@@ -9,7 +9,7 @@ import wraith.fabricaeexnihilo.util.Color;
 
 public class DefaultApiModule implements FENApiModule {
     @Override
-    public void register(FENRegistries registries) {
+    public void onInit(FENRegistries registries) {
         registries.registerOrePiece("iron", Color.IRON);
         registries.registerOrePiece("copper", Color.COPPER);
         registries.registerOrePiece("gold", Color.GOLD);
@@ -39,11 +39,11 @@ public class DefaultApiModule implements FENApiModule {
         registries.registerMesh("string", Color.WHITE, 10);
         registries.registerMesh("flint", Color.GRAY, 12);
         registries.registerMesh("iron", new Color("777777"), 14);
-        registries.registerMesh("gold", Color.GOLDEN, 22);
-        registries.registerMesh("copper", Color.COPPER, 13);
-        registries.registerMesh("emerald", Color.DARK_GREEN, 24);
         registries.registerMesh("diamond", Color.DARK_AQUA, 10);
         registries.registerMesh("netherite", new Color("3B393B"), 15);
+        registries.registerMesh("copper", Color.COPPER, 13);
+        registries.registerMesh("gold", Color.GOLDEN, 22);
+        registries.registerMesh("emerald", Color.DARK_GREEN, 24);
         
         registries.registerInfestedLeaves("oak", new Identifier("minecraft:oak_leaves"));
         registries.registerInfestedLeaves("birch", new Identifier("minecraft:birch_leaves"));

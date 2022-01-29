@@ -28,7 +28,7 @@ public class EntrypointHelper {
         var entrypoints = FabricLoader.getInstance().getEntrypoints("fabricaeexnihilo:api", FENApiModule.class).stream().filter(FENApiModule::shouldLoad).toList();
         var registries = new FENRegistriesImpl();
 
-        entrypoints.forEach(entrypoint -> entrypoint.register(registries));
+        entrypoints.forEach(entrypoint -> entrypoint.onInit(registries));
     }
 
     private static Identifier id(String ore, @Nullable String prefix, @Nullable String suffix) {
@@ -74,6 +74,7 @@ public class EntrypointHelper {
 
         @Override
         public void registerInfestedLeaves(String name, Identifier source) {
+            // TODO: Make these stack somehow: multiple sources for one result.
             ModBlocks.INFESTED_LEAVES.put(id(name, "infested_", "_leaves"), new InfestedLeavesBlock(source, ModBlocks.INFESTED_LEAVES_SETTINGS));
         }
 
