@@ -29,11 +29,7 @@ public abstract class BarrelMode implements BarrelModeStorage {
             case "compost" -> CompostMode.CODEC.encodeStart(NbtOps.INSTANCE, (CompostMode) mode);
             case "empty" -> EmptyMode.CODEC.encodeStart(NbtOps.INSTANCE, (EmptyMode) mode);
             default -> throw new IllegalStateException("Unknown barrel mode!");
-        }).getOrThrow(false, error -> {
-            FabricaeExNihilo.LOGGER.warn(error);
-            FabricaeExNihilo.LOGGER.warn(mode);
-            FabricaeExNihilo.LOGGER.warn(mode.getId());
-        });
+        }).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
         ((NbtCompound) nbt).putString("id", mode.getId());
         return new Dynamic<>(NbtOps.INSTANCE, nbt);
     });

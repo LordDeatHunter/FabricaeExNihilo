@@ -1,18 +1,18 @@
 {
-  "parent": "fabricaeexnihilo:hammer",
+  "parent": "fabricaeexnihilo:iron_hammer",
   "display": {
     "icon": {
-      "item": "fabricaeexnihilo:netherite_hammer"
+      "item": "fabricaeexnihilo:diamond_hammer"
     },
     "title": {
-      "translate": "advancements.fabricaeexnihilo.luxurious_hammer.title"
+      "translate": "advancements.fabricaeexnihilo.diamond_hammer.title"
     },
     "description": {
-      "translate": "advancements.fabricaeexnihilo.luxurious_hammer.description"
+      "translate": "advancements.fabricaeexnihilo.diamond_hammer.description"
     },
     "frame": "task",
     "show_toast": true,
-    "announce_to_chat": false,
+    "announce_to_chat": true,
     "hidden": false
   },
   "criteria": {
@@ -22,7 +22,7 @@
         "items": [
           {
             "items": [
-              "fabricaeexnihilo:netherite_hammer"
+              "fabricaeexnihilo:diamond_hammer"
             ]
           }
         ]

@@ -11,18 +11,20 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 
+import java.util.Optional;
+
 public class EntityStack {
     public static final Codec<EntityStack> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Registry.ENTITY_TYPE.getCodec()
                     .fieldOf("type")
                     .forGetter(EntityStack::getType),
             Codec.INT
-                    .fieldOf("size")
-                    .forGetter(EntityStack::getSize),
+                    .optionalFieldOf("size")
+                    .forGetter(entityStack -> Optional.of(entityStack.getSize())),
             NbtCompound.CODEC
-                    .fieldOf("data")
-                    .forGetter(EntityStack::getData)
-    ).apply(instance, EntityStack::new));
+                    .optionalFieldOf("data")
+                    .forGetter(entityStack -> Optional.of(entityStack.getData()))
+    ).apply(instance, (type, size, data) -> new EntityStack(type, size.orElse(1), data.orElse(new NbtCompound()))));
     
     
     private EntityType<?> type;
