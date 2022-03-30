@@ -3,7 +3,10 @@
   "id": "fabricaeexnihilo",
   "name": "FabricaeExNihilo",
   "description": "Fabricate from nothing.",
-  "authors": ["LordDeatHunter"],
+  "authors": [
+    "LordDeatHunter",
+    "MattiDragon"
+  ],
   "version": "${version}",
   "license": "MIT",
   "icon": "icon.png",
