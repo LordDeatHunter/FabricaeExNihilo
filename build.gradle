@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.10-SNAPSHOT'
+    id 'fabric-loom' version '0.11-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -19,8 +19,10 @@ repositories {
     maven { url = "https://jitpack.io" }
     maven { url = "https://maven.terraformersmc.com/" }
     maven { url = "https://maven.saps.dev/minecraft" }
-	/*
-	maven {
+
+    maven { url "https://maven.bai.lol/" }
+    /*
+    maven {
         name = "CurseForge"
         url = "https://minecraft.curseforge.com/api/maven"
     }
@@ -41,6 +43,9 @@ dependencies {
     modImplementation("dev.latvian.mods:kubejs-fabric:$kubejs_version")
 
     modImplementation "com.terraformersmc:modmenu:$modmenu_version"
+    // WTHIT
+    modCompileOnly "mcp.mobius.waila:wthit-api:fabric-${wthit_version}"
+    modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${wthit_version}"
 }
 
 processResources {
