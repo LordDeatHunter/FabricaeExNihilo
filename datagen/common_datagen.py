@@ -19,6 +19,7 @@ blockstates_path = create_and_return_path(root_path + '/generated/assets/fabrica
 default_lang_file = create_and_return_path(root_path + '/generated/assets/fabricaeexnihilo/lang/en_us.json')
 recipes_path = create_and_return_path(root_path + '/generated/data/fabricaeexnihilo/recipes/')
 ore_piece_recipes_path = create_and_return_path(root_path + '/generated/data/fabricaeexnihilo/recipes/ore_piece/')
+pebble_recipes_path = create_and_return_path(root_path + '/generated/data/fabricaeexnihilo/recipes/pebble/')
 
 
 def save_block_item_model(file_name, block_path):
@@ -81,6 +82,30 @@ def save_ore_piece_recipe(material, raw_ore):
             }
         ]
     with open(f'{ore_piece_recipes_path}{file_name}.json', 'w') as f:
+        f.write(json.dumps(data, indent=2))
+
+def save_pebble_recipe(stone):
+    stone_namespace, stone_path = stone.split(':')
+    data = {
+        'type': 'minecraft:crafting_shaped',
+        'pattern': ['###', '###', '###'],
+        'key': {
+            '#': {'item': f'fabricaeexnihilo:{stone_path}_pebble'}
+        },
+        'result': {
+            'item': stone,
+            'count': 1
+        }
+    }
+    if stone_namespace != 'minecraft':
+        file_name = f'{stone_namespace}_{stone_name}'
+        data['fabric:conditions'] = [
+            {
+                'condition': 'fabric:any_mods_loaded',
+                'values': [stone_namespace]
+            }
+        ]
+    with open(f'{pebble_recipes_path}{stone_path}.json', 'w') as f:
         f.write(json.dumps(data, indent=2))
 
 

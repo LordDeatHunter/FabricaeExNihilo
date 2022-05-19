@@ -29,12 +29,12 @@ public final class ModItems {
 
     static {
         RESOURCES.put(id("andesite_pebble"), new Item(BASE_SETTINGS));
+        RESOURCES.put(id("basalt_pebble"), new Item(BASE_SETTINGS));
+        RESOURCES.put(id("blackstone_pebble"), new Item(BASE_SETTINGS));
+        RESOURCES.put(id("deepslate_pebble"), new Item(BASE_SETTINGS));
         RESOURCES.put(id("diorite_pebble"), new Item(BASE_SETTINGS));
         RESOURCES.put(id("granite_pebble"), new Item(BASE_SETTINGS));
         RESOURCES.put(id("stone_pebble"), new Item(BASE_SETTINGS));
-        RESOURCES.put(id("blackstone_pebble"), new Item(BASE_SETTINGS));
-        RESOURCES.put(id("basalt_pebble"), new Item(BASE_SETTINGS));
-        RESOURCES.put(id("deepslate_pebble"), new Item(BASE_SETTINGS));
 
         RESOURCES.put(id("porcelain"), new Item(BASE_SETTINGS));
         RESOURCES.put(id("unfired_porcelain_crucible"), new Item(BASE_SETTINGS));
