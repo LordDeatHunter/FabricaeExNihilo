@@ -1,5 +1,5 @@
 {
-  "parent": "fabricaeexnihilo:wooden_hammer",
+  "parent": "fabricaeexnihilo:stone_hammer",
   "display": {
     "icon": {
       "item": "fabricaeexnihilo:iron_hammer"

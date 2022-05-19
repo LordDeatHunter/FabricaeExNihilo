@@ -1,14 +1,14 @@
 {
-  "parent": "fabricaeexnihilo:cobblestone",
+  "parent": "fabricaeexnihilo:wooden_hammer",
   "display": {
     "icon": {
-      "item": "fabricaeexnihilo:wooden_hammer"
+      "item": "fabricaeexnihilo:stone_hammer"
     },
     "title": {
-      "translate": "advancements.fabricaeexnihilo.wooden_hammer.title"
+      "translate": "advancements.fabricaeexnihilo.stone_hammer.title"
     },
     "description": {
-      "translate": "advancements.fabricaeexnihilo.wooden_hammer.description"
+      "translate": "advancements.fabricaeexnihilo.stone_hammer.description"
     },
     "frame": "task",
     "show_toast": true,
@@ -22,7 +22,7 @@
         "items": [
           {
             "items": [
-              "fabricaeexnihilo:wooden_hammer"
+              "fabricaeexnihilo:stone_hammer"
             ]
           }
         ]

@@ -1,14 +1,14 @@
 {
-  "parent": "fabricaeexnihilo:cobblestone",
+  "parent": "fabricaeexnihilo:string_mesh",
   "display": {
     "icon": {
-      "item": "fabricaeexnihilo:wooden_hammer"
+      "item": "fabricaeexnihilo:flint_mesh"
     },
     "title": {
-      "translate": "advancements.fabricaeexnihilo.wooden_hammer.title"
+      "translate": "advancements.fabricaeexnihilo.flint_mesh.title"
     },
     "description": {
-      "translate": "advancements.fabricaeexnihilo.wooden_hammer.description"
+      "translate": "advancements.fabricaeexnihilo.flint_mesh.description"
     },
     "frame": "task",
     "show_toast": true,
@@ -16,13 +16,13 @@
     "hidden": false
   },
   "criteria": {
-    "hammer": {
+    "mesh": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "fabricaeexnihilo:wooden_hammer"
+              "fabricaeexnihilo:flint_mesh"
             ]
           }
         ]
@@ -31,7 +31,7 @@
   },
   "requirements": [
     [
-      "hammer"
+      "mesh"
     ]
   ]
 }
