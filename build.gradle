@@ -46,6 +46,7 @@ dependencies {
     // WTHIT
     modCompileOnly "mcp.mobius.waila:wthit-api:fabric-${wthit_version}"
     modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${wthit_version}"
+    modRuntimeOnly "lol.bai:badpackets:fabric-0.1.2"
 }
 
 processResources {
