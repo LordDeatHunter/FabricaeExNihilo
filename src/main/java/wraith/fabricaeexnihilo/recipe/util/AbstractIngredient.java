@@ -35,7 +35,7 @@ public abstract class AbstractIngredient<T> implements Predicate<T> {
     }
     
     public boolean test(T value) {
-        return this.value.map(single -> single.equals(value), tag -> Iterables.contains(getRegistry().iterateEntries(tag), value));
+        return this.value.map(single -> single.equals(value), tag -> StreamSupport.stream(getRegistry().iterateEntries(tag).spliterator(), false).map(RegistryEntry::value).anyMatch(value1 -> value == value1));
     }
     
     public boolean isEmpty() {
