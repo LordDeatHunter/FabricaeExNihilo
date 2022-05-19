@@ -1,6 +1,5 @@
 package wraith.fabricaeexnihilo.modules.fluids;
 
-import net.fabricmc.fabric.api.tag.TagFactory;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
@@ -8,8 +7,9 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraft.tag.Tag;
+import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.modules.ModFluids;
 import wraith.fabricaeexnihilo.modules.base.AbstractFluid;
 import wraith.fabricaeexnihilo.modules.base.BaseFluidBlock;
@@ -18,7 +18,7 @@ import wraith.fabricaeexnihilo.modules.base.FluidSettings;
 public class MilkFluid extends AbstractFluid {
     
     private static final FluidSettings FLUID_SETTINGS = new FluidSettings("milk", false);
-    public static final Tag.Identified<Fluid> TAG = TagFactory.FLUID.create(new Identifier("c:milk"));
+    public static final TagKey<Fluid> TAG = TagKey.of(Registry.FLUID_KEY, new Identifier("c:milk"));
     public static final MilkFluid STILL = new MilkFluid(true);
     public static final MilkFluid FLOWING = new MilkFluid(false);
     public static final BaseFluidBlock BLOCK = new BaseFluidBlock(STILL, ModFluids.BLOCK_SETTINGS);

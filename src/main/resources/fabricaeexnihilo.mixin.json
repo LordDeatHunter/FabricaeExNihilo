@@ -11,9 +11,7 @@
     "EnchantmentHelperMixin",
     "EnchantmentMixin",
     "FluidBlockMixin",
-    "LootContextTypesAccess",
-    "client.FastBlockModelRendererMixin",
-    "client.SlowBlockModelRendererMixin"
+    "LootContextTypesAccess"
   ],
   "client": [
   ],

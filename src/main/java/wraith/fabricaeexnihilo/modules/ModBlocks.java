@@ -30,10 +30,10 @@ import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public final class ModBlocks {
 
-    public static final FabricBlockSettings WOOD_SETTINGS = FabricBlockSettings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD).breakByHand(true);
-    public static final FabricBlockSettings STONE_SETTINGS = FabricBlockSettings.of(Material.STONE).strength(2.0f, 6.0f).sounds(BlockSoundGroup.STONE);
-    public static final FabricBlockSettings CRUSHED_GRAVELY_SETTINGS = FabricBlockSettings.of(Material.AGGREGATE).strength(0.6f).sounds(BlockSoundGroup.GRAVEL).breakByHand(true);
-    public static final FabricBlockSettings CRUSHED_SANDY_SETTINGS = FabricBlockSettings.of(Material.AGGREGATE).strength(0.4f).sounds(BlockSoundGroup.SAND).breakByHand(true);
+    public static final FabricBlockSettings WOOD_SETTINGS = FabricBlockSettings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD);
+    public static final FabricBlockSettings STONE_SETTINGS = FabricBlockSettings.of(Material.STONE).strength(2.0f, 6.0f).sounds(BlockSoundGroup.STONE).requiresTool();
+    public static final FabricBlockSettings CRUSHED_GRAVELY_SETTINGS = FabricBlockSettings.of(Material.AGGREGATE).strength(0.6f).sounds(BlockSoundGroup.GRAVEL);
+    public static final FabricBlockSettings CRUSHED_SANDY_SETTINGS = FabricBlockSettings.of(Material.AGGREGATE).strength(0.4f).sounds(BlockSoundGroup.SAND);
     public static final FabricBlockSettings INFESTED_LEAVES_SETTINGS = FabricBlockSettings.of(Material.LEAVES).nonOpaque().suffocates((state, world, pos) -> false).allowsSpawning((state, world, pos, type) -> type == EntityType.OCELOT || type == EntityType.PARROT).strength(0.2F).ticksRandomly().sounds(BlockSoundGroup.GRASS);
 
     public static final Map<Identifier, SieveBlock> SIEVES = new HashMap<>();

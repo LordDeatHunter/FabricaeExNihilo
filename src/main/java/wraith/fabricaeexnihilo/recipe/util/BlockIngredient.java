@@ -5,14 +5,13 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.Dynamic;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
-import net.fabricmc.fabric.api.tag.TagFactory;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.NbtString;
-import net.minecraft.tag.ServerTagManagerHolder;
-import net.minecraft.tag.Tag;
+import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
@@ -25,12 +24,12 @@ public class BlockIngredient extends AbstractIngredient<Block> {
             .xmap(dynamic -> {
                 var string = dynamic.asString().getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
                 if (string.startsWith("#")) {
-                    return new BlockIngredient(TagFactory.BLOCK.create(new Identifier(string.substring(1))));
+                    return new BlockIngredient(TagKey.of(Registry.BLOCK_KEY, new Identifier(string.substring(1))));
                 } else {
                     return new BlockIngredient(Registry.BLOCK.get(new Identifier(string)));
                 }
             }, blockIngredient -> {
-                var string = blockIngredient.value.map(entry -> Registry.BLOCK.getId(entry).toString(), tag -> "#" + ServerTagManagerHolder.getTagManager().getOrCreateTagGroup(Registry.BLOCK_KEY).getUncheckedTagId(tag));
+                var string = blockIngredient.value.map(entry -> Registry.BLOCK.getId(entry).toString(), tag -> "#" + tag.id());
                 return new Dynamic<>(NbtOps.INSTANCE, NbtString.of(string));
             });
     
@@ -38,12 +37,17 @@ public class BlockIngredient extends AbstractIngredient<Block> {
         super(value);
     }
     
-    public BlockIngredient(Tag<Block> value) {
+    public BlockIngredient(TagKey<Block> value) {
         super(value);
     }
     
-    public BlockIngredient(Either<Block, Tag<Block>> value) {
+    public BlockIngredient(Either<Block, TagKey<Block>> value) {
         super(value);
+    }
+    
+    @Override
+    public Registry<Block> getRegistry() {
+        return Registry.BLOCK;
     }
     
     public boolean test(BlockItem block) {
@@ -57,7 +61,10 @@ public class BlockIngredient extends AbstractIngredient<Block> {
     public static BlockIngredient EMPTY = new BlockIngredient((Block) null);
     
     public ItemStack getDisplayStack() {
-        return value.map(Function.identity(), tag -> tag.values().get(0)).asItem().getDefaultStack();
+        return value.map(Function.identity(), tag -> {
+            var iterator = Registry.BLOCK.iterateEntries(tag).iterator();
+            return iterator.hasNext() ? iterator.next().value() : Items.BARRIER;
+        }).asItem().getDefaultStack();
     }
     
 }

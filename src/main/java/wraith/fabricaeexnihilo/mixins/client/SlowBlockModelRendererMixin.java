@@ -16,6 +16,7 @@ import java.util.List;
 
 @Environment(EnvType.CLIENT)
 @Mixin(BlockModelRenderer.class)
+@SuppressWarnings("all") // TODO: fix this and re-enable
 public class SlowBlockModelRendererMixin {
     @ModifyVariable(
             method = "renderQuad(Lnet/minecraft/client/util/math/MatrixStack$Entry;Lnet/minecraft/client/render/VertexConsumer;FFFLjava/util/List;II)V",
