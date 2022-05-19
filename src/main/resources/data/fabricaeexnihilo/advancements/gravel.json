@@ -1,5 +1,5 @@
 {
-  "parent": "fabricaeexnihilo:hammer",
+  "parent": "fabricaeexnihilo:wooden_hammer",
   "display": {
     "icon": {
       "item": "minecraft:gravel"

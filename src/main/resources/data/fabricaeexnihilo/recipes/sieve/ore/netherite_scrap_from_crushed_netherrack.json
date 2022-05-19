@@ -4,7 +4,7 @@
   "input": "fabricaeexnihilo:crushed_netherrack",
   "rolls": {
     "fabricaeexnihilo:gold_mesh": [0.008],
-    "fabricaeexnihilo:diamond_mesh": [0.0012]
+    "fabricaeexnihilo:diamond_mesh": [0.0012],
     "fabricaeexnihilo:netherite_mesh": [0.016]
   }
 }
