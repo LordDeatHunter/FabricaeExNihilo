@@ -10,10 +10,7 @@ import wraith.fabricaeexnihilo.modules.base.ColoredItem;
 import wraith.fabricaeexnihilo.modules.infested.SilkWormItem;
 import wraith.fabricaeexnihilo.modules.sieves.MeshItem;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
@@ -21,12 +18,12 @@ public final class ModItems {
 
     public static final FabricItemSettings BASE_SETTINGS = new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP).maxCount(64);
     
-    public static final Map<Identifier, Item> SEEDS = new HashMap<>();
+    public static final Map<Identifier, Item> SEEDS = new LinkedHashMap<>();
 
-    public static final Map<Identifier, Item> RESOURCES = new HashMap<>();
+    public static final Map<Identifier, Item> RESOURCES = new LinkedHashMap<>();
 
-    public static final Map<Identifier, ColoredItem> ORE_PIECES = new HashMap<>();
-    public static final Map<Identifier, MeshItem> MESHES = new HashMap<>();
+    public static final Map<Identifier, ColoredItem> ORE_PIECES = new LinkedHashMap<>();
+    public static final Map<Identifier, MeshItem> MESHES = new LinkedHashMap<>();
 
     public static final List<Identifier> DOLLS = new ArrayList<>();
 
