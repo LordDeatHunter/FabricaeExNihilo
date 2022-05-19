@@ -53,7 +53,7 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
     
     private int tickCounter;
     private BarrelMode mode;
-    private final boolean isStone;
+    public final boolean isStone;
     public final Storage<ItemVariant> itemStorage;
     public final Storage<FluidVariant> fluidStorage;
     private final EnchantmentContainer enchantments = new EnchantmentContainer();

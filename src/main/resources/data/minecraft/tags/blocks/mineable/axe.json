@@ -18,6 +18,12 @@
     "fabricaeexnihilo:spruce_sieve",
     "fabricaeexnihilo:jungle_sieve",
     "fabricaeexnihilo:dark_oak_sieve",
-    "fabricaeexnihilo:acacia_sieve"
+    "fabricaeexnihilo:acacia_sieve",
+    "fabricaeexnihilo:oak_strainer",
+    "fabricaeexnihilo:birch_strainer",
+    "fabricaeexnihilo:spruce_strainer",
+    "fabricaeexnihilo:jungle_strainer",
+    "fabricaeexnihilo:dark_oak_strainer",
+    "fabricaeexnihilo:acacia_strainer"
   ]
 }

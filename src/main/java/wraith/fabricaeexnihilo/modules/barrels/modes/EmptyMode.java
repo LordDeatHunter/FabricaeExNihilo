@@ -55,7 +55,7 @@ public class EmptyMode extends BarrelMode {
     public long insertFluid(FluidVariant fluid, long maxAmount, TransactionContext transaction, BarrelFluidStorage storage) {
         StoragePreconditions.notBlankNotNegative(fluid, maxAmount);
         var config = FabricaeExNihilo.CONFIG.modules.barrels;
-        if (ArrayUtils.contains(config.woodenFluidFilter, Registry.FLUID.getId(fluid.getFluid()).toString()) != config.isFilterWhitelist)
+        if (ArrayUtils.contains(config.woodenFluidFilter, Registry.FLUID.getId(fluid.getFluid()).toString()) != config.isFilterWhitelist && !storage.barrel.isStone)
             return 0;
         var amount = Math.min(maxAmount, FluidConstants.BUCKET);
         storage.updateSnapshots(transaction);
