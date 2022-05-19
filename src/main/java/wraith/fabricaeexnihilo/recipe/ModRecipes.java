@@ -63,7 +63,7 @@ public class ModRecipes {
         Registry.register(Registry.RECIPE_SERIALIZER, type.id, serializer);
     }
     
-    public static final record ModRecipeType<T extends Recipe<?>>(Identifier id) implements RecipeType<T> {
+    public record ModRecipeType<T extends Recipe<?>>(Identifier id) implements RecipeType<T> {
         @Override
         public String toString() {
             return id.toString();

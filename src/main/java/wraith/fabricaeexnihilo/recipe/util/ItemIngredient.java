@@ -1,18 +1,15 @@
 package wraith.fabricaeexnihilo.recipe.util;
 
-import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Dynamic;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
-import net.fabricmc.fabric.api.tag.TagFactory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.NbtString;
-import net.minecraft.tag.ServerTagManagerHolder;
-import net.minecraft.tag.Tag;
+import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
@@ -24,12 +21,12 @@ public class ItemIngredient extends AbstractIngredient<Item> {
             .xmap(dynamic -> {
                 var string = dynamic.asString().getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
                 if (string.startsWith("#")) {
-                    return new ItemIngredient(TagFactory.ITEM.create(new Identifier(string.substring(1))));
+                    return new ItemIngredient(TagKey.of(Registry.ITEM_KEY, new Identifier(string.substring(1))));
                 } else {
                     return new ItemIngredient(Registry.ITEM.get(new Identifier(string)));
                 }
             }, itemIngredient -> {
-                var string = itemIngredient.value.map(entry -> Registry.ITEM.getId(entry).toString(), tag -> "#" + ServerTagManagerHolder.getTagManager().getOrCreateTagGroup(Registry.ITEM_KEY).getUncheckedTagId(tag));
+                var string = itemIngredient.value.map(entry -> Registry.ITEM.getId(entry).toString(), tag -> "#" + tag.id());
                 return new Dynamic<>(NbtOps.INSTANCE, NbtString.of(string));
             });
     
@@ -37,11 +34,7 @@ public class ItemIngredient extends AbstractIngredient<Item> {
         super(value == null ? null : value.asItem());
     }
     
-    public ItemIngredient(Tag<Item> value) {
-        super(value);
-    }
-    
-    public ItemIngredient(Either<Item, Tag<Item>> value) {
+    public ItemIngredient(TagKey<Item> value) {
         super(value);
     }
     
@@ -62,4 +55,9 @@ public class ItemIngredient extends AbstractIngredient<Item> {
     }
     
     public static ItemIngredient EMPTY = new ItemIngredient((Item) null);
+    
+    @Override
+    public Registry<Item> getRegistry() {
+        return Registry.ITEM;
+    }
 }

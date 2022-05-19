@@ -22,7 +22,7 @@ public class HammerItem extends ToolItem {
     }
     
     public static boolean isHammer(ItemStack stack) {
-        return stack.getItem() instanceof HammerItem || ModTags.HAMMER_TAG.contains(stack.getItem());
+        return stack.getItem() instanceof HammerItem || stack.isIn(ModTags.HAMMER_TAG);
     }
     
     @Override

@@ -5,15 +5,13 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.Dynamic;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
-import net.fabricmc.fabric.api.tag.TagFactory;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.NbtString;
-import net.minecraft.tag.ServerTagManagerHolder;
-import net.minecraft.tag.Tag;
+import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
@@ -27,15 +25,12 @@ public class EntityTypeIngredient extends AbstractIngredient<EntityType<?>> {
             .xmap(dynamic -> {
                 var string = dynamic.asString().getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
                 if (string.startsWith("#")) {
-                    return new EntityTypeIngredient(TagFactory.ENTITY_TYPE.create(new Identifier(string.substring(1))));
+                    return new EntityTypeIngredient(TagKey.of(Registry.ENTITY_TYPE_KEY, new Identifier(string.substring(1))));
                 } else {
                     return new EntityTypeIngredient(Registry.ENTITY_TYPE.get(new Identifier(string)));
                 }
             }, itemIngredient -> {
-                var string = itemIngredient.value.map(entry -> Registry.ENTITY_TYPE.getId(entry).toString(),
-                        tag -> "#" + ServerTagManagerHolder.getTagManager()
-                                .getOrCreateTagGroup(Registry.ENTITY_TYPE_KEY)
-                                .getUncheckedTagId(tag));
+                var string = itemIngredient.value.map(entry -> Registry.ENTITY_TYPE.getId(entry).toString(), tag -> "#" + tag.id());
                 return new Dynamic<>(NbtOps.INSTANCE, NbtString.of(string));
             });
     
@@ -43,12 +38,17 @@ public class EntityTypeIngredient extends AbstractIngredient<EntityType<?>> {
         super(value);
     }
     
-    public EntityTypeIngredient(Tag<EntityType<?>> value) {
+    public EntityTypeIngredient(TagKey<EntityType<?>> value) {
         super(value);
     }
     
-    public EntityTypeIngredient(Either<EntityType<?>, Tag<EntityType<?>>> value) {
+    public EntityTypeIngredient(Either<EntityType<?>, TagKey<EntityType<?>>> value) {
         super(value);
+    }
+    
+    @Override
+    public Registry<EntityType<?>> getRegistry() {
+        return Registry.ENTITY_TYPE;
     }
     
     public boolean test(Entity entity) {

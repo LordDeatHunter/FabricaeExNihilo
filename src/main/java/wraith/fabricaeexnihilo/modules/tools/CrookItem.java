@@ -22,7 +22,7 @@ public class CrookItem extends ToolItem {
     }
     
     public static boolean isCrook(ItemStack stack) {
-        return stack.getItem() instanceof CrookItem || ModTags.CROOK_TAG.contains(stack.getItem());
+        return stack.getItem() instanceof CrookItem || stack.isIn(ModTags.CROOK_TAG);
     }
     
     @Override
