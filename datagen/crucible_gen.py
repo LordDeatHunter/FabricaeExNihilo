@@ -7,8 +7,8 @@ crucibles = [
     ('fabricaeexnihilo:jungle_crucible', 'minecraft:jungle_log', 'minecraft:jungle_log', 'minecraft:jungle_slab'),
     ('fabricaeexnihilo:acacia_crucible', 'minecraft:acacia_log', 'minecraft:acacia_log', 'minecraft:acacia_slab'),
     ('fabricaeexnihilo:dark_oak_crucible', 'minecraft:dark_oak_log', 'minecraft:dark_oak_log', 'minecraft:dark_oak_slab'),
-    ('fabricaeexnihilo:warped_crucible', 'minecraft:warped_stem', 'minecraft:warped_log', 'minecraft:warped_slab'),
-    ('fabricaeexnihilo:crimson_crucible', 'minecraft:crimson_stem', 'minecraft:crimson_log', 'minecraft:crimson_slab'),
+    ('fabricaeexnihilo:warped_crucible', 'minecraft:warped_stem', 'minecraft:warped_stem', 'minecraft:warped_slab'),
+    ('fabricaeexnihilo:crimson_crucible', 'minecraft:crimson_stem', 'minecraft:crimson_stem', 'minecraft:crimson_slab'),
     ('fabricaeexnihilo:rubber_crucible', 'techreborn:rubber_log_side', 'techreborn:rubber_log', 'techreborn:rubber_plank_slab'),
     ('fabricaeexnihilo:porcelain_crucible', 'minecraft:stone', '', '')
 ]

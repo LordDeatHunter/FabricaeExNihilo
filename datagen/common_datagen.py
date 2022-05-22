@@ -75,9 +75,9 @@ def save_ore_piece_recipe(material, raw_ore):
     file_name = material
     if raw_ore_namespace != 'minecraft':
         file_name = f'{raw_ore_namespace}_{file_name}'
-        data['fabric:conditions'] = [
+        data['fabric:load_conditions'] = [
             {
-                'condition': 'fabric:any_mods_loaded',
+                'condition': 'fabric:any_mod_loaded',
                 'values': [raw_ore_namespace]
             }
         ]
@@ -99,9 +99,9 @@ def save_pebble_recipe(stone):
     }
     if stone_namespace != 'minecraft':
         file_name = f'{stone_namespace}_{stone_name}'
-        data['fabric:conditions'] = [
+        data['fabric:load_conditions'] = [
             {
-                'condition': 'fabric:any_mods_loaded',
+                'condition': 'fabric:any_mod_loaded',
                 'values': [stone_namespace]
             }
         ]

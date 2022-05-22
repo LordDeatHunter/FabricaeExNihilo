@@ -8,7 +8,7 @@
     "fabricaeexnihilo:gold_mesh": [0.11],
     "fabricaeexnihilo:emerald_mesh": [0.14]
   },
-  "fabric:conditions": [
+  "fabric:load_conditions": [
     {
       "condition": "fabricaeexnihilo:all_items_present",
       "values": [

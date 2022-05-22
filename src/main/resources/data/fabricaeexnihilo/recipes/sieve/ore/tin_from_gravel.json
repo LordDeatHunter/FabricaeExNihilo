@@ -7,9 +7,9 @@
     "fabricaeexnihilo:diamond_mesh": [0.1],
     "fabricaeexnihilo:netherite_mesh": [0.2, 0.1]
   },
-  "fabric:conditions": [
+  "fabric:load_conditions": [
     {
-      "condition": "fabric:any_mods_loaded",
+      "condition": "fabric:any_mod_loaded",
       "values": [
         "techreborn",
         "indrev",
