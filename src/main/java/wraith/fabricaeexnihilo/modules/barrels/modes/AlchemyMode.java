@@ -25,13 +25,16 @@ public class AlchemyMode extends BarrelMode {
                     .fieldOf("toSpawn")
                     .forGetter(AlchemyMode::getToSpawn),
             Codec.INT
-                    .fieldOf("countdown")
-                    .forGetter(AlchemyMode::getCountdown),
+                    .fieldOf("duration")
+                    .forGetter(AlchemyMode::getDuration),
+            Codec.INT
+                    .optionalFieldOf("progress")
+                    .forGetter(mode -> Optional.of(mode.progress)),
             Loot.CODEC
                     .optionalFieldOf("byproduct")
                     .forGetter(mode -> Optional.ofNullable(mode.byproduct))
-    ).apply(instance, (before, after, toSpawn, countdown, byproduct) -> {
-        var mode = new AlchemyMode(before, after, toSpawn, countdown);
+    ).apply(instance, (before, after, toSpawn, duration, progress, byproduct) -> {
+        var mode = new AlchemyMode(before, after, toSpawn, progress.orElse(0), duration);
         mode.byproduct = byproduct.orElse(null);
         return mode;
     }));
@@ -39,24 +42,29 @@ public class AlchemyMode extends BarrelMode {
     private final BarrelMode before;
     private final BarrelMode after;
     private final EntityStack toSpawn;
-    private int countdown;
+    private int progress;
+    private final int duration;
     private @Nullable Loot byproduct;
-    
     public AlchemyMode(BarrelMode before, AlchemyRecipe recipe) {
         this(before, recipe.getResult().copy(), recipe.getToSpawn().copy(), recipe.getDelay());
         this.byproduct = recipe.getByproduct();
     }
     
-    public AlchemyMode(BarrelMode before, BarrelMode after, EntityStack toSpawn, int countdown) {
+    public AlchemyMode(BarrelMode before, BarrelMode after, int duration) {
+        this(before, after, EntityStack.EMPTY, duration);
+    }
+    
+    public AlchemyMode(BarrelMode before, BarrelMode after, EntityStack toSpawn, int duration) {
+        this(before, after, toSpawn, 0, duration);
+    }
+    
+    public AlchemyMode(BarrelMode before, BarrelMode after, EntityStack toSpawn, int progress, int duration) {
         super();
         this.before = before;
         this.after = after;
         this.toSpawn = toSpawn;
-        this.countdown = countdown;
-    }
-    
-    public AlchemyMode(BarrelMode before, BarrelMode after, int countdown) {
-        this(before, after, EntityStack.EMPTY, countdown);
+        this.progress = progress;
+        this.duration = duration;
     }
     
     @Override
@@ -66,14 +74,14 @@ public class AlchemyMode extends BarrelMode {
     
     @Override
     public BarrelMode copy() {
-        return new AlchemyMode(before.copy(), after.copy(), toSpawn.copy(), countdown);
+        return new AlchemyMode(before.copy(), after.copy(), toSpawn.copy(), progress, duration);
     }
     
     @Override
     public void tick(BarrelBlockEntity barrel) {
-        countdown -= barrel.getEfficiencyMultiplier();
+        progress += barrel.getEfficiencyMultiplier();
         var world = barrel.getWorld();
-        if (world != null && !world.isClient && countdown <= 0) {
+        if (world != null && !world.isClient && progress >= duration) {
             if (byproduct != null) {
                 barrel.spawnByproduct(byproduct.createStack(world.random));
                 byproduct = null;
@@ -81,6 +89,14 @@ public class AlchemyMode extends BarrelMode {
             barrel.spawnEntity(toSpawn);
             barrel.setMode(after);
         }
+    }
+    
+    public int getDuration() {
+        return duration;
+    }
+    
+    public int getProgress() {
+        return progress;
     }
     
     public BarrelMode getBefore() {
@@ -93,10 +109,6 @@ public class AlchemyMode extends BarrelMode {
     
     public EntityStack getToSpawn() {
         return toSpawn;
-    }
-    
-    public int getCountdown() {
-        return countdown;
     }
     
     public static AlchemyMode readNbt(NbtCompound nbt) {

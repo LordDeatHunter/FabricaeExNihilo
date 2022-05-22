@@ -164,6 +164,11 @@
   "text.autoconfig.fabricaeexnihilo.category.compat": "Compatibility",
   "text.autoconfig.fabricaeexnihilo.category.modules": "Modules",
 
+  "fabricaeexnihilo.wthit.barrel.compost.composting": "Composting: %s%%",
+  "fabricaeexnihilo.wthit.barrel.compost.filling": "Filling compost: %s%%",
+  "fabricaeexnihilo.wthit.barrel.alchemy.processing": "Transforming: %s%%",
+  "fabricaeexnihilo.wthit.crucible.queued": "Solid remaining: %smb",
+
   "advancements.fabricaeexnihilo.root.title": "Ex Nihilo",
   "advancements.fabricaeexnihilo.root.description": "Fabricate from Nothing",
   "advancements.fabricaeexnihilo.crook.title": "I am not a crook.",

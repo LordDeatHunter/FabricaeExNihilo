@@ -13,20 +13,14 @@ group = project.maven_group
 repositories {
     mavenCentral()
 
-    maven { url = "https://maven.fabricmc.net/" }
-    maven { url = "https://maven.shedaniel.me/" }
-    maven { url = "https://www.cursemaven.com" }
-    maven { url = "https://jitpack.io" }
-    maven { url = "https://maven.terraformersmc.com/" }
-    maven { url = "https://maven.saps.dev/minecraft" }
-
+    maven { url "https://maven.fabricmc.net/" }
+    maven { url "https://maven.shedaniel.me/" }
+    maven { url "https://www.cursemaven.com" }
+    maven { url "https://jitpack.io" }
+    maven { url "https://maven.terraformersmc.com/" }
+    maven { url "https://maven.saps.dev/minecraft" }
     maven { url "https://maven.bai.lol/" }
-    /*
-    maven {
-        name = "CurseForge"
-        url = "https://minecraft.curseforge.com/api/maven"
-    }
-    */
+    maven { url "https://maven.wispforest.io" }
 }
 
 dependencies {
@@ -43,10 +37,29 @@ dependencies {
     modImplementation("dev.latvian.mods:kubejs-fabric:$kubejs_version")
 
     modImplementation "com.terraformersmc:modmenu:$modmenu_version"
-    // WTHIT
-    modCompileOnly "mcp.mobius.waila:wthit-api:fabric-${wthit_version}"
-    modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${wthit_version}"
-    modRuntimeOnly "lol.bai:badpackets:fabric-0.1.2"
+
+    // Change to toggle between wthit and the one probe
+    var wthit = false
+
+    // WTHIT and Megane
+    modCompileOnly "mcp.mobius.waila:wthit-api:fabric-$wthit_version"
+    modCompileOnly "lol.bai.megane:megane-api:7.1.0"
+    if (wthit) {
+        print "Using wthit!"
+        modRuntimeOnly "mcp.mobius.waila:wthit:fabric-$wthit_version"
+        modRuntimeOnly "lol.bai:badpackets:fabric-0.1.2"
+        modRuntimeOnly "lol.bai.megane:megane-runtime:7.1.0"
+        modRuntimeOnly "lol.bai.megane:megane-vanilla:7.1.0"
+        modRuntimeOnly "lol.bai.megane:megane-api:7.1.0"
+    }
+
+    // The one probe
+    modCompileOnly "mcjty.theoneprobe:theoneprobe-fabric:$theoneprobe_version"
+    if (!wthit) {
+        print "Using the one probe!"
+        modRuntimeOnly "mcjty.theoneprobe:theoneprobe-fabric:$theoneprobe_version"
+        modRuntimeOnly "com.electronwill.night-config:toml:3.6.0"
+    }
 }
 
 processResources {

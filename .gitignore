@@ -24,6 +24,7 @@ bin/
 
 run/*
 !run/kubejs/
+!run/config/fabric_loader_dependencies.json
 run/kubejs/exported
 
 # datagen

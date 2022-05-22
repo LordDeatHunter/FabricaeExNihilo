@@ -18,6 +18,9 @@
     "client": [
       "wraith.fabricaeexnihilo.client.FabricaeExNihiloClient"
     ],
+    "top_plugin": [
+      "wraith.fabricaeexnihilo.compatibility.theoneprobe.TheOneProbePlugin"
+    ],
     "fabricaeexnihilo:api": [
       "wraith.fabricaeexnihilo.compatibility.DefaultApiModule",
       "wraith.fabricaeexnihilo.compatibility.TechRebornApiModule",
@@ -28,6 +31,15 @@
   "mixins": [
     "fabricaeexnihilo.mixin.json"
   ],
+  "custom": {
+    "megane:modules": [
+      "wraith.fabricaeexnihilo.compatibility.megane.FENMeganeModule"
+    ],
+    "waila:plugins": {
+      "initializer": "wraith.fabricaeexnihilo.compatibility.wthit.WthitPlugin",
+      "id": "fabricaeexnihilo:wthit_plugin"
+    }
+  },
   "depends": {
     "fabricloader": ">=0.12.8",
     "fabric": "*",
