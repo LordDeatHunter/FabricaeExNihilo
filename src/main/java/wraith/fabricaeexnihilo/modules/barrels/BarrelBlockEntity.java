@@ -240,7 +240,6 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
                 moved = StorageUtil.move(fluidStorage, bucketFluidStorage, fluidVariant -> true, FluidConstants.BUCKET, t);
             } else {
                 // Bucket to barrel
-                // TODO: Bucket shouldn't lose contents in creative (hard to fix)
                 if (player.isCreative()) {
                     moved = fluidStorage.insert(amount.resource(), amount.amount(), t);
                 } else {
