@@ -24,6 +24,8 @@ bin/
 
 run/*
 !run/kubejs/
+!run/config/
+run/config/*
 !run/config/fabric_loader_dependencies.json
 run/kubejs/exported
 
