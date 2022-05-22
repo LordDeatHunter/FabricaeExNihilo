@@ -2,7 +2,6 @@ package wraith.fabricaeexnihilo.modules.barrels;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.block.*;
@@ -22,7 +21,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -31,34 +29,34 @@ import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.ModEffects;
 import wraith.fabricaeexnihilo.modules.barrels.modes.ItemMode;
 import wraith.fabricaeexnihilo.modules.fluids.BloodFluid;
-import wraith.fabricaeexnihilo.modules.fluids.MilkFluid;
 import wraith.fabricaeexnihilo.recipe.barrel.MilkingRecipe;
 
 @SuppressWarnings("UnstableApiUsage")
 public class BarrelBlock extends BlockWithEntity {
+
     private static final VoxelShape SHAPE = createCuboidShape(1.0, 0.0, 1.0, 15.0, 16.0, 15.0);
-    
+
     public FabricBlockSettings settings;
-    
+
     public BarrelBlock(FabricBlockSettings settings) {
         super(settings);
         this.settings = settings;
     }
-    
+
     public Material getMaterial() {
         return this.material;
     }
-    
+
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPE;
     }
-    
+
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }
-    
+
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hitResult) {
         if (world == null || pos == null) {
@@ -66,10 +64,10 @@ public class BarrelBlock extends BlockWithEntity {
         }
         var blockEntity = world.getBlockEntity(pos);
         return blockEntity instanceof BarrelBlockEntity barrelBlock
-                ? barrelBlock.activate(player, hand)
-                : ActionResult.PASS;
+            ? barrelBlock.activate(player, hand)
+            : ActionResult.PASS;
     }
-    
+
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (!state.isOf(newState.getBlock()) && world.getBlockEntity(pos) instanceof BarrelBlockEntity barrel && barrel.getMode() instanceof ItemMode mode) {
@@ -77,7 +75,7 @@ public class BarrelBlock extends BlockWithEntity {
         }
         super.onStateReplaced(state, world, pos, newState, moved);
     }
-    
+
     // Milking
     @Override
     public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
@@ -86,8 +84,8 @@ public class BarrelBlock extends BlockWithEntity {
             if (FabricaeExNihilo.CONFIG.modules.barrels.enableBleeding) {
                 var thorns = barrel.getEnchantmentContainer().getEnchantmentLevel(Enchantments.THORNS);
                 if (thorns > 0
-                        && barrel.fluidStorage.simulateInsert(FluidVariant.of(BloodFluid.STILL), 1, null) >= 1
-                        && livingEntity.damage(DamageSource.CACTUS, thorns / 2F)) {
+                    && barrel.fluidStorage.simulateInsert(FluidVariant.of(BloodFluid.STILL), 1, null) >= 1
+                    && livingEntity.damage(DamageSource.CACTUS, thorns / 2F)) {
                     var amount = FluidConstants.BUCKET * thorns / livingEntity.getMaxHealth();
                     try (Transaction t = Transaction.openOuter()) {
                         barrel.fluidStorage.insert(FluidVariant.of(BloodFluid.STILL), (long) amount, t);
@@ -111,24 +109,24 @@ public class BarrelBlock extends BlockWithEntity {
         }
         super.onSteppedOn(world, pos, state, entity);
     }
-    
+
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         return world.isClient ? null : checkType(type, BarrelBlockEntity.TYPE, BarrelBlockEntity::ticker);
     }
-    
+
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new BarrelBlockEntity(pos, state, this.material == Material.STONE);
     }
-    
+
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         if (world.getBlockEntity(pos) instanceof BarrelBlockEntity barrelEntity) {
             EnchantmentHelper.get(itemStack).forEach((enchantment, level) -> barrelEntity.getEnchantmentContainer().setEnchantmentLevel(enchantment, level));
         }
     }
-    
+
 }
