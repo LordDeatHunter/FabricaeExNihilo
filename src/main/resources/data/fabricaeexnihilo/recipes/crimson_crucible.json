@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "# #",
+    "#S#",
+    "I I"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:crimson_log"
+    },
+    "S": {
+      "item": "minecraft:crimson_slab"
+    },
+    "I": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "fabricaeexnihilo:crimson_crucible",
+    "count": 1
+  }
+}
