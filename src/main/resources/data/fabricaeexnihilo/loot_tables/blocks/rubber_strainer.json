@@ -6,12 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "fabricaeexnihilo:rubber_sieve",
-          "functions": [
-            {
-              "function": "fabricaeexnihilo:copy_enchantments"
-            }
-          ]
+          "name": "fabricaeexnihilo:rubber_strainer"
         }
       ],
       "conditions": [

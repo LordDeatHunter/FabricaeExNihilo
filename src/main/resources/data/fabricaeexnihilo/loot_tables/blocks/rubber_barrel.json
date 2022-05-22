@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "fabricaeexnihilo:rubber_sieve",
+          "name": "fabricaeexnihilo:rubber_barrel",
           "functions": [
             {
               "function": "fabricaeexnihilo:copy_enchantments"

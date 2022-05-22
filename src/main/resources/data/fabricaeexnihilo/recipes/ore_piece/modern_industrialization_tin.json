@@ -13,9 +13,9 @@
     "item": "modern_industrialization:raw_tin",
     "count": 1
   },
-  "fabric:conditions": [
+  "fabric:load_conditions": [
     {
-      "condition": "fabric:any_mods_loaded",
+      "condition": "fabric:any_mod_loaded",
       "values": [
         "modern_industrialization"
       ]

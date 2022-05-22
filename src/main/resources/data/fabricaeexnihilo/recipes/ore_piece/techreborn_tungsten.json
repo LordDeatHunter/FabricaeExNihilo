@@ -13,9 +13,9 @@
     "item": "techreborn:raw_tungsten",
     "count": 1
   },
-  "fabric:conditions": [
+  "fabric:load_conditions": [
     {
-      "condition": "fabric:any_mods_loaded",
+      "condition": "fabric:any_mod_loaded",
       "values": [
         "techreborn"
       ]

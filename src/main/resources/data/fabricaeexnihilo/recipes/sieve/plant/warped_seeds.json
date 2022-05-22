@@ -6,7 +6,7 @@
     "fabricaeexnihilo:gold_mesh": [0.2],
     "fabricaeexnihilo:emerald_mesh": [0.3, 0.3]
   },
-  "fabric:conditions": [
+  "fabric:load_conditions": [
     {
       "condition": "fabricaeexnihilo:all_items_present",
       "values": [

@@ -1,5 +1,5 @@
 {
-  "type":  "fabricaeexnihilo:strainer",
+  "type": "fabricaeexnihilo:strainer",
   "pools": [
     {
       "rolls": 1,
