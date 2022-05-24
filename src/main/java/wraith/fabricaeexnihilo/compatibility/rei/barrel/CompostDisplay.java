@@ -5,30 +5,34 @@ import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
-import wraith.fabricaeexnihilo.modules.ModBlocks;
+import wraith.fabricaeexnihilo.recipe.barrel.CompostRecipe;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public record CompostDisplay(REICompostRecipe recipe) implements Display {
-    
+public class CompostDisplay implements Display {
+
+    private final List<EntryIngredient> inputs;
+    private final List<EntryIngredient> outputs;
+
+    public CompostDisplay(CompostRecipe recipe) {
+        this.inputs = recipe.getInput().flatten(EntryIngredients::of);
+        this.outputs = Collections.singletonList(EntryIngredients.of(recipe.getResult()));
+    }
+
     @Override
     public CategoryIdentifier<?> getCategoryIdentifier() {
         return PluginEntry.COMPOSTING;
     }
-    
+
     @Override
     public List<EntryIngredient> getInputEntries() {
-        var inputs = new ArrayList<EntryIngredient>();
-        inputs.addAll(recipe.reiInputs());
-        inputs.addAll(ModBlocks.BARRELS.values().stream().map(EntryIngredients::of).toList());
         return inputs;
     }
-    
+
     @Override
     public List<EntryIngredient> getOutputEntries() {
-        return recipe.reiOutput();
+        return outputs;
     }
-    
-    
+
 }

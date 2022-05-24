@@ -15,21 +15,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record AlchemyDisplay(AlchemyRecipe recipe) implements Display {
-    
+
     @Override
     public CategoryIdentifier<?> getCategoryIdentifier() {
         return PluginEntry.ALCHEMY;
     }
-    
+
     @Override
     public List<EntryIngredient> getInputEntries() {
         var inputs = new ArrayList<EntryIngredient>();
-        inputs.addAll(recipe.getReactant().asREIEntries());
-        inputs.addAll(recipe.getCatalyst().asREIEntries());
+        inputs.addAll(recipe.getReactant().flatten(EntryIngredients::of));
+        inputs.addAll(recipe.getCatalyst().flatten(EntryIngredients::of));
         inputs.addAll(ModBlocks.BARRELS.values().stream().map(EntryIngredients::of).toList());
         return inputs;
     }
-    
+
     @Override
     public List<EntryIngredient> getOutputEntries() {
         var outputs = new ArrayList<EntryIngredient>();
@@ -51,5 +51,5 @@ public record AlchemyDisplay(AlchemyRecipe recipe) implements Display {
         outputs.add(!recipe.getToSpawn().isEmpty() ? EntryIngredients.of(SpawnEggItem.forEntity(recipe.getToSpawn().getType())) : EntryIngredient.empty());
         return outputs;
     }
-    
+
 }

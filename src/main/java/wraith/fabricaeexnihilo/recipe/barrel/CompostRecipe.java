@@ -31,7 +31,11 @@ public class CompostRecipe extends BaseRecipe<CompostRecipe.Context> {
         this.increment = increment;
         this.color = color;
     }
-    
+
+    public ItemIngredient getInput() {
+        return input;
+    }
+
     public static Optional<CompostRecipe> find(ItemStack input, @Nullable World world) {
         if (world == null) {
             return Optional.empty();

@@ -19,7 +19,7 @@ public record WitchWaterEntityDisplay(WitchWaterEntityRecipe recipe) implements 
     public List<EntryIngredient> getInputEntries() {
         var list = new ArrayList<EntryIngredient>();
         list.add(EntryIngredients.of(WitchWaterFluid.BUCKET));
-        list.addAll(recipe.getTarget().asREIEntries());
+        list.addAll(recipe.getTarget().flattenListOfEggStacks(EntryIngredients::of));
         return list;
     }
     

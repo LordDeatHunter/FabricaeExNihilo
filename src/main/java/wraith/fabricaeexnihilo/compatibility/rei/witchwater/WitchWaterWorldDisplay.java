@@ -12,23 +12,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record WitchWaterWorldDisplay(WitchWaterWorldRecipe recipe) implements Display {
-    
+
     @Override
     public List<EntryIngredient> getInputEntries() {
         var list = new ArrayList<EntryIngredient>();
         list.add(EntryIngredients.of(WitchWaterFluid.BUCKET));
-        list.addAll(recipe.getTarget().asREIEntries());
+        list.addAll(recipe.getTarget().flattenListOfBuckets(EntryIngredients::of));
         return list;
     }
-    
+
     @Override
     public List<EntryIngredient> getOutputEntries() {
-        return recipe.getResult().asEntryList();
+        return recipe.getResult().flatten(EntryIngredients::of);
     }
-    
+
     @Override
     public CategoryIdentifier<?> getCategoryIdentifier() {
         return PluginEntry.WITCH_WATER_WORLD;
     }
-    
+
 }

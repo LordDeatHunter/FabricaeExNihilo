@@ -21,7 +21,7 @@ public record MilkingDisplay(MilkingRecipe recipe) implements Display {
     
     @Override
     public List<EntryIngredient> getInputEntries() {
-        var entity = recipe.getEntity().asREIEntries();
+        var entity = recipe.getEntity().flattenListOfEggStacks(EntryIngredients::of);
         var barrels = ModBlocks.BARRELS.values().stream().map(EntryIngredients::of).toList();
         return Stream.of(entity, barrels).flatMap(List::stream).toList();
     }

@@ -1,8 +1,6 @@
 package wraith.fabricaeexnihilo.recipe.util;
 
 import com.mojang.serialization.Codec;
-import me.shedaniel.rei.api.common.entry.EntryIngredient;
-import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Pair;
@@ -13,19 +11,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.function.Function;
 
 public class WeightedList {
+
     public static final Codec<WeightedList> CODEC = Codec.unboundedMap(Registry.BLOCK.getCodec(), Codec.INT)
-            .xmap(WeightedList::new, WeightedList::getValues);
-    
+        .xmap(WeightedList::new, WeightedList::getValues);
+
     private final Map<Block, Integer> values;
     private int totalWeight;
-    
+
     public WeightedList(Map<Block, Integer> values) {
         this.values = values;
         setTotalWeight();
     }
-    
+
     public WeightedList(List<Pair<Block, Integer>> values) {
         this.values = new HashMap<>();
         for (var value : values) {
@@ -33,15 +33,15 @@ public class WeightedList {
         }
         setTotalWeight();
     }
-    
+
     public Map<Block, Integer> getValues() {
         return values;
     }
-    
+
     private void setTotalWeight() {
         this.totalWeight = this.values.values().stream().mapToInt(Integer::intValue).sum();
     }
-    
+
     public Block choose(Random random) {
         var rem = random.nextInt(totalWeight);
         Block block = null;
@@ -54,15 +54,15 @@ public class WeightedList {
         }
         return block;
     }
-    
+
     public List<ItemStack> asListOfStacks() {
         return values.entrySet().stream().map(item -> ItemUtils.asStack(item.getKey(), item.getValue())).toList();
     }
-    
-    public List<EntryIngredient> asEntryList() {
-        return values.keySet().stream().map(EntryIngredients::of).toList();
+
+    public <U> List<U> flatten(Function<Block, U> func) {
+        return values.keySet().stream().map(func).toList();
     }
-    
+
     /**
      * Takes another weighted list and adds all its entries to this WeightedList.
      */
