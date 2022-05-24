@@ -4,39 +4,43 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
-import net.minecraft.block.Material;
-import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
-import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleRecipe;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
 
-public record CrucibleDisplay(CrucibleRecipe recipe, CategoryIdentifier<?> category) implements Display {
-    
+public class CrucibleDisplay implements Display {
+
+    private final CategoryIdentifier<?> category;
+    private final List<EntryIngredient> inputs;
+    private final List<EntryIngredient> outputs;
+    private final long amount;
+
+    @SuppressWarnings("UnstableApiUsage")
+    public CrucibleDisplay(CrucibleRecipe recipe, CategoryIdentifier<?> category) {
+        this.inputs = recipe.getInput().flatten(EntryIngredients::of);
+        this.category = category;
+        this.outputs = Collections.singletonList(EntryIngredients.of(recipe.getFluid().getFluid()));
+        this.amount = recipe.getAmount();
+    }
+
     @Override
     public CategoryIdentifier<?> getCategoryIdentifier() {
         return category;
     }
-    
+
     @Override
     public List<EntryIngredient> getInputEntries() {
-        var inputs = recipe.getInput().asREIEntries();
-        var crucibles = ModBlocks.CRUCIBLES.values().stream().filter(crucible -> category == PluginEntry.WOOD_CRUCIBLE ? crucible.getMaterial() == Material.WOOD : crucible.getMaterial() == Material.STONE).map(EntryIngredients::of).toList();
-        return Stream.of(inputs, crucibles).flatMap(List::stream).toList();
+        return inputs;
     }
-    
+
     @Override
     public List<EntryIngredient> getOutputEntries() {
-        var fluid = recipe.getFluid().getFluid();
-        if (fluid != null) {
-            var bucket = fluid.getBucketItem();
-            if (bucket != null) {
-                return Collections.singletonList(EntryIngredients.of(bucket));
-            }
-        }
-        return Collections.singletonList(EntryIngredient.empty());
+        return outputs;
     }
-    
+
+    public long getAmount() {
+        return amount;
+    }
+
 }

@@ -18,6 +18,7 @@ public class ToolDisplay implements Display {
     public ToolDisplay(ToolRecipe recipe, CategoryIdentifier<ToolDisplay> category) {
         this.category = category;
         this.inputs = recipe.getBlock().flatten(EntryIngredients::of);
+        // TODO: Add multiple outputs
         this.output = Collections.singletonList(EntryIngredients.of(recipe.getOutput()));
     }
 
