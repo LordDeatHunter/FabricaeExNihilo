@@ -13,6 +13,7 @@ import wraith.fabricaeexnihilo.compatibility.rei.crucible.CrucibleCategory;
 import wraith.fabricaeexnihilo.compatibility.rei.crucible.CrucibleDisplay;
 import wraith.fabricaeexnihilo.compatibility.rei.crucible.CrucibleHeatCategory;
 import wraith.fabricaeexnihilo.compatibility.rei.crucible.CrucibleHeatDisplay;
+import wraith.fabricaeexnihilo.compatibility.rei.sieve.SieveCategory;
 import wraith.fabricaeexnihilo.compatibility.rei.sieve.SieveDisplay;
 import wraith.fabricaeexnihilo.compatibility.rei.tools.ToolCategory;
 import wraith.fabricaeexnihilo.compatibility.rei.tools.ToolDisplay;
@@ -21,19 +22,19 @@ import wraith.fabricaeexnihilo.compatibility.rei.witchwater.WitchWaterWorldDispl
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModTools;
 import wraith.fabricaeexnihilo.recipe.ModRecipes;
+import wraith.fabricaeexnihilo.recipe.SieveRecipe;
 import wraith.fabricaeexnihilo.recipe.ToolRecipe;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleHeatRecipe;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleRecipe;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.util.Objects;
-import java.util.function.Predicate;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public class PluginEntry implements REIClientPlugin {
 
-    public static final CategoryIdentifier<SieveDisplay> SIEVE = CategoryIdentifier.of(id("rei/sieve"));
+    public static final CategoryIdentifier<SieveDisplay> SIFTING = CategoryIdentifier.of(id("rei/sieve"));
     public static final CategoryIdentifier<AlchemyDisplay> ALCHEMY = CategoryIdentifier.of(id("rei/barrel/alchemy"));
     public static final CategoryIdentifier<CompostDisplay> COMPOSTING = CategoryIdentifier.of(id("rei/barrel/composting"));
     public static final CategoryIdentifier<LeakingDisplay> LEAKING = CategoryIdentifier.of(id("rei/barrel/leaking"));
@@ -55,6 +56,7 @@ public class PluginEntry implements REIClientPlugin {
         registry.add(new CrucibleCategory(WOOD_CRUCIBLE, ItemUtils.getExNihiloItemStack("oak_crucible"), "fabricaeexnihilo.rei.category.wood_crucible"));
         registry.add(new CrucibleCategory(PORCELAIN_CRUCIBLE, ItemUtils.getExNihiloItemStack("porcelain_crucible"), "fabricaeexnihilo.rei.category.porcelain_crucible"));
         registry.add(new CrucibleHeatCategory(ItemUtils.getExNihiloItemStack("porcelain_crucible"), "fabricaeexnihilo.rei.category.crucible_heat"));
+        registry.add(new SieveCategory(ItemUtils.getExNihiloItemStack("oak_sieve"), "fabricaeexnihilo.rei.category.sieve"));
         ModTools.HAMMERS.values().forEach(hammer -> registry.addWorkstations(CRUSHING, EntryStacks.of(hammer)));
         ModBlocks.CRUCIBLES.values().forEach(crucible -> {
             registry.addWorkstations(HEATING, EntryStacks.of(crucible));
@@ -64,6 +66,7 @@ public class PluginEntry implements REIClientPlugin {
             }
             registry.addWorkstations(PORCELAIN_CRUCIBLE, EntryStacks.of(crucible));
         });
+        ModBlocks.SIEVES.values().forEach(sieve -> registry.addWorkstations(SIFTING, EntryStacks.of(sieve)));
 //        registry.add(new SieveCategory());
 //
 //        registry.add(new ToolCategory(CROOK, ItemUtils.getExNihiloItemStack("wooden_crook"), "Crook"));
@@ -103,7 +106,8 @@ public class PluginEntry implements REIClientPlugin {
         registry.registerRecipeFiller(CrucibleRecipe.class, type -> Objects.equals(ModRecipes.CRUCIBLE, type), recipe -> !recipe.getFluid().isOf(Fluids.LAVA), recipe -> new CrucibleDisplay(recipe, WOOD_CRUCIBLE));
         registry.registerRecipeFiller(CrucibleRecipe.class, ModRecipes.CRUCIBLE, recipe -> new CrucibleDisplay(recipe, PORCELAIN_CRUCIBLE));
         registry.registerRecipeFiller(CrucibleHeatRecipe.class, ModRecipes.CRUCIBLE_HEAT, CrucibleHeatDisplay::new);
-        //FabricaeExNihiloRegistries.SIEVE.getREIRecipes().forEach(recipe -> registry.add(new SieveDisplay(recipe)));
+        // TODO: Actually implement this properly
+        registry.registerRecipeFiller(SieveRecipe.class, ModRecipes.SIEVE, SieveDisplay::new);
         //FabricaeExNihiloRegistries.CROOK.getREIRecipes().forEach(recipe -> registry.add(new ToolDisplay(recipe, CROOK)));
         //FabricaeExNihiloRegistries.BARREL_ALCHEMY.getREIRecipes().forEach(recipe -> registry.add(new AlchemyDisplay(recipe)));
         //FabricaeExNihiloRegistries.BARREL_COMPOST.getREIRecipes().forEach(recipe -> registry.add(new CompostDisplay(recipe)));

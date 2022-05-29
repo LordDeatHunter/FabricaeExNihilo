@@ -3,37 +3,51 @@ package wraith.fabricaeexnihilo.compatibility.rei.sieve;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
+import me.shedaniel.rei.api.common.util.EntryIngredients;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 import wraith.fabricaeexnihilo.recipe.SieveRecipe;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
-public record SieveDisplay(SieveRecipe recipe) implements Display {
-    
+public class SieveDisplay implements Display {
+
+    private final List<EntryIngredient> input;
+    private final List<EntryIngredient> output;
+    private final List<EntryIngredient> fluid;
+    private final Map<Identifier, ? extends List<Double>> chancesForMesh;
+
+    public SieveDisplay(SieveRecipe recipe) {
+        this.input = recipe.getInput().flatten(EntryIngredients::of);
+        this.output = Collections.singletonList(EntryIngredients.of(recipe.getResult()));
+        this.fluid = recipe.getFluid().flatten(EntryIngredients::of);
+        this.chancesForMesh = recipe.getRolls();
+    }
+
     @Override
     public CategoryIdentifier<?> getCategoryIdentifier() {
-        return PluginEntry.SIEVE;
+        return PluginEntry.SIFTING;
     }
-    
+
     @Override
     public List<EntryIngredient> getOutputEntries() {
-        return List.of();
-        // TODO: not easy fix: we need to reformat these...
-        //return recipe.getRolls().entrySet().stream().map(loot -> EntryIngredients.of(loot.)).toList();
+        return output;
     }
-    
+
     @Override
     public List<EntryIngredient> getInputEntries() {
-        return List.of();
-        // TODO: not easy fix: we need to reformat these...
-        /*
-        var sievable = recipe.sievable().asREIEntries();
-        var mesh = recipe.mesh().asREIEntries();
-        var buckets = recipe.fluid().asREIEntries();
-        var sieves = ModBlocks.SIEVES.values().stream().map(EntryIngredients::of).toList();
-        return Stream.of(sievable, mesh, buckets, sieves).flatMap(List::stream).toList();
-        
-         */
+        return input;
     }
-    
+
+    public List<EntryIngredient> getFluid() {
+        return fluid;
+    }
+
+    public Map<Identifier, ? extends List<Double>> getChancesForMeshes() {
+        return chancesForMesh;
+    }
+
 }

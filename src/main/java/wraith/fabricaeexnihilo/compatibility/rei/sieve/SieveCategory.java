@@ -7,14 +7,17 @@ import me.shedaniel.rei.api.client.gui.widgets.Widget;
 import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
+import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.compatibility.rei.GlyphWidget;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
-import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +31,14 @@ public class SieveCategory implements DisplayCategory<SieveDisplay> {
     public static int OUTPUT_SLOTS_Y = Math.max(FabricaeExNihilo.CONFIG.modules.REI.sieveNumRows, 3);
     public static int MARGIN = 6;
     public static int WIDTH = 2 * 18 + OUTPUT_SLOTS_X * 18 + MARGIN * 2;
-    public static int HEIGHT = OUTPUT_SLOTS_Y * 18 + MARGIN * 2;
-    public static int BLOCK_Y = MARGIN + (HEIGHT - 2 * MARGIN) / 2 - 27;
+    public static int HEIGHT = 4 * 18 + MARGIN * 2;
+    public static int SIFT_Y = MARGIN + (HEIGHT - 2 * MARGIN) / 2 - 27;
+    public static int BLOCK_Y = SIFT_Y + 18;
     public static int MESH_Y = BLOCK_Y + 18;
     public static int BUCKET_Y = MESH_Y + 18;
     public static int ARROW_OFFSET_Y = MESH_Y;
     public static int BLOCK_X = MARGIN;
+    public static int SIFT_X = MARGIN;
     public static int MESH_X = MARGIN;
     public static int ARROW_OFFSET_X = MESH_X + 18;
     public static int OUTPUT_X = ARROW_OFFSET_X + 18;
@@ -44,20 +49,27 @@ public class SieveCategory implements DisplayCategory<SieveDisplay> {
     public static int ARROW_U = 0;
     public static int ARROW_V = 0;
     public static int MAX_OUTPUTS = OUTPUT_SLOTS_X * OUTPUT_SLOTS_Y;
+    private final ItemStack icon;
+    private final String name;
 
-    @Override
-    public CategoryIdentifier<? extends SieveDisplay> getCategoryIdentifier() {
-        return PluginEntry.SIEVE;
+    public SieveCategory(ItemStack icon, String name) {
+        this.icon = icon;
+        this.name = name;
     }
 
     @Override
     public Renderer getIcon() {
-        return EntryStacks.of(ItemUtils.getExNihiloItemStack("oak_sieve"));
+        return EntryStacks.of(icon);
     }
 
     @Override
     public Text getTitle() {
-        return new TranslatableText("Sieve");
+        return new TranslatableText(this.name);
+    }
+
+    @Override
+    public CategoryIdentifier<? extends SieveDisplay> getCategoryIdentifier() {
+        return PluginEntry.SIFTING;
     }
 
     @Override
@@ -72,42 +84,41 @@ public class SieveCategory implements DisplayCategory<SieveDisplay> {
 
     @Override
     public List<Widget> setupDisplay(SieveDisplay display, Rectangle bounds) {
+        // TODO: Actually implement this properly
         var widgets = new ArrayList<Widget>();
+
+        var meshEntry = display.getChancesForMeshes().entrySet().stream().findFirst().orElse(null);
+        if (meshEntry == null) {
+            return widgets;
+        }
+        var mesh = Registry.ITEM.get(meshEntry.getKey());
+        var siftable = display.getInputEntries().get(0);
+        var fluid = display.getFluid().get(0);
+        var outputs = display.getOutputEntries().get(0);
+
         widgets.add(Widgets.createRecipeBase(bounds));
 
         widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW_OFFSET_X, bounds.getMinY() + ARROW_OFFSET_Y, ARROW_WIDTH, ARROW_HEIGHT, ARROW, ARROW_U, ARROW_V));
 
-        var inputs = display.getInputEntries();
-        var outputs = display.getOutputEntries();
-
         // Sieves
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + MESH_X, bounds.getMinY() + MESH_Y)).entries(inputs.get(3)));
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + SIFT_X, bounds.getMinY() + SIFT_Y)).entries(siftable));
         // Meshes
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + MESH_X, bounds.getMinY() + MESH_Y)).entries(inputs.get(1)));
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + MESH_X, bounds.getMinY() + MESH_Y)).entries(EntryIngredients.of(mesh)));
         // Fluids
-        if (!inputs.get(2).isEmpty()) {
-            widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BUCKET_X, bounds.getMinY() + BUCKET_Y)).entries(inputs.get(2)));
+        if (!fluid.isEmpty()) {
+            widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BUCKET_X, bounds.getMinY() + BUCKET_Y)).entries(fluid));
         }
         // Sievables
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BLOCK_X, bounds.getMinY() + BLOCK_Y)).entries(inputs.get(0)));
-
-        for (var i = 0; i < outputs.size(); i++) {
-            var output = outputs.get(i);
-            widgets.add(
-                Widgets.createSlot(new Point(
-                    bounds.getMinX() + OUTPUT_X + (i % OUTPUT_SLOTS_X) * 18,
-                    bounds.getMinY() + OUTPUT_Y + (i / OUTPUT_SLOTS_X) * 18)).entries(output)
-            );
+        var slot = Widgets.createSlot(new Point(bounds.getMinX() + BLOCK_X, bounds.getMinY() + BLOCK_Y)).entries(outputs);
+        var tooltip = new LiteralText("");
+        for (var chance : meshEntry.getValue()) {
+            if (chance <= 0) {
+                continue;
+            }
+            tooltip.append(chance * 100 + "%");
         }
-
-        // Fill in the empty spots
-        for (var i = 0; i < outputs.size() && i < MAX_OUTPUTS; i++) {
-            widgets.add(
-                Widgets.createSlot(new Point(
-                    bounds.getMinX() + OUTPUT_X + (i % OUTPUT_SLOTS_X) * 18,
-                    bounds.getMinY() + OUTPUT_Y + (i / OUTPUT_SLOTS_X) * 18))
-            );
-        }
+        Widgets.withTooltip(slot, tooltip);
+        widgets.add(slot);
 
         return widgets;
     }
