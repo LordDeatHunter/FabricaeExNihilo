@@ -8,12 +8,12 @@ import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import net.minecraft.text.LiteralText;
+import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.compatibility.rei.GlyphWidget;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
-import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +48,13 @@ public class AlchemyCategory implements DisplayCategory<AlchemyDisplay> {
     public static final int ARROW_V = 0;
     public static final int PLUS_U = 3 * 16;
     public static final int PLUS_V = 0;
+    private final ItemStack icon;
+    private final String name;
+
+    public AlchemyCategory(ItemStack icon, String name) {
+        this.icon = icon;
+        this.name = name;
+    }
 
     @Override
     public CategoryIdentifier<? extends AlchemyDisplay> getCategoryIdentifier() {
@@ -56,12 +63,12 @@ public class AlchemyCategory implements DisplayCategory<AlchemyDisplay> {
 
     @Override
     public Renderer getIcon() {
-        return EntryStacks.of(ItemUtils.getExNihiloItemStack("oak_barrel"));
+        return EntryStacks.of(icon);
     }
 
     @Override
     public Text getTitle() {
-        return new LiteralText("Alchemy");
+        return new TranslatableText(this.name);
     }
 
     @Override
@@ -84,12 +91,11 @@ public class AlchemyCategory implements DisplayCategory<AlchemyDisplay> {
         // Arrow Glyph
         widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW_X, bounds.getMinY() + ARROW_Y, GLYPH_WIDTH, GLYPH_HEIGHT, GLYPHS, ARROW_U, ARROW_V));
 
-        var inputs = display.getInputEntries();
         var outputs = display.getOutputEntries();
+        var catalyst = display.getCatalyst().get(0);
+        var reactant = display.getReactant().get(0);
 
-        var reactant = inputs.get(0);
-        var catalyst = inputs.get(1);
-        var barrels = inputs.get(2);
+        var barrels = display.getBarrel();
         var product = outputs.get(0);
         var byproduct = outputs.get(1);
         var toSpawn = outputs.get(2);

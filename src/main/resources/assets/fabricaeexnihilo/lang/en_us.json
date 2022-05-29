@@ -170,12 +170,13 @@
   "fabricaeexnihilo.wthit.crucible.queued": "Solid remaining: %smb",
 
   "fabricaeexnihilo.rei.category.hammer": "Crushing",
+  "fabricaeexnihilo.rei.category.crook": "Crook",
   "fabricaeexnihilo.rei.category.crucible_heat": "Crucible Heat",
   "fabricaeexnihilo.rei.category.crucible_heat.speed": "Heat Multiplier ×%d",
   "fabricaeexnihilo.rei.category.porcelain_crucible": "Heated Crucible",
   "fabricaeexnihilo.rei.category.wood_crucible": "Crucible",
   "fabricaeexnihilo.rei.category.sieve": "Sifting",
-  "fabricaeexnihilo.rei.category.crook": "Crook",
+  "fabricaeexnihilo.rei.category.barrel.alchemy": "Alchemy",
 
   "advancements.fabricaeexnihilo.root.title": "Ex Nihilo",
   "advancements.fabricaeexnihilo.root.description": "Fabricate from Nothing",
