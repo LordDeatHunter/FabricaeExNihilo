@@ -11,6 +11,7 @@ import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.compatibility.rei.GlyphWidget;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
@@ -58,7 +59,7 @@ public class MilkingCategory implements DisplayCategory<MilkingDisplay> {
 
     @Override
     public Text getTitle() {
-        return new LiteralText(name);
+        return new TranslatableText(name);
     }
 
     @Override
