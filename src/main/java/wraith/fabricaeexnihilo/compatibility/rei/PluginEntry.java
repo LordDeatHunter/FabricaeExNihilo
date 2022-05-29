@@ -25,6 +25,7 @@ import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.SieveRecipe;
 import wraith.fabricaeexnihilo.recipe.ToolRecipe;
 import wraith.fabricaeexnihilo.recipe.barrel.AlchemyRecipe;
+import wraith.fabricaeexnihilo.recipe.barrel.CompostRecipe;
 import wraith.fabricaeexnihilo.recipe.barrel.FluidTransformationRecipe;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleHeatRecipe;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleRecipe;
@@ -62,6 +63,7 @@ public class PluginEntry implements REIClientPlugin {
         registry.add(new SieveCategory(ItemUtils.getExNihiloItemStack("oak_sieve"), "fabricaeexnihilo.rei.category.sieve"));
         registry.add(new AlchemyCategory(ItemUtils.getExNihiloItemStack("oak_barrel"), "fabricaeexnihilo.rei.category.barrel.alchemy"));
         registry.add(new TransformingCategory(ItemUtils.getExNihiloItemStack("oak_barrel"), "fabricaeexnihilo.rei.category.barrel.transforming"));
+        registry.add(new CompostCategory(ItemUtils.getExNihiloItemStack("oak_barrel"), "fabricaeexnihilo.rei.category.barrel.composting"));
         ModTools.HAMMERS.values().forEach(hammer -> registry.addWorkstations(CRUSHING, EntryStacks.of(hammer)));
         ModTools.CROOKS.values().forEach(crook -> registry.addWorkstations(CROOK, EntryStacks.of(crook)));
         ModBlocks.CRUCIBLES.values().forEach(crucible -> {
@@ -76,7 +78,7 @@ public class PluginEntry implements REIClientPlugin {
         ModBlocks.BARRELS.values().forEach(barrel -> {
             registry.addWorkstations(ALCHEMY, EntryStacks.of(barrel));
             registry.addWorkstations(TRANSFORMING, EntryStacks.of(barrel));
-//            registry.addWorkstations(COMPOSTING, EntryStacks.of(barrel));
+            registry.addWorkstations(COMPOSTING, EntryStacks.of(barrel));
 //            registry.addWorkstations(LEAKING, EntryStacks.of(barrel));
 //            registry.addWorkstations(MILKING, EntryStacks.of(barrel));
 //            registry.addWorkstations(ON_TOP, EntryStacks.of(barrel));
@@ -121,12 +123,11 @@ public class PluginEntry implements REIClientPlugin {
         registry.registerRecipeFiller(SieveRecipe.class, ModRecipes.SIEVE, SieveDisplay::new);
         registry.registerRecipeFiller(AlchemyRecipe.class, ModRecipes.ALCHEMY, AlchemyDisplay::new);
         registry.registerRecipeFiller(FluidTransformationRecipe.class, ModRecipes.FLUID_TRANSFORMATION, TransformingDisplay::new);
-        //FabricaeExNihiloRegistries.BARREL_ALCHEMY.getREIRecipes().forEach(recipe -> registry.add(new AlchemyDisplay(recipe)));
-        //FabricaeExNihiloRegistries.BARREL_COMPOST.getREIRecipes().forEach(recipe -> registry.add(new CompostDisplay(recipe)));
+        // TODO: Actually implement this properly
+        registry.registerRecipeFiller(CompostRecipe.class, ModRecipes.COMPOST, CompostDisplay::new);
         //FabricaeExNihiloRegistries.BARREL_LEAKING.getREIRecipes().forEach(recipe -> registry.add(new LeakingDisplay(recipe)));
         //FabricaeExNihiloRegistries.BARREL_ON_TOP.getREIRecipes().forEach(recipe -> registry.add(new FluidOnTopDisplay(recipe)));
         //FabricaeExNihiloRegistries.BARREL_MILKING.getREIRecipes().forEach(recipe -> registry.add(new MilkingDisplay(recipe)));
-        //FabricaeExNihiloRegistries.BARREL_TRANSFORM.getREIRecipes().forEach(recipe -> registry.add(new TransformingDisplay(recipe)));
         //FabricaeExNihiloRegistries.WITCHWATER_ENTITY.getREIRecipes().forEach(recipe -> registry.add(new WitchWaterEntityDisplay(recipe)));
         //FabricaeExNihiloRegistries.WITCHWATER_WORLD.getREIRecipes().forEach(recipe -> registry.add(new WitchWaterWorldDisplay(recipe)));
     }
