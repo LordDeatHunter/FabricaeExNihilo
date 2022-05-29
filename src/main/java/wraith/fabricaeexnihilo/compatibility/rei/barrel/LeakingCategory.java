@@ -11,10 +11,10 @@ import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
-import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.compatibility.rei.GlyphWidget;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
@@ -44,6 +44,13 @@ public class LeakingCategory implements DisplayCategory<LeakingDisplay> {
     public static final int TARGET_Y = ARROW_OFFSET_Y + 9;
     public static final int BUCKET_Y = ARROW_OFFSET_Y - 9;
     public static final int OUTPUT_Y = ARROW_OFFSET_Y + 9;
+    private final ItemStack icon;
+    private final String name;
+
+    public LeakingCategory(ItemStack icon, String name) {
+        this.icon = icon;
+        this.name = name;
+    }
 
     @Override
     public CategoryIdentifier<? extends LeakingDisplay> getCategoryIdentifier() {
@@ -52,12 +59,12 @@ public class LeakingCategory implements DisplayCategory<LeakingDisplay> {
 
     @Override
     public Renderer getIcon() {
-        return EntryStacks.of(Blocks.MOSSY_COBBLESTONE);
+        return EntryStacks.of(icon);
     }
 
     @Override
     public Text getTitle() {
-        return new LiteralText("Barrel Leaking");
+        return new TranslatableText(this.name);
     }
 
     @Override
@@ -77,29 +84,20 @@ public class LeakingCategory implements DisplayCategory<LeakingDisplay> {
 
         widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW_OFFSET_X, bounds.getMinY() + ARROW_OFFSET_Y, ARROW_WIDTH, ARROW_HEIGHT, ARROW, ARROW_U, ARROW_V));
 
-        var inputs = display.getInputEntries();
-
-        var targets = inputs.get(0);
-        var fluids = inputs.get(1);
-        var loss = display.recipe().getAmount();
+        var block = display.getBlock().get(0);
+        var fluid = display.getFluid().get(0);
+        var loss = display.getAmount();
         var result = display.getOutputEntries();
 
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X, bounds.getMinY() + OUTPUT_Y)).entries(result.get(0)));
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BUCKET_X, bounds.getMinY() + BUCKET_Y)).entries(fluids));
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + TARGET_X, bounds.getMinY() + TARGET_Y)).entries(targets));
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BUCKET_X, bounds.getMinY() + BUCKET_Y)).entries(fluid));
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + TARGET_X, bounds.getMinY() + TARGET_Y)).entries(block));
 
-        var bucketStack = fluids.stream().findFirst().orElse(null);
-        String label;
+        var bucketStack = fluid.stream().findFirst().orElse(null);
+        String label = "?";
 
-        if (bucketStack != null && bucketStack.getValue() instanceof ItemStack stack) {
-            var fluid = StorageUtil.findExtractableResource(FluidStorage.ITEM.find(stack, ContainerItemContext.withInitial(stack)), null);
-            if (fluid != null) {
-                label = String.valueOf(loss);
-            } else {
-                label = "?";
-            }
-        } else {
-            label = "?";
+        if (bucketStack != null && bucketStack.getValue() instanceof ItemStack stack && StorageUtil.findExtractableResource(FluidStorage.ITEM.find(stack, ContainerItemContext.withInitial(stack)), null) != null) {
+            label = String.valueOf(loss);
         }
 
         var text = Widgets.createLabel(new Point(0, 0), new LiteralText("-" + label));

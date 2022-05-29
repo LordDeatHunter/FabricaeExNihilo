@@ -9,23 +9,46 @@ import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.recipe.barrel.LeakingRecipe;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
-public record LeakingDisplay(LeakingRecipe recipe) implements Display {
+public class LeakingDisplay implements Display {
+
+    private final List<EntryIngredient> block;
+    private final List<EntryIngredient> fluid;
+    private final List<EntryIngredient> inputs;
+    private final List<EntryIngredient> outputs;
+    private final List<EntryIngredient> barrels;
+    private final long amount;
+
+    public LeakingDisplay(LeakingRecipe recipe) {
+        this.block = recipe.getBlock().flatten(EntryIngredients::of);
+        this.fluid = recipe.getFluid().flatten(EntryIngredients::of);
+        this.inputs = new ArrayList<>();
+        this.inputs.addAll(this.block);
+        this.inputs.addAll(this.fluid);
+        this.outputs = new ArrayList<>();
+        this.outputs.add(EntryIngredients.of(recipe.getResult()));
+        this.barrels = ModBlocks.BARRELS.values().stream().filter(barrel -> barrel.getMaterial() != Material.STONE).map(EntryIngredients::of).toList();
+        this.amount = recipe.getAmount();
+    }
 
     @Override
     public List<EntryIngredient> getInputEntries() {
-        var entity = recipe.getBlock().flatten(EntryIngredients::of);
-        var fluid = recipe.getFluid().flattenListOfBuckets(EntryIngredients::of);
-        var barrels = ModBlocks.BARRELS.values().stream().filter(barrel -> barrel.getMaterial() != Material.STONE).map(EntryIngredients::of).toList();
-        return Stream.of(entity, fluid, barrels).flatMap(List::stream).toList();
+        return this.inputs;
+    }
+
+    public long getAmount() {
+        return amount;
+    }
+
+    public List<EntryIngredient> getBarrels() {
+        return barrels;
     }
 
     @Override
     public List<EntryIngredient> getOutputEntries() {
-        return Collections.singletonList(EntryIngredients.of(recipe.getResult()));
+        return this.outputs;
     }
 
     @Override
@@ -33,4 +56,11 @@ public record LeakingDisplay(LeakingRecipe recipe) implements Display {
         return PluginEntry.LEAKING;
     }
 
+    public List<EntryIngredient> getBlock() {
+        return block;
+    }
+
+    public List<EntryIngredient> getFluid() {
+        return fluid;
+    }
 }
