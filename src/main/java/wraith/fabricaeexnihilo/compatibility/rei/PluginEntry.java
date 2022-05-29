@@ -17,16 +17,21 @@ import wraith.fabricaeexnihilo.compatibility.rei.sieve.SieveCategory;
 import wraith.fabricaeexnihilo.compatibility.rei.sieve.SieveDisplay;
 import wraith.fabricaeexnihilo.compatibility.rei.tools.ToolCategory;
 import wraith.fabricaeexnihilo.compatibility.rei.tools.ToolDisplay;
+import wraith.fabricaeexnihilo.compatibility.rei.witchwater.WitchWaterEntityCategory;
 import wraith.fabricaeexnihilo.compatibility.rei.witchwater.WitchWaterEntityDisplay;
+import wraith.fabricaeexnihilo.compatibility.rei.witchwater.WitchWaterWorldCategory;
 import wraith.fabricaeexnihilo.compatibility.rei.witchwater.WitchWaterWorldDisplay;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModTools;
+import wraith.fabricaeexnihilo.modules.witchwater.WitchWaterFluid;
 import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.SieveRecipe;
 import wraith.fabricaeexnihilo.recipe.ToolRecipe;
 import wraith.fabricaeexnihilo.recipe.barrel.*;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleHeatRecipe;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleRecipe;
+import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterEntityRecipe;
+import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterWorldRecipe;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.util.Objects;
@@ -65,6 +70,8 @@ public class PluginEntry implements REIClientPlugin {
         registry.add(new LeakingCategory(ItemUtils.getExNihiloItemStack("oak_barrel"), "fabricaeexnihilo.rei.category.barrel.leaking"));
         registry.add(new MilkingCategory(ItemUtils.getExNihiloItemStack("oak_barrel"), "fabricaeexnihilo.rei.category.barrel.milking"));
         registry.add(new FluidOnTopCategory(ItemUtils.getExNihiloItemStack("oak_barrel"), "fabricaeexnihilo.rei.category.barrel.fluid_on_top"));
+        registry.add(new WitchWaterEntityCategory());
+        registry.add(new WitchWaterWorldCategory());
         ModTools.HAMMERS.values().forEach(hammer -> registry.addWorkstations(CRUSHING, EntryStacks.of(hammer)));
         ModTools.CROOKS.values().forEach(crook -> registry.addWorkstations(CROOK, EntryStacks.of(crook)));
         ModBlocks.CRUCIBLES.values().forEach(crucible -> {
@@ -86,8 +93,8 @@ public class PluginEntry implements REIClientPlugin {
             registry.addWorkstations(MILKING, EntryStacks.of(barrel));
             registry.addWorkstations(FLUID_ABOVE, EntryStacks.of(barrel));
         });
-//        registry.add(new WitchWaterEntityCategory());
-//        registry.add(new WitchWaterWorldCategory());
+        registry.addWorkstations(WITCH_WATER_ENTITY, EntryStacks.of(WitchWaterFluid.BUCKET));
+        registry.addWorkstations(WITCH_WATER_WORLD, EntryStacks.of(WitchWaterFluid.BUCKET));
 //
 //        // Hackishly Remove the autocrafting button
 //        registry.removePlusButton(SIEVE);
@@ -124,8 +131,8 @@ public class PluginEntry implements REIClientPlugin {
         registry.registerRecipeFiller(LeakingRecipe.class, ModRecipes.LEAKING, LeakingDisplay::new);
         registry.registerRecipeFiller(MilkingRecipe.class, ModRecipes.MILKING, MilkingDisplay::new);
         registry.registerRecipeFiller(FluidCombinationRecipe.class, ModRecipes.FLUID_COMBINATION, FluidOnTopDisplay::new);
-        //FabricaeExNihiloRegistries.WITCHWATER_ENTITY.getREIRecipes().forEach(recipe -> registry.add(new WitchWaterEntityDisplay(recipe)));
-        //FabricaeExNihiloRegistries.WITCHWATER_WORLD.getREIRecipes().forEach(recipe -> registry.add(new WitchWaterWorldDisplay(recipe)));
+        registry.registerRecipeFiller(WitchWaterEntityRecipe.class, ModRecipes.WITCH_WATER_ENTITY, WitchWaterEntityDisplay::new);
+        registry.registerRecipeFiller(WitchWaterWorldRecipe.class, ModRecipes.WITCH_WATER_WORLD, WitchWaterWorldDisplay::new);
     }
 
 }

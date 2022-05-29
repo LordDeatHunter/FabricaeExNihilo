@@ -182,6 +182,8 @@
   "fabricaeexnihilo.rei.category.barrel.leaking": "Barrel Leaking",
   "fabricaeexnihilo.rei.category.barrel.milking": "Barrel Milking",
   "fabricaeexnihilo.rei.category.barrel.fluid_on_top": "Fluid Above",
+  "fabricaeexnihilo.rei.category.witch_water.entity": "Witch Water Bathing",
+  "fabricaeexnihilo.rei.category.witch_water.world": "Witch Water Fluid Interactions",
 
   "advancements.fabricaeexnihilo.root.title": "Ex Nihilo",
   "advancements.fabricaeexnihilo.root.description": "Fabricate from Nothing",

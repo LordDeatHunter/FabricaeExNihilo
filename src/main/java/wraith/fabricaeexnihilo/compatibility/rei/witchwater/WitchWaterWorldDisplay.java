@@ -5,25 +5,28 @@ import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
-import wraith.fabricaeexnihilo.modules.witchwater.WitchWaterFluid;
 import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterWorldRecipe;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public record WitchWaterWorldDisplay(WitchWaterWorldRecipe recipe) implements Display {
+public class WitchWaterWorldDisplay implements Display {
+
+    private final List<EntryIngredient> input;
+    private final List<EntryIngredient> output;
+
+    public WitchWaterWorldDisplay(WitchWaterWorldRecipe recipe) {
+        this.input = recipe.getTarget().flatten(EntryIngredients::of);
+        this.output = recipe.getResult().flatten(EntryIngredients::of);
+    }
 
     @Override
     public List<EntryIngredient> getInputEntries() {
-        var list = new ArrayList<EntryIngredient>();
-        list.add(EntryIngredients.of(WitchWaterFluid.BUCKET));
-        list.addAll(recipe.getTarget().flattenListOfBuckets(EntryIngredients::of));
-        return list;
+        return input;
     }
 
     @Override
     public List<EntryIngredient> getOutputEntries() {
-        return recipe.getResult().flatten(EntryIngredients::of);
+        return output;
     }
 
     @Override

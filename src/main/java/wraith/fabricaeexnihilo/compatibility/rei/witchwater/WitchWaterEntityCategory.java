@@ -7,9 +7,9 @@ import me.shedaniel.rei.api.client.gui.widgets.Widget;
 import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
+import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.entity.EntityType;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
@@ -58,7 +58,7 @@ public class WitchWaterEntityCategory implements DisplayCategory<WitchWaterEntit
 
     @Override
     public Text getTitle() {
-        return new LiteralText("Witch Water Bathing");
+        return new TranslatableText("fabricaeexnihilo.rei.category.witch_water.entity");
     }
 
     @Override
@@ -81,17 +81,16 @@ public class WitchWaterEntityCategory implements DisplayCategory<WitchWaterEntit
         widgets.add(arrowIn);
         widgets.add(arrowOut);
 
-        var input = display.getInputEntries();
-        var eggsIn = input.get(0);
+        var eggsIn = display.getInputEntries().get(0);
         var eggOut = display.getOutputEntries().get(0);
-        var fluids = input.get(1);
+        var fluids = EntryIngredients.of(WitchWaterFluid.BUCKET);
 
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + IN_X, bounds.getMinY() + IN_Y)).entries(eggsIn));
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + OUT_X, bounds.getMinY() + OUT_Y)).entries(eggOut));
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + FLUID_X, bounds.getMinY() + FLUID_Y)).entries(fluids));
 
-        if (display.recipe().getTarget().test(EntityType.VILLAGER)) {
-            var profession = display.recipe().getProfession();
+        if (display.getTarget().test(EntityType.VILLAGER)) {
+            var profession = display.getProfession();
             var professionId = Registry.VILLAGER_PROFESSION.getId(profession == null ? VillagerProfession.NONE : profession);
             var text = Widgets.createLabel(new Point(0, 0), new TranslatableText("entity." + professionId.getNamespace() + ".villager." + professionId.getPath()));
             text.setPoint(new Point(bounds.getMinX() + MARGIN + text.getBounds().getMaxX(), bounds.getMinY() - MARGIN + text.getBounds().getMaxY()));

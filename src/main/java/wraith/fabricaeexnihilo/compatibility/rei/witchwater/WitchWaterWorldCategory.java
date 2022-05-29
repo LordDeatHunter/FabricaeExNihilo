@@ -7,9 +7,10 @@ import me.shedaniel.rei.api.client.gui.widgets.Widget;
 import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
+import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.compatibility.rei.GlyphWidget;
@@ -59,7 +60,7 @@ public class WitchWaterWorldCategory implements DisplayCategory<WitchWaterWorldD
 
     @Override
     public Text getTitle() {
-        return new LiteralText("Witch Water Fluid Interactions");
+        return new TranslatableText("fabricaeexnihilo.rei.category.witch_water.world");
     }
 
     @Override
@@ -82,8 +83,8 @@ public class WitchWaterWorldCategory implements DisplayCategory<WitchWaterWorldD
         widgets.add(glyphPlus);
         widgets.add(glypgArrow);
 
-        var witchWaterwitchWater = display.getInputEntries().get(0);
-        var fluids = display.getInputEntries().get(1);
+        var witchWaterwitchWater = EntryIngredients.of(WitchWaterFluid.BUCKET);
+        var fluids = display.getInputEntries().get(0);
         var results = display.getOutputEntries();
 
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + WITCH_X, bounds.getMinY() + WITCH_Y)).entries(witchWaterwitchWater));
