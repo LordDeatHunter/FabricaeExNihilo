@@ -8,7 +8,7 @@ import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import net.minecraft.block.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
@@ -42,20 +42,27 @@ public class TransformingCategory implements DisplayCategory<TransformingDisplay
     public static final int ARROW_HEIGHT = 16;
     public static final int ARROW_U = 0;
     public static final int ARROW_V = 0;
+    private final ItemStack icon;
+    private final String name;
 
-    @Override
-    public CategoryIdentifier<? extends TransformingDisplay> getCategoryIdentifier() {
-        return PluginEntry.TRANSFORMING;
+    public TransformingCategory(ItemStack icon, String name) {
+        this.icon = icon;
+        this.name = name;
     }
 
     @Override
     public Renderer getIcon() {
-        return EntryStacks.of(Blocks.MYCELIUM);
+        return EntryStacks.of(icon);
     }
 
     @Override
     public Text getTitle() {
-        return new TranslatableText("Transformation");
+        return new TranslatableText(this.name);
+    }
+
+    @Override
+    public CategoryIdentifier<? extends TransformingDisplay> getCategoryIdentifier() {
+        return PluginEntry.TRANSFORMING;
     }
 
     @Override
@@ -76,14 +83,14 @@ public class TransformingCategory implements DisplayCategory<TransformingDisplay
         widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW1_X, bounds.getMinY() + ARROW1_Y, ARROW_WIDTH, ARROW_HEIGHT, ARROW, ARROW_U, ARROW_V));
         widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW2_X, bounds.getMinY() + ARROW2_Y, ARROW_WIDTH, ARROW_HEIGHT, ARROW, ARROW_U, ARROW_V));
 
-        var inputs = display.getInputEntries();
-        var inBarrel = inputs.get(0);
-        var below = inputs.get(1);
-        var barrels = inputs.get(2);
         var outputs = display.getOutputEntries().get(0);
+        var catalyst = display.getCatalyst().get(0);
+        var contained = display.getContained().get(0);
 
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + INPUT_X, bounds.getMinY() + INPUT_Y)).entries(inBarrel));
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BELOW_X, bounds.getMinY() + BELOW_Y)).entries(below));
+        var barrels = display.getBarrel();
+
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + INPUT_X, bounds.getMinY() + INPUT_Y)).entries(contained));
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BELOW_X, bounds.getMinY() + BELOW_Y)).entries(catalyst));
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BARRELS_X, bounds.getMinY() + BARRELS_Y)).entries(barrels));
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X, bounds.getMinY() + OUTPUT_Y)).entries(outputs));
 

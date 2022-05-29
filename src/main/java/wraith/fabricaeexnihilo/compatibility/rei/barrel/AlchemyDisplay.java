@@ -14,6 +14,7 @@ import wraith.fabricaeexnihilo.util.ItemUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("ALL")
 public class AlchemyDisplay implements Display {
 
     private final List<EntryIngredient> inputs;
@@ -38,11 +39,10 @@ public class AlchemyDisplay implements Display {
             outputs.add(EntryIngredients.of(itemMode.getStack()));
         } else if (mode instanceof FluidMode fluidMode) {
             var fluid = fluidMode.getFluid().getFluid();
-            if (fluid == null) {
-                outputs.add(EntryIngredient.empty());
+            if (fluid != null) {
+                outputs.add(EntryIngredients.of(fluid));
             } else {
-                var bucket = fluid.getBucketItem();
-                outputs.add(bucket == null ? EntryIngredient.empty() : EntryIngredients.of(bucket));
+                outputs.add(EntryIngredient.empty());
             }
         } else {
             outputs.add(EntryIngredient.empty());
