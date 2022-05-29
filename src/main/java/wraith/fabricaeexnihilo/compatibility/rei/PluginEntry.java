@@ -53,11 +53,13 @@ public class PluginEntry implements REIClientPlugin {
     public void registerCategories(CategoryRegistry registry) {
         FabricaeExNihilo.LOGGER.info("Registering REI Categories");
         registry.add(new ToolCategory(CRUSHING, ItemUtils.getExNihiloItemStack("iron_hammer"), "fabricaeexnihilo.rei.category.hammer"));
+        registry.add(new ToolCategory(CROOK, ItemUtils.getExNihiloItemStack("wooden_crook"), "fabricaeexnihilo.rei.category.crook"));
         registry.add(new CrucibleCategory(WOOD_CRUCIBLE, ItemUtils.getExNihiloItemStack("oak_crucible"), "fabricaeexnihilo.rei.category.wood_crucible"));
         registry.add(new CrucibleCategory(PORCELAIN_CRUCIBLE, ItemUtils.getExNihiloItemStack("porcelain_crucible"), "fabricaeexnihilo.rei.category.porcelain_crucible"));
         registry.add(new CrucibleHeatCategory(ItemUtils.getExNihiloItemStack("porcelain_crucible"), "fabricaeexnihilo.rei.category.crucible_heat"));
         registry.add(new SieveCategory(ItemUtils.getExNihiloItemStack("oak_sieve"), "fabricaeexnihilo.rei.category.sieve"));
         ModTools.HAMMERS.values().forEach(hammer -> registry.addWorkstations(CRUSHING, EntryStacks.of(hammer)));
+        ModTools.CROOKS.values().forEach(crook -> registry.addWorkstations(CROOK, EntryStacks.of(crook)));
         ModBlocks.CRUCIBLES.values().forEach(crucible -> {
             registry.addWorkstations(HEATING, EntryStacks.of(crucible));
             // TODO: Replace materials with something else
@@ -67,9 +69,6 @@ public class PluginEntry implements REIClientPlugin {
             registry.addWorkstations(PORCELAIN_CRUCIBLE, EntryStacks.of(crucible));
         });
         ModBlocks.SIEVES.values().forEach(sieve -> registry.addWorkstations(SIFTING, EntryStacks.of(sieve)));
-//        registry.add(new SieveCategory());
-//
-//        registry.add(new ToolCategory(CROOK, ItemUtils.getExNihiloItemStack("wooden_crook"), "Crook"));
 //
 //        registry.add(new CompostCategory());
 //        registry.add(new LeakingCategory());
@@ -102,13 +101,13 @@ public class PluginEntry implements REIClientPlugin {
     public void registerDisplays(DisplayRegistry registry) {
         FabricaeExNihilo.LOGGER.info("Registering REI Displays");
         registry.registerRecipeFiller(ToolRecipe.class, ModRecipes.HAMMER, recipe -> new ToolDisplay(recipe, CRUSHING));
+        registry.registerRecipeFiller(ToolRecipe.class, ModRecipes.CROOK, recipe -> new ToolDisplay(recipe, CROOK));
         // TODO: Add better check for hot fluids
         registry.registerRecipeFiller(CrucibleRecipe.class, type -> Objects.equals(ModRecipes.CRUCIBLE, type), recipe -> !recipe.getFluid().isOf(Fluids.LAVA), recipe -> new CrucibleDisplay(recipe, WOOD_CRUCIBLE));
         registry.registerRecipeFiller(CrucibleRecipe.class, ModRecipes.CRUCIBLE, recipe -> new CrucibleDisplay(recipe, PORCELAIN_CRUCIBLE));
         registry.registerRecipeFiller(CrucibleHeatRecipe.class, ModRecipes.CRUCIBLE_HEAT, CrucibleHeatDisplay::new);
         // TODO: Actually implement this properly
         registry.registerRecipeFiller(SieveRecipe.class, ModRecipes.SIEVE, SieveDisplay::new);
-        //FabricaeExNihiloRegistries.CROOK.getREIRecipes().forEach(recipe -> registry.add(new ToolDisplay(recipe, CROOK)));
         //FabricaeExNihiloRegistries.BARREL_ALCHEMY.getREIRecipes().forEach(recipe -> registry.add(new AlchemyDisplay(recipe)));
         //FabricaeExNihiloRegistries.BARREL_COMPOST.getREIRecipes().forEach(recipe -> registry.add(new CompostDisplay(recipe)));
         //FabricaeExNihiloRegistries.BARREL_LEAKING.getREIRecipes().forEach(recipe -> registry.add(new LeakingDisplay(recipe)));
