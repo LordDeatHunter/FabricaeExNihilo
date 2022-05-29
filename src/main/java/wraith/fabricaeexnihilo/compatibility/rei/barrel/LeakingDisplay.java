@@ -4,9 +4,7 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
-import net.minecraft.block.Material;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
-import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.recipe.barrel.LeakingRecipe;
 
 import java.util.ArrayList;
@@ -18,7 +16,6 @@ public class LeakingDisplay implements Display {
     private final List<EntryIngredient> fluid;
     private final List<EntryIngredient> inputs;
     private final List<EntryIngredient> outputs;
-    private final List<EntryIngredient> barrels;
     private final long amount;
 
     public LeakingDisplay(LeakingRecipe recipe) {
@@ -29,7 +26,6 @@ public class LeakingDisplay implements Display {
         this.inputs.addAll(this.fluid);
         this.outputs = new ArrayList<>();
         this.outputs.add(EntryIngredients.of(recipe.getResult()));
-        this.barrels = ModBlocks.BARRELS.values().stream().filter(barrel -> barrel.getMaterial() != Material.STONE).map(EntryIngredients::of).toList();
         this.amount = recipe.getAmount();
     }
 
@@ -40,10 +36,6 @@ public class LeakingDisplay implements Display {
 
     public long getAmount() {
         return amount;
-    }
-
-    public List<EntryIngredient> getBarrels() {
-        return barrels;
     }
 
     @Override

@@ -178,8 +178,9 @@
   "fabricaeexnihilo.rei.category.sieve": "Sifting",
   "fabricaeexnihilo.rei.category.barrel.alchemy": "Alchemy",
   "fabricaeexnihilo.rei.category.barrel.transforming": "Fluid Transformation",
-  "fabricaeexnihilo.rei.category.barrel.composting": "Composting",
-  "fabricaeexnihilo.rei.category.barrel.leaking": "Leaking",
+  "fabricaeexnihilo.rei.category.barrel.composting": "Barrel Composting",
+  "fabricaeexnihilo.rei.category.barrel.leaking": "Barrel Leaking",
+  "fabricaeexnihilo.rei.category.barrel.milking": "Barrel Milking",
 
   "advancements.fabricaeexnihilo.root.title": "Ex Nihilo",
   "advancements.fabricaeexnihilo.root.description": "Fabricate from Nothing",

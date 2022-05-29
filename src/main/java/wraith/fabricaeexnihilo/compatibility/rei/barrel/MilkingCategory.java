@@ -8,7 +8,7 @@ import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import net.minecraft.item.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -38,6 +38,13 @@ public class MilkingCategory implements DisplayCategory<MilkingDisplay> {
     public static final int ARROW_HEIGHT = 16;
     public static final int ARROW_U = 0;
     public static final int ARROW_V = 0;
+    private final ItemStack icon;
+    private final String name;
+
+    public MilkingCategory(ItemStack icon, String name) {
+        this.icon = icon;
+        this.name = name;
+    }
 
     @Override
     public CategoryIdentifier<? extends MilkingDisplay> getCategoryIdentifier() {
@@ -46,12 +53,12 @@ public class MilkingCategory implements DisplayCategory<MilkingDisplay> {
 
     @Override
     public Renderer getIcon() {
-        return EntryStacks.of(Items.MILK_BUCKET);
+        return EntryStacks.of(icon);
     }
 
     @Override
     public Text getTitle() {
-        return new LiteralText("Barrel Milking");
+        return new LiteralText(name);
     }
 
     @Override
@@ -71,14 +78,12 @@ public class MilkingCategory implements DisplayCategory<MilkingDisplay> {
 
         widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW_X, bounds.getMinY() + ARROW_Y, ARROW_WIDTH, ARROW_HEIGHT, ARROW, ARROW_U, ARROW_V));
 
-        var inputs = display.getInputEntries();
-
-        var eggs = inputs.get(0);
-        var barrels = inputs.get(1);
+        var eggs = display.getInputEntries().get(0);
+        var barrel = display.getBarrel();
         var outputs = display.getOutputEntries();
 
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + ABOVE_X, bounds.getMinY() + ABOVE_Y)).entries(eggs));
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BARRELS_X, bounds.getMinY() + BARRELS_Y)).entries(barrels));
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BARRELS_X, bounds.getMinY() + BARRELS_Y)).entries(barrel));
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X, bounds.getMinY() + OUTPUT_Y)).entries(outputs.get(0)));
 
         // TODO some day figure out how to render a little entity over the barrel instead of an egg :/
@@ -86,7 +91,7 @@ public class MilkingCategory implements DisplayCategory<MilkingDisplay> {
 //            widgets.add(EntityWidget(bounds.getMinX(), bounds.getMinY(), 36, 36, it))
 //        }
 
-        var text = Widgets.createLabel(new Point(0, 0), new LiteralText(String.valueOf(display.recipe().getAmount())));
+        var text = Widgets.createLabel(new Point(0, 0), new LiteralText(String.valueOf(display.getAmount())));
         text.setPoint(new Point(bounds.getMaxX() - MARGIN - text.getBounds().getMaxX(), bounds.getMinY() + MARGIN));
         widgets.add(text);
 
