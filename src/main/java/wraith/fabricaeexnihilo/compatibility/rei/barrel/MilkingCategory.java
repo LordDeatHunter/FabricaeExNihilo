@@ -24,21 +24,21 @@ import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 public class MilkingCategory implements DisplayCategory<MilkingDisplay> {
 
     public static final Identifier ARROW = id("textures/gui/rei/glyphs.png");
+    public static final int ARROW_HEIGHT = 16;
+    public static final int ARROW_U = 0;
+    public static final int ARROW_V = 0;
+    public static final int ARROW_WIDTH = 16;
     public static final int MARGIN = 6;
-    public static final int WIDTH = 8 * 18 + MARGIN * 2;
-    public static final int ARROW_X = WIDTH / 2 - 9;
-    public static final int BARRELS_X = ARROW_X - 18;
-    public static final int ABOVE_X = BARRELS_X;
-    public static final int OUTPUT_X = ARROW_X + 18;
     public static final int HEIGHT = 2 * 18 + MARGIN * 2;
     public static final int ARROW_Y = HEIGHT / 2;
     public static final int BARRELS_Y = ARROW_Y;
     public static final int ABOVE_Y = BARRELS_Y - 18;
     public static final int OUTPUT_Y = ARROW_Y;
-    public static final int ARROW_WIDTH = 16;
-    public static final int ARROW_HEIGHT = 16;
-    public static final int ARROW_U = 0;
-    public static final int ARROW_V = 0;
+    public static final int WIDTH = 8 * 18 + MARGIN * 2;
+    public static final int ARROW_X = WIDTH / 2 - 9;
+    public static final int BARRELS_X = ARROW_X - 18;
+    public static final int ABOVE_X = BARRELS_X;
+    public static final int OUTPUT_X = ARROW_X + 18;
     private final ItemStack icon;
     private final String name;
 
@@ -53,16 +53,6 @@ public class MilkingCategory implements DisplayCategory<MilkingDisplay> {
     }
 
     @Override
-    public Renderer getIcon() {
-        return EntryStacks.of(icon);
-    }
-
-    @Override
-    public Text getTitle() {
-        return new TranslatableText(name);
-    }
-
-    @Override
     public int getDisplayHeight() {
         return HEIGHT;
     }
@@ -70,6 +60,16 @@ public class MilkingCategory implements DisplayCategory<MilkingDisplay> {
     @Override
     public int getDisplayWidth(MilkingDisplay display) {
         return WIDTH;
+    }
+
+    @Override
+    public Renderer getIcon() {
+        return EntryStacks.of(icon);
+    }
+
+    @Override
+    public Text getTitle() {
+        return new TranslatableText(name);
     }
 
     @Override

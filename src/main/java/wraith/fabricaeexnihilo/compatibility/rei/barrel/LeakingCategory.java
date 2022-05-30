@@ -28,22 +28,22 @@ import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 public class LeakingCategory implements DisplayCategory<LeakingDisplay> {
 
     public static final Identifier ARROW = id("textures/gui/rei/glyphs.png");
-    public static final int ARROW_WIDTH = 16;
     public static final int ARROW_HEIGHT = 16;
     public static final int ARROW_U = 0;
     public static final int ARROW_V = 0;
+    public static final int ARROW_WIDTH = 16;
     public static final int MARGIN = 6;
+    public static final int HEIGHT = 3 * 18 + MARGIN * 2;
+    public static final int ARROW_OFFSET_Y = HEIGHT / 2 - 9;
+    public static final int TARGET_Y = ARROW_OFFSET_Y + 9;
+    public static final int BUCKET_Y = ARROW_OFFSET_Y - 9;
+    public static final int OUTPUT_Y = ARROW_OFFSET_Y + 9;
     public static final int WIDTH = 8 * 18 + MARGIN * 2;
     // Center the arrow
     public static final int ARROW_OFFSET_X = WIDTH / 2 - 9;
     public static final int TARGET_X = ARROW_OFFSET_X - 18;
     public static final int BUCKET_X = ARROW_OFFSET_X - 18;
     public static final int OUTPUT_X = ARROW_OFFSET_X + 18;
-    public static final int HEIGHT = 3 * 18 + MARGIN * 2;
-    public static final int ARROW_OFFSET_Y = HEIGHT / 2 - 9;
-    public static final int TARGET_Y = ARROW_OFFSET_Y + 9;
-    public static final int BUCKET_Y = ARROW_OFFSET_Y - 9;
-    public static final int OUTPUT_Y = ARROW_OFFSET_Y + 9;
     private final ItemStack icon;
     private final String name;
 
@@ -58,16 +58,6 @@ public class LeakingCategory implements DisplayCategory<LeakingDisplay> {
     }
 
     @Override
-    public Renderer getIcon() {
-        return EntryStacks.of(icon);
-    }
-
-    @Override
-    public Text getTitle() {
-        return new TranslatableText(this.name);
-    }
-
-    @Override
     public int getDisplayHeight() {
         return HEIGHT;
     }
@@ -75,6 +65,16 @@ public class LeakingCategory implements DisplayCategory<LeakingDisplay> {
     @Override
     public int getDisplayWidth(LeakingDisplay display) {
         return WIDTH;
+    }
+
+    @Override
+    public Renderer getIcon() {
+        return EntryStacks.of(icon);
+    }
+
+    @Override
+    public Text getTitle() {
+        return new TranslatableText(this.name);
     }
 
     @Override

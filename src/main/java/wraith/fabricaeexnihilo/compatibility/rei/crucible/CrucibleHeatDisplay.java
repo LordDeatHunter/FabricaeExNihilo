@@ -12,8 +12,8 @@ import java.util.List;
 
 public class CrucibleHeatDisplay implements Display {
 
-    private final List<EntryIngredient> inputs;
     private final int heat;
+    private final List<EntryIngredient> inputs;
 
     public CrucibleHeatDisplay(CrucibleHeatRecipe recipe) {
         this.inputs = recipe.getBlock().flatten(EntryIngredients::of);
@@ -25,6 +25,10 @@ public class CrucibleHeatDisplay implements Display {
         return PluginEntry.HEATING;
     }
 
+    public int getHeat() {
+        return heat;
+    }
+
     @Override
     public List<EntryIngredient> getInputEntries() {
         return inputs;
@@ -33,10 +37,6 @@ public class CrucibleHeatDisplay implements Display {
     @Override
     public List<EntryIngredient> getOutputEntries() {
         return new ArrayList<>();
-    }
-
-    public int getHeat() {
-        return heat;
     }
 
 }

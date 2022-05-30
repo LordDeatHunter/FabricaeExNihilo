@@ -25,43 +25,33 @@ import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 public class ToolCategory implements DisplayCategory<ToolDisplay> {
 
     public static final Identifier GLYPH = id("textures/gui/rei/glyphs.png");
+    public static final int GLYPH_HEIGHT = 16;
+    public static final int GLYPH_V = 0;
+    public static final int GLYPH_WIDTH = 16;
+    public static final int MARGIN = 6;
     public static final int OUTPUT_SLOTS_X = Math.max(FabricaeExNihilo.CONFIG.modules.REI.toolNumCols, 1);
     public static final int OUTPUT_SLOTS_Y = Math.max(FabricaeExNihilo.CONFIG.modules.REI.toolNumRows, 2);
-    public static final int MARGIN = 6;
-    public static final int TOOL_X = MARGIN;
-    public static final int BLOCK_X = TOOL_X;
-    public static final int ARROW_OFFSET_X = TOOL_X + 18;
-    public static final int OUTPUT_X = ARROW_OFFSET_X + 18;
-    public static final int WIDTH = OUTPUT_X + OUTPUT_SLOTS_X * 18 + TOOL_X;
+    public static final int MAX_OUTPUTS = OUTPUT_SLOTS_X * OUTPUT_SLOTS_Y;
     public static final int OUTPUT_Y = MARGIN;
     public static final int HEIGHT = OUTPUT_Y + OUTPUT_SLOTS_Y * 18 + OUTPUT_Y;
     public static final int TOOL_Y = MARGIN + (HEIGHT - 2 * MARGIN) / 2 - 18;
     public static final int BLOCK_Y = TOOL_Y + 18;
     public static final int ARROW_OFFSET_Y = MARGIN + (HEIGHT - 2 * MARGIN) / 2 - 9;
-    public static final int GLYPH_WIDTH = 16;
-    public static final int GLYPH_HEIGHT = 16;
-    public static final int GLYPH_V = 0;
-    public static final int MAX_OUTPUTS = OUTPUT_SLOTS_X * OUTPUT_SLOTS_Y;
-    private final CategoryIdentifier<ToolDisplay> tool;
+    public static final int TOOL_X = MARGIN;
+    public static final int BLOCK_X = TOOL_X;
+    public static final int ARROW_OFFSET_X = TOOL_X + 18;
+    public static final int OUTPUT_X = ARROW_OFFSET_X + 18;
+    public static final int WIDTH = OUTPUT_X + OUTPUT_SLOTS_X * 18 + TOOL_X;
+    private final int GLYPH_U;
     private final ItemStack icon;
     private final String name;
-    private final int GLYPH_U;
+    private final CategoryIdentifier<ToolDisplay> tool;
 
     public ToolCategory(CategoryIdentifier<ToolDisplay> tool, ItemStack icon, String name) {
         this.tool = tool;
         this.icon = icon;
         this.name = name;
         GLYPH_U = (tool == PluginEntry.CRUSHING) ? 16 : 32;
-    }
-
-    @Override
-    public Renderer getIcon() {
-        return EntryStacks.of(icon);
-    }
-
-    @Override
-    public Text getTitle() {
-        return new TranslatableText(this.name);
     }
 
     @Override
@@ -77,6 +67,16 @@ public class ToolCategory implements DisplayCategory<ToolDisplay> {
     @Override
     public int getDisplayWidth(ToolDisplay display) {
         return WIDTH;
+    }
+
+    @Override
+    public Renderer getIcon() {
+        return EntryStacks.of(icon);
+    }
+
+    @Override
+    public Text getTitle() {
+        return new TranslatableText(this.name);
     }
 
     @Override

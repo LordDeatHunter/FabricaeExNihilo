@@ -12,14 +12,14 @@ import java.util.List;
 public class ToolDisplay implements Display {
 
     private final CategoryIdentifier<ToolDisplay> category;
-    private final List<EntryIngredient> output;
     private final List<EntryIngredient> inputs;
+    private final List<EntryIngredient> outputs;
 
     public ToolDisplay(ToolRecipe recipe, CategoryIdentifier<ToolDisplay> category) {
         this.category = category;
         this.inputs = recipe.getBlock().flatten(EntryIngredients::of);
         // TODO: Add multiple outputs
-        this.output = Collections.singletonList(EntryIngredients.of(recipe.getOutput()));
+        this.outputs = Collections.singletonList(EntryIngredients.of(recipe.getOutput()));
     }
 
     @Override
@@ -28,13 +28,13 @@ public class ToolDisplay implements Display {
     }
 
     @Override
-    public List<EntryIngredient> getOutputEntries() {
-        return output;
+    public List<EntryIngredient> getInputEntries() {
+        return inputs;
     }
 
     @Override
-    public List<EntryIngredient> getInputEntries() {
-        return inputs;
+    public List<EntryIngredient> getOutputEntries() {
+        return outputs;
     }
 
 }

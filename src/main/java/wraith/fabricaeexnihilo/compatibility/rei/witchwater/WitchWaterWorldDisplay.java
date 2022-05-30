@@ -11,27 +11,27 @@ import java.util.List;
 
 public class WitchWaterWorldDisplay implements Display {
 
-    private final List<EntryIngredient> input;
-    private final List<EntryIngredient> output;
+    private final List<EntryIngredient> inputs;
+    private final List<EntryIngredient> outputs;
 
     public WitchWaterWorldDisplay(WitchWaterWorldRecipe recipe) {
-        this.input = recipe.getTarget().flatten(EntryIngredients::of);
-        this.output = recipe.getResult().flatten(EntryIngredients::of);
-    }
-
-    @Override
-    public List<EntryIngredient> getInputEntries() {
-        return input;
-    }
-
-    @Override
-    public List<EntryIngredient> getOutputEntries() {
-        return output;
+        this.inputs = recipe.getTarget().flatten(EntryIngredients::of);
+        this.outputs = recipe.getResult().flatten(EntryIngredients::of);
     }
 
     @Override
     public CategoryIdentifier<?> getCategoryIdentifier() {
         return PluginEntry.WITCH_WATER_WORLD;
+    }
+
+    @Override
+    public List<EntryIngredient> getInputEntries() {
+        return inputs;
+    }
+
+    @Override
+    public List<EntryIngredient> getOutputEntries() {
+        return outputs;
     }
 
 }

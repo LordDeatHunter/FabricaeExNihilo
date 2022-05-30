@@ -24,43 +24,33 @@ import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public class WitchWaterWorldCategory implements DisplayCategory<WitchWaterWorldDisplay> {
 
+    public static final int GLYPH_ARROW_U = 0;
+    public static final int GLYPH_ARROW_V = 0;
+    public static final int GLYPH_HEIGHT = 16;
+    public static final int GLYPH_PLUS_U = 3 * 16;
+    public static final int GLYPH_PLUS_V = 0;
+    public static final int GLYPH_WIDTH = 16;
+    public static final int MARGIN = 6;
+    public static final int GLYPH_PLUS_X = MARGIN;
+    public static final int GLYPH_ARROW_X = MARGIN + 18;
+    public static final int OUTPUT_X = GLYPH_ARROW_X + 18;
+    public static final int FLUID_X = MARGIN;
     public static final int OUTPUT_SLOTS_X = Math.max(FabricaeExNihilo.CONFIG.modules.REI.witchwaterworldCols, 1);
     public static final int OUTPUT_SLOTS_Y = Math.max(FabricaeExNihilo.CONFIG.modules.REI.witchwaterworldRows, 3);
     public static final int MAX_OUTPUTS = OUTPUT_SLOTS_X * OUTPUT_SLOTS_Y;
-    public static final int MARGIN = 6;
-    public static final int WIDTH = (OUTPUT_SLOTS_X + 2) * 18 + MARGIN * 2;
     public static final int HEIGHT = OUTPUT_SLOTS_Y * 18 + MARGIN * 2;
     public static final int GLYPH_PLUS_Y = HEIGHT / 2 - 9;
     public static final int GLYPH_ARROW_Y = GLYPH_PLUS_Y;
     public static final int FLUID_Y = GLYPH_PLUS_Y + 18;
     public static final int WITCH_Y = GLYPH_PLUS_Y - 18;
-    public static final int GLYPH_PLUS_X = MARGIN;
-    public static final int GLYPH_ARROW_X = MARGIN + 18;
-    public static final int OUTPUT_X = GLYPH_ARROW_X + 18;
     public static final int OUTPUT_Y = MARGIN;
-    public static final int FLUID_X = MARGIN;
+    public static final int WIDTH = (OUTPUT_SLOTS_X + 2) * 18 + MARGIN * 2;
     public static final int WITCH_X = MARGIN;
-    public static final int GLYPH_WIDTH = 16;
-    public static final int GLYPH_HEIGHT = 16;
-    public static final int GLYPH_PLUS_U = 3 * 16;
-    public static final int GLYPH_PLUS_V = 0;
-    public static final int GLYPH_ARROW_U = 0;
-    public static final int GLYPH_ARROW_V = 0;
     public static Identifier GLYPHS = id("textures/gui/rei/glyphs.png");
 
     @Override
     public CategoryIdentifier<? extends WitchWaterWorldDisplay> getCategoryIdentifier() {
         return PluginEntry.WITCH_WATER_WORLD;
-    }
-
-    @Override
-    public Renderer getIcon() {
-        return EntryStacks.of(WitchWaterFluid.BUCKET);
-    }
-
-    @Override
-    public Text getTitle() {
-        return new TranslatableText("fabricaeexnihilo.rei.category.witch_water.world");
     }
 
     @Override
@@ -71,6 +61,16 @@ public class WitchWaterWorldCategory implements DisplayCategory<WitchWaterWorldD
     @Override
     public int getDisplayWidth(WitchWaterWorldDisplay display) {
         return WIDTH;
+    }
+
+    @Override
+    public Renderer getIcon() {
+        return EntryStacks.of(WitchWaterFluid.BUCKET);
+    }
+
+    @Override
+    public Text getTitle() {
+        return new TranslatableText("fabricaeexnihilo.rei.category.witch_water.world");
     }
 
     @Override

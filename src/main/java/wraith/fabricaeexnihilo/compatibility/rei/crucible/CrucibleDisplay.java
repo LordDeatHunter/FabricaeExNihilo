@@ -9,19 +9,23 @@ import wraith.fabricaeexnihilo.recipe.crucible.CrucibleRecipe;
 import java.util.Collections;
 import java.util.List;
 
+@SuppressWarnings("UnstableApiUsage")
 public class CrucibleDisplay implements Display {
 
+    private final long amount;
     private final CategoryIdentifier<?> category;
     private final List<EntryIngredient> inputs;
     private final List<EntryIngredient> outputs;
-    private final long amount;
 
-    @SuppressWarnings("UnstableApiUsage")
     public CrucibleDisplay(CrucibleRecipe recipe, CategoryIdentifier<?> category) {
         this.inputs = recipe.getInput().flatten(EntryIngredients::of);
         this.category = category;
         this.outputs = Collections.singletonList(EntryIngredients.of(recipe.getFluid().getFluid()));
         this.amount = recipe.getAmount();
+    }
+
+    public long getAmount() {
+        return amount;
     }
 
     @Override
@@ -37,10 +41,6 @@ public class CrucibleDisplay implements Display {
     @Override
     public List<EntryIngredient> getOutputEntries() {
         return outputs;
-    }
-
-    public long getAmount() {
-        return amount;
     }
 
 }

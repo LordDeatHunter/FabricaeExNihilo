@@ -27,38 +27,29 @@ import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 public class WitchWaterEntityCategory implements DisplayCategory<WitchWaterEntityDisplay> {
 
     public static final Identifier ARROW = id("textures/gui/rei/glyphs.png");
+    public static final int ARROW_HEIGHT = 16;
+    public static final int ARROW_IN_U = 0;
+    public static final int ARROW_IN_V = 16 * 5;
+    public static final int ARROW_OUT_U = 0;
+    public static final int ARROW_OUT_V = 16 * 4;
+    public static final int ARROW_WIDTH = 16;
     public static final int MARGIN = 6;
-    public static final int WIDTH = 8 * 18 + MARGIN * 2;
-    public static final int FLUID_X = WIDTH / 2 - 9;
-    public static final int ARROW_IN_X = FLUID_X - 5;
-    public static final int IN_X = ARROW_IN_X - 18;
-    public static final int ARROW_OUT_X = FLUID_X + 9;
-    public static final int OUT_X = ARROW_OUT_X + 18;
     public static final int HEIGHT = 3 * 18 + MARGIN * 2 - 9;
     public static final int FLUID_Y = HEIGHT / 2 + 9;
     public static final int ARROW_IN_Y = FLUID_Y - 18;
     public static final int IN_Y = ARROW_IN_Y - 7;
     public static final int ARROW_OUT_Y = FLUID_Y - 18;
     public static final int OUT_Y = ARROW_OUT_Y;
-    public static final int ARROW_WIDTH = 16;
-    public static final int ARROW_HEIGHT = 16;
-    public static final int ARROW_IN_U = 0;
-    public static final int ARROW_IN_V = 16 * 5;
-    public static final int ARROW_OUT_U = 0;
-    public static final int ARROW_OUT_V = 16 * 4;
+    public static final int WIDTH = 8 * 18 + MARGIN * 2;
+    public static final int FLUID_X = WIDTH / 2 - 9;
+    public static final int ARROW_IN_X = FLUID_X - 5;
+    public static final int IN_X = ARROW_IN_X - 18;
+    public static final int ARROW_OUT_X = FLUID_X + 9;
+    public static final int OUT_X = ARROW_OUT_X + 18;
 
     @Override
     public CategoryIdentifier<? extends WitchWaterEntityDisplay> getCategoryIdentifier() {
         return PluginEntry.WITCH_WATER_ENTITY;
-    }
-
-    public Renderer getIcon() {
-        return EntryStacks.of(WitchWaterFluid.BUCKET);
-    }
-
-    @Override
-    public Text getTitle() {
-        return new TranslatableText("fabricaeexnihilo.rei.category.witch_water.entity");
     }
 
     @Override
@@ -69,6 +60,15 @@ public class WitchWaterEntityCategory implements DisplayCategory<WitchWaterEntit
     @Override
     public int getDisplayWidth(WitchWaterEntityDisplay display) {
         return WIDTH;
+    }
+
+    public Renderer getIcon() {
+        return EntryStacks.of(WitchWaterFluid.BUCKET);
+    }
+
+    @Override
+    public Text getTitle() {
+        return new TranslatableText("fabricaeexnihilo.rei.category.witch_water.entity");
     }
 
     @Override

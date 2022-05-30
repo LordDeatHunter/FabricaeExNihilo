@@ -12,11 +12,11 @@ import java.util.List;
 
 public class LeakingDisplay implements Display {
 
+    private final long amount;
     private final List<EntryIngredient> block;
     private final List<EntryIngredient> fluid;
     private final List<EntryIngredient> inputs;
     private final List<EntryIngredient> outputs;
-    private final long amount;
 
     public LeakingDisplay(LeakingRecipe recipe) {
         this.block = recipe.getBlock().flatten(EntryIngredients::of);
@@ -29,18 +29,12 @@ public class LeakingDisplay implements Display {
         this.amount = recipe.getAmount();
     }
 
-    @Override
-    public List<EntryIngredient> getInputEntries() {
-        return this.inputs;
-    }
-
     public long getAmount() {
         return amount;
     }
 
-    @Override
-    public List<EntryIngredient> getOutputEntries() {
-        return this.outputs;
+    public List<EntryIngredient> getBlock() {
+        return block;
     }
 
     @Override
@@ -48,11 +42,17 @@ public class LeakingDisplay implements Display {
         return PluginEntry.LEAKING;
     }
 
-    public List<EntryIngredient> getBlock() {
-        return block;
-    }
-
     public List<EntryIngredient> getFluid() {
         return fluid;
+    }
+
+    @Override
+    public List<EntryIngredient> getInputEntries() {
+        return this.inputs;
+    }
+
+    @Override
+    public List<EntryIngredient> getOutputEntries() {
+        return this.outputs;
     }
 }

@@ -14,14 +14,14 @@ import wraith.fabricaeexnihilo.util.ItemUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("ALL")
+@SuppressWarnings("UnstableApiUsage")
 public class AlchemyDisplay implements Display {
 
-    private final List<EntryIngredient> inputs;
-    private final List<EntryIngredient> reactant;
-    private final List<EntryIngredient> outputs;
     private final EntryIngredient barrel;
     private final List<EntryIngredient> catalyst;
+    private final List<EntryIngredient> inputs;
+    private final List<EntryIngredient> outputs;
+    private final List<EntryIngredient> reactant;
 
     public AlchemyDisplay(AlchemyRecipe recipe) {
         this.catalyst = recipe.getCatalyst().flatten(EntryIngredients::of);
@@ -55,6 +55,10 @@ public class AlchemyDisplay implements Display {
         return this.barrel;
     }
 
+    public List<EntryIngredient> getCatalyst() {
+        return catalyst;
+    }
+
     @Override
     public CategoryIdentifier<?> getCategoryIdentifier() {
         return PluginEntry.ALCHEMY;
@@ -65,17 +69,13 @@ public class AlchemyDisplay implements Display {
         return this.inputs;
     }
 
-    public List<EntryIngredient> getCatalyst() {
-        return catalyst;
+    @Override
+    public List<EntryIngredient> getOutputEntries() {
+        return this.outputs;
     }
 
     public List<EntryIngredient> getReactant() {
         return this.reactant;
-    }
-
-    @Override
-    public List<EntryIngredient> getOutputEntries() {
-        return this.outputs;
     }
 
 }

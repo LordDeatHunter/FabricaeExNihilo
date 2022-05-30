@@ -14,16 +14,16 @@ import java.util.List;
 @SuppressWarnings("UnstableApiUsage")
 public final class MilkingDisplay implements Display {
 
-    private final List<EntryIngredient> inputs;
-    private final List<EntryIngredient> output;
-    private final EntryIngredient barrel;
     private final long amount;
+    private final EntryIngredient barrel;
+    private final List<EntryIngredient> inputs;
+    private final List<EntryIngredient> outputs;
 
     public MilkingDisplay(MilkingRecipe recipe) {
         this.inputs = recipe.getEntity().flattenListOfEggStacks(EntryIngredients::of);
-        this.output = new ArrayList<>();
+        this.outputs = new ArrayList<>();
         var fluid = recipe.getFluid().getFluid();
-        this.output.add(fluid != null ? EntryIngredients.of(fluid) : EntryIngredient.empty());
+        this.outputs.add(fluid != null ? EntryIngredients.of(fluid) : EntryIngredient.empty());
         this.barrel = EntryIngredients.of(ItemUtils.getExNihiloItemStack("oak_barrel"));
         this.amount = recipe.getAmount();
     }
@@ -48,7 +48,7 @@ public final class MilkingDisplay implements Display {
 
     @Override
     public List<EntryIngredient> getOutputEntries() {
-        return output;
+        return outputs;
     }
 
 }

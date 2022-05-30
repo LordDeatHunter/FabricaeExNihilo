@@ -24,10 +24,13 @@ import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 public class CompostCategory implements DisplayCategory<CompostDisplay> {
 
     public static Identifier ARROW = id("textures/gui/rei/glyphs.png");
+    public static int ARROW_HEIGHT = 16;
+    public static int ARROW_U = 0;
+    public static int ARROW_V = 16;
+    public static int ARROW_WIDTH = 16;
     public static int INPUT_SLOTS_X = Math.max(FabricaeExNihilo.CONFIG.modules.REI.compostNumCols, 1);
     public static int INPUT_SLOTS_Y = Math.max(FabricaeExNihilo.CONFIG.modules.REI.compostNumRows, 1);
     public static int MARGIN = 6;
-    public static int WIDTH = 2 * 18 + INPUT_SLOTS_X * 18 + MARGIN * 2;
     public static int HEIGHT = 18 + MARGIN * 2;
     public static int BLOCK_Y = MARGIN + (HEIGHT - 2 * MARGIN) / 2 - 9;
     public static int ARROW_OFFSET_Y = BLOCK_Y;
@@ -35,11 +38,8 @@ public class CompostCategory implements DisplayCategory<CompostDisplay> {
     public static int ARROW_OFFSET_X = BLOCK_X + 18;
     public static int INPUT_X = ARROW_OFFSET_X + 18;
     public static int INPUT_Y = MARGIN;
-    public static int ARROW_WIDTH = 16;
-    public static int ARROW_HEIGHT = 16;
-    public static int ARROW_U = 0;
-    public static int ARROW_V = 16;
     public static int MAX_INPUT = INPUT_SLOTS_X * INPUT_SLOTS_Y;
+    public static int WIDTH = 2 * 18 + INPUT_SLOTS_X * 18 + MARGIN * 2;
     private final ItemStack icon;
     private final String name;
 
@@ -54,6 +54,11 @@ public class CompostCategory implements DisplayCategory<CompostDisplay> {
     }
 
     @Override
+    public int getDisplayHeight() {
+        return HEIGHT;
+    }
+
+    @Override
     public Renderer getIcon() {
         return EntryStacks.of(icon);
     }
@@ -61,11 +66,6 @@ public class CompostCategory implements DisplayCategory<CompostDisplay> {
     @Override
     public Text getTitle() {
         return new TranslatableText(this.name);
-    }
-
-    @Override
-    public int getDisplayHeight() {
-        return HEIGHT;
     }
 
     @Override

@@ -23,19 +23,19 @@ import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 public class CrucibleCategory implements DisplayCategory<CrucibleDisplay> {
 
     public static final Identifier GLYPH = id("textures/gui/rei/glyphs.png");
+    public static final int GLYPH_HEIGHT = 16;
+    public static final int GLYPH_U = 0;
+    public static final int GLYPH_V = 0;
+    public static final int GLYPH_WIDTH = 16;
     public static final int MARGIN = 6;
-    public static final int WIDTH = MARGIN * 2 + 18 * 9;
     public static final int HEIGHT = MARGIN * 2 + 16;
     public static final int INPUT_X = MARGIN;
     public static final int GLYPH_X = INPUT_X + 18;
     public static final int OUTPUT_X = GLYPH_X + 18;
     public static final int INPUT_Y = MARGIN;
     public static final int GLYPH_Y = MARGIN;
-    public static final int GLYPH_WIDTH = 16;
-    public static final int GLYPH_HEIGHT = 16;
-    public static final int GLYPH_U = 0;
-    public static final int GLYPH_V = 0;
     public static final int OUTPUT_Y = MARGIN;
+    public static final int WIDTH = MARGIN * 2 + 18 * 9;
     private final CategoryIdentifier<? extends CrucibleDisplay> crucible;
     private final ItemStack icon;
     private final String name;
@@ -52,16 +52,6 @@ public class CrucibleCategory implements DisplayCategory<CrucibleDisplay> {
     }
 
     @Override
-    public Renderer getIcon() {
-        return EntryStacks.of(icon);
-    }
-
-    @Override
-    public Text getTitle() {
-        return new TranslatableText(this.name);
-    }
-
-    @Override
     public int getDisplayHeight() {
         return HEIGHT;
     }
@@ -69,6 +59,16 @@ public class CrucibleCategory implements DisplayCategory<CrucibleDisplay> {
     @Override
     public int getDisplayWidth(CrucibleDisplay display) {
         return WIDTH;
+    }
+
+    @Override
+    public Renderer getIcon() {
+        return EntryStacks.of(icon);
+    }
+
+    @Override
+    public Text getTitle() {
+        return new TranslatableText(this.name);
     }
 
     @Override

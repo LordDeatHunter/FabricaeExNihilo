@@ -32,6 +32,11 @@ public class CrucibleHeatCategory implements DisplayCategory<CrucibleHeatDisplay
     }
 
     @Override
+    public int getDisplayHeight() {
+        return 49;
+    }
+
+    @Override
     public Renderer getIcon() {
         return EntryStacks.of(icon);
     }
@@ -39,11 +44,6 @@ public class CrucibleHeatCategory implements DisplayCategory<CrucibleHeatDisplay
     @Override
     public Text getTitle() {
         return new TranslatableText(this.name);
-    }
-
-    @Override
-    public int getDisplayHeight() {
-        return 49;
     }
 
     @Override

@@ -23,14 +23,11 @@ import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 public class TransformingCategory implements DisplayCategory<TransformingDisplay> {
 
     public static final Identifier ARROW = id("textures/gui/rei/glyphs.png");
+    public static final int ARROW_HEIGHT = 16;
+    public static final int ARROW_U = 0;
+    public static final int ARROW_V = 0;
+    public static final int ARROW_WIDTH = 16;
     public static final int MARGIN = 6;
-    public static final int WIDTH = 8 * 18 + MARGIN * 2;
-    public static final int BARRELS_X = WIDTH / 2 - 9;
-    public static final int ARROW1_X = BARRELS_X - 18;
-    public static final int ARROW2_X = BARRELS_X + 18;
-    public static final int BELOW_X = BARRELS_X;
-    public static final int INPUT_X = BARRELS_X - 2 * 18;
-    public static final int OUTPUT_X = BARRELS_X + 2 * 18;
     public static final int HEIGHT = 2 * 18 + MARGIN * 2;
     public static final int BARRELS_Y = MARGIN;
     public static final int ARROW1_Y = BARRELS_Y;
@@ -38,26 +35,19 @@ public class TransformingCategory implements DisplayCategory<TransformingDisplay
     public static final int BELOW_Y = BARRELS_Y + 18;
     public static final int INPUT_Y = BARRELS_Y;
     public static final int OUTPUT_Y = BARRELS_Y;
-    public static final int ARROW_WIDTH = 16;
-    public static final int ARROW_HEIGHT = 16;
-    public static final int ARROW_U = 0;
-    public static final int ARROW_V = 0;
+    public static final int WIDTH = 8 * 18 + MARGIN * 2;
+    public static final int BARRELS_X = WIDTH / 2 - 9;
+    public static final int ARROW1_X = BARRELS_X - 18;
+    public static final int ARROW2_X = BARRELS_X + 18;
+    public static final int BELOW_X = BARRELS_X;
+    public static final int INPUT_X = BARRELS_X - 2 * 18;
+    public static final int OUTPUT_X = BARRELS_X + 2 * 18;
     private final ItemStack icon;
     private final String name;
 
     public TransformingCategory(ItemStack icon, String name) {
         this.icon = icon;
         this.name = name;
-    }
-
-    @Override
-    public Renderer getIcon() {
-        return EntryStacks.of(icon);
-    }
-
-    @Override
-    public Text getTitle() {
-        return new TranslatableText(this.name);
     }
 
     @Override
@@ -73,6 +63,16 @@ public class TransformingCategory implements DisplayCategory<TransformingDisplay
     @Override
     public int getDisplayWidth(TransformingDisplay display) {
         return WIDTH;
+    }
+
+    @Override
+    public Renderer getIcon() {
+        return EntryStacks.of(icon);
+    }
+
+    @Override
+    public Text getTitle() {
+        return new TranslatableText(this.name);
     }
 
     @Override

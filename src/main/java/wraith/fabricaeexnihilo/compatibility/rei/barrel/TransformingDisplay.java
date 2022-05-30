@@ -13,7 +13,7 @@ import wraith.fabricaeexnihilo.util.ItemUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("ALL")
+@SuppressWarnings("UnstableApiUsage")
 public class TransformingDisplay implements Display {
 
     private final EntryIngredient barrel;
@@ -47,16 +47,6 @@ public class TransformingDisplay implements Display {
         }
     }
 
-    @Override
-    public CategoryIdentifier<?> getCategoryIdentifier() {
-        return PluginEntry.TRANSFORMING;
-    }
-
-    @Override
-    public List<EntryIngredient> getInputEntries() {
-        return this.inputs;
-    }
-
     public EntryIngredient getBarrel() {
         return this.barrel;
     }
@@ -65,8 +55,18 @@ public class TransformingDisplay implements Display {
         return catalyst;
     }
 
+    @Override
+    public CategoryIdentifier<?> getCategoryIdentifier() {
+        return PluginEntry.TRANSFORMING;
+    }
+
     public List<EntryIngredient> getContained() {
         return contained;
+    }
+
+    @Override
+    public List<EntryIngredient> getInputEntries() {
+        return this.inputs;
     }
 
     @Override

@@ -22,17 +22,12 @@ import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public class AlchemyCategory implements DisplayCategory<AlchemyDisplay> {
 
+    public static final int ARROW_U = 0;
+    public static final int ARROW_V = 0;
     public static final Identifier GLYPHS = id("textures/gui/rei/glyphs.png");
+    public static final int GLYPH_HEIGHT = 16;
+    public static final int GLYPH_WIDTH = 16;
     public static final int MARGIN = 6;
-    public static final int WIDTH = 8 * 18 + MARGIN * 2;
-    public static final int BARRELS_X = WIDTH / 2 - 9;
-    public static final int ARROW_X = BARRELS_X;
-    public static final int REACTANT_X = ARROW_X - 18;
-    public static final int PLUS_X = REACTANT_X - 18;
-    public static final int CATALYST_X = PLUS_X - 18;
-    public static final int PRODUCT_X = ARROW_X + 18;
-    public static final int BYPRODUCT_X = PRODUCT_X + 18;
-    public static final int SPAWN_X = BYPRODUCT_X + 18;
     public static final int HEIGHT = 3 * 18 + MARGIN * 2;
     public static final int BARRELS_Y = HEIGHT / 2 + 9;
     public static final int ARROW_Y = BARRELS_Y - 18;
@@ -42,12 +37,17 @@ public class AlchemyCategory implements DisplayCategory<AlchemyDisplay> {
     public static final int PRODUCT_Y = ARROW_Y;
     public static final int BYPRODUCT_Y = PRODUCT_Y;
     public static final int SPAWN_Y = BYPRODUCT_Y;
-    public static final int GLYPH_WIDTH = 16;
-    public static final int GLYPH_HEIGHT = 16;
-    public static final int ARROW_U = 0;
-    public static final int ARROW_V = 0;
     public static final int PLUS_U = 3 * 16;
     public static final int PLUS_V = 0;
+    public static final int WIDTH = 8 * 18 + MARGIN * 2;
+    public static final int BARRELS_X = WIDTH / 2 - 9;
+    public static final int ARROW_X = BARRELS_X;
+    public static final int REACTANT_X = ARROW_X - 18;
+    public static final int PLUS_X = REACTANT_X - 18;
+    public static final int CATALYST_X = PLUS_X - 18;
+    public static final int PRODUCT_X = ARROW_X + 18;
+    public static final int BYPRODUCT_X = PRODUCT_X + 18;
+    public static final int SPAWN_X = BYPRODUCT_X + 18;
     private final ItemStack icon;
     private final String name;
 
@@ -62,16 +62,6 @@ public class AlchemyCategory implements DisplayCategory<AlchemyDisplay> {
     }
 
     @Override
-    public Renderer getIcon() {
-        return EntryStacks.of(icon);
-    }
-
-    @Override
-    public Text getTitle() {
-        return new TranslatableText(this.name);
-    }
-
-    @Override
     public int getDisplayHeight() {
         return HEIGHT;
     }
@@ -79,6 +69,16 @@ public class AlchemyCategory implements DisplayCategory<AlchemyDisplay> {
     @Override
     public int getDisplayWidth(AlchemyDisplay display) {
         return WIDTH;
+    }
+
+    @Override
+    public Renderer getIcon() {
+        return EntryStacks.of(icon);
+    }
+
+    @Override
+    public Text getTitle() {
+        return new TranslatableText(this.name);
     }
 
     @Override
