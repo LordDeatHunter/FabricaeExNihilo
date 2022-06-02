@@ -15,6 +15,7 @@ import wraith.fabricaeexnihilo.compatibility.rei.crucible.CrucibleHeatCategory;
 import wraith.fabricaeexnihilo.compatibility.rei.crucible.CrucibleHeatDisplay;
 import wraith.fabricaeexnihilo.compatibility.rei.sieve.SieveCategory;
 import wraith.fabricaeexnihilo.compatibility.rei.sieve.SieveDisplay;
+import wraith.fabricaeexnihilo.compatibility.rei.sieve.SieveRecipeHolder;
 import wraith.fabricaeexnihilo.compatibility.rei.tools.ToolCategory;
 import wraith.fabricaeexnihilo.compatibility.rei.tools.ToolDisplay;
 import wraith.fabricaeexnihilo.compatibility.rei.witchwater.WitchWaterEntityCategory;
@@ -25,7 +26,6 @@ import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModTools;
 import wraith.fabricaeexnihilo.modules.witchwater.WitchWaterFluid;
 import wraith.fabricaeexnihilo.recipe.ModRecipes;
-import wraith.fabricaeexnihilo.recipe.SieveRecipe;
 import wraith.fabricaeexnihilo.recipe.ToolRecipe;
 import wraith.fabricaeexnihilo.recipe.barrel.*;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleHeatRecipe;
@@ -34,6 +34,7 @@ import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterEntityRecipe;
 import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterWorldRecipe;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
@@ -122,8 +123,19 @@ public class PluginEntry implements REIClientPlugin {
         registry.registerRecipeFiller(CrucibleRecipe.class, type -> Objects.equals(ModRecipes.CRUCIBLE, type), recipe -> !recipe.getFluid().isOf(Fluids.LAVA), recipe -> new CrucibleDisplay(recipe, WOOD_CRUCIBLE));
         registry.registerRecipeFiller(CrucibleRecipe.class, ModRecipes.CRUCIBLE, recipe -> new CrucibleDisplay(recipe, PORCELAIN_CRUCIBLE));
         registry.registerRecipeFiller(CrucibleHeatRecipe.class, ModRecipes.CRUCIBLE_HEAT, CrucibleHeatDisplay::new);
-        // TODO: Actually implement this properly
-        registry.registerRecipeFiller(SieveRecipe.class, ModRecipes.SIEVE, SieveDisplay::new);
+        var sieveRecipes = registry.getRecipeManager().listAllOfType(ModRecipes.SIEVE);
+        var map = new HashMap<Integer, SieveRecipeHolder>();
+        for (var sieveRecipe : sieveRecipes) {
+            var recipes = SieveRecipeHolder.fromRecipe(sieveRecipe);
+            for (var recipe : recipes) {
+                if (map.containsKey(recipe.hashCode())) {
+                    map.get(recipe.hashCode()).add(recipe);
+                } else {
+                    map.put(recipe.hashCode(), recipe);
+                }
+            }
+        }
+        map.values().forEach(recipe -> recipe.split(SieveCategory.MAX_OUTPUTS).forEach(r -> registry.add(new SieveDisplay(r))));
         registry.registerRecipeFiller(AlchemyRecipe.class, ModRecipes.ALCHEMY, AlchemyDisplay::new);
         registry.registerRecipeFiller(FluidTransformationRecipe.class, ModRecipes.FLUID_TRANSFORMATION, TransformingDisplay::new);
         // TODO: Actually implement this properly

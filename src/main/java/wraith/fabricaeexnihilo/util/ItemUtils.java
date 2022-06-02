@@ -14,11 +14,12 @@ import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public final class ItemUtils {
 
-    public static ItemStack stackWithCount(ItemStack stack, int count) {
-        if (count <= 0) return ItemStack.EMPTY;
-        var returnStack = stack.copy();
-        returnStack.setCount(count);
-        return returnStack;
+    public static ItemEntity asEntity(ItemStack stack, World world, double x, double y, double z) {
+        return new ItemEntity(world, x, y, z, stack);
+    }
+
+    public static ItemEntity asEntity(ItemStack stack, World world, BlockPos pos) {
+        return asEntity(stack, world, pos.getX(), pos.getY(), pos.getZ());
     }
 
     public static ItemStack asStack(ItemConvertible itemConvertible, int amount) {
@@ -29,38 +30,41 @@ public final class ItemUtils {
         return new ItemStack(itemConvertible.asItem());
     }
 
-    public static ItemStack getItemStack(Identifier identifier) {
-        return asStack(Registry.ITEM.get(identifier));
+    public static Block getExNihiloBlock(String str) {
+        return Registry.BLOCK.get(id(str));
+    }
+
+    public static Item getExNihiloItem(String str) {
+        return getItem(id(str));
     }
 
     public static ItemStack getExNihiloItemStack(String str) {
         return getItemStack(id(str));
     }
 
-    public static Block getExNihiloBlock(String str) {
-        return Registry.BLOCK.get(id(str));
+    public static Item getItem(Identifier identifier) {
+        return Registry.ITEM.get(identifier);
     }
 
-    public static Item getExNihiloItem(String str) {
-        return Registry.ITEM.get(id(str));
-    }
-
-    public static ItemEntity asEntity(ItemStack stack, World world, double x, double y, double z) {
-        return new ItemEntity(world, x, y, z, stack);
-    }
-
-    public static ItemEntity asEntity(ItemStack stack, World world, BlockPos pos) {
-        return asEntity(stack, world, pos.getX(), pos.getY(), pos.getZ());
-    }
-
-    public static void spawnStack(World world, BlockPos pos, ItemStack stack) {
-        world.spawnEntity(asEntity(stack, world, pos));
+    public static ItemStack getItemStack(Identifier identifier) {
+        return asStack(getItem(identifier));
     }
 
     public static ItemStack ofSize(ItemStack stack, int count) {
         var newStack = stack.copy();
         newStack.setCount(count);
         return newStack;
+    }
+
+    public static void spawnStack(World world, BlockPos pos, ItemStack stack) {
+        world.spawnEntity(asEntity(stack, world, pos));
+    }
+
+    public static ItemStack stackWithCount(ItemStack stack, int count) {
+        if (count <= 0) return ItemStack.EMPTY;
+        var returnStack = stack.copy();
+        returnStack.setCount(count);
+        return returnStack;
     }
 
 }

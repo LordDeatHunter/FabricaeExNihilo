@@ -11,6 +11,7 @@ import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
+import wraith.fabricaeexnihilo.util.ItemUtils;
 
 public class ItemIngredient extends AbstractIngredient<Item> {
 
@@ -20,7 +21,7 @@ public class ItemIngredient extends AbstractIngredient<Item> {
             if (string.startsWith("#")) {
                 return new ItemIngredient(TagKey.of(Registry.ITEM_KEY, new Identifier(string.substring(1))));
             } else {
-                return new ItemIngredient(Registry.ITEM.get(new Identifier(string)));
+                return new ItemIngredient(ItemUtils.getItem(new Identifier(string)));
             }
         }, itemIngredient -> {
             var string = itemIngredient.value.map(entry -> Registry.ITEM.getId(entry).toString(), tag -> "#" + tag.id());
