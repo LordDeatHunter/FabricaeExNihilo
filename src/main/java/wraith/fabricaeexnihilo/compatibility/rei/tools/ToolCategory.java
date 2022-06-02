@@ -65,7 +65,7 @@ public class ToolCategory implements DisplayCategory<ToolDisplay> {
 
         var arrowWidget = new GlyphWidget(
             bounds,
-            startPoint.x + 27,
+            startPoint.x + 31,
             startPoint.y + 4,
             16,
             16,
