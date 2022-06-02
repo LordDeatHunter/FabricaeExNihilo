@@ -17,10 +17,6 @@ public class FabricaeExNihiloConfig {
             public int compostNumRows = 5;
             // How many columns should show up for the compost inputs, min = 1
             public int compostNumCols = 8;
-            // How many rows should show up for the crook/hammer outputs, min = 2
-            public int toolNumRows = 3;
-            // How many columns should show up for the crook/hammer outputs, min = 1
-            public int toolNumCols = 8;
             // How many rows should show up for the Witch Water fluid interactions outputs, min = 3
             public int witchwaterworldRows = 3;
             // How many columns should show up for the Witch Water fluid interactions outputs, min = 1
