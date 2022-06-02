@@ -23,10 +23,6 @@ import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 public class CrucibleCategory implements DisplayCategory<CrucibleDisplay> {
 
     public static final Identifier GLYPH = id("textures/gui/rei/glyphs.png");
-    public static final int GLYPH_HEIGHT = 16;
-    public static final int GLYPH_U = 0;
-    public static final int GLYPH_V = 0;
-    public static final int GLYPH_WIDTH = 16;
     public static final int MARGIN = 6;
     public static final int HEIGHT = MARGIN * 2 + 16;
     public static final int INPUT_X = MARGIN;
@@ -35,7 +31,7 @@ public class CrucibleCategory implements DisplayCategory<CrucibleDisplay> {
     public static final int INPUT_Y = MARGIN;
     public static final int GLYPH_Y = MARGIN;
     public static final int OUTPUT_Y = MARGIN;
-    public static final int WIDTH = MARGIN * 2 + 18 * 9;
+    public static final int WIDTH = MARGIN * 2 + 18 * 6;
     private final CategoryIdentifier<? extends CrucibleDisplay> crucible;
     private final ItemStack icon;
     private final String name;
@@ -83,7 +79,7 @@ public class CrucibleCategory implements DisplayCategory<CrucibleDisplay> {
         // Input
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + INPUT_X, bounds.getMinY() + INPUT_Y)).entries(inputs));
 
-        widgets.add(new GlyphWidget(bounds, bounds.getMinX() + GLYPH_X, bounds.getMinY() + GLYPH_Y, GLYPH_WIDTH, GLYPH_HEIGHT, GLYPH, GLYPH_U, GLYPH_V));
+        widgets.add(new GlyphWidget(bounds, bounds.getMinX() + GLYPH_X, bounds.getMinY() + GLYPH_Y, 16, 16, GLYPH, 0, 0));
 
         // Output
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X, bounds.getMinY() + OUTPUT_Y)).entries(outputs));
