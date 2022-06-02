@@ -4,36 +4,63 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
-import wraith.fabricaeexnihilo.recipe.SieveRecipe;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public record SieveDisplay(SieveRecipe recipe) implements Display {
-    
+public class SieveDisplay implements Display {
+
+    private final List<EntryIngredient> blocks;
+    private final List<EntryIngredient> fluids;
+    private final List<EntryIngredient> inputs;
+    private final EntryIngredient mesh;
+    private final HashMap<EntryIngredient, List<Double>> outputChances;
+    private final List<EntryIngredient> outputs;
+
+
+    public SieveDisplay(SieveRecipeHolder recipeHolder) {
+        this.blocks = recipeHolder.getInputs();
+        this.fluids = recipeHolder.getFluids();
+        this.mesh = recipeHolder.getMesh();
+        this.inputs = new ArrayList<>();
+        this.inputs.addAll(this.blocks);
+        this.inputs.addAll(this.fluids);
+        this.inputs.add(mesh);
+        this.outputChances = new HashMap<>(recipeHolder.getOutputs());
+        this.outputs = new ArrayList<>(outputChances.keySet());
+
+    }
+
+    public List<EntryIngredient> getBlocks() {
+        return blocks;
+    }
+
     @Override
     public CategoryIdentifier<?> getCategoryIdentifier() {
-        return PluginEntry.SIEVE;
+        return PluginEntry.SIFTING;
     }
-    
-    @Override
-    public List<EntryIngredient> getOutputEntries() {
-        return List.of();
-        // TODO: not easy fix: we need to reformat these...
-        //return recipe.getRolls().entrySet().stream().map(loot -> EntryIngredients.of(loot.)).toList();
+
+    public List<EntryIngredient> getFluids() {
+        return fluids;
     }
-    
+
     @Override
     public List<EntryIngredient> getInputEntries() {
-        return List.of();
-        // TODO: not easy fix: we need to reformat these...
-        /*
-        var sievable = recipe.sievable().asREIEntries();
-        var mesh = recipe.mesh().asREIEntries();
-        var buckets = recipe.fluid().asREIEntries();
-        var sieves = ModBlocks.SIEVES.values().stream().map(EntryIngredients::of).toList();
-        return Stream.of(sievable, mesh, buckets, sieves).flatMap(List::stream).toList();
-        
-         */
+        return inputs;
     }
-    
+
+    public EntryIngredient getMesh() {
+        return mesh;
+    }
+
+    public HashMap<EntryIngredient, List<Double>> getOutputChances() {
+        return outputChances;
+    }
+
+    @Override
+    public List<EntryIngredient> getOutputEntries() {
+        return outputs;
+    }
+
 }

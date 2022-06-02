@@ -5,37 +5,50 @@ import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
-import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.recipe.barrel.MilkingRecipe;
+import wraith.fabricaeexnihilo.util.ItemUtils;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
-public record MilkingDisplay(MilkingRecipe recipe) implements Display {
-    
+@SuppressWarnings("UnstableApiUsage")
+public final class MilkingDisplay implements Display {
+
+    private final long amount;
+    private final EntryIngredient barrel;
+    private final List<EntryIngredient> inputs;
+    private final List<EntryIngredient> outputs;
+
+    public MilkingDisplay(MilkingRecipe recipe) {
+        this.inputs = recipe.getEntity().flattenListOfEggStacks(EntryIngredients::of);
+        this.outputs = new ArrayList<>();
+        var fluid = recipe.getFluid().getFluid();
+        this.outputs.add(fluid != null ? EntryIngredients.of(fluid) : EntryIngredient.empty());
+        this.barrel = EntryIngredients.of(ItemUtils.getExNihiloItemStack("oak_barrel"));
+        this.amount = recipe.getAmount();
+    }
+
+    public long getAmount() {
+        return amount;
+    }
+
+    public EntryIngredient getBarrel() {
+        return this.barrel;
+    }
+
     @Override
     public CategoryIdentifier<?> getCategoryIdentifier() {
         return PluginEntry.MILKING;
     }
-    
+
     @Override
     public List<EntryIngredient> getInputEntries() {
-        var entity = recipe.getEntity().asREIEntries();
-        var barrels = ModBlocks.BARRELS.values().stream().map(EntryIngredients::of).toList();
-        return Stream.of(entity, barrels).flatMap(List::stream).toList();
+        return inputs;
     }
-    
+
     @Override
     public List<EntryIngredient> getOutputEntries() {
-        var fluid = recipe.getFluid().getFluid();
-        if (fluid != null) {
-            var bucket = fluid.getBucketItem();
-            if (bucket != null) {
-                return Collections.singletonList(EntryIngredients.of(bucket));
-            }
-        }
-        return Collections.singletonList(EntryIngredient.empty());
+        return outputs;
     }
-    
+
 }

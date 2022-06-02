@@ -4,35 +4,37 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
-import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
-import wraith.fabricaeexnihilo.modules.ModTools;
 import wraith.fabricaeexnihilo.recipe.ToolRecipe;
-import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
 
-public record ToolDisplay(ToolRecipe recipe, CategoryIdentifier<ToolDisplay> category) implements Display {
-    
+public class ToolDisplay implements Display {
+
+    private final CategoryIdentifier<ToolDisplay> category;
+    private final List<EntryIngredient> inputs;
+    private final List<EntryIngredient> outputs;
+
+    public ToolDisplay(ToolRecipe recipe, CategoryIdentifier<ToolDisplay> category) {
+        this.category = category;
+        this.inputs = recipe.getBlock().flatten(EntryIngredients::of);
+        // TODO: Add multiple outputs
+        this.outputs = Collections.singletonList(EntryIngredients.of(recipe.getOutput()));
+    }
+
     @Override
     public CategoryIdentifier<ToolDisplay> getCategoryIdentifier() {
         return category;
     }
-    
-    @Override
-    public List<EntryIngredient> getOutputEntries() {
-        return Collections.singletonList(EntryIngredient.of(List.of(ItemUtils.asREIEntry(recipe.getResult().stack()))));
-    }
-    
+
     @Override
     public List<EntryIngredient> getInputEntries() {
-        var ingredients = recipe.getBlock().asREIEntries();
-        var tools = (category == PluginEntry.HAMMER ? ModTools.HAMMERS : ModTools.CROOKS)
-                .values().stream()
-                .map(EntryIngredients::of)
-                .toList();
-        return Stream.of(ingredients, tools).flatMap(List::stream).toList();
+        return inputs;
     }
-    
+
+    @Override
+    public List<EntryIngredient> getOutputEntries() {
+        return outputs;
+    }
+
 }

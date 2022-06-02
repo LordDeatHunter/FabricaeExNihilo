@@ -36,11 +36,8 @@ public class BarrelBlock extends BlockWithEntity {
 
     private static final VoxelShape SHAPE = createCuboidShape(1.0, 0.0, 1.0, 15.0, 16.0, 15.0);
 
-    public FabricBlockSettings settings;
-
     public BarrelBlock(FabricBlockSettings settings) {
         super(settings);
-        this.settings = settings;
     }
 
     public Material getMaterial() {

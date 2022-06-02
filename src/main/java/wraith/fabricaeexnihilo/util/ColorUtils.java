@@ -20,7 +20,7 @@ public class ColorUtils {
     }
     
     public static Item getDye(DyeColor color) {
-        return Registry.ITEM.get(new Identifier(color.asString() + "_dye"));
+        return ItemUtils.getItem(new Identifier(color.asString() + "_dye"));
     }
     
     public static Block getGlass(DyeColor color) {

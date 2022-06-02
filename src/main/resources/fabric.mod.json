@@ -26,6 +26,9 @@
       "wraith.fabricaeexnihilo.compatibility.TechRebornApiModule",
       "wraith.fabricaeexnihilo.compatibility.IndustrialRevolutionApiModule",
       "wraith.fabricaeexnihilo.compatibility.ModernIndustrializationApiModule"
+    ],
+    "rei_plugins": [
+      "wraith.fabricaeexnihilo.compatibility.rei.PluginEntry"
     ]
   },
   "mixins": [

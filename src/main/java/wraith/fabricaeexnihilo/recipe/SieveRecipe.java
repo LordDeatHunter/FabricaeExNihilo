@@ -25,11 +25,12 @@ import java.util.Map;
 import java.util.stream.StreamSupport;
 
 public class SieveRecipe extends BaseRecipe<SieveRecipe.Context> {
+
     private final ItemStack result;
     private final ItemIngredient input;
     private final FluidIngredient fluid;
     private final Map<Identifier, ? extends List<Double>> rolls;
-    
+
     public SieveRecipe(Identifier id, ItemStack result, ItemIngredient input, FluidIngredient fluid, Map<Identifier, ? extends List<Double>> rolls) {
         super(id);
         this.result = result;
@@ -37,62 +38,62 @@ public class SieveRecipe extends BaseRecipe<SieveRecipe.Context> {
         this.fluid = fluid;
         this.rolls = rolls;
     }
-    
+
     public static List<Loot> find(Item item, Fluid fluid, Identifier mesh, @Nullable World world) {
         if (world == null) {
             return List.of();
         }
         return world.getRecipeManager().getAllMatches(ModRecipes.SIEVE, new Context(item, fluid), world)
-                .stream()
-                .map(recipe -> new Loot(recipe.result, recipe.rolls.get(mesh)))
-                .filter(loot -> loot.chances() != null)
-                .toList();
+            .stream()
+            .map(recipe -> new Loot(recipe.result, recipe.rolls.get(mesh)))
+            .filter(loot -> loot.chances() != null)
+            .toList();
     }
-    
+
     @Override
     public boolean matches(SieveRecipe.Context context, World world) {
         return input.test(context.input) && fluid.test(context.fluid);
     }
-    
+
     @Override
     public RecipeSerializer<?> getSerializer() {
         return ModRecipes.SIEVE_SERIALIZER;
     }
-    
+
     @Override
     public RecipeType<?> getType() {
         return ModRecipes.SIEVE;
     }
-    
+
     @Override
     public ItemStack getDisplayStack() {
         return result;
     }
-    
+
     public ItemStack getResult() {
         return result;
     }
-    
+
     public Map<Identifier, ? extends List<Double>> getRolls() {
         return rolls;
     }
-    
+
     public ItemIngredient getInput() {
         return input;
     }
-    
+
     public FluidIngredient getFluid() {
         return fluid;
     }
-    
+
     public List<Double> getRollsForMesh(Identifier mesh) {
         return rolls.get(mesh);
     }
-    
-    public static record Context(Item input, Fluid fluid) implements RecipeContext {
-    }
-    
+
+    public record Context(Item input, Fluid fluid) implements RecipeContext {}
+
     public static class Serializer implements RecipeSerializer<SieveRecipe> {
+
         @Override
         public SieveRecipe read(Identifier id, JsonObject json) {
             var result = CodecUtils.fromJson(CodecUtils.ITEM_STACK, json.get("result"));
@@ -103,24 +104,24 @@ public class SieveRecipe extends BaseRecipe<SieveRecipe.Context> {
                 var meshJson = entry.getKey();
                 var chancesJson = entry.getValue();
                 rolls.put(new Identifier(meshJson),
-                        StreamSupport.stream(chancesJson.getAsJsonArray().spliterator(), false)
-                                .map(JsonElement::getAsDouble)
-                                .toList());
+                    StreamSupport.stream(chancesJson.getAsJsonArray().spliterator(), false)
+                        .map(JsonElement::getAsDouble)
+                        .toList());
             });
-            
+
             return new SieveRecipe(id, result, input, fluid, rolls);
         }
-        
+
         @Override
         public SieveRecipe read(Identifier id, PacketByteBuf buf) {
             var result = buf.readItemStack();
             var input = CodecUtils.fromPacket(ItemIngredient.CODEC, buf);
             var fluid = CodecUtils.fromPacket(FluidIngredient.CODEC, buf);
             var rolls = buf.readMap(PacketByteBuf::readIdentifier, buf1 -> buf1.readCollection(ArrayList::new, PacketByteBuf::readDouble));
-            
+
             return new SieveRecipe(id, result, input, fluid, rolls);
         }
-        
+
         @Override
         public void write(PacketByteBuf buf, SieveRecipe recipe) {
             buf.writeItemStack(recipe.result);
