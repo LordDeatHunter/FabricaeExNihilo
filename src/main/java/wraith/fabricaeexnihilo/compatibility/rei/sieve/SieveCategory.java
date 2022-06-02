@@ -35,6 +35,7 @@ public class SieveCategory implements DisplayCategory<SieveDisplay> {
     public static final int MESH_Y = BLOCK_Y + 18;
     public static final int FLUID_Y = MESH_Y + 18;
     public static final int ARROW_OFFSET_Y = MESH_Y;
+    public static final int OUTPUT_Y = BLOCK_Y;
     public static final int BLOCK_X = MARGIN;
     public static final int FLUID_X = MARGIN;
     public static final int MESH_X = MARGIN;
@@ -43,7 +44,6 @@ public class SieveCategory implements DisplayCategory<SieveDisplay> {
     public static final int OUTPUT_SLOTS_X = 9;
     public static final int OUTPUT_SLOTS_Y = 3;
     public static final int MAX_OUTPUTS = OUTPUT_SLOTS_X * OUTPUT_SLOTS_Y;
-    public static final int OUTPUT_Y = MARGIN;
     public static final int WIDTH = 2 * 18 + OUTPUT_SLOTS_X * 18 + MARGIN * 2;
     private final ItemStack icon;
     private final String name;
@@ -98,22 +98,29 @@ public class SieveCategory implements DisplayCategory<SieveDisplay> {
         // Meshes
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + MESH_X, bounds.getMinY() + MESH_Y)).entries(mesh));
         // Fluids
-        if (!fluid.isEmpty()) {
+        if (!fluid.get(0).isEmpty()) {
             widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + FLUID_X, bounds.getMinY() + FLUID_Y)).entries(fluid));
         }
         // Outputs
-        for (int i = 0, outputsSize = outputs.size(); i < outputsSize; i++) {
-            EntryIngredient output = outputs.get(i);
-            List<Text> tooltips = new ArrayList<>();
-            var chances = outputChances.get(output);
-            for (var chance : chances) {
-                if (chance <= 0) continue;
-                tooltips.add(new LiteralText(chance * 100 + "%"));
+        for (int y = 0; y < OUTPUT_SLOTS_Y; ++y) {
+            for (int x = 0; x < OUTPUT_SLOTS_X; ++x) {
+                var slot = Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X + 18 * x, bounds.getMinY() + OUTPUT_Y + 18 * y));
+                var index = y * OUTPUT_SLOTS_X + x;
+                if (index < outputs.size()) {
+                    EntryIngredient output = outputs.get(index);
+                    List<Text> tooltips = new ArrayList<>();
+                    var chances = outputChances.get(output);
+                    for (var chance : chances) {
+                        if (chance <= 0) continue;
+                        tooltips.add(new LiteralText(chance * 100 + "%"));
+                    }
+                    if (!tooltips.isEmpty()) {
+                        slot.entries(output);
+                        Widgets.withTooltip(slot, tooltips);
+                    }
+                }
+                widgets.add(slot);
             }
-            if (tooltips.isEmpty()) continue;
-            var slot = Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X + 18 * ((i + 1) % OUTPUT_SLOTS_X), bounds.getMinY() + OUTPUT_Y + 18 * (i / OUTPUT_SLOTS_X))).entries(output);
-            Widgets.withTooltip(slot, tooltips);
-            widgets.add(slot);
         }
         return widgets;
     }
