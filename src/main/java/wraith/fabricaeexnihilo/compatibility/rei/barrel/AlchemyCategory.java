@@ -25,11 +25,9 @@ public class AlchemyCategory implements DisplayCategory<AlchemyDisplay> {
     public static final int ARROW_U = 0;
     public static final int ARROW_V = 0;
     public static final Identifier GLYPHS = id("textures/gui/rei/glyphs.png");
-    public static final int GLYPH_HEIGHT = 16;
-    public static final int GLYPH_WIDTH = 16;
     public static final int MARGIN = 6;
     public static final int HEIGHT = 3 * 18 + MARGIN * 2;
-    public static final int BARRELS_Y = HEIGHT / 2 + 9;
+    public static final int BARRELS_Y = HEIGHT / 2;
     public static final int ARROW_Y = BARRELS_Y - 18;
     public static final int REACTANT_Y = ARROW_Y;
     public static final int PLUS_Y = REACTANT_Y;
@@ -87,9 +85,9 @@ public class AlchemyCategory implements DisplayCategory<AlchemyDisplay> {
         widgets.add(Widgets.createRecipeBase(bounds));
 
         // Plus Glyph
-        widgets.add(new GlyphWidget(bounds, bounds.getMinX() + PLUS_X, bounds.getMinY() + PLUS_Y, GLYPH_WIDTH, GLYPH_HEIGHT, GLYPHS, PLUS_U, PLUS_V));
+        widgets.add(new GlyphWidget(bounds, bounds.getMinX() + PLUS_X, bounds.getMinY() + PLUS_Y, 16, 16, GLYPHS, PLUS_U, PLUS_V));
         // Arrow Glyph
-        widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW_X, bounds.getMinY() + ARROW_Y, GLYPH_WIDTH, GLYPH_HEIGHT, GLYPHS, ARROW_U, ARROW_V));
+        widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW_X, bounds.getMinY() + ARROW_Y, 16, 16, GLYPHS, ARROW_U, ARROW_V));
 
         var outputs = display.getOutputEntries();
         var catalyst = display.getCatalyst().get(0);

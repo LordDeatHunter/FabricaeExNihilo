@@ -8,70 +8,66 @@ import java.util.Map;
 
 public class FabricaeExNihiloConfig {
     public ModuleConfig modules = new ModuleConfig();
-    
+
     public static class ModuleConfig {
         public REIConfig REI = new REIConfig();
-        
+
         public static class REIConfig {
-            // How many rows should show up for the compost inputs, min = 1
-            public int compostNumRows = 5;
-            // How many columns should show up for the compost inputs, min = 1
-            public int compostNumCols = 8;
             // How many rows should show up for the Witch Water fluid interactions outputs, min = 3
             public int witchwaterworldRows = 3;
             // How many columns should show up for the Witch Water fluid interactions outputs, min = 1
             public int witchwaterworldCols = 8;
         }
-        
+
         public StrainerConfig strainers = new StrainerConfig();
-        
+
         public static class StrainerConfig {
             public int minWaitTime = 1200; // One minute
             public int maxWaitTime = 6000; // Five minutes
         }
-        
+
         public BarrelConfig barrels = new BarrelConfig();
-        
+
         public static class BarrelConfig {
             // How many ticks between updates
             public int tickRate = 6;
-            
+
             public EnchantmentConfig enchantments = new EnchantmentConfig();
-            
+
             public static class EnchantmentConfig {
                 // Can barrels be enchanted with efficiency.
                 public boolean efficiency = true;
                 // Can barrels be enchanted with thorns.
                 public boolean thorns = true;
             }
-            
+
             public String[] woodenFluidFilter = {"minecraft:lava"};
             public boolean isFilterWhitelist = false;
-            
+
             public boolean enableAlchemy = true;
             // Requires that thorns be enabled too.
             public boolean enableBleeding = true;
             public boolean enableMilking = true;
             public boolean enableFluidCombination = true;
-    
+
             public CompostConfig compost = new CompostConfig();
-    
+
             public static class CompostConfig {
                 public boolean enabled = true;
                 // How much progress to add each time the barrel ticks
                 public double rate = 0.01;
-    
+
             }
             public LeakingConfig leaking = new LeakingConfig();
-    
+
             public static class LeakingConfig {
                 public boolean enabled = true;
                 // How much progress to add each time the barrel ticks
                 public int radius = 2;
-    
+
             }
             public TransformingConfig transforming = new TransformingConfig();
-            
+
             public static class TransformingConfig {
                 public boolean enabled = true;
                 // How far away can a block be and still boost the transformation rate
@@ -82,9 +78,9 @@ public class FabricaeExNihiloConfig {
                 public int boost = 15;
             }
         }
-        
+
         public CrucibleConfig crucibles = new CrucibleConfig();
-        
+
         @SuppressWarnings("UnstableApiUsage")
         public static class CrucibleConfig {
             // How many ticks between updates
@@ -100,9 +96,9 @@ public class FabricaeExNihiloConfig {
             // Can stone crucibles be enchanted with fire aspect.
             public boolean fireAspect = true;
         }
-        
+
         public InfestedConfig silkworms = new InfestedConfig();
-        
+
         public static class InfestedConfig {
             public boolean enabled = true;
             // How much progress should be made during each infesting leaves update
@@ -118,9 +114,9 @@ public class FabricaeExNihiloConfig {
             // How many attempts should infested leaves make to spread each time they check.
             public int infestedSpreadAttempts = 4;
         }
-        
+
         public SeedConfig seeds = new SeedConfig();
-        
+
         //TODO: Probably should remove many of these
         public static class SeedConfig {
             public boolean enabled = true;
@@ -137,9 +133,9 @@ public class FabricaeExNihiloConfig {
             public boolean flowerSeeds = true;
             public boolean netherSpores = true;
         }
-        
+
         public SieveConfig sieves = new SieveConfig();
-        
+
         public static class SieveConfig {
             // Do meshes use up durability (WIP)
             //public boolean meshDurability = false;
@@ -157,9 +153,9 @@ public class FabricaeExNihiloConfig {
             // Do haste beacons/potions affect sieving speed
             public boolean haste = true;
         }
-    
+
         public WitchWaterConfig witchwater = new WitchWaterConfig();
-        
+
         public static class WitchWaterConfig {
             // What effects should players get on contact
             public Map<String, StatusEffectStats> effects = Map.of(

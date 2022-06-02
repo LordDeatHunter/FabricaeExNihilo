@@ -28,13 +28,13 @@ public class FluidOnTopCategory implements DisplayCategory<FluidOnTopDisplay> {
     public static final int ARROW_V = 0;
     public static final int ARROW_WIDTH = 16;
     public static final int MARGIN = 6;
-    public static final int HEIGHT = 2 * 18 + MARGIN * 2;
-    public static final int ABOVE_Y = MARGIN;
-    public static final int BARRELS_Y = ABOVE_Y + 18;
+    public static final int HEIGHT = 3 * 18 + MARGIN * 2;
+    public static final int BARRELS_Y = HEIGHT / 2;
     public static final int ARROW1_Y = BARRELS_Y;
     public static final int ARROW2_Y = BARRELS_Y;
     public static final int INPUT_Y = BARRELS_Y;
     public static final int OUTPUT_Y = BARRELS_Y;
+    public static final int ABOVE_Y = BARRELS_Y - 18;
     public static final int WIDTH = 8 * 18 + MARGIN * 2;
     public static final int ABOVE_X = WIDTH / 2 - 9;
     public static final int BARRELS_X = ABOVE_X;

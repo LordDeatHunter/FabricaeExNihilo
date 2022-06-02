@@ -23,13 +23,11 @@ import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 public class TransformingCategory implements DisplayCategory<TransformingDisplay> {
 
     public static final Identifier ARROW = id("textures/gui/rei/glyphs.png");
-    public static final int ARROW_HEIGHT = 16;
     public static final int ARROW_U = 0;
     public static final int ARROW_V = 0;
-    public static final int ARROW_WIDTH = 16;
     public static final int MARGIN = 6;
-    public static final int HEIGHT = 2 * 18 + MARGIN * 2;
-    public static final int BARRELS_Y = MARGIN;
+    public static final int HEIGHT = 3 * 18 + MARGIN * 2;
+    public static final int BARRELS_Y = HEIGHT / 2 - 18;
     public static final int ARROW1_Y = BARRELS_Y;
     public static final int ARROW2_Y = BARRELS_Y;
     public static final int BELOW_Y = BARRELS_Y + 18;
@@ -80,8 +78,8 @@ public class TransformingCategory implements DisplayCategory<TransformingDisplay
         var widgets = new ArrayList<Widget>();
         widgets.add(Widgets.createRecipeBase(bounds));
 
-        widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW1_X, bounds.getMinY() + ARROW1_Y, ARROW_WIDTH, ARROW_HEIGHT, ARROW, ARROW_U, ARROW_V));
-        widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW2_X, bounds.getMinY() + ARROW2_Y, ARROW_WIDTH, ARROW_HEIGHT, ARROW, ARROW_U, ARROW_V));
+        widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW1_X, bounds.getMinY() + ARROW1_Y, 16, 16, ARROW, ARROW_U, ARROW_V));
+        widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW2_X, bounds.getMinY() + ARROW2_Y, 16, 16, ARROW, ARROW_U, ARROW_V));
 
         var outputs = display.getOutputEntries().get(0);
         var catalyst = display.getCatalyst().get(0);

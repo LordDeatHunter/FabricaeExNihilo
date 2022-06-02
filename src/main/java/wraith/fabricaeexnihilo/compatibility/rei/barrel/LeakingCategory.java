@@ -8,9 +8,6 @@ import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
-import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
@@ -28,10 +25,8 @@ import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 public class LeakingCategory implements DisplayCategory<LeakingDisplay> {
 
     public static final Identifier ARROW = id("textures/gui/rei/glyphs.png");
-    public static final int ARROW_HEIGHT = 16;
     public static final int ARROW_U = 0;
     public static final int ARROW_V = 0;
-    public static final int ARROW_WIDTH = 16;
     public static final int MARGIN = 6;
     public static final int HEIGHT = 3 * 18 + MARGIN * 2;
     public static final int ARROW_OFFSET_Y = HEIGHT / 2 - 9;
@@ -82,7 +77,7 @@ public class LeakingCategory implements DisplayCategory<LeakingDisplay> {
         var widgets = new ArrayList<Widget>();
         widgets.add(Widgets.createRecipeBase(bounds));
 
-        widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW_OFFSET_X, bounds.getMinY() + ARROW_OFFSET_Y, ARROW_WIDTH, ARROW_HEIGHT, ARROW, ARROW_U, ARROW_V));
+        widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW_OFFSET_X, bounds.getMinY() + ARROW_OFFSET_Y, 16, 16, ARROW, ARROW_U, ARROW_V));
 
         var block = display.getBlock().get(0);
         var fluid = display.getFluid().get(0);
@@ -93,14 +88,7 @@ public class LeakingCategory implements DisplayCategory<LeakingDisplay> {
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BUCKET_X, bounds.getMinY() + BUCKET_Y)).entries(fluid));
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + TARGET_X, bounds.getMinY() + TARGET_Y)).entries(block));
 
-        var bucketStack = fluid.stream().findFirst().orElse(null);
-        String label = "?";
-
-        if (bucketStack != null && bucketStack.getValue() instanceof ItemStack stack && StorageUtil.findExtractableResource(FluidStorage.ITEM.find(stack, ContainerItemContext.withInitial(stack)), null) != null) {
-            label = String.valueOf(loss);
-        }
-
-        var text = Widgets.createLabel(new Point(0, 0), new LiteralText("-" + label));
+        var text = Widgets.createLabel(new Point(0, 0), new LiteralText("-" + loss));
         text.setPoint(new Point(bounds.getMaxX() - MARGIN - text.getBounds().getMaxX(), bounds.getMinY() + MARGIN + 9));
         widgets.add(text);
 

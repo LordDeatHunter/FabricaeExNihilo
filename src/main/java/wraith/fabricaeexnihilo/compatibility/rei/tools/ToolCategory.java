@@ -63,17 +63,7 @@ public class ToolCategory implements DisplayCategory<ToolDisplay> {
         var widgets = new ArrayList<Widget>();
         widgets.add(Widgets.createRecipeBase(bounds));
 
-        var arrowWidget = new GlyphWidget(
-            bounds,
-            startPoint.x + 31,
-            startPoint.y + 4,
-            16,
-            16,
-            GLYPH,
-            GLYPH_U,
-            GLYPH_V
-        );
-        widgets.add(arrowWidget);
+        widgets.add(new GlyphWidget(bounds, startPoint.x + 31, startPoint.y + 4, 16, 16, GLYPH, GLYPH_U, GLYPH_V));
 
         var inputs = display.getInputEntries().get(0);
         var outputs = display.getOutputEntries().get(0);

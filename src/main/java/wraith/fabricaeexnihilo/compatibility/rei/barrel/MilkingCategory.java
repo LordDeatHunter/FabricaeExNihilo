@@ -24,12 +24,8 @@ import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 public class MilkingCategory implements DisplayCategory<MilkingDisplay> {
 
     public static final Identifier ARROW = id("textures/gui/rei/glyphs.png");
-    public static final int ARROW_HEIGHT = 16;
-    public static final int ARROW_U = 0;
-    public static final int ARROW_V = 0;
-    public static final int ARROW_WIDTH = 16;
     public static final int MARGIN = 6;
-    public static final int HEIGHT = 2 * 18 + MARGIN * 2;
+    public static final int HEIGHT = 3 * 18 + MARGIN * 2;
     public static final int ARROW_Y = HEIGHT / 2;
     public static final int BARRELS_Y = ARROW_Y;
     public static final int ABOVE_Y = BARRELS_Y - 18;
@@ -77,7 +73,7 @@ public class MilkingCategory implements DisplayCategory<MilkingDisplay> {
         var widgets = new ArrayList<Widget>();
         widgets.add(Widgets.createRecipeBase(bounds));
 
-        widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW_X, bounds.getMinY() + ARROW_Y, ARROW_WIDTH, ARROW_HEIGHT, ARROW, ARROW_U, ARROW_V));
+        widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW_X, bounds.getMinY() + ARROW_Y, 16, 16, ARROW, 0, 0));
 
         var eggs = display.getInputEntries().get(0);
         var barrel = display.getBarrel();
