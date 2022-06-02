@@ -138,12 +138,12 @@ public class PluginEntry implements REIClientPlugin {
         map.values().forEach(recipe -> recipe.split(SieveCategory.MAX_OUTPUTS).forEach(r -> registry.add(new SieveDisplay(r))));
         registry.registerRecipeFiller(AlchemyRecipe.class, ModRecipes.ALCHEMY, AlchemyDisplay::new);
         registry.registerRecipeFiller(FluidTransformationRecipe.class, ModRecipes.FLUID_TRANSFORMATION, TransformingDisplay::new);
-        // TODO: Actually implement this properly
         registry.registerRecipeFiller(CompostRecipe.class, ModRecipes.COMPOST, CompostDisplay::new);
         registry.registerRecipeFiller(LeakingRecipe.class, ModRecipes.LEAKING, LeakingDisplay::new);
         registry.registerRecipeFiller(MilkingRecipe.class, ModRecipes.MILKING, MilkingDisplay::new);
         registry.registerRecipeFiller(FluidCombinationRecipe.class, ModRecipes.FLUID_COMBINATION, FluidOnTopDisplay::new);
         registry.registerRecipeFiller(WitchWaterEntityRecipe.class, ModRecipes.WITCH_WATER_ENTITY, WitchWaterEntityDisplay::new);
+        // TODO: Merge recipes with same input, check sieve recipes
         registry.registerRecipeFiller(WitchWaterWorldRecipe.class, ModRecipes.WITCH_WATER_WORLD, WitchWaterWorldDisplay::new);
     }
 

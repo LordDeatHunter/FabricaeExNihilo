@@ -26,10 +26,8 @@ public class WitchWaterWorldCategory implements DisplayCategory<WitchWaterWorldD
 
     public static final int GLYPH_ARROW_U = 0;
     public static final int GLYPH_ARROW_V = 0;
-    public static final int GLYPH_HEIGHT = 16;
     public static final int GLYPH_PLUS_U = 3 * 16;
     public static final int GLYPH_PLUS_V = 0;
-    public static final int GLYPH_WIDTH = 16;
     public static final int MARGIN = 6;
     public static final int GLYPH_PLUS_X = MARGIN;
     public static final int GLYPH_ARROW_X = MARGIN + 18;
@@ -78,32 +76,24 @@ public class WitchWaterWorldCategory implements DisplayCategory<WitchWaterWorldD
         var widgets = new ArrayList<Widget>();
         widgets.add(Widgets.createRecipeBase(bounds));
 
-        var glyphPlus = new GlyphWidget(bounds, bounds.getMinX() + GLYPH_PLUS_X, bounds.getMinY() + GLYPH_PLUS_Y, GLYPH_WIDTH, GLYPH_HEIGHT, GLYPHS, GLYPH_PLUS_U, GLYPH_PLUS_V);
-        var glypgArrow = new GlyphWidget(bounds, bounds.getMinX() + GLYPH_ARROW_X, bounds.getMinY() + GLYPH_ARROW_Y, GLYPH_WIDTH, GLYPH_HEIGHT, GLYPHS, GLYPH_ARROW_U, GLYPH_ARROW_V);
+        var glyphPlus = new GlyphWidget(bounds, bounds.getMinX() + GLYPH_PLUS_X, bounds.getMinY() + GLYPH_PLUS_Y, 16, 16, GLYPHS, GLYPH_PLUS_U, GLYPH_PLUS_V);
+        var glyphArrow = new GlyphWidget(bounds, bounds.getMinX() + GLYPH_ARROW_X, bounds.getMinY() + GLYPH_ARROW_Y, 16, 16, GLYPHS, GLYPH_ARROW_U, GLYPH_ARROW_V);
         widgets.add(glyphPlus);
-        widgets.add(glypgArrow);
+        widgets.add(glyphArrow);
 
-        var witchWaterwitchWater = EntryIngredients.of(WitchWaterFluid.BUCKET);
+        var witchWater = EntryIngredients.of(WitchWaterFluid.STILL);
         var fluids = display.getInputEntries().get(0);
         var results = display.getOutputEntries();
 
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + WITCH_X, bounds.getMinY() + WITCH_Y)).entries(witchWaterwitchWater));
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + WITCH_X, bounds.getMinY() + WITCH_Y)).entries(witchWater));
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + FLUID_X, bounds.getMinY() + FLUID_Y)).entries(fluids));
 
-        for (int i = 0; i < results.size(); i++) {
-            var result = results.get(i);
-            widgets.add(
-                Widgets.createSlot(new Point(
-                    bounds.getMinX() + OUTPUT_X + (i % OUTPUT_SLOTS_X) * 18,
-                    bounds.getMinY() + OUTPUT_Y + (i / OUTPUT_SLOTS_X) * 18)).entries(result));
-
-        }
-        // Fill in the empty spots
-        for (int i = 0; i < results.size() && i < MAX_OUTPUTS; i++) {
-            widgets.add(
-                Widgets.createSlot(new Point(
-                    bounds.getMinX() + OUTPUT_X + (i % OUTPUT_SLOTS_X) * 18,
-                    bounds.getMinY() + OUTPUT_Y + (i / OUTPUT_SLOTS_X) * 18)));
+        for (int y = 0; y < MAX_OUTPUTS; ++y) {
+            var slot = Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X + (y % OUTPUT_SLOTS_X) * 18, bounds.getMinY() + OUTPUT_Y + (y / OUTPUT_SLOTS_X) * 18));
+            if (y < results.size()) {
+                slot.entries(results.get(y));
+            }
+            widgets.add(slot);
         }
 
         return widgets;

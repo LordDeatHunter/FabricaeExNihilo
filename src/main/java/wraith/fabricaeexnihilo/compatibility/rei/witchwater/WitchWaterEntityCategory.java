@@ -27,15 +27,13 @@ import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 public class WitchWaterEntityCategory implements DisplayCategory<WitchWaterEntityDisplay> {
 
     public static final Identifier ARROW = id("textures/gui/rei/glyphs.png");
-    public static final int ARROW_HEIGHT = 16;
     public static final int ARROW_IN_U = 0;
     public static final int ARROW_IN_V = 16 * 5;
     public static final int ARROW_OUT_U = 0;
     public static final int ARROW_OUT_V = 16 * 4;
-    public static final int ARROW_WIDTH = 16;
     public static final int MARGIN = 6;
-    public static final int HEIGHT = 3 * 18 + MARGIN * 2 - 9;
-    public static final int FLUID_Y = HEIGHT / 2 + 9;
+    public static final int HEIGHT = 3 * 18 + MARGIN * 4;
+    public static final int FLUID_Y = HEIGHT / 2 + 12;
     public static final int ARROW_IN_Y = FLUID_Y - 18;
     public static final int IN_Y = ARROW_IN_Y - 7;
     public static final int ARROW_OUT_Y = FLUID_Y - 18;
@@ -76,14 +74,14 @@ public class WitchWaterEntityCategory implements DisplayCategory<WitchWaterEntit
         var widgets = new ArrayList<Widget>();
         widgets.add(Widgets.createRecipeBase(bounds));
 
-        var arrowIn = new GlyphWidget(bounds, bounds.getMinX() + ARROW_IN_X, bounds.getMinY() + ARROW_IN_Y, ARROW_WIDTH, ARROW_HEIGHT, ARROW, ARROW_IN_U, ARROW_IN_V);
-        var arrowOut = new GlyphWidget(bounds, bounds.getMinX() + ARROW_OUT_X, bounds.getMinY() + ARROW_OUT_Y, ARROW_WIDTH, ARROW_HEIGHT, ARROW, ARROW_OUT_U, ARROW_OUT_V);
+        var arrowIn = new GlyphWidget(bounds, bounds.getMinX() + ARROW_IN_X, bounds.getMinY() + ARROW_IN_Y, 16, 16, ARROW, ARROW_IN_U, ARROW_IN_V);
+        var arrowOut = new GlyphWidget(bounds, bounds.getMinX() + ARROW_OUT_X, bounds.getMinY() + ARROW_OUT_Y, 16, 16, ARROW, ARROW_OUT_U, ARROW_OUT_V);
         widgets.add(arrowIn);
         widgets.add(arrowOut);
 
         var eggsIn = display.getInputEntries().get(0);
         var eggOut = display.getOutputEntries().get(0);
-        var fluids = EntryIngredients.of(WitchWaterFluid.BUCKET);
+        var fluids = EntryIngredients.of(WitchWaterFluid.STILL);
 
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + IN_X, bounds.getMinY() + IN_Y)).entries(eggsIn));
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + OUT_X, bounds.getMinY() + OUT_Y)).entries(eggOut));
@@ -93,7 +91,7 @@ public class WitchWaterEntityCategory implements DisplayCategory<WitchWaterEntit
             var profession = display.getProfession();
             var professionId = Registry.VILLAGER_PROFESSION.getId(profession == null ? VillagerProfession.NONE : profession);
             var text = Widgets.createLabel(new Point(0, 0), new TranslatableText("entity." + professionId.getNamespace() + ".villager." + professionId.getPath()));
-            text.setPoint(new Point(bounds.getMinX() + MARGIN + text.getBounds().getMaxX(), bounds.getMinY() - MARGIN + text.getBounds().getMaxY()));
+            text.setPoint(new Point(bounds.getMinX() + MARGIN + text.getBounds().getMaxX(), bounds.getMinY() + text.getBounds().getMaxY()));
             widgets.add(text);
         }
 
