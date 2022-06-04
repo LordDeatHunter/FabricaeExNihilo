@@ -27,10 +27,44 @@ import wraith.fabricaeexnihilo.modules.base.BaseFluidBlock;
 import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterEntityRecipe;
 import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterWorldRecipe;
 
+@SuppressWarnings("deprecation")
 public class WitchWaterBlock extends BaseFluidBlock {
 
     public WitchWaterBlock(FlowableFluid fluid, Settings settings) {
         super(fluid, settings);
+    }
+
+    public static void applyStatusEffect(LivingEntity entity, StatusEffectInstance statusEffect) {
+        // Grab the potion effect on the entity (null if not active) compare its duration (defaulting to 0) to the new duration
+        boolean hasEffect = entity.getActiveStatusEffects().containsKey(statusEffect.getEffectType());
+        var entityEffectDuration = hasEffect ? entity.getActiveStatusEffects().get(statusEffect.getEffectType()).getDuration() : Integer.MIN_VALUE;
+        if (entityEffectDuration <= statusEffect.getDuration() - 20) {
+            entity.addStatusEffect(statusEffect);
+        }
+    }
+
+    public static boolean fluidInteraction(World world, BlockPos witchPos, BlockPos otherPos) {
+        var fluidState = world.getFluidState(otherPos);
+        if (fluidState.isEmpty() || fluidState.isIn(WitchWaterFluid.TAG)) {
+            return false;
+        }
+        var recipe = WitchWaterWorldRecipe.find(fluidState.getFluid(), world);
+        if (recipe.isEmpty()) {
+            return false;
+        }
+        var changePos = witchPos.offset(Direction.DOWN) == otherPos ? otherPos : witchPos;
+        world.setBlockState(changePos, recipe.get().getResult().choose(world.random).getDefaultState());
+        world.playSound(null, changePos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 0.7f, 0.8f + world.random.nextFloat() * 0.2f);
+        return true;
+    }
+
+    // A status effect is used to mark entities that have been processed so that they are no longer processed.
+    public static boolean isMarked(LivingEntity entity) {
+        return entity.hasStatusEffect(ModEffects.WITCH_WATERED);
+    }
+
+    public static void markEntity(LivingEntity entity) {
+        applyStatusEffect(entity, ModEffects.WITCH_WATERED.getInstance());
     }
 
     public static boolean receiveNeighborFluids(WitchWaterBlock witchWaterBlock, World world, BlockPos pos, BlockState state) {
@@ -49,28 +83,14 @@ public class WitchWaterBlock extends BaseFluidBlock {
         return true;
     }
 
-    // A status effect is used to mark entities that have been processed so that they are no longer processed.
-    public static boolean isMarked(LivingEntity entity) {
-        return entity.hasStatusEffect(ModEffects.WITCH_WATERED);
-    }
-
-    public static void markEntity(LivingEntity entity) {
-        applyStatusEffect(entity, ModEffects.WITCH_WATERED.getInstance());
-    }
-
-    public static boolean fluidInteraction(World world, BlockPos witchPos, BlockPos otherPos) {
-        var fluidState = world.getFluidState(otherPos);
-        if (fluidState.isEmpty() || fluidState.isIn(WitchWaterFluid.TAG)) {
-            return false;
+    public static void replaceMob(World world, Entity toKill, @Nullable Entity toSpawn) {
+        toKill.remove(Entity.RemovalReason.DISCARDED);
+        if (toSpawn != null) {
+            if (toSpawn instanceof LivingEntity livingEntity) {
+                markEntity(livingEntity);
+            }
+            world.spawnEntity(toSpawn);
         }
-        var recipe = WitchWaterWorldRecipe.find(fluidState.getFluid(), world);
-        if (recipe.isEmpty()) {
-            return false;
-        }
-        var changePos = witchPos.offset(Direction.DOWN) == otherPos ? otherPos : witchPos;
-        world.setBlockState(changePos, recipe.get().getResult().choose(world.random).getDefaultState());
-        world.playSound(null, changePos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 0.7f, 0.8f + world.random.nextFloat() * 0.2f);
-        return true;
     }
 
     public static void replaceMob(World world, LivingEntity toKill, EntityType<?> spawnType) {
@@ -90,25 +110,6 @@ public class WitchWaterBlock extends BaseFluidBlock {
             livingEntity.setHealth(livingEntity.getMaxHealth() * toKill.getHealth() / toKill.getMaxHealth());
         }
         replaceMob(world, toKill, toSpawn);
-    }
-
-    public static void replaceMob(World world, Entity toKill, @Nullable Entity toSpawn) {
-        toKill.remove(Entity.RemovalReason.DISCARDED);
-        if (toSpawn != null) {
-            if (toSpawn instanceof LivingEntity livingEntity) {
-                markEntity(livingEntity);
-            }
-            world.spawnEntity(toSpawn);
-        }
-    }
-
-    public static void applyStatusEffect(LivingEntity entity, StatusEffectInstance statusEffect) {
-        // Grab the potion effect on the entity (null if not active) compare its duration (defaulting to 0) to the new duration
-        boolean hasEffect = entity.getActiveStatusEffects().containsKey(statusEffect.getEffectType());
-        var entityEffectDuration = hasEffect ? entity.getActiveStatusEffects().get(statusEffect.getEffectType()).getDuration() : Integer.MIN_VALUE;
-        if (entityEffectDuration <= statusEffect.getDuration() - 20) {
-            entity.addStatusEffect(statusEffect);
-        }
     }
 
     @Override
@@ -138,7 +139,7 @@ public class WitchWaterBlock extends BaseFluidBlock {
                 return;
             }
             if (livingEntity instanceof PlayerEntity player && !player.isCreative()) {
-                FabricaeExNihilo.CONFIG.modules.witchwater.effects.forEach((effect, durationLevel) ->
+                FabricaeExNihilo.CONFIG.modules.witchWater.effects.forEach((effect, durationLevel) ->
                     applyStatusEffect(player,
                         new StatusEffectInstance(Registry.STATUS_EFFECT.get(new Identifier(effect)),
                             durationLevel.duration,
