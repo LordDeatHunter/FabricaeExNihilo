@@ -1,0 +1,35 @@
+{
+  "parent": "fabricaeexnihilo:clay",
+  "display": {
+    "icon": {
+      "item": "fabricaeexnihilo:clay_crook"
+    },
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.clay_crook_broken.title"
+    },
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.clay_crook_broken.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "clay_crook_broken": {
+      "trigger": "minecraft:item_durability_changed",
+      "conditions": {
+        "item": {
+          "items": [
+            "fabricaeexnihilo:clay_crook"
+          ]
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "clay_crook_broken"
+    ]
+  ]
+}
