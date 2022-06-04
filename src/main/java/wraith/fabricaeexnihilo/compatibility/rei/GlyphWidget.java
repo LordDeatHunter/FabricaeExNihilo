@@ -2,6 +2,7 @@ package wraith.fabricaeexnihilo.compatibility.rei;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import me.shedaniel.math.Rectangle;
+import me.shedaniel.rei.api.client.gui.widgets.WidgetWithBounds;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
@@ -9,13 +10,12 @@ import net.minecraft.util.Identifier;
 import java.util.Collections;
 import java.util.List;
 
-public class GlyphWidget extends AbstractGlyph {
+public class GlyphWidget extends WidgetWithBounds {
     
     private final int width;
     private final int height;
     private final int x;
     private final int y;
-    private double animationDuration = -1;
     private final Rectangle bounds;
     private final Identifier texture;
     private final int u;
@@ -33,18 +33,6 @@ public class GlyphWidget extends AbstractGlyph {
     }
     
     @Override
-    public double getAnimationDuration() {
-        return animationDuration;
-    }
-    
-    @Override
-    public void setAnimationDuration(double animationDurationMS) {
-        this.animationDuration = animationDurationMS;
-        if (this.animationDuration <= 0)
-            this.animationDuration = -1;
-    }
-    
-    @Override
     public Rectangle getBounds() {
         return bounds;
     }
@@ -58,6 +46,14 @@ public class GlyphWidget extends AbstractGlyph {
     @Override
     public List<? extends Element> children() {
         return Collections.emptyList();
+    }
+    
+    public final int getX() {
+        return getBounds().getX();
+    }
+    
+    public final int getY() {
+        return getBounds().getY();
     }
     
 }
