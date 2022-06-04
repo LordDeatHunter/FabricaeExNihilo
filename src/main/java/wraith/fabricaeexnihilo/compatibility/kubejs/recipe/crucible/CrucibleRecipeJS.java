@@ -14,7 +14,7 @@ public class CrucibleRecipeJS extends RecipeJS {
     private long amount;
     private FluidVariant fluid;
     private ItemIngredient input;
-    private boolean isStone = true;
+    private boolean isFireproof = true;
     
     @Override
     public void create(ListJS listJS) {
@@ -26,7 +26,7 @@ public class CrucibleRecipeJS extends RecipeJS {
     
     @SuppressWarnings("unused") // Used from js
     public CrucibleRecipeJS wooden() {
-        isStone = false;
+        isFireproof = false;
         return this;
     }
     
@@ -35,7 +35,7 @@ public class CrucibleRecipeJS extends RecipeJS {
         input = CodecUtils.fromJson(ItemIngredient.CODEC, json.get("input"));
         amount = JsonHelper.getLong(json, "amount");
         fluid = CodecUtils.fromJson(CodecUtils.FLUID_VARIANT, json.get("fluid"));
-        isStone = JsonHelper.getBoolean(json, "isStone");
+        isFireproof = JsonHelper.getBoolean(json, "isFireproof");
     }
     
     @Override
@@ -43,6 +43,6 @@ public class CrucibleRecipeJS extends RecipeJS {
         json.add("input", CodecUtils.toJson(ItemIngredient.CODEC, input));
         json.addProperty("amount", amount);
         json.add("fluid", CodecUtils.toJson(CodecUtils.FLUID_VARIANT, fluid));
-        json.addProperty("isStone", isStone);
+        json.addProperty("isFireproof", isFireproof);
     }
 }

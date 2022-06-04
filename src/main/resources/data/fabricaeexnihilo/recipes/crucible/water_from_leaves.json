@@ -3,5 +3,5 @@
   "input": "#minecraft:leaves",
   "amount": 20250,
   "fluid": "minecraft:water",
-  "isStone": false
+  "isFireproof": false
 }

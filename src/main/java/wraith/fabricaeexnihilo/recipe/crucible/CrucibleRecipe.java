@@ -25,27 +25,27 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
     private final ItemIngredient input;
     private final long amount;
     private final FluidVariant fluid;
-    private final boolean isStone;
+    private final boolean isFireproof;
 
-    public CrucibleRecipe(Identifier id, ItemIngredient input, long amount, FluidVariant fluid, boolean isStone) {
+    public CrucibleRecipe(Identifier id, ItemIngredient input, long amount, FluidVariant fluid, boolean isFireproof) {
         super(id);
         this.input = input;
         this.amount = amount;
 
         this.fluid = fluid;
-        this.isStone = isStone;
+        this.isFireproof = isFireproof;
     }
 
-    public static Optional<CrucibleRecipe> find(Item input, boolean isStone, @Nullable World world) {
+    public static Optional<CrucibleRecipe> find(Item input, boolean isFireproof, @Nullable World world) {
         if (world == null) {
             return Optional.empty();
         }
-        return world.getRecipeManager().getFirstMatch(ModRecipes.CRUCIBLE, new Context(input, isStone), world);
+        return world.getRecipeManager().getFirstMatch(ModRecipes.CRUCIBLE, new Context(input, isFireproof), world);
     }
 
     @Override
     public boolean matches(Context context, World world) {
-        return input.test(context.input) && isStone == context.isStone;
+        return input.test(context.input) && isFireproof == context.isFireproof;
     }
 
     @Override
@@ -82,9 +82,9 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
             var input = CodecUtils.fromJson(ItemIngredient.CODEC, json.get("input"));
             var amount = JsonHelper.getLong(json, "amount");
             var fluid = CodecUtils.fromJson(CodecUtils.FLUID_VARIANT, json.get("fluid"));
-            var isStone = JsonHelper.getBoolean(json, "isStone");
+            var isFireproof = JsonHelper.getBoolean(json, "isFireproof");
 
-            return new CrucibleRecipe(id, input, amount, fluid, isStone);
+            return new CrucibleRecipe(id, input, amount, fluid, isFireproof);
         }
 
         @Override
@@ -92,9 +92,9 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
             var input = CodecUtils.fromPacket(ItemIngredient.CODEC, buf);
             var amount = buf.readLong();
             var fluid = CodecUtils.fromPacket(CodecUtils.FLUID_VARIANT, buf);
-            var isStone = buf.readBoolean();
+            var isFireproof = buf.readBoolean();
 
-            return new CrucibleRecipe(id, input, amount, fluid, isStone);
+            return new CrucibleRecipe(id, input, amount, fluid, isFireproof);
         }
 
         @Override
@@ -102,10 +102,10 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
             CodecUtils.toPacket(ItemIngredient.CODEC, recipe.input, buf);
             buf.writeLong(recipe.amount);
             CodecUtils.toPacket(CodecUtils.FLUID_VARIANT, recipe.fluid, buf);
-            buf.writeBoolean(recipe.isStone);
+            buf.writeBoolean(recipe.isFireproof);
         }
     }
 
-    protected static record Context(Item input, boolean isStone) implements RecipeContext {
+    protected static record Context(Item input, boolean isFireproof) implements RecipeContext {
     }
 }

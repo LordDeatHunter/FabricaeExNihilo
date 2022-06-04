@@ -41,9 +41,10 @@ import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlockEntity {
 
     public static final Identifier BLOCK_ENTITY_ID = id("barrel");
+
     public static final BlockEntityType<BarrelBlockEntity> TYPE = FabricBlockEntityTypeBuilder.create(
-            BarrelBlockEntity::new,
-            ModBlocks.BARRELS.values().toArray(new BarrelBlock[0])
+        BarrelBlockEntity::new,
+        ModBlocks.BARRELS.values().toArray(new BarrelBlock[0])
     ).build(null);
 
     static {
@@ -51,138 +52,28 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
         FluidStorage.SIDED.registerForBlockEntity((barrel, direction) -> barrel.fluidStorage, TYPE);
     }
 
-    public final boolean isStone;
-    public final Storage<ItemVariant> itemStorage;
     public final Storage<FluidVariant> fluidStorage;
+    public final Storage<ItemVariant> itemStorage;
     private final EnchantmentContainer enchantments = new EnchantmentContainer();
-    private int tickCounter;
+    private final boolean isFireproof;
     private BarrelMode mode;
-
-    public BarrelBlockEntity(BlockPos pos, BlockState state, boolean isStone) {
+    private int tickCounter;
+    public BarrelBlockEntity(BlockPos pos, BlockState state, boolean isFireproof) {
         super(TYPE, pos, state);
         this.mode = new EmptyMode();
-        this.isStone = isStone;
+        this.isFireproof = isFireproof;
         itemStorage = new BarrelItemStorage(this);
         fluidStorage = new BarrelFluidStorage(this);
         tickCounter = world == null
             ? FabricaeExNihilo.CONFIG.modules.barrels.tickRate
             : world.random.nextInt(FabricaeExNihilo.CONFIG.modules.barrels.tickRate);
     }
-
     public BarrelBlockEntity(BlockPos pos, BlockState state) {
         this(pos, state, false);
     }
 
     public static void ticker(World world, BlockPos blockPos, BlockState blockState, BarrelBlockEntity barrelEntity) {
         barrelEntity.tick();
-    }
-
-    public BarrelMode getMode() {
-        return mode;
-    }
-
-    public void setMode(BarrelMode mode) {
-        this.mode = mode;
-        markDirty();
-    }
-
-    public EnchantmentContainer getEnchantmentContainer() {
-        return enchantments;
-    }
-
-    public void tick() {
-        if (tickCounter <= 0) {
-            tickCounter = FabricaeExNihilo.CONFIG.modules.barrels.tickRate;
-            markDirty();
-            mode.tick(this);
-        } else {
-            --tickCounter;
-            markDirty();
-        }
-    }
-
-    public int getEfficiencyMultiplier() {
-        return 1 + enchantments.getEnchantmentLevel(Enchantments.EFFICIENCY);
-    }
-
-    public int countBelow(Block block, int radius) {
-        var count = 0;
-        if (world == null) {
-            return count;
-        }
-        for (int x = -radius; x <= radius; ++x) {
-            for (int z = -radius; z <= radius; ++z) {
-                if (world.getBlockState(pos.add(x, -1, z)).getBlock() == block) {
-                    ++count;
-                }
-            }
-        }
-        return count;
-    }
-
-    // NBT Serialization section
-
-    @Override
-    public void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
-        writeNbtWithoutWorldInfo(nbt);
-    }
-
-    @Override
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
-        if (nbt == null) {
-            FabricaeExNihilo.LOGGER.warn("A barrel at $pos is missing data.");
-            return;
-        }
-        readNbtWithoutWorldInfo(nbt);
-    }
-
-    private void writeNbtWithoutWorldInfo(NbtCompound nbt) {
-        nbt.put("mode", CodecUtils.toNbt(BarrelMode.CODEC, mode));
-        nbt.put("enchantments", enchantments.writeNbt());
-    }
-
-    private void readNbtWithoutWorldInfo(NbtCompound nbt) {
-        mode = CodecUtils.fromNbt(BarrelMode.CODEC, nbt.getCompound("mode"));
-        if (nbt.contains("enchantments")) {
-            var readEnchantments = new EnchantmentContainer();
-            readEnchantments.readNbt(nbt.getCompound("enchantments"));
-            enchantments.setAllEnchantments(readEnchantments);
-        }
-    }
-
-    public void spawnByproduct(ItemStack stack) {
-        if (stack.isEmpty() || world == null) {
-            return;
-        }
-        ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), stack);
-    }
-
-    public void spawnEntity(EntityStack entityStack) {
-        if (entityStack.isEmpty() || world == null || world.isClient) {
-            return;
-        }
-        var entity = entityStack.getEntity((ServerWorld) world, pos.up((int) Math.ceil(entityStack.getType().getHeight())));
-        if (entity == null) {
-            return;
-        }
-        world.spawnEntity(entity);
-        // TODO play some particles
-        entityStack.setSize(entityStack.getSize() - 1);
-    }
-
-    /**
-     * Returns a valid BlockPos or null
-     */
-    public BlockPos getLeakPos() {
-        if (world == null) {
-            return null;
-        }
-        var rand = world.random;
-        var r = FabricaeExNihilo.CONFIG.modules.barrels.leaking.radius;
-        var leakPos = pos.add(rand.nextInt(2 * r + 1) - r, -rand.nextInt(2), rand.nextInt(2 * r + 1) - r);
-        return World.isValid(leakPos) ? leakPos : null;
     }
 
     public ActionResult activate(@Nullable PlayerEntity player, @Nullable Hand hand) {
@@ -200,6 +91,21 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
         }
     }
 
+    public int countBelow(Block block, int radius) {
+        var count = 0;
+        if (world == null) {
+            return count;
+        }
+        for (int x = -radius; x <= radius; ++x) {
+            for (int z = -radius; z <= radius; ++z) {
+                if (world.getBlockState(pos.add(x, -1, z)).getBlock() == block) {
+                    ++count;
+                }
+            }
+        }
+        return count;
+    }
+
     public void dropInventoryAtPlayer(PlayerEntity player) {
         if (world == null || !(mode instanceof ItemMode itemMode)) {
             return;
@@ -212,6 +118,38 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
         mode = new EmptyMode();
         markDirty();
     }
+
+    public int getEfficiencyMultiplier() {
+        return 1 + enchantments.getEnchantmentLevel(Enchantments.EFFICIENCY);
+    }
+
+    public EnchantmentContainer getEnchantmentContainer() {
+        return enchantments;
+    }
+
+    /**
+     * Returns a valid BlockPos or null
+     */
+    public BlockPos getLeakPos() {
+        if (world == null) {
+            return null;
+        }
+        var rand = world.random;
+        var r = FabricaeExNihilo.CONFIG.modules.barrels.leaking.radius;
+        var leakPos = pos.add(rand.nextInt(2 * r + 1) - r, -rand.nextInt(2), rand.nextInt(2 * r + 1) - r);
+        return World.isValid(leakPos) ? leakPos : null;
+    }
+
+    public BarrelMode getMode() {
+        return mode;
+    }
+
+    public void setMode(BarrelMode mode) {
+        this.mode = mode;
+        markDirty();
+    }
+
+    // NBT Serialization section
 
     public ActionResult insertFromHand(PlayerEntity player, Hand hand) {
         var held = player.getStackInHand(hand);
@@ -253,4 +191,71 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
         }
         return ActionResult.PASS;
     }
+
+    public boolean isFireproof() {
+        return isFireproof;
+    }
+
+    @Override
+    public void readNbt(NbtCompound nbt) {
+        super.readNbt(nbt);
+        if (nbt == null) {
+            FabricaeExNihilo.LOGGER.warn("A barrel at $pos is missing data.");
+            return;
+        }
+        readNbtWithoutWorldInfo(nbt);
+    }
+
+    private void readNbtWithoutWorldInfo(NbtCompound nbt) {
+        mode = CodecUtils.fromNbt(BarrelMode.CODEC, nbt.getCompound("mode"));
+        if (nbt.contains("enchantments")) {
+            var readEnchantments = new EnchantmentContainer();
+            readEnchantments.readNbt(nbt.getCompound("enchantments"));
+            enchantments.setAllEnchantments(readEnchantments);
+        }
+    }
+
+    public void spawnByproduct(ItemStack stack) {
+        if (stack.isEmpty() || world == null) {
+            return;
+        }
+        ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+    }
+
+    public void spawnEntity(EntityStack entityStack) {
+        if (entityStack.isEmpty() || world == null || world.isClient) {
+            return;
+        }
+        var entity = entityStack.getEntity((ServerWorld) world, pos.up((int) Math.ceil(entityStack.getType().getHeight())));
+        if (entity == null) {
+            return;
+        }
+        world.spawnEntity(entity);
+        // TODO play some particles
+        entityStack.setSize(entityStack.getSize() - 1);
+    }
+
+    public void tick() {
+        if (tickCounter <= 0) {
+            tickCounter = FabricaeExNihilo.CONFIG.modules.barrels.tickRate;
+            markDirty();
+            mode.tick(this);
+        } else {
+            --tickCounter;
+            markDirty();
+        }
+    }
+
+    @Override
+    public void writeNbt(NbtCompound nbt) {
+        super.writeNbt(nbt);
+        writeNbtWithoutWorldInfo(nbt);
+    }
+
+    private void writeNbtWithoutWorldInfo(NbtCompound nbt) {
+        nbt.put("mode", CodecUtils.toNbt(BarrelMode.CODEC, mode));
+        nbt.put("enchantments", enchantments.writeNbt());
+    }
+
+
 }

@@ -5,7 +5,6 @@ import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import net.minecraft.block.Material;
 import net.minecraft.fluid.Fluids;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.compatibility.rei.barrel.*;
@@ -77,8 +76,7 @@ public class PluginEntry implements REIClientPlugin {
         ModTools.CROOKS.values().forEach(crook -> registry.addWorkstations(CROOK, EntryStacks.of(crook)));
         ModBlocks.CRUCIBLES.values().forEach(crucible -> {
             registry.addWorkstations(HEATING, EntryStacks.of(crucible));
-            // TODO: Replace materials with something else
-            if (crucible.getMaterial() == Material.WOOD) {
+            if (!crucible.isFireproof()) {
                 registry.addWorkstations(WOOD_CRUCIBLE, EntryStacks.of(crucible));
             }
             registry.addWorkstations(PORCELAIN_CRUCIBLE, EntryStacks.of(crucible));
@@ -88,7 +86,7 @@ public class PluginEntry implements REIClientPlugin {
             registry.addWorkstations(ALCHEMY, EntryStacks.of(barrel));
             registry.addWorkstations(TRANSFORMING, EntryStacks.of(barrel));
             registry.addWorkstations(COMPOSTING, EntryStacks.of(barrel));
-            if (barrel.getMaterial() != Material.STONE) {
+            if (!barrel.isFireproof()) {
                 registry.addWorkstations(LEAKING, EntryStacks.of(barrel));
             }
             registry.addWorkstations(MILKING, EntryStacks.of(barrel));
@@ -96,8 +94,8 @@ public class PluginEntry implements REIClientPlugin {
         });
         registry.addWorkstations(WITCH_WATER_ENTITY, EntryStacks.of(WitchWaterFluid.BUCKET));
         registry.addWorkstations(WITCH_WATER_WORLD, EntryStacks.of(WitchWaterFluid.BUCKET));
-//
-//        // Hackishly Remove the autocrafting button
+
+// TODO: See if this is a viable solution
 //        registry.removePlusButton(SIEVE);
 //        registry.removePlusButton(CROOK);
 //        registry.removePlusButton(HAMMER);

@@ -4,7 +4,10 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
-import net.minecraft.block.*;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -31,17 +34,21 @@ import wraith.fabricaeexnihilo.modules.barrels.modes.ItemMode;
 import wraith.fabricaeexnihilo.modules.fluids.BloodFluid;
 import wraith.fabricaeexnihilo.recipe.barrel.MilkingRecipe;
 
-@SuppressWarnings("UnstableApiUsage")
+@SuppressWarnings({ "UnstableApiUsage", "deprecation" })
 public class BarrelBlock extends BlockWithEntity {
 
     private static final VoxelShape SHAPE = createCuboidShape(1.0, 0.0, 1.0, 15.0, 16.0, 15.0);
+    private final boolean isFireproof;
 
-    public BarrelBlock(FabricBlockSettings settings) {
+    public BarrelBlock(FabricBlockSettings settings, boolean isFireproof) {
         super(settings);
+        this.isFireproof = isFireproof;
     }
 
-    public Material getMaterial() {
-        return this.material;
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new BarrelBlockEntity(pos, state, isFireproof);
     }
 
     @Override
@@ -54,15 +61,21 @@ public class BarrelBlock extends BlockWithEntity {
         return BlockRenderType.MODEL;
     }
 
+    @Nullable
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hitResult) {
-        if (world == null || pos == null) {
-            return ActionResult.PASS;
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return world.isClient ? null : checkType(type, BarrelBlockEntity.TYPE, BarrelBlockEntity::ticker);
+    }
+
+    public boolean isFireproof() {
+        return isFireproof;
+    }
+
+    @Override
+    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+        if (world.getBlockEntity(pos) instanceof BarrelBlockEntity barrelEntity) {
+            EnchantmentHelper.get(itemStack).forEach((enchantment, level) -> barrelEntity.getEnchantmentContainer().setEnchantmentLevel(enchantment, level));
         }
-        var blockEntity = world.getBlockEntity(pos);
-        return blockEntity instanceof BarrelBlockEntity barrelBlock
-            ? barrelBlock.activate(player, hand)
-            : ActionResult.PASS;
     }
 
     @Override
@@ -107,23 +120,15 @@ public class BarrelBlock extends BlockWithEntity {
         super.onSteppedOn(world, pos, state, entity);
     }
 
-    @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return world.isClient ? null : checkType(type, BarrelBlockEntity.TYPE, BarrelBlockEntity::ticker);
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new BarrelBlockEntity(pos, state, this.material == Material.STONE);
-    }
-
-    @Override
-    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        if (world.getBlockEntity(pos) instanceof BarrelBlockEntity barrelEntity) {
-            EnchantmentHelper.get(itemStack).forEach((enchantment, level) -> barrelEntity.getEnchantmentContainer().setEnchantmentLevel(enchantment, level));
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hitResult) {
+        if (world == null || pos == null) {
+            return ActionResult.PASS;
         }
+        var blockEntity = world.getBlockEntity(pos);
+        return blockEntity instanceof BarrelBlockEntity barrelBlock
+            ? barrelBlock.activate(player, hand)
+            : ActionResult.PASS;
     }
 
 }

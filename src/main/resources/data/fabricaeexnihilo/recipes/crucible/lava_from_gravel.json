@@ -3,5 +3,5 @@
   "input": "minecraft:gravel",
   "amount": 10125,
   "fluid": "minecraft:lava",
-  "isStone": true
+  "isFireproof": true
 }

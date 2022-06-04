@@ -63,13 +63,13 @@ public class EntrypointHelper {
         }
     
         @Override
-        public void registerCrucible(String name, boolean isStone) {
-            ModBlocks.CRUCIBLES.put(id(name, null, "_crucible"), new CrucibleBlock(isStone ? ModBlocks.STONE_SETTINGS : ModBlocks.WOOD_SETTINGS));
+        public void registerCrucible(String name, boolean isStone, boolean isFireproof) {
+            ModBlocks.CRUCIBLES.put(id(name, null, "_crucible"), new CrucibleBlock(isStone ? ModBlocks.STONE_SETTINGS : ModBlocks.WOOD_SETTINGS, isFireproof));
         }
 
         @Override
-        public void registerBarrel(String name, boolean isStone) {
-            ModBlocks.BARRELS.put(id(name, null, "_barrel"), new BarrelBlock(isStone ? ModBlocks.STONE_SETTINGS : ModBlocks.WOOD_SETTINGS));
+        public void registerBarrel(String name, boolean isStone, boolean isFireproof) {
+            ModBlocks.BARRELS.put(id(name, null, "_barrel"), new BarrelBlock(isStone ? ModBlocks.STONE_SETTINGS : ModBlocks.WOOD_SETTINGS, isFireproof));
         }
 
         @Override
