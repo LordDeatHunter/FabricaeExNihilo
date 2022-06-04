@@ -12,24 +12,25 @@ import net.minecraft.world.World;
 import wraith.fabricaeexnihilo.modules.ModTags;
 
 public class HammerItem extends ToolItem {
+
     public HammerItem(ToolMaterial material, FabricItemSettings settings) {
         super(material, settings);
     }
-    
-    @Override
-    public boolean isSuitableFor(BlockState state) {
-        return state.isIn(ModTags.HAMMERABLES);
-    }
-    
+
     public static boolean isHammer(ItemStack stack) {
         return stack.getItem() instanceof HammerItem || stack.isIn(ModTags.HAMMER_TAG);
     }
-    
+
     @Override
     public float getMiningSpeedMultiplier(ItemStack stack, BlockState state) {
         return isSuitableFor(state) ? getMaterial().getMiningSpeedMultiplier() : 1F;
     }
-    
+
+    @Override
+    public boolean isSuitableFor(BlockState state) {
+        return state.isIn(ModTags.HAMMERABLES);
+    }
+
     @Override
     public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
         if (!world.isClient && state.getHardness(world, pos) != 0.0f) {

@@ -12,24 +12,25 @@ import net.minecraft.world.World;
 import wraith.fabricaeexnihilo.modules.ModTags;
 
 public class CrookItem extends ToolItem {
+
     public CrookItem(ToolMaterial material, FabricItemSettings settings) {
         super(material, settings);
     }
-    
-    @Override
-    public boolean isSuitableFor(BlockState state) {
-        return state.isIn(ModTags.CROOKABLES);
-    }
-    
+
     public static boolean isCrook(ItemStack stack) {
         return stack.getItem() instanceof CrookItem || stack.isIn(ModTags.CROOK_TAG);
     }
-    
+
     @Override
     public float getMiningSpeedMultiplier(ItemStack stack, BlockState state) {
         return isSuitableFor(state) ? getMaterial().getMiningSpeedMultiplier() : 1F;
     }
-    
+
+    @Override
+    public boolean isSuitableFor(BlockState state) {
+        return state.isIn(ModTags.CROOKABLES);
+    }
+
     @Override
     public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
         if (!world.isClient && state.getHardness(world, pos) != 0.0f) {
