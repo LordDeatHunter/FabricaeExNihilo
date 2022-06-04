@@ -14,6 +14,7 @@ import wraith.fabricaeexnihilo.recipe.util.BlockIngredient;
 import wraith.fabricaeexnihilo.recipe.util.Loot;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
+import java.util.List;
 import java.util.Optional;
 
 public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
@@ -28,11 +29,11 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
         this.result = result;
     }
     
-    public static Optional<ToolRecipe> find(ToolType type, Block block, @Nullable World world) {
+    public static List<ToolRecipe> find(ToolType type, Block block, @Nullable World world) {
         if (world == null) {
-            return Optional.empty();
+            return List.of();
         }
-        return world.getRecipeManager().getFirstMatch(type.type, new Context(block), world);
+        return world.getRecipeManager().getAllMatches(type.type, new Context(block), world);
     }
     
     @Override

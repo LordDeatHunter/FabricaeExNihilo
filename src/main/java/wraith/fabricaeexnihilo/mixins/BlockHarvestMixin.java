@@ -24,12 +24,12 @@ public abstract class BlockHarvestMixin {
     @Inject(at = @At("RETURN"), method = "getDroppedStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/loot/context/LootContext$Builder;)Ljava/util/List;", cancellable = true)
     public void getDroppedStacks(BlockState state, LootContext.Builder builder, CallbackInfoReturnable<List<ItemStack>> info) {
         ItemStack tool = builder.get(LootContextParameters.TOOL);
-        if (CrookItem.isCrook(tool)) {
-            var recipe = ToolRecipe.find(ToolRecipe.ToolType.CROOK, state.getBlock(), builder.getWorld());
-            recipe.ifPresent(toolRecipe -> info.setReturnValue(List.of(toolRecipe.getResult().createStack(builder.getWorld().random))));
-        } else if (HammerItem.isHammer(tool)) {
-            var recipe = ToolRecipe.find(ToolRecipe.ToolType.HAMMER, state.getBlock(), builder.getWorld());
-            recipe.ifPresent(toolRecipe -> info.setReturnValue(List.of(toolRecipe.getResult().createStack(builder.getWorld().random))));
+        if (CrookItem.isCrook(tool) || HammerItem.isHammer(tool)) {
+            var recipes = ToolRecipe.find(CrookItem.isCrook(tool) ? ToolRecipe.ToolType.CROOK : ToolRecipe.ToolType.HAMMER, state.getBlock(), builder.getWorld());
+            info.setReturnValue(recipes.stream()
+                    .map(ToolRecipe::getResult)
+                    .map(loot -> loot.createStack(builder.getWorld().random))
+                    .toList());
         }
     }
 }
