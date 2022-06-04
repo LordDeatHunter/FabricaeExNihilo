@@ -39,6 +39,7 @@ public class FabricaeExNihiloConfig {
             // How many ticks between updates
             public int tickRate = 6;
             public TransformingConfig transforming = new TransformingConfig();
+            //TODO: Replace with tag
             public String[] woodenFluidFilter = { "minecraft:lava" };
 
             public static class EnchantmentConfig {

@@ -5,7 +5,8 @@ import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import net.minecraft.fluid.Fluids;
+import net.minecraft.util.registry.Registry;
+import org.apache.commons.lang3.ArrayUtils;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.compatibility.rei.barrel.*;
 import wraith.fabricaeexnihilo.compatibility.rei.crucible.CrucibleCategory;
@@ -112,13 +113,19 @@ public class PluginEntry implements REIClientPlugin {
 //        registry.removePlusButton(ALCHEMY);
     }
 
+    @SuppressWarnings("UnstableApiUsage")
     @Override
     public void registerDisplays(DisplayRegistry registry) {
         FabricaeExNihilo.LOGGER.info("Registering REI Displays");
         registry.registerRecipeFiller(ToolRecipe.class, ModRecipes.HAMMER, recipe -> new ToolDisplay(recipe, CRUSHING));
         registry.registerRecipeFiller(ToolRecipe.class, ModRecipes.CROOK, recipe -> new ToolDisplay(recipe, CROOK));
-        //TODO: Add better check for hot fluids
-        registry.registerRecipeFiller(CrucibleRecipe.class, type -> Objects.equals(ModRecipes.CRUCIBLE, type), recipe -> !recipe.getFluid().isOf(Fluids.LAVA), recipe -> new CrucibleDisplay(recipe, WOOD_CRUCIBLE));
+        var config = FabricaeExNihilo.CONFIG.modules.barrels;
+        registry.registerRecipeFiller(
+            CrucibleRecipe.class,
+            type -> Objects.equals(ModRecipes.CRUCIBLE, type),
+            recipe -> !ArrayUtils.contains(config.woodenFluidFilter, Registry.FLUID.getId(recipe.getFluid().getFluid()).toString()),
+            recipe -> new CrucibleDisplay(recipe, WOOD_CRUCIBLE)
+        );
         registry.registerRecipeFiller(CrucibleRecipe.class, ModRecipes.CRUCIBLE, recipe -> new CrucibleDisplay(recipe, PORCELAIN_CRUCIBLE));
         registry.registerRecipeFiller(CrucibleHeatRecipe.class, ModRecipes.CRUCIBLE_HEAT, CrucibleHeatDisplay::new);
         var sieveRecipes = registry.getRecipeManager().listAllOfType(ModRecipes.SIEVE);

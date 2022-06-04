@@ -29,16 +29,12 @@ public abstract class AbstractIngredient<T> implements Predicate<T> {
         this.value = value;
     }
 
-    public boolean test(T value) {
-        return this.value.map(single -> single.equals(value), tag ->
-            StreamSupport.stream(getRegistry().iterateEntries(tag).spliterator(), false)
-                .map(RegistryEntry::value)
-                .anyMatch(value1 -> value == value1)
-        );
-    }
-
-    public boolean isEmpty() {
-        return this.value.map(Objects::isNull, tag -> Iterables.isEmpty(getRegistry().iterateEntries(tag)));
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof AbstractIngredient other) {
+            return this.getClass() == other.getClass() && this.value.equals(other.value);
+        }
+        return false;
     }
 
     public <U> List<U> flatten(Function<T, U> func) {
@@ -55,24 +51,28 @@ public abstract class AbstractIngredient<T> implements Predicate<T> {
 
     public abstract Registry<T> getRegistry();
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof AbstractIngredient other) {
-            return this.getClass() == other.getClass() && this.value.equals(other.value);
-        }
-        return false;
-    }
-
     public Either<T, TagKey<T>> getValue() {
         return value;
+    }
+
+    public int hashCode() {
+        return value.hashCode();
+    }
+
+    public boolean isEmpty() {
+        return this.value.map(Objects::isNull, tag -> Iterables.isEmpty(getRegistry().iterateEntries(tag)));
+    }
+
+    public boolean test(T value) {
+        return this.value.map(single -> single.equals(value), tag ->
+            StreamSupport.stream(getRegistry().iterateEntries(tag).spliterator(), false)
+                .map(RegistryEntry::value)
+                .anyMatch(value1 -> value == value1)
+        );
     }
 
     @Override
     public String toString() {
         return value.map(Object::toString, tag -> "#" + tag.toString());
-    }
-
-    public int hashCode() {
-        return value.hashCode();
     }
 }
