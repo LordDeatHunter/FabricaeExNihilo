@@ -1,11 +1,13 @@
 package wraith.fabricaeexnihilo.modules.sieves;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
@@ -27,7 +29,7 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
     public SieveBlock() {
-        super(ModBlocks.WOOD_SETTINGS.nonOpaque());
+        super(FabricBlockSettings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD).nonOpaque());
         setDefaultState(getStateManager().getDefaultState().with(WATERLOGGED, false));
     }
 

@@ -1,5 +1,6 @@
 package wraith.fabricaeexnihilo.modules.fluids;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BucketItem;
 import net.minecraft.tag.TagKey;
@@ -17,7 +18,7 @@ public class BloodFluid extends AbstractFluid {
     public static final BloodFluid STILL = new BloodFluid(true);
     public static final BucketItem BUCKET = new BucketItem(STILL, ModFluids.BUCKET_ITEM_SETTINGS);
     public static final BloodFluid FLOWING = new BloodFluid(false);
-    public static final BaseFluidBlock BLOCK = new BaseFluidBlock(STILL, ModFluids.BLOCK_SETTINGS);
+    public static final BaseFluidBlock BLOCK = new BaseFluidBlock(STILL, FabricBlockSettings.copyOf(ModFluids.BLOCK_SETTINGS));
     
     @Override
     public boolean matchesType(Fluid fluid) {

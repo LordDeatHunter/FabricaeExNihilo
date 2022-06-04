@@ -44,7 +44,7 @@ public final class ModBlocks {
     public static final Map<Identifier, Block> CRUSHED = new HashMap<>();
 
     public static final Map<Identifier, InfestedLeavesBlock> INFESTED_LEAVES = new HashMap<>();
-    public static final InfestingLeavesBlock INFESTING_LEAVES = new InfestingLeavesBlock(INFESTED_LEAVES_SETTINGS);
+    public static final InfestingLeavesBlock INFESTING_LEAVES = new InfestingLeavesBlock(FabricBlockSettings.copyOf(INFESTED_LEAVES_SETTINGS));
 
     public static void registerBlocks() {
         SIEVES.forEach((identifier, block) -> Registry.register(Registry.BLOCK, identifier, block));

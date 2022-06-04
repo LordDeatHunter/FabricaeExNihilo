@@ -20,15 +20,11 @@ import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 public final class ModItems {
 
     public static final FabricItemSettings BASE_SETTINGS = new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP).maxCount(64);
-
-    public static final Map<Identifier, Item> SEEDS = new LinkedHashMap<>();
-
-    public static final Map<Identifier, Item> RESOURCES = new LinkedHashMap<>();
-
-    public static final Map<Identifier, ColoredItem> ORE_PIECES = new LinkedHashMap<>();
-    public static final Map<Identifier, MeshItem> MESHES = new LinkedHashMap<>();
-
     public static final List<Identifier> DOLLS = new ArrayList<>();
+    public static final Map<Identifier, MeshItem> MESHES = new LinkedHashMap<>();
+    public static final Map<Identifier, ColoredItem> ORE_PIECES = new LinkedHashMap<>();
+    public static final Map<Identifier, Item> RESOURCES = new LinkedHashMap<>();
+    public static final Map<Identifier, Item> SEEDS = new LinkedHashMap<>();
 
     static {
         RESOURCES.put(id("andesite_pebble"), new Item(BASE_SETTINGS));
