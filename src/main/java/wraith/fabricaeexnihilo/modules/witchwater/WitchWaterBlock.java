@@ -103,7 +103,7 @@ public class WitchWaterBlock extends BaseFluidBlock {
 
             // Slime -> Magma Slime
             if (toKill instanceof SlimeEntity slimeEntity && livingEntity instanceof MagmaCubeEntity magmaCubeEntity) {
-                //TODO mixin for setting slime size
+                //TODO: mixin for setting slime size
             }
 
             // Set Health
@@ -166,7 +166,7 @@ public class WitchWaterBlock extends BaseFluidBlock {
             }
             replaceMob(world, arrow, bullet);
         }
-        // TODO item changes
+        //TODO: item changes
     }
 
 }

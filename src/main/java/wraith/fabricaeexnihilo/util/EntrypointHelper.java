@@ -74,7 +74,7 @@ public class EntrypointHelper {
 
         @Override
         public void registerInfestedLeaves(String name, Identifier source) {
-            // TODO: Make these stack somehow: multiple sources for one result.
+            //TODO: Make these stack somehow: multiple sources for one result.
             ModBlocks.INFESTED_LEAVES.put(id(name, "infested_", "_leaves"), new InfestedLeavesBlock(source, ModBlocks.INFESTED_LEAVES_SETTINGS));
         }
 

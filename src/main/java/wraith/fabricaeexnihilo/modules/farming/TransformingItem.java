@@ -23,7 +23,7 @@ public class TransformingItem extends Item {
         var world = context.getWorld();
         var blockPos = context.getBlockPos();
         var target = world.getBlockState(blockPos).getBlock();
-        // TODO make this work if someone overrides a block
+        //TODO: make this work if someone overrides a block
         if (target == from.get()) {
             world.setBlockState(blockPos, to.get().getDefaultState());
             if (context.getPlayer() != null && !context.getPlayer().isCreative()) {

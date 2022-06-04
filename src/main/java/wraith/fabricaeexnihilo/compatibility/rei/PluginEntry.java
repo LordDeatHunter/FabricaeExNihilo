@@ -95,7 +95,7 @@ public class PluginEntry implements REIClientPlugin {
         registry.addWorkstations(WITCH_WATER_ENTITY, EntryStacks.of(WitchWaterFluid.BUCKET));
         registry.addWorkstations(WITCH_WATER_WORLD, EntryStacks.of(WitchWaterFluid.BUCKET));
 
-// TODO: See if this is a viable solution
+//TODO: See if this is a viable solution
 //        registry.removePlusButton(SIEVE);
 //        registry.removePlusButton(CROOK);
 //        registry.removePlusButton(HAMMER);
@@ -117,7 +117,7 @@ public class PluginEntry implements REIClientPlugin {
         FabricaeExNihilo.LOGGER.info("Registering REI Displays");
         registry.registerRecipeFiller(ToolRecipe.class, ModRecipes.HAMMER, recipe -> new ToolDisplay(recipe, CRUSHING));
         registry.registerRecipeFiller(ToolRecipe.class, ModRecipes.CROOK, recipe -> new ToolDisplay(recipe, CROOK));
-        // TODO: Add better check for hot fluids
+        //TODO: Add better check for hot fluids
         registry.registerRecipeFiller(CrucibleRecipe.class, type -> Objects.equals(ModRecipes.CRUCIBLE, type), recipe -> !recipe.getFluid().isOf(Fluids.LAVA), recipe -> new CrucibleDisplay(recipe, WOOD_CRUCIBLE));
         registry.registerRecipeFiller(CrucibleRecipe.class, ModRecipes.CRUCIBLE, recipe -> new CrucibleDisplay(recipe, PORCELAIN_CRUCIBLE));
         registry.registerRecipeFiller(CrucibleHeatRecipe.class, ModRecipes.CRUCIBLE_HEAT, CrucibleHeatDisplay::new);
@@ -141,7 +141,7 @@ public class PluginEntry implements REIClientPlugin {
         registry.registerRecipeFiller(MilkingRecipe.class, ModRecipes.MILKING, MilkingDisplay::new);
         registry.registerRecipeFiller(FluidCombinationRecipe.class, ModRecipes.FLUID_COMBINATION, FluidOnTopDisplay::new);
         registry.registerRecipeFiller(WitchWaterEntityRecipe.class, ModRecipes.WITCH_WATER_ENTITY, WitchWaterEntityDisplay::new);
-        // TODO: Merge recipes with same input, check sieve recipes
+        //TODO: Merge recipes with same input, check sieve recipes
         registry.registerRecipeFiller(WitchWaterWorldRecipe.class, ModRecipes.WITCH_WATER_WORLD, WitchWaterWorldDisplay::new);
     }
 

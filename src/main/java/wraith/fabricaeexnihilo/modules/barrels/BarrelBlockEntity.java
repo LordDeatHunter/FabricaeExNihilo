@@ -231,7 +231,7 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
             return;
         }
         world.spawnEntity(entity);
-        // TODO play some particles
+        //TODO: play some particles
         entityStack.setSize(entityStack.getSize() - 1);
     }
 

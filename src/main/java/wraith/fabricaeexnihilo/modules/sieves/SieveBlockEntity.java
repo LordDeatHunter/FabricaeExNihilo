@@ -149,7 +149,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
                 + FabricaeExNihilo.CONFIG.modules.sieves.efficiencyScaleFactor * efficiency
                 + FabricaeExNihilo.CONFIG.modules.sieves.hasteScaleFactor * hasteLevel;
         
-        // TODO spawn some particles
+        //TODO: spawn some particles
         if (progress > 1.0) {
             // The utility method for multiple items is less neat to use
             for (var result : SieveRecipe.find(contents.getItem(), getFluid(), RegistryUtils.getId(mesh.getItem()), world)) {

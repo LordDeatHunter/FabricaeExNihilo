@@ -52,7 +52,7 @@ public class DefaultApiModule implements FENApiModule {
         registries.registerInfestedLeaves("dark_oak", new Identifier("minecraft:dark_oak_leaves"));
         registries.registerInfestedLeaves("jungle", new Identifier("minecraft:jungle_leaves"));
 
-        // TODO: Replace seeds with vanilla variants
+        //TODO: Replace seeds with vanilla variants
         var seedConfig = FabricaeExNihilo.CONFIG.modules.seeds;
         if (seedConfig.enabled) {
             if (seedConfig.carrot) {

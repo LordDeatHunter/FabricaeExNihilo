@@ -44,7 +44,7 @@ public class AlchemyRecipeJS extends RecipeJS {
         return toSpawn(type, 1);
     }
     
-    // TODO: Figure out how to allow for nbt
+    //TODO: Figure out how to allow for nbt
     public AlchemyRecipeJS toSpawn(String type, int count) {
         this.toSpawn = new EntityStack(Registry.ENTITY_TYPE.get(new Identifier(type)), count);
         return this;

@@ -83,7 +83,7 @@ public class MilkingCategory implements DisplayCategory<MilkingDisplay> {
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BARRELS_X, bounds.getMinY() + BARRELS_Y)).entries(barrel));
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X, bounds.getMinY() + OUTPUT_Y)).entries(outputs.get(0)));
 
-        // TODO some day figure out how to render a little entity over the barrel instead of an egg :/
+        //TODO: some day figure out how to render a little entity over the barrel instead of an egg :/
 //        (display.recipe.entity.flatten().firstOrNull())?.let{
 //            widgets.add(EntityWidget(bounds.getMinX(), bounds.getMinY(), 36, 36, it))
 //        }
