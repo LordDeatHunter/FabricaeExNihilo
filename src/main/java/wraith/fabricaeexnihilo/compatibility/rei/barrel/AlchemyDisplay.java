@@ -24,8 +24,8 @@ public class AlchemyDisplay implements Display {
     private final List<EntryIngredient> reactant;
 
     public AlchemyDisplay(AlchemyRecipe recipe) {
-        this.catalyst = recipe.getCatalyst().flatten(EntryIngredients::of);
-        this.reactant = recipe.getReactant().flatten(EntryIngredients::of);
+        this.catalyst = recipe.getCatalyst().streamEntries().map(EntryIngredients::of).toList();
+        this.reactant = recipe.getReactant().streamEntries().map(EntryIngredients::of).toList();
 
         this.inputs = new ArrayList<>();
         this.inputs.addAll(this.catalyst);

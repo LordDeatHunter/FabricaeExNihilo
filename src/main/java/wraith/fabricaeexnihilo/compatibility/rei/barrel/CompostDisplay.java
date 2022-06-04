@@ -16,7 +16,7 @@ public class CompostDisplay implements Display {
     private final List<EntryIngredient> outputs;
 
     public CompostDisplay(CompostRecipe recipe) {
-        this.inputs = recipe.getInput().flatten(EntryIngredients::of);
+        this.inputs = recipe.getInput().streamEntries().map(EntryIngredients::of).toList();
         this.outputs = Collections.singletonList(EntryIngredients.of(recipe.getResult()));
     }
 

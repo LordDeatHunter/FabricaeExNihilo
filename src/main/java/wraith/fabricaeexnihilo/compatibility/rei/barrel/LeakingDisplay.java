@@ -19,8 +19,8 @@ public class LeakingDisplay implements Display {
     private final List<EntryIngredient> outputs;
 
     public LeakingDisplay(LeakingRecipe recipe) {
-        this.block = recipe.getBlock().flatten(EntryIngredients::of);
-        this.fluid = recipe.getFluid().flatten(EntryIngredients::of);
+        this.block = recipe.getBlock().streamEntries().map(EntryIngredients::of).toList();
+        this.fluid = recipe.getFluid().streamEntries().map(EntryIngredients::of).toList();
         this.inputs = new ArrayList<>();
         this.inputs.addAll(this.block);
         this.inputs.addAll(this.fluid);

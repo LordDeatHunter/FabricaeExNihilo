@@ -15,7 +15,7 @@ public class WitchWaterWorldDisplay implements Display {
     private final List<EntryIngredient> outputs;
 
     public WitchWaterWorldDisplay(WitchWaterWorldRecipe recipe) {
-        this.inputs = recipe.getTarget().flatten(EntryIngredients::of);
+        this.inputs = recipe.getTarget().streamEntries().map(EntryIngredients::of).toList();
         this.outputs = recipe.getResult().flatten(EntryIngredients::of);
     }
 

@@ -80,7 +80,7 @@ public class FluidIngredient extends AbstractIngredient<Fluid> {
     }
 
     public List<ItemStack> flattenListOfBuckets() {
-        return flatten(fluid -> ItemUtils.asStack(fluid.getBucketItem())).stream().filter(fluid -> !fluid.isEmpty()).toList();
+        return streamEntries().map(fluid1 -> ItemUtils.asStack(fluid1.getBucketItem())).toList().stream().filter(fluid -> !fluid.isEmpty()).toList();
     }
 
     public <U> List<U> flattenListOfBuckets(Function<ItemStack, U> func) {

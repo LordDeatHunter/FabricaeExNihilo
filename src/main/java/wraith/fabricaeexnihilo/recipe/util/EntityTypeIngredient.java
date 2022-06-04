@@ -57,7 +57,7 @@ public class EntityTypeIngredient extends AbstractIngredient<EntityType<?>> {
     }
 
     public List<ItemStack> flattenListOfEggStacks() {
-        return flatten(SpawnEggItem::forEntity).stream().filter(Objects::nonNull).map(ItemUtils::asStack).toList();
+        return streamEntries().map(SpawnEggItem::forEntity).toList().stream().filter(Objects::nonNull).map(ItemUtils::asStack).toList();
     }
 
     public <U> List<U> flattenListOfEggStacks(Function<ItemStack, U> func) {

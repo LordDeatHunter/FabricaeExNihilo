@@ -1,16 +1,14 @@
 package wraith.fabricaeexnihilo.recipe.util;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.mojang.datafixers.util.Either;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 public abstract class AbstractIngredient<T> implements Predicate<T> {
@@ -36,19 +34,7 @@ public abstract class AbstractIngredient<T> implements Predicate<T> {
         }
         return false;
     }
-
-    public <U> List<U> flatten(Function<T, U> func) {
-        return this.value
-            .map(ImmutableList::of, (tag) ->
-                StreamSupport
-                    .stream(getRegistry().iterateEntries(tag).spliterator(), false)
-                    .map(RegistryEntry::value).toList()
-            )
-            .stream()
-            .map(func)
-            .toList();
-    }
-
+    
     public abstract Registry<T> getRegistry();
 
     public Either<T, TagKey<T>> getValue() {
@@ -64,11 +50,12 @@ public abstract class AbstractIngredient<T> implements Predicate<T> {
     }
 
     public boolean test(T value) {
-        return this.value.map(single -> single.equals(value), tag ->
-            StreamSupport.stream(getRegistry().iterateEntries(tag).spliterator(), false)
-                .map(RegistryEntry::value)
-                .anyMatch(value1 -> value == value1)
-        );
+        return streamEntries().anyMatch(value1 -> value == value1);
+    }
+    
+    public Stream<T> streamEntries() {
+        return value.map(Stream::of, tag -> StreamSupport.stream(getRegistry().iterateEntries(tag).spliterator(), false)
+                .map(RegistryEntry::value));
     }
 
     @Override

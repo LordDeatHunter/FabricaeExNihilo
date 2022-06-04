@@ -23,9 +23,9 @@ public class FluidOnTopDisplay implements Display {
 
     public FluidOnTopDisplay(FluidCombinationRecipe recipe) {
         this.barrel = EntryIngredients.of(ItemUtils.getExNihiloItemStack("oak_barrel"));
-
-        this.fluidInside = recipe.getContained().flatten(EntryIngredients::of);
-        this.blockAbove = recipe.getOther().flatten(EntryIngredients::of);
+    
+        this.fluidInside = recipe.getContained().streamEntries().map(EntryIngredients::of).toList();
+        this.blockAbove = recipe.getOther().streamEntries().map(EntryIngredients::of).toList();
         this.outputs = new ArrayList<>();
         this.inputs = new ArrayList<>();
         this.inputs.addAll(this.fluidInside);

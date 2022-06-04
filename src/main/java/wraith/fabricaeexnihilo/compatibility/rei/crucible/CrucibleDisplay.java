@@ -18,7 +18,7 @@ public class CrucibleDisplay implements Display {
     private final List<EntryIngredient> outputs;
 
     public CrucibleDisplay(CrucibleRecipe recipe, CategoryIdentifier<?> category) {
-        this.inputs = recipe.getInput().flatten(EntryIngredients::of);
+        this.inputs = recipe.getInput().streamEntries().map(EntryIngredients::of).toList();
         this.category = category;
         this.outputs = Collections.singletonList(EntryIngredients.of(recipe.getFluid().getFluid()));
         this.amount = recipe.getAmount();

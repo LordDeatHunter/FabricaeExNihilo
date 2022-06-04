@@ -26,9 +26,9 @@ public class SieveRecipeHolder {
 
     public static List<SieveRecipeHolder> fromRecipe(SieveRecipe recipe) {
         var holders = new ArrayList<SieveRecipeHolder>();
-
-        var inputs = recipe.getInput().flatten(EntryIngredients::of);
-        var fluids = recipe.getFluid().flatten(EntryIngredients::of);
+    
+        var inputs = recipe.getInput().streamEntries().map(EntryIngredients::of).toList();
+        var fluids = recipe.getFluid().streamEntries().map(EntryIngredients::of).toList();
         var output = EntryIngredients.of(recipe.getResult());
         var outputs = new HashMap<EntryIngredient, List<Double>>();
 

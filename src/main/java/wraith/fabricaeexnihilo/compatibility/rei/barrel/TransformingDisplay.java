@@ -24,8 +24,8 @@ public class TransformingDisplay implements Display {
 
     public TransformingDisplay(FluidTransformationRecipe recipe) {
         this.barrel = EntryIngredients.of(ItemUtils.getExNihiloItemStack("oak_barrel"));
-        this.catalyst = recipe.getCatalyst().flatten(EntryIngredients::of);
-        this.contained = recipe.getContained().flatten(EntryIngredients::of);
+        this.catalyst = recipe.getCatalyst().streamEntries().map(EntryIngredients::of).toList();
+        this.contained = recipe.getContained().streamEntries().map(EntryIngredients::of).toList();
 
         this.inputs = new ArrayList<>();
         this.inputs.addAll(this.catalyst);

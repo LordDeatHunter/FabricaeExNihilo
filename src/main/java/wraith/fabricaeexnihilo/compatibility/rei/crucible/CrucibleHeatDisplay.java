@@ -17,13 +17,13 @@ public class CrucibleHeatDisplay implements Display {
     private final List<EntryIngredient> inputs;
 
     public CrucibleHeatDisplay(CrucibleHeatRecipe recipe) {
-        this.inputs = recipe.getBlock().flatten(block -> {
+        this.inputs = recipe.getBlock().streamEntries().map(block -> {
             var fluid = block.getDefaultState().getFluidState().getFluid();
             if (fluid != Fluids.EMPTY) {
                 return EntryIngredients.of(fluid);
             }
             return EntryIngredients.of(block);
-        });
+        }).toList();
         this.heat = recipe.getHeat();
     }
 
