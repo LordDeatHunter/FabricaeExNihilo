@@ -1,6 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:iridium_piece",
+  "result": "fabricaeexnihilo:raw_iridium_piece",
   "input": "minecraft:gravel",
   "rolls": {
     "fabricaeexnihilo:diamond_mesh": [0.1],

@@ -1,6 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:iron_piece",
+  "result": "fabricaeexnihilo:raw_iron_piece",
   "input": "fabricaeexnihilo:crushed_granite",
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.075],

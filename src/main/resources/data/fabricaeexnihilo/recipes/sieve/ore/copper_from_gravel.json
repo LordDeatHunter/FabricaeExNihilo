@@ -1,6 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:copper_piece",
+  "result": "fabricaeexnihilo:raw_copper_piece",
   "input": "minecraft:gravel",
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.1],

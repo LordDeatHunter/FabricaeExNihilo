@@ -75,9 +75,8 @@ public interface FENRegistries {
      * have to manually provide all assets. (layer1 will be tinted based on {@code color}).
      *
      * @param name  The name of the ore.
-     * @param color The color of the overlay.
      */
-    void registerOrePiece(String name, Color color);
+    void registerOrePiece(String name);
 
     /**
      * Register a new type of seed that creates normal plants. It will be registered under

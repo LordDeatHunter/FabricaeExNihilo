@@ -1,6 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:gold_piece",
+  "result": "fabricaeexnihilo:raw_gold_piece",
   "input": "fabricaeexnihilo:crushed_netherrack",
   "rolls": {
     "fabricaeexnihilo:iron_mesh": [0.1, 0.1],

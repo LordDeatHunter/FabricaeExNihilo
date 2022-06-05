@@ -1,6 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:nickel_piece",
+  "result": "fabricaeexnihilo:raw_nickel_piece",
   "input": "fabricaeexnihilo:crushed_andesite",
   "rolls": {
     "fabricaeexnihilo:iron_mesh": [0.1, 0.1],

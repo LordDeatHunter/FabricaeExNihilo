@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "fabricaeexnihilo:item/ore/pieces/coarse_andesite",
-    "layer1": "fabricaeexnihilo:item/ore/pieces/coarse_overlay"
-  }
-}

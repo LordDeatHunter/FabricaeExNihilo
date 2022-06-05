@@ -1,6 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:antimony_piece",
+  "result": "fabricaeexnihilo:raw_antimony_piece",
   "input": "minecraft:gravel",
   "rolls": {
     "fabricaeexnihilo:iron_mesh": [0.075],

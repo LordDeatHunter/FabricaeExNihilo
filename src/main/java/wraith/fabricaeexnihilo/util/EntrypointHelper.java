@@ -5,6 +5,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.FallingBlock;
 import net.minecraft.block.TallPlantBlock;
+import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
@@ -89,8 +90,8 @@ public class EntrypointHelper {
         }
 
         @Override
-        public void registerOrePiece(String name, Color color) {
-            ModItems.ORE_PIECES.put(id(name, null, "_piece"), new ColoredItem(color, ModItems.BASE_SETTINGS));
+        public void registerOrePiece(String name) {
+            ModItems.ORE_PIECES.put(id(name, "raw_", "_piece"), new Item(ModItems.BASE_SETTINGS));
         }
 
         @Override

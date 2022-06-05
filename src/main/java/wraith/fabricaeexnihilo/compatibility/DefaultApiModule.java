@@ -10,9 +10,9 @@ public class DefaultApiModule implements FENApiModule {
 
     @Override
     public void onInit(FENRegistries registries) {
-        registries.registerOrePiece("iron", Color.IRON);
-        registries.registerOrePiece("copper", Color.COPPER);
-        registries.registerOrePiece("gold", Color.GOLD);
+        registries.registerOrePiece("iron");
+        registries.registerOrePiece("copper");
+        registries.registerOrePiece("gold");
         registries.registerWood("oak");
         registries.registerWood("birch");
         registries.registerWood("spruce");

@@ -1,6 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:uranium_piece",
+  "result": "fabricaeexnihilo:raw_uranium_piece",
   "input": "minecraft:gravel",
   "rolls": {
     "fabricaeexnihilo:diamond_mesh": [0.1],
