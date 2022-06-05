@@ -22,9 +22,10 @@
   },
   "fabric:load_conditions": [
     {
-      "condition": "fabric:all_mods_loaded",
+      "condition": "fabricaeexnihilo:all_items_present",
       "values": [
-        "techreborn"
+        "techreborn:rubber_log",
+        "techreborn:rubber_plank_slab"
       ]
     }
   ]

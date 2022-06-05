@@ -4,9 +4,9 @@
   "heat": 16,
   "fabric:load_conditions": [
     {
-      "condition": "fabric:all_mods_loaded",
+      "condition": "fabricaeexnihilo:all_blocks_present",
       "values": [
-        "techreborn"
+        "techreborn:nitro_diesel"
       ]
     }
   ]

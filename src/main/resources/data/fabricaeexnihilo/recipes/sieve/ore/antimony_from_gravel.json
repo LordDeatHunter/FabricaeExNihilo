@@ -9,9 +9,9 @@
   },
   "fabric:load_conditions": [
     {
-      "condition": "fabric:any_mod_loaded",
+      "condition": "fabricaeexnihilo:all_items_present",
       "values": [
-        "modern_industrialization"
+        "fabricaeexnihilo:raw_antimony_piece"
       ]
     }
   ]
