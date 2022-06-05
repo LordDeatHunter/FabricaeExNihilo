@@ -6,55 +6,68 @@ import wraith.fabricaeexnihilo.api.FENApiModule;
 import wraith.fabricaeexnihilo.api.FENRegistries;
 import wraith.fabricaeexnihilo.util.Color;
 
+import static wraith.fabricaeexnihilo.modules.ModBlocks.*;
+import static wraith.fabricaeexnihilo.modules.ModItems.itemSettings;
+
 public class DefaultApiModule implements FENApiModule {
 
     @Override
     public void onInit(FENRegistries registries) {
-        registries.registerOrePiece("iron");
-        registries.registerOrePiece("copper");
-        registries.registerOrePiece("gold");
-        registries.registerWood("oak");
-        registries.registerWood("birch");
-        registries.registerWood("spruce");
-        registries.registerWood("acacia");
-        registries.registerWood("dark_oak");
-        registries.registerWood("jungle");
-        registries.registerWood("warped", true);
-        registries.registerWood("crimson", true);
+        registries.registerOrePiece("iron", itemSettings());
+        registries.registerOrePiece("copper", itemSettings());
+        registries.registerOrePiece("gold", itemSettings());
+        
+        registries.registerWood("oak", false, woodSettings());
+        registries.registerWood("birch", false, woodSettings());
+        registries.registerWood("spruce", false, woodSettings());
+        registries.registerWood("acacia", false, woodSettings());
+        registries.registerWood("dark_oak", false, woodSettings());
+        registries.registerWood("jungle", false, woodSettings());
+        registries.registerWood("warped", false, woodSettings());
+        registries.registerWood("crimson", false, woodSettings());
+    
+        registries.registerCrushedBlock("dust", sandySettings());
+        registries.registerCrushedBlock("silt", sandySettings());
 
-        registries.registerCrushedBlock("dust", true);
-        registries.registerCrushedBlock("silt", true);
-
-        registries.registerCrushedBlock("crushed_andesite", false);
-        registries.registerCrushedBlock("crushed_diorite", false);
-        registries.registerCrushedBlock("crushed_granite", false);
-        registries.registerCrushedBlock("crushed_prismarine", false);
-        registries.registerCrushedBlock("crushed_endstone", false);
-        registries.registerCrushedBlock("crushed_netherrack", false);
-
-        registries.registerStoneCrucible("porcelain");
-
-        registries.registerStoneBarrel("stone");
-
-        registries.registerMesh("string", Color.WHITE, 10);
-        registries.registerMesh("flint", Color.GRAY, 12);
-        registries.registerMesh("iron", new Color("777777"), 14);
-        registries.registerMesh("diamond", Color.DARK_AQUA, 10);
-        registries.registerMesh("netherite", new Color("3B393B"), 15);
-        registries.registerMesh("copper", Color.COPPER, 13);
-        registries.registerMesh("gold", Color.GOLDEN, 22);
-        registries.registerMesh("emerald", Color.DARK_GREEN, 24);
-
-        registries.registerInfestedLeaves("oak", new Identifier("minecraft:oak_leaves"));
-        registries.registerInfestedLeaves("birch", new Identifier("minecraft:birch_leaves"));
-        registries.registerInfestedLeaves("spruce", new Identifier("minecraft:spruce_leaves"));
-        registries.registerInfestedLeaves("acacia", new Identifier("minecraft:acacia_leaves"));
-        registries.registerInfestedLeaves("dark_oak", new Identifier("minecraft:dark_oak_leaves"));
-        registries.registerInfestedLeaves("jungle", new Identifier("minecraft:jungle_leaves"));
-
-        //TODO: Replace seeds with vanilla variants
+        registries.registerCrushedBlock("crushed_andesite", gravelySettings());
+        registries.registerCrushedBlock("crushed_diorite", gravelySettings());
+        registries.registerCrushedBlock("crushed_granite", gravelySettings());
+        registries.registerCrushedBlock("crushed_prismarine", gravelySettings());
+        registries.registerCrushedBlock("crushed_endstone", gravelySettings());
+        registries.registerCrushedBlock("crushed_netherrack", gravelySettings());
+    
+        registries.registerCrucible("porcelain", true, stoneSettings());
+        registries.registerBarrel("stone", true, stoneSettings());
+        
+        registries.registerInfestedLeaves("oak", new Identifier("minecraft:oak_leaves"), infestedLeavesSettings());
+        registries.registerInfestedLeaves("birch", new Identifier("minecraft:birch_leaves"), infestedLeavesSettings());
+        registries.registerInfestedLeaves("spruce", new Identifier("minecraft:spruce_leaves"), infestedLeavesSettings());
+        registries.registerInfestedLeaves("acacia", new Identifier("minecraft:acacia_leaves"), infestedLeavesSettings());
+        registries.registerInfestedLeaves("dark_oak", new Identifier("minecraft:dark_oak_leaves"), infestedLeavesSettings());
+        registries.registerInfestedLeaves("jungle", new Identifier("minecraft:jungle_leaves"), infestedLeavesSettings());
+    
+        registries.registerMesh("string", Color.WHITE, 10, itemSettings());
+        registries.registerMesh("flint", Color.GRAY, 12, itemSettings());
+        registries.registerMesh("iron", new Color("777777"), 14, itemSettings());
+        registries.registerMesh("diamond", Color.DARK_AQUA, 10, itemSettings());
+        registries.registerMesh("netherite", new Color("3B393B"), 15, itemSettings());
+        registries.registerMesh("copper", Color.COPPER, 13, itemSettings());
+        registries.registerMesh("gold", Color.GOLDEN, 22, itemSettings());
+        registries.registerMesh("emerald", Color.DARK_GREEN, 24, itemSettings());
+        
         var seedConfig = FabricaeExNihilo.CONFIG.modules.seeds;
         if (seedConfig.enabled) {
+            if (seedConfig.mycelium) {
+                registries.registerTransformingSeed("mycelium", new Identifier("minecraft", "dirt"), new Identifier("minecraft", "mycelium"));
+            }
+            if (seedConfig.netherSpores) {
+                registries.registerTransformingSeed("warped", new Identifier("minecraft", "netherrack"), new Identifier("minecraft", "warped_nylium"));
+                registries.registerTransformingSeed("crimson", new Identifier("minecraft", "netherrack"), new Identifier("minecraft", "crimson_nylium"));
+            }
+            if (seedConfig.grass) {
+                registries.registerTransformingSeed("grass", new Identifier("minecraft", "dirt"), new Identifier("minecraft", "grass_block"));
+            }
+            //TODO: Replace seeds bellow with vanilla variants
             if (seedConfig.carrot) {
                 registries.registerSeed("carrot", new Identifier("minecraft", "carrots"));
             }
@@ -73,18 +86,8 @@ public class DefaultApiModule implements FENApiModule {
             if (seedConfig.cactus) {
                 registries.registerSeed("cactus", new Identifier("minecraft", "cactus"));
             }
-            if (seedConfig.grass) {
-                registries.registerTransformingSeed("grass", new Identifier("minecraft", "dirt"), new Identifier("minecraft", "grass_block"));
-            }
-            if (seedConfig.mycelium) {
-                registries.registerTransformingSeed("mycelium", new Identifier("minecraft", "dirt"), new Identifier("minecraft", "mycelium"));
-            }
             if (seedConfig.kelp) {
                 registries.registerSeed("kelp", new Identifier("minecraft", "kelp"));
-            }
-            if (seedConfig.netherSpores) {
-                registries.registerTransformingSeed("warped", new Identifier("minecraft", "netherrack"), new Identifier("minecraft", "warped_nylium"));
-                registries.registerTransformingSeed("crimson", new Identifier("minecraft", "netherrack"), new Identifier("minecraft", "crimson_nylium"));
             }
             if (seedConfig.flowerSeeds) {
                 registries.registerTallPlantSeed("sunflower", new Identifier("minecraft", "sunflower"));

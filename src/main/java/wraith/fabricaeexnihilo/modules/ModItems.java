@@ -18,7 +18,7 @@ import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public final class ModItems {
 
-    public static final FabricItemSettings BASE_SETTINGS = new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP).maxCount(64);
+    public static final FabricItemSettings BASE_SETTINGS = new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP);
     public static final List<Identifier> DOLLS = new ArrayList<>();
     public static final Map<Identifier, MeshItem> MESHES = new LinkedHashMap<>();
     public static final Map<Identifier, Item> ORE_PIECES = new LinkedHashMap<>();
@@ -63,10 +63,14 @@ public final class ModItems {
         ModFluids.registerBuckets();
     }
 
-    public static void setup() {
+    private static void setup() {
         if (FabricaeExNihilo.CONFIG.modules.silkworms.enabled) {
             RESOURCES.put(id("raw_silkworm"), new SilkWormItem(new FabricItemSettings().maxCount(64).food(FoodComponents.COD).group(FabricaeExNihilo.ITEM_GROUP)));
             RESOURCES.put(id("cooked_silkworm"), new Item(new FabricItemSettings().maxCount(64).food(FoodComponents.COOKED_COD).group(FabricaeExNihilo.ITEM_GROUP)));
         }
+    }
+    
+    public static FabricItemSettings itemSettings() {
+        return new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP);
     }
 }

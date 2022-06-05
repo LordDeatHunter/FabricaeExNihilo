@@ -1,7 +1,9 @@
 package wraith.fabricaeexnihilo.api;
 
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.TallPlantBlock;
+import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.ApiStatus;
@@ -24,10 +26,10 @@ public interface FENRegistries {
      * to manually provide all assets. The model {@code fabricaeexnihilo:block/barrel} can be extended for convenience.
      *
      * @param name        The name of the barrel.
-     * @param isStone     Whether it should be considered made of stone. Affects the sounds and hardness of the block.
      * @param isFireproof Whether it should be fireproof.
+     * @param settings
      */
-    void registerBarrel(String name, boolean isStone, boolean isFireproof);
+    void registerBarrel(String name, boolean isFireproof, AbstractBlock.Settings settings);
 
     /**
      * Register a new type of crucible. It will be registered under {@code fabricaeexnihilo:<name>_crucible}. You will
@@ -38,7 +40,7 @@ public interface FENRegistries {
      * @param isStone     Whether it should be considered made of stone. Affects the sounds and hardness of the block.
      * @param isFireproof Whether it should be fireproof.
      */
-    void registerCrucible(String name, boolean isStone, boolean isFireproof);
+    void registerCrucible(String name, boolean isFireproof, AbstractBlock.Settings settings);
 
     /**
      * Register a new crushed block. It will be registered under {@code fabricaeexnihilo:crushed_<name>}. You will have
@@ -47,7 +49,7 @@ public interface FENRegistries {
      * @param name    The base name of the crushed block.
      * @param isSandy Whether it should be considered sandy. Affects the sounds of the block.
      */
-    void registerCrushedBlock(String name, boolean isSandy);
+    void registerCrushedBlock(String name, AbstractBlock.Settings settings);
 
     /**
      * Register a new type of infested leaves. It will be registered under
@@ -57,8 +59,26 @@ public interface FENRegistries {
      * @param name   The name of the wood type.
      * @param source The source of the transformation. Used in code.
      */
-    void registerInfestedLeaves(String name, Identifier source);
-
+    void registerInfestedLeaves(String name, Identifier source, AbstractBlock.Settings settings);
+    
+    /**
+     * Register a new type of sieve. It will be registered under {@code fabricaeexnihilo:<name>_sieve}. You will have to
+     * manually provide all assets. The model {@code fabricaeexnihilo:block/sieve} can be extended for convenience.
+     *
+     * @param name The name of the sieve.
+     */
+    void registerSieve(String name, boolean isFireproof, AbstractBlock.Settings settings);
+    
+    /**
+     * Register a new type of strainer. It will be registered under {@code fabricaeexnihilo:<name>_strainer}. You will
+     * have to manually provide all assets. The model {@code fabricaeexnihilo:block/strainer} can be extended for
+     * convenience.
+     *
+     * @param name        The name of the strainer.
+     * @param isFireproof
+     */
+    void registerStrainer(String name, boolean isFireproof, AbstractBlock.Settings settings);
+    
     /**
      * Register a new type of mesh piece. It will be registered under {@code fabricaeexnihilo:<name>_mesh}. You will
      * have to manually provide all assets. The model {@code fabricaeexnihilo:item/mesh} can be directly extended.
@@ -67,17 +87,19 @@ public interface FENRegistries {
      * @param name           The name of the mesh.
      * @param color          The color it will be tinted.
      * @param enchantability The enchantability of the mesh. You can use vanilla tool materials as a reference.
+     * @param settings
      */
-    void registerMesh(String name, Color color, int enchantability);
-
+    void registerMesh(String name, Color color, int enchantability, Item.Settings settings);
+    
     /**
      * Register a new type of ore piece. It will be registered under {@code fabricaeexnihilo:<name>_piece}. You will
      * have to manually provide all assets. (layer1 will be tinted based on {@code color}).
      *
-     * @param name  The name of the ore.
+     * @param name     The name of the ore.
+     * @param settings
      */
-    void registerOrePiece(String name);
-
+    void registerOrePiece(String name, Item.Settings settings);
+    
     /**
      * Register a new type of seed that creates normal plants. It will be registered under
      * {@code fabricaeexnihilo:<name>_seeds}. You will have to manually provide all assets.
@@ -101,39 +123,6 @@ public interface FENRegistries {
             .map(Registry.BLOCK::get)
             .toArray(Block[]::new)));
     }
-
-    /**
-     * Register a new type of sieve. It will be registered under {@code fabricaeexnihilo:<name>_sieve}. You will have to
-     * manually provide all assets. The model {@code fabricaeexnihilo:block/sieve} can be extended for convenience.
-     *
-     * @param name The name of the sieve.
-     */
-    void registerSieve(String name);
-
-    /**
-     * @param name The name of the barrel.
-     * @see #registerBarrel
-     */
-    default void registerStoneBarrel(String name) {
-        registerBarrel(name, true, true);
-    }
-
-    /**
-     * @param name The name of the crucible.
-     * @see #registerCrucible
-     */
-    default void registerStoneCrucible(String name) {
-        registerCrucible(name, true, true);
-    }
-
-    /**
-     * Register a new type of strainer. It will be registered under {@code fabricaeexnihilo:<name>_strainer}. You will
-     * have to manually provide all assets. The model {@code fabricaeexnihilo:block/strainer} can be extended for
-     * convenience.
-     *
-     * @param name The name of the strainer.
-     */
-    void registerStrainer(String name);
 
     /**
      * Register a new type of seed that creates tall plants. It will be registered under
@@ -196,37 +185,11 @@ public interface FENRegistries {
      * @see #registerSieve
      * @see #registerStrainer
      */
-    default void registerWood(String name, boolean fireproof) {
-        registerSieve(name);
-        registerStrainer(name);
-        registerBarrel(name, false, fireproof);
-        registerCrucible(name, false, fireproof);
+    default void registerWood(String name, boolean fireproof, AbstractBlock.Settings settings) {
+        registerSieve(name, fireproof, settings);
+        registerStrainer(name, fireproof, settings);
+        registerBarrel(name, fireproof, settings);
+        registerCrucible(name, fireproof, settings);
     }
-
-    /**
-     * @see #registerWood(String, boolean)
-     */
-    default void registerWood(String name) {
-        registerSieve(name);
-        registerStrainer(name);
-        registerWoodBarrel(name);
-        registerWoodCrucible(name);
-    }
-
-    /**
-     * @param name The name of the barrel.
-     * @see #registerBarrel(String, boolean, boolean)
-     */
-    default void registerWoodBarrel(String name) {
-        registerBarrel(name, false, false);
-    }
-
-    /**
-     * @param name The name of the crucible.
-     * @see #registerCrucible
-     */
-    default void registerWoodCrucible(String name) {
-        registerCrucible(name, false, false);
-    }
-
+    
 }

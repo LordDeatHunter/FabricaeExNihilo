@@ -84,5 +84,24 @@ public final class ModBlocks {
         Registry.register(Registry.BLOCK_ENTITY_TYPE, BarrelBlockEntity.BLOCK_ENTITY_ID, BarrelBlockEntity.TYPE);
         Registry.register(Registry.BLOCK_ENTITY_TYPE, InfestingLeavesBlockEntity.BLOCK_ENTITY_ID, InfestingLeavesBlockEntity.TYPE);
     }
-
+    
+    public static FabricBlockSettings woodSettings() {
+        return FabricBlockSettings.copyOf(WOOD_SETTINGS);
+    }
+    
+    public static FabricBlockSettings stoneSettings() {
+        return FabricBlockSettings.copyOf(STONE_SETTINGS);
+    }
+    
+    public static FabricBlockSettings sandySettings() {
+        return FabricBlockSettings.copyOf(CRUSHED_SANDY_SETTINGS);
+    }
+    
+    public static FabricBlockSettings gravelySettings() {
+        return FabricBlockSettings.copyOf(CRUSHED_GRAVELY_SETTINGS);
+    }
+    
+    public static FabricBlockSettings infestedLeavesSettings() {
+        return FabricBlockSettings.copyOf(INFESTED_LEAVES_SETTINGS);
+    }
 }

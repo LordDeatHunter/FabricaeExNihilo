@@ -1,6 +1,5 @@
 package wraith.fabricaeexnihilo.modules.sieves;
 
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
@@ -9,13 +8,11 @@ import wraith.fabricaeexnihilo.modules.base.Colored;
 import wraith.fabricaeexnihilo.util.Color;
 
 public class MeshItem extends Item implements Colored {
-    protected static final FabricItemSettings ITEM_SETTINGS = new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP).maxCount(FabricaeExNihilo.CONFIG.modules.sieves.meshStackSize);
-    
     private final Color color;
     private final int enchantability;
     
-    public MeshItem(Color color, int enchantability) {
-        super(ITEM_SETTINGS);
+    public MeshItem(Color color, int enchantability, Settings settings) {
+        super(settings.maxCount(FabricaeExNihilo.CONFIG.modules.sieves.meshStackSize));
         this.color = color;
         this.enchantability = enchantability;
     }

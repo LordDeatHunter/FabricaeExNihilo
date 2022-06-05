@@ -1,6 +1,5 @@
 package wraith.fabricaeexnihilo.modules.barrels;
 
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
@@ -40,7 +39,7 @@ public class BarrelBlock extends BlockWithEntity {
     private static final VoxelShape SHAPE = createCuboidShape(1.0, 0.0, 1.0, 15.0, 16.0, 15.0);
     private final boolean isFireproof;
 
-    public BarrelBlock(FabricBlockSettings settings, boolean isFireproof) {
+    public BarrelBlock(Settings settings, boolean isFireproof) {
         super(settings);
         this.isFireproof = isFireproof;
     }

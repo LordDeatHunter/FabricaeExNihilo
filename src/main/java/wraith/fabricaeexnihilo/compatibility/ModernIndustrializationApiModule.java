@@ -4,20 +4,22 @@ import net.fabricmc.loader.api.FabricLoader;
 import wraith.fabricaeexnihilo.api.FENApiModule;
 import wraith.fabricaeexnihilo.api.FENRegistries;
 
+import static wraith.fabricaeexnihilo.modules.ModItems.itemSettings;
+
 public class ModernIndustrializationApiModule implements FENApiModule {
 
     @Override
     public void onInit(FENRegistries registries) {
-        registries.registerOrePiece("antimony");
-        registries.registerOrePiece("iridium");
-        registries.registerOrePiece("tin");
-        registries.registerOrePiece("silver");
-        registries.registerOrePiece("lead");
-        registries.registerOrePiece("nickel");
-        registries.registerOrePiece("platinum");
-        registries.registerOrePiece("titanium");
-        registries.registerOrePiece("tungsten");
-        registries.registerOrePiece("uranium");
+        registries.registerOrePiece("antimony", itemSettings());
+        registries.registerOrePiece("iridium", itemSettings());
+        registries.registerOrePiece("tin", itemSettings());
+        registries.registerOrePiece("silver", itemSettings());
+        registries.registerOrePiece("lead", itemSettings());
+        registries.registerOrePiece("nickel", itemSettings());
+        registries.registerOrePiece("platinum", itemSettings());
+        registries.registerOrePiece("titanium", itemSettings());
+        registries.registerOrePiece("tungsten", itemSettings());
+        registries.registerOrePiece("uranium", itemSettings());
     }
 
     @Override

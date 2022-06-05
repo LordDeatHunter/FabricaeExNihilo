@@ -19,7 +19,7 @@ public class InfestedLeavesBlock extends LeavesBlock implements Colored, NonInfe
     private final Identifier old;
     private final Lazy<Block> leafBlock;
     
-    public InfestedLeavesBlock(Identifier leafBlock, FabricBlockSettings settings) {
+    public InfestedLeavesBlock(Identifier leafBlock, Settings settings) {
         super(settings);
         this.old = leafBlock;
         this.leafBlock = new Lazy<>(() -> Registry.BLOCK.get(leafBlock));

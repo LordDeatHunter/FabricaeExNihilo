@@ -45,8 +45,8 @@ public class StrainerBlock extends BlockWithEntity implements Waterloggable {
     );
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
-    public StrainerBlock() {
-        super(FabricBlockSettings.copyOf(ModBlocks.WOOD_SETTINGS).nonOpaque());
+    public StrainerBlock(Settings settings) {
+        super(settings.nonOpaque());
         setDefaultState(this.stateManager.getDefaultState().with(WATERLOGGED, false));
     }
 
