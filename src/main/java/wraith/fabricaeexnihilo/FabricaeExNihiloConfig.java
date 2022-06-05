@@ -113,7 +113,6 @@ public class FabricaeExNihiloConfig {
         public static class SeedConfig {
 
             public boolean cactus = true;
-            public boolean carrot = true;
             public boolean chorus = true;
             public boolean enabled = true;
             public boolean flowerSeeds = true;
@@ -121,10 +120,8 @@ public class FabricaeExNihiloConfig {
             public boolean kelp = true;
             public boolean mycelium = true;
             public boolean netherSpores = true;
-            public boolean potato = true;
             public boolean seaPickle = true;
             public boolean sugarCane = true;
-            public boolean treeSeeds = true;
         }
 
         public static class SieveConfig {

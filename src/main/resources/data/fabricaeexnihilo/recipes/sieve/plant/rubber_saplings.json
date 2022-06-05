@@ -1,6 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:rubber_seeds",
+  "result": "techreborn:rubber_sapling",
   "input": "minecraft:dirt",
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.04],
@@ -12,7 +12,7 @@
     {
       "condition": "fabricaeexnihilo:all_items_present",
       "values": [
-        "fabricaeexnihilo:rubber_seeds"
+        "techreborn:rubber_sapling"
       ]
     }
   ]

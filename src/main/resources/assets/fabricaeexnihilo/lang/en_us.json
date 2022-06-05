@@ -1,5 +1,6 @@
 {
   "itemGroup.fabricaeexnihilo.general": "Fabricae Ex Nihilo",
+
   "block.fabricaeexnihilo.oak_barrel": "Oak Barrel",
   "block.fabricaeexnihilo.spruce_barrel": "Spruce Barrel",
   "block.fabricaeexnihilo.birch_barrel": "Birch Barrel",
@@ -10,6 +11,7 @@
   "block.fabricaeexnihilo.crimson_barrel": "Crimson Barrel",
   "block.fabricaeexnihilo.rubber_barrel": "Rubber Barrel",
   "block.fabricaeexnihilo.stone_barrel": "Stone Barrel",
+
   "block.fabricaeexnihilo.oak_crucible": "Oak Crucible",
   "block.fabricaeexnihilo.spruce_crucible": "Spruce Crucible",
   "block.fabricaeexnihilo.birch_crucible": "Birch Crucible",
@@ -21,6 +23,7 @@
   "block.fabricaeexnihilo.rubber_crucible": "Rubber Crucible",
   "block.fabricaeexnihilo.porcelain_crucible": "Porcelain Crucible",
   "item.fabricaeexnihilo.unfired_porcelain_crucible": "Unfired Porcelain Crucible",
+
   "block.fabricaeexnihilo.oak_sieve": "Oak Sieve",
   "block.fabricaeexnihilo.spruce_sieve": "Spruce Sieve",
   "block.fabricaeexnihilo.birch_sieve": "Birch Sieve",
@@ -30,6 +33,7 @@
   "block.fabricaeexnihilo.crimson_sieve": "Crimson Sieve",
   "block.fabricaeexnihilo.dark_oak_sieve": "Dark Oak Sieve",
   "block.fabricaeexnihilo.rubber_sieve": "Rubber Sieve",
+
   "block.fabricaeexnihilo.oak_strainer": "Oak Strainer",
   "block.fabricaeexnihilo.spruce_strainer": "Spruce Strainer",
   "block.fabricaeexnihilo.birch_strainer": "Birch Strainer",
@@ -39,6 +43,7 @@
   "block.fabricaeexnihilo.warped_strainer": "Warped Strainer",
   "block.fabricaeexnihilo.crimson_strainer": "Crimson Strainer",
   "block.fabricaeexnihilo.rubber_strainer": "Rubber Strainer",
+
   "block.fabricaeexnihilo.dust": "Dust",
   "block.fabricaeexnihilo.silt": "Silt",
   "block.fabricaeexnihilo.crushed_andesite": "Crushed Andesite",
@@ -47,32 +52,26 @@
   "block.fabricaeexnihilo.crushed_endstone": "Crushed End Stone",
   "block.fabricaeexnihilo.crushed_netherrack": "Crushed Netherrack",
   "block.fabricaeexnihilo.crushed_prismarine": "Crushed Prismarine",
+
   "block.fabricaeexnihilo.witchwater": "Witchwater",
   "block.fabricaeexnihilo.brine": "Brine",
   "block.fabricaeexnihilo.blood": "Blood",
   "block.fabricaeexnihilo.milk": "Milk",
-  "item.fabricaeexnihilo.acacia_seeds": "Acacia Seed",
-  "item.fabricaeexnihilo.birch_seeds": "Birch Seed",
+
   "item.fabricaeexnihilo.cactus_seeds": "Cactus Seed",
   "item.fabricaeexnihilo.chorus_seeds": "Chorus Pod",
-  "item.fabricaeexnihilo.carrot_seeds": "Carrot Seed",
-  "item.fabricaeexnihilo.dark_oak_seeds": "Dark Oak Acorn",
   "item.fabricaeexnihilo.grass_seeds": "Grass Seed",
-  "item.fabricaeexnihilo.jungle_seeds": "Jungle Tree Seed",
   "item.fabricaeexnihilo.kelp_seeds": "Kelp Sporophyte",
   "item.fabricaeexnihilo.mycelium_seeds": "Ancient Spores",
   "item.fabricaeexnihilo.warped_seeds": "Warped Spores",
   "item.fabricaeexnihilo.crimson_seeds": "Crimson Spores",
-  "item.fabricaeexnihilo.oak_seeds": "Oak Acorn",
-  "item.fabricaeexnihilo.potato_seeds": "Potato Sprout",
-  "item.fabricaeexnihilo.rubber_seeds": "Rubber Tree Seed",
   "item.fabricaeexnihilo.sea_pickle_seeds": "Sea Pickle Sprouts",
-  "item.fabricaeexnihilo.spruce_seeds": "Spruce Seed",
   "item.fabricaeexnihilo.sugarcane_seeds": "Sugarcane Seed",
   "item.fabricaeexnihilo.sunflower_seeds": "Sunflower Seeds",
   "item.fabricaeexnihilo.lilac_seeds": "Lilac Seeds",
   "item.fabricaeexnihilo.rose_bush_seeds": "Rose Seeds",
   "item.fabricaeexnihilo.peony_seeds": "Peony Seeds",
+
   "item.fabricaeexnihilo.wooden_crook": "Wooden Crook",
   "item.fabricaeexnihilo.bone_crook": "Bone Crook",
   "item.fabricaeexnihilo.stone_crook": "Stone Crook",
@@ -87,12 +86,14 @@
   "item.fabricaeexnihilo.blackstone_crook": "Blackstone Crook",
   "item.fabricaeexnihilo.basalt_crook": "Basalt Crook",
   "item.fabricaeexnihilo.deepslate_crook": "Deepslate Crook",
+
   "item.fabricaeexnihilo.wooden_hammer": "Wood Hammer",
   "item.fabricaeexnihilo.stone_hammer": "Stone Hammer",
   "item.fabricaeexnihilo.iron_hammer": "Iron Hammer",
   "item.fabricaeexnihilo.golden_hammer": "Gold Hammer",
   "item.fabricaeexnihilo.diamond_hammer": "Diamond Hammer",
   "item.fabricaeexnihilo.netherite_hammer": "Netherite Hammer",
+
   "item.fabricaeexnihilo.string_mesh": "String Mesh",
   "item.fabricaeexnihilo.flint_mesh": "Flint Mesh",
   "item.fabricaeexnihilo.copper_mesh": "Copper Mesh",
@@ -102,6 +103,7 @@
   "item.fabricaeexnihilo.gold_mesh": "Gold Mesh",
   "item.fabricaeexnihilo.emerald_mesh": "Emerald Mesh",
   "item.fabricaeexnihilo.carbon_mesh": "Carbon Mesh",
+
   "item.fabricaeexnihilo.raw_iron_piece": "Raw Iron Piece",
   "item.fabricaeexnihilo.raw_gold_piece": "Raw Gold Piece",
   "item.fabricaeexnihilo.raw_copper_piece": "Raw Copper Piece",
@@ -115,6 +117,7 @@
   "item.fabricaeexnihilo.raw_nickel_piece": "Raw Nickel Piece",
   "item.fabricaeexnihilo.raw_titanium_piece": "Raw Titanium Piece",
   "item.fabricaeexnihilo.raw_uranium_piece": "Raw Uranium Piece",
+
   "block.fabricaeexnihilo.infested_oak_leaves": "Infested Oak Leaves",
   "block.fabricaeexnihilo.infested_spruce_leaves": "Infested Spruce Leaves",
   "block.fabricaeexnihilo.infested_birch_leaves": "Infested Birch Leaves",
@@ -123,11 +126,14 @@
   "block.fabricaeexnihilo.infested_dark_oak_leaves": "Infested Dark Oak Leaves",
   "block.fabricaeexnihilo.infested_rubber_leaves": "Infested Rubber Leaves",
   "block.fabricaeexnihilo.infesting_leaves": "Infesting Leaves",
+
   "item.fabricaeexnihilo.cooked_silkworm": "Cooked Silkworm",
   "item.fabricaeexnihilo.raw_silkworm": "Silkworm",
+
   "item.fabricaeexnihilo.witchwater_bucket": "Witchwater Bucket",
   "item.fabricaeexnihilo.blood_bucket": "Bucket o' Blood",
   "item.fabricaeexnihilo.brine_bucket": "Brine Bucket",
+
   "item.fabricaeexnihilo.stone_pebble": "Stone Pebble",
   "item.fabricaeexnihilo.andesite_pebble": "Andesite Pebble",
   "item.fabricaeexnihilo.diorite_pebble": "Diorite Pebble",
@@ -135,22 +141,27 @@
   "item.fabricaeexnihilo.blackstone_pebble": "Blackstone Pebble",
   "item.fabricaeexnihilo.basalt_pebble": "Basalt Pebble",
   "item.fabricaeexnihilo.deepslate_pebble": "Deepslate Pebble",
+
   "item.fabricaeexnihilo.porcelain": "Porcelain",
   "item.fabricaeexnihilo.salt_bottle": "Salt",
+
   "item.fabricaeexnihilo.doll": "Porcelain Doll",
   "item.fabricaeexnihilo.doll_blaze": "Blazing Doll",
   "item.fabricaeexnihilo.doll_enderman": "Creeping Doll",
   "item.fabricaeexnihilo.doll_guardian": "Protecting Doll",
   "item.fabricaeexnihilo.doll_shulker": "Floating Doll",
+
   "text.autoconfig.fabricaeexnihilo.title": "Fabricae Ex Nihilo Config",
   "text.autoconfig.fabricaeexnihilo.category.client": "Client",
   "text.autoconfig.fabricaeexnihilo.category.misc": "Misc.",
   "text.autoconfig.fabricaeexnihilo.category.compat": "Compatibility",
   "text.autoconfig.fabricaeexnihilo.category.modules": "Modules",
+
   "fabricaeexnihilo.wthit.barrel.compost.composting": "Composting: %s%%",
   "fabricaeexnihilo.wthit.barrel.compost.filling": "Filling compost: %s%%",
   "fabricaeexnihilo.wthit.barrel.alchemy.processing": "Transforming: %s%%",
   "fabricaeexnihilo.wthit.crucible.queued": "Solid remaining: %smb",
+
   "fabricaeexnihilo.rei.category.hammer": "Crushing",
   "fabricaeexnihilo.rei.category.crook": "Crook",
   "fabricaeexnihilo.rei.category.crucible_heat": "Crucible Heat",
@@ -166,6 +177,7 @@
   "fabricaeexnihilo.rei.category.barrel.fluid_on_top": "Fluid Above",
   "fabricaeexnihilo.rei.category.witch_water.entity": "Witch Water Bathing",
   "fabricaeexnihilo.rei.category.witch_water.world": "Witch Water Fluid Interactions",
+
   "advancements.fabricaeexnihilo.root.title": "Ex Nihilo",
   "advancements.fabricaeexnihilo.root.description": "Fabricate from Nothing",
   "advancements.fabricaeexnihilo.crook.title": "I am not a crook.",

@@ -1,8 +1,8 @@
 {
   "type": "fabricaeexnihilo:crook",
-  "block": "minecraft:dark_oak_leaves",
+  "block": "minecraft:birch_leaves",
   "result": {
-    "stack": "fabricaeexnihilo:dark_oak_seeds",
+    "stack": "minecraft:birch_sapling",
     "chances": [
       0.25
     ]

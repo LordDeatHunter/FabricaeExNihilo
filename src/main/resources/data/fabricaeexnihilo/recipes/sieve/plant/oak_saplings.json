@@ -1,19 +1,11 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:carrot_seeds",
+  "result": "minecraft:oak_sapling",
   "input": "minecraft:dirt",
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.08],
     "fabricaeexnihilo:copper_mesh": [0.12],
     "fabricaeexnihilo:gold_mesh": [0.2],
     "fabricaeexnihilo:emerald_mesh": [0.3, 0.3]
-  },
-  "fabric:load_conditions": [
-    {
-      "condition": "fabricaeexnihilo:all_items_present",
-      "values": [
-        "fabricaeexnihilo:carrot_seeds"
-      ]
-    }
-  ]
+  }
 }
