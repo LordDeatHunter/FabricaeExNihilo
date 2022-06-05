@@ -1,0 +1,17 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "techreborn:platinum_small_dust",
+  "input": "minecraft:gravel",
+  "rolls": {
+    "fabricaeexnihilo:diamond_mesh": [0.075],
+    "fabricaeexnihilo:netherite_mesh": [0.125, 0.08]
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "fabricaeexnihilo:all_items_present",
+      "values": [
+        "techreborn:platinum_small_dust"
+      ]
+    }
+  ]
+}

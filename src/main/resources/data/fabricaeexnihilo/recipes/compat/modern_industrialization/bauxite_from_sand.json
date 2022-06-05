@@ -1,0 +1,18 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "modern_industrialization:bauxite_tiny_dust",
+  "input": "minecraft:gravel",
+  "rolls": {
+    "fabricaeexnihilo:iron_mesh": [0.1, 0.075, 0.05],
+    "fabricaeexnihilo:diamond_mesh": [0.1, 0.1, 0.075],
+    "fabricaeexnihilo:netherite_mesh": [0.4, 0.2, 0.1, 0.05]
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "fabricaeexnihilo:all_items_present",
+      "values": [
+        "modern_industrialization:bauxite_tiny_dust"
+      ]
+    }
+  ]
+}

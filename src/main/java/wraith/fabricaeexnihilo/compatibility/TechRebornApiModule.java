@@ -15,10 +15,6 @@ public class TechRebornApiModule implements FENApiModule {
         registries.registerOrePiece("lead", registries.defaultItemSettings());
         registries.registerOrePiece("iridium", registries.defaultItemSettings());
         registries.registerOrePiece("tungsten", registries.defaultItemSettings());
-        // No raw ores
-        // registry.accept("aluminum", new OreDefinition(Color.ALUMINUM, OreDefinition.PieceShape.FINE, OreDefinition.BaseMaterial.SAND));
-        // registry.accept("zinc", new OreDefinition(Color.ZINC, OreDefinition.PieceShape.FINE, OreDefinition.BaseMaterial.NETHERRACK));
-        // registries.registerOrePiece("platinum", Color.PLATINUM);
 
         registries.registerMesh("carbon", Color.BLACK, 14, registries.defaultItemSettings());
         registries.registerWood("rubber", false, registries.woodenBlockSettings());
