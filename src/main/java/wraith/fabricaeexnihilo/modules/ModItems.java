@@ -70,7 +70,4 @@ public final class ModItems {
         }
     }
     
-    public static FabricItemSettings itemSettings() {
-        return new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP);
-    }
 }

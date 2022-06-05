@@ -6,27 +6,23 @@ import wraith.fabricaeexnihilo.api.FENApiModule;
 import wraith.fabricaeexnihilo.api.FENRegistries;
 import wraith.fabricaeexnihilo.util.Color;
 
-import static wraith.fabricaeexnihilo.modules.ModBlocks.infestedLeavesSettings;
-import static wraith.fabricaeexnihilo.modules.ModBlocks.woodSettings;
-import static wraith.fabricaeexnihilo.modules.ModItems.itemSettings;
-
 public class TechRebornApiModule implements FENApiModule {
 
     @Override
     public void onInit(FENRegistries registries) {
-        registries.registerOrePiece("tin", itemSettings());
-        registries.registerOrePiece("silver", itemSettings());
-        registries.registerOrePiece("lead", itemSettings());
-        registries.registerOrePiece("iridium", itemSettings());
-        registries.registerOrePiece("tungsten", itemSettings());
+        registries.registerOrePiece("tin", registries.defaultItemSettings());
+        registries.registerOrePiece("silver", registries.defaultItemSettings());
+        registries.registerOrePiece("lead", registries.defaultItemSettings());
+        registries.registerOrePiece("iridium", registries.defaultItemSettings());
+        registries.registerOrePiece("tungsten", registries.defaultItemSettings());
         // No raw ores
         // registry.accept("aluminum", new OreDefinition(Color.ALUMINUM, OreDefinition.PieceShape.FINE, OreDefinition.BaseMaterial.SAND));
         // registry.accept("zinc", new OreDefinition(Color.ZINC, OreDefinition.PieceShape.FINE, OreDefinition.BaseMaterial.NETHERRACK));
         // registries.registerOrePiece("platinum", Color.PLATINUM);
 
-        registries.registerMesh("carbon", Color.BLACK, 14, itemSettings());
-        registries.registerWood("rubber", false, woodSettings());
-        registries.registerInfestedLeaves("rubber", new Identifier("techreborn:rubber_leaves"), infestedLeavesSettings());
+        registries.registerMesh("carbon", Color.BLACK, 14, registries.defaultItemSettings());
+        registries.registerWood("rubber", false, registries.woodenBlockSettings());
+        registries.registerInfestedLeaves("rubber", new Identifier("techreborn:rubber_leaves"), registries.infestedLeavesBlockSettings());
         //TODO: remove with seed refactor
         registries.registerSeed("rubber", new Identifier("techreborn:rubber_sapling"));
     }

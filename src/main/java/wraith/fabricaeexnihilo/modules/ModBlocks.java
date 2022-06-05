@@ -29,11 +29,7 @@ import java.util.Map;
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public final class ModBlocks {
-
-    public static final FabricBlockSettings WOOD_SETTINGS = FabricBlockSettings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD);
-    public static final FabricBlockSettings STONE_SETTINGS = FabricBlockSettings.of(Material.STONE).strength(2.0f, 6.0f).sounds(BlockSoundGroup.STONE).requiresTool();
-    public static final FabricBlockSettings CRUSHED_GRAVELY_SETTINGS = FabricBlockSettings.of(Material.AGGREGATE).strength(0.6f).sounds(BlockSoundGroup.GRAVEL);
-    public static final FabricBlockSettings CRUSHED_SANDY_SETTINGS = FabricBlockSettings.of(Material.AGGREGATE).strength(0.4f).sounds(BlockSoundGroup.SAND);
+    
     public static final FabricBlockSettings INFESTED_LEAVES_SETTINGS = FabricBlockSettings.of(Material.LEAVES).nonOpaque().suffocates((state, world, pos) -> false).allowsSpawning((state, world, pos, type) -> type == EntityType.OCELOT || type == EntityType.PARROT).strength(0.2F).ticksRandomly().sounds(BlockSoundGroup.GRASS);
 
     public static final Map<Identifier, SieveBlock> SIEVES = new HashMap<>();
@@ -85,23 +81,4 @@ public final class ModBlocks {
         Registry.register(Registry.BLOCK_ENTITY_TYPE, InfestingLeavesBlockEntity.BLOCK_ENTITY_ID, InfestingLeavesBlockEntity.TYPE);
     }
     
-    public static FabricBlockSettings woodSettings() {
-        return FabricBlockSettings.copyOf(WOOD_SETTINGS);
-    }
-    
-    public static FabricBlockSettings stoneSettings() {
-        return FabricBlockSettings.copyOf(STONE_SETTINGS);
-    }
-    
-    public static FabricBlockSettings sandySettings() {
-        return FabricBlockSettings.copyOf(CRUSHED_SANDY_SETTINGS);
-    }
-    
-    public static FabricBlockSettings gravelySettings() {
-        return FabricBlockSettings.copyOf(CRUSHED_GRAVELY_SETTINGS);
-    }
-    
-    public static FabricBlockSettings infestedLeavesSettings() {
-        return FabricBlockSettings.copyOf(INFESTED_LEAVES_SETTINGS);
-    }
 }

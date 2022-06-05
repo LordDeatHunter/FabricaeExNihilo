@@ -4,16 +4,14 @@ import net.fabricmc.loader.api.FabricLoader;
 import wraith.fabricaeexnihilo.api.FENApiModule;
 import wraith.fabricaeexnihilo.api.FENRegistries;
 
-import static wraith.fabricaeexnihilo.modules.ModItems.itemSettings;
-
 public class IndustrialRevolutionApiModule implements FENApiModule {
 
     @Override
     public void onInit(FENRegistries registries) {
-        registries.registerOrePiece("tin", itemSettings());
-        registries.registerOrePiece("silver", itemSettings());
-        registries.registerOrePiece("lead", itemSettings());
-        registries.registerOrePiece("tungsten", itemSettings());
+        registries.registerOrePiece("tin", registries.defaultItemSettings());
+        registries.registerOrePiece("silver", registries.defaultItemSettings());
+        registries.registerOrePiece("lead", registries.defaultItemSettings());
+        registries.registerOrePiece("tungsten", registries.defaultItemSettings());
     }
 
     @Override

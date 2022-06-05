@@ -1,5 +1,7 @@
 package wraith.fabricaeexnihilo.api;
 
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.TallPlantBlock;
@@ -27,8 +29,9 @@ public interface FENRegistries {
      *
      * @param name        The name of the barrel.
      * @param isFireproof Whether it should be fireproof.
-     * @param settings
+     * @param settings    Block settings for the barrel.
      */
+    //TODO: enchantability option
     void registerBarrel(String name, boolean isFireproof, AbstractBlock.Settings settings);
 
     /**
@@ -37,17 +40,18 @@ public interface FENRegistries {
      * convenience.
      *
      * @param name        The name of the crucible.
-     * @param isStone     Whether it should be considered made of stone. Affects the sounds and hardness of the block.
      * @param isFireproof Whether it should be fireproof.
+     * @param settings    Block settings for the crucible.
      */
+    //TODO: enchantability option
     void registerCrucible(String name, boolean isFireproof, AbstractBlock.Settings settings);
 
     /**
      * Register a new crushed block. It will be registered under {@code fabricaeexnihilo:crushed_<name>}. You will have
      * to manually provide all assets.
      *
-     * @param name    The base name of the crushed block.
-     * @param isSandy Whether it should be considered sandy. Affects the sounds of the block.
+     * @param name     The base name of the crushed block.
+     * @param settings Block settings for the crushed block.
      */
     void registerCrushedBlock(String name, AbstractBlock.Settings settings);
 
@@ -56,8 +60,9 @@ public interface FENRegistries {
      * {@code fabricaeexnihilo:infested_<name>_leaves}. You will have to manually provide all assets, but you can reuse
      * the standard leaves model. The tintindex of 0 is provided as white.
      *
-     * @param name   The name of the wood type.
-     * @param source The source of the transformation. Used in code.
+     * @param name     The name of the wood type.
+     * @param source   The source of the transformation. Used in code.
+     * @param settings Block settings for the leaves
      */
     void registerInfestedLeaves(String name, Identifier source, AbstractBlock.Settings settings);
     
@@ -65,8 +70,11 @@ public interface FENRegistries {
      * Register a new type of sieve. It will be registered under {@code fabricaeexnihilo:<name>_sieve}. You will have to
      * manually provide all assets. The model {@code fabricaeexnihilo:block/sieve} can be extended for convenience.
      *
-     * @param name The name of the sieve.
+     * @param name        The name of the sieve.
+     * @param isFireproof Whether it should be fireproof.
+     * @param settings    Block settings for the sieve.
      */
+    //TODO: enchantability option
     void registerSieve(String name, boolean isFireproof, AbstractBlock.Settings settings);
     
     /**
@@ -75,7 +83,8 @@ public interface FENRegistries {
      * convenience.
      *
      * @param name        The name of the strainer.
-     * @param isFireproof
+     * @param isFireproof Whether it should be fireproof.
+     * @param settings    Block settings for the strainer.
      */
     void registerStrainer(String name, boolean isFireproof, AbstractBlock.Settings settings);
     
@@ -87,7 +96,7 @@ public interface FENRegistries {
      * @param name           The name of the mesh.
      * @param color          The color it will be tinted.
      * @param enchantability The enchantability of the mesh. You can use vanilla tool materials as a reference.
-     * @param settings
+     * @param settings       Item settings for the mesh.
      */
     void registerMesh(String name, Color color, int enchantability, Item.Settings settings);
     
@@ -96,7 +105,7 @@ public interface FENRegistries {
      * have to manually provide all assets. (layer1 will be tinted based on {@code color}).
      *
      * @param name     The name of the ore.
-     * @param settings
+     * @param settings Item settings for the piece.
      */
     void registerOrePiece(String name, Item.Settings settings);
     
@@ -192,4 +201,33 @@ public interface FENRegistries {
         registerCrucible(name, fireproof, settings);
     }
     
+    /**
+     * Provides default item settings that all FEN items are based on.
+     */
+    FabricItemSettings defaultItemSettings();
+    
+    /**
+     * Provides wooden block settings that all wooden FEN blocks are based on.
+     */
+    FabricBlockSettings woodenBlockSettings();
+    
+    /**
+     * Provides stone block settings that all stone FEN blocks are based on.
+     */
+    FabricBlockSettings stoneBlockSettings();
+    
+    /**
+     * Provides sandy block settings that all sand-like FEN blocks use.
+     */
+    FabricBlockSettings sandyBlockSettings();
+    
+    /**
+     * Provides gravely block settings that all gravel-like FEN blocks use.
+     */
+    FabricBlockSettings gravelyBlockSettings();
+    
+    /**
+     * Provides infested leaves block settings that all infested leaves are based on.
+     */
+    FabricBlockSettings infestedLeavesBlockSettings();
 }

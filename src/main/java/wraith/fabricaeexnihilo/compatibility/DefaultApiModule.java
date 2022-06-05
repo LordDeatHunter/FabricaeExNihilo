@@ -6,54 +6,51 @@ import wraith.fabricaeexnihilo.api.FENApiModule;
 import wraith.fabricaeexnihilo.api.FENRegistries;
 import wraith.fabricaeexnihilo.util.Color;
 
-import static wraith.fabricaeexnihilo.modules.ModBlocks.*;
-import static wraith.fabricaeexnihilo.modules.ModItems.itemSettings;
-
 public class DefaultApiModule implements FENApiModule {
 
     @Override
     public void onInit(FENRegistries registries) {
-        registries.registerOrePiece("iron", itemSettings());
-        registries.registerOrePiece("copper", itemSettings());
-        registries.registerOrePiece("gold", itemSettings());
+        registries.registerOrePiece("iron", registries.defaultItemSettings());
+        registries.registerOrePiece("copper", registries.defaultItemSettings());
+        registries.registerOrePiece("gold", registries.defaultItemSettings());
         
-        registries.registerWood("oak", false, woodSettings());
-        registries.registerWood("birch", false, woodSettings());
-        registries.registerWood("spruce", false, woodSettings());
-        registries.registerWood("acacia", false, woodSettings());
-        registries.registerWood("dark_oak", false, woodSettings());
-        registries.registerWood("jungle", false, woodSettings());
-        registries.registerWood("warped", false, woodSettings());
-        registries.registerWood("crimson", false, woodSettings());
+        registries.registerWood("oak", false, registries.woodenBlockSettings());
+        registries.registerWood("birch", false, registries.woodenBlockSettings());
+        registries.registerWood("spruce", false, registries.woodenBlockSettings());
+        registries.registerWood("acacia", false, registries.woodenBlockSettings());
+        registries.registerWood("dark_oak", false, registries.woodenBlockSettings());
+        registries.registerWood("jungle", false, registries.woodenBlockSettings());
+        registries.registerWood("warped", false, registries.woodenBlockSettings());
+        registries.registerWood("crimson", false, registries.woodenBlockSettings());
     
-        registries.registerCrushedBlock("dust", sandySettings());
-        registries.registerCrushedBlock("silt", sandySettings());
+        registries.registerCrushedBlock("dust", registries.sandyBlockSettings());
+        registries.registerCrushedBlock("silt", registries.sandyBlockSettings());
 
-        registries.registerCrushedBlock("crushed_andesite", gravelySettings());
-        registries.registerCrushedBlock("crushed_diorite", gravelySettings());
-        registries.registerCrushedBlock("crushed_granite", gravelySettings());
-        registries.registerCrushedBlock("crushed_prismarine", gravelySettings());
-        registries.registerCrushedBlock("crushed_endstone", gravelySettings());
-        registries.registerCrushedBlock("crushed_netherrack", gravelySettings());
+        registries.registerCrushedBlock("crushed_andesite", registries.gravelyBlockSettings());
+        registries.registerCrushedBlock("crushed_diorite", registries.gravelyBlockSettings());
+        registries.registerCrushedBlock("crushed_granite", registries.gravelyBlockSettings());
+        registries.registerCrushedBlock("crushed_prismarine", registries.gravelyBlockSettings());
+        registries.registerCrushedBlock("crushed_endstone", registries.gravelyBlockSettings());
+        registries.registerCrushedBlock("crushed_netherrack", registries.gravelyBlockSettings());
     
-        registries.registerCrucible("porcelain", true, stoneSettings());
-        registries.registerBarrel("stone", true, stoneSettings());
+        registries.registerCrucible("porcelain", true, registries.stoneBlockSettings());
+        registries.registerBarrel("stone", true, registries.stoneBlockSettings());
         
-        registries.registerInfestedLeaves("oak", new Identifier("minecraft:oak_leaves"), infestedLeavesSettings());
-        registries.registerInfestedLeaves("birch", new Identifier("minecraft:birch_leaves"), infestedLeavesSettings());
-        registries.registerInfestedLeaves("spruce", new Identifier("minecraft:spruce_leaves"), infestedLeavesSettings());
-        registries.registerInfestedLeaves("acacia", new Identifier("minecraft:acacia_leaves"), infestedLeavesSettings());
-        registries.registerInfestedLeaves("dark_oak", new Identifier("minecraft:dark_oak_leaves"), infestedLeavesSettings());
-        registries.registerInfestedLeaves("jungle", new Identifier("minecraft:jungle_leaves"), infestedLeavesSettings());
+        registries.registerInfestedLeaves("oak", new Identifier("minecraft:oak_leaves"), registries.infestedLeavesBlockSettings());
+        registries.registerInfestedLeaves("birch", new Identifier("minecraft:birch_leaves"), registries.infestedLeavesBlockSettings());
+        registries.registerInfestedLeaves("spruce", new Identifier("minecraft:spruce_leaves"), registries.infestedLeavesBlockSettings());
+        registries.registerInfestedLeaves("acacia", new Identifier("minecraft:acacia_leaves"), registries.infestedLeavesBlockSettings());
+        registries.registerInfestedLeaves("dark_oak", new Identifier("minecraft:dark_oak_leaves"), registries.infestedLeavesBlockSettings());
+        registries.registerInfestedLeaves("jungle", new Identifier("minecraft:jungle_leaves"), registries.infestedLeavesBlockSettings());
     
-        registries.registerMesh("string", Color.WHITE, 10, itemSettings());
-        registries.registerMesh("flint", Color.GRAY, 12, itemSettings());
-        registries.registerMesh("iron", new Color("777777"), 14, itemSettings());
-        registries.registerMesh("diamond", Color.DARK_AQUA, 10, itemSettings());
-        registries.registerMesh("netherite", new Color("3B393B"), 15, itemSettings());
-        registries.registerMesh("copper", Color.COPPER, 13, itemSettings());
-        registries.registerMesh("gold", Color.GOLDEN, 22, itemSettings());
-        registries.registerMesh("emerald", Color.DARK_GREEN, 24, itemSettings());
+        registries.registerMesh("string", Color.WHITE, 10, registries.defaultItemSettings());
+        registries.registerMesh("flint", Color.GRAY, 12, registries.defaultItemSettings());
+        registries.registerMesh("iron", new Color("777777"), 14, registries.defaultItemSettings());
+        registries.registerMesh("diamond", Color.DARK_AQUA, 10, registries.defaultItemSettings());
+        registries.registerMesh("netherite", new Color("3B393B"), 15, registries.defaultItemSettings());
+        registries.registerMesh("copper", Color.COPPER, 13, registries.defaultItemSettings());
+        registries.registerMesh("gold", Color.GOLDEN, 22, registries.defaultItemSettings());
+        registries.registerMesh("emerald", Color.DARK_GREEN, 24, registries.defaultItemSettings());
         
         var seedConfig = FabricaeExNihilo.CONFIG.modules.seeds;
         if (seedConfig.enabled) {
