@@ -1,6 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "techreborn:red_garnet",
+  "result": "techreborn:red_garnet_gem",
   "input": "minecraft:gravel",
   "rolls": {
     "fabricaeexnihilo:gold_mesh": [0.004],
