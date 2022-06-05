@@ -2,6 +2,7 @@ package wraith.fabricaeexnihilo.util;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.*;
 import net.minecraft.item.Item;
@@ -37,21 +38,36 @@ public class EntrypointHelper {
     }
 
     private static final class FENRegistriesImpl implements FENRegistries {
-
         @Override
         public void registerBarrel(String name, boolean isFireproof, AbstractBlock.Settings settings) {
-            ModBlocks.BARRELS.put(
-                id(name, null, "_barrel"),
-                new BarrelBlock(settings, isFireproof)
-            );
+            var block = new BarrelBlock(settings, isFireproof);
+            ModBlocks.BARRELS.put(id(name, null, "_barrel"), block);
+            if (!isFireproof)
+                FlammableBlockRegistry.getDefaultInstance().add(block, 5, 20);
         }
     
         @Override
         public void registerCrucible(String name, boolean isFireproof, AbstractBlock.Settings settings) {
-            ModBlocks.CRUCIBLES.put(
-                    id(name, null, "_crucible"),
-                    new CrucibleBlock(settings, isFireproof)
-            );
+            var block = new CrucibleBlock(settings, isFireproof);
+            ModBlocks.CRUCIBLES.put(id(name, null, "_crucible"), block);
+            if (!isFireproof)
+                FlammableBlockRegistry.getDefaultInstance().add(block, 5, 20);
+        }
+    
+        @Override
+        public void registerSieve(String name, boolean isFireproof, AbstractBlock.Settings settings) {
+            var block = new SieveBlock(settings);
+            ModBlocks.SIEVES.put(id(name, null, "_sieve"), block);
+            if (!isFireproof)
+                FlammableBlockRegistry.getDefaultInstance().add(block, 5, 20);
+        }
+    
+        @Override
+        public void registerStrainer(String name, boolean isFireproof, AbstractBlock.Settings settings) {
+            var block = new StrainerBlock(settings);
+            ModBlocks.STRAINERS.put(id(name, null, "_strainer"), block);
+            if (!isFireproof)
+                FlammableBlockRegistry.getDefaultInstance().add(block, 5, 20);
         }
     
         @Override
@@ -63,22 +79,11 @@ public class EntrypointHelper {
         }
     
         @Override
-        public void registerSieve(String name, boolean isFireproof, AbstractBlock.Settings settings) {
-            ModBlocks.SIEVES.put(id(name, null, "_sieve"), new SieveBlock(settings));
-        }
-    
-        @Override
-        public void registerStrainer(String name, boolean isFireproof, AbstractBlock.Settings settings) {
-            ModBlocks.STRAINERS.put(id(name, null, "_strainer"), new StrainerBlock(settings));
-        }
-    
-        @Override
         public void registerInfestedLeaves(String name, Identifier source, AbstractBlock.Settings settings) {
             //TODO: Make these stack somehow: multiple sources for one result.
-            ModBlocks.INFESTED_LEAVES.put(
-                    id(name, "infested_", "_leaves"),
-                    new InfestedLeavesBlock(source, settings)
-            );
+            var block = new InfestedLeavesBlock(source, settings);
+            ModBlocks.INFESTED_LEAVES.put(id(name, "infested_", "_leaves"), block);
+            FlammableBlockRegistry.getDefaultInstance().add(block, 30, 60);
         }
 
         @Override
