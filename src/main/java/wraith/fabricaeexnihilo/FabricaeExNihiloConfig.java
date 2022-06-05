@@ -34,13 +34,10 @@ public class FabricaeExNihiloConfig {
             public boolean enableFluidCombination = true;
             public boolean enableMilking = true;
             public EnchantmentConfig enchantments = new EnchantmentConfig();
-            public boolean isFilterWhitelist = false;
             public LeakingConfig leaking = new LeakingConfig();
             // How many ticks between updates
             public int tickRate = 6;
             public TransformingConfig transforming = new TransformingConfig();
-            //TODO: Replace with tag
-            public String[] woodenFluidFilter = { "minecraft:lava" };
 
             public static class EnchantmentConfig {
 

@@ -5,8 +5,6 @@ import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import net.minecraft.util.registry.Registry;
-import org.apache.commons.lang3.ArrayUtils;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.compatibility.rei.barrel.*;
 import wraith.fabricaeexnihilo.compatibility.rei.crucible.CrucibleCategory;
@@ -113,17 +111,15 @@ public class PluginEntry implements REIClientPlugin {
 //        registry.removePlusButton(ALCHEMY);
     }
 
-    @SuppressWarnings("UnstableApiUsage")
     @Override
     public void registerDisplays(DisplayRegistry registry) {
-        FabricaeExNihilo.LOGGER.info("Registering REI Displays");
+        FabricaeExNihilo.LOGGER.debug("Registering REI Displays");
         registry.registerRecipeFiller(ToolRecipe.class, ModRecipes.HAMMER, recipe -> new ToolDisplay(recipe, CRUSHING));
         registry.registerRecipeFiller(ToolRecipe.class, ModRecipes.CROOK, recipe -> new ToolDisplay(recipe, CROOK));
-        var config = FabricaeExNihilo.CONFIG.modules.barrels;
         registry.registerRecipeFiller(
             CrucibleRecipe.class,
             type -> Objects.equals(ModRecipes.CRUCIBLE, type),
-            recipe -> !ArrayUtils.contains(config.woodenFluidFilter, Registry.FLUID.getId(recipe.getFluid().getFluid()).toString()),
+            recipe -> !recipe.isRequiresFireproofCrucible(),
             recipe -> new CrucibleDisplay(recipe, WOOD_CRUCIBLE)
         );
         registry.registerRecipeFiller(CrucibleRecipe.class, ModRecipes.CRUCIBLE, recipe -> new CrucibleDisplay(recipe, PORCELAIN_CRUCIBLE));
@@ -140,7 +136,10 @@ public class PluginEntry implements REIClientPlugin {
                 }
             }
         }
-        map.values().forEach(recipe -> recipe.split(SieveCategory.MAX_OUTPUTS).forEach(r -> registry.add(new SieveDisplay(r))));
+        map.values().stream()
+                .flatMap(recipe -> recipe.split(SieveCategory.MAX_OUTPUTS).stream())
+                .map(SieveDisplay::new)
+                .forEachOrdered(registry::add);
         registry.registerRecipeFiller(AlchemyRecipe.class, ModRecipes.ALCHEMY, AlchemyDisplay::new);
         registry.registerRecipeFiller(FluidTransformationRecipe.class, ModRecipes.FLUID_TRANSFORMATION, TransformingDisplay::new);
         registry.registerRecipeFiller(CompostRecipe.class, ModRecipes.COMPOST, CompostDisplay::new);

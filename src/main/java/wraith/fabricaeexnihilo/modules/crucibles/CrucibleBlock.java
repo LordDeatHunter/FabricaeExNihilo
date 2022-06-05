@@ -20,7 +20,6 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class CrucibleBlock extends BlockWithEntity {
-
     private static final VoxelShape SHAPE;
 
     static {

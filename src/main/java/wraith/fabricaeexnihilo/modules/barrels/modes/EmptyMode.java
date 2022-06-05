@@ -10,6 +10,7 @@ import net.minecraft.util.registry.Registry;
 import org.apache.commons.lang3.ArrayUtils;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.FabricaeExNihiloConfig;
+import wraith.fabricaeexnihilo.modules.ModTags;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelFluidStorage;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelItemStorage;
 import wraith.fabricaeexnihilo.recipe.barrel.CompostRecipe;
@@ -54,8 +55,7 @@ public class EmptyMode extends BarrelMode {
     @Override
     public long insertFluid(FluidVariant fluid, long maxAmount, TransactionContext transaction, BarrelFluidStorage storage) {
         StoragePreconditions.notBlankNotNegative(fluid, maxAmount);
-        var config = FabricaeExNihilo.CONFIG.modules.barrels;
-        if (ArrayUtils.contains(config.woodenFluidFilter, Registry.FLUID.getId(fluid.getFluid()).toString()) != config.isFilterWhitelist && !storage.barrel.isFireproof())
+        if (fluid.getFluid().isIn(ModTags.HOT) && !storage.barrel.isFireproof())
             return 0;
         var amount = Math.min(maxAmount, FluidConstants.BUCKET);
         storage.updateSnapshots(transaction);

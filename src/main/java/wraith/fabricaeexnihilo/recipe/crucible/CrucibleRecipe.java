@@ -25,32 +25,35 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
     private final ItemIngredient input;
     private final long amount;
     private final FluidVariant fluid;
-    private final boolean isFireproof;
-
-    public CrucibleRecipe(Identifier id, ItemIngredient input, long amount, FluidVariant fluid, boolean isFireproof) {
+    private final boolean requiresFireproofCrucible;
+    
+    public CrucibleRecipe(Identifier id, ItemIngredient input, long amount, FluidVariant fluid, boolean requiresFireproofCrucible) {
         super(id);
         this.input = input;
         this.amount = amount;
-
         this.fluid = fluid;
-        this.isFireproof = isFireproof;
+        this.requiresFireproofCrucible = requiresFireproofCrucible;
     }
-
+    
     public static Optional<CrucibleRecipe> find(Item input, boolean isFireproof, @Nullable World world) {
         if (world == null) {
             return Optional.empty();
         }
         return world.getRecipeManager().getFirstMatch(ModRecipes.CRUCIBLE, new Context(input, isFireproof), world);
     }
-
+    
     @Override
     public boolean matches(Context context, World world) {
-        return input.test(context.input) && isFireproof == context.isFireproof;
+        return input.test(context.input) && (!requiresFireproofCrucible || context.isFireproof);
     }
-
+    
     @Override
     public ItemStack getDisplayStack() {
         return fluid.getFluid().getBucketItem().getDefaultStack();
+    }
+    
+    public boolean isRequiresFireproofCrucible() {
+        return requiresFireproofCrucible;
     }
 
     @Override
@@ -82,7 +85,8 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
             var input = CodecUtils.fromJson(ItemIngredient.CODEC, json.get("input"));
             var amount = JsonHelper.getLong(json, "amount");
             var fluid = CodecUtils.fromJson(CodecUtils.FLUID_VARIANT, json.get("fluid"));
-            var isFireproof = JsonHelper.getBoolean(json, "isFireproof");
+            var isFireproof = JsonHelper.getBoolean(json, "requiresFireproofCrucible"); // TODO: rename json field
+            
 
             return new CrucibleRecipe(id, input, amount, fluid, isFireproof);
         }
@@ -102,7 +106,7 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
             CodecUtils.toPacket(ItemIngredient.CODEC, recipe.input, buf);
             buf.writeLong(recipe.amount);
             CodecUtils.toPacket(CodecUtils.FLUID_VARIANT, recipe.fluid, buf);
-            buf.writeBoolean(recipe.isFireproof);
+            buf.writeBoolean(recipe.requiresFireproofCrucible);
         }
     }
 

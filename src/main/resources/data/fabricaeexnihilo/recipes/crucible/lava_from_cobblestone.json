@@ -3,5 +3,5 @@
   "input": "minecraft:cobblestone",
   "amount": 20250,
   "fluid": "minecraft:lava",
-  "isFireproof": true
+  "requiresFireproofCrucible": true
 }

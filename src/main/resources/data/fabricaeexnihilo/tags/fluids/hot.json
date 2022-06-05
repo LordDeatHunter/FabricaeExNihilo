@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#fabricaeexnihilo:true_lava",
+    {
+      "id": "techreborn:nitro_diesel",
+      "required": false
+    }
+  ]
+}

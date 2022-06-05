@@ -3,5 +3,5 @@
   "input": "#minecraft:small_flowers",
   "amount": 8100,
   "fluid": "minecraft:water",
-  "isFireproof": false
+  "requiresFireproofCrucible": false
 }

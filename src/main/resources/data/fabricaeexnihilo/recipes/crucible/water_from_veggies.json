@@ -3,5 +3,5 @@
   "input": "#c:veggies",
   "amount": 8100,
   "fluid": "minecraft:water",
-  "isFireproof": false
+  "requiresFireproofCrucible": false
 }

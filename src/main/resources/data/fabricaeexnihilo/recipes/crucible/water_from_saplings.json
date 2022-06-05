@@ -3,5 +3,5 @@
   "input": "#minecraft:saplings",
   "amount": 8100,
   "fluid": "minecraft:water",
-  "isFireproof": false
+  "requiresFireproofCrucible": false
 }

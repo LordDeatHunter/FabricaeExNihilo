@@ -58,6 +58,7 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
     private final boolean isFireproof;
     private BarrelMode mode;
     private int tickCounter;
+    
     public BarrelBlockEntity(BlockPos pos, BlockState state, boolean isFireproof) {
         super(TYPE, pos, state);
         this.mode = new EmptyMode();
@@ -69,7 +70,7 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
             : world.random.nextInt(FabricaeExNihilo.CONFIG.modules.barrels.tickRate);
     }
     public BarrelBlockEntity(BlockPos pos, BlockState state) {
-        this(pos, state, false);
+        this(pos, state, state.getBlock() instanceof BarrelBlock barrel && barrel.isFireproof());
     }
 
     public static void ticker(World world, BlockPos blockPos, BlockState blockState, BarrelBlockEntity barrelEntity) {
