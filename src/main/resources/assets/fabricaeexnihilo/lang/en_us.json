@@ -151,6 +151,9 @@
   "item.fabricaeexnihilo.doll_guardian": "Protecting Doll",
   "item.fabricaeexnihilo.doll_shulker": "Floating Doll",
 
+  "effect.fabricaeexnihilo.witch_watered": "Witch Watered",
+  "effect.fabricaeexnihilo.milked": "Milked",
+
   "text.autoconfig.fabricaeexnihilo.title": "Fabricae Ex Nihilo Config",
   "text.autoconfig.fabricaeexnihilo.category.client": "Client",
   "text.autoconfig.fabricaeexnihilo.category.misc": "Misc.",
