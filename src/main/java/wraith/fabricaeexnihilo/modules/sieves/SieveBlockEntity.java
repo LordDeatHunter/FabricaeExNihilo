@@ -202,7 +202,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
             return false;
         }
         if (world.getBlockEntity(pos) instanceof SieveBlockEntity sieve) {
-            return ItemStack.areItemsEqual(mesh, sieve.mesh);
+            return ItemStack.areItemsEqual(mesh, sieve.mesh) && world.getFluidState(pos).getFluid() == getFluid();
         }
         return false;
     }
