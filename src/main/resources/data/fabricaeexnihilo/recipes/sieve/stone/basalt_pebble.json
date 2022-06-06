@@ -1,7 +1,7 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "fabricaeexnihilo:basalt_pebble",
-  "input": "minecraft:dirt",
+  "input": "fabricaeexnihilo:crushed_netherrack",
   "rolls": {
     "fabricaeexnihilo:string_mesh": [0.3, 0.1],
     "fabricaeexnihilo:flint_mesh": [0.2, 0.2, 0.2]
