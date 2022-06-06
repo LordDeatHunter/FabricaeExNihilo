@@ -20,8 +20,8 @@ public class DefaultApiModule implements FENApiModule {
         registries.registerWood("acacia", false, registries.woodenBlockSettings());
         registries.registerWood("dark_oak", false, registries.woodenBlockSettings());
         registries.registerWood("jungle", false, registries.woodenBlockSettings());
-        registries.registerWood("warped", false, registries.woodenBlockSettings());
-        registries.registerWood("crimson", false, registries.woodenBlockSettings());
+        registries.registerWood("warped", true, registries.woodenBlockSettings());
+        registries.registerWood("crimson", true, registries.woodenBlockSettings());
 
         registries.registerCrushedBlock("dust", registries.sandyBlockSettings());
         registries.registerCrushedBlock("silt", registries.sandyBlockSettings());
