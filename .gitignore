@@ -29,6 +29,8 @@ run/config/*
 !run/config/fabric_loader_dependencies.json
 run/kubejs/exported
 
+dev_settings.properties
+
 # datagen
 datagen/generated/assets/
 datagen/data/

@@ -1,0 +1,21 @@
+import java.nio.file.Files
+
+var path = project.file("dev_settings.properties").toPath()
+var properties = new Properties()
+properties.putAll(wthit: "false", the_one_probe: "true", modmenu: "true", rei: "true", kubejs: "true", tech_reborn: "false", modern_industrialization: "false")
+
+if (Files.exists(path)) {
+    properties.load(Files.newBufferedReader(path))
+}
+
+properties.store(Files.newBufferedWriter(path), "IMPORTANT: Remember to reload gradle in intellij after changing!")
+
+wthit = Boolean.parseBoolean(properties.getProperty("wthit"))
+modmenu = Boolean.parseBoolean(properties.getProperty("modmenu"))
+rei = Boolean.parseBoolean(properties.getProperty("rei"))
+theOneProbe = Boolean.parseBoolean(properties.getProperty("the_one_probe"))
+kubejs = Boolean.parseBoolean(properties.getProperty("kubejs"))
+techReborn = Boolean.parseBoolean(properties.getProperty("tech_reborn"))
+modernIndustrialization = Boolean.parseBoolean(properties.getProperty("modern_industrialization"))
+
+println "Applied configs!"
