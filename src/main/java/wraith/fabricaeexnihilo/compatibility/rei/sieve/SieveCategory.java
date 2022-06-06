@@ -8,6 +8,7 @@ import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
+import me.shedaniel.rei.api.common.entry.EntryStack;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
@@ -106,20 +107,24 @@ public class SieveCategory implements DisplayCategory<SieveDisplay> {
             for (int x = 0; x < OUTPUT_SLOTS_X; ++x) {
                 var slot = Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X + 18 * x, bounds.getMinY() + OUTPUT_Y + 18 * y));
                 var index = y * OUTPUT_SLOTS_X + x;
+                Widget widget = slot;
                 if (index < outputs.size()) {
-                    EntryIngredient output = outputs.get(index);
+                    var output = outputs.get(index);
                     List<Text> tooltips = new ArrayList<>();
                     var chances = outputChances.get(output);
                     for (var chance : chances) {
                         if (chance <= 0) continue;
                         tooltips.add(new LiteralText(chance * 100 + "%"));
                     }
+                    
                     if (!tooltips.isEmpty()) {
                         slot.entries(output);
-                        Widgets.withTooltip(slot, tooltips);
+                        slot.disableTooltips();
+                        widget = Widgets.withTooltip(slot, tooltips);
                     }
+                    
                 }
-                widgets.add(slot);
+                widgets.add(widget);
             }
         }
         return widgets;
