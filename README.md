@@ -1,5 +1,5 @@
-![FEN](/assets/FEN.png)
-[![Discord](https://img.shields.io/discord/760524772189798431.svg?style=flat&label=Discord&colorB=blue&logo=discord)](https://discord.gg/pCydqysM2r)
+![FEN](/assets/FEN.png)\
+[![Discord](https://img.shields.io/discord/760524772189798431.svg?style=flat&label=Discord&colorB=blue&logo=discord)](https://discord.gg/e5r7kuKRpY)
 
 Ex Nihilo for Fabric (Minecraft 1.18.2 onwards)
 
