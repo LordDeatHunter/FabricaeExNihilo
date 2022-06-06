@@ -7,6 +7,7 @@ import net.minecraft.item.ItemConvertible;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModItems;
+import wraith.fabricaeexnihilo.modules.ModTools;
 
 import java.util.*;
 
@@ -35,6 +36,8 @@ public final class BonusEnchantingManager {
         if (FabricaeExNihilo.CONFIG.modules.sieves.fortune) {
             DATA.computeIfAbsent(Enchantments.FORTUNE, enchantment -> new ArrayList<>()).addAll(ModItems.MESHES.values());
         }
+        DATA.computeIfAbsent(Enchantments.EFFICIENCY, enchantment -> new ArrayList<>()).addAll(ModTools.HAMMERS.values());
+        DATA.computeIfAbsent(Enchantments.EFFICIENCY, enchantment -> new ArrayList<>()).addAll(ModTools.CROOKS.values());
     }
     
 }
