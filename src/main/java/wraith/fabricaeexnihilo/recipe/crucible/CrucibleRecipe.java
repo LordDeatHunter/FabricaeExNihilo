@@ -52,7 +52,7 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
         return fluid.getFluid().getBucketItem().getDefaultStack();
     }
     
-    public boolean isRequiresFireproofCrucible() {
+    public boolean requiresFireproofCrucible() {
         return requiresFireproofCrucible;
     }
 

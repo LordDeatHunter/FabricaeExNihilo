@@ -38,110 +38,123 @@ public class EntrypointHelper {
     }
 
     private static final class FENRegistriesImpl implements FENRegistries {
+
+        @Override
+        public FabricItemSettings defaultItemSettings() {
+            return new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP);
+        }
+
+        @Override
+        public FabricBlockSettings gravelyBlockSettings() {
+            return FabricBlockSettings.copyOf(FabricBlockSettings.of(Material.AGGREGATE).strength(0.6f).sounds(BlockSoundGroup.GRAVEL));
+        }
+
+        @Override
+        public FabricBlockSettings infestedLeavesBlockSettings() {
+            return FabricBlockSettings.copyOf(ModBlocks.INFESTED_LEAVES_SETTINGS);
+        }
+
         @Override
         public void registerBarrel(String name, boolean isFireproof, AbstractBlock.Settings settings) {
+            var id = id(name, null, "_barrel");
+            if (ModBlocks.BARRELS.containsKey(id)) return;
             var block = new BarrelBlock(settings, isFireproof);
-            ModBlocks.BARRELS.put(id(name, null, "_barrel"), block);
-            if (!isFireproof)
-                FlammableBlockRegistry.getDefaultInstance().add(block, 5, 20);
+            ModBlocks.BARRELS.put(id, block);
+            if (!isFireproof) FlammableBlockRegistry.getDefaultInstance().add(block, 5, 20);
         }
-    
+
         @Override
         public void registerCrucible(String name, boolean isFireproof, AbstractBlock.Settings settings) {
+            var id = id(name, null, "_crucible");
+            if (ModBlocks.CRUCIBLES.containsKey(id)) return;
             var block = new CrucibleBlock(settings, isFireproof);
-            ModBlocks.CRUCIBLES.put(id(name, null, "_crucible"), block);
-            if (!isFireproof)
-                FlammableBlockRegistry.getDefaultInstance().add(block, 5, 20);
+            ModBlocks.CRUCIBLES.put(id, block);
+            if (!isFireproof) FlammableBlockRegistry.getDefaultInstance().add(block, 5, 20);
         }
-    
-        @Override
-        public void registerSieve(String name, boolean isFireproof, AbstractBlock.Settings settings) {
-            var block = new SieveBlock(settings);
-            ModBlocks.SIEVES.put(id(name, null, "_sieve"), block);
-            if (!isFireproof)
-                FlammableBlockRegistry.getDefaultInstance().add(block, 5, 20);
-        }
-    
-        @Override
-        public void registerStrainer(String name, boolean isFireproof, AbstractBlock.Settings settings) {
-            var block = new StrainerBlock(settings);
-            ModBlocks.STRAINERS.put(id(name, null, "_strainer"), block);
-            if (!isFireproof)
-                FlammableBlockRegistry.getDefaultInstance().add(block, 5, 20);
-        }
-    
+
         @Override
         public void registerCrushedBlock(String name, AbstractBlock.Settings settings) {
-            ModBlocks.CRUSHED.put(
-                    id(name, null, null),
-                    new FallingBlock(settings)
-            );
+            var id = id(name, null, null);
+            if (ModBlocks.CRUSHED.containsKey(id)) return;
+            ModBlocks.CRUSHED.put(id, new FallingBlock(settings));
         }
-    
+
         @Override
         public void registerInfestedLeaves(String name, Identifier source, AbstractBlock.Settings settings) {
             //TODO: Make these stack somehow: multiple sources for one result.
+            var id = id(name, "infested_", "_leaves");
+            if (ModBlocks.INFESTED_LEAVES.containsKey(id)) return;
             var block = new InfestedLeavesBlock(source, settings);
-            ModBlocks.INFESTED_LEAVES.put(id(name, "infested_", "_leaves"), block);
+            ModBlocks.INFESTED_LEAVES.put(id, block);
             FlammableBlockRegistry.getDefaultInstance().add(block, 30, 60);
         }
 
         @Override
         public void registerMesh(String name, Color color, int enchantability, Item.Settings settings) {
-            ModItems.MESHES.put(
-                id(name, null, "_mesh"),
-                new MeshItem(color, enchantability, settings)
-            );
+            var id = id(name, null, "_mesh");
+            if (ModItems.MESHES.containsKey(id)) return;
+            ModItems.MESHES.put(id, new MeshItem(color, enchantability, settings));
         }
 
         @Override
         public void registerOrePiece(String name, Item.Settings settings) {
-            ModItems.ORE_PIECES.put(id(name, "raw_", "_piece"), new Item(ModItems.BASE_SETTINGS));
+            var id = id(name, "raw_", "_piece");
+            if (ModItems.ORE_PIECES.containsKey(id)) return;
+            ModItems.ORE_PIECES.put(id, new Item(ModItems.BASE_SETTINGS));
         }
 
         @Override
         public void registerSeed(String name, Lazy<Block[]> plants) {
-            ModItems.SEEDS.put(id(name, null, "_seeds"), new PlantableItem(plants, ModItems.BASE_SETTINGS));
+            var id = id(name, null, "_seeds");
+            if (ModItems.SEEDS.containsKey(id)) return;
+            ModItems.SEEDS.put(id, new PlantableItem(plants, ModItems.BASE_SETTINGS));
+        }
+
+        @Override
+        public void registerSieve(String name, boolean isFireproof, AbstractBlock.Settings settings) {
+            var id = id(name, null, "_sieve");
+            if (ModBlocks.SIEVES.containsKey(id)) return;
+            var block = new SieveBlock(settings);
+            ModBlocks.SIEVES.put(id, block);
+            if (!isFireproof) FlammableBlockRegistry.getDefaultInstance().add(block, 5, 20);
+        }
+
+        @Override
+        public void registerStrainer(String name, boolean isFireproof, AbstractBlock.Settings settings) {
+            var id = id(name, null, "_strainer");
+            if (ModBlocks.STRAINERS.containsKey(id)) return;
+            var block = new StrainerBlock(settings);
+            ModBlocks.STRAINERS.put(id, block);
+            if (!isFireproof) FlammableBlockRegistry.getDefaultInstance().add(block, 5, 20);
         }
 
         @Override
         public void registerTallPlantSeed(String name, Lazy<TallPlantBlock[]> plants) {
-            ModItems.SEEDS.put(id(name, null, "_seeds"), new TallPlantableItem(plants, ModItems.BASE_SETTINGS));
+            var id = id(name, null, "_seeds");
+            if (ModItems.SEEDS.containsKey(id)) return;
+            ModItems.SEEDS.put(id, new TallPlantableItem(plants, ModItems.BASE_SETTINGS));
         }
 
         @Override
         public void registerTransformingSeed(String name, Lazy<Block> from, Lazy<Block> to) {
-            ModItems.SEEDS.put(id(name, null, "_seeds"), new TransformingItem(from, to, ModItems.BASE_SETTINGS));
+            var id = id(name, null, "_seeds");
+            if (ModItems.SEEDS.containsKey(id)) return;
+            ModItems.SEEDS.put(id, new TransformingItem(from, to, ModItems.BASE_SETTINGS));
         }
-    
-        @Override
-        public FabricItemSettings defaultItemSettings() {
-            return new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP);
-        }
-    
-        @Override
-        public FabricBlockSettings woodenBlockSettings() {
-            return FabricBlockSettings.copyOf(FabricBlockSettings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD));
-        }
-    
-        @Override
-        public FabricBlockSettings stoneBlockSettings() {
-            return FabricBlockSettings.copyOf(FabricBlockSettings.of(Material.STONE).strength(2.0f, 6.0f).sounds(BlockSoundGroup.STONE).requiresTool());
-        }
-    
-        @Override
-        public FabricBlockSettings infestedLeavesBlockSettings() {
-            return FabricBlockSettings.copyOf(ModBlocks.INFESTED_LEAVES_SETTINGS);
-        }
-    
+
         @Override
         public FabricBlockSettings sandyBlockSettings() {
             return FabricBlockSettings.copyOf(FabricBlockSettings.of(Material.AGGREGATE).strength(0.4f).sounds(BlockSoundGroup.SAND));
         }
-    
+
         @Override
-        public FabricBlockSettings gravelyBlockSettings() {
-            return FabricBlockSettings.copyOf(FabricBlockSettings.of(Material.AGGREGATE).strength(0.6f).sounds(BlockSoundGroup.GRAVEL));
+        public FabricBlockSettings stoneBlockSettings() {
+            return FabricBlockSettings.copyOf(FabricBlockSettings.of(Material.STONE).strength(2.0f, 6.0f).sounds(BlockSoundGroup.STONE).requiresTool());
+        }
+
+        @Override
+        public FabricBlockSettings woodenBlockSettings() {
+            return FabricBlockSettings.copyOf(FabricBlockSettings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD));
         }
     }
 }

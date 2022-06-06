@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "fabricaeexnihilo:emerald_mesh"
+  },
+  "addition": {
+    "item": "techreborn:carbon_fiber"
+  },
+  "result": {
+    "item": "fabricaeexnihilo:carbon_mesh"
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "fabricaeexnihilo:all_items_present",
+      "values": [
+        "techreborn:carbon_fiber"
+      ]
+    }
+  ]
+}

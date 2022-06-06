@@ -1,0 +1,10 @@
+{
+  "type": "fabricaeexnihilo:crook",
+  "block": "minecraft:oak_leaves",
+  "result": {
+    "stack": "minecraft:oak_sapling",
+    "chances": [
+      0.25
+    ]
+  }
+}

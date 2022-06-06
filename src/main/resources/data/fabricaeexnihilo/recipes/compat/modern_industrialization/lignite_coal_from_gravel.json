@@ -1,0 +1,19 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "modern_industrialization:lignite_coal",
+  "input": "minecraft:gravel",
+  "rolls": {
+    "fabricaeexnihilo:flint_mesh": [0.05],
+    "fabricaeexnihilo:iron_mesh": [0.1],
+    "fabricaeexnihilo:diamond_mesh": [0.2],
+    "fabricaeexnihilo:netherite_mesh": [0.4]
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "fabricaeexnihilo:all_items_present",
+      "values": [
+        "modern_industrialization:lignite_coal"
+      ]
+    }
+  ]
+}

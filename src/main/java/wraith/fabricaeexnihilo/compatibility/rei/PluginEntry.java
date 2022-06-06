@@ -43,11 +43,11 @@ public class PluginEntry implements REIClientPlugin {
     public static final CategoryIdentifier<CompostDisplay> COMPOSTING = CategoryIdentifier.of(id("rei/barrel/composting"));
     public static final CategoryIdentifier<ToolDisplay> CROOK = CategoryIdentifier.of(id("rei/tools/crook"));
     public static final CategoryIdentifier<ToolDisplay> CRUSHING = CategoryIdentifier.of(id("rei/tools/hammer"));
+    public static final CategoryIdentifier<CrucibleDisplay> FIREPROOF_CRUCIBLE = CategoryIdentifier.of(id("rei/crucible/stone"));
     public static final CategoryIdentifier<FluidOnTopDisplay> FLUID_ABOVE = CategoryIdentifier.of(id("rei/barrel/fluid_on_top"));
     public static final CategoryIdentifier<CrucibleHeatDisplay> HEATING = CategoryIdentifier.of(id("rei/crucible/heat"));
     public static final CategoryIdentifier<LeakingDisplay> LEAKING = CategoryIdentifier.of(id("rei/barrel/leaking"));
     public static final CategoryIdentifier<MilkingDisplay> MILKING = CategoryIdentifier.of(id("rei/barrel/milking"));
-    public static final CategoryIdentifier<CrucibleDisplay> PORCELAIN_CRUCIBLE = CategoryIdentifier.of(id("rei/crucible/stone"));
     public static final CategoryIdentifier<SieveDisplay> SIFTING = CategoryIdentifier.of(id("rei/sieve"));
     public static final CategoryIdentifier<TransformingDisplay> TRANSFORMING = CategoryIdentifier.of(id("rei/barrel/transforming"));
     public static final CategoryIdentifier<WitchWaterEntityDisplay> WITCH_WATER_ENTITY = CategoryIdentifier.of(id("rei/witchwater/entity"));
@@ -60,7 +60,7 @@ public class PluginEntry implements REIClientPlugin {
         registry.add(new ToolCategory(CRUSHING, ItemUtils.getExNihiloItemStack("iron_hammer"), "fabricaeexnihilo.rei.category.hammer"));
         registry.add(new ToolCategory(CROOK, ItemUtils.getExNihiloItemStack("wooden_crook"), "fabricaeexnihilo.rei.category.crook"));
         registry.add(new CrucibleCategory(WOOD_CRUCIBLE, ItemUtils.getExNihiloItemStack("oak_crucible"), "fabricaeexnihilo.rei.category.wood_crucible"));
-        registry.add(new CrucibleCategory(PORCELAIN_CRUCIBLE, ItemUtils.getExNihiloItemStack("porcelain_crucible"), "fabricaeexnihilo.rei.category.porcelain_crucible"));
+        registry.add(new CrucibleCategory(FIREPROOF_CRUCIBLE, ItemUtils.getExNihiloItemStack("porcelain_crucible"), "fabricaeexnihilo.rei.category.porcelain_crucible"));
         registry.add(new CrucibleHeatCategory(ItemUtils.getExNihiloItemStack("porcelain_crucible"), "fabricaeexnihilo.rei.category.crucible_heat"));
         registry.add(new SieveCategory(ItemUtils.getExNihiloItemStack("oak_sieve"), "fabricaeexnihilo.rei.category.sieve"));
         registry.add(new AlchemyCategory(ItemUtils.getExNihiloItemStack("oak_barrel"), "fabricaeexnihilo.rei.category.barrel.alchemy"));
@@ -75,10 +75,10 @@ public class PluginEntry implements REIClientPlugin {
         ModTools.CROOKS.values().forEach(crook -> registry.addWorkstations(CROOK, EntryStacks.of(crook)));
         ModBlocks.CRUCIBLES.values().forEach(crucible -> {
             registry.addWorkstations(HEATING, EntryStacks.of(crucible));
-            if (!crucible.isFireproof()) {
-                registry.addWorkstations(WOOD_CRUCIBLE, EntryStacks.of(crucible));
+            if (crucible.isFireproof()) {
+                registry.addWorkstations(FIREPROOF_CRUCIBLE, EntryStacks.of(crucible));
             }
-            registry.addWorkstations(PORCELAIN_CRUCIBLE, EntryStacks.of(crucible));
+            registry.addWorkstations(WOOD_CRUCIBLE, EntryStacks.of(crucible));
         });
         ModBlocks.SIEVES.values().forEach(sieve -> registry.addWorkstations(SIFTING, EntryStacks.of(sieve)));
         ModBlocks.BARRELS.values().forEach(barrel -> {
@@ -119,10 +119,10 @@ public class PluginEntry implements REIClientPlugin {
         registry.registerRecipeFiller(
             CrucibleRecipe.class,
             type -> Objects.equals(ModRecipes.CRUCIBLE, type),
-            recipe -> !recipe.isRequiresFireproofCrucible(),
-            recipe -> new CrucibleDisplay(recipe, WOOD_CRUCIBLE)
+            CrucibleRecipe::requiresFireproofCrucible,
+            recipe -> new CrucibleDisplay(recipe, FIREPROOF_CRUCIBLE)
         );
-        registry.registerRecipeFiller(CrucibleRecipe.class, ModRecipes.CRUCIBLE, recipe -> new CrucibleDisplay(recipe, PORCELAIN_CRUCIBLE));
+        registry.registerRecipeFiller(CrucibleRecipe.class, ModRecipes.CRUCIBLE, recipe -> new CrucibleDisplay(recipe, WOOD_CRUCIBLE));
         registry.registerRecipeFiller(CrucibleHeatRecipe.class, ModRecipes.CRUCIBLE_HEAT, CrucibleHeatDisplay::new);
         var sieveRecipes = registry.getRecipeManager().listAllOfType(ModRecipes.SIEVE);
         var map = new HashMap<Integer, SieveRecipeHolder>();
@@ -137,9 +137,9 @@ public class PluginEntry implements REIClientPlugin {
             }
         }
         map.values().stream()
-                .flatMap(recipe -> recipe.split(SieveCategory.MAX_OUTPUTS).stream())
-                .map(SieveDisplay::new)
-                .forEachOrdered(registry::add);
+            .flatMap(recipe -> recipe.split(SieveCategory.MAX_OUTPUTS).stream())
+            .map(SieveDisplay::new)
+            .forEachOrdered(registry::add);
         registry.registerRecipeFiller(AlchemyRecipe.class, ModRecipes.ALCHEMY, AlchemyDisplay::new);
         registry.registerRecipeFiller(FluidTransformationRecipe.class, ModRecipes.FLUID_TRANSFORMATION, TransformingDisplay::new);
         registry.registerRecipeFiller(CompostRecipe.class, ModRecipes.COMPOST, CompostDisplay::new);

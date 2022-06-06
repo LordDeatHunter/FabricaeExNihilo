@@ -1,0 +1,13 @@
+{
+  "type": "fabricaeexnihilo:crucible_heat",
+  "block": "techreborn:nitro_diesel",
+  "heat": 16,
+  "fabric:load_conditions": [
+    {
+      "condition": "fabricaeexnihilo:all_blocks_present",
+      "values": [
+        "techreborn:nitro_diesel"
+      ]
+    }
+  ]
+}

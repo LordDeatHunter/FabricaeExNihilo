@@ -47,6 +47,16 @@ public class FabricaeExNihilo implements ModInitializer {
             }
             return true;
         });
+        ResourceConditions.register(id("all_blocks_present"), json -> {
+            var values = JsonHelper.getArray(json, "values");
+
+            for (var value : values) {
+                if (!Registry.BLOCK.containsId(new Identifier(value.getAsString()))) {
+                    return false;
+                }
+            }
+            return true;
+        });
         Registry.register(Registry.LOOT_FUNCTION_TYPE, id("copy_enchantments"), CopyEnchantmentsLootFunction.TYPE);
 
         LOGGER.debug("Registering Status Effects");

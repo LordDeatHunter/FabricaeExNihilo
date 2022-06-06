@@ -1,0 +1,18 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "techreborn:bauxite_small_dust",
+  "input": "minecraft:gravel",
+  "rolls": {
+    "fabricaeexnihilo:iron_mesh": [0.075],
+    "fabricaeexnihilo:diamond_mesh": [0.1],
+    "fabricaeexnihilo:netherite_mesh": [0.2, 0.1]
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "fabricaeexnihilo:all_items_present",
+      "values": [
+        "techreborn:bauxite_small_dust"
+      ]
+    }
+  ]
+}
