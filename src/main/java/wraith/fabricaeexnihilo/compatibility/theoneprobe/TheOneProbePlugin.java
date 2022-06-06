@@ -7,6 +7,7 @@ public class TheOneProbePlugin implements ITheOneProbePlugin {
     public void onLoad(ITheOneProbe api) {
         api.registerProvider(new BarrelProbeInfoProvider());
         api.registerProvider(new CrucibleProbeInfoProvider());
+        api.registerProvider(new SieveProbeInfoProvider());
     }
     
 }

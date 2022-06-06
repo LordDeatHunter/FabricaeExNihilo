@@ -164,6 +164,9 @@
   "fabricaeexnihilo.wthit.barrel.compost.filling": "Filling compost: %s%%",
   "fabricaeexnihilo.wthit.barrel.alchemy.processing": "Transforming: %s%%",
   "fabricaeexnihilo.wthit.crucible.queued": "Solid remaining: %smb",
+  "fabricaeexnihilo.wthit.sieve.mesh": "Mesh: %s",
+  "fabricaeexnihilo.wthit.sieve.progress": "Progress: %s%%",
+  "fabricaeexnihilo.wthit.sieve.content": "Sieving: %s",
 
   "fabricaeexnihilo.rei.category.hammer": "Crushing",
   "fabricaeexnihilo.rei.category.crook": "Crook",
