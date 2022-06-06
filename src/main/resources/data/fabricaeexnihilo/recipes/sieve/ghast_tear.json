@@ -1,0 +1,9 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "minecraft:ghast_tear",
+  "input": "minecraft:soul_sand",
+  "rolls": {
+    "fabricaeexnihilo:diamond_mesh": [0.1],
+    "fabricaeexnihilo:netherite_mesh": [0.2]
+  }
+}

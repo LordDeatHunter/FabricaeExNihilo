@@ -1,0 +1,19 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "indrev:nikolite_dust",
+  "input": "fabricaeexnihilo:dust",
+  "rolls": {
+    "fabricaeexnihilo:flint_mesh": [0.15],
+    "fabricaeexnihilo:iron_mesh": [0.15, 0.125],
+    "fabricaeexnihilo:diamond_mesh": [0.25, 0.15, 0.1],
+    "fabricaeexnihilo:netherite_mesh": [0.4, 0.2, 0.1]
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "fabricaeexnihilo:all_items_present",
+      "values": [
+        "indrev:nikolite_dust"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "type": "fabricaeexnihilo:crucible",
+  "input": "minecraft:diorite",
+  "amount": 20250,
+  "fluid": "minecraft:lava",
+  "requiresFireproofCrucible": true
+}

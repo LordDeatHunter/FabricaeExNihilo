@@ -1,0 +1,11 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "minecraft:jungle_sapling",
+  "input": "minecraft:jungle_leaves",
+  "rolls": {
+    "fabricaeexnihilo:flint_mesh": [0.1, 0.08],
+    "fabricaeexnihilo:copper_mesh": [0.2, 0.1],
+    "fabricaeexnihilo:gold_mesh": [0.05, 0.05, 0.05, 0.05],
+    "fabricaeexnihilo:emerald_mesh": [0.3, 0.3, 0.1]
+  }
+}

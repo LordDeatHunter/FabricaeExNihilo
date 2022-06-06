@@ -3,9 +3,9 @@
   "result": "fabricaeexnihilo:raw_iron_piece",
   "input": "minecraft:gravel",
   "rolls": {
-    "fabricaeexnihilo:flint_mesh": [0.05],
-    "fabricaeexnihilo:iron_mesh": [0.15],
-    "fabricaeexnihilo:diamond_mesh": [0.2],
-    "fabricaeexnihilo:netherite_mesh": [0.3, 0.1]
+    "fabricaeexnihilo:flint_mesh": [0.1],
+    "fabricaeexnihilo:iron_mesh": [0.15, 0.1],
+    "fabricaeexnihilo:diamond_mesh": [0.25, 0.15, 0.075],
+    "fabricaeexnihilo:netherite_mesh": [0.3, 0.25, 0.2, 0.1]
   }
 }

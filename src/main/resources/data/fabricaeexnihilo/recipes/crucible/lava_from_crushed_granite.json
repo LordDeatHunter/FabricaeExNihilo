@@ -1,0 +1,7 @@
+{
+  "type": "fabricaeexnihilo:crucible",
+  "input": "fabricaeexnihilo:crushed_granite",
+  "amount": 10125,
+  "fluid": "minecraft:lava",
+  "requiresFireproofCrucible": true
+}
