@@ -2,13 +2,11 @@ package wraith.fabricaeexnihilo.compatibility.rei.sieve;
 
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
+import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.recipe.SieveRecipe;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class SieveRecipeHolder {
 
@@ -30,14 +28,16 @@ public class SieveRecipeHolder {
         var inputs = recipe.getInput().streamEntries().map(EntryIngredients::of).toList();
         var fluids = recipe.getFluid().streamEntries().map(EntryIngredients::of).toList();
         var output = EntryIngredients.of(recipe.getResult());
-        var outputs = new HashMap<EntryIngredient, List<Double>>();
+        HashMap<EntryIngredient, List<Double>> outputs;
 
-        recipe.getRolls().forEach((key, value) -> {
-            outputs.clear();
+        for (var entry : recipe.getRolls().entrySet()) {
+            Identifier key = entry.getKey();
+            List<Double> value = entry.getValue();
+            outputs = new HashMap<>();
             var mesh = EntryIngredients.of(ItemUtils.getItem(key));
-            outputs.put(output, value);
+            outputs.put(output, new ArrayList<>(value));
             holders.add(new SieveRecipeHolder(inputs, fluids, mesh, outputs));
-        });
+        }
 
         return holders;
     }
