@@ -47,7 +47,7 @@ public class BarrelBlock extends BlockWithEntity {
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new BarrelBlockEntity(pos, state, isFireproof);
+        return new BarrelBlockEntity(pos, state);
     }
 
     @Override

@@ -43,7 +43,7 @@ public class CrucibleBlock extends BlockWithEntity {
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new CrucibleBlockEntity(pos, state, isFireproof);
+        return new CrucibleBlockEntity(pos, state);
     }
 
     @Override

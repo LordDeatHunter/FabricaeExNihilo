@@ -30,6 +30,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
+import wraith.fabricaeexnihilo.modules.barrels.BarrelBlock;
 import wraith.fabricaeexnihilo.modules.base.BaseBlockEntity;
 import wraith.fabricaeexnihilo.modules.base.EnchantableBlockEntity;
 import wraith.fabricaeexnihilo.modules.base.EnchantmentContainer;
@@ -59,7 +60,6 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
      */
     private final EnchantmentContainer enchantments = new EnchantmentContainer();
     private final Storage<FluidVariant> fluidStorage = new CrucibleFluidStorage();
-    private final boolean isFireproof;
     private final Storage<ItemVariant> itemStorage = new CrucibleItemStorage();
     private long contained = 0;
     private FluidVariant fluid = FluidVariant.blank();
@@ -67,17 +67,12 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
     private long queued = 0;
     private ItemStack renderStack = ItemStack.EMPTY;
     private int tickCounter;
-    public CrucibleBlockEntity(BlockPos pos, BlockState state, boolean isFireproof) {
+    
+    public CrucibleBlockEntity(BlockPos pos, BlockState state) {
         super(TYPE, pos, state);
-        this.isFireproof = isFireproof;
         tickCounter = world == null
             ? FabricaeExNihilo.CONFIG.modules.crucibles.tickRate
             : world.random.nextInt(FabricaeExNihilo.CONFIG.modules.crucibles.tickRate);
-    }
-
-
-    public CrucibleBlockEntity(BlockPos pos, BlockState state) {
-        this(pos, state, false);
     }
 
     @SuppressWarnings("unused") // lambda stuff
@@ -144,11 +139,11 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
     }
 
     public long getMaxCapacity() {
-        return FluidConstants.BUCKET * (isFireproof ? FabricaeExNihilo.CONFIG.modules.crucibles.stoneVolume : FabricaeExNihilo.CONFIG.modules.crucibles.woodVolume);
+        return FluidConstants.BUCKET * (isFireproof() ? FabricaeExNihilo.CONFIG.modules.crucibles.stoneVolume : FabricaeExNihilo.CONFIG.modules.crucibles.woodVolume);
     }
 
     public long getProcessingSpeed() {
-        return getEfficiencyMultiplier() * (isFireproof ? heat * FabricaeExNihilo.CONFIG.modules.crucibles.baseProcessRate : FabricaeExNihilo.CONFIG.modules.crucibles.woodenProcessingRate);
+        return getEfficiencyMultiplier() * (isFireproof() ? heat * FabricaeExNihilo.CONFIG.modules.crucibles.baseProcessRate : FabricaeExNihilo.CONFIG.modules.crucibles.woodenProcessingRate);
     }
 
     public long getQueued() {
@@ -158,9 +153,9 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
     public ItemStack getRenderStack() {
         return renderStack;
     }
-
+    
     public boolean isFireproof() {
-        return isFireproof;
+        return getCachedState().getBlock() instanceof CrucibleBlock crucible && crucible.isFireproof();
     }
 
     @Override
@@ -188,7 +183,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
     }
 
     public void tick() {
-        if (queued == 0 || contained > getMaxCapacity() || (heat <= 0 && isFireproof)) {
+        if (queued == 0 || contained > getMaxCapacity() || (heat <= 0 && isFireproof())) {
             return;
         }
         if (--tickCounter <= 0) {
@@ -236,7 +231,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
         nbt.put("enchantments", enchantments.writeNbt());
     }
 
-    private static record CrucibleSnapshot(long contained, long queued, FluidVariant fluid, ItemStack renderStack) {
+    private record CrucibleSnapshot(long contained, long queued, FluidVariant fluid, ItemStack renderStack) {
     }
 
     private class CrucibleFluidStorage extends SnapshotParticipant<CrucibleSnapshot> implements SingleSlotStorage<FluidVariant>, ExtractionOnlyStorage<FluidVariant> {
@@ -316,7 +311,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
 
         @Override
         public long insert(ItemVariant resource, long maxAmount, TransactionContext transaction) {
-            var recipeOptional = CrucibleRecipe.find(resource.getItem(), isFireproof, world);
+            var recipeOptional = CrucibleRecipe.find(resource.getItem(), isFireproof(), world);
             if (recipeOptional.isEmpty()) return 0;
             var recipe = recipeOptional.get();
             if (!recipe.getFluid().equals(fluid) && !fluid.isBlank()) return 0;

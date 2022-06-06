@@ -55,22 +55,17 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
     public final Storage<FluidVariant> fluidStorage;
     public final Storage<ItemVariant> itemStorage;
     private final EnchantmentContainer enchantments = new EnchantmentContainer();
-    private final boolean isFireproof;
     private BarrelMode mode;
     private int tickCounter;
     
-    public BarrelBlockEntity(BlockPos pos, BlockState state, boolean isFireproof) {
+    public BarrelBlockEntity(BlockPos pos, BlockState state) {
         super(TYPE, pos, state);
         this.mode = new EmptyMode();
-        this.isFireproof = isFireproof;
         itemStorage = new BarrelItemStorage(this);
         fluidStorage = new BarrelFluidStorage(this);
         tickCounter = world == null
             ? FabricaeExNihilo.CONFIG.modules.barrels.tickRate
             : world.random.nextInt(FabricaeExNihilo.CONFIG.modules.barrels.tickRate);
-    }
-    public BarrelBlockEntity(BlockPos pos, BlockState state) {
-        this(pos, state, state.getBlock() instanceof BarrelBlock barrel && barrel.isFireproof());
     }
 
     public static void ticker(World world, BlockPos blockPos, BlockState blockState, BarrelBlockEntity barrelEntity) {
@@ -194,7 +189,7 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
     }
 
     public boolean isFireproof() {
-        return isFireproof;
+        return getCachedState().getBlock() instanceof BarrelBlock barrel && barrel.isFireproof();
     }
 
     @Override
@@ -257,6 +252,4 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
         nbt.put("mode", CodecUtils.toNbt(BarrelMode.CODEC, mode));
         nbt.put("enchantments", enchantments.writeNbt());
     }
-
-
 }
