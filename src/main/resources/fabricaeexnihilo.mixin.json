@@ -11,10 +11,10 @@
     "EnchantmentHelperMixin",
     "EnchantmentMixin",
     "FluidBlockMixin",
-    "LootContextTypesAccess",
-    "client.BlockModelRendererMixin"
+    "LootContextTypesAccess"
   ],
   "client": [
+    "client.BlockModelRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

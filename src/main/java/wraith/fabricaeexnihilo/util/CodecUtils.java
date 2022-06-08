@@ -59,11 +59,23 @@ public class CodecUtils {
     }
     
     public static <T> T fromPacket(Codec<T> codec, PacketByteBuf buf) {
-        return fromNbt(codec, buf.readNbt());
+        var packed = buf.readBoolean();
+        NbtCompound nbt = buf.readNbt();
+        return fromNbt(codec, packed && nbt != null ? nbt.get("value") : nbt);
     }
     
     public static <T> void toPacket(Codec<T> codec, T data, PacketByteBuf buf) {
-        buf.writeNbt((NbtCompound) toNbt(codec, data));
+        var nbtData = toNbt(codec, data);
+        // Packets only support nbt compounds, so if we have a non-compound value we set a flag and wrap it
+        if (!(nbtData instanceof NbtCompound compound)) {
+            buf.writeBoolean(true);
+            var compound = new NbtCompound();
+            compound.put("value", nbtData);
+            buf.writeNbt(compound);
+            return;
+        }
+        buf.writeBoolean(false);
+        buf.writeNbt(compound);
     }
     
     public static <T> T fromNbt(Codec<T> codec, NbtElement data) {
