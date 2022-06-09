@@ -30,12 +30,12 @@ class BarrelProbeInfoProvider implements IProbeInfoProvider {
         var barrelMode = barrel.getMode();
         if (barrelMode instanceof CompostMode compostMode) {
             if (compostMode.getAmount() < 1) {
-                probeInfo.text(new TranslatableText("fabricaeexnihilo.wthit.barrel.compost.filling", (int) (compostMode.getAmount() * 100)));
+                probeInfo.text(new TranslatableText("fabricaeexnihilo.hud.barrel.compost.filling", (int) (compostMode.getAmount() * 100)));
             } else {
-                probeInfo.text(new TranslatableText("fabricaeexnihilo.wthit.barrel.compost.composting", (int) (compostMode.getProgress() * 100)));
+                probeInfo.text(new TranslatableText("fabricaeexnihilo.hud.barrel.compost.composting", (int) (compostMode.getProgress() * 100)));
             }
         } else if (barrelMode instanceof AlchemyMode alchemyMode) {
-            probeInfo.text(new TranslatableText("fabricaeexnihilo.wthit.barrel.alchemy.processing", (int) ((100.0 / alchemyMode.getDuration()) * alchemyMode.getProgress())));
+            probeInfo.text(new TranslatableText("fabricaeexnihilo.hud.barrel.alchemy.processing", (int) ((100.0 / alchemyMode.getDuration()) * alchemyMode.getProgress())));
         }
     }
 }

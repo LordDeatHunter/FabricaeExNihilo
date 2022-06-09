@@ -18,12 +18,12 @@ public class BarrelComponentProvider implements IBlockComponentProvider {
         var mode = barrel.getMode();
         if (mode instanceof CompostMode compostMode) {
             if (compostMode.getAmount() < 1) {
-                tooltip.addLine(new TranslatableText("fabricaeexnihilo.wthit.barrel.compost.filling", (int)(compostMode.getAmount() * 100)));
+                tooltip.addLine(new TranslatableText("fabricaeexnihilo.hud.barrel.compost.filling", (int)(compostMode.getAmount() * 100)));
             } else {
-                tooltip.addLine(new TranslatableText("fabricaeexnihilo.wthit.barrel.compost.composting", (int)(compostMode.getProgress() * 100)));
+                tooltip.addLine(new TranslatableText("fabricaeexnihilo.hud.barrel.compost.composting", (int)(compostMode.getProgress() * 100)));
             }
         } else if (mode instanceof AlchemyMode alchemyMode) {
-            tooltip.addLine(new TranslatableText("fabricaeexnihilo.wthit.barrel.alchemy.processing", (int)((100.0 / alchemyMode.getDuration()) * alchemyMode.getProgress())));
+            tooltip.addLine(new TranslatableText("fabricaeexnihilo.hud.barrel.alchemy.processing", (int)((100.0 / alchemyMode.getDuration()) * alchemyMode.getProgress())));
         }
     }
 }

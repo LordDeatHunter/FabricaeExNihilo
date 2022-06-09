@@ -28,11 +28,11 @@ public class SieveProbeInfoProvider implements IProbeInfoProvider {
             return;
         
         if (!sieve.getMesh().isEmpty()) {
-            probeInfo.text("fabricaeexnihilo.wthit.sieve.mesh", sieve.getMesh().getName());
+            probeInfo.text("fabricaeexnihilo.hud.sieve.mesh", sieve.getMesh().getName());
         }
         if (!sieve.getContents().isEmpty()) {
-            probeInfo.text("fabricaeexnihilo.wthit.sieve.content", sieve.getContents().getName());
-            probeInfo.text("fabricaeexnihilo.wthit.sieve.progress", (int) sieve.getProgress() * 100);
+            probeInfo.text("fabricaeexnihilo.hud.sieve.content", sieve.getContents().getName());
+            probeInfo.text("fabricaeexnihilo.hud.sieve.progress", (int) (sieve.getProgress() * 100));
         }
     }
 }

@@ -14,11 +14,11 @@ public class SieveComponentProvider implements IBlockComponentProvider {
         if (sieve == null) return;
     
         if (!sieve.getMesh().isEmpty()) {
-            tooltip.addLine(new TranslatableText("fabricaeexnihilo.wthit.sieve.mesh", sieve.getMesh().getName()));
+            tooltip.addLine(new TranslatableText("fabricaeexnihilo.hud.sieve.mesh", sieve.getMesh().getName()));
         }
         if (!sieve.getContents().isEmpty()) {
-            tooltip.addLine(new TranslatableText("fabricaeexnihilo.wthit.sieve.content", sieve.getContents().getName()));
-            tooltip.addLine(new TranslatableText("fabricaeexnihilo.wthit.sieve.progress", (int) sieve.getProgress() * 100));
+            tooltip.addLine(new TranslatableText("fabricaeexnihilo.hud.sieve.content", sieve.getContents().getName()));
+            tooltip.addLine(new TranslatableText("fabricaeexnihilo.hud.sieve.progress", (int) (sieve.getProgress() * 100)));
         }
     }
 }

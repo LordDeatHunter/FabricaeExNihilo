@@ -2,7 +2,7 @@ import java.nio.file.Files
 
 var path = project.file("dev_settings.properties").toPath()
 var properties = new Properties()
-properties.putAll(wthit: "false", the_one_probe: "true", modmenu: "true", rei: "true", kubejs: "true", tech_reborn: "false", modern_industrialization: "false")
+properties.putAll(wthit: "false", the_one_probe: "true", modmenu: "true", rei: "true", kubejs: "true", tech_reborn: "false", modern_industrialization: "false", jade: "false")
 
 if (Files.exists(path)) {
     properties.load(Files.newBufferedReader(path))
@@ -17,5 +17,6 @@ theOneProbe = Boolean.parseBoolean(properties.getProperty("the_one_probe"))
 kubejs = Boolean.parseBoolean(properties.getProperty("kubejs"))
 techReborn = Boolean.parseBoolean(properties.getProperty("tech_reborn"))
 modernIndustrialization = Boolean.parseBoolean(properties.getProperty("modern_industrialization"))
+jade = Boolean.parseBoolean(properties.getProperty("jade"))
 
 println "Applied configs!"

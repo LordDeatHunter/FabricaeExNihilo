@@ -29,6 +29,9 @@
     ],
     "rei_plugins": [
       "wraith.fabricaeexnihilo.compatibility.rei.PluginEntry"
+    ],
+    "jade": [
+      "wraith.fabricaeexnihilo.compatibility.jade.FENJadePlugin"
     ]
   },
   "mixins": [

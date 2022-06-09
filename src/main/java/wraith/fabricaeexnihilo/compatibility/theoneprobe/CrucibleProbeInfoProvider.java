@@ -28,7 +28,7 @@ public class CrucibleProbeInfoProvider implements IProbeInfoProvider {
             return;
     
         if (crucible.getQueued() > 0 && mode == ProbeMode.EXTENDED) {
-            probeInfo.text(new TranslatableText("fabricaeexnihilo.wthit.crucible.queued", crucible.getQueued() / 81 /* Convert to millibuckets */));
+            probeInfo.text(new TranslatableText("fabricaeexnihilo.hud.crucible.queued", crucible.getQueued() / 81 /* Convert to millibuckets */));
         }
     }
 }

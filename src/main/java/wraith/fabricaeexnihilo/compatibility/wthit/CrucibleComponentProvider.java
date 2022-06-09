@@ -14,7 +14,7 @@ public class CrucibleComponentProvider implements IBlockComponentProvider {
         if (crucible == null) return;
         
         if (crucible.getQueued() > 0) {
-            tooltip.addLine(new TranslatableText("fabricaeexnihilo.wthit.crucible.queued", crucible.getQueued() / 81 /* Convert to millibuckets */));
+            tooltip.addLine(new TranslatableText("fabricaeexnihilo.hud.crucible.queued", crucible.getQueued() / 81 /* Convert to millibuckets */));
         }
     }
 }
