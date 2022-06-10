@@ -1,0 +1,11 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "minecraft:amethyst_shard",
+  "input": "fabricaeexnihilo:crushed_calcite",
+  "rolls": {
+    "fabricaeexnihilo:flint_mesh": [0.1],
+    "fabricaeexnihilo:iron_mesh": [0.25],
+    "fabricaeexnihilo:diamond_mesh": [0.3, 0.1],
+    "fabricaeexnihilo:netherite_mesh": [0.4, 0.2]
+  }
+}
