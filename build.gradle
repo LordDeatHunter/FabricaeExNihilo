@@ -92,9 +92,9 @@ dependencies {
         modRuntimeOnly "com.electronwill.night-config:toml:3.6.0"
     }
 
-    modCompileOnly "curse.maven:jade-324717:3821714"
+    modCompileOnly "curse.maven:jade-324717:3823077"
     if (settings.jade) {
-        modRuntimeOnly "curse.maven:jade-324717:3821714"
+        modRuntimeOnly "curse.maven:jade-324717:3823077g"
     }
 }
 
