@@ -25,6 +25,7 @@ public class DefaultApiModule implements FENApiModule {
 
         registries.registerCrushedBlock("dust", registries.sandyBlockSettings());
         registries.registerCrushedBlock("silt", registries.sandyBlockSettings());
+        registries.registerCrushedBlock("crushed_calcite", registries.sandyBlockSettings());
 
         registries.registerCrushedBlock("crushed_andesite", registries.gravelyBlockSettings());
         registries.registerCrushedBlock("crushed_diorite", registries.gravelyBlockSettings());

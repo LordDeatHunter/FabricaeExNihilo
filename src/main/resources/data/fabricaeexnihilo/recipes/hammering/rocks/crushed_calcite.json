@@ -1,0 +1,11 @@
+{
+  "type": "fabricaeexnihilo:hammer",
+  "block": "minecraft:calcite",
+  "result": {
+    "stack": "fabricaeexnihilo:crushed_calcite",
+    "chances": [
+      1.0,
+      0.5
+    ]
+  }
+}
