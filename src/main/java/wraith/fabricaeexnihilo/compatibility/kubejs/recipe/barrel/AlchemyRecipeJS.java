@@ -10,7 +10,10 @@ import net.minecraft.util.JsonHelper;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.modules.barrels.modes.BarrelMode;
 import wraith.fabricaeexnihilo.modules.barrels.modes.EmptyMode;
-import wraith.fabricaeexnihilo.recipe.util.*;
+import wraith.fabricaeexnihilo.recipe.util.EntityStack;
+import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
+import wraith.fabricaeexnihilo.recipe.util.ItemIngredient;
+import wraith.fabricaeexnihilo.recipe.util.Loot;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
 public class AlchemyRecipeJS extends RecipeJS {

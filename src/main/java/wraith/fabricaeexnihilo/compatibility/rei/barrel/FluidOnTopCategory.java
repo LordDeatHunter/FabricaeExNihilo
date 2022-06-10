@@ -10,7 +10,6 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.compatibility.rei.GlyphWidget;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
@@ -72,7 +71,7 @@ public class FluidOnTopCategory implements DisplayCategory<FluidOnTopDisplay> {
 
     @Override
     public Text getTitle() {
-        return new TranslatableText(name);
+        return Text.translatable(name);
     }
 
     @Override

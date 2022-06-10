@@ -1,7 +1,7 @@
 package wraith.fabricaeexnihilo.compatibility.jade;
 
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.IBlockComponentProvider;
@@ -17,11 +17,11 @@ public class CrucibleProvider implements IBlockComponentProvider {
         if (!(blockAccessor.getBlockEntity() instanceof CrucibleBlockEntity crucible)) return;
     
         if (crucible.getQueued() > 0) {
-            tooltip.add(new TranslatableText("fabricaeexnihilo.hud.crucible.queued", crucible.getQueued() / 81));
+            tooltip.add(Text.translatable("fabricaeexnihilo.hud.crucible.queued", crucible.getQueued() / 81));
         }
         if (crucible.getContained() > 0) {
             var fluid = crucible.getFluid();
-            tooltip.add(new TranslatableText("fabricaeexnihilo.hud.fluid_content", FluidVariantAttributes.getName(fluid), crucible.getContained()/81, crucible.getMaxCapacity()/81));
+            tooltip.add(Text.translatable("fabricaeexnihilo.hud.fluid_content", FluidVariantAttributes.getName(fluid), crucible.getContained()/81, crucible.getMaxCapacity()/81));
         }
     }
     

@@ -16,9 +16,9 @@ public class BloodFluid extends AbstractFluid {
     private static final FluidSettings FLUID_SETTINGS = new FluidSettings("blood", false);
     public static final TagKey<Fluid> TAG = TagKey.of(Registry.FLUID_KEY, new Identifier("c:blood"));
     public static final BloodFluid STILL = new BloodFluid(true);
-    public static final BucketItem BUCKET = new BucketItem(STILL, ModFluids.BUCKET_ITEM_SETTINGS);
+    public static final BucketItem BUCKET = new BucketItem(STILL, ModFluids.getBucketItemSettings());
     public static final BloodFluid FLOWING = new BloodFluid(false);
-    public static final BaseFluidBlock BLOCK = new BaseFluidBlock(STILL, FabricBlockSettings.copyOf(ModFluids.BLOCK_SETTINGS));
+    public static final BaseFluidBlock BLOCK = new BaseFluidBlock(STILL, FabricBlockSettings.copyOf(ModFluids.getBlockSettings()));
     
     @Override
     public boolean matchesType(Fluid fluid) {

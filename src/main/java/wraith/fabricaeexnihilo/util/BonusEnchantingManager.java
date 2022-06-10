@@ -9,7 +9,10 @@ import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModItems;
 import wraith.fabricaeexnihilo.modules.ModTools;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public final class BonusEnchantingManager {
     public static final Map<Enchantment, List<Item>> DATA = new HashMap<>();

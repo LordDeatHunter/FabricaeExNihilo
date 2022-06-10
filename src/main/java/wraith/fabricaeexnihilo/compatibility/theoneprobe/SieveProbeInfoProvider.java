@@ -6,11 +6,8 @@ import mcjty.theoneprobe.api.IProbeInfoProvider;
 import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
-import wraith.fabricaeexnihilo.modules.barrels.BarrelBlock;
-import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
 import wraith.fabricaeexnihilo.modules.sieves.SieveBlock;
 import wraith.fabricaeexnihilo.modules.sieves.SieveBlockEntity;
 

@@ -87,7 +87,7 @@ public class StrainerBlockEntity extends BaseBlockEntity {
                 }
             }
             var config = FabricaeExNihilo.CONFIG.modules.strainers;
-            strainer.timeUntilCatch = world.random.nextInt(config.minWaitTime, config.maxWaitTime);
+            strainer.timeUntilCatch = world.random.nextBetweenExclusive(config.minWaitTime, config.maxWaitTime);
         }
         strainer.markDirty();
     }

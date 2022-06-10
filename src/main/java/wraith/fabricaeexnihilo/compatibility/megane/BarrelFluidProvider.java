@@ -3,7 +3,6 @@ package wraith.fabricaeexnihilo.compatibility.megane;
 import lol.bai.megane.api.provider.FluidProvider;
 import net.minecraft.fluid.Fluid;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.modules.barrels.BarrelBlock;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
 import wraith.fabricaeexnihilo.modules.barrels.modes.FluidMode;
 

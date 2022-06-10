@@ -4,7 +4,7 @@ import mcp.mobius.waila.api.IBlockAccessor;
 import mcp.mobius.waila.api.IBlockComponentProvider;
 import mcp.mobius.waila.api.IPluginConfig;
 import mcp.mobius.waila.api.ITooltip;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import wraith.fabricaeexnihilo.modules.crucibles.CrucibleBlockEntity;
 
 public class CrucibleComponentProvider implements IBlockComponentProvider {
@@ -14,7 +14,7 @@ public class CrucibleComponentProvider implements IBlockComponentProvider {
         if (crucible == null) return;
         
         if (crucible.getQueued() > 0) {
-            tooltip.addLine(new TranslatableText("fabricaeexnihilo.hud.crucible.queued", crucible.getQueued() / 81 /* Convert to millibuckets */));
+            tooltip.addLine(Text.translatable("fabricaeexnihilo.hud.crucible.queued", crucible.getQueued() / 81 /* Convert to millibuckets */));
         }
     }
 }

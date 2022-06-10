@@ -9,9 +9,6 @@ import snownee.jade.api.config.IPluginConfig;
 import snownee.jade.api.ui.IElement;
 import wraith.fabricaeexnihilo.modules.strainer.StrainerBlockEntity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public class StrainerProvider implements IBlockComponentProvider {

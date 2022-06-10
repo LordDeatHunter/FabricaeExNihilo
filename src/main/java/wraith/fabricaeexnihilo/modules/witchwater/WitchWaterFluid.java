@@ -16,8 +16,8 @@ public class WitchWaterFluid extends AbstractFluid {
     private static final FluidSettings FLUID_SETTINGS = new FluidSettings("witchwater", false);
     public static final WitchWaterFluid FLOWING = new WitchWaterFluid(false);
     public static final WitchWaterFluid STILL = new WitchWaterFluid(true);
-    public static final BucketItem BUCKET = new BucketItem(STILL, ModFluids.BUCKET_ITEM_SETTINGS);
-    public static final WitchWaterBlock BLOCK = new WitchWaterBlock(STILL, FabricBlockSettings.copyOf(ModFluids.BLOCK_SETTINGS));
+    public static final BucketItem BUCKET = new BucketItem(STILL, ModFluids.getBucketItemSettings());
+    public static final WitchWaterBlock BLOCK = new WitchWaterBlock(STILL, FabricBlockSettings.copyOf(ModFluids.getBlockSettings()));
     public static final TagKey<Fluid> TAG = TagKey.of(Registry.FLUID_KEY, id("witchwater"));
 
     public WitchWaterFluid(boolean isStill) {

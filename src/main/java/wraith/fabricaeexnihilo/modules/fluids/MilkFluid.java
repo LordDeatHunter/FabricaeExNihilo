@@ -22,7 +22,7 @@ public class MilkFluid extends AbstractFluid {
     public static final Item BUCKET = Items.MILK_BUCKET;
     public static final MilkFluid FLOWING = new MilkFluid(false);
     public static final MilkFluid STILL = new MilkFluid(true);
-    public static final BaseFluidBlock BLOCK = new BaseFluidBlock(STILL, FabricBlockSettings.copyOf(ModFluids.BLOCK_SETTINGS));
+    public static final BaseFluidBlock BLOCK = new BaseFluidBlock(STILL, FabricBlockSettings.copyOf(ModFluids.getBlockSettings()));
     public static final TagKey<Fluid> TAG = TagKey.of(Registry.FLUID_KEY, new Identifier("c:milk"));
 
     static {

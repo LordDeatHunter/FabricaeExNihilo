@@ -30,7 +30,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
-import wraith.fabricaeexnihilo.modules.barrels.BarrelBlock;
 import wraith.fabricaeexnihilo.modules.base.BaseBlockEntity;
 import wraith.fabricaeexnihilo.modules.base.EnchantableBlockEntity;
 import wraith.fabricaeexnihilo.modules.base.EnchantmentContainer;

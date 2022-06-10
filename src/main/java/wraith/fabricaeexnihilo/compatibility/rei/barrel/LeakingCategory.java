@@ -9,9 +9,7 @@ import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.compatibility.rei.GlyphWidget;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
@@ -69,7 +67,7 @@ public class LeakingCategory implements DisplayCategory<LeakingDisplay> {
 
     @Override
     public Text getTitle() {
-        return new TranslatableText(this.name);
+        return Text.translatable(this.name);
     }
 
     @Override
@@ -88,7 +86,7 @@ public class LeakingCategory implements DisplayCategory<LeakingDisplay> {
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BUCKET_X, bounds.getMinY() + BUCKET_Y)).entries(fluid));
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + TARGET_X, bounds.getMinY() + TARGET_Y)).entries(block));
 
-        var text = Widgets.createLabel(new Point(0, 0), new LiteralText("-" + loss));
+        var text = Widgets.createLabel(new Point(0, 0), Text.literal("-" + loss));
         text.setPoint(new Point(bounds.getMaxX() - MARGIN - text.getBounds().getMaxX(), bounds.getMinY() + MARGIN + 9));
         widgets.add(text);
 

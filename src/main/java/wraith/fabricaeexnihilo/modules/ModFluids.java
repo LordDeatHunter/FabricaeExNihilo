@@ -2,6 +2,7 @@ package wraith.fabricaeexnihilo.modules;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Material;
 import net.minecraft.item.Items;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
@@ -15,8 +16,6 @@ import java.util.List;
 
 public final class ModFluids {
 
-    public static final FabricBlockSettings BLOCK_SETTINGS = FabricBlockSettings.of(Material.WATER).noCollision().strength(100.0f, 100.0f).dropsNothing();
-    public static final FabricItemSettings BUCKET_ITEM_SETTINGS = new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP).maxCount(1).recipeRemainder(Items.BUCKET);
     public static final List<AbstractFluid> FLUIDS = List.of(
         WitchWaterFluid.STILL,
         MilkFluid.STILL,
@@ -29,6 +28,14 @@ public final class ModFluids {
         BrineFluid.FLOWING,
         BloodFluid.FLOWING
     );
+
+    public static AbstractBlock.Settings getBlockSettings() {
+        return FabricBlockSettings.of(Material.WATER).noCollision().strength(100.0f, 100.0f).dropsNothing();
+    }
+
+    public static FabricItemSettings getBucketItemSettings() {
+        return new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP).maxCount(1).recipeRemainder(Items.BUCKET);
+    }
 
     public static void registerBuckets() {
         FLUIDS.stream().filter(fluid -> fluid != MilkFluid.STILL).forEach(AbstractFluid::registerBucket);

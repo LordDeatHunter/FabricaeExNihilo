@@ -1,7 +1,5 @@
-import java.text.FieldPosition
-
 plugins {
-    id 'fabric-loom' version '0.11-SNAPSHOT'
+    id 'fabric-loom' version '0.12-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -45,6 +43,7 @@ repositories {
 
 var settings = new Object() {
     boolean wthit
+    boolean megane
     boolean modmenu
     boolean rei
     boolean theOneProbe
@@ -75,9 +74,11 @@ dependencies {
 
     // WTHIT and Megane
     modCompileOnly "mcp.mobius.waila:wthit-api:fabric-$wthit_version"
-    modCompileOnly "lol.bai.megane:megane-api:7.1.0"
     if (settings.wthit) {
         modRuntimeOnly "mcp.mobius.waila:wthit:fabric-$wthit_version"
+    }
+    modCompileOnly "lol.bai.megane:megane-api:7.1.0"
+    if (settings.megane) {
         modRuntimeOnly "lol.bai:badpackets:fabric-0.1.2"
         modRuntimeOnly "lol.bai.megane:megane-runtime:$megane_version"
         modRuntimeOnly "lol.bai.megane:megane-vanilla:$megane_version"

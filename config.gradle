@@ -11,6 +11,7 @@ if (Files.exists(path)) {
 properties.store(Files.newBufferedWriter(path), "IMPORTANT: Remember to reload gradle in intellij after changing!")
 
 wthit = Boolean.parseBoolean(properties.getProperty("wthit"))
+megane = Boolean.parseBoolean(properties.getProperty("megane"))
 modmenu = Boolean.parseBoolean(properties.getProperty("modmenu"))
 rei = Boolean.parseBoolean(properties.getProperty("rei"))
 theOneProbe = Boolean.parseBoolean(properties.getProperty("the_one_probe"))

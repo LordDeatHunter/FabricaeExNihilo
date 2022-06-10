@@ -6,7 +6,10 @@ import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.recipe.SieveRecipe;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 public class SieveRecipeHolder {
 

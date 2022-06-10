@@ -9,9 +9,7 @@ import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.compatibility.rei.GlyphWidget;
 
@@ -64,7 +62,7 @@ public class CrucibleCategory implements DisplayCategory<CrucibleDisplay> {
 
     @Override
     public Text getTitle() {
-        return new TranslatableText(this.name);
+        return Text.translatable(this.name);
     }
 
     @Override
@@ -85,7 +83,7 @@ public class CrucibleCategory implements DisplayCategory<CrucibleDisplay> {
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X, bounds.getMinY() + OUTPUT_Y)).entries(outputs));
 
         // Amount Text Value
-        var text = Widgets.createLabel(new Point(0, 0), new LiteralText(String.valueOf(output)));
+        var text = Widgets.createLabel(new Point(0, 0), Text.literal(String.valueOf(output)));
         text.setPoint(new Point(bounds.getMinX() + WIDTH - MARGIN - text.getBounds().getMaxX(), bounds.getMinY() + MARGIN + 18 - text.getBounds().getMaxY() - text.getBounds().getMaxY() / 2));
 
         widgets.add(text);

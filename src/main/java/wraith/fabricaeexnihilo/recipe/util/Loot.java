@@ -3,11 +3,11 @@ package wraith.fabricaeexnihilo.recipe.util;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.random.Random;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public record Loot(ItemStack stack, List<Double> chances) {
     public static final Loot EMPTY = new Loot(ItemStack.EMPTY);

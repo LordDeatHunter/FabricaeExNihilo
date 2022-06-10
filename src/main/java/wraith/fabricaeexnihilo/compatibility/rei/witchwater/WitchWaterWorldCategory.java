@@ -10,9 +10,7 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.compatibility.rei.GlyphWidget;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 import wraith.fabricaeexnihilo.modules.witchwater.WitchWaterFluid;
@@ -68,7 +66,7 @@ public class WitchWaterWorldCategory implements DisplayCategory<WitchWaterWorldD
 
     @Override
     public Text getTitle() {
-        return new TranslatableText("fabricaeexnihilo.rei.category.witch_water.world");
+        return Text.translatable("fabricaeexnihilo.rei.category.witch_water.world");
     }
 
     @Override

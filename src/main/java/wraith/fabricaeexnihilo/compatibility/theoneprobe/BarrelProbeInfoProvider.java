@@ -6,7 +6,7 @@ import mcjty.theoneprobe.api.IProbeInfoProvider;
 import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlock;
@@ -30,12 +30,12 @@ class BarrelProbeInfoProvider implements IProbeInfoProvider {
         var barrelMode = barrel.getMode();
         if (barrelMode instanceof CompostMode compostMode) {
             if (compostMode.getAmount() < 1) {
-                probeInfo.text(new TranslatableText("fabricaeexnihilo.hud.barrel.compost.filling", (int) (compostMode.getAmount() * 100)));
+                probeInfo.text(Text.translatable("fabricaeexnihilo.hud.barrel.compost.filling", (int) (compostMode.getAmount() * 100)));
             } else {
-                probeInfo.text(new TranslatableText("fabricaeexnihilo.hud.barrel.compost.composting", (int) (compostMode.getProgress() * 100)));
+                probeInfo.text(Text.translatable("fabricaeexnihilo.hud.barrel.compost.composting", (int) (compostMode.getProgress() * 100)));
             }
         } else if (barrelMode instanceof AlchemyMode alchemyMode) {
-            probeInfo.text(new TranslatableText("fabricaeexnihilo.hud.barrel.alchemy.processing", (int) ((100.0 / alchemyMode.getDuration()) * alchemyMode.getProgress())));
+            probeInfo.text(Text.translatable("fabricaeexnihilo.hud.barrel.alchemy.processing", (int) ((100.0 / alchemyMode.getDuration()) * alchemyMode.getProgress())));
         }
     }
 }

@@ -10,7 +10,6 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 import wraith.fabricaeexnihilo.compatibility.rei.GlyphWidget;
@@ -54,7 +53,7 @@ public class ToolCategory implements DisplayCategory<ToolDisplay> {
 
     @Override
     public Text getTitle() {
-        return new TranslatableText(this.name);
+        return Text.translatable(this.name);
     }
 
     @Override

@@ -10,7 +10,6 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ public class CrucibleHeatCategory implements DisplayCategory<CrucibleHeatDisplay
 
     @Override
     public Text getTitle() {
-        return new TranslatableText(this.name);
+        return Text.translatable(this.name);
     }
 
     @Override
@@ -56,7 +55,7 @@ public class CrucibleHeatCategory implements DisplayCategory<CrucibleHeatDisplay
 
         Point startPoint = new Point(bounds.getCenterX() - 41, bounds.getCenterY() - 17);
         widgets.add(
-            Widgets.createLabel(new Point(bounds.x + 26, bounds.getCenterY()), new TranslatableText("fabricaeexnihilo.rei.category.crucible_heat.speed", heat))
+            Widgets.createLabel(new Point(bounds.x + 26, bounds.getCenterY()), Text.translatable("fabricaeexnihilo.rei.category.crucible_heat.speed", heat))
                 .color(0xFF404040, 0xFFBBBBBB)
                 .noShadow()
                 .leftAligned()

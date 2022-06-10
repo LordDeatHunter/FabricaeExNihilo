@@ -1,6 +1,7 @@
 package wraith.fabricaeexnihilo.compatibility.theoneprobe;
 
-import mcjty.theoneprobe.api.*;
+import mcjty.theoneprobe.api.ITheOneProbe;
+import mcjty.theoneprobe.api.ITheOneProbePlugin;
 
 public class TheOneProbePlugin implements ITheOneProbePlugin {
     @Override

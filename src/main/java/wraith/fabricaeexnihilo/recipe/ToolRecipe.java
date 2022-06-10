@@ -15,7 +15,6 @@ import wraith.fabricaeexnihilo.recipe.util.Loot;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
 import java.util.List;
-import java.util.Optional;
 
 public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
     private final ToolType tool;

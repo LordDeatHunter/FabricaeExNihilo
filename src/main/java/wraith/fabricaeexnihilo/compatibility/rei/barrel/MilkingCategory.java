@@ -9,9 +9,7 @@ import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.compatibility.rei.GlyphWidget;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
@@ -65,7 +63,7 @@ public class MilkingCategory implements DisplayCategory<MilkingDisplay> {
 
     @Override
     public Text getTitle() {
-        return new TranslatableText(name);
+        return Text.translatable(name);
     }
 
     @Override
@@ -88,7 +86,7 @@ public class MilkingCategory implements DisplayCategory<MilkingDisplay> {
 //            widgets.add(EntityWidget(bounds.getMinX(), bounds.getMinY(), 36, 36, it))
 //        }
 
-        var text = Widgets.createLabel(new Point(0, 0), new LiteralText(String.valueOf(display.getAmount())));
+        var text = Widgets.createLabel(new Point(0, 0), Text.literal(String.valueOf(display.getAmount())));
         text.setPoint(new Point(bounds.getMaxX() - MARGIN - text.getBounds().getMaxX(), bounds.getMinY() + MARGIN));
         widgets.add(text);
 

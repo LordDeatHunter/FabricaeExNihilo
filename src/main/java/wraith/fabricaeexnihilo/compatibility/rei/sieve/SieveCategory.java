@@ -7,13 +7,9 @@ import me.shedaniel.rei.api.client.gui.widgets.Widget;
 import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
-import me.shedaniel.rei.api.common.entry.EntryIngredient;
-import me.shedaniel.rei.api.common.entry.EntryStack;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.compatibility.rei.GlyphWidget;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
@@ -76,7 +72,7 @@ public class SieveCategory implements DisplayCategory<SieveDisplay> {
 
     @Override
     public Text getTitle() {
-        return new TranslatableText(this.name);
+        return Text.translatable(this.name);
     }
 
     @Override
@@ -114,7 +110,7 @@ public class SieveCategory implements DisplayCategory<SieveDisplay> {
                     var chances = outputChances.get(output);
                     for (var chance : chances) {
                         if (chance <= 0) continue;
-                        tooltips.add(new LiteralText(chance * 100 + "%"));
+                        tooltips.add(Text.literal(chance * 100 + "%"));
                     }
                     
                     if (!tooltips.isEmpty()) {

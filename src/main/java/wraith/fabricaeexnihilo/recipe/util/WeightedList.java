@@ -4,13 +4,13 @@ import com.mojang.serialization.Codec;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Pair;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.function.Function;
 
 public class WeightedList {

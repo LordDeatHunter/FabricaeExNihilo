@@ -11,7 +11,6 @@ import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.village.VillagerProfession;
@@ -66,7 +65,7 @@ public class WitchWaterEntityCategory implements DisplayCategory<WitchWaterEntit
 
     @Override
     public Text getTitle() {
-        return new TranslatableText("fabricaeexnihilo.rei.category.witch_water.entity");
+        return Text.translatable("fabricaeexnihilo.rei.category.witch_water.entity");
     }
 
     @Override
@@ -90,7 +89,7 @@ public class WitchWaterEntityCategory implements DisplayCategory<WitchWaterEntit
         if (display.getTarget().test(EntityType.VILLAGER)) {
             var profession = display.getProfession();
             var professionId = Registry.VILLAGER_PROFESSION.getId(profession == null ? VillagerProfession.NONE : profession);
-            var text = Widgets.createLabel(new Point(0, 0), new TranslatableText("entity." + professionId.getNamespace() + ".villager." + professionId.getPath()));
+            var text = Widgets.createLabel(new Point(0, 0), Text.translatable("entity." + professionId.getNamespace() + ".villager." + professionId.getPath()));
             text.setPoint(new Point(bounds.getMinX() + MARGIN + text.getBounds().getMaxX(), bounds.getMinY() + text.getBounds().getMaxY()));
             widgets.add(text);
         }

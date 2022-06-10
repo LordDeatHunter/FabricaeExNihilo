@@ -1,6 +1,6 @@
 package wraith.fabricaeexnihilo.compatibility.jade;
 
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.IBlockComponentProvider;
@@ -16,11 +16,11 @@ public class SieveProvider implements IBlockComponentProvider {
         if (!(blockAccessor.getBlockEntity() instanceof SieveBlockEntity sieve)) return;
     
         if (!sieve.getMesh().isEmpty()) {
-            tooltip.add(new TranslatableText("fabricaeexnihilo.hud.sieve.mesh", sieve.getMesh().getName()));
+            tooltip.add(Text.translatable("fabricaeexnihilo.hud.sieve.mesh", sieve.getMesh().getName()));
         }
         if (!sieve.getContents().isEmpty()) {
-            tooltip.add(new TranslatableText("fabricaeexnihilo.hud.sieve.content", sieve.getContents().getName()));
-            tooltip.add(new TranslatableText("fabricaeexnihilo.hud.sieve.progress", (int) (sieve.getProgress() * 100)));
+            tooltip.add(Text.translatable("fabricaeexnihilo.hud.sieve.content", sieve.getContents().getName()));
+            tooltip.add(Text.translatable("fabricaeexnihilo.hud.sieve.progress", (int) (sieve.getProgress() * 100)));
         }
     }
     
