@@ -4,8 +4,7 @@
   "result": {
     "stack": "minecraft:red_sand",
     "chances": [
-      1.0,
-      0.5
+      1.0
     ]
   }
 }
