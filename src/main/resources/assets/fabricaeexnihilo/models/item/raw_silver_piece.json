@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "fabricaeexnihilo:item/ore/raw_iron_piece"
+    "layer0": "fabricaeexnihilo:item/ore/raw_silver_piece"
   }
 }
