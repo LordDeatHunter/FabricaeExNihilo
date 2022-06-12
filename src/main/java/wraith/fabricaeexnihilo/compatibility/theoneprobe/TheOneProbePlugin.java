@@ -9,6 +9,7 @@ public class TheOneProbePlugin implements ITheOneProbePlugin {
         api.registerProvider(new BarrelProbeInfoProvider());
         api.registerProvider(new CrucibleProbeInfoProvider());
         api.registerProvider(new SieveProbeInfoProvider());
+        api.registerProvider(new InfestingLeavesProvider());
     }
     
 }

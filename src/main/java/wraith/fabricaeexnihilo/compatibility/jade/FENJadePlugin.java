@@ -14,5 +14,6 @@ public class FENJadePlugin implements IWailaPlugin {
         registration.registerBlockComponent(new CrucibleProvider(), CrucibleBlock.class);
         registration.registerBlockComponent(new SieveProvider(), SieveBlock.class);
         registration.registerBlockComponent(new StrainerProvider(), StrainerBlock.class);
+        registration.registerBlockComponent(new InfestingLeavesProvider(), StrainerBlock.class);
     }
 }
