@@ -63,6 +63,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
     private long contained = 0;
     private FluidVariant fluid = FluidVariant.blank();
     private int heat = 0;
+    private boolean requiresFireproof = false;
     private long queued = 0;
     private ItemStack renderStack = ItemStack.EMPTY;
     private int tickCounter;
@@ -142,7 +143,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
     }
 
     public long getProcessingSpeed() {
-        return getEfficiencyMultiplier() * (isFireproof() ? heat * FabricaeExNihilo.CONFIG.modules.crucibles.baseProcessRate : FabricaeExNihilo.CONFIG.modules.crucibles.woodenProcessingRate);
+        return getEfficiencyMultiplier() * (isFireproof() ? (requiresFireproof ? heat : 1) * FabricaeExNihilo.CONFIG.modules.crucibles.baseProcessRate : FabricaeExNihilo.CONFIG.modules.crucibles.woodenProcessingRate);
     }
 
     public long getQueued() {
@@ -182,7 +183,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
     }
 
     public void tick() {
-        if (queued == 0 || contained > getMaxCapacity() || (heat <= 0 && isFireproof())) {
+        if (queued == 0 || contained > getMaxCapacity() || (requiresFireproof && (heat <= 0 || !isFireproof()))) {
             return;
         }
         if (--tickCounter <= 0) {
@@ -230,14 +231,14 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
         nbt.put("enchantments", enchantments.writeNbt());
     }
 
-    private record CrucibleSnapshot(long contained, long queued, FluidVariant fluid, ItemStack renderStack) {
+    private record CrucibleSnapshot(long contained, long queued, FluidVariant fluid, boolean requiresFireproof, ItemStack renderStack) {
     }
 
     private class CrucibleFluidStorage extends SnapshotParticipant<CrucibleSnapshot> implements SingleSlotStorage<FluidVariant>, ExtractionOnlyStorage<FluidVariant> {
 
         @Override
         protected CrucibleSnapshot createSnapshot() {
-            return new CrucibleSnapshot(contained, queued, fluid, renderStack);
+            return new CrucibleSnapshot(contained, queued, fluid, requiresFireproof, renderStack);
         }
 
         @Override
@@ -276,6 +277,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
             contained = snapshot.contained;
             queued = snapshot.queued;
             fluid = snapshot.fluid;
+            requiresFireproof = snapshot.requiresFireproof;
             renderStack = snapshot.renderStack.copy();
         }
     }
@@ -284,7 +286,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
 
         @Override
         protected CrucibleSnapshot createSnapshot() {
-            return new CrucibleSnapshot(contained, queued, fluid, renderStack.copy());
+            return new CrucibleSnapshot(contained, queued, fluid, requiresFireproof, renderStack.copy());
         }
 
         // Compiler dumb
@@ -320,6 +322,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
             updateSnapshots(transaction);
             fluid = recipe.getFluid();
             queued += amount;
+            requiresFireproof = recipe.requiresFireproofCrucible();
             renderStack = resource.toStack();
             return 1;
         }
@@ -334,6 +337,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
             contained = snapshot.contained;
             queued = snapshot.queued;
             fluid = snapshot.fluid;
+            requiresFireproof = snapshot.requiresFireproof;
             renderStack = snapshot.renderStack.copy();
         }
     }
