@@ -1,6 +1,7 @@
 package wraith.fabricaeexnihilo.modules;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.FoodComponents;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
@@ -63,6 +64,7 @@ public final class ModItems {
 
         // Register Ores
         ORE_PIECES.forEach((identifier, item) -> Registry.register(Registry.ITEM, identifier, item));
+        Registry.register(Registry.ITEM, id("end_cake"), new BlockItem(ModBlocks.END_CAKE, new FabricItemSettings().maxCount(1).group(FabricaeExNihilo.ITEM_GROUP)));
         ModFluids.registerBuckets();
     }
 
@@ -72,5 +74,5 @@ public final class ModItems {
             RESOURCES.put(id("cooked_silkworm"), new Item(new FabricItemSettings().maxCount(64).food(FoodComponents.COOKED_COD).group(FabricaeExNihilo.ITEM_GROUP)));
         }
     }
-    
+
 }
