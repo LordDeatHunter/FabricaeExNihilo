@@ -172,6 +172,7 @@
   "fabricaeexnihilo.hud.sieve.progress": "Progress: %s%%",
   "fabricaeexnihilo.hud.sieve.content": "Sieving: %s",
   "fabricaeexnihilo.hud.fluid_content": "%s: %smb / %smb",
+  "fabricaeexnihilo.hud.infesting_leaves.progress": "Progress: %s%%",
 
   "config.jade.plugin_fabricaeexnihilo.barrel": "Barrel",
   "config.jade.plugin_fabricaeexnihilo.crucible": "Crucible",
