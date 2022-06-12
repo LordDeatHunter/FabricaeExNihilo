@@ -4,9 +4,8 @@ import mcp.mobius.waila.api.IBlockAccessor;
 import mcp.mobius.waila.api.IBlockComponentProvider;
 import mcp.mobius.waila.api.IPluginConfig;
 import mcp.mobius.waila.api.ITooltip;
-import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import wraith.fabricaeexnihilo.modules.infested.InfestingLeavesBlockEntity;
-import wraith.fabricaeexnihilo.modules.sieves.SieveBlockEntity;
 
 public class InfestingLeavesProvider implements IBlockComponentProvider {
     @Override
@@ -14,6 +13,6 @@ public class InfestingLeavesProvider implements IBlockComponentProvider {
         InfestingLeavesBlockEntity leaves = accessor.getBlockEntity();
         if (leaves == null) return;
     
-        tooltip.addLine(Text.translatable("fabricaeexnihilo.hud.infesting_leaves.progress", (int) (leaves.getProgress() * 100)));
+        tooltip.addLine(new TranslatableText("fabricaeexnihilo.hud.infesting_leaves.progress", (int) (leaves.getProgress() * 100)));
     }
 }
