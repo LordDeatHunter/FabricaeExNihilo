@@ -174,6 +174,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
         contained = nbt.getLong("contained");
         queued = nbt.getLong("queued");
         heat = nbt.getInt("heat");
+        requiresFireproof = !nbt.contains("requiresFireproof") || nbt.getBoolean("requiresFireproof");
         // Why? It always exists...
         if (nbt.contains("enchantments")) {
             var readEnchantments = new EnchantmentContainer();
@@ -228,6 +229,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
         nbt.putLong("contained", contained);
         nbt.putLong("queued", queued);
         nbt.putInt("heat", heat);
+        nbt.putBoolean("requiresFireproof", requiresFireproof);
         nbt.put("enchantments", enchantments.writeNbt());
     }
 
@@ -341,8 +343,5 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
             renderStack = snapshot.renderStack.copy();
         }
     }
-
-
-
 
 }
