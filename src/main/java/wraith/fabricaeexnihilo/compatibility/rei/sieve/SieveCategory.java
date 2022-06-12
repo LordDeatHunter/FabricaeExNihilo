@@ -3,13 +3,17 @@ package wraith.fabricaeexnihilo.compatibility.rei.sieve;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.Renderer;
+import me.shedaniel.rei.api.client.gui.widgets.Tooltip;
 import me.shedaniel.rei.api.client.gui.widgets.Widget;
 import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
+import me.shedaniel.rei.api.client.util.ClientEntryStacks;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
+import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.compatibility.rei.GlyphWidget;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
@@ -48,6 +52,15 @@ public class SieveCategory implements DisplayCategory<SieveDisplay> {
     public SieveCategory(ItemStack icon, String name) {
         this.icon = icon;
         this.name = name;
+    }
+
+    private void applyTooltip(EntryIngredient ingredient, List<Tooltip.Entry> tooltips) {
+        for (var stack : ingredient) {
+            ClientEntryStacks.setTooltipProcessor(stack, ((entryStack, tooltip) -> {
+                tooltip.entries().addAll(1, tooltips);
+                return tooltip;
+            }));
+        }
     }
 
     @Override
@@ -103,27 +116,24 @@ public class SieveCategory implements DisplayCategory<SieveDisplay> {
             for (int x = 0; x < OUTPUT_SLOTS_X; ++x) {
                 var slot = Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X + 18 * x, bounds.getMinY() + OUTPUT_Y + 18 * y));
                 var index = y * OUTPUT_SLOTS_X + x;
-                Widget widget = slot;
                 if (index < outputs.size()) {
                     var output = outputs.get(index);
-                    List<Text> tooltips = new ArrayList<>();
+                    List<Tooltip.Entry> tooltips = new ArrayList<>();
                     var chances = outputChances.get(output);
                     for (var chance : chances) {
                         if (chance <= 0) continue;
-                        tooltips.add(Text.literal(chance * 100 + "%"));
+                        tooltips.add(Tooltip.entry(Text.literal(chance * 100 + "%").formatted(Formatting.GRAY)));
                     }
-                    
+
+                    applyTooltip(output, tooltips);
+
                     if (!tooltips.isEmpty()) {
                         slot.entries(output);
-                        slot.disableTooltips();
-                        widget = Widgets.withTooltip(slot, tooltips);
                     }
-                    
                 }
-                widgets.add(widget);
+                widgets.add(slot);
             }
         }
         return widgets;
     }
-
 }
