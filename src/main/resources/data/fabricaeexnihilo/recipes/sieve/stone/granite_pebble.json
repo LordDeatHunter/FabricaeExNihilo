@@ -3,7 +3,7 @@
   "result": "fabricaeexnihilo:granite_pebble",
   "input": "minecraft:dirt",
   "rolls": {
-    "fabricaeexnihilo:string_mesh": [0.5, 0.1],
-    "fabricaeexnihilo:flint_mesh": [0.33, 0.33, 0.33]
+    "fabricaeexnihilo:string_mesh": [0.75, 0.6, 0.33, 0.1],
+    "fabricaeexnihilo:flint_mesh": [0.5, 0.5, 0.5, 0.5]
   }
 }
