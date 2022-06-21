@@ -11,6 +11,7 @@ import wraith.fabricaeexnihilo.modules.tools.CrookItem;
 import wraith.fabricaeexnihilo.modules.tools.HammerItem;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
@@ -22,7 +23,7 @@ public class ModTools {
 
     static {
         for (var toolMaterial : ModToolMaterials.values()) {
-            var crookId = id(toolMaterial.name().toLowerCase() + "_crook");
+            var crookId = id(toolMaterial.name().toLowerCase(Locale.ROOT) + "_crook");
             var crook = new CrookItem(toolMaterial, new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP));
             CROOKS.put(crookId, crook);
         }
