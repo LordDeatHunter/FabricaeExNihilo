@@ -1,6 +1,6 @@
 {
   "type": "fabricaeexnihilo:witch_water_world",
-  "target": "#fabricaeexnihilo:true_water",
+  "target": "#fabricaeexnihilo:true_lava",
   "result": {
     "minecraft:cobblestone": 3,
     "minecraft:andesite": 1,
