@@ -27,7 +27,7 @@
       "wraith.fabricaeexnihilo.compatibility.IndustrialRevolutionApiModule",
       "wraith.fabricaeexnihilo.compatibility.ModernIndustrializationApiModule"
     ],
-    "rei_common": [
+    "rei_client": [
       "wraith.fabricaeexnihilo.compatibility.rei.PluginEntry"
     ],
     "jade": [
