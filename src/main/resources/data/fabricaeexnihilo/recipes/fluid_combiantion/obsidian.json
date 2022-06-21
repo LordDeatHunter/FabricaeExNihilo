@@ -4,6 +4,6 @@
   "other": "minecraft:water",
   "result": {
     "id": "item",
-    "stack": "minecraft:obsidian"}
+    "stack": "minecraft:obsidian"
   }
 }
