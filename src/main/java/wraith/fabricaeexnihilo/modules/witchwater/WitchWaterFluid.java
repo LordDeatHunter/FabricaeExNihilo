@@ -13,7 +13,7 @@ import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public class WitchWaterFluid extends AbstractFluid {
 
-    private static final FluidSettings FLUID_SETTINGS = new FluidSettings("witchwater", 0x311362, false);
+    private static final FluidSettings FLUID_SETTINGS = new FluidSettings("witchwater", 0x311362, false, true);
     public static final WitchWaterFluid FLOWING = new WitchWaterFluid(false);
     public static final WitchWaterFluid STILL = new WitchWaterFluid(true);
     public static final BucketItem BUCKET = new BucketItem(STILL, ModFluids.BUCKET_ITEM_SETTINGS);
