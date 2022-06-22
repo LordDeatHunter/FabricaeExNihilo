@@ -14,7 +14,7 @@ public final class BlockModelRendererFlags {
         colorOverride = enabled;
     }
     
-    public static boolean isColorOverriden() {
+    public static boolean isColorOverridden() {
         return colorOverride;
     }
 }
