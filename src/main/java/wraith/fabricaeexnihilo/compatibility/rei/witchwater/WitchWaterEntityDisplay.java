@@ -4,6 +4,7 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.village.VillagerProfession;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
@@ -15,19 +16,16 @@ import java.util.List;
 
 public class WitchWaterEntityDisplay implements Display {
 
-    private final List<EntryIngredient> inputs;
-    private final List<EntryIngredient> outputs;
+    private final List<EntryIngredient> inputs = new ArrayList<>();
+    private final List<EntryIngredient> outputs = new ArrayList<>();
     private final VillagerProfession profession;
-    private final EntityTypeIngredient target;
+    private final EntityType<?> result;
+    private final List<EntityType<?>> target;
 
     public WitchWaterEntityDisplay(WitchWaterEntityRecipe recipe) {
-        this.inputs = recipe.getTarget().flattenListOfEggStacks(EntryIngredients::of);
-        var result = recipe.getResult();
-        var spawnEgg = SpawnEggItem.forEntity(result);
-        this.outputs = new ArrayList<>();
-        this.outputs.add(spawnEgg != null ? EntryIngredients.of(spawnEgg) : EntryIngredient.empty());
+        this.target = recipe.getTarget().flattenListOfEntities();
+        this.result = recipe.getResult();
         this.profession = recipe.getProfession();
-        this.target = recipe.getTarget();
     }
 
     @Override
@@ -45,12 +43,16 @@ public class WitchWaterEntityDisplay implements Display {
         return outputs;
     }
 
-    public VillagerProfession getProfession() {
-        return profession;
+    public EntityType<?> getResult() {
+        return result;
     }
 
-    public EntityTypeIngredient getTarget() {
+    public List<EntityType<?>> getTarget() {
         return target;
+    }
+
+    public VillagerProfession getProfession() {
+        return profession;
     }
 
 }
