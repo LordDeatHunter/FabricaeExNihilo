@@ -18,7 +18,7 @@ import wraith.fabricaeexnihilo.modules.base.FluidSettings;
 
 public class MilkFluid extends AbstractFluid {
 
-    private static final FluidSettings FLUID_SETTINGS = new FluidSettings("milk", false);
+    private static final FluidSettings FLUID_SETTINGS = new FluidSettings("milk", 0xFFFFFF, false);
     public static final Item BUCKET = Items.MILK_BUCKET;
     public static final MilkFluid FLOWING = new MilkFluid(false);
     public static final MilkFluid STILL = new MilkFluid(true);
