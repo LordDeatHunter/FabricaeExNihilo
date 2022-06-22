@@ -1,6 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "result": "fabricaeexnihilo:basalt_pebble",
+  "result": "fabricaeexnihilo:deepslate_pebble",
   "input": "minecraft:gravel",
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.5, 0.5, 0.25],
