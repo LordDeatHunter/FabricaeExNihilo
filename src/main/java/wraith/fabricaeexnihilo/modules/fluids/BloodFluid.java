@@ -13,7 +13,7 @@ import wraith.fabricaeexnihilo.modules.base.FluidSettings;
 
 public class BloodFluid extends AbstractFluid {
     
-    private static final FluidSettings FLUID_SETTINGS = new FluidSettings("blood", false);
+    private static final FluidSettings FLUID_SETTINGS = new FluidSettings("blood", 0x6F0000, false);
     public static final TagKey<Fluid> TAG = TagKey.of(Registry.FLUID_KEY, new Identifier("c:blood"));
     public static final BloodFluid STILL = new BloodFluid(true);
     public static final BucketItem BUCKET = new BucketItem(STILL, ModFluids.getBucketItemSettings());
