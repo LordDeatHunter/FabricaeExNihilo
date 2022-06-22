@@ -43,7 +43,7 @@ public class WeightedList {
     }
 
     public Block choose(Random random) {
-        var rem = random.nextInt(totalWeight);
+        var rem = random.nextInt(totalWeight + 1);
         Block block = null;
         for (var entry : values.entrySet()) {
             rem -= entry.getValue();
