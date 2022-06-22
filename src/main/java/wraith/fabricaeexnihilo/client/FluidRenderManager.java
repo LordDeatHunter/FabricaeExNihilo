@@ -14,6 +14,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.modules.ModFluids;
 import wraith.fabricaeexnihilo.modules.base.AbstractFluid;
+import wraith.fabricaeexnihilo.modules.base.FluidSettings;
 
 import java.util.function.Function;
 
@@ -31,10 +32,12 @@ public class FluidRenderManager {
 
         final Sprite[] fluidSprites = { null, null, null };
 
+        final FluidSettings fluidSettings = fluid.getFluidSettings();
+
         ClientSpriteRegistryCallback.event(BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
-            registry.register(fluid.getFluidSettings().getStillTexture());
-            registry.register(fluid.getFluidSettings().getFlowingTexture());
-            registry.register(fluid.getFluidSettings().getOverlayTexture());
+            registry.register(fluidSettings.getStillTexture());
+            registry.register(fluidSettings.getFlowingTexture());
+            registry.register(fluidSettings.getOverlayTexture());
         });
 
         ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
@@ -46,15 +49,17 @@ public class FluidRenderManager {
             @Override
             public void reload(ResourceManager resourceManager) {
                 final Function<Identifier, Sprite> atlas = MinecraftClient.getInstance().getSpriteAtlas(BLOCK_ATLAS_TEXTURE);
-                fluidSprites[0] = atlas.apply(fluid.getFluidSettings().getStillTexture());
-                fluidSprites[1] = atlas.apply(fluid.getFluidSettings().getFlowingTexture());
-                fluidSprites[2] = atlas.apply(fluid.getFluidSettings().getOverlayTexture());
+                fluidSprites[0] = atlas.apply(fluidSettings.getStillTexture());
+                fluidSprites[1] = atlas.apply(fluidSettings.getFlowingTexture());
+                fluidSprites[2] = atlas.apply(fluidSettings.getOverlayTexture());
             }
         });
         FluidRenderHandlerRegistry.INSTANCE.register(fluid, fluid.getFlowing(), (view, pos, state) -> fluidSprites);
 
-        BlockRenderLayerMap.INSTANCE.putFluid(fluid, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putFluid(fluid.getFlowing(), RenderLayer.getCutout());
+        if (fluidSettings.isTranslucent()) {
+            BlockRenderLayerMap.INSTANCE.putFluid(fluid, RenderLayer.getTranslucent());
+            BlockRenderLayerMap.INSTANCE.putFluid(fluid.getFlowing(), RenderLayer.getTranslucent());
+        }
     }
 
 }

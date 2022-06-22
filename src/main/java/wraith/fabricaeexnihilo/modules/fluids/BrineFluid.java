@@ -13,7 +13,7 @@ import wraith.fabricaeexnihilo.modules.base.FluidSettings;
 
 public class BrineFluid extends AbstractFluid {
     
-    private static final FluidSettings FLUID_SETTINGS = new FluidSettings("brine", 0xACC4B9, false);
+    private static final FluidSettings FLUID_SETTINGS = new FluidSettings("brine", 0xACC4B9, false, true);
     public static final TagKey<Fluid> TAG = TagKey.of(Registry.FLUID_KEY, new Identifier("c:brine"));
     public static final BrineFluid STILL = new BrineFluid(true);
     public static final BucketItem BUCKET = new BucketItem(STILL, ModFluids.getBucketItemSettings());
