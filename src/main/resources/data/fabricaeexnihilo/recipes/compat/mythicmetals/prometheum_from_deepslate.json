@@ -1,0 +1,18 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "fabricaeexnihilo:raw_prometheum_piece",
+  "input": "fabricaeexnihilo:crushed_deepslate",
+  "rolls": {
+    "fabricaeexnihilo:diamond_mesh": [0.01],
+    "fabricaeexnihilo:netherite_mesh": [0.02],
+    "fabricaeexnihilo:adamantite_mesh": [0.04]
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "fabricaeexnihilo:all_items_present",
+      "values": [
+        "fabricaeexnihilo:raw_prometheum_piece"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "fabricaeexnihilo:raw_stormyx_piece",
+  "input": "fabricaeexnihilo:crushed_netherrack",
+  "rolls": {
+    "fabricaeexnihilo:iron_mesh": [0.0125],
+    "fabricaeexnihilo:diamond_mesh": [0.025],
+    "fabricaeexnihilo:netherite_mesh": [0.05],
+    "fabricaeexnihilo:adamantite_mesh": [0.1]
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "fabricaeexnihilo:all_items_present",
+      "values": [
+        "fabricaeexnihilo:raw_stormyx_piece"
+      ]
+    }
+  ]
+}

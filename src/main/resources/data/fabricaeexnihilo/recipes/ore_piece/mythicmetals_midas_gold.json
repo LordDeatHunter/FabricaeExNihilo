@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "fabricaeexnihilo:raw_midas_gold_piece"
+    },
+    {
+      "item": "fabricaeexnihilo:raw_midas_gold_piece"
+    },
+    {
+      "item": "fabricaeexnihilo:raw_midas_gold_piece"
+    },
+    {
+      "item": "fabricaeexnihilo:raw_midas_gold_piece"
+    }
+  ],
+  "result": {
+    "item": "mythicmetals:raw_midas_gold",
+    "count": 1
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "fabricaeexnihilo:all_items_present",
+      "values": [
+        "mythicmetals:raw_midas_gold"
+      ]
+    }
+  ]
+}
