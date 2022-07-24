@@ -1,0 +1,10 @@
+{
+  "type": "fabricaeexnihilo:hammer",
+  "block": "minecraft:cobbled_deepslate",
+  "result": {
+    "stack": "fabricaeexnihilo:crushed_deepslate",
+    "chances": [
+      1.0
+    ]
+  }
+}
