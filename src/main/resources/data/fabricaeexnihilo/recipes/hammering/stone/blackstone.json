@@ -1,0 +1,10 @@
+{
+  "type": "fabricaeexnihilo:hammer",
+  "block": "minecraft:blackstone",
+  "result": {
+    "stack": "fabricaeexnihilo:crushed_blackstone",
+    "chances": [
+      1.0
+    ]
+  }
+}
