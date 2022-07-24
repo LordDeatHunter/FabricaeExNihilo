@@ -1,0 +1,19 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "fabricaeexnihilo:raw_manganese_piece",
+  "input": "minecraft:gravel",
+  "rolls": {
+    "fabricaeexnihilo:iron_mesh": [0.03],
+    "fabricaeexnihilo:diamond_mesh": [0.06],
+    "fabricaeexnihilo:netherite_mesh": [0.09],
+    "fabricaeexnihilo:adamantite_mesh": [0.18]
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "fabricaeexnihilo:all_items_present",
+      "values": [
+        "fabricaeexnihilo:raw_manganese_piece"
+      ]
+    }
+  ]
+}

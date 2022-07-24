@@ -1,0 +1,18 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "fabricaeexnihilo:raw_runite_piece",
+  "input": "fabricaeexnihilo:crushed_deepslate",
+  "rolls": {
+    "fabricaeexnihilo:diamond_mesh": [0.021],
+    "fabricaeexnihilo:netherite_mesh": [0.042],
+    "fabricaeexnihilo:adamantite_mesh": [0.073]
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "fabricaeexnihilo:all_items_present",
+      "values": [
+        "fabricaeexnihilo:raw_runite_piece"
+      ]
+    }
+  ]
+}
