@@ -1,0 +1,18 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "fabricaeexnihilo:raw_runite_piece",
+  "input": "minecraft:gravel",
+  "rolls": {
+    "fabricaeexnihilo:diamond_mesh": [0.011],
+    "fabricaeexnihilo:netherite_mesh": [0.022],
+    "fabricaeexnihilo:adamantite_mesh": [0.042]
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "fabricaeexnihilo:all_items_present",
+      "values": [
+        "fabricaeexnihilo:raw_runite_piece"
+      ]
+    }
+  ]
+}

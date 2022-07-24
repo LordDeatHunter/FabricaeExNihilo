@@ -1,0 +1,18 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "mythicmetals:starrite",
+  "input": "fabricaeexnihilo:crushed_calcite",
+  "rolls": {
+    "fabricaeexnihilo:diamond_mesh": [0.0025],
+    "fabricaeexnihilo:netherite_mesh": [0.005],
+    "fabricaeexnihilo:adamantite_mesh": [0.01]
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "fabricaeexnihilo:all_items_present",
+      "values": [
+        "mythicmetals:starrite"
+      ]
+    }
+  ]
+}

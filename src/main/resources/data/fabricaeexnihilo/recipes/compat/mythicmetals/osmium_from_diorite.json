@@ -1,0 +1,19 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": "fabricaeexnihilo:raw_osmium_piece",
+  "input": "fabricaeexnihilo:crushed_diorite",
+  "rolls": {
+    "fabricaeexnihilo:iron_mesh": [0.025],
+    "fabricaeexnihilo:diamond_mesh": [0.05],
+    "fabricaeexnihilo:netherite_mesh": [0.075],
+    "fabricaeexnihilo:adamantite_mesh": [0.15]
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "fabricaeexnihilo:all_items_present",
+      "values": [
+        "fabricaeexnihilo:raw_osmium_piece"
+      ]
+    }
+  ]
+}

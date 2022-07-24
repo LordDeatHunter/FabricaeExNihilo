@@ -25,7 +25,8 @@
       "wraith.fabricaeexnihilo.compatibility.DefaultApiModule",
       "wraith.fabricaeexnihilo.compatibility.TechRebornApiModule",
       "wraith.fabricaeexnihilo.compatibility.IndustrialRevolutionApiModule",
-      "wraith.fabricaeexnihilo.compatibility.ModernIndustrializationApiModule"
+      "wraith.fabricaeexnihilo.compatibility.ModernIndustrializationApiModule",
+      "wraith.fabricaeexnihilo.compatibility.MythicMetalsApiModule"
     ],
     "rei_client": [
       "wraith.fabricaeexnihilo.compatibility.rei.PluginEntry"
