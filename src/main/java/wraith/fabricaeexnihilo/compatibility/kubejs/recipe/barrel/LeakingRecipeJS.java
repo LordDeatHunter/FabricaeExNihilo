@@ -1,8 +1,8 @@
 package wraith.fabricaeexnihilo.compatibility.kubejs.recipe.barrel;
 
 import com.google.gson.JsonPrimitive;
+import dev.latvian.mods.kubejs.recipe.RecipeArguments;
 import dev.latvian.mods.kubejs.recipe.RecipeJS;
-import dev.latvian.mods.kubejs.util.ListJS;
 import net.minecraft.block.Block;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -11,19 +11,20 @@ import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
 public class LeakingRecipeJS extends RecipeJS {
+
     private Block result;
     private BlockIngredient block;
     private FluidIngredient fluid;
     private long amount;
-    
+
     @Override
-    public void create(ListJS listJS) {
+    public void create(RecipeArguments listJS) {
         result = Registry.BLOCK.get(new Identifier(listJS.get(0).toString()));
         block = CodecUtils.fromJson(BlockIngredient.CODEC, new JsonPrimitive(listJS.get(1).toString()));
         fluid = CodecUtils.fromJson(FluidIngredient.CODEC, new JsonPrimitive(listJS.get(2).toString()));
-        amount = (long)(double) listJS.get(3);
+        amount = (long) (double) listJS.get(3);
     }
-    
+
     @Override
     public void deserialize() {
         block = CodecUtils.fromJson(BlockIngredient.CODEC, json.get("block"));
@@ -31,7 +32,7 @@ public class LeakingRecipeJS extends RecipeJS {
         amount = json.get("amount").getAsLong();
         result = Registry.BLOCK.get(new Identifier(json.get("result").getAsString()));
     }
-    
+
     @Override
     public void serialize() {
         json.add("block", CodecUtils.toJson(BlockIngredient.CODEC, block));

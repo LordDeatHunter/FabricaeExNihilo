@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import dev.latvian.mods.kubejs.item.ItemStackJS;
+import dev.latvian.mods.kubejs.recipe.RecipeArguments;
 import dev.latvian.mods.kubejs.recipe.RecipeJS;
 import dev.latvian.mods.kubejs.util.ListJS;
 import dev.latvian.mods.kubejs.util.MapJS;
@@ -21,18 +22,19 @@ import java.util.Map;
 import java.util.stream.StreamSupport;
 
 public class SieveRecipeJS extends RecipeJS {
+
+    private final Map<Identifier, List<Double>> rolls = new HashMap<>();
     private ItemIngredient input = ItemIngredient.EMPTY;
     private FluidIngredient fluid = new FluidIngredient(Fluids.EMPTY);
-    private final Map<Identifier, List<Double>> rolls = new HashMap<>();
-    
+
     @Override
-    public void create(ListJS listJS) {
+    public void create(RecipeArguments listJS) {
         outputItems.add(parseResultItem(listJS.get(0)));
         input = CodecUtils.fromJson(ItemIngredient.CODEC, new JsonPrimitive(listJS.get(1).toString()));
         fluid = CodecUtils.fromJson(FluidIngredient.CODEC, new JsonPrimitive(listJS.get(2).toString()));
-        ((MapJS)listJS.get(3)).forEach((id, rolls) -> this.rolls.put(Identifier.tryParse(id), ((ListJS)rolls).stream().map(obj -> (Double)obj).toList()));
+        MapJS.orEmpty(listJS.get(3)).forEach((id, rolls) -> this.rolls.put(Identifier.tryParse((String) id), (ListJS.orEmpty(rolls)).stream().map(obj -> (Double) obj).toList()));
     }
-    
+
     @Override
     public void deserialize() {
         outputItems.add(ItemStackJS.of(CodecUtils.fromJson(CodecUtils.ITEM_STACK, json.get("result"))));
@@ -42,12 +44,12 @@ public class SieveRecipeJS extends RecipeJS {
             var meshJson = entry.getKey();
             var chancesJson = entry.getValue();
             rolls.put(new Identifier(meshJson),
-                    StreamSupport.stream(chancesJson.getAsJsonArray().spliterator(), false)
-                            .map(JsonElement::getAsDouble)
-                            .toList());
+                StreamSupport.stream(chancesJson.getAsJsonArray().spliterator(), false)
+                    .map(JsonElement::getAsDouble)
+                    .toList());
         });
     }
-    
+
     @Override
     public void serialize() {
         json.add("result", CodecUtils.toJson(CodecUtils.ITEM_STACK, outputItems.get(0).getItemStack()));

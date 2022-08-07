@@ -66,7 +66,10 @@ dependencies {
     modCompileOnly "dev.latvian.mods:kubejs-fabric:$kubejs_version"
     modCompileOnly "com.terraformersmc:modmenu:$modmenu_version"
 
-    if (settings.rei) modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
+    if (settings.rei) {
+        modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
+        modRuntimeOnly "dev.architectury:architectury-fabric:$architectury_version"
+    }
     if (settings.kubejs) modRuntimeOnly "dev.latvian.mods:kubejs-fabric:$kubejs_version"
     if (settings.modmenu) modRuntimeOnly "com.terraformersmc:modmenu:$modmenu_version"
     if (settings.techReborn) modRuntimeOnly "TechReborn:TechReborn-1.18:$tech_reborn_version"

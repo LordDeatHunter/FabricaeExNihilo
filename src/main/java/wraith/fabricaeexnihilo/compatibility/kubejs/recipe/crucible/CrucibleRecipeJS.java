@@ -2,8 +2,8 @@ package wraith.fabricaeexnihilo.compatibility.kubejs.recipe.crucible;
 
 import com.google.gson.JsonPrimitive;
 import dev.latvian.mods.kubejs.fluid.FluidStackJS;
+import dev.latvian.mods.kubejs.recipe.RecipeArguments;
 import dev.latvian.mods.kubejs.recipe.RecipeJS;
-import dev.latvian.mods.kubejs.util.ListJS;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.util.JsonHelper;
 import wraith.fabricaeexnihilo.recipe.util.ItemIngredient;
@@ -11,25 +11,26 @@ import wraith.fabricaeexnihilo.util.CodecUtils;
 
 @SuppressWarnings("UnstableApiUsage")
 public class CrucibleRecipeJS extends RecipeJS {
+
     private long amount;
     private FluidVariant fluid;
     private ItemIngredient input;
     private boolean requiresFireproofCrucible = true;
-    
+
     @Override
-    public void create(ListJS listJS) {
+    public void create(RecipeArguments listJS) {
         var fluid = FluidStackJS.of(listJS.get(0));
         this.fluid = FluidVariant.of(fluid.getFluid(), fluid.getNbt());
         this.amount = fluid.getAmount();
         input = CodecUtils.fromJson(ItemIngredient.CODEC, new JsonPrimitive(listJS.get(1).toString()));
     }
-    
+
     @SuppressWarnings("unused") // Used from js
     public CrucibleRecipeJS wooden() {
         requiresFireproofCrucible = false;
         return this;
     }
-    
+
     @Override
     public void deserialize() {
         input = CodecUtils.fromJson(ItemIngredient.CODEC, json.get("input"));
@@ -37,7 +38,7 @@ public class CrucibleRecipeJS extends RecipeJS {
         fluid = CodecUtils.fromJson(CodecUtils.FLUID_VARIANT, json.get("fluid"));
         requiresFireproofCrucible = JsonHelper.getBoolean(json, "requiresFireproofCrucible");
     }
-    
+
     @Override
     public void serialize() {
         json.add("input", CodecUtils.toJson(ItemIngredient.CODEC, input));

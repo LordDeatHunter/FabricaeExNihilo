@@ -2,8 +2,8 @@ package wraith.fabricaeexnihilo.compatibility.kubejs.recipe.barrel;
 
 import com.google.gson.JsonPrimitive;
 import dev.latvian.mods.kubejs.item.ItemStackJS;
+import dev.latvian.mods.kubejs.recipe.RecipeArguments;
 import dev.latvian.mods.kubejs.recipe.RecipeJS;
-import dev.latvian.mods.kubejs.util.ListJS;
 import dev.latvian.mods.kubejs.util.MapJS;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
@@ -17,48 +17,49 @@ import wraith.fabricaeexnihilo.recipe.util.Loot;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
 public class AlchemyRecipeJS extends RecipeJS {
+
     private FluidIngredient reactant;
     private ItemIngredient catalyst;
     private Loot byproduct = Loot.EMPTY;
     private int delay = 0;
     private EntityStack toSpawn = EntityStack.EMPTY;
     private BarrelMode result = new EmptyMode();
-    
+
     @Override
-    public void create(ListJS listJS) {
+    public void create(RecipeArguments listJS) {
         reactant = CodecUtils.fromJson(FluidIngredient.CODEC, new JsonPrimitive(listJS.get(0).toString()));
         catalyst = CodecUtils.fromJson(ItemIngredient.CODEC, new JsonPrimitive(listJS.get(1).toString()));
     }
-    
+
     @SuppressWarnings("unused") // Used from js
     public AlchemyRecipeJS byproduct(ItemStackJS stack, double... chances) {
         this.byproduct = new Loot(stack.getItemStack(), chances);
         return this;
     }
-    
+
     @SuppressWarnings("unused") // Used from js
     public AlchemyRecipeJS delay(int delay) {
         this.delay = delay;
         return this;
     }
-    
+
     @SuppressWarnings("unused") // Used from js
     public AlchemyRecipeJS toSpawn(String type) {
         return toSpawn(type, 1);
     }
-    
+
     //TODO: Figure out how to allow for nbt
     public AlchemyRecipeJS toSpawn(String type, int count) {
         this.toSpawn = new EntityStack(Registry.ENTITY_TYPE.get(new Identifier(type)), count);
         return this;
     }
-    
+
     @SuppressWarnings("unused") // Used from js
     public AlchemyRecipeJS result(MapJS result) {
         this.result = CodecUtils.fromJson(BarrelMode.CODEC, MapJS.json(result));
         return this;
     }
-    
+
     @Override
     public void deserialize() {
         this.reactant = CodecUtils.fromJson(FluidIngredient.CODEC, json.get("reactant"));
@@ -72,7 +73,7 @@ public class AlchemyRecipeJS extends RecipeJS {
         if (json.has("result"))
             this.result = CodecUtils.fromJson(BarrelMode.CODEC, json.get("result"));
     }
-    
+
     @Override
     public void serialize() {
         json.add("reactant", CodecUtils.toJson(FluidIngredient.CODEC, reactant));
