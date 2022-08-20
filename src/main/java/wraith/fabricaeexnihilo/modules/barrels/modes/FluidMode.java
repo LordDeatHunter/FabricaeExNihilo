@@ -129,13 +129,14 @@ public class FluidMode extends BarrelMode {
                 var recipe = FluidTransformationRecipe.find(this.fluid, block, world);
                 if (recipe.isPresent()) {
                     var num = barrel.countBelow(block, config.transforming.boostRadius);
-                    barrel.setMode(new AlchemyMode(this, recipe.get().getResult(), config.transforming.rate - (num - 1) * config.transforming.boost));
+                    barrel.setMode(new AlchemyMode(this, recipe.get().getResult().copy(), config.transforming.rate - (num - 1) * config.transforming.boost));
                 }
             }
         }
         if (!config.leaking.enabled)
             return;
-
+        if (barrel.isFireproof()) 
+            return; 
         var leakPos = barrel.getLeakPos();
         if (leakPos == null)
             return;
