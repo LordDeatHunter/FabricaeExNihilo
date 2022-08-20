@@ -125,9 +125,8 @@ public class SieveCategory implements DisplayCategory<SieveDisplay> {
                         tooltips.add(Tooltip.entry(Text.literal(chance * 100 + "%").formatted(Formatting.GRAY)));
                     }
 
-                    applyTooltip(output, tooltips);
-
                     if (!tooltips.isEmpty()) {
+                        applyTooltip(output, tooltips);
                         slot.entries(output);
                     }
                 }
