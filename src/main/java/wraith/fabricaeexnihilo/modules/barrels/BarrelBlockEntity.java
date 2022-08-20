@@ -25,6 +25,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
@@ -240,6 +241,10 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
             --tickCounter;
             markDirty();
         }
+    }
+
+    public void precipitationTick(Biome.Precipitation precipitation) {
+        mode.precipitationTick(this, precipitation);
     }
 
     @Override

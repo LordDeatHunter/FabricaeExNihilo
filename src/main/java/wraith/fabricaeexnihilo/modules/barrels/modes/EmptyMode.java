@@ -6,8 +6,11 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.world.biome.Biome;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.ModTags;
+import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelFluidStorage;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelItemStorage;
 import wraith.fabricaeexnihilo.recipe.barrel.CompostRecipe;
@@ -29,7 +32,14 @@ public class EmptyMode extends BarrelMode {
     public BarrelMode copy() {
         return new EmptyMode();
     }
-    
+
+    @Override
+    public void precipitationTick(BarrelBlockEntity barrel, Biome.Precipitation precipitation) {
+        if (precipitation == Biome.Precipitation.RAIN) {
+            barrel.setMode(new FluidMode(FluidVariant.of(Fluids.WATER), FluidConstants.BUCKET / 100));
+        }
+    }
+
     @Override
     public long insertItem(ItemVariant item, long maxAmount, TransactionContext transaction, BarrelItemStorage storage) {
         StoragePreconditions.notBlankNotNegative(item, maxAmount);

@@ -26,6 +26,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.ModEffects;
@@ -35,10 +36,9 @@ import wraith.fabricaeexnihilo.recipe.barrel.MilkingRecipe;
 
 @SuppressWarnings({ "UnstableApiUsage", "deprecation" })
 public class BarrelBlock extends BlockWithEntity {
-
     private static final VoxelShape SHAPE = createCuboidShape(1.0, 0.0, 1.0, 15.0, 16.0, 15.0);
-    private final boolean isFireproof;
 
+    private final boolean isFireproof;
     public BarrelBlock(Settings settings, boolean isFireproof) {
         super(settings);
         this.isFireproof = isFireproof;
@@ -58,6 +58,14 @@ public class BarrelBlock extends BlockWithEntity {
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
+    }
+
+    @Override
+    public void precipitationTick(BlockState state, World world, BlockPos pos, Biome.Precipitation precipitation) {
+        var blockEntity = world.getBlockEntity(pos);
+        if (blockEntity instanceof BarrelBlockEntity barrel) {
+            barrel.precipitationTick(precipitation);
+        }
     }
 
     @Nullable

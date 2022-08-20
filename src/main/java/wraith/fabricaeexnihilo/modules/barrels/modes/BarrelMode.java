@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.world.biome.Biome;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelModeStorage;
@@ -42,5 +43,9 @@ public abstract class BarrelMode implements BarrelModeStorage {
     public abstract BarrelMode copy();
     
     public void tick(BarrelBlockEntity barrel) {
+    }
+
+    public void precipitationTick(BarrelBlockEntity barrel, Biome.Precipitation precipitation) {
+
     }
 }
