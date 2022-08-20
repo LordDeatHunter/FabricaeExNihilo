@@ -7,6 +7,8 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.world.biome.Biome;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelFluidStorage;
@@ -111,6 +113,15 @@ public class FluidMode extends BarrelMode {
     }
 
     @Override
+    public void precipitationTick(BarrelBlockEntity barrel, Biome.Precipitation precipitation) {
+        if (precipitation == Biome.Precipitation.RAIN && fluid.isOf(Fluids.WATER) && amount < getFluidCapacity()) {
+            amount += FluidConstants.BUCKET / 100;
+            if (amount >= getFluidCapacity())
+                amount = getFluidCapacity();
+        }
+    }
+
+    @Override
     public void tick(BarrelBlockEntity barrel) {
         var config = FabricaeExNihilo.CONFIG.modules.barrels;
         var world = barrel.getWorld();
@@ -135,8 +146,8 @@ public class FluidMode extends BarrelMode {
         }
         if (!config.leaking.enabled)
             return;
-        if (barrel.isFireproof()) 
-            return; 
+        if (barrel.isFireproof())
+            return;
         var leakPos = barrel.getLeakPos();
         if (leakPos == null)
             return;

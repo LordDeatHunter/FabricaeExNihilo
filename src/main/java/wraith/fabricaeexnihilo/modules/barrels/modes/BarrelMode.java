@@ -4,11 +4,13 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.world.biome.Biome;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelModeStorage;
 
 public abstract class BarrelMode implements BarrelModeStorage {
+
     // We really gotta do this? :concern:
     // Yes, since we need to have the switch...
     public static final Codec<BarrelMode> CODEC = Codec.PASSTHROUGH.xmap(dynamic -> {
@@ -33,14 +35,19 @@ public abstract class BarrelMode implements BarrelModeStorage {
         ((NbtCompound) nbt).putString("id", mode.getId());
         return new Dynamic<>(NbtOps.INSTANCE, nbt);
     });
-    
+
     protected BarrelMode() {
     }
-    
+
     public abstract String getId();
-    
+
     public abstract BarrelMode copy();
-    
+
     public void tick(BarrelBlockEntity barrel) {
     }
+
+    public void precipitationTick(BarrelBlockEntity barrel, Biome.Precipitation precipitation) {
+
+    }
+
 }
