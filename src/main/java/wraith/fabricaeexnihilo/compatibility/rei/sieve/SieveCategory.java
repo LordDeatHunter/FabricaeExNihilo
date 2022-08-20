@@ -13,7 +13,6 @@ import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
@@ -118,10 +117,8 @@ public class SieveCategory implements DisplayCategory<SieveDisplay> {
                         if (chance <= 0) continue;
                         tooltips.add(Tooltip.entry(new LiteralText(chance * 100 + "%").formatted(Formatting.GRAY)));
                     }
-    
-                    applyTooltip(output, tooltips);
-    
                     if (!tooltips.isEmpty()) {
+                        applyTooltip(output, tooltips);
                         slot.entries(output);
                     }
                 }
@@ -130,7 +127,7 @@ public class SieveCategory implements DisplayCategory<SieveDisplay> {
         }
         return widgets;
     }
-    
+
     private void applyTooltip(EntryIngredient ingredient, List<Tooltip.Entry> tooltips) {
         for (var stack : ingredient) {
             ClientEntryStacks.setTooltipProcessor(stack, ((entryStack, tooltip) -> {
