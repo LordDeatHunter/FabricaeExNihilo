@@ -10,8 +10,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import wraith.fabricaeexnihilo.modules.infested.InfestingLeavesBlock;
 import wraith.fabricaeexnihilo.modules.infested.InfestingLeavesBlockEntity;
-import wraith.fabricaeexnihilo.modules.sieves.SieveBlock;
-import wraith.fabricaeexnihilo.modules.sieves.SieveBlockEntity;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 

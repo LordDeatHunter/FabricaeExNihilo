@@ -40,5 +40,4 @@ public class RegistryUtils {
     public static Identifier getId(VillagerProfession villagerProfession) {
         return Registry.VILLAGER_PROFESSION.getId(villagerProfession);
     }
-    
 }

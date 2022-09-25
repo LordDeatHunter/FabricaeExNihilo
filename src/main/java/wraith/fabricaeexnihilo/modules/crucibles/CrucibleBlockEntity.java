@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ExtractionOnlyStorage;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.InsertionOnlyStorage;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage;
@@ -27,6 +28,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
@@ -36,6 +38,8 @@ import wraith.fabricaeexnihilo.modules.base.EnchantmentContainer;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleHeatRecipe;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleRecipe;
 import wraith.fabricaeexnihilo.util.CodecUtils;
+
+import java.util.Iterator;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
@@ -285,16 +289,9 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
     }
 
     private class CrucibleItemStorage extends SnapshotParticipant<CrucibleSnapshot> implements InsertionOnlyStorage<ItemVariant>, SingleSlotStorage<ItemVariant> {
-
         @Override
         protected CrucibleSnapshot createSnapshot() {
             return new CrucibleSnapshot(contained, queued, fluid, requiresFireproof, renderStack.copy());
-        }
-
-        // Compiler dumb
-        @Override
-        public long extract(ItemVariant resource, long maxAmount, TransactionContext transaction) {
-            return InsertionOnlyStorage.super.extract(resource, maxAmount, transaction);
         }
 
         @Override
@@ -314,7 +311,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
 
         @Override
         public long insert(ItemVariant resource, long maxAmount, TransactionContext transaction) {
-            var recipeOptional = CrucibleRecipe.find(resource.getItem(), isFireproof(), world);
+            var recipeOptional = CrucibleRecipe.find(resource.toStack(), isFireproof(), world);
             if (recipeOptional.isEmpty()) return 0;
             var recipe = recipeOptional.get();
             if (!recipe.getFluid().equals(fluid) && !fluid.isBlank()) return 0;
@@ -327,6 +324,12 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
             requiresFireproof = recipe.requiresFireproofCrucible();
             renderStack = resource.toStack();
             return 1;
+        }
+
+        // Compiler dumb
+        @Override
+        public long extract(ItemVariant resource, long maxAmount, TransactionContext transaction) {
+            return InsertionOnlyStorage.super.extract(resource, maxAmount, transaction);
         }
 
         @Override
@@ -342,6 +345,12 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
             requiresFireproof = snapshot.requiresFireproof;
             renderStack = snapshot.renderStack.copy();
         }
-    }
 
+        // Parents have conflicting impls, pick one
+        @Override
+        @NotNull
+        public Iterator<StorageView<ItemVariant>> iterator() {
+            return SingleSlotStorage.super.iterator();
+        }
+    }
 }

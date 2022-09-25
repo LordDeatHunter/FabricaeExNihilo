@@ -1,6 +1,8 @@
 {
   "type": "fabricaeexnihilo:crucible",
-  "input": "#minecraft:leaves",
+  "input": {
+    "tag": "minecraft:leaves"
+  },
   "amount": 20250,
   "fluid": "minecraft:water",
   "requiresFireproofCrucible": false

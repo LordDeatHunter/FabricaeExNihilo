@@ -2,25 +2,20 @@ package wraith.fabricaeexnihilo.compatibility.rei.sieve;
 
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
-import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.recipe.SieveRecipe;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class SieveRecipeHolder {
+    public final boolean waterlogged;
+    public final EntryIngredient input;
+    public final EntryIngredient mesh;
+    public final Map<EntryIngredient, List<Double>> outputs;
 
-    private final List<EntryIngredient> fluids;
-    private final List<EntryIngredient> inputs;
-    private final EntryIngredient mesh;
-    private final HashMap<EntryIngredient, List<Double>> outputs;
-
-    public SieveRecipeHolder(List<EntryIngredient> inputs, List<EntryIngredient> fluids, EntryIngredient mesh, HashMap<EntryIngredient, List<Double>> outputs) {
-        this.inputs = inputs;
-        this.fluids = fluids;
+    public SieveRecipeHolder(EntryIngredient input, boolean waterlogged, EntryIngredient mesh, Map<EntryIngredient, List<Double>> outputs) {
+        this.input = input;
+        this.waterlogged = waterlogged;
         this.mesh = mesh;
         this.outputs = outputs;
     }
@@ -28,18 +23,13 @@ public class SieveRecipeHolder {
     public static List<SieveRecipeHolder> fromRecipe(SieveRecipe recipe) {
         var holders = new ArrayList<SieveRecipeHolder>();
     
-        var inputs = recipe.getInput().streamEntries().map(EntryIngredients::of).toList();
-        var fluids = recipe.getFluid().streamEntries().map(EntryIngredients::of).toList();
         var output = EntryIngredients.of(recipe.getResult());
-        HashMap<EntryIngredient, List<Double>> outputs;
 
         for (var entry : recipe.getRolls().entrySet()) {
-            Identifier key = entry.getKey();
-            List<Double> value = entry.getValue();
-            outputs = new HashMap<>();
-            var mesh = EntryIngredients.of(ItemUtils.getItem(key));
-            outputs.put(output, new ArrayList<>(value));
-            holders.add(new SieveRecipeHolder(inputs, fluids, mesh, outputs));
+            holders.add(new SieveRecipeHolder(EntryIngredients.ofIngredient(recipe.getInput()),
+                    recipe.isWaterlogged(),
+                    EntryIngredients.of(ItemUtils.getItem(entry.getKey())),
+                    new HashMap<>(Map.of(output, entry.getValue()))));
         }
 
         return holders;
@@ -49,42 +39,18 @@ public class SieveRecipeHolder {
         this.outputs.putAll(recipe.outputs);
     }
 
-    public List<EntryIngredient> getFluids() {
-        return fluids;
-    }
-
-    public List<EntryIngredient> getInputs() {
-        return inputs;
-    }
-
-    public EntryIngredient getMesh() {
-        return mesh;
-    }
-
-    public HashMap<EntryIngredient, List<Double>> getOutputs() {
-        return outputs;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(inputs, fluids, mesh);
-    }
-
     public List<SieveRecipeHolder> split(int size) {
         var holders = new ArrayList<SieveRecipeHolder>();
-
         var outputs = new HashMap<EntryIngredient, List<Double>>();
 
         int i = 0;
         for (var iterator = this.outputs.entrySet().iterator(); iterator.hasNext(); ) {
             var entry = iterator.next();
-            var output = entry.getKey();
-            var chances = entry.getValue();
 
-            outputs.put(output, chances);
+            outputs.put(entry.getKey(), entry.getValue());
             if (i >= size || !iterator.hasNext()) {
-                holders.add(new SieveRecipeHolder(new ArrayList<>(inputs), new ArrayList<>(fluids), mesh, new HashMap<>(outputs)));
-                outputs.clear();
+                holders.add(new SieveRecipeHolder(input, waterlogged, mesh, outputs));
+                outputs = new HashMap<>();
                 i = 0;
             } else {
                 ++i;
@@ -94,4 +60,20 @@ public class SieveRecipeHolder {
         return holders;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(input, waterlogged, mesh);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SieveRecipeHolder that = (SieveRecipeHolder) o;
+
+        if (waterlogged != that.waterlogged) return false;
+        if (!input.equals(that.input)) return false;
+        return mesh.equals(that.mesh);
+    }
 }

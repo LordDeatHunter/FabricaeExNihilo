@@ -1,3 +1,4 @@
+/*
 package wraith.fabricaeexnihilo.compatibility.kubejs.recipe.barrel;
 
 import com.google.gson.JsonPrimitive;
@@ -84,3 +85,4 @@ public class AlchemyRecipeJS extends RecipeJS {
         json.add("result", CodecUtils.toJson(BarrelMode.CODEC, result));
     }
 }
+*/

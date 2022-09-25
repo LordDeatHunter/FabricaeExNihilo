@@ -1,3 +1,4 @@
+/*
 package wraith.fabricaeexnihilo.compatibility.kubejs.recipe.barrel;
 
 import com.google.gson.JsonPrimitive;
@@ -36,3 +37,4 @@ public class FluidTransformationRecipeJS extends RecipeJS {
         json.add("catalyst", CodecUtils.toJson(BlockIngredient.CODEC, catalyst));
     }
 }
+*/

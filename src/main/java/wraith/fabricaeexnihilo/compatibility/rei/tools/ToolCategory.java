@@ -64,12 +64,9 @@ public class ToolCategory implements DisplayCategory<ToolDisplay> {
 
         widgets.add(new GlyphWidget(bounds, startPoint.x + 31, startPoint.y + 4, 16, 16, GLYPH, GLYPH_U, GLYPH_V));
 
-        var inputs = display.getInputEntries().get(0);
-        var outputs = display.getOutputEntries().get(0);
-
         widgets.add(Widgets.createResultSlotBackground(new Point(startPoint.x + 61, startPoint.y + 5)));
-        widgets.add(Widgets.createSlot(new Point(startPoint.x + 4, startPoint.y + 5)).entries(inputs).markInput());
-        widgets.add(Widgets.createSlot(new Point(startPoint.x + 61, startPoint.y + 5)).entries(outputs).disableBackground().markOutput());
+        widgets.add(Widgets.createSlot(new Point(startPoint.x + 4, startPoint.y + 5)).entries(display.block).markInput());
+        widgets.add(Widgets.createSlot(new Point(startPoint.x + 61, startPoint.y + 5)).entries(display.result).disableBackground().markOutput());
 
         return widgets;
     }

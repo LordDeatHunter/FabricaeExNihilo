@@ -6,26 +6,20 @@ import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleRecipe;
 
-import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("UnstableApiUsage")
 public class CrucibleDisplay implements Display {
-
-    private final long amount;
     private final CategoryIdentifier<?> category;
-    private final List<EntryIngredient> inputs;
-    private final List<EntryIngredient> outputs;
+    public final long amount;
+    public final EntryIngredient input;
+    public final EntryIngredient result;
 
     public CrucibleDisplay(CrucibleRecipe recipe, CategoryIdentifier<?> category) {
-        this.inputs = recipe.getInput().streamEntries().map(EntryIngredients::of).toList();
+        this.input = EntryIngredients.ofIngredient(recipe.getInput());
         this.category = category;
-        this.outputs = Collections.singletonList(EntryIngredients.of(recipe.getFluid().getFluid()));
+        this.result = EntryIngredients.of(recipe.getFluid().getFluid());
         this.amount = recipe.getAmount();
-    }
-
-    public long getAmount() {
-        return amount;
     }
 
     @Override
@@ -35,12 +29,12 @@ public class CrucibleDisplay implements Display {
 
     @Override
     public List<EntryIngredient> getInputEntries() {
-        return inputs;
+        return List.of(input);
     }
 
     @Override
     public List<EntryIngredient> getOutputEntries() {
-        return outputs;
+        return List.of(result);
     }
 
 }

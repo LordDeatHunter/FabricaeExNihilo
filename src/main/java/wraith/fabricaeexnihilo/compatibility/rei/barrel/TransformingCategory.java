@@ -80,16 +80,14 @@ public class TransformingCategory implements DisplayCategory<TransformingDisplay
         widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW1_X, bounds.getMinY() + ARROW1_Y, 16, 16, ARROW, ARROW_U, ARROW_V));
         widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW2_X, bounds.getMinY() + ARROW2_Y, 16, 16, ARROW, ARROW_U, ARROW_V));
 
-        var outputs = display.getOutputEntries().get(0);
-        var catalyst = display.getCatalyst().get(0);
-        var contained = display.getContained().get(0);
+        var result = display.result.getReiResult();
+        var catalyst = display.catalyst;
+        var contained = display.fluid;
 
-        var barrels = display.getBarrel();
-
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + INPUT_X, bounds.getMinY() + INPUT_Y)).entries(contained));
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BELOW_X, bounds.getMinY() + BELOW_Y)).entries(catalyst));
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BARRELS_X, bounds.getMinY() + BARRELS_Y)).entries(barrels));
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X, bounds.getMinY() + OUTPUT_Y)).entries(outputs));
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + INPUT_X, bounds.getMinY() + INPUT_Y)).entries(contained).markInput());
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BELOW_X, bounds.getMinY() + BELOW_Y)).entries(catalyst).markInput());
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BARRELS_X, bounds.getMinY() + BARRELS_Y)).entries(PluginEntry.BARRELS.get()));
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X, bounds.getMinY() + OUTPUT_Y)).entries(result).markOutput());
 
         return widgets;
     }

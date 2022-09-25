@@ -1,3 +1,4 @@
+/*
 package wraith.fabricaeexnihilo.compatibility.kubejs.recipe.barrel;
 
 import com.google.gson.JsonPrimitive;
@@ -41,3 +42,4 @@ public class MilkingRecipeJS extends RecipeJS {
         json.addProperty("cooldown", cooldown);
     }
 }
+*/

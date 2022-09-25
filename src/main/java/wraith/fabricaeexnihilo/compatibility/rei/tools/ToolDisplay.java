@@ -5,21 +5,20 @@ import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import wraith.fabricaeexnihilo.recipe.ToolRecipe;
+import wraith.fabricaeexnihilo.util.RegistryEntryLists;
 
-import java.util.Collections;
 import java.util.List;
 
+//TODO: Make this like sieve, big box of outputs
 public class ToolDisplay implements Display {
-
-    private final CategoryIdentifier<ToolDisplay> category;
-    private final List<EntryIngredient> inputs;
-    private final List<EntryIngredient> outputs;
+    public final CategoryIdentifier<ToolDisplay> category;
+    public final EntryIngredient block;
+    public final EntryIngredient result;
 
     public ToolDisplay(ToolRecipe recipe, CategoryIdentifier<ToolDisplay> category) {
         this.category = category;
-        this.inputs = recipe.getBlock().streamEntries().map(EntryIngredients::of).toList();
-        //TODO: Add multiple outputs
-        this.outputs = Collections.singletonList(EntryIngredients.of(recipe.getOutput()));
+        this.block = RegistryEntryLists.asReiIngredient(recipe.getBlock());
+        this.result = EntryIngredients.of(recipe.getResult().stack());
     }
 
     @Override
@@ -29,12 +28,12 @@ public class ToolDisplay implements Display {
 
     @Override
     public List<EntryIngredient> getInputEntries() {
-        return inputs;
+        return List.of(block);
     }
 
     @Override
     public List<EntryIngredient> getOutputEntries() {
-        return outputs;
+        return List.of(result);
     }
 
 }

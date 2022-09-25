@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:alchemy",
   "reactant": "#fabricaeexnihilo:witchwater",
-  "catalyst": "fabricaeexnihilo:doll_enderman",
+  "catalyst": {
+    "item": "fabricaeexnihilo:doll_enderman"
+  },
   "delay": 20,
   "toSpawn": {
     "type": "minecraft:enderman",

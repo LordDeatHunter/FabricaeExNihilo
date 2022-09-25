@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:compost",
   "result": "minecraft:white_wool",
-  "input": "minecraft:cobweb",
+  "input": {
+    "item": "minecraft:cobweb"
+  },
   "increment": 0.5,
   "color": "FFFFFF"
 }

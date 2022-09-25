@@ -2,7 +2,7 @@
   "type": "fabricaeexnihilo:sieve",
   "result": "minecraft:prismarine_shard",
   "input": "minecraft:gravel",
-  "fluid": "#fabricaeexnihilo:true_water",
+  "waterlogged": true,
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.01],
     "fabricaeexnihilo:iron_mesh": [0.02],

@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:alchemy",
   "reactant": "#c:brine",
-  "catalyst": "fabricaeexnihilo:doll_guardian",
+  "catalyst": {
+    "item": "fabricaeexnihilo:doll_guardian"
+  },
   "delay": 20,
   "toSpawn": {
     "type": "minecraft:guardian",

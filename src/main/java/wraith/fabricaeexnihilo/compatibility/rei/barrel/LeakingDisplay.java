@@ -4,37 +4,24 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
+import me.shedaniel.rei.api.common.util.EntryStacks;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 import wraith.fabricaeexnihilo.recipe.barrel.LeakingRecipe;
+import wraith.fabricaeexnihilo.util.RegistryEntryLists;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LeakingDisplay implements Display {
-
-    private final long amount;
-    private final List<EntryIngredient> block;
-    private final List<EntryIngredient> fluid;
-    private final List<EntryIngredient> inputs;
-    private final List<EntryIngredient> outputs;
+    public final long amount;
+    public final EntryIngredient block;
+    public final EntryIngredient fluid;
+    public final EntryIngredient output;
 
     public LeakingDisplay(LeakingRecipe recipe) {
-        this.block = recipe.getBlock().streamEntries().map(EntryIngredients::of).toList();
-        this.fluid = recipe.getFluid().streamEntries().map(EntryIngredients::of).toList();
-        this.inputs = new ArrayList<>();
-        this.inputs.addAll(this.block);
-        this.inputs.addAll(this.fluid);
-        this.outputs = new ArrayList<>();
-        this.outputs.add(EntryIngredients.of(recipe.getResult()));
         this.amount = recipe.getAmount();
-    }
-
-    public long getAmount() {
-        return amount;
-    }
-
-    public List<EntryIngredient> getBlock() {
-        return block;
+        this.block = RegistryEntryLists.asReiIngredient(recipe.getBlock());
+        this.fluid = RegistryEntryLists.asReiIngredient(recipe.getFluid(), fluid -> EntryStacks.of(fluid, amount));
+        this.output = EntryIngredients.of(recipe.getResult());
     }
 
     @Override
@@ -42,17 +29,13 @@ public class LeakingDisplay implements Display {
         return PluginEntry.LEAKING;
     }
 
-    public List<EntryIngredient> getFluid() {
-        return fluid;
-    }
-
     @Override
     public List<EntryIngredient> getInputEntries() {
-        return this.inputs;
+        return List.of(block, fluid);
     }
 
     @Override
     public List<EntryIngredient> getOutputEntries() {
-        return this.outputs;
+        return List.of(this.output);
     }
 }

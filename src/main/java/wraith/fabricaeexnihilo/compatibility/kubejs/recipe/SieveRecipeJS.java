@@ -1,4 +1,4 @@
-package wraith.fabricaeexnihilo.compatibility.kubejs.recipe;
+/*package wraith.fabricaeexnihilo.compatibility.kubejs.recipe;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -63,4 +63,4 @@ public class SieveRecipeJS extends RecipeJS {
         });
         json.add("rolls", rollsJson);
     }
-}
+}*/

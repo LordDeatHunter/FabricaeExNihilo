@@ -2,27 +2,30 @@ package wraith.fabricaeexnihilo.recipe.crucible;
 
 import com.google.gson.JsonObject;
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.util.registry.RegistryEntryList;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
-import wraith.fabricaeexnihilo.recipe.util.BlockIngredient;
-import wraith.fabricaeexnihilo.util.CodecUtils;
+import wraith.fabricaeexnihilo.util.RegistryEntryLists;
 
 import java.util.Optional;
 
 public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.Context> {
-    private final BlockIngredient block;
+    private final RegistryEntryList<Block> block;
     private final int heat;
     
-    public CrucibleHeatRecipe(Identifier id, BlockIngredient block, int heat) {
+    public CrucibleHeatRecipe(Identifier id, RegistryEntryList<Block> block, int heat) {
         super(id);
         this.block = block;
         this.heat = heat;
@@ -37,7 +40,7 @@ public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.Context> {
     
     @Override
     public boolean matches(Context context, World world) {
-        return block.test(context.block);
+        return block.contains(context.block.getRegistryEntry());
     }
     
     @Override
@@ -52,10 +55,10 @@ public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.Context> {
     
     @Override
     public ItemStack getDisplayStack() {
-        return block.getDisplayStack();
+        return block.stream().map(RegistryEntry::value).map(Block::asItem).map(Item::getDefaultStack).findFirst().orElse(ItemStack.EMPTY);
     }
     
-    public BlockIngredient getBlock() {
+    public RegistryEntryList<Block> getBlock() {
         return block;
     }
     
@@ -63,30 +66,29 @@ public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.Context> {
         return heat;
     }
     
-    protected static record Context(Block block) implements RecipeContext {
-    }
-    
     public static class Serializer implements RecipeSerializer<CrucibleHeatRecipe> {
         @Override
         public CrucibleHeatRecipe read(Identifier id, JsonObject json) {
-            var block = CodecUtils.fromJson(BlockIngredient.CODEC, json.get("block"));
+            var block = RegistryEntryLists.fromJson(Registry.BLOCK_KEY, json.get("block"));
             var heat = JsonHelper.getInt(json, "heat");
-            
+
             return new CrucibleHeatRecipe(id, block, heat);
         }
-        
         @Override
         public CrucibleHeatRecipe read(Identifier id, PacketByteBuf buf) {
-            var block = CodecUtils.fromPacket(BlockIngredient.CODEC, buf);
+            var block = RegistryEntryLists.fromPacket(Registry.BLOCK_KEY, buf);
             var heat = buf.readInt();
-            
+
             return new CrucibleHeatRecipe(id, block, heat);
         }
-        
+
         @Override
         public void write(PacketByteBuf buf, CrucibleHeatRecipe recipe) {
-            CodecUtils.toPacket(BlockIngredient.CODEC, recipe.block, buf);
+            RegistryEntryLists.toPacket(Registry.BLOCK_KEY, recipe.block, buf);
             buf.writeInt(recipe.heat);
         }
+    }
+
+    protected record Context(Block block) implements RecipeContext {
     }
 }

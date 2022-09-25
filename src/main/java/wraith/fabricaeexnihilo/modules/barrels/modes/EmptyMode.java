@@ -1,6 +1,7 @@
 package wraith.fabricaeexnihilo.modules.barrels.modes;
 
 import com.mojang.serialization.Codec;
+import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
@@ -31,6 +32,11 @@ public class EmptyMode extends BarrelMode {
     @Override
     public BarrelMode copy() {
         return new EmptyMode();
+    }
+
+    @Override
+    public EntryIngredient getReiResult() {
+        return EntryIngredient.empty();
     }
 
     @Override

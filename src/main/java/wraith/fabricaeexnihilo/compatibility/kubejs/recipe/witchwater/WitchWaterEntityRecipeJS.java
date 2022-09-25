@@ -1,3 +1,4 @@
+/*
 package wraith.fabricaeexnihilo.compatibility.kubejs.recipe.witchwater;
 
 import com.google.gson.JsonPrimitive;
@@ -46,3 +47,4 @@ public class WitchWaterEntityRecipeJS extends RecipeJS {
         json.add("target", CodecUtils.toJson(EntityTypeIngredient.CODEC, target));
     }
 }
+*/

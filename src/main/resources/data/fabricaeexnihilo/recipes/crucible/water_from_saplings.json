@@ -1,6 +1,8 @@
 {
   "type": "fabricaeexnihilo:crucible",
-  "input": "#minecraft:saplings",
+  "input": {
+    "tag": "minecraft:saplings"
+  },
   "amount": 8100,
   "fluid": "minecraft:water",
   "requiresFireproofCrucible": false

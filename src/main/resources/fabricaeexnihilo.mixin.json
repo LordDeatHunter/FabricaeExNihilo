@@ -8,8 +8,10 @@
     "BlockHarvestMixin",
     "BlockWithEntityInvoker",
     "BottleUseMixin",
+    "BucketItemAccess",
     "EnchantmentHelperMixin",
     "EnchantmentMixin",
+    "FluidBlockAccess",
     "FluidBlockMixin",
     "LootContextTypesAccess"
   ],

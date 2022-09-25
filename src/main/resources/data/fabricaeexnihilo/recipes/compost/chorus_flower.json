@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:compost",
   "result": "minecraft:end_stone",
-  "input": "minecraft:chorus_flower",
+  "input": {
+    "item": "minecraft:chorus_flower"
+  },
   "increment": 0.25,
   "color": "AA00AA"
 }

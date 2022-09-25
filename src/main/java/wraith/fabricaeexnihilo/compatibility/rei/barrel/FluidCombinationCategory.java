@@ -19,7 +19,7 @@ import java.util.List;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
-public class FluidOnTopCategory implements DisplayCategory<FluidOnTopDisplay> {
+public class FluidCombinationCategory implements DisplayCategory<FluidCombinationDisplay> {
 
     public static final Identifier ARROW = id("textures/gui/rei/glyphs.png");
     public static final int ARROW_HEIGHT = 16;
@@ -44,13 +44,13 @@ public class FluidOnTopCategory implements DisplayCategory<FluidOnTopDisplay> {
     private final ItemStack icon;
     private final String name;
 
-    public FluidOnTopCategory(ItemStack icon, String name) {
+    public FluidCombinationCategory(ItemStack icon, String name) {
         this.icon = icon;
         this.name = name;
     }
 
     @Override
-    public CategoryIdentifier<? extends FluidOnTopDisplay> getCategoryIdentifier() {
+    public CategoryIdentifier<? extends FluidCombinationDisplay> getCategoryIdentifier() {
         return PluginEntry.FLUID_ABOVE;
     }
 
@@ -60,7 +60,7 @@ public class FluidOnTopCategory implements DisplayCategory<FluidOnTopDisplay> {
     }
 
     @Override
-    public int getDisplayWidth(FluidOnTopDisplay display) {
+    public int getDisplayWidth(FluidCombinationDisplay display) {
         return WIDTH;
     }
 
@@ -75,23 +75,17 @@ public class FluidOnTopCategory implements DisplayCategory<FluidOnTopDisplay> {
     }
 
     @Override
-    public List<Widget> setupDisplay(FluidOnTopDisplay display, Rectangle bounds) {
+    public List<Widget> setupDisplay(FluidCombinationDisplay display, Rectangle bounds) {
         var widgets = new ArrayList<Widget>();
         widgets.add(Widgets.createRecipeBase(bounds));
 
         widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW1_X, bounds.getMinY() + ARROW1_Y, ARROW_WIDTH, ARROW_HEIGHT, ARROW, ARROW_U, ARROW_V));
         widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW2_X, bounds.getMinY() + ARROW2_Y, ARROW_WIDTH, ARROW_HEIGHT, ARROW, ARROW_U, ARROW_V));
 
-        var fluidInside = display.getFluidInside().get(0);
-        var blockAbove = display.getBlockAbove().get(0);
-        var barrels = display.getBarrel();
-
-        var outputs = display.getOutputEntries().get(0);
-
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + INPUT_X, bounds.getMinY() + INPUT_Y)).entries(fluidInside));
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + ABOVE_X, bounds.getMinY() + ABOVE_Y)).entries(blockAbove));
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BARRELS_X, bounds.getMinY() + BARRELS_Y)).entries(barrels));
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X, bounds.getMinY() + OUTPUT_Y)).entries(outputs));
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + INPUT_X, bounds.getMinY() + INPUT_Y)).entries(display.inside));
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + ABOVE_X, bounds.getMinY() + ABOVE_Y)).entries(display.above));
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BARRELS_X, bounds.getMinY() + BARRELS_Y)).entries(PluginEntry.BARRELS.get()));
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X, bounds.getMinY() + OUTPUT_Y)).entries(display.result.getReiResult()));
 
         return widgets;
     }

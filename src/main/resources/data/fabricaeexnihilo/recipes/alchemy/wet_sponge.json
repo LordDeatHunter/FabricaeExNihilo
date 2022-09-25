@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:alchemy",
   "reactant": "#c:brine",
-  "catalyst": "#minecraft:wool",
+  "catalyst": {
+    "tag": "minecraft:wool"
+  },
   "result": {
     "id": "item",
     "stack": "minecraft:wet_sponge"

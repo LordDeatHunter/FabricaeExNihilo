@@ -3,37 +3,24 @@ package wraith.fabricaeexnihilo.compatibility.rei.sieve;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
+import me.shedaniel.rei.api.common.util.EntryIngredients;
+import net.minecraft.fluid.Fluids;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SieveDisplay implements Display {
-
-    private final List<EntryIngredient> blocks;
-    private final List<EntryIngredient> fluids;
-    private final List<EntryIngredient> inputs;
-    private final EntryIngredient mesh;
-    private final HashMap<EntryIngredient, List<Double>> outputChances;
-    private final List<EntryIngredient> outputs;
-
+    public final boolean waterlogged;
+    public final EntryIngredient input;
+    public final EntryIngredient mesh;
+    public final Map<EntryIngredient, List<Double>> outputs;
 
     public SieveDisplay(SieveRecipeHolder recipeHolder) {
-        this.blocks = recipeHolder.getInputs();
-        this.fluids = recipeHolder.getFluids();
-        this.mesh = recipeHolder.getMesh();
-        this.inputs = new ArrayList<>();
-        this.inputs.addAll(this.blocks);
-        this.inputs.addAll(this.fluids);
-        this.inputs.add(mesh);
-        this.outputChances = new HashMap<>(recipeHolder.getOutputs());
-        this.outputs = new ArrayList<>(outputChances.keySet());
-
-    }
-
-    public List<EntryIngredient> getBlocks() {
-        return blocks;
+        this.waterlogged = recipeHolder.waterlogged;
+        this.input = recipeHolder.input;
+        this.mesh = recipeHolder.mesh;
+        this.outputs = recipeHolder.outputs;
     }
 
     @Override
@@ -41,26 +28,14 @@ public class SieveDisplay implements Display {
         return PluginEntry.SIFTING;
     }
 
-    public List<EntryIngredient> getFluids() {
-        return fluids;
-    }
-
     @Override
     public List<EntryIngredient> getInputEntries() {
-        return inputs;
-    }
-
-    public EntryIngredient getMesh() {
-        return mesh;
-    }
-
-    public HashMap<EntryIngredient, List<Double>> getOutputChances() {
-        return outputChances;
+        return waterlogged ? List.of(input, mesh, EntryIngredients.of(Fluids.WATER)) : List.of(input, mesh);
     }
 
     @Override
     public List<EntryIngredient> getOutputEntries() {
-        return outputs;
+        return List.copyOf(outputs.keySet());
     }
 
 }

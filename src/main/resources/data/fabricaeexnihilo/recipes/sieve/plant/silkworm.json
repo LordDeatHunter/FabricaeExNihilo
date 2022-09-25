@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "fabricaeexnihilo:raw_silkworm",
-  "input": "#minecraft:leaves",
+  "input": {
+    "tag": "minecraft:leaves"
+  },
   "rolls": {
     "fabricaeexnihilo:string_mesh": [0.025],
     "fabricaeexnihilo:flint_mesh": [0.04],

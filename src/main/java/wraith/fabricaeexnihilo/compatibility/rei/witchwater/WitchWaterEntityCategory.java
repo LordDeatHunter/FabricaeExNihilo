@@ -125,8 +125,8 @@ public class WitchWaterEntityCategory implements DisplayCategory<WitchWaterEntit
         var widgets = new ArrayList<Widget>();
 
         // TODO: make separate displays for each entity type
-        Entity target = display.getTarget().stream().map(e -> e.create(MinecraftClient.getInstance().world)).filter(Objects::nonNull).findFirst().orElse(null);
-        Entity result = display.getResult().create(MinecraftClient.getInstance().world);
+        Entity target = display.target.stream().map(e -> e.create(MinecraftClient.getInstance().world)).filter(Objects::nonNull).findFirst().orElse(null);
+        Entity result = display.result.create(MinecraftClient.getInstance().world);
 
         if (target == null || result == null) {
             FabricaeExNihilo.LOGGER.warn("Unable to create REI display entity");
@@ -141,7 +141,7 @@ public class WitchWaterEntityCategory implements DisplayCategory<WitchWaterEntit
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + 70, bounds.getMinY() + 42)).entries(EntryIngredients.of(WitchWaterFluid.BUCKET)));
         List<Text> lines = new ArrayList<>();
         lines.add(target.getDisplayName());
-        VillagerProfession profession = display.getProfession();
+        VillagerProfession profession = display.profession;
         if (profession != null) {
             lines.add(Text.of("-> " + profession));
         }

@@ -10,7 +10,9 @@ import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.client.util.ClientEntryStacks;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
+import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -92,34 +94,29 @@ public class SieveCategory implements DisplayCategory<SieveDisplay> {
     public List<Widget> setupDisplay(SieveDisplay display, Rectangle bounds) {
         var widgets = new ArrayList<Widget>();
 
-        var outputChances = display.getOutputChances();
-
-        var mesh = display.getMesh();
-        var siftable = display.getBlocks().get(0);
-        var fluid = display.getFluids().get(0);
-        var outputs = display.getOutputEntries();
+        var outputs = List.copyOf(display.outputs.keySet());
 
         widgets.add(Widgets.createRecipeBase(bounds));
 
         widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW_OFFSET_X, bounds.getMinY() + ARROW_OFFSET_Y, ARROW_WIDTH, ARROW_HEIGHT, ARROW, ARROW_U, ARROW_V));
 
         // Blocks
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BLOCK_X, bounds.getMinY() + BLOCK_Y)).entries(siftable));
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BLOCK_X, bounds.getMinY() + BLOCK_Y)).entries(display.input).markInput());
         // Meshes
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + MESH_X, bounds.getMinY() + MESH_Y)).entries(mesh));
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + MESH_X, bounds.getMinY() + MESH_Y)).entries(display.mesh).markInput());
         // Fluids
-        if (!fluid.get(0).isEmpty()) {
-            widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + FLUID_X, bounds.getMinY() + FLUID_Y)).entries(fluid));
+        if (display.waterlogged) {
+            widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + FLUID_X, bounds.getMinY() + FLUID_Y)).entries(EntryIngredients.of(Fluids.WATER)));
         }
         // Outputs
         for (int y = 0; y < OUTPUT_SLOTS_Y; ++y) {
             for (int x = 0; x < OUTPUT_SLOTS_X; ++x) {
-                var slot = Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X + 18 * x, bounds.getMinY() + OUTPUT_Y + 18 * y));
+                var slot = Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X + 18 * x, bounds.getMinY() + OUTPUT_Y + 18 * y)).markOutput();
                 var index = y * OUTPUT_SLOTS_X + x;
                 if (index < outputs.size()) {
                     var output = outputs.get(index);
                     List<Tooltip.Entry> tooltips = new ArrayList<>();
-                    var chances = outputChances.get(output);
+                    var chances = display.outputs.get(output);
                     for (var chance : chances) {
                         if (chance <= 0) continue;
                         tooltips.add(Tooltip.entry(Text.literal(chance * 100 + "%").formatted(Formatting.GRAY)));

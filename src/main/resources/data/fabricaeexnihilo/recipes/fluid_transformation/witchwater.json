@@ -1,6 +1,6 @@
 {
   "type": "fabricaeexnihilo:fluid_transformation",
-  "contained": "#fabricaeexnihilo:true_water",
+  "fluid": "#fabricaeexnihilo:true_water",
   "catalyst": "minecraft:mycelium",
   "result": {
     "id": "fluid",

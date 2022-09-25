@@ -2,9 +2,12 @@ package wraith.fabricaeexnihilo.modules.barrels.modes;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import me.shedaniel.rei.api.common.entry.EntryIngredient;
+import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelItemStorage;
@@ -31,7 +34,7 @@ public class CompostMode extends BarrelMode {
             .apply(instance, CompostMode::new));
     
     private final ItemStack result;
-    private double progress = 0;
+    private double progress;
     private double amount;
     private Color color;
     
@@ -59,7 +62,12 @@ public class CompostMode extends BarrelMode {
     public BarrelMode copy() {
         return new CompostMode(result.copy(), amount, progress, color);
     }
-    
+
+    @Override
+    public EntryIngredient getReiResult() {
+        return EntryIngredients.of(result).map(stack -> stack.tooltip(Text.literal("%d%%".formatted((int) amount * 100))));
+    }
+
     @Override
     public void tick(BarrelBlockEntity barrel) {
         if (progress >= 1.0) {

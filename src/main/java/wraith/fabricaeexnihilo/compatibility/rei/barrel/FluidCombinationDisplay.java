@@ -4,38 +4,36 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import net.minecraft.util.registry.RegistryEntry;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 import wraith.fabricaeexnihilo.modules.barrels.modes.BarrelMode;
-import wraith.fabricaeexnihilo.recipe.barrel.FluidTransformationRecipe;
+import wraith.fabricaeexnihilo.recipe.barrel.FluidCombinationRecipe;
 import wraith.fabricaeexnihilo.util.RegistryEntryLists;
 
 import java.util.List;
 
-public class TransformingDisplay implements Display {
-    public final EntryIngredient catalyst;
-    public final EntryIngredient fluid;
+public class FluidCombinationDisplay implements Display {
     public final BarrelMode result;
+    public final EntryIngredient above;
+    public final EntryIngredient inside;
 
-    public TransformingDisplay(FluidTransformationRecipe recipe) {
-        this.catalyst = RegistryEntryLists.asReiIngredient(recipe.getCatalyst());
-        this.fluid = EntryIngredient.of(recipe.getFluid().stream().map(RegistryEntry::value).map(EntryStacks::of).toList());
+    public FluidCombinationDisplay(FluidCombinationRecipe recipe) {
+        this.inside = RegistryEntryLists.asReiIngredient(recipe.getContained(), EntryStacks::of);
+        this.above = RegistryEntryLists.asReiIngredient(recipe.getOther(), EntryStacks::of);
         this.result = recipe.getResult();
     }
 
     @Override
     public CategoryIdentifier<?> getCategoryIdentifier() {
-        return PluginEntry.TRANSFORMING;
+        return PluginEntry.FLUID_ABOVE;
     }
 
     @Override
     public List<EntryIngredient> getInputEntries() {
-        return List.of(catalyst, fluid);
+        return List.of(inside, above);
     }
 
     @Override
     public List<EntryIngredient> getOutputEntries() {
         return List.of(result.getReiResult());
     }
-
 }

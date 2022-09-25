@@ -2,6 +2,8 @@ package wraith.fabricaeexnihilo.modules.barrels.modes;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import me.shedaniel.rei.api.common.entry.EntryIngredient;
+import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
@@ -21,7 +23,6 @@ import wraith.fabricaeexnihilo.util.CodecUtils;
 
 @SuppressWarnings("UnstableApiUsage")
 public class FluidMode extends BarrelMode {
-
     public static final Codec<FluidMode> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             CodecUtils.FLUID_VARIANT
                 .fieldOf("fluid")
@@ -42,6 +43,11 @@ public class FluidMode extends BarrelMode {
     @Override
     public BarrelMode copy() {
         return new FluidMode(fluid, amount);
+    }
+
+    @Override
+    public EntryIngredient getReiResult() {
+        return EntryIngredients.of(fluid.getFluid(), amount);
     }
 
     @Override
@@ -103,7 +109,7 @@ public class FluidMode extends BarrelMode {
     @Override
     public long insertItem(ItemVariant item, long maxAmount, TransactionContext transaction, BarrelItemStorage storage) {
         StoragePreconditions.notBlankNotNegative(item, maxAmount);
-        var result = AlchemyRecipe.find(fluid, item.getItem(), storage.barrel.getWorld());
+        var result = AlchemyRecipe.find(fluid, item.toStack(), storage.barrel.getWorld());
         if (result.isEmpty() || !FabricaeExNihilo.CONFIG.modules.barrels.enableAlchemy) {
             return 0;
         }

@@ -73,20 +73,16 @@ public class MilkingCategory implements DisplayCategory<MilkingDisplay> {
 
         widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW_X, bounds.getMinY() + ARROW_Y, 16, 16, ARROW, 0, 0));
 
-        var eggs = display.getInputEntries().get(0);
-        var barrel = display.getBarrel();
-        var outputs = display.getOutputEntries();
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + ABOVE_X, bounds.getMinY() + ABOVE_Y)).entries(display.entity).markInput());
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BARRELS_X, bounds.getMinY() + BARRELS_Y)).entries(PluginEntry.BARRELS.get()));
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X, bounds.getMinY() + OUTPUT_Y)).entries(display.result).markOutput());
 
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + ABOVE_X, bounds.getMinY() + ABOVE_Y)).entries(eggs));
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BARRELS_X, bounds.getMinY() + BARRELS_Y)).entries(barrel));
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X, bounds.getMinY() + OUTPUT_Y)).entries(outputs.get(0)));
-
-        //TODO: some day figure out how to render a little entity over the barrel instead of an egg :/
+        //TODO: some day figure out how to render a little entity over the barrel instead of an egg :/ (steal code from witchwater entity recipe?)
 //        (display.recipe.entity.flatten().firstOrNull())?.let{
 //            widgets.add(EntityWidget(bounds.getMinX(), bounds.getMinY(), 36, 36, it))
 //        }
 
-        var text = Widgets.createLabel(new Point(0, 0), Text.literal(String.valueOf(display.getAmount())));
+        var text = Widgets.createLabel(new Point(0, 0), Text.literal(String.valueOf(display.amount)));
         text.setPoint(new Point(bounds.getMaxX() - MARGIN - text.getBounds().getMaxX(), bounds.getMinY() + MARGIN));
         widgets.add(text);
 

@@ -80,8 +80,8 @@ public class WitchWaterWorldCategory implements DisplayCategory<WitchWaterWorldD
         widgets.add(glyphArrow);
 
         var witchWater = EntryIngredients.of(WitchWaterFluid.STILL);
-        var fluids = display.getInputEntries().get(0);
-        var results = display.getOutputEntries();
+        var fluids = display.input;
+        var results = display.outputs;
 
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + WITCH_X, bounds.getMinY() + WITCH_Y)).entries(witchWater));
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + FLUID_X, bounds.getMinY() + FLUID_Y)).entries(fluids));

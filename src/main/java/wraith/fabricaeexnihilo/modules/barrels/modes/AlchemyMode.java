@@ -2,14 +2,14 @@ package wraith.fabricaeexnihilo.modules.barrels.modes;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.nbt.NbtCompound;
+import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
 import wraith.fabricaeexnihilo.recipe.barrel.AlchemyRecipe;
 import wraith.fabricaeexnihilo.recipe.util.EntityStack;
 import wraith.fabricaeexnihilo.recipe.util.Loot;
-import wraith.fabricaeexnihilo.util.CodecUtils;
 
 import java.util.Optional;
 
@@ -76,7 +76,20 @@ public class AlchemyMode extends BarrelMode {
     public BarrelMode copy() {
         return new AlchemyMode(before.copy(), after.copy(), toSpawn.copy(), progress, duration);
     }
-    
+
+    @Override
+    public EntryIngredient getReiResult() {
+        var checking = after;
+        while (checking instanceof AlchemyMode alchemyMode) {
+            checking = alchemyMode.after;
+            if (checking == this) {
+                FabricaeExNihilo.LOGGER.warn("Recursive alchemy mode detected");
+                return EntryIngredient.empty();
+            }
+        }
+        return checking.getReiResult();
+    }
+
     @Override
     public void tick(BarrelBlockEntity barrel) {
         progress += barrel.getEfficiencyMultiplier();
@@ -110,9 +123,4 @@ public class AlchemyMode extends BarrelMode {
     public EntityStack getToSpawn() {
         return toSpawn;
     }
-    
-    public static AlchemyMode readNbt(NbtCompound nbt) {
-        return new AlchemyMode(CodecUtils.fromNbt(CODEC, nbt.getCompound("before")), CodecUtils.fromNbt(CODEC, nbt.getCompound("after")), new EntityStack(nbt.getCompound("toSpawn")), nbt.getInt("countdown"));
-    }
-    
 }

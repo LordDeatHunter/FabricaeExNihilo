@@ -1,7 +1,7 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "minecraft:prismarine_crystals",
-  "fluid": "#fabricaeexnihilo:true_water",
+  "waterlogged": true,
   "input": "fabricaeexnihilo:crushed_prismarine",
   "rolls": {
     "fabricaeexnihilo:copper_mesh": [0.5, 0.01],

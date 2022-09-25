@@ -1,3 +1,4 @@
+/*
 package wraith.fabricaeexnihilo.compatibility.kubejs.recipe.barrel;
 
 import com.google.gson.JsonPrimitive;
@@ -41,3 +42,4 @@ public class LeakingRecipeJS extends RecipeJS {
         json.addProperty("result", Registry.BLOCK.getId(result).toString());
     }
 }
+*/

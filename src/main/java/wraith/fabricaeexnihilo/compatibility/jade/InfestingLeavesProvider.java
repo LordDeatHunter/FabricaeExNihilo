@@ -7,7 +7,6 @@ import snownee.jade.api.IBlockComponentProvider;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.config.IPluginConfig;
 import wraith.fabricaeexnihilo.modules.infested.InfestingLeavesBlockEntity;
-import wraith.fabricaeexnihilo.modules.sieves.SieveBlockEntity;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 

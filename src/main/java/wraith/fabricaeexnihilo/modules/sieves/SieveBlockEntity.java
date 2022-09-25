@@ -33,6 +33,7 @@ import wraith.fabricaeexnihilo.util.RegistryUtils;
 import java.util.*;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
+import static wraith.fabricaeexnihilo.modules.sieves.SieveBlock.WATERLOGGED;
 
 public class SieveBlockEntity extends BaseBlockEntity {
 
@@ -48,7 +49,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
         super(TYPE, pos, state);
     }
 
-    public ActionResult activate(@Nullable BlockState state, @Nullable PlayerEntity player, @Nullable Hand hand, @Nullable BlockHitResult hitResult) {
+    public ActionResult activate(BlockState state, PlayerEntity player, Hand hand, BlockHitResult hitResult) {
         if (world == null || player == null) {
             return ActionResult.PASS;
         }
@@ -92,7 +93,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
         }
 
         // Add a block
-        if (held.isEmpty() || SieveRecipe.find(held.getItem(), getFluid(), RegistryUtils.getId(mesh.getItem()), world).isEmpty()) {
+        if (held.isEmpty() || SieveRecipe.find(held.getItem(), state.get(WATERLOGGED), RegistryUtils.getId(mesh.getItem()), world).isEmpty()) {
             return ActionResult.PASS;
         }
         final ItemStack finalHeld = held;
@@ -115,7 +116,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
         //TODO: spawn some particles
         if (progress > 1.0) {
             // The utility method for multiple items is less neat to use
-            for (var result : SieveRecipe.find(contents.getItem(), getFluid(), RegistryUtils.getId(mesh.getItem()), world)) {
+            for (var result : SieveRecipe.find(contents.getItem(), getCachedState().get(WATERLOGGED), RegistryUtils.getId(mesh.getItem()), world)) {
                 ItemScatterer.spawn(world, pos.getX(), pos.getY() + 1, pos.getZ(), result.createStack(world.random));
             }
             progress = 0.0;

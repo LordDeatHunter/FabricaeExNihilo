@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CrucibleHeatCategory implements DisplayCategory<CrucibleHeatDisplay> {
-
     private final ItemStack icon;
     private final String name;
 
@@ -50,8 +49,7 @@ public class CrucibleHeatCategory implements DisplayCategory<CrucibleHeatDisplay
         var widgets = new ArrayList<Widget>();
         widgets.add(Widgets.createRecipeBase(bounds));
 
-        var inputs = display.getInputEntries().get(0);
-        var heat = display.getHeat();
+        var heat = display.heat;
 
         Point startPoint = new Point(bounds.getCenterX() - 41, bounds.getCenterY() - 17);
         widgets.add(
@@ -61,7 +59,7 @@ public class CrucibleHeatCategory implements DisplayCategory<CrucibleHeatDisplay
                 .leftAligned()
         );
         widgets.add(Widgets.createBurningFire(new Point(bounds.x + 6, startPoint.y + 1)).animationDurationTicks(100F / heat));
-        widgets.add(Widgets.createSlot(new Point(bounds.x + 6, startPoint.y + 18)).entries(inputs).markInput());
+        widgets.add(Widgets.createSlot(new Point(bounds.x + 6, startPoint.y + 18)).entries(display.source).markInput());
         return widgets;
     }
 

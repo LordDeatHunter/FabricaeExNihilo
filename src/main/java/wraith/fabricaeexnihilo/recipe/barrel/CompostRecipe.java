@@ -3,6 +3,7 @@ package wraith.fabricaeexnihilo.recipe.barrel;
 import com.google.gson.JsonObject;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
@@ -12,7 +13,6 @@ import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
-import wraith.fabricaeexnihilo.recipe.util.ItemIngredient;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 import wraith.fabricaeexnihilo.util.Color;
 
@@ -20,20 +20,16 @@ import java.util.Optional;
 
 public class CompostRecipe extends BaseRecipe<CompostRecipe.Context> {
     private final ItemStack result;
-    private final ItemIngredient input;
+    private final Ingredient input;
     private final double increment;
     private final Color color;
     
-    public CompostRecipe(Identifier id, ItemStack result, ItemIngredient input, double increment, Color color) {
+    public CompostRecipe(Identifier id, ItemStack result, Ingredient input, double increment, Color color) {
         super(id);
         this.result = result;
         this.input = input;
         this.increment = increment;
         this.color = color;
-    }
-
-    public ItemIngredient getInput() {
-        return input;
     }
 
     public static Optional<CompostRecipe> find(ItemStack input, @Nullable World world) {
@@ -42,7 +38,11 @@ public class CompostRecipe extends BaseRecipe<CompostRecipe.Context> {
         }
         return world.getRecipeManager().getFirstMatch(ModRecipes.COMPOST, new Context(input), world);
     }
-    
+
+    public Ingredient getInput() {
+        return input;
+    }
+
     public double getIncrement() {
         return increment;
     }
@@ -79,7 +79,7 @@ public class CompostRecipe extends BaseRecipe<CompostRecipe.Context> {
         @Override
         public CompostRecipe read(Identifier id, JsonObject json) {
             var result = CodecUtils.fromJson(CodecUtils.ITEM_STACK, json.get("result"));
-            var input = CodecUtils.fromJson(ItemIngredient.CODEC, json.get("input"));
+            var input = Ingredient.fromJson(json.get("input"));
             var increment = JsonHelper.getDouble(json, "increment");
             var color = Color.fromJson(json.get("color"));
             
@@ -89,7 +89,7 @@ public class CompostRecipe extends BaseRecipe<CompostRecipe.Context> {
         @Override
         public CompostRecipe read(Identifier id, PacketByteBuf buf) {
             var result = buf.readItemStack();
-            var input = CodecUtils.fromPacket(ItemIngredient.CODEC, buf);
+            var input = Ingredient.fromPacket(buf);
             var increment = buf.readDouble();
             var color = new Color(buf.readInt());
             
@@ -99,12 +99,12 @@ public class CompostRecipe extends BaseRecipe<CompostRecipe.Context> {
         @Override
         public void write(PacketByteBuf buf, CompostRecipe recipe) {
             buf.writeItemStack(recipe.result);
-            CodecUtils.toPacket(ItemIngredient.CODEC, recipe.input, buf);
+            recipe.input.write(buf);
             buf.writeDouble(recipe.increment);
             buf.writeInt(recipe.color.toInt());
         }
     }
     
-    protected static record Context(ItemStack input) implements RecipeContext {
+    protected record Context(ItemStack input) implements RecipeContext {
     }
 }

@@ -12,23 +12,26 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryCodecs;
+import net.minecraft.util.registry.RegistryEntryList;
 import net.minecraft.village.VillagerProfession;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
-import wraith.fabricaeexnihilo.recipe.util.EntityTypeIngredient;
 import wraith.fabricaeexnihilo.util.CodecUtils;
+import wraith.fabricaeexnihilo.util.RegistryEntryLists;
 
 import java.util.Optional;
 
 public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.Context> {
-    private final EntityTypeIngredient target;
+    private final RegistryEntryList<EntityType<?>> target;
+    //TODO: nbt filter?
     private final @Nullable VillagerProfession profession;
     private final EntityType<?> result;
     
-    public WitchWaterEntityRecipe(Identifier id, EntityTypeIngredient target, @Nullable VillagerProfession profession, EntityType<?> result) {
+    public WitchWaterEntityRecipe(Identifier id, RegistryEntryList<EntityType<?>> target, @Nullable VillagerProfession profession, EntityType<?> result) {
         super(id);
         this.target = target;
         this.profession = profession;
@@ -44,7 +47,7 @@ public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.Co
     
     @Override
     public boolean matches(Context context, World world) {
-        if (!target.test(context.entity))
+        if (!target.contains(context.entity.getType().getRegistryEntry()))
             return false;
         
         return !(context.entity instanceof VillagerEntity villager) || profession == null || villager.getVillagerData().getProfession() == profession;
@@ -66,7 +69,7 @@ public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.Co
         return egg == null ? ItemStack.EMPTY : egg.getDefaultStack();
     }
     
-    public EntityTypeIngredient getTarget() {
+    public RegistryEntryList<EntityType<?>> getTarget() {
         return target;
     }
     
@@ -74,17 +77,17 @@ public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.Co
         return result;
     }
     
-    public VillagerProfession getProfession() {
+    public @Nullable VillagerProfession getProfession() {
         return profession;
     }
     
-    protected static record Context(Entity entity) implements RecipeContext {
+    protected record Context(Entity entity) implements RecipeContext {
     }
     
     public static class Serializer implements RecipeSerializer<WitchWaterEntityRecipe> {
         @Override
         public WitchWaterEntityRecipe read(Identifier id, JsonObject json) {
-            var target = CodecUtils.fromJson(EntityTypeIngredient.CODEC, json.get("target"));
+            var target = RegistryEntryLists.fromJson(Registry.ENTITY_TYPE_KEY, json.get("target"));
             var profession = json.has("profession") ? Registry.VILLAGER_PROFESSION.get(new Identifier(JsonHelper.getString(json, "profession"))) : null;
             var result = Registry.ENTITY_TYPE.get(new Identifier(JsonHelper.getString(json, "result")));
             
@@ -93,7 +96,7 @@ public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.Co
         
         @Override
         public WitchWaterEntityRecipe read(Identifier id, PacketByteBuf buf) {
-            var target = CodecUtils.fromPacket(EntityTypeIngredient.CODEC, buf);
+            var target = CodecUtils.fromPacket(RegistryCodecs.entryList(Registry.ENTITY_TYPE_KEY), buf);
             var profession = buf.readBoolean() ? Registry.VILLAGER_PROFESSION.get(buf.readIdentifier()) : null;
             var result = Registry.ENTITY_TYPE.get(buf.readIdentifier());
             
@@ -102,7 +105,7 @@ public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.Co
         
         @Override
         public void write(PacketByteBuf buf, WitchWaterEntityRecipe recipe) {
-            CodecUtils.toPacket(EntityTypeIngredient.CODEC, recipe.target, buf);
+            CodecUtils.toPacket(RegistryCodecs.entryList(Registry.ENTITY_TYPE_KEY), recipe.target, buf);
             buf.writeBoolean(recipe.profession != null);
             if (recipe.profession != null) {
                 buf.writeIdentifier(Registry.VILLAGER_PROFESSION.getId(recipe.profession));

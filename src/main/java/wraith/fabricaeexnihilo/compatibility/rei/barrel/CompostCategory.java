@@ -60,11 +60,8 @@ public class CompostCategory implements DisplayCategory<CompostDisplay> {
 
         widgets.add(new GlyphWidget(bounds, startPoint.x + 32, startPoint.y + 4, 16, 16, ARROW, ARROW_U, ARROW_V));
 
-        var inputs = display.getInputEntries().get(0);
-        var outputs = display.getOutputEntries().get(0);
-
-        widgets.add(Widgets.createSlot(new Point(startPoint.x + 61, startPoint.y + 5)).entries(inputs).markInput());
-        widgets.add(Widgets.createSlot(new Point(startPoint.x + 4, startPoint.y + 5)).entries(outputs).markOutput());
+        widgets.add(Widgets.createSlot(new Point(startPoint.x + 61, startPoint.y + 5)).entries(display.input).markInput());
+        widgets.add(Widgets.createSlot(new Point(startPoint.x + 4, startPoint.y + 5)).entries(display.result).markOutput());
         return widgets;
     }
 

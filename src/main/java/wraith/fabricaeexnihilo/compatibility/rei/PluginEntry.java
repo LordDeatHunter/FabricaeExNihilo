@@ -4,6 +4,7 @@ import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
+import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.compatibility.rei.barrel.*;
@@ -31,20 +32,22 @@ import wraith.fabricaeexnihilo.recipe.crucible.CrucibleRecipe;
 import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterEntityRecipe;
 import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterWorldRecipe;
 import wraith.fabricaeexnihilo.util.ItemUtils;
+import wraith.fabricaeexnihilo.util.Lazy;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Objects;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public class PluginEntry implements REIClientPlugin {
+    public static final Lazy<EntryIngredient> BARRELS =  new Lazy<>(() -> EntryIngredient.of(ModBlocks.BARRELS.values().stream().map(EntryStacks::of).toList()));
 
     public static final CategoryIdentifier<AlchemyDisplay> ALCHEMY = CategoryIdentifier.of(id("rei/barrel/alchemy"));
     public static final CategoryIdentifier<CompostDisplay> COMPOSTING = CategoryIdentifier.of(id("rei/barrel/composting"));
     public static final CategoryIdentifier<ToolDisplay> CROOK = CategoryIdentifier.of(id("rei/tools/crook"));
     public static final CategoryIdentifier<ToolDisplay> CRUSHING = CategoryIdentifier.of(id("rei/tools/hammer"));
     public static final CategoryIdentifier<CrucibleDisplay> FIREPROOF_CRUCIBLE = CategoryIdentifier.of(id("rei/crucible/stone"));
-    public static final CategoryIdentifier<FluidOnTopDisplay> FLUID_ABOVE = CategoryIdentifier.of(id("rei/barrel/fluid_on_top"));
+    public static final CategoryIdentifier<FluidCombinationDisplay> FLUID_ABOVE = CategoryIdentifier.of(id("rei/barrel/fluid_on_top"));
     public static final CategoryIdentifier<CrucibleHeatDisplay> HEATING = CategoryIdentifier.of(id("rei/crucible/heat"));
     public static final CategoryIdentifier<LeakingDisplay> LEAKING = CategoryIdentifier.of(id("rei/barrel/leaking"));
     public static final CategoryIdentifier<MilkingDisplay> MILKING = CategoryIdentifier.of(id("rei/barrel/milking"));
@@ -68,7 +71,7 @@ public class PluginEntry implements REIClientPlugin {
         registry.add(new CompostCategory(ItemUtils.getExNihiloItemStack("oak_barrel"), "fabricaeexnihilo.rei.category.barrel.composting"));
         registry.add(new LeakingCategory(ItemUtils.getExNihiloItemStack("oak_barrel"), "fabricaeexnihilo.rei.category.barrel.leaking"));
         registry.add(new MilkingCategory(ItemUtils.getExNihiloItemStack("oak_barrel"), "fabricaeexnihilo.rei.category.barrel.milking"));
-        registry.add(new FluidOnTopCategory(ItemUtils.getExNihiloItemStack("oak_barrel"), "fabricaeexnihilo.rei.category.barrel.fluid_on_top"));
+        registry.add(new FluidCombinationCategory(ItemUtils.getExNihiloItemStack("oak_barrel"), "fabricaeexnihilo.rei.category.barrel.fluid_on_top"));
         registry.add(new WitchWaterEntityCategory());
         registry.add(new WitchWaterWorldCategory());
         ModTools.HAMMERS.values().forEach(hammer -> registry.addWorkstations(CRUSHING, EntryStacks.of(hammer)));
@@ -124,31 +127,35 @@ public class PluginEntry implements REIClientPlugin {
         );
         registry.registerRecipeFiller(CrucibleRecipe.class, ModRecipes.CRUCIBLE, recipe -> new CrucibleDisplay(recipe, WOOD_CRUCIBLE));
         registry.registerRecipeFiller(CrucibleHeatRecipe.class, ModRecipes.CRUCIBLE_HEAT, CrucibleHeatDisplay::new);
-        var sieveRecipes = registry.getRecipeManager().listAllOfType(ModRecipes.SIEVE);
-        var map = new HashMap<Integer, SieveRecipeHolder>();
-        for (var sieveRecipe : sieveRecipes) {
-            var recipes = SieveRecipeHolder.fromRecipe(sieveRecipe);
-            for (var recipe : recipes) {
-                if (map.containsKey(recipe.hashCode())) {
-                    map.get(recipe.hashCode()).add(recipe);
-                } else {
-                    map.put(recipe.hashCode(), recipe);
-                }
-            }
-        }
-        map.values().stream()
-            .flatMap(recipe -> recipe.split(SieveCategory.MAX_OUTPUTS).stream())
-            .map(SieveDisplay::new)
-            .forEachOrdered(registry::add);
+        registerSieveDisplays(registry);
         registry.registerRecipeFiller(AlchemyRecipe.class, ModRecipes.ALCHEMY, AlchemyDisplay::new);
         registry.registerRecipeFiller(FluidTransformationRecipe.class, ModRecipes.FLUID_TRANSFORMATION, TransformingDisplay::new);
         registry.registerRecipeFiller(CompostRecipe.class, ModRecipes.COMPOST, CompostDisplay::new);
         registry.registerRecipeFiller(LeakingRecipe.class, ModRecipes.LEAKING, LeakingDisplay::new);
         registry.registerRecipeFiller(MilkingRecipe.class, ModRecipes.MILKING, MilkingDisplay::new);
-        registry.registerRecipeFiller(FluidCombinationRecipe.class, ModRecipes.FLUID_COMBINATION, FluidOnTopDisplay::new);
+        registry.registerRecipeFiller(FluidCombinationRecipe.class, ModRecipes.FLUID_COMBINATION, FluidCombinationDisplay::new);
         registry.registerRecipeFiller(WitchWaterEntityRecipe.class, ModRecipes.WITCH_WATER_ENTITY, WitchWaterEntityDisplay::new);
         //TODO: Merge recipes with same input, check sieve recipes
         registry.registerRecipeFiller(WitchWaterWorldRecipe.class, ModRecipes.WITCH_WATER_WORLD, WitchWaterWorldDisplay::new);
+    }
+
+    private static void registerSieveDisplays(DisplayRegistry registry) {
+        var sieveRecipes = registry.getRecipeManager().listAllOfType(ModRecipes.SIEVE);
+        var list = new ArrayList<SieveRecipeHolder>();
+        for (var sieveRecipe : sieveRecipes) {
+            var holders = SieveRecipeHolder.fromRecipe(sieveRecipe);
+            for (var holder : holders) {
+                var index = list.indexOf(holder);
+                if (index == -1)
+                    list.add(holder);
+                else
+                    list.get(index).add(holder);
+            }
+        }
+        list.stream()
+            .flatMap(recipe -> recipe.split(SieveCategory.MAX_OUTPUTS).stream())
+            .map(SieveDisplay::new)
+            .forEachOrdered(registry::add);
     }
 
 }

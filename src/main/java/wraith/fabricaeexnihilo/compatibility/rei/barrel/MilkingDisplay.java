@@ -4,36 +4,29 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
+import me.shedaniel.rei.api.common.util.EntryStacks;
+import net.minecraft.item.SpawnEggItem;
+import net.minecraft.util.registry.RegistryEntry;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 import wraith.fabricaeexnihilo.recipe.barrel.MilkingRecipe;
-import wraith.fabricaeexnihilo.util.ItemUtils;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @SuppressWarnings("UnstableApiUsage")
 public final class MilkingDisplay implements Display {
-
-    private final long amount;
-    private final EntryIngredient barrel;
-    private final List<EntryIngredient> inputs;
-    private final List<EntryIngredient> outputs;
+    public final long amount;
+    public final EntryIngredient entity;
+    public final EntryIngredient result;
 
     public MilkingDisplay(MilkingRecipe recipe) {
-        this.inputs = recipe.getEntity().flattenListOfEggStacks(EntryIngredients::of);
-        this.outputs = new ArrayList<>();
-        var fluid = recipe.getFluid().getFluid();
-        this.outputs.add(fluid != null ? EntryIngredients.of(fluid) : EntryIngredient.empty());
-        this.barrel = EntryIngredients.of(ItemUtils.getExNihiloItemStack("oak_barrel"));
+        this.entity = EntryIngredient.of(recipe.getEntity().stream()
+                .map(RegistryEntry::value)
+                .flatMap(entity -> Stream.ofNullable(SpawnEggItem.forEntity(entity)))
+                .map(EntryStacks::of)
+                .toList());
         this.amount = recipe.getAmount();
-    }
-
-    public long getAmount() {
-        return amount;
-    }
-
-    public EntryIngredient getBarrel() {
-        return this.barrel;
+        this.result = EntryIngredients.of(recipe.getFluid().getFluid(), amount);
     }
 
     @Override
@@ -43,12 +36,12 @@ public final class MilkingDisplay implements Display {
 
     @Override
     public List<EntryIngredient> getInputEntries() {
-        return inputs;
+        return List.of(entity);
     }
 
     @Override
     public List<EntryIngredient> getOutputEntries() {
-        return outputs;
+        return List.of(result);
     }
 
 }

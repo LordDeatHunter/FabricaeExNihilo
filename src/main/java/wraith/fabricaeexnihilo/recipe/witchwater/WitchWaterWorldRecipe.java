@@ -7,22 +7,24 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryEntryList;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
-import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
 import wraith.fabricaeexnihilo.recipe.util.WeightedList;
 import wraith.fabricaeexnihilo.util.CodecUtils;
+import wraith.fabricaeexnihilo.util.RegistryEntryLists;
 
 import java.util.Optional;
 
 public class WitchWaterWorldRecipe extends BaseRecipe<WitchWaterWorldRecipe.Context> {
-    private final FluidIngredient target;
+    private final RegistryEntryList<Fluid> target;
     private final WeightedList result;
     
-    public WitchWaterWorldRecipe(Identifier id, FluidIngredient target, WeightedList result) {
+    public WitchWaterWorldRecipe(Identifier id, RegistryEntryList<Fluid> target, WeightedList result) {
         super(id);
         this.target = target;
         this.result = result;
@@ -37,7 +39,7 @@ public class WitchWaterWorldRecipe extends BaseRecipe<WitchWaterWorldRecipe.Cont
     
     @Override
     public boolean matches(Context context, World world) {
-        return target.test(context.fluid);
+        return target.contains(context.fluid.getRegistryEntry());
     }
     
     @Override
@@ -55,7 +57,7 @@ public class WitchWaterWorldRecipe extends BaseRecipe<WitchWaterWorldRecipe.Cont
         return result.asListOfStacks().get(0);
     }
     
-    public FluidIngredient getTarget() {
+    public RegistryEntryList<Fluid> getTarget() {
         return target;
     }
     
@@ -63,13 +65,13 @@ public class WitchWaterWorldRecipe extends BaseRecipe<WitchWaterWorldRecipe.Cont
         return result;
     }
     
-    protected static record Context(Fluid fluid) implements RecipeContext {
+    protected record Context(Fluid fluid) implements RecipeContext {
     }
     
     public static class Serializer implements RecipeSerializer<WitchWaterWorldRecipe> {
         @Override
         public WitchWaterWorldRecipe read(Identifier id, JsonObject json) {
-            var target = CodecUtils.fromJson(FluidIngredient.CODEC, json.get("target"));
+            var target = RegistryEntryLists.fromJson(Registry.FLUID_KEY, json.get("target"));
             var result = CodecUtils.fromJson(WeightedList.CODEC, json.get("result"));
             
             return new WitchWaterWorldRecipe(id, target, result);
@@ -77,7 +79,7 @@ public class WitchWaterWorldRecipe extends BaseRecipe<WitchWaterWorldRecipe.Cont
         
         @Override
         public WitchWaterWorldRecipe read(Identifier id, PacketByteBuf buf) {
-            var target = CodecUtils.fromPacket(FluidIngredient.CODEC, buf);
+            var target = RegistryEntryLists.fromPacket(Registry.FLUID_KEY, buf);
             var result = CodecUtils.fromPacket(WeightedList.CODEC, buf);
             
             return new WitchWaterWorldRecipe(id, target, result);
@@ -85,7 +87,7 @@ public class WitchWaterWorldRecipe extends BaseRecipe<WitchWaterWorldRecipe.Cont
         
         @Override
         public void write(PacketByteBuf buf, WitchWaterWorldRecipe recipe) {
-            CodecUtils.toPacket(FluidIngredient.CODEC, recipe.target, buf);
+            RegistryEntryLists.toPacket(Registry.FLUID_KEY, recipe.target, buf);
             CodecUtils.toPacket(WeightedList.CODEC, recipe.result, buf);
         }
     }

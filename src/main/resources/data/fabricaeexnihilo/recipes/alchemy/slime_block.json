@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:alchemy",
   "reactant": "#c:milk",
-  "catalyst": "#c:mushrooms",
+  "catalyst": {
+    "tag": "c:mushrooms"
+  },
   "result": {
     "id": "item",
     "stack": "minecraft:slime_block"

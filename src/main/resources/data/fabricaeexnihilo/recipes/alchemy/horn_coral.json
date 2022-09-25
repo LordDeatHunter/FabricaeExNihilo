@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:alchemy",
   "reactant": "#c:brine",
-  "catalyst": "minecraft:yellow_dye",
+  "catalyst": {
+    "item": "minecraft:yellow_dye"
+  },
   "result": {
     "id": "item",
     "stack": "minecraft:horn_coral_block"

@@ -1,3 +1,4 @@
+/*
 package wraith.fabricaeexnihilo.compatibility.kubejs.recipe.crucible;
 
 import com.google.gson.JsonPrimitive;
@@ -30,3 +31,4 @@ public class CrucibleHeatRecipeJS extends RecipeJS {
         json.addProperty("heat", heat);
     }
 }
+*/

@@ -4,18 +4,19 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
+import me.shedaniel.rei.api.common.util.EntryStacks;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterWorldRecipe;
+import wraith.fabricaeexnihilo.util.RegistryEntryLists;
 
 import java.util.List;
 
 public class WitchWaterWorldDisplay implements Display {
-
-    private final List<EntryIngredient> inputs;
-    private final List<EntryIngredient> outputs;
+    public final EntryIngredient input;
+    public final List<EntryIngredient> outputs;
 
     public WitchWaterWorldDisplay(WitchWaterWorldRecipe recipe) {
-        this.inputs = recipe.getTarget().streamEntries().map(EntryIngredients::of).toList();
+        this.input = RegistryEntryLists.asReiIngredient(recipe.getTarget(), EntryStacks::of);
         this.outputs = recipe.getResult().flatten(EntryIngredients::of);
     }
 
@@ -26,7 +27,7 @@ public class WitchWaterWorldDisplay implements Display {
 
     @Override
     public List<EntryIngredient> getInputEntries() {
-        return inputs;
+        return List.of(input);
     }
 
     @Override

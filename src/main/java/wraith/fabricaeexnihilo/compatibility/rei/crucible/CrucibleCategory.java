@@ -70,20 +70,16 @@ public class CrucibleCategory implements DisplayCategory<CrucibleDisplay> {
         var widgets = new ArrayList<Widget>();
         widgets.add(Widgets.createRecipeBase(bounds));
 
-        var inputs = display.getInputEntries().get(0);
-        var outputs = display.getOutputEntries().get(0);
-        var output = display.getAmount();
-
         // Input
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + INPUT_X, bounds.getMinY() + INPUT_Y)).entries(inputs));
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + INPUT_X, bounds.getMinY() + INPUT_Y)).entries(display.input).markInput());
 
         widgets.add(new GlyphWidget(bounds, bounds.getMinX() + GLYPH_X, bounds.getMinY() + GLYPH_Y, 16, 16, GLYPH, 0, 0));
 
         // Output
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X, bounds.getMinY() + OUTPUT_Y)).entries(outputs));
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X, bounds.getMinY() + OUTPUT_Y)).entries(display.result).markOutput());
 
         // Amount Text Value
-        var text = Widgets.createLabel(new Point(0, 0), Text.literal(String.valueOf(output)));
+        var text = Widgets.createLabel(new Point(0, 0), Text.literal(String.valueOf(display.amount)));
         text.setPoint(new Point(bounds.getMinX() + WIDTH - MARGIN - text.getBounds().getMaxX(), bounds.getMinY() + MARGIN + 18 - text.getBounds().getMaxY() - text.getBounds().getMaxY() / 2));
 
         widgets.add(text);

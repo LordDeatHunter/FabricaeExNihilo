@@ -1,3 +1,4 @@
+/*
 package wraith.fabricaeexnihilo.compatibility.kubejs.recipe.witchwater;
 
 import com.google.gson.JsonPrimitive;
@@ -37,3 +38,4 @@ public class WitchWaterWorldRecipeJS extends RecipeJS {
         json.add("result", CodecUtils.toJson(WeightedList.CODEC, result));
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package wraith.fabricaeexnihilo.compatibility.kubejs.recipe.barrel;
 
 import com.google.gson.JsonPrimitive;
@@ -40,3 +41,4 @@ public class CompostRecipeJS extends RecipeJS {
         json.addProperty("color", color.toInt());
     }
 }
+*/

@@ -2,6 +2,7 @@ package wraith.fabricaeexnihilo.modules.barrels.modes;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Dynamic;
+import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.world.biome.Biome;
@@ -41,6 +42,8 @@ public abstract class BarrelMode implements BarrelModeStorage {
     public abstract String getId();
     
     public abstract BarrelMode copy();
+
+    public abstract EntryIngredient getReiResult();
     
     public void tick(BarrelBlockEntity barrel) {
     }

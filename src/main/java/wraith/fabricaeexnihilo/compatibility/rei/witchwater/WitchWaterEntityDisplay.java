@@ -3,27 +3,26 @@ package wraith.fabricaeexnihilo.compatibility.rei.witchwater;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
-import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.minecraft.entity.EntityType;
-import net.minecraft.item.SpawnEggItem;
+import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.village.VillagerProfession;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
-import wraith.fabricaeexnihilo.recipe.util.EntityTypeIngredient;
 import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterEntityRecipe;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class WitchWaterEntityDisplay implements Display {
-
-    private final List<EntryIngredient> inputs = new ArrayList<>();
-    private final List<EntryIngredient> outputs = new ArrayList<>();
-    private final VillagerProfession profession;
-    private final EntityType<?> result;
-    private final List<EntityType<?>> target;
+    public final VillagerProfession profession;
+    public final EntityType<?> result;
+    public final List<EntityType<?>> target;
 
     public WitchWaterEntityDisplay(WitchWaterEntityRecipe recipe) {
-        this.target = recipe.getTarget().flattenListOfEntities();
+        this.target = recipe.getTarget()
+                .stream()
+                .map(RegistryEntry::value)
+                // Use collector to avoid generics error
+                .collect(Collectors.toList());
         this.result = recipe.getResult();
         this.profession = recipe.getProfession();
     }
@@ -35,24 +34,11 @@ public class WitchWaterEntityDisplay implements Display {
 
     @Override
     public List<EntryIngredient> getInputEntries() {
-        return inputs;
+        return List.of();
     }
 
     @Override
     public List<EntryIngredient> getOutputEntries() {
-        return outputs;
+        return List.of();
     }
-
-    public EntityType<?> getResult() {
-        return result;
-    }
-
-    public List<EntityType<?>> getTarget() {
-        return target;
-    }
-
-    public VillagerProfession getProfession() {
-        return profession;
-    }
-
 }

@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:alchemy",
   "reactant": "#c:blood",
-  "catalyst": "minecraft:cut_sandstone",
+  "catalyst": {
+    "item": "minecraft:cut_sandstone"
+  },
   "result": {
     "id": "item",
     "stack": "minecraft:cut_red_sandstone"

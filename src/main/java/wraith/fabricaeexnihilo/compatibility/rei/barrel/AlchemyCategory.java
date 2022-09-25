@@ -88,21 +88,12 @@ public class AlchemyCategory implements DisplayCategory<AlchemyDisplay> {
         // Arrow Glyph
         widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW_X, bounds.getMinY() + ARROW_Y, 16, 16, GLYPHS, ARROW_U, ARROW_V));
 
-        var outputs = display.getOutputEntries();
-        var catalyst = display.getCatalyst().get(0);
-        var reactant = display.getReactant().get(0);
-
-        var barrels = display.getBarrel();
-        var product = outputs.get(0);
-        var byproduct = outputs.get(1);
-        var toSpawn = outputs.get(2);
-
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + REACTANT_X, bounds.getMinY() + REACTANT_Y)).entries(reactant));
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + CATALYST_X, bounds.getMinY() + CATALYST_Y)).entries(catalyst));
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + PRODUCT_X, bounds.getMinY() + PRODUCT_Y)).entries(product));
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BYPRODUCT_X, bounds.getMinY() + BYPRODUCT_Y)).entries(byproduct));
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + SPAWN_X, bounds.getMinY() + SPAWN_Y)).entries(toSpawn));
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BARRELS_X, bounds.getMinY() + BARRELS_Y)).entries(barrels));
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + REACTANT_X, bounds.getMinY() + REACTANT_Y)).entries(display.reactant).markInput());
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + CATALYST_X, bounds.getMinY() + CATALYST_Y)).entries(display.catalyst).markInput());
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + PRODUCT_X, bounds.getMinY() + PRODUCT_Y)).entries(display.result).markOutput());
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BYPRODUCT_X, bounds.getMinY() + BYPRODUCT_Y)).entries(display.byproduct).markOutput());
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + SPAWN_X, bounds.getMinY() + SPAWN_Y)).entries(display.entity).markOutput());
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BARRELS_X, bounds.getMinY() + BARRELS_Y)).entries(PluginEntry.BARRELS.get()));
 
         return widgets;
     }

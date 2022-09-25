@@ -2,6 +2,8 @@ package wraith.fabricaeexnihilo.modules.barrels.modes;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import me.shedaniel.rei.api.common.entry.EntryIngredient;
+import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
@@ -33,7 +35,12 @@ public class ItemMode extends BarrelMode {
     public BarrelMode copy() {
         return new ItemMode(stack.copy());
     }
-    
+
+    @Override
+    public EntryIngredient getReiResult() {
+        return EntryIngredients.of(stack);
+    }
+
     public ItemStack getStack() {
         return stack;
     }

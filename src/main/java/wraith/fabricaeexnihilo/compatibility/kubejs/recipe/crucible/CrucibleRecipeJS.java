@@ -1,3 +1,4 @@
+/*
 package wraith.fabricaeexnihilo.compatibility.kubejs.recipe.crucible;
 
 import com.google.gson.JsonPrimitive;
@@ -47,3 +48,4 @@ public class CrucibleRecipeJS extends RecipeJS {
         json.addProperty("requiresFireproofCrucible", requiresFireproofCrucible);
     }
 }
+*/

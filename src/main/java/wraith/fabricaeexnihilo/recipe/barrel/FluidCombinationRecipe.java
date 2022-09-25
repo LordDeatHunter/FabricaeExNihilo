@@ -2,29 +2,32 @@ package wraith.fabricaeexnihilo.recipe.barrel;
 
 import com.google.gson.JsonObject;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryEntryList;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.modules.barrels.modes.BarrelMode;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
-import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
 import wraith.fabricaeexnihilo.util.CodecUtils;
+import wraith.fabricaeexnihilo.util.RegistryEntryLists;
 
 import java.util.Optional;
 
 @SuppressWarnings("UnstableApiUsage")
 public class FluidCombinationRecipe extends BaseRecipe<FluidCombinationRecipe.Context> {
-    private final FluidIngredient contained;
-    private final FluidIngredient other;
+    private final RegistryEntryList<Fluid> contained;
+    private final RegistryEntryList<Fluid> other;
     private final BarrelMode result;
     
-    public FluidCombinationRecipe(Identifier id, FluidIngredient contained, FluidIngredient other, BarrelMode result) {
+    public FluidCombinationRecipe(Identifier id, RegistryEntryList<Fluid> contained, RegistryEntryList<Fluid> other, BarrelMode result) {
         super(id);
         this.contained = contained;
         this.other = other;
@@ -40,13 +43,13 @@ public class FluidCombinationRecipe extends BaseRecipe<FluidCombinationRecipe.Co
     
     @Override
     public boolean matches(Context context, World world) {
-        return contained.test(context.contained) && other.test(context.other);
+        return contained.contains(context.contained.getFluid().getRegistryEntry()) && other.contains(context.other.getFluid().getRegistryEntry());
     }
     
     @Override
     public ItemStack getDisplayStack() {
-        // FIXME: there might not be any buckets, should use the result somehow...
-        return other.flattenListOfBuckets().get(0);
+        var reiResult = result.getReiResult();
+        return reiResult.size() > 0 ? reiResult.get(0).cheatsAs().getValue() : ItemStack.EMPTY;
     }
     
     @Override
@@ -63,19 +66,19 @@ public class FluidCombinationRecipe extends BaseRecipe<FluidCombinationRecipe.Co
         return result;
     }
     
-    public FluidIngredient getContained() {
+    public RegistryEntryList<Fluid> getContained() {
         return contained;
     }
     
-    public FluidIngredient getOther() {
+    public RegistryEntryList<Fluid> getOther() {
         return other;
     }
     
     public static class Serializer implements RecipeSerializer<FluidCombinationRecipe> {
         @Override
         public FluidCombinationRecipe read(Identifier id, JsonObject json) {
-            FluidIngredient contained = CodecUtils.fromJson(FluidIngredient.CODEC, json.get("contained"));
-            FluidIngredient other = CodecUtils.fromJson(FluidIngredient.CODEC, json.get("other"));
+            var contained = RegistryEntryLists.fromJson(Registry.FLUID_KEY, json.get("contained"));
+            var other = RegistryEntryLists.fromJson(Registry.FLUID_KEY, json.get("other"));
             BarrelMode result = CodecUtils.fromJson(BarrelMode.CODEC, json.get("result"));
             
             return new FluidCombinationRecipe(id, contained, other, result);
@@ -83,8 +86,8 @@ public class FluidCombinationRecipe extends BaseRecipe<FluidCombinationRecipe.Co
         
         @Override
         public FluidCombinationRecipe read(Identifier id, PacketByteBuf buf) {
-            FluidIngredient contained = CodecUtils.fromPacket(FluidIngredient.CODEC, buf);
-            FluidIngredient other = CodecUtils.fromPacket(FluidIngredient.CODEC, buf);
+            var contained = RegistryEntryLists.fromPacket(Registry.FLUID_KEY, buf);
+            var other = RegistryEntryLists.fromPacket(Registry.FLUID_KEY, buf);
             BarrelMode result = CodecUtils.fromPacket(BarrelMode.CODEC, buf);
             
             return new FluidCombinationRecipe(id, contained, other, result);
@@ -92,12 +95,12 @@ public class FluidCombinationRecipe extends BaseRecipe<FluidCombinationRecipe.Co
         
         @Override
         public void write(PacketByteBuf buf, FluidCombinationRecipe recipe) {
-            CodecUtils.toPacket(FluidIngredient.CODEC, recipe.contained, buf);
-            CodecUtils.toPacket(FluidIngredient.CODEC, recipe.other, buf);
+            RegistryEntryLists.toPacket(Registry.FLUID_KEY, recipe.contained, buf);
+            RegistryEntryLists.toPacket(Registry.FLUID_KEY, recipe.other, buf);
             CodecUtils.toPacket(BarrelMode.CODEC, recipe.result, buf);
         }
     }
     
-    protected static record Context(FluidVariant contained, FluidVariant other) implements RecipeContext {
+    protected record Context(FluidVariant contained, FluidVariant other) implements RecipeContext {
     }
 }

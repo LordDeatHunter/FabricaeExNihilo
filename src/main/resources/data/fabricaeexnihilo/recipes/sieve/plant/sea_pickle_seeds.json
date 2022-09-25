@@ -2,7 +2,7 @@
   "type": "fabricaeexnihilo:sieve",
   "result": "fabricaeexnihilo:sea_pickle_seeds",
   "input": "minecraft:sand",
-  "fluid": "#fabricaeexnihilo:true_water",
+  "waterlogged": true,
   "rolls": {
     "fabricaeexnihilo:copper_mesh": [0.12],
     "fabricaeexnihilo:gold_mesh": [0.2],

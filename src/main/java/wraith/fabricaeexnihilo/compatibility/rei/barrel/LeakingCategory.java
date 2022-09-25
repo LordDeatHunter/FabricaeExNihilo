@@ -19,9 +19,7 @@ import java.util.List;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
-@SuppressWarnings("UnstableApiUsage")
 public class LeakingCategory implements DisplayCategory<LeakingDisplay> {
-
     public static final Identifier ARROW = id("textures/gui/rei/glyphs.png");
     public static final int ARROW_U = 0;
     public static final int ARROW_V = 0;
@@ -77,14 +75,14 @@ public class LeakingCategory implements DisplayCategory<LeakingDisplay> {
 
         widgets.add(new GlyphWidget(bounds, bounds.getMinX() + ARROW_OFFSET_X, bounds.getMinY() + ARROW_OFFSET_Y, 16, 16, ARROW, ARROW_U, ARROW_V));
 
-        var block = display.getBlock().get(0);
-        var fluid = display.getFluid().get(0);
-        var loss = display.getAmount();
-        var result = display.getOutputEntries();
+        var block = display.block;
+        var fluid = display.fluid;
+        var loss = display.amount;
+        var result = display.output;
 
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X, bounds.getMinY() + OUTPUT_Y)).entries(result.get(0)));
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BUCKET_X, bounds.getMinY() + BUCKET_Y)).entries(fluid));
-        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + TARGET_X, bounds.getMinY() + TARGET_Y)).entries(block));
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + OUTPUT_X, bounds.getMinY() + OUTPUT_Y)).entries(result).markOutput());
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + BUCKET_X, bounds.getMinY() + BUCKET_Y)).entries(fluid).markInput());
+        widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + TARGET_X, bounds.getMinY() + TARGET_Y)).entries(block).markInput());
 
         var text = Widgets.createLabel(new Point(0, 0), Text.literal("-" + loss));
         text.setPoint(new Point(bounds.getMaxX() - MARGIN - text.getBounds().getMaxX(), bounds.getMinY() + MARGIN + 9));

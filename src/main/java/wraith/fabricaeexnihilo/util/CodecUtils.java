@@ -101,7 +101,7 @@ public class CodecUtils {
     public static <T, O> O serialize(Codec<T> codec, DynamicOps<O> ops, T data) {
         return codec.encodeStart(ops, data).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
     }
-    
+
     private static <T> T flattenEither(Either<T, T> either) {
         return either.map(Function.identity(), Function.identity());
     }

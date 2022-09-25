@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:alchemy",
   "reactant": "#fabricaeexnihilo:witchwater",
-  "catalyst": "fabricaeexnihilo:doll_shulker",
+  "catalyst": {
+    "item": "fabricaeexnihilo:doll_shulker"
+  },
   "delay": 20,
   "toSpawn": {
     "type": "minecraft:shulker",

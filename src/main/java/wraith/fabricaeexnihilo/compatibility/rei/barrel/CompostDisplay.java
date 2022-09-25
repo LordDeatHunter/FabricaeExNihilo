@@ -7,17 +7,15 @@ import me.shedaniel.rei.api.common.util.EntryIngredients;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 import wraith.fabricaeexnihilo.recipe.barrel.CompostRecipe;
 
-import java.util.Collections;
 import java.util.List;
 
 public class CompostDisplay implements Display {
-
-    private final List<EntryIngredient> inputs;
-    private final List<EntryIngredient> outputs;
+    public final EntryIngredient input;
+    public final EntryIngredient result;
 
     public CompostDisplay(CompostRecipe recipe) {
-        this.inputs = recipe.getInput().streamEntries().map(EntryIngredients::of).toList();
-        this.outputs = Collections.singletonList(EntryIngredients.of(recipe.getResult()));
+        this.input = EntryIngredients.ofIngredient(recipe.getInput());
+        this.result = EntryIngredients.of(recipe.getResult());
     }
 
     @Override
@@ -27,12 +25,12 @@ public class CompostDisplay implements Display {
 
     @Override
     public List<EntryIngredient> getInputEntries() {
-        return inputs;
+        return List.of(input);
     }
 
     @Override
     public List<EntryIngredient> getOutputEntries() {
-        return outputs;
+        return List.of(result);
     }
 
 }

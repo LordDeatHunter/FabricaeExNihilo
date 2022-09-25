@@ -6,7 +6,6 @@ import mcp.mobius.waila.api.IPluginConfig;
 import mcp.mobius.waila.api.ITooltip;
 import net.minecraft.text.Text;
 import wraith.fabricaeexnihilo.modules.infested.InfestingLeavesBlockEntity;
-import wraith.fabricaeexnihilo.modules.sieves.SieveBlockEntity;
 
 public class InfestingLeavesProvider implements IBlockComponentProvider {
     @Override

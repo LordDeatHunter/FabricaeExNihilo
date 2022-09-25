@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:alchemy",
   "reactant": "#fabricaeexnihilo:true_water",
-  "catalyst": "fabricaeexnihilo:dust",
+  "catalyst": {
+    "item": "fabricaeexnihilo:dust"
+  },
   "result": {
     "id": "item",
     "stack": "minecraft:clay"

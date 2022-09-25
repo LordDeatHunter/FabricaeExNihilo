@@ -33,6 +33,8 @@ public class DefaultApiModule implements FENApiModule {
         registries.registerCrushedBlock("crushed_prismarine", registries.gravelyBlockSettings());
         registries.registerCrushedBlock("crushed_endstone", registries.gravelyBlockSettings());
         registries.registerCrushedBlock("crushed_netherrack", registries.gravelyBlockSettings());
+        registries.registerCrushedBlock("crushed_deepslate", registries.gravelyBlockSettings());
+        registries.registerCrushedBlock("crushed_blackstone", registries.gravelyBlockSettings());
 
         registries.registerCrucible("porcelain", true, registries.stoneBlockSettings());
         registries.registerBarrel("stone", true, registries.stoneBlockSettings());

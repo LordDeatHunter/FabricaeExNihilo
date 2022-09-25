@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:alchemy",
   "reactant": "#fabricaeexnihilo:true_water",
-  "catalyst": "#c:salt",
+  "catalyst": {
+    "tag": "c:salt"
+  },
   "result": {
     "id": "fluid",
     "fluid": "fabricaeexnihilo:brine",
