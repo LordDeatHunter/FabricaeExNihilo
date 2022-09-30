@@ -16,6 +16,7 @@ import java.util.Map;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
+// TODO: merge with ModItems (why is this a thing?)
 public class ModTools {
 
     public static final Map<Identifier, Item> CROOKS = new HashMap<>();

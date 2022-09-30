@@ -1,0 +1,21 @@
+{
+  "type": "fabricaeexnihilo:strainer",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "minecraft:gameplay/fishing/junk",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "minecraft:gameplay/fishing/fish",
+          "weight": 85
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

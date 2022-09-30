@@ -1,0 +1,37 @@
+{
+  "parent": "fabricaeexnihilo:diamond_mesh",
+  "criteria": {
+    "mesh": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fabricaeexnihilo:netherite_mesh"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.netherite_mesh.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fabricaeexnihilo:netherite_mesh"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.netherite_mesh.title"
+    }
+  },
+  "requirements": [
+    [
+      "mesh"
+    ]
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "parent": "fabricaeexnihilo:wooden_hammer",
+  "criteria": {
+    "gravel": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:gravel"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.gravel.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:gravel"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.gravel.title"
+    }
+  },
+  "requirements": [
+    [
+      "gravel"
+    ]
+  ]
+}

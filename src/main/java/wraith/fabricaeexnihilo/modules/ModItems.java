@@ -23,24 +23,33 @@ public final class ModItems {
     public static final List<Identifier> DOLLS = new ArrayList<>();
     public static final Map<Identifier, MeshItem> MESHES = new LinkedHashMap<>();
     public static final Map<Identifier, Item> ORE_PIECES = new LinkedHashMap<>();
-    public static final Map<Identifier, Item> RESOURCES = new LinkedHashMap<>();
+    public static final Map<Identifier, Item> PEBBLES = new LinkedHashMap<>();
     public static final Map<Identifier, Item> SEEDS = new LinkedHashMap<>();
 
-    static {
-        RESOURCES.put(id("andesite_pebble"), new Item(BASE_SETTINGS));
-        RESOURCES.put(id("basalt_pebble"), new Item(BASE_SETTINGS));
-        RESOURCES.put(id("blackstone_pebble"), new Item(BASE_SETTINGS));
-        RESOURCES.put(id("calcite_pebble"), new Item(BASE_SETTINGS));
-        RESOURCES.put(id("dripstone_pebble"), new Item(BASE_SETTINGS));
-        RESOURCES.put(id("deepslate_pebble"), new Item(BASE_SETTINGS));
-        RESOURCES.put(id("diorite_pebble"), new Item(BASE_SETTINGS));
-        RESOURCES.put(id("granite_pebble"), new Item(BASE_SETTINGS));
-        RESOURCES.put(id("stone_pebble"), new Item(BASE_SETTINGS));
-        RESOURCES.put(id("tuff_pebble"), new Item(BASE_SETTINGS));
+    public static final Item PORCELAIN;
+    public static final Item UNFIRED_PORCELAIN_CRUCIBLE;
+    public static final Item SALT_BOTTLE;
+    public static final Item RAW_SILKWORM;
+    public static final Item COOKED_SILKWORM;
 
-        RESOURCES.put(id("porcelain"), new Item(BASE_SETTINGS));
-        RESOURCES.put(id("unfired_porcelain_crucible"), new Item(BASE_SETTINGS));
-        RESOURCES.put(id("salt_bottle"), new Item(BASE_SETTINGS));
+    static {
+        // TODO: replace RESOURCES with PEBBLES and single block fields
+        PEBBLES.put(id("andesite_pebble"), new Item(BASE_SETTINGS));
+        PEBBLES.put(id("basalt_pebble"), new Item(BASE_SETTINGS));
+        PEBBLES.put(id("blackstone_pebble"), new Item(BASE_SETTINGS));
+        PEBBLES.put(id("calcite_pebble"), new Item(BASE_SETTINGS));
+        PEBBLES.put(id("dripstone_pebble"), new Item(BASE_SETTINGS));
+        PEBBLES.put(id("deepslate_pebble"), new Item(BASE_SETTINGS));
+        PEBBLES.put(id("diorite_pebble"), new Item(BASE_SETTINGS));
+        PEBBLES.put(id("granite_pebble"), new Item(BASE_SETTINGS));
+        PEBBLES.put(id("stone_pebble"), new Item(BASE_SETTINGS));
+        PEBBLES.put(id("tuff_pebble"), new Item(BASE_SETTINGS));
+
+        PORCELAIN = new Item(BASE_SETTINGS);
+        UNFIRED_PORCELAIN_CRUCIBLE = new Item(BASE_SETTINGS);
+        SALT_BOTTLE = new Item(BASE_SETTINGS);
+        RAW_SILKWORM = new SilkWormItem(new FabricItemSettings().maxCount(64).food(FoodComponents.COD).group(FabricaeExNihilo.ITEM_GROUP));
+        COOKED_SILKWORM = new Item(new FabricItemSettings().maxCount(64).food(FoodComponents.COOKED_COD).group(FabricaeExNihilo.ITEM_GROUP));
 
         DOLLS.add(id("doll"));
         DOLLS.add(id("doll_blaze"));
@@ -50,29 +59,20 @@ public final class ModItems {
     }
 
     public static void registerItems() {
-        // Setup Conditional Items.
-        setup();
-        // Register Seeds
+        // Register stuff
+        Registry.register(Registry.ITEM, id("porcelain"), PORCELAIN);
+        Registry.register(Registry.ITEM, id("unfired_porcelain_crucible"), UNFIRED_PORCELAIN_CRUCIBLE);
+        Registry.register(Registry.ITEM, id("salt_bottle"), SALT_BOTTLE);
+        Registry.register(Registry.ITEM, id("raw_silkworm"), RAW_SILKWORM);
+        Registry.register(Registry.ITEM, id("cooked_silkworm"), COOKED_SILKWORM);
+
         SEEDS.forEach((identifier, item) -> Registry.register(Registry.ITEM, identifier, item));
-
-        // Register Meshes
         MESHES.forEach((identifier, item) -> Registry.register(Registry.ITEM, identifier, item));
-
-        // Register Others
-        RESOURCES.forEach((identifier, item) -> Registry.register(Registry.ITEM, identifier, item));
+        PEBBLES.forEach((identifier, item) -> Registry.register(Registry.ITEM, identifier, item));
         DOLLS.forEach(doll -> Registry.register(Registry.ITEM, doll, new Item(BASE_SETTINGS)));
-
-        // Register Ores
         ORE_PIECES.forEach((identifier, item) -> Registry.register(Registry.ITEM, identifier, item));
         Registry.register(Registry.ITEM, id("end_cake"), new BlockItem(ModBlocks.END_CAKE, new FabricItemSettings().maxCount(1).group(FabricaeExNihilo.ITEM_GROUP)));
         ModFluids.registerBuckets();
-    }
-
-    private static void setup() {
-        if (FabricaeExNihilo.CONFIG.modules.silkworms.enabled) {
-            RESOURCES.put(id("raw_silkworm"), new SilkWormItem(new FabricItemSettings().maxCount(64).food(FoodComponents.COD).group(FabricaeExNihilo.ITEM_GROUP)));
-            RESOURCES.put(id("cooked_silkworm"), new Item(new FabricItemSettings().maxCount(64).food(FoodComponents.COOKED_COD).group(FabricaeExNihilo.ITEM_GROUP)));
-        }
     }
 
 }

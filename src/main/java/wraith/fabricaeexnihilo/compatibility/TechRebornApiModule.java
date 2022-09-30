@@ -1,13 +1,15 @@
 package wraith.fabricaeexnihilo.compatibility;
 
+import net.fabricmc.fabric.api.resource.conditions.v1.ConditionJsonProvider;
+import net.fabricmc.fabric.api.resource.conditions.v1.DefaultResourceConditions;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.api.FENApiModule;
 import wraith.fabricaeexnihilo.api.FENRegistries;
 import wraith.fabricaeexnihilo.util.Color;
 
 public class TechRebornApiModule implements FENApiModule {
-
     @Override
     public void onInit(FENRegistries registries) {
         registries.registerOrePiece("tin", registries.defaultItemSettings());
@@ -26,4 +28,9 @@ public class TechRebornApiModule implements FENApiModule {
         return FabricLoader.getInstance().isModLoaded("techreborn");
     }
 
+    @Override
+    @Nullable
+    public ConditionJsonProvider getResourceCondition() {
+        return DefaultResourceConditions.allModsLoaded("techreborn");
+    }
 }

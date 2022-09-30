@@ -18,7 +18,7 @@ public class HammerItem extends ToolItem {
     }
 
     public static boolean isHammer(ItemStack stack) {
-        return stack.getItem() instanceof HammerItem || stack.isIn(ModTags.HAMMER_TAG);
+        return stack.getItem() instanceof HammerItem || stack.isIn(ModTags.HAMMERS);
     }
 
     @Override

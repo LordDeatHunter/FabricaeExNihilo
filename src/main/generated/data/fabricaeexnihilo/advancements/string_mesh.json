@@ -1,0 +1,37 @@
+{
+  "parent": "fabricaeexnihilo:silkworm",
+  "criteria": {
+    "mesh": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fabricaeexnihilo:string_mesh"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.string_mesh.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fabricaeexnihilo:string_mesh"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.string_mesh.title"
+    }
+  },
+  "requirements": [
+    [
+      "mesh"
+    ]
+  ]
+}

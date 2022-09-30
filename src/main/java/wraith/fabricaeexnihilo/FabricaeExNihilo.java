@@ -22,14 +22,13 @@ import wraith.fabricaeexnihilo.util.ItemUtils;
 import java.nio.file.Files;
 
 public class FabricaeExNihilo implements ModInitializer {
-    public static final String MODID = "fabricaeexnihilo";
-    public static final ItemGroup ITEM_GROUP = FabricItemGroupBuilder.create(new Identifier(MODID, "general")).icon(() -> ItemUtils.getExNihiloItemStack("wooden_crook")).build();
+    public static final ItemGroup ITEM_GROUP = FabricItemGroupBuilder.create(new Identifier("fabricaeexnihilo", "general")).icon(() -> ItemUtils.getExNihiloItemStack("wooden_crook")).build();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().setLenient().create();
     public static final Logger LOGGER = LogManager.getLogger("Fabricae Ex Nihilo");
     public static final FabricaeExNihiloConfig CONFIG = initConfig();
 
     public static Identifier id(String path) {
-        return new Identifier(MODID, path);
+        return new Identifier("fabricaeexnihilo", path);
     }
 
     @Override

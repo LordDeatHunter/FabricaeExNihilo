@@ -1,0 +1,37 @@
+{
+  "parent": "fabricaeexnihilo:flint_mesh",
+  "criteria": {
+    "mesh": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fabricaeexnihilo:iron_mesh"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.iron_mesh.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fabricaeexnihilo:iron_mesh"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.iron_mesh.title"
+    }
+  },
+  "requirements": [
+    [
+      "mesh"
+    ]
+  ]
+}

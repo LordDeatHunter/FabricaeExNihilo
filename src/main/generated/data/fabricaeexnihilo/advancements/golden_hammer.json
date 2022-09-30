@@ -1,0 +1,38 @@
+{
+  "parent": "fabricaeexnihilo:wooden_hammer",
+  "criteria": {
+    "hammer": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fabricaeexnihilo:golden_hammer"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.golden_hammer.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fabricaeexnihilo:golden_hammer",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.golden_hammer.title"
+    }
+  },
+  "requirements": [
+    [
+      "hammer"
+    ]
+  ]
+}

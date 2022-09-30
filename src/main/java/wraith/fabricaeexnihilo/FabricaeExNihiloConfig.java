@@ -93,8 +93,6 @@ public class FabricaeExNihiloConfig {
         }
 
         public static class InfestedConfig {
-
-            public boolean enabled = true;
             // How many attempts should infested leaves make to spread each time they check.
             public int infestedSpreadAttempts = 4;
             // How many attempts should infesting leaves make to spread each time they check.

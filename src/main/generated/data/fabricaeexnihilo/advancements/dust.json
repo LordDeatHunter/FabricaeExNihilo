@@ -1,0 +1,37 @@
+{
+  "parent": "fabricaeexnihilo:silt",
+  "criteria": {
+    "dust": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fabricaeexnihilo:dust"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.dust.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fabricaeexnihilo:dust"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.dust.title"
+    }
+  },
+  "requirements": [
+    [
+      "dust"
+    ]
+  ]
+}

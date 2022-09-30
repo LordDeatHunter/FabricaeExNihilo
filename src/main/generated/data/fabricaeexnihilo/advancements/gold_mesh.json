@@ -1,0 +1,37 @@
+{
+  "parent": "fabricaeexnihilo:copper_mesh",
+  "criteria": {
+    "mesh": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fabricaeexnihilo:gold_mesh"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.gold_mesh.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fabricaeexnihilo:gold_mesh"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.gold_mesh.title"
+    }
+  },
+  "requirements": [
+    [
+      "mesh"
+    ]
+  ]
+}

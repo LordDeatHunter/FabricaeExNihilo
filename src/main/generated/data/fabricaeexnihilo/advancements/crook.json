@@ -1,0 +1,38 @@
+{
+  "parent": "fabricaeexnihilo:root",
+  "criteria": {
+    "crook": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fabricaeexnihilo:wooden_crook"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.crook.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fabricaeexnihilo:wooden_crook",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.crook.title"
+    }
+  },
+  "requirements": [
+    [
+      "crook"
+    ]
+  ]
+}

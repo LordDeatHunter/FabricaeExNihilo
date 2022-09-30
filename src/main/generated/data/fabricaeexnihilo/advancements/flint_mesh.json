@@ -1,0 +1,37 @@
+{
+  "parent": "fabricaeexnihilo:string_mesh",
+  "criteria": {
+    "mesh": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fabricaeexnihilo:flint_mesh"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.flint_mesh.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fabricaeexnihilo:flint_mesh"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.flint_mesh.title"
+    }
+  },
+  "requirements": [
+    [
+      "mesh"
+    ]
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "parent": "fabricaeexnihilo:diamond_hammer",
+  "criteria": {
+    "hammer": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fabricaeexnihilo:netherite_hammer"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.netherite_hammer.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fabricaeexnihilo:netherite_hammer",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.netherite_hammer.title"
+    }
+  },
+  "requirements": [
+    [
+      "hammer"
+    ]
+  ]
+}

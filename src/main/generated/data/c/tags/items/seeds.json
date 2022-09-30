@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:wheat_seeds",
+    "minecraft:pumpkin_seeds",
+    "minecraft:melon_seeds",
+    "minecraft:beetroot_seeds",
+    "fabricaeexnihilo:sea_pickle_seeds",
+    "fabricaeexnihilo:grass_seeds",
+    "fabricaeexnihilo:mycelium_seeds",
+    "fabricaeexnihilo:chorus_seeds",
+    "fabricaeexnihilo:cactus_seeds",
+    "fabricaeexnihilo:sugarcane_seeds",
+    "fabricaeexnihilo:kelp_seeds"
+  ]
+}

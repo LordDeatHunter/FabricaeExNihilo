@@ -1,11 +1,14 @@
 package wraith.fabricaeexnihilo.util;
 
+import com.google.common.collect.Maps;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
+import net.fabricmc.fabric.api.resource.conditions.v1.ConditionJsonProvider;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.*;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
@@ -24,13 +27,22 @@ import wraith.fabricaeexnihilo.modules.sieves.MeshItem;
 import wraith.fabricaeexnihilo.modules.sieves.SieveBlock;
 import wraith.fabricaeexnihilo.modules.strainer.StrainerBlock;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public class EntrypointHelper {
+    public static final Map<ItemConvertible, List<ConditionJsonProvider>> CONDITIONS = Maps.newIdentityHashMap();
 
     public static void callEntrypoints() {
-        var entrypoints = FabricLoader.getInstance().getEntrypoints("fabricaeexnihilo:api", FENApiModule.class).stream().filter(FENApiModule::shouldLoad).toList();
-        var registries = new FENRegistriesImpl();
+        var entrypoints = FabricLoader.getInstance().getEntrypoints("fabricaeexnihilo:api", FENApiModule.class).stream();
 
-        entrypoints.forEach(entrypoint -> entrypoint.onInit(registries));
+        // Enable all compat modules when running datagen to ensure all
+        // data gets generated regardless of currently active dependencies
+        if (System.getProperty("fabric-api.datagen") == null)
+            entrypoints = entrypoints.filter(FENApiModule::shouldLoad);
+
+        entrypoints.forEach(entrypoint -> entrypoint.onInit(new FENRegistriesImpl(entrypoint.getResourceCondition())));
     }
 
     private static Identifier id(String ore, @Nullable String prefix, @Nullable String suffix) {
@@ -38,6 +50,12 @@ public class EntrypointHelper {
     }
 
     private static final class FENRegistriesImpl implements FENRegistries {
+        @Nullable
+        private final ConditionJsonProvider condition;
+
+        private FENRegistriesImpl(@Nullable ConditionJsonProvider condition) {
+            this.condition = condition;
+        }
 
         @Override
         public FabricItemSettings defaultItemSettings() {
@@ -55,94 +73,6 @@ public class EntrypointHelper {
         }
 
         @Override
-        public void registerBarrel(String name, boolean isFireproof, AbstractBlock.Settings settings) {
-            var id = id(name, null, "_barrel");
-            if (ModBlocks.BARRELS.containsKey(id)) return;
-            var block = new BarrelBlock(settings, isFireproof);
-            ModBlocks.BARRELS.put(id, block);
-            if (!isFireproof) FlammableBlockRegistry.getDefaultInstance().add(block, 5, 20);
-        }
-
-        @Override
-        public void registerCrucible(String name, boolean isFireproof, AbstractBlock.Settings settings) {
-            var id = id(name, null, "_crucible");
-            if (ModBlocks.CRUCIBLES.containsKey(id)) return;
-            var block = new CrucibleBlock(settings, isFireproof);
-            ModBlocks.CRUCIBLES.put(id, block);
-            if (!isFireproof) FlammableBlockRegistry.getDefaultInstance().add(block, 5, 20);
-        }
-
-        @Override
-        public void registerCrushedBlock(String name, AbstractBlock.Settings settings) {
-            var id = id(name, null, null);
-            if (ModBlocks.CRUSHED.containsKey(id)) return;
-            ModBlocks.CRUSHED.put(id, new FallingBlock(settings));
-        }
-
-        @Override
-        public void registerInfestedLeaves(String name, Identifier source, AbstractBlock.Settings settings) {
-            //TODO: Make these stack somehow: multiple sources for one result.
-            var id = id(name, "infested_", "_leaves");
-            if (ModBlocks.INFESTED_LEAVES.containsKey(id)) return;
-            var block = new InfestedLeavesBlock(source, settings);
-            ModBlocks.INFESTED_LEAVES.put(id, block);
-            FlammableBlockRegistry.getDefaultInstance().add(block, 30, 60);
-        }
-
-        @Override
-        public void registerMesh(String name, Color color, int enchantability, Item.Settings settings) {
-            var id = id(name, null, "_mesh");
-            if (ModItems.MESHES.containsKey(id)) return;
-            ModItems.MESHES.put(id, new MeshItem(color, enchantability, settings));
-        }
-
-        @Override
-        public void registerOrePiece(String name, Item.Settings settings) {
-            var id = id(name, "raw_", "_piece");
-            if (ModItems.ORE_PIECES.containsKey(id)) return;
-            ModItems.ORE_PIECES.put(id, new Item(ModItems.BASE_SETTINGS));
-        }
-
-        @Override
-        public void registerSeed(String name, Lazy<Block[]> plants) {
-            var id = id(name, null, "_seeds");
-            if (ModItems.SEEDS.containsKey(id)) return;
-            ModItems.SEEDS.put(id, new PlantableItem(plants, ModItems.BASE_SETTINGS));
-        }
-
-        @Override
-        public void registerSieve(String name, boolean isFireproof, AbstractBlock.Settings settings) {
-            var id = id(name, null, "_sieve");
-            if (ModBlocks.SIEVES.containsKey(id)) return;
-            var block = new SieveBlock(settings);
-            ModBlocks.SIEVES.put(id, block);
-            if (!isFireproof) FlammableBlockRegistry.getDefaultInstance().add(block, 5, 20);
-        }
-
-        @Override
-        public void registerStrainer(String name, boolean isFireproof, AbstractBlock.Settings settings) {
-            var id = id(name, null, "_strainer");
-            if (ModBlocks.STRAINERS.containsKey(id)) return;
-            var block = new StrainerBlock(settings);
-            ModBlocks.STRAINERS.put(id, block);
-            if (!isFireproof) FlammableBlockRegistry.getDefaultInstance().add(block, 5, 20);
-        }
-
-        @Override
-        public void registerTallPlantSeed(String name, Lazy<TallPlantBlock[]> plants) {
-            var id = id(name, null, "_seeds");
-            if (ModItems.SEEDS.containsKey(id)) return;
-            ModItems.SEEDS.put(id, new TallPlantableItem(plants, ModItems.BASE_SETTINGS));
-        }
-
-        @Override
-        public void registerTransformingSeed(String name, Lazy<Block> from, Lazy<Block> to) {
-            var id = id(name, null, "_seeds");
-            if (ModItems.SEEDS.containsKey(id)) return;
-            ModItems.SEEDS.put(id, new TransformingItem(from, to, ModItems.BASE_SETTINGS));
-        }
-
-        @Override
         public FabricBlockSettings sandyBlockSettings() {
             return FabricBlockSettings.copyOf(FabricBlockSettings.of(Material.AGGREGATE).strength(0.4f).sounds(BlockSoundGroup.SAND));
         }
@@ -155,6 +85,115 @@ public class EntrypointHelper {
         @Override
         public FabricBlockSettings woodenBlockSettings() {
             return FabricBlockSettings.copyOf(FabricBlockSettings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD));
+        }
+
+        @Override
+        public void registerBarrel(String name, boolean isFireproof, AbstractBlock.Settings settings) {
+            var id = id(name, null, "_barrel");
+            var block = ModBlocks.BARRELS.computeIfAbsent(id, __ -> {
+                var block1 = new BarrelBlock(settings, isFireproof);
+                if (!isFireproof) FlammableBlockRegistry.getDefaultInstance().add(block1, 5, 20);
+                return block1;
+            });
+            if (condition != null)
+                CONDITIONS.computeIfAbsent(block, __ -> new ArrayList<>()).add(condition);
+        }
+
+        @Override
+        public void registerCrucible(String name, boolean isFireproof, AbstractBlock.Settings settings) {
+            var id = id(name, null, "_crucible");
+            var block = ModBlocks.CRUCIBLES.computeIfAbsent(id, __ -> {
+                var block1 = new CrucibleBlock(settings, isFireproof);
+                if (!isFireproof) FlammableBlockRegistry.getDefaultInstance().add(block1, 5, 20);
+                return block1;
+            });
+            if (condition != null)
+                CONDITIONS.computeIfAbsent(block, __ -> new ArrayList<>()).add(condition);
+        }
+
+        @Override
+        public void registerCrushedBlock(String name, AbstractBlock.Settings settings) {
+            var id = id(name, null, null);
+            var block = ModBlocks.CRUSHED.computeIfAbsent(id, __ -> new FallingBlock(settings));
+            if (condition != null)
+                CONDITIONS.computeIfAbsent(block, __ -> new ArrayList<>()).add(condition);
+        }
+
+        @Override
+        public void registerInfestedLeaves(String name, Identifier source, AbstractBlock.Settings settings) {
+            //TODO: Make these stack somehow: multiple sources for one result.
+            var id = id(name, "infested_", "_leaves");
+            var block = ModBlocks.INFESTED_LEAVES.computeIfAbsent(id, __ -> {
+                var block1 = new InfestedLeavesBlock(source, settings);
+                FlammableBlockRegistry.getDefaultInstance().add(block1, 30, 60);
+                return block1;
+            });
+            if (condition != null)
+                CONDITIONS.computeIfAbsent(block, __ -> new ArrayList<>()).add(condition);
+        }
+
+        @Override
+        public void registerMesh(String name, Color color, int enchantability, Item.Settings settings) {
+            var id = id(name, null, "_mesh");
+            var item = ModItems.MESHES.computeIfAbsent(id, __ -> new MeshItem(color, enchantability, settings));
+            if (condition != null)
+                CONDITIONS.computeIfAbsent(item, __ -> new ArrayList<>()).add(condition);
+        }
+
+        @Override
+        public void registerOrePiece(String name, Item.Settings settings) {
+            var id = id(name, "raw_", "_piece");
+            var item = ModItems.ORE_PIECES.computeIfAbsent(id, __ -> new Item(ModItems.BASE_SETTINGS));
+            if (condition != null)
+                CONDITIONS.computeIfAbsent(item, __ -> new ArrayList<>()).add(condition);
+        }
+
+        @Override
+        public void registerSeed(String name, Lazy<Block[]> plants) {
+            var id = id(name, null, "_seeds");
+            var item = ModItems.SEEDS.computeIfAbsent(id, __ -> new PlantableItem(plants, ModItems.BASE_SETTINGS));
+            if (condition != null)
+                CONDITIONS.computeIfAbsent(item, __ -> new ArrayList<>()).add(condition);
+        }
+
+        @Override
+        public void registerSieve(String name, boolean isFireproof, AbstractBlock.Settings settings) {
+            var id = id(name, null, "_sieve");
+            var block = ModBlocks.SIEVES.computeIfAbsent(id, __ -> {
+                var block1 = new SieveBlock(settings);
+                if (!isFireproof) FlammableBlockRegistry.getDefaultInstance().add(block1, 5, 20);
+                return block1;
+            });
+            if (condition != null)
+                CONDITIONS.computeIfAbsent(block, __ -> new ArrayList<>()).add(condition);
+        }
+
+        @Override
+        public void registerStrainer(String name, boolean isFireproof, AbstractBlock.Settings settings) {
+            var id = id(name, null, "_strainer");
+            var block = ModBlocks.STRAINERS.computeIfAbsent(id, __ -> {
+                var block1 = new StrainerBlock(settings);
+                if (!isFireproof) FlammableBlockRegistry.getDefaultInstance().add(block1, 5, 20);
+                return block1;
+            });
+            if (condition != null)
+                CONDITIONS.computeIfAbsent(block, __ -> new ArrayList<>()).add(condition);
+        }
+
+        @Override
+        public void registerTallPlantSeed(String name, Lazy<TallPlantBlock[]> plants) {
+            var id = id(name, null, "_seeds");
+            var item = ModItems.SEEDS.computeIfAbsent(id, __ -> new TallPlantableItem(plants, ModItems.BASE_SETTINGS));
+            if (condition != null)
+                CONDITIONS.computeIfAbsent(item, __ -> new ArrayList<>()).add(condition);
+        }
+
+        @Override
+        public void registerTransformingSeed(String name, Lazy<Block> from, Lazy<Block> to) {
+            var id = id(name, null, "_seeds");
+            var item = ModItems.SEEDS.computeIfAbsent(id, __ -> new TransformingItem(from, to, ModItems.BASE_SETTINGS));
+            if (condition != null)
+                CONDITIONS.computeIfAbsent(item, __ -> new ArrayList<>()).add(condition);
         }
     }
 }

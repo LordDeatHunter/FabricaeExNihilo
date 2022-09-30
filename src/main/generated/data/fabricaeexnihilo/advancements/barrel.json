@@ -1,0 +1,35 @@
+{
+  "parent": "fabricaeexnihilo:root",
+  "criteria": {
+    "barrel": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "fabricaeexnihilo:barrels"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.barrel.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fabricaeexnihilo:oak_barrel"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.barrel.title"
+    }
+  },
+  "requirements": [
+    [
+      "barrel"
+    ]
+  ]
+}

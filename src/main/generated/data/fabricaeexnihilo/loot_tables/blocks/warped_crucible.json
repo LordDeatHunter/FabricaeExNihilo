@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "fabricaeexnihilo:copy_enchantments"
+            }
+          ],
+          "name": "fabricaeexnihilo:warped_crucible"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

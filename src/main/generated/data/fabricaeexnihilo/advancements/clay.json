@@ -1,0 +1,37 @@
+{
+  "parent": "fabricaeexnihilo:barrel",
+  "criteria": {
+    "clay": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:clay"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.clay.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:clay"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.clay.title"
+    }
+  },
+  "requirements": [
+    [
+      "clay"
+    ]
+  ]
+}

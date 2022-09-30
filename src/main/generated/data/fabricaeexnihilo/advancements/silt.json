@@ -1,0 +1,37 @@
+{
+  "parent": "fabricaeexnihilo:sand",
+  "criteria": {
+    "silt": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fabricaeexnihilo:silt"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.silt.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fabricaeexnihilo:silt"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.silt.title"
+    }
+  },
+  "requirements": [
+    [
+      "silt"
+    ]
+  ]
+}

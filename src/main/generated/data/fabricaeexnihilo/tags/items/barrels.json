@@ -1,0 +1,45 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "fabricaeexnihilo:rubber_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:dark_oak_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:stone_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:spruce_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:warped_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:jungle_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:oak_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:acacia_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:crimson_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:birch_barrel",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "parent": "fabricaeexnihilo:crook",
+  "criteria": {
+    "silkworm": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fabricaeexnihilo:raw_silkworm"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.silkworm.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fabricaeexnihilo:raw_silkworm"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.silkworm.title"
+    }
+  },
+  "requirements": [
+    [
+      "silkworm"
+    ]
+  ]
+}

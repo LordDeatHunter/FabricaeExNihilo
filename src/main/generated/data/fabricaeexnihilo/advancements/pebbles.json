@@ -1,0 +1,37 @@
+{
+  "parent": "fabricaeexnihilo:string_mesh",
+  "criteria": {
+    "pebble": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fabricaeexnihilo:stone_pebble"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.pebbles.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fabricaeexnihilo:stone_pebble"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.pebbles.title"
+    }
+  },
+  "requirements": [
+    [
+      "pebble"
+    ]
+  ]
+}

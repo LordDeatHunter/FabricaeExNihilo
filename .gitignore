@@ -31,8 +31,11 @@ run/kubejs/exported
 
 dev_settings.properties
 
-# datagen
+# old datagen
 datagen/generated/assets/
 datagen/data/
 datagen/generated/
 datagen/__pycache__/
+
+# new datagen
+src/main/generated/.cache

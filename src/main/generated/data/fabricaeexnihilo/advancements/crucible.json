@@ -1,0 +1,37 @@
+{
+  "parent": "fabricaeexnihilo:porcelain",
+  "criteria": {
+    "porcelain_crucible": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fabricaeexnihilo:porcelain_crucible"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.crucible.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fabricaeexnihilo:porcelain_crucible"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.crucible.title"
+    }
+  },
+  "requirements": [
+    [
+      "porcelain_crucible"
+    ]
+  ]
+}

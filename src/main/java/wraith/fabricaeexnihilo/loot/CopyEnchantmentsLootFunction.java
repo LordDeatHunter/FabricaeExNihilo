@@ -8,6 +8,7 @@ import net.minecraft.loot.condition.LootCondition;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.loot.function.ConditionalLootFunction;
+import net.minecraft.loot.function.LootFunction;
 import net.minecraft.loot.function.LootFunctionType;
 import wraith.fabricaeexnihilo.modules.base.EnchantableBlockEntity;
 import wraith.fabricaeexnihilo.modules.base.EnchantmentContainer;
@@ -31,7 +32,23 @@ public class CopyEnchantmentsLootFunction extends ConditionalLootFunction {
     public LootFunctionType getType() {
         return TYPE;
     }
-    
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    protected static class Builder extends ConditionalLootFunction.Builder<CopyEnchantmentsLootFunction.Builder> {
+        @Override
+        protected Builder getThisBuilder() {
+            return this;
+        }
+
+        @Override
+        public LootFunction build() {
+            return new CopyEnchantmentsLootFunction(getConditions());
+        }
+    }
+
     private static class Serializer extends ConditionalLootFunction.Serializer<CopyEnchantmentsLootFunction> {
         @Override
         public CopyEnchantmentsLootFunction fromJson(JsonObject json, JsonDeserializationContext context, LootCondition[] conditions) {

@@ -36,6 +36,9 @@
     ],
     "preLaunch": [
       "com.llamalad7.mixinextras.MixinExtrasBootstrap::init"
+    ],
+    "fabric-datagen": [
+      "wraith.fabricaeexnihilo.datagen.FENDatagen"
     ]
   },
   "mixins": [

@@ -1,8 +1,0 @@
-{
-  "replace": false,
-  "__comment": "This is for when we want actual water and not water-like fluids",
-  "values": [
-    "minecraft:water",
-    "minecraft:flowing_water"
-  ]
-}

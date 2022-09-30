@@ -1,0 +1,26 @@
+{
+  "replace": false,
+  "values": [
+    "#c:glass_blocks",
+    "#c:concretes",
+    "#c:concrete_powders",
+    "#minecraft:wool",
+    "#minecraft:coral_plants",
+    "#minecraft:coral_blocks",
+    "minecraft:stone",
+    "minecraft:cobblestone",
+    "minecraft:gravel",
+    "minecraft:sand",
+    "fabricaeexnihilo:silt",
+    "minecraft:andesite",
+    "minecraft:granite",
+    "minecraft:diorite",
+    "minecraft:calcite",
+    "minecraft:prismarine",
+    "minecraft:end_stone",
+    "minecraft:end_stone_bricks",
+    "minecraft:nether_bricks",
+    "minecraft:netherrack",
+    "fabricaeexnihilo:crushed_granite"
+  ]
+}

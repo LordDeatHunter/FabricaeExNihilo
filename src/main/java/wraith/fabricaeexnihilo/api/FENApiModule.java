@@ -1,6 +1,8 @@
 package wraith.fabricaeexnihilo.api;
 
+import net.fabricmc.fabric.api.resource.conditions.v1.ConditionJsonProvider;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * An entrypoint that allows mods to add their own resources to Fabricae Ex Nihilo.
@@ -21,5 +23,14 @@ public interface FENApiModule {
      */
     default boolean shouldLoad() {
         return true;
+    }
+
+    /**
+     * Override this if to provide a resource condition for assets generated for this module. Mostly used by included modules to disable assets for other mods.
+     * @return A {@link ConditionJsonProvider} that corresponds with when this plugin is loaded, or {@code null} if there isn't a condition, or it isn't required for assets to follow it.
+     */
+    @Nullable
+    default ConditionJsonProvider getResourceCondition() {
+        return null;
     }
 }

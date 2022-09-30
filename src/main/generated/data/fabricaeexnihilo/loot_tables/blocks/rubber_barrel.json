@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:block",
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "techreborn"
+      ]
+    }
+  ],
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "fabricaeexnihilo:copy_enchantments"
+            }
+          ],
+          "name": "fabricaeexnihilo:rubber_barrel"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

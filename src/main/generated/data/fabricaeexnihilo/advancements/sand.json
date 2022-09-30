@@ -1,0 +1,37 @@
+{
+  "parent": "fabricaeexnihilo:gravel",
+  "criteria": {
+    "sand": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:sand"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.fabricaeexnihilo.sand.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:sand"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.fabricaeexnihilo.sand.title"
+    }
+  },
+  "requirements": [
+    [
+      "sand"
+    ]
+  ]
+}

@@ -18,7 +18,7 @@ public class CrookItem extends ToolItem {
     }
 
     public static boolean isCrook(ItemStack stack) {
-        return stack.getItem() instanceof CrookItem || stack.isIn(ModTags.CROOK_TAG);
+        return stack.getItem() instanceof CrookItem || stack.isIn(ModTags.CROOKS);
     }
 
     @Override
