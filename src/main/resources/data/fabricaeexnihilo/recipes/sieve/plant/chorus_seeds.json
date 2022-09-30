@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "fabricaeexnihilo:chorus_seeds",
-  "input": "fabricaeexnihilo:crushed_endstone",
+  "input": {
+    "item": "fabricaeexnihilo:crushed_endstone"
+  },
   "rolls": {
     "fabricaeexnihilo:copper_mesh": [0.05],
     "fabricaeexnihilo:gold_mesh": [0.1],
@@ -10,9 +12,7 @@
   "fabric:load_conditions": [
     {
       "condition": "fabricaeexnihilo:all_items_present",
-      "values": [
-        "fabricaeexnihilo:chorus_seeds"
-      ]
+      "values": ["fabricaeexnihilo:chorus_seeds"]
     }
   ]
 }

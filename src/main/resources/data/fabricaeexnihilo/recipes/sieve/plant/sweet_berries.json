@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "minecraft:sweet_berries",
-  "input": "minecraft:dirt",
+  "input": {
+    "item": "minecraft:dirt"
+  },
   "rolls": {
     "fabricaeexnihilo:string_mesh": [0.02],
     "fabricaeexnihilo:flint_mesh": [0.06],

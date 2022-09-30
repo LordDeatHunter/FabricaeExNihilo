@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "fabricaeexnihilo:warped_seeds",
-  "input": "minecraft:dirt",
+  "input": {
+    "item": "minecraft:dirt"
+  },
   "rolls": {
     "fabricaeexnihilo:gold_mesh": [0.2],
     "fabricaeexnihilo:emerald_mesh": [0.3, 0.3]
@@ -9,9 +11,7 @@
   "fabric:load_conditions": [
     {
       "condition": "fabricaeexnihilo:all_items_present",
-      "values": [
-        "fabricaeexnihilo:warped_seeds"
-      ]
+      "values": ["fabricaeexnihilo:warped_seeds"]
     }
   ]
 }

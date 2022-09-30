@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "minecraft:blaze_powder",
-  "input": "fabricaeexnihilo:dust",
+  "input": {
+    "item": "fabricaeexnihilo:dust"
+  },
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.1],
     "fabricaeexnihilo:copper_mesh": [0.2],

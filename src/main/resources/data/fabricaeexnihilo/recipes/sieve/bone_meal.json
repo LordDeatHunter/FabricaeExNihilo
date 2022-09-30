@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "minecraft:bone_meal",
-  "input": "fabricaeexnihilo:dust",
+  "input": {
+    "item": "fabricaeexnihilo:dust"
+  },
   "rolls": {
     "fabricaeexnihilo:string_mesh": [0.2],
     "fabricaeexnihilo:flint_mesh": [0.3],

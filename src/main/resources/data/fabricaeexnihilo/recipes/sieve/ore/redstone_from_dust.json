@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "minecraft:redstone",
-  "input": "fabricaeexnihilo:dust",
+  "input": {
+    "item": "fabricaeexnihilo:dust"
+  },
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.15],
     "fabricaeexnihilo:iron_mesh": [0.15, 0.125],

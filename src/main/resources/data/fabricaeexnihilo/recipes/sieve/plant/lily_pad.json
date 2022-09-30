@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "minecraft:lily_pad",
-  "input": "fabricaeexnihilo:silt",
+  "input": {
+    "item": "fabricaeexnihilo:silt"
+  },
   "waterlogged": true,
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.08],

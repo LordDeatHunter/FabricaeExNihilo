@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "minecraft:glowstone_dust",
-  "input": "fabricaeexnihilo:dust",
+  "input": {
+    "item": "fabricaeexnihilo:dust"
+  },
   "rolls": {
     "fabricaeexnihilo:iron_mesh": [0.04],
     "fabricaeexnihilo:copper_mesh": [0.06],

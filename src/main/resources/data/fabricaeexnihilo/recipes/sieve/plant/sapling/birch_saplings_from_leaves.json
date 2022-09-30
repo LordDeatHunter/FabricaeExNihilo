@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "minecraft:birch_sapling",
-  "input": "minecraft:birch_leaves",
+  "input": {
+    "item": "minecraft:birch_leaves"
+  },
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.1, 0.08],
     "fabricaeexnihilo:copper_mesh": [0.2, 0.1],

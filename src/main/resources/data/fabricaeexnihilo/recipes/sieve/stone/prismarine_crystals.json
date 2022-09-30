@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "minecraft:prismarine_crystals",
-  "input": "fabricaeexnihilo:crushed_prismarine",
+  "input": {
+    "item": "fabricaeexnihilo:crushed_prismarine"
+  },
   "rolls": {
     "fabricaeexnihilo:gold_mesh": [0.01],
     "fabricaeexnihilo:emerald_mesh": [0.025]

@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "fabricaeexnihilo:raw_iron_piece",
-  "input": "minecraft:red_sand",
+  "input": {
+    "item": "minecraft:red_sand"
+  },
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.05],
     "fabricaeexnihilo:iron_mesh": [0.1],

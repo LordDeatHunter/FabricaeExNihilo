@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "minecraft:brown_mushroom",
-  "input": "minecraft:dirt",
+  "input": {
+    "item": "minecraft:dirt"
+  },
   "rolls": {
     "fabricaeexnihilo:copper_mesh": [0.05],
     "fabricaeexnihilo:gold_mesh": [0.1],

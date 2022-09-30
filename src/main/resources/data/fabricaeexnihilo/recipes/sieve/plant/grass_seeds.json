@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "fabricaeexnihilo:grass_seeds",
-  "input": "minecraft:dirt",
+  "input": {
+    "item": "minecraft:dirt"
+  },
   "rolls": {
     "fabricaeexnihilo:string_mesh": [0.05],
     "fabricaeexnihilo:flint_mesh": [0.08],
@@ -12,9 +14,7 @@
   "fabric:load_conditions": [
     {
       "condition": "fabricaeexnihilo:all_items_present",
-      "values": [
-        "fabricaeexnihilo:grass_seeds"
-      ]
+      "values": ["fabricaeexnihilo:grass_seeds"]
     }
   ]
 }

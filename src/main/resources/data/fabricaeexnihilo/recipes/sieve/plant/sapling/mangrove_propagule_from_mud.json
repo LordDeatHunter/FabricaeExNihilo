@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "minecraft:mangrove_propagule",
-  "input": "minecraft:mud",
+  "input": {
+    "item": "minecraft:mud"
+  },
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.08],
     "fabricaeexnihilo:copper_mesh": [0.12],

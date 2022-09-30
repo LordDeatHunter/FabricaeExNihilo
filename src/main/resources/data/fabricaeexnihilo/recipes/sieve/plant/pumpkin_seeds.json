@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "minecraft:pumpkin_seeds",
-  "input": "minecraft:dirt",
+  "input": {
+    "item": "minecraft:dirt"
+  },
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.2],
     "fabricaeexnihilo:copper_mesh": [0.4, 0.1],

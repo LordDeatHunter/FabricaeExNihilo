@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "minecraft:nether_wart",
-  "input": "minecraft:soul_sand",
+  "input": {
+    "item": "minecraft:soul_sand"
+  },
   "rolls": {
     "fabricaeexnihilo:string_mesh": [0.1],
     "fabricaeexnihilo:flint_mesh": [0.15],

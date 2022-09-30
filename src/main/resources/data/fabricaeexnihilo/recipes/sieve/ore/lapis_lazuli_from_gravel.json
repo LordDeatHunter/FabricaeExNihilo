@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "minecraft:lapis_lazuli",
-  "input": "fabricaeexnihilo:silt",
+  "input": {
+    "item": "fabricaeexnihilo:silt"
+  },
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.05]
   }

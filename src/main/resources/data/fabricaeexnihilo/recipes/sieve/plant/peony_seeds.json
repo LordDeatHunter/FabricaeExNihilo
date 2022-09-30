@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "fabricaeexnihilo:peony_seeds",
-  "input": "minecraft:dirt",
+  "input": {
+    "item": "minecraft:dirt"
+  },
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.08],
     "fabricaeexnihilo:copper_mesh": [0.12],
@@ -11,9 +13,7 @@
   "fabric:load_conditions": [
     {
       "condition": "fabricaeexnihilo:all_items_present",
-      "values": [
-        "fabricaeexnihilo:peony_seeds"
-      ]
+      "values": ["fabricaeexnihilo:peony_seeds"]
     }
   ]
 }

@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "minecraft:oak_sapling",
-  "input": "minecraft:oak_leaves",
+  "input": {
+    "item": "minecraft:oak_leaves"
+  },
   "rolls": {
     "fabricaeexnihilo:flint_mesh": [0.1, 0.08],
     "fabricaeexnihilo:copper_mesh": [0.2, 0.1],

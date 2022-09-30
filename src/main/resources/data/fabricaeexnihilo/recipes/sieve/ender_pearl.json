@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "minecraft:ender_pearl",
-  "input": "fabricaeexnihilo:crushed_endstone",
+  "input": {
+    "item": "fabricaeexnihilo:crushed_endstone"
+  },
   "rolls": {
     "fabricaeexnihilo:copper_mesh": [0.005],
     "fabricaeexnihilo:gold_mesh": [0.005, 0.005],
