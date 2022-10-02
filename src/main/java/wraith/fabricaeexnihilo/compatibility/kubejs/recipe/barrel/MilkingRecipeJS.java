@@ -1,34 +1,56 @@
-/*
 package wraith.fabricaeexnihilo.compatibility.kubejs.recipe.barrel;
 
-import com.google.gson.JsonPrimitive;
 import dev.latvian.mods.kubejs.fluid.FluidStackJS;
-import dev.latvian.mods.kubejs.recipe.RecipeArguments;
-import dev.latvian.mods.kubejs.recipe.RecipeJS;
+import dev.latvian.mods.kubejs.recipe.*;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import wraith.fabricaeexnihilo.recipe.util.EntityTypeIngredient;
+import net.minecraft.entity.EntityType;
+import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryEntryList;
+import wraith.fabricaeexnihilo.compatibility.kubejs.FENKubePlugin;
 import wraith.fabricaeexnihilo.util.CodecUtils;
+import wraith.fabricaeexnihilo.util.RegistryEntryLists;
 
 @SuppressWarnings("UnstableApiUsage")
 public class MilkingRecipeJS extends RecipeJS {
-
     private FluidVariant fluid;
-    private EntityTypeIngredient entity;
+    private RegistryEntryList<EntityType<?>> entity;
     private long amount;
     private int cooldown;
 
     @Override
-    public void create(RecipeArguments listJS) {
-        var fluidJS = FluidStackJS.of(listJS.get(0));
+    public void create(RecipeArguments args) {
+        var fluidJS = FluidStackJS.of(args.get(0));
         fluid = FluidVariant.of(fluidJS.getFluid(), fluidJS.getNbt());
-        entity = CodecUtils.fromJson(EntityTypeIngredient.CODEC, new JsonPrimitive(listJS.get(1).toString()));
-        amount = (long) (double) listJS.get(2);
-        cooldown = (int) (double) listJS.get(3);
+        entity = FENKubePlugin.getEntryList(args, 1, Registry.ENTITY_TYPE);
+        amount = (long) args.getDouble(2, 810);
+        cooldown = args.getInt(3, 20);
+    }
+
+    @Override
+    public boolean hasInput(IngredientMatch ingredientMatch) {
+        return false;
+    }
+
+    @Override
+    public boolean replaceInput(IngredientMatch ingredientMatch, Ingredient ingredient, ItemInputTransformer itemInputTransformer) {
+        return false;
+    }
+
+    @Override
+    public boolean hasOutput(IngredientMatch ingredientMatch) {
+        return false;
+    }
+
+    @Override
+    public boolean replaceOutput(IngredientMatch ingredientMatch, ItemStack itemStack, ItemOutputTransformer itemOutputTransformer) {
+        return false;
     }
 
     @Override
     public void deserialize() {
-        entity = CodecUtils.fromJson(EntityTypeIngredient.CODEC, json.get("entity"));
+        entity = RegistryEntryLists.fromJson(Registry.ENTITY_TYPE_KEY, json.get("entity"));
         fluid = CodecUtils.fromJson(CodecUtils.FLUID_VARIANT, json.get("fluid"));
         amount = json.get("amount").getAsLong();
         cooldown = json.get("cooldown").getAsInt();
@@ -36,10 +58,13 @@ public class MilkingRecipeJS extends RecipeJS {
 
     @Override
     public void serialize() {
-        json.add("entity", CodecUtils.toJson(EntityTypeIngredient.CODEC, entity));
-        json.add("fluid", CodecUtils.toJson(CodecUtils.FLUID_VARIANT, fluid));
-        json.addProperty("amount", amount);
-        json.addProperty("cooldown", cooldown);
+        if (serializeInputs)
+            json.add("entity", RegistryEntryLists.toJson(Registry.ENTITY_TYPE_KEY, entity));
+        if (serializeOutputs) {
+            json.add("fluid", CodecUtils.toJson(CodecUtils.FLUID_VARIANT, fluid));
+            json.addProperty("amount", amount);
+            json.addProperty("cooldown", cooldown);
+        }
     }
 }
-*/
+

@@ -20,7 +20,6 @@ import java.util.List;
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public class CompostCategory implements DisplayCategory<CompostDisplay> {
-
     public static Identifier ARROW = id("textures/gui/rei/glyphs.png");
     public static int ARROW_U = 0;
     public static int ARROW_V = 16;

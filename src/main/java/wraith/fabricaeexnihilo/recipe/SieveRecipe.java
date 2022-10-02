@@ -10,7 +10,6 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.recipe.util.Loot;
@@ -83,17 +82,13 @@ public class SieveRecipe extends BaseRecipe<SieveRecipe.Context> {
         return waterlogged;
     }
 
-    public List<Double> getRollsForMesh(Identifier mesh) {
-        return rolls.get(mesh);
-    }
-
     public record Context(Item input, boolean waterlogged) implements RecipeContext {}
 
     public static class Serializer implements RecipeSerializer<SieveRecipe> {
         @Override
         public SieveRecipe read(Identifier id, JsonObject json) {
             var result = CodecUtils.fromJson(CodecUtils.ITEM_STACK, json.get("result"));
-            var input = JsonHelper.hasString(json, "input") ? Ingredient.ofItems(Registry.ITEM.get(new Identifier(json.get("input").getAsString()))) : Ingredient.fromJson(json.get("input"));
+            var input = Ingredient.fromJson(json.get("input"));
             var waterlogged = JsonHelper.getBoolean(json, "waterlogged", false);
             var rolls = new HashMap<Identifier, List<Double>>();
             JsonHelper.getObject(json, "rolls").entrySet().forEach(entry -> {

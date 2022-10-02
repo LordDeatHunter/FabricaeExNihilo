@@ -1,34 +1,84 @@
-/*
 package wraith.fabricaeexnihilo.compatibility.kubejs.recipe.crucible;
 
-import com.google.gson.JsonPrimitive;
-import dev.latvian.mods.kubejs.recipe.RecipeArguments;
-import dev.latvian.mods.kubejs.recipe.RecipeJS;
+import dev.latvian.mods.kubejs.recipe.*;
+import net.minecraft.block.Block;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.JsonHelper;
-import wraith.fabricaeexnihilo.recipe.util.BlockIngredient;
-import wraith.fabricaeexnihilo.util.CodecUtils;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.util.registry.RegistryEntryList;
+import wraith.fabricaeexnihilo.compatibility.kubejs.FENKubePlugin;
+import wraith.fabricaeexnihilo.util.RegistryEntryLists;
+
+import java.util.Arrays;
+import java.util.stream.StreamSupport;
 
 public class CrucibleHeatRecipeJS extends RecipeJS {
-
-    private BlockIngredient block;
+    private RegistryEntryList<Block> block;
     private int heat;
 
     @Override
-    public void create(RecipeArguments listJS) {
-        block = CodecUtils.fromJson(BlockIngredient.CODEC, new JsonPrimitive(listJS.get(0).toString()));
-        heat = (int) (double) listJS.get(1);
+    public void create(RecipeArguments args) {
+        block = FENKubePlugin.getEntryList(args, 0, Registry.BLOCK);
+        heat = args.getInt(1, 1);
+    }
+
+    @Override
+    public boolean hasInput(IngredientMatch ingredientMatch) {
+        return StreamSupport.stream(ingredientMatch.getAllItems().spliterator(), false)
+                .map(ItemStack::getItem)
+                .filter(BlockItem.class::isInstance)
+                .map(BlockItem.class::cast)
+                .map(BlockItem::getBlock)
+                .anyMatch(check -> block.contains(check.getRegistryEntry()));
+    }
+
+    @Override
+    public boolean replaceInput(IngredientMatch match, Ingredient with, ItemInputTransformer transformer) {
+        if (hasInput(match)) {
+            var oldIngredient = Ingredient.ofItems(block.stream()
+                    .map(RegistryEntry::value)
+                    .map(Block::asItem)
+                    .toArray(Item[]::new));
+
+            block = RegistryEntryList.of(Block::getRegistryEntry, Arrays.stream(transformer.transform(this, match, oldIngredient, with).getMatchingStacks())
+                    .map(ItemStack::getItem)
+                    .filter(BlockItem.class::isInstance)
+                    .map(BlockItem.class::cast)
+                    .map(BlockItem::getBlock)
+                    .toList());
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean hasOutput(IngredientMatch ingredientMatch) {
+        return false;
+    }
+
+    @Override
+    public boolean replaceOutput(IngredientMatch ingredientMatch, ItemStack itemStack, ItemOutputTransformer itemOutputTransformer) {
+        return false;
     }
 
     @Override
     public void deserialize() {
-        block = CodecUtils.fromJson(BlockIngredient.CODEC, json.get("block"));
+        block = RegistryEntryLists.fromJson(Registry.BLOCK_KEY, json.get("block"));
         heat = JsonHelper.getInt(json, "heat");
     }
 
     @Override
     public void serialize() {
-        json.add("block", CodecUtils.toJson(BlockIngredient.CODEC, block));
-        json.addProperty("heat", heat);
+        if (serializeInputs)
+            json.add("block", RegistryEntryLists.toJson(Registry.BLOCK_KEY, block));
+        if (serializeOutputs)
+            json.addProperty("heat", heat);
     }
 }
-*/
+
+

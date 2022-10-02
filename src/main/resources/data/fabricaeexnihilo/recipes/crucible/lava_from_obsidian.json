@@ -1,6 +1,8 @@
 {
   "type": "fabricaeexnihilo:crucible",
-  "input": "minecraft:obsidian",
+  "input": {
+    "item": "minecraft:obsidian"
+  },
   "amount": 81000,
   "fluid": "minecraft:lava",
   "requiresFireproofCrucible": true

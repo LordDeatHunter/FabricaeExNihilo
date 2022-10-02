@@ -5,19 +5,23 @@ import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
+import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterWorldRecipe;
 import wraith.fabricaeexnihilo.util.RegistryEntryLists;
 
 import java.util.List;
+import java.util.Optional;
 
 public class WitchWaterWorldDisplay implements Display {
     public final EntryIngredient input;
     public final List<EntryIngredient> outputs;
+    private final Identifier id;
 
     public WitchWaterWorldDisplay(WitchWaterWorldRecipe recipe) {
         this.input = RegistryEntryLists.asReiIngredient(recipe.getTarget(), EntryStacks::of);
         this.outputs = recipe.getResult().flatten(EntryIngredients::of);
+        this.id = recipe.getId();
     }
 
     @Override
@@ -35,4 +39,8 @@ public class WitchWaterWorldDisplay implements Display {
         return outputs;
     }
 
+    @Override
+    public Optional<Identifier> getDisplayLocation() {
+        return Optional.of(id);
+    }
 }

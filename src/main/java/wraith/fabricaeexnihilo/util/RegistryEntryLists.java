@@ -22,6 +22,10 @@ public class RegistryEntryLists {
         return CodecUtils.deserialize(RegistryCodecs.entryList(registry), getRegistryOps(JsonOps.INSTANCE), json);
     }
 
+    public static <T> JsonElement toJson(RegistryKey<Registry<T>> registry, RegistryEntryList<T> list) {
+        return CodecUtils.serialize(RegistryCodecs.entryList(registry), getRegistryOps(JsonOps.INSTANCE), list);
+    }
+
     public static <T> RegistryEntryList<T> fromPacket(RegistryKey<Registry<T>> registry, PacketByteBuf buf) {
         var wrapper = buf.readNbt();
         if (wrapper == null)

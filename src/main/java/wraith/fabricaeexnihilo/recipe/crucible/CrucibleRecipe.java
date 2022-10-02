@@ -9,7 +9,6 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
@@ -80,7 +79,7 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
     public static class Serializer implements RecipeSerializer<CrucibleRecipe> {
         @Override
         public CrucibleRecipe read(Identifier id, JsonObject json) {
-            var input = JsonHelper.hasString(json, "input") ? Ingredient.ofItems(Registry.ITEM.get(new Identifier(json.get("input").getAsString()))) : Ingredient.fromJson(json.get("input"));
+            var input = Ingredient.fromJson(json.get("input"));
             var amount = JsonHelper.getLong(json, "amount");
             var fluid = CodecUtils.fromJson(CodecUtils.FLUID_VARIANT, json.get("fluid"));
             var isFireproof = JsonHelper.getBoolean(json, "requiresFireproofCrucible"); // TODO: rename json field

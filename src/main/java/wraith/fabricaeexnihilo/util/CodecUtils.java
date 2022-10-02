@@ -55,7 +55,7 @@ public class CodecUtils {
             })));
     
     private static <T> Codec<T> magicCodec(Codec<T> simple, Codec<T> expanded) {
-        return Codec.either(simple, expanded).xmap(CodecUtils::flattenEither, Either::right);
+        return Codec.either(simple, expanded).xmap(either -> either.map(Function.identity(), Function.identity()), Either::right);
     }
     
     public static <T> T fromPacket(Codec<T> codec, PacketByteBuf buf) {
@@ -102,7 +102,4 @@ public class CodecUtils {
         return codec.encodeStart(ops, data).getOrThrow(false, FabricaeExNihilo.LOGGER::warn);
     }
 
-    private static <T> T flattenEither(Either<T, T> either) {
-        return either.map(Function.identity(), Function.identity());
-    }
 }

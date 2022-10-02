@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.function.Function;
 
 public class WeightedList {
-
     public static final Codec<WeightedList> CODEC = Codec.unboundedMap(Registry.BLOCK.getCodec(), Codec.INT)
         .xmap(WeightedList::new, WeightedList::getValues);
 
@@ -63,11 +62,18 @@ public class WeightedList {
         return values.keySet().stream().map(func).toList();
     }
 
-    /**
-     * Takes another weighted list and adds all its entries to this WeightedList.
-     */
-    public void amend(WeightedList other) {
-        totalWeight += other.totalWeight;
-        other.values.forEach((key, value) -> values.put(key, value + values.getOrDefault(key, 0)));
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        WeightedList that = (WeightedList) o;
+
+        return values.equals(that.values);
+    }
+
+    @Override
+    public int hashCode() {
+        return values.hashCode();
     }
 }

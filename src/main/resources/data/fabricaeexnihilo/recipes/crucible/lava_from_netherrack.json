@@ -1,6 +1,8 @@
 {
   "type": "fabricaeexnihilo:crucible",
-  "input": "minecraft:netherrack",
+  "input": {
+    "item": "minecraft:netherrack"
+  },
   "amount": 40500,
   "fluid": "minecraft:lava",
   "requiresFireproofCrucible": true

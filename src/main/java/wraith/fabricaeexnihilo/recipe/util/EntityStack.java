@@ -34,15 +34,7 @@ public class EntityStack {
     public EntityStack(Identifier identifier, int size, NbtCompound data) {
         this(Registry.ENTITY_TYPE.get(identifier), size, data);
     }
-    
-    public EntityStack(String identifier, int size, NbtCompound data) {
-        this(new Identifier(identifier), size, data);
-    }
-    
-    public EntityStack(NbtCompound nbt) {
-        this(nbt.getString("type"), nbt.getInt("size"), nbt.getCompound("data"));
-    }
-    
+
     public EntityStack(EntityType<?> entityType, int size, NbtCompound data) {
         this.type = entityType;
         this.size = size;
@@ -51,14 +43,6 @@ public class EntityStack {
     
     public EntityStack(EntityType<?> entityType, int size) {
         this(entityType, size, new NbtCompound());
-    }
-    
-    public EntityStack(EntityType<?> entityType, NbtCompound data) {
-        this(entityType, 1, data);
-    }
-    
-    public EntityStack(EntityType<?> entityType) {
-        this(entityType, 1, new NbtCompound());
     }
     
     public boolean isEmpty() {

@@ -1,51 +1,75 @@
-/*
 package wraith.fabricaeexnihilo.compatibility.kubejs.recipe.crucible;
 
-import com.google.gson.JsonPrimitive;
 import dev.latvian.mods.kubejs.fluid.FluidStackJS;
-import dev.latvian.mods.kubejs.recipe.RecipeArguments;
-import dev.latvian.mods.kubejs.recipe.RecipeJS;
+import dev.latvian.mods.kubejs.recipe.*;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.JsonHelper;
-import wraith.fabricaeexnihilo.recipe.util.ItemIngredient;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
 @SuppressWarnings("UnstableApiUsage")
 public class CrucibleRecipeJS extends RecipeJS {
-
     private long amount;
     private FluidVariant fluid;
-    private ItemIngredient input;
-    private boolean requiresFireproofCrucible = true;
+    private Ingredient input;
 
     @Override
     public void create(RecipeArguments listJS) {
         var fluid = FluidStackJS.of(listJS.get(0));
         this.fluid = FluidVariant.of(fluid.getFluid(), fluid.getNbt());
         this.amount = fluid.getAmount();
-        input = CodecUtils.fromJson(ItemIngredient.CODEC, new JsonPrimitive(listJS.get(1).toString()));
+        input = parseItemInput(listJS.get(1));
+        json.addProperty("requiresFireproofCrucible", false);
     }
 
     @SuppressWarnings("unused") // Used from js
     public CrucibleRecipeJS wooden() {
-        requiresFireproofCrucible = false;
+        json.addProperty("requiresFireproofCrucible", true);
+        save();
         return this;
     }
 
     @Override
+    public boolean hasInput(IngredientMatch match) {
+        return match.contains(input);
+    }
+
+    @Override
+    public boolean replaceInput(IngredientMatch match, Ingredient with, ItemInputTransformer transformer) {
+        if (hasInput(match)) {
+            input = transformer.transform(this, match, input, with);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean hasOutput(IngredientMatch ingredientMatch) {
+        return false;
+    }
+
+    @Override
+    public boolean replaceOutput(IngredientMatch ingredientMatch, ItemStack itemStack, ItemOutputTransformer itemOutputTransformer) {
+        return false;
+    }
+
+    @Override
     public void deserialize() {
-        input = CodecUtils.fromJson(ItemIngredient.CODEC, json.get("input"));
+        input = Ingredient.fromJson(json.get("input"));
         amount = JsonHelper.getLong(json, "amount");
         fluid = CodecUtils.fromJson(CodecUtils.FLUID_VARIANT, json.get("fluid"));
-        requiresFireproofCrucible = JsonHelper.getBoolean(json, "requiresFireproofCrucible");
     }
 
     @Override
     public void serialize() {
-        json.add("input", CodecUtils.toJson(ItemIngredient.CODEC, input));
-        json.addProperty("amount", amount);
-        json.add("fluid", CodecUtils.toJson(CodecUtils.FLUID_VARIANT, fluid));
-        json.addProperty("requiresFireproofCrucible", requiresFireproofCrucible);
+        if (serializeInputs)
+            json.add("input", input.toJson());
+
+        if (serializeOutputs) {
+            json.addProperty("amount", amount);
+            json.add("fluid", CodecUtils.toJson(CodecUtils.FLUID_VARIANT, fluid));
+        }
     }
 }
-*/
+

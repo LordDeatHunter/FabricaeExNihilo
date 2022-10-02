@@ -1,40 +1,92 @@
-/*
 package wraith.fabricaeexnihilo.compatibility.kubejs.recipe.barrel;
 
-import com.google.gson.JsonPrimitive;
-import dev.latvian.mods.kubejs.recipe.RecipeArguments;
-import dev.latvian.mods.kubejs.recipe.RecipeJS;
+import dev.latvian.mods.kubejs.recipe.*;
 import dev.latvian.mods.kubejs.util.MapJS;
+import net.minecraft.block.Block;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.util.registry.RegistryEntryList;
+import wraith.fabricaeexnihilo.compatibility.kubejs.FENKubePlugin;
 import wraith.fabricaeexnihilo.modules.barrels.modes.BarrelMode;
-import wraith.fabricaeexnihilo.recipe.util.BlockIngredient;
-import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
 import wraith.fabricaeexnihilo.util.CodecUtils;
+import wraith.fabricaeexnihilo.util.RegistryEntryLists;
+
+import java.util.Arrays;
+import java.util.stream.StreamSupport;
 
 public class FluidTransformationRecipeJS extends RecipeJS {
-
-    private FluidIngredient contained;
-    private BlockIngredient catalyst;
+    private RegistryEntryList<Fluid> fluid;
+    private RegistryEntryList<Block> catalyst;
     private BarrelMode result;
 
     @Override
-    public void create(RecipeArguments listJS) {
-        result = CodecUtils.fromJson(BarrelMode.CODEC, MapJS.json(listJS.get(0)));
-        contained = CodecUtils.fromJson(FluidIngredient.CODEC, new JsonPrimitive(listJS.get(1).toString()));
-        catalyst = CodecUtils.fromJson(BlockIngredient.CODEC, new JsonPrimitive(listJS.get(2).toString()));
+    public void create(RecipeArguments args) {
+        result = CodecUtils.fromJson(BarrelMode.CODEC, MapJS.json(args.get(0)));
+        fluid = FENKubePlugin.getEntryList(args, 1, Registry.FLUID);
+        catalyst = FENKubePlugin.getEntryList(args, 2, Registry.BLOCK);
+    }
+
+    @Override
+    public boolean hasInput(IngredientMatch ingredientMatch) {
+        return StreamSupport.stream(ingredientMatch.getAllItems().spliterator(), false)
+                .map(ItemStack::getItem)
+                .filter(BlockItem.class::isInstance)
+                .map(BlockItem.class::cast)
+                .map(BlockItem::getBlock)
+                .anyMatch(check -> catalyst.contains(check.getRegistryEntry()));
+    }
+
+    @Override
+    public boolean replaceInput(IngredientMatch match, Ingredient with, ItemInputTransformer transformer) {
+        if (hasInput(match)) {
+            var oldIngredient = Ingredient.ofItems(catalyst.stream()
+                    .map(RegistryEntry::value)
+                    .map(Block::asItem)
+                    .toArray(Item[]::new));
+
+            catalyst = RegistryEntryList.of(Block::getRegistryEntry, Arrays.stream(transformer.transform(this, match, oldIngredient, with).getMatchingStacks())
+                    .map(ItemStack::getItem)
+                    .filter(BlockItem.class::isInstance)
+                    .map(BlockItem.class::cast)
+                    .map(BlockItem::getBlock)
+                    .toList());
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean hasOutput(IngredientMatch ingredientMatch) {
+        return false;
+    }
+
+    @Override
+    public boolean replaceOutput(IngredientMatch ingredientMatch, ItemStack itemStack, ItemOutputTransformer itemOutputTransformer) {
+        return false;
     }
 
     @Override
     public void deserialize() {
         result = CodecUtils.fromJson(BarrelMode.CODEC, json.get("result"));
-        contained = CodecUtils.fromJson(FluidIngredient.CODEC, json.get("contained"));
-        catalyst = CodecUtils.fromJson(BlockIngredient.CODEC, json.get("catalyst"));
+        fluid = RegistryEntryLists.fromJson(Registry.FLUID_KEY, json.get("fluid"));
+        catalyst = RegistryEntryLists.fromJson(Registry.BLOCK_KEY, json.get("catalyst"));
     }
 
     @Override
     public void serialize() {
-        json.add("result", CodecUtils.toJson(BarrelMode.CODEC, result));
-        json.add("contained", CodecUtils.toJson(FluidIngredient.CODEC, contained));
-        json.add("catalyst", CodecUtils.toJson(BlockIngredient.CODEC, catalyst));
+        if (serializeInputs) {
+            json.add("fluid", RegistryEntryLists.toJson(Registry.FLUID_KEY, fluid));
+            json.add("catalyst", RegistryEntryLists.toJson(Registry.BLOCK_KEY, catalyst));
+        }
+        if (serializeOutputs) {
+            json.add("result", CodecUtils.toJson(BarrelMode.CODEC, result));
+        }
     }
 }
-*/
+

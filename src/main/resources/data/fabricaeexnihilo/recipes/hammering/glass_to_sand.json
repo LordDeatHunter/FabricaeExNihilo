@@ -1,6 +1,6 @@
 {
   "type": "fabricaeexnihilo:hammer",
-  "block": "#c:glass",
+  "block": "#c:glass_blocks",
   "result": {
     "stack": "minecraft:sand",
     "chances": [

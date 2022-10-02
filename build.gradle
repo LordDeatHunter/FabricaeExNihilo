@@ -49,6 +49,8 @@ repositories {
     }
 }
 
+// toggle this if you need to make a change to allow intellij to refresh
+boolean nothing = true
 
 var settings = new Object() {
     boolean wthit
@@ -85,8 +87,7 @@ dependencies {
         modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
         modRuntimeOnly "dev.architectury:architectury-fabric:$architectury_version"
     }
-    // Doesn't seem to be working right now
-    //if (settings.kubejs) modRuntimeOnly "dev.latvian.mods:kubejs-fabric:$kubejs_version"
+    if (settings.kubejs) modRuntimeOnly "dev.latvian.mods:kubejs-fabric:$kubejs_version"
     if (settings.modmenu) modRuntimeOnly "com.terraformersmc:modmenu:$modmenu_version"
     if (settings.techReborn) modRuntimeOnly "TechReborn:TechReborn-1.19:$tech_reborn_version"
     //Mojmap breaking shit
