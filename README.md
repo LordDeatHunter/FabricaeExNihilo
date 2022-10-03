@@ -39,3 +39,10 @@ There have been many mods with the name "Ex Nihilo", below is the short lineage 
 
 ## License
 Fabricae Ex Nihilo is licensed under the MIT license (see the license file)
+
+## Development
+Some notes for people who want to develop this mod:
+ * Change the `dev_settings.properties` file to toggle dependencies. An intellij refresh is required to apply the changes. If the file is missing, run any gradle command to generate it.
+ * We use fabric datagen to generate most of our assets. 
+   * To change something you need to modify the classes under `wraith.fabricaeexnihilo.datagen` and run the `Data Generation` run configuration or the `runDatagen` gradle task.
+   * Data generation gets stuck if KubeJS is enabled in the dependencies due to a bug
