@@ -36,3 +36,6 @@ datagen/generated/assets/
 datagen/data/
 datagen/generated/
 datagen/__pycache__/
+
+# 1.19 datagen cache
+/src/main/generated/.cache/
