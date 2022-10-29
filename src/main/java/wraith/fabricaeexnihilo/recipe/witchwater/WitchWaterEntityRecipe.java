@@ -12,7 +12,6 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryCodecs;
 import net.minecraft.util.registry.RegistryEntryList;
 import net.minecraft.village.VillagerProfession;
 import net.minecraft.world.World;
@@ -20,7 +19,6 @@ import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
-import wraith.fabricaeexnihilo.util.CodecUtils;
 import wraith.fabricaeexnihilo.util.RegistryEntryLists;
 
 import java.util.Optional;
@@ -81,8 +79,7 @@ public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.Co
         return profession;
     }
     
-    protected record Context(Entity entity) implements RecipeContext {
-    }
+    protected record Context(Entity entity) implements RecipeContext {}
     
     public static class Serializer implements RecipeSerializer<WitchWaterEntityRecipe> {
         @Override
@@ -96,7 +93,7 @@ public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.Co
         
         @Override
         public WitchWaterEntityRecipe read(Identifier id, PacketByteBuf buf) {
-            var target = CodecUtils.fromPacket(RegistryCodecs.entryList(Registry.ENTITY_TYPE_KEY), buf);
+            var target = RegistryEntryLists.fromPacket(Registry.ENTITY_TYPE_KEY, buf);
             var profession = buf.readBoolean() ? Registry.VILLAGER_PROFESSION.get(buf.readIdentifier()) : null;
             var result = Registry.ENTITY_TYPE.get(buf.readIdentifier());
             
@@ -105,7 +102,7 @@ public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.Co
         
         @Override
         public void write(PacketByteBuf buf, WitchWaterEntityRecipe recipe) {
-            CodecUtils.toPacket(RegistryCodecs.entryList(Registry.ENTITY_TYPE_KEY), recipe.target, buf);
+            RegistryEntryLists.toPacket(Registry.ENTITY_TYPE_KEY, recipe.target, buf);
             buf.writeBoolean(recipe.profession != null);
             if (recipe.profession != null) {
                 buf.writeIdentifier(Registry.VILLAGER_PROFESSION.getId(recipe.profession));
