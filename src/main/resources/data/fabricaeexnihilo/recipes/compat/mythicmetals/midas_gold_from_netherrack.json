@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "fabricaeexnihilo:raw_midas_gold_piece",
-  "input": "fabricaeexnihilo:crushed_netherrack",
+  "input": {
+    "item": "fabricaeexnihilo:crushed_netherrack"
+  },
   "rolls": {
     "fabricaeexnihilo:iron_mesh": [0.025],
     "fabricaeexnihilo:diamond_mesh": [0.05],

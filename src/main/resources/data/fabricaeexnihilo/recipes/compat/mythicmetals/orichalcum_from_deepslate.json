@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "fabricaeexnihilo:raw_orichalcum_piece",
-  "input": "fabricaeexnihilo:crushed_deepslate",
+  "input": {
+    "item": "fabricaeexnihilo:crushed_deepslate"
+  },
   "rolls": {
     "fabricaeexnihilo:diamond_mesh": [0.01],
     "fabricaeexnihilo:netherite_mesh": [0.02],

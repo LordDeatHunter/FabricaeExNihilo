@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "fabricaeexnihilo:raw_prometheum_piece",
-  "input": "minecraft:moss_block",
+  "input": {
+    "item": "minecraft:moss_block"
+  },
   "rolls": {
     "fabricaeexnihilo:diamond_mesh": [0.02],
     "fabricaeexnihilo:netherite_mesh": [0.04],

@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "fabricaeexnihilo:raw_aquarium_piece",
-  "input": "fabricaeexnihilo:crushed_prismarine",
+  "input": {
+    "item": "fabricaeexnihilo:crushed_prismarine"
+  },
   "rolls": {
     "fabricaeexnihilo:iron_mesh": [0.025],
     "fabricaeexnihilo:diamond_mesh": [0.05],

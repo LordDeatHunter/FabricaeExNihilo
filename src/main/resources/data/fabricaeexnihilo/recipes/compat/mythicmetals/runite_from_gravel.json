@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "fabricaeexnihilo:raw_runite_piece",
-  "input": "minecraft:gravel",
+  "input": {
+    "item": "minecraft:gravel"
+  },
   "rolls": {
     "fabricaeexnihilo:diamond_mesh": [0.011],
     "fabricaeexnihilo:netherite_mesh": [0.022],

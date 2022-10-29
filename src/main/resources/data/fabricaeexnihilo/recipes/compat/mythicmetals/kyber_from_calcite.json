@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "fabricaeexnihilo:raw_kyber_piece",
-  "input": "fabricaeexnihilo:crushed_calcite",
+  "input": {
+    "item": "fabricaeexnihilo:crushed_calcite"
+  },
   "rolls": {
     "fabricaeexnihilo:iron_mesh": [0.025],
     "fabricaeexnihilo:diamond_mesh": [0.05],

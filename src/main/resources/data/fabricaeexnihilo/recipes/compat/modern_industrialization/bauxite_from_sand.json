@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "modern_industrialization:bauxite_tiny_dust",
-  "input": "minecraft:gravel",
+  "input": {
+    "item": "minecraft:sand"
+  },
   "rolls": {
     "fabricaeexnihilo:iron_mesh": [0.1, 0.075, 0.05],
     "fabricaeexnihilo:diamond_mesh": [0.1, 0.1, 0.075],

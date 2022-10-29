@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "mythicmetals:starrite",
-  "input": "fabricaeexnihilo:crushed_endstone",
+  "input": {
+    "item": "fabricaeexnihilo:crushed_endstone"
+  },
   "rolls": {
     "fabricaeexnihilo:diamond_mesh": [0.03],
     "fabricaeexnihilo:netherite_mesh": [0.05],

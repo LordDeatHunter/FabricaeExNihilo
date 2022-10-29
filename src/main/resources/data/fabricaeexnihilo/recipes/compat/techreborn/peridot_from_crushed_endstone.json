@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "techreborn:peridot_gem",
-  "input": "fabricaeexnihilo:crushed_endstone",
+  "input": {
+    "item": "fabricaeexnihilo:crushed_endstone"
+  },
   "rolls": {
     "fabricaeexnihilo:gold_mesh": [0.004],
     "fabricaeexnihilo:diamond_mesh": [0.032],

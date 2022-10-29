@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "mythicmetals:banglum_chunk",
-  "input": "fabricaeexnihilo:crushed_netherrack",
+  "input": {
+    "item": "fabricaeexnihilo:crushed_netherrack"
+  },
   "rolls": {
     "fabricaeexnihilo:iron_mesh": [0.01],
     "fabricaeexnihilo:diamond_mesh": [0.02],

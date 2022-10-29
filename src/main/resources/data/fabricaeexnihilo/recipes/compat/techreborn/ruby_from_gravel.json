@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "techreborn:ruby_gem",
-  "input": "minecraft:gravel",
+  "input": {
+    "item": "minecraft:gravel"
+  },
   "rolls": {
     "fabricaeexnihilo:gold_mesh": [0.004],
     "fabricaeexnihilo:diamond_mesh": [0.032],

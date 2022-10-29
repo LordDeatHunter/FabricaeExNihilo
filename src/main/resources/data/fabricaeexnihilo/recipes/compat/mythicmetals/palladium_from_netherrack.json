@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "fabricaeexnihilo:raw_palladium_piece",
-  "input": "fabricaeexnihilo:crushed_netherrack",
+  "input": {
+    "item": "fabricaeexnihilo:crushed_netherrack"
+  },
   "rolls": {
     "fabricaeexnihilo:diamond_mesh": [0.0125],
     "fabricaeexnihilo:netherite_mesh": [0.025],

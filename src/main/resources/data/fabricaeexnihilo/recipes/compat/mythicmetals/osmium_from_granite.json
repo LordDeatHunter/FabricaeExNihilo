@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "fabricaeexnihilo:raw_osmium_piece",
-  "input": "fabricaeexnihilo:crushed_granite",
+  "input": {
+    "item": "fabricaeexnihilo:crushed_granite"
+  },
   "rolls": {
     "fabricaeexnihilo:iron_mesh": [0.025],
     "fabricaeexnihilo:diamond_mesh": [0.05],

@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "fabricaeexnihilo:raw_platinum_piece",
-  "input": "fabricaeexnihilo:crushed_endstone",
+  "input": {
+    "item": "fabricaeexnihilo:crushed_endstone"
+  },
   "rolls": {
     "fabricaeexnihilo:diamond_mesh": [0.2, 0.2],
     "fabricaeexnihilo:netherite_mesh": [0.35, 0.3]

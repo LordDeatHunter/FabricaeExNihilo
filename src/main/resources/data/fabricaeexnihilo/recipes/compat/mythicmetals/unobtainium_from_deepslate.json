@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "mythicmetals:unobtainium",
-  "input": "fabricaeexnihilo:crushed_deepslate",
+  "input": {
+    "item": "fabricaeexnihilo:crushed_deepslate"
+  },
   "rolls": {
     "fabricaeexnihilo:netherite_mesh": [0.004],
     "fabricaeexnihilo:adamantite_mesh": [0.008]

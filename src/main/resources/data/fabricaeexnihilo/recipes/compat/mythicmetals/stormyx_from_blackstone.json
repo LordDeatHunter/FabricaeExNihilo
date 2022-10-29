@@ -1,7 +1,9 @@
 {
   "type": "fabricaeexnihilo:sieve",
   "result": "fabricaeexnihilo:raw_stormyx_piece",
-  "input": "fabricaeexnihilo:crushed_blackstone",
+  "input": {
+    "item": "fabricaeexnihilo:crushed_blackstone"
+  },
   "rolls": {
     "fabricaeexnihilo:iron_mesh": [0.025],
     "fabricaeexnihilo:diamond_mesh": [0.05],
