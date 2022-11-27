@@ -16,6 +16,7 @@ import wraith.fabricaeexnihilo.modules.base.AbstractFluid;
 import wraith.fabricaeexnihilo.modules.base.BaseFluidBlock;
 import wraith.fabricaeexnihilo.modules.base.FluidSettings;
 
+@SuppressWarnings("UnstableApiUsage")
 public class MilkFluid extends AbstractFluid {
 
     private static final FluidSettings FLUID_SETTINGS = new FluidSettings("milk", 0xFFFFFF, false, false);
@@ -27,8 +28,8 @@ public class MilkFluid extends AbstractFluid {
 
     static {
         // Milk buckets
-        //noinspection UnstableApiUsage
-        FluidStorage.ITEM.registerForItems((stack, context) -> new FullItemFluidStorage(context, Items.BUCKET, FluidVariant.of(MilkFluid.STILL), FluidConstants.BUCKET), Items.MILK_BUCKET);
+//        FluidStorage.ITEM.registerForItems((stack, context) -> new FullItemFluidStorage(context, Items.BUCKET, FluidVariant.of(MilkFluid.STILL), FluidConstants.BUCKET), Items.MILK_BUCKET);
+        FluidStorage.combinedItemApiProvider(BUCKET).register((context) -> new FullItemFluidStorage(context, Items.BUCKET, FluidVariant.of(MilkFluid.STILL), FluidConstants.BUCKET));
     }
 
     public MilkFluid(boolean isStill) {
