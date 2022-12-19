@@ -34,7 +34,7 @@ public final class ModFluids {
     }
 
     public static FabricItemSettings getBucketItemSettings() {
-        return new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP).maxCount(1).recipeRemainder(Items.BUCKET);
+        return new FabricItemSettings().maxCount(1).recipeRemainder(Items.BUCKET);
     }
 
     public static void registerBuckets() {

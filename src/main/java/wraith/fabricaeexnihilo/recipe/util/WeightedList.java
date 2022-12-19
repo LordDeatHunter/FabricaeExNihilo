@@ -3,9 +3,9 @@ package wraith.fabricaeexnihilo.recipe.util;
 import com.mojang.serialization.Codec;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.util.HashMap;
@@ -14,7 +14,8 @@ import java.util.Map;
 import java.util.function.Function;
 
 public class WeightedList {
-    public static final Codec<WeightedList> CODEC = Codec.unboundedMap(Registry.BLOCK.getCodec(), Codec.INT)
+
+    public static final Codec<WeightedList> CODEC = Codec.unboundedMap(Registries.BLOCK.getCodec(), Codec.INT)
         .xmap(WeightedList::new, WeightedList::getValues);
 
     private final Map<Block, Integer> values;

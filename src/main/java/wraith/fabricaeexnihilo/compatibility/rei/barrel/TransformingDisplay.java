@@ -4,8 +4,8 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryStacks;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.RegistryEntry;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 import wraith.fabricaeexnihilo.modules.barrels.modes.BarrelMode;
 import wraith.fabricaeexnihilo.recipe.barrel.FluidTransformationRecipe;
@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class TransformingDisplay implements Display {
+
     public final EntryIngredient catalyst;
     public final EntryIngredient fluid;
     public final BarrelMode result;

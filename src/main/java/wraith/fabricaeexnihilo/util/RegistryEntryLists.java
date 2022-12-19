@@ -10,23 +10,25 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.util.dynamic.RegistryOps;
-import net.minecraft.util.registry.*;
+import net.minecraft.registry.*;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.entry.RegistryEntryList;
 
 import java.util.function.Function;
 
 public class RegistryEntryLists {
-    private static final DynamicRegistryManager STATIC_DRM = DynamicRegistryManager.of(Registry.REGISTRIES);
 
-    public static <T> RegistryEntryList<T> fromJson(RegistryKey<Registry<T>> registry, JsonElement json) {
+    private static final DynamicRegistryManager STATIC_DRM = DynamicRegistryManager.of(Registries.REGISTRIES);
+
+    public static <T> RegistryEntryList<T> fromJson(RegistryKey<? extends Registry<T>> registry, JsonElement json) {
         return CodecUtils.deserialize(RegistryCodecs.entryList(registry), getRegistryOps(JsonOps.INSTANCE), json);
     }
 
-    public static <T> JsonElement toJson(RegistryKey<Registry<T>> registry, RegistryEntryList<T> list) {
+    public static <T> JsonElement toJson(RegistryKey<? extends Registry<T>> registry, RegistryEntryList<T> list) {
         return CodecUtils.serialize(RegistryCodecs.entryList(registry), getRegistryOps(JsonOps.INSTANCE), list);
     }
 
-    public static <T> RegistryEntryList<T> fromPacket(RegistryKey<Registry<T>> registry, PacketByteBuf buf) {
+    public static <T> RegistryEntryList<T> fromPacket(RegistryKey<? extends Registry<T>> registry, PacketByteBuf buf) {
         var wrapper = buf.readNbt();
         if (wrapper == null)
             throw new NullPointerException("wraith.fabricaeexnihilo.util.RegistryEntryLists.fromPacket()");
@@ -34,7 +36,7 @@ public class RegistryEntryLists {
         return CodecUtils.deserialize(RegistryCodecs.entryList(registry), getRegistryOps(NbtOps.INSTANCE), nbt);
     }
 
-    public static <T> void toPacket(RegistryKey<Registry<T>> registry, RegistryEntryList<T> list, PacketByteBuf buf) {
+    public static <T> void toPacket(RegistryKey<? extends Registry<T>> registry, RegistryEntryList<T> list, PacketByteBuf buf) {
         var nbt = CodecUtils.serialize(RegistryCodecs.entryList(registry), getRegistryOps(NbtOps.INSTANCE), list);
         var wrapper = new NbtCompound();
         wrapper.put("value", nbt);

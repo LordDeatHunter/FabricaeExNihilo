@@ -4,12 +4,13 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public final class ItemUtils {
+
     public static ItemStack asStack(ItemConvertible itemConvertible, int amount) {
         return new ItemStack(itemConvertible.asItem(), amount);
     }
@@ -19,7 +20,7 @@ public final class ItemUtils {
     }
 
     public static Block getExNihiloBlock(String str) {
-        return Registry.BLOCK.get(id(str));
+        return Registries.BLOCK.get(id(str));
     }
 
     public static Item getExNihiloItem(String str) {
@@ -31,7 +32,7 @@ public final class ItemUtils {
     }
 
     public static Item getItem(Identifier identifier) {
-        return Registry.ITEM.get(identifier);
+        return Registries.ITEM.get(identifier);
     }
 
     public static ItemStack getItemStack(Identifier identifier) {

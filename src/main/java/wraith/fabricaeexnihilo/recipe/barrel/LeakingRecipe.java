@@ -8,9 +8,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryEntryList;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
@@ -22,6 +22,7 @@ import java.util.Optional;
 
 @SuppressWarnings("UnstableApiUsage")
 public class LeakingRecipe extends BaseRecipe<LeakingRecipe.Context> {
+
     private final RegistryEntryList<Block> block;
     private final RegistryEntryList<Fluid> fluid;
     private final long amount;
@@ -79,32 +80,33 @@ public class LeakingRecipe extends BaseRecipe<LeakingRecipe.Context> {
     }
 
     public static class Serializer implements RecipeSerializer<LeakingRecipe> {
+
         @Override
         public LeakingRecipe read(Identifier id, JsonObject json) {
-            var block = RegistryEntryLists.fromJson(Registry.BLOCK_KEY, json.get("block"));
-            var fluid = RegistryEntryLists.fromJson(Registry.FLUID_KEY, json.get("fluid"));
+            var block = RegistryEntryLists.fromJson(Registries.BLOCK.getKey(), json.get("block"));
+            var fluid = RegistryEntryLists.fromJson(Registries.FLUID.getKey(), json.get("fluid"));
             var amount = json.get("amount").getAsLong();
-            var result = Registry.BLOCK.get(new Identifier(json.get("result").getAsString()));
+            var result = Registries.BLOCK.get(new Identifier(json.get("result").getAsString()));
 
             return new LeakingRecipe(id, block, fluid, amount, result);
         }
 
         @Override
         public LeakingRecipe read(Identifier id, PacketByteBuf buf) {
-            var block = RegistryEntryLists.fromPacket(Registry.BLOCK_KEY, buf);
-            var fluid = RegistryEntryLists.fromPacket(Registry.FLUID_KEY, buf);
+            var block = RegistryEntryLists.fromPacket(Registries.BLOCK.getKey(), buf);
+            var fluid = RegistryEntryLists.fromPacket(Registries.FLUID.getKey(), buf);
             var amount = buf.readLong();
-            var result = Registry.BLOCK.get(buf.readIdentifier());
+            var result = Registries.BLOCK.get(buf.readIdentifier());
 
             return new LeakingRecipe(id, block, fluid, amount, result);
         }
 
         @Override
         public void write(PacketByteBuf buf, LeakingRecipe recipe) {
-            RegistryEntryLists.toPacket(Registry.BLOCK_KEY, recipe.block, buf);
-            RegistryEntryLists.toPacket(Registry.FLUID_KEY, recipe.fluid, buf);
+            RegistryEntryLists.toPacket(Registries.BLOCK.getKey(), recipe.block, buf);
+            RegistryEntryLists.toPacket(Registries.FLUID.getKey(), recipe.fluid, buf);
             buf.writeLong(recipe.amount);
-            buf.writeIdentifier(Registry.BLOCK.getId(recipe.result));
+            buf.writeIdentifier(Registries.BLOCK.getId(recipe.result));
         }
     }
 

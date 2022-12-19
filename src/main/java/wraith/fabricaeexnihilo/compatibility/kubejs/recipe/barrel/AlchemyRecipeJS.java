@@ -7,10 +7,10 @@ import dev.latvian.mods.rhino.mod.util.NBTUtils;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryEntryList;
 import wraith.fabricaeexnihilo.compatibility.kubejs.FENKubePlugin;
 import wraith.fabricaeexnihilo.modules.barrels.modes.BarrelMode;
 import wraith.fabricaeexnihilo.modules.barrels.modes.EmptyMode;
@@ -22,6 +22,7 @@ import wraith.fabricaeexnihilo.util.RegistryEntryLists;
 import java.util.Map;
 
 public class AlchemyRecipeJS extends RecipeJS {
+
     private RegistryEntryList<Fluid> reactant;
     private Ingredient catalyst;
     private Loot byproduct = Loot.EMPTY;
@@ -31,7 +32,7 @@ public class AlchemyRecipeJS extends RecipeJS {
 
     @Override
     public void create(RecipeArguments args) {
-        reactant = FENKubePlugin.getEntryList(args, 0, Registry.FLUID);
+        reactant = FENKubePlugin.getEntryList(args, 0, Registries.FLUID);
         catalyst = parseItemInput(args.get(1));
     }
 
@@ -101,7 +102,7 @@ public class AlchemyRecipeJS extends RecipeJS {
 
     @Override
     public void deserialize() {
-        this.reactant = RegistryEntryLists.fromJson(Registry.FLUID_KEY, json.get("reactant"));
+        this.reactant = RegistryEntryLists.fromJson(Registries.FLUID.getKey(), json.get("reactant"));
         this.catalyst = Ingredient.fromJson(json.get("catalyst"));
         if (json.has("byproduct"))
             this.byproduct = CodecUtils.fromJson(Loot.CODEC, json.get("byproduct"));
@@ -116,7 +117,7 @@ public class AlchemyRecipeJS extends RecipeJS {
     @Override
     public void serialize() {
         if (serializeInputs) {
-            json.add("reactant", RegistryEntryLists.toJson(Registry.FLUID_KEY, reactant));
+            json.add("reactant", RegistryEntryLists.toJson(Registries.FLUID.getKey(), reactant));
             json.add("catalyst", catalyst.toJson());
             json.addProperty("delay", delay);
         }

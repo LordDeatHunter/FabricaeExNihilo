@@ -11,14 +11,16 @@ import wraith.fabricaeexnihilo.datagen.provider.tag.FluidTagProvider;
 import wraith.fabricaeexnihilo.datagen.provider.tag.ItemTagProvider;
 
 public class FENDatagen implements DataGeneratorEntrypoint {
+
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator generator) {
-        generator.addProvider(ModelProvider::new);
-        generator.addProvider(AdvancementProvider::new);
-        generator.addProvider(StrainerLootTableProvider::new);
-        generator.addProvider(BlockLootTableProvider::new);
-        generator.addProvider(FluidTagProvider::new);
-        var blockTags = generator.addProvider(BlockTagProvider::new);
-        generator.addProvider(new ItemTagProvider(generator, blockTags));
+        final FabricDataGenerator.Pack pack = generator.createPack();
+        pack.addProvider(ModelProvider::new);
+        pack.addProvider(AdvancementProvider::new);
+        pack.addProvider(StrainerLootTableProvider::new);
+        pack.addProvider(BlockLootTableProvider::new);
+        pack.addProvider(FluidTagProvider::new);
+        var blockTags = pack.addProvider(BlockTagProvider::new);
+        pack.addProvider((output, registries) -> new ItemTagProvider(output, registries, blockTags));
     }
 }

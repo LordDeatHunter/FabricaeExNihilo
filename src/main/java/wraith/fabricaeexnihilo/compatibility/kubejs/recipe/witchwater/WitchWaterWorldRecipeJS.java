@@ -7,10 +7,10 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryEntryList;
 import wraith.fabricaeexnihilo.compatibility.kubejs.FENKubePlugin;
 import wraith.fabricaeexnihilo.recipe.util.WeightedList;
 import wraith.fabricaeexnihilo.util.CodecUtils;
@@ -19,6 +19,7 @@ import wraith.fabricaeexnihilo.util.RegistryEntryLists;
 import java.util.HashMap;
 
 public class WitchWaterWorldRecipeJS extends RecipeJS {
+
     private WeightedList result;
     private RegistryEntryList<Fluid> target;
 
@@ -26,9 +27,9 @@ public class WitchWaterWorldRecipeJS extends RecipeJS {
     public void create(RecipeArguments listJS) {
         result = new WeightedList((MapJS.orEmpty(listJS.get(0))).entrySet()
             .stream()
-            .map(entry -> new Pair<>(Registry.BLOCK.get(new Identifier((String) entry.getKey())), ((Number)entry.getValue()).intValue()))
+            .map(entry -> new Pair<>(Registries.BLOCK.get(new Identifier((String) entry.getKey())), ((Number) entry.getValue()).intValue()))
             .toList());
-        target = FENKubePlugin.getEntryList(listJS, 1, Registry.FLUID);
+        target = FENKubePlugin.getEntryList(listJS, 1, Registries.FLUID);
     }
 
     @Override
@@ -64,7 +65,7 @@ public class WitchWaterWorldRecipeJS extends RecipeJS {
 
     @Override
     public void deserialize() {
-        target = RegistryEntryLists.fromJson(Registry.FLUID_KEY, json.get("target"));
+        target = RegistryEntryLists.fromJson(Registries.FLUID.getKey(), json.get("target"));
         result = CodecUtils.fromJson(WeightedList.CODEC, json.get("result"));
     }
 
@@ -73,7 +74,7 @@ public class WitchWaterWorldRecipeJS extends RecipeJS {
         if (serializeOutputs)
             json.add("result", CodecUtils.toJson(WeightedList.CODEC, result));
         if (serializeInputs)
-            json.add("target", RegistryEntryLists.toJson(Registry.FLUID_KEY, target));
+            json.add("target", RegistryEntryLists.toJson(Registries.FLUID.getKey(), target));
     }
 }
 

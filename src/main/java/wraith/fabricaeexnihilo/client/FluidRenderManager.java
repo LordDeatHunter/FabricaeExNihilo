@@ -2,16 +2,15 @@ package wraith.fabricaeexnihilo.client;
 
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
-import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.texture.Sprite;
+import net.minecraft.registry.Registries;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.modules.ModFluids;
 import wraith.fabricaeexnihilo.modules.base.AbstractFluid;
 import wraith.fabricaeexnihilo.modules.base.FluidSettings;
@@ -27,18 +26,18 @@ public class FluidRenderManager {
     }
 
     private static void setupFluidRenderer(AbstractFluid fluid) {
-        var identifier = Registry.FLUID.getId(fluid);
+        var identifier = Registries.FLUID.getId(fluid);
         final Identifier listenerId = new Identifier(identifier.getNamespace(), identifier.getPath() + "_reload_listener");
 
         final Sprite[] fluidSprites = { null, null, null };
 
         final FluidSettings fluidSettings = fluid.getFluidSettings();
 
-        ClientSpriteRegistryCallback.event(BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
-            registry.register(fluidSettings.getStillTexture());
-            registry.register(fluidSettings.getFlowingTexture());
-            registry.register(fluidSettings.getOverlayTexture());
-        });
+//        ClientSpriteRegistryCallback.event(BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
+//            registry.register(fluidSettings.getStillTexture());
+//            registry.register(fluidSettings.getFlowingTexture());
+//            registry.register(fluidSettings.getOverlayTexture());
+//        });
 
         ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
             @Override

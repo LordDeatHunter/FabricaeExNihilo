@@ -6,8 +6,8 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.TallPlantBlock;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.ApiStatus;
 import wraith.fabricaeexnihilo.util.Color;
 import wraith.fabricaeexnihilo.util.Lazy;
@@ -129,7 +129,7 @@ public interface FENRegistries {
      */
     default void registerSeed(String name, Identifier... plants) {
         registerSeed(name, new Lazy<>(() -> Arrays.stream(plants)
-            .map(Registry.BLOCK::get)
+            .map(Registries.BLOCK::get)
             .toArray(Block[]::new)));
     }
 
@@ -153,7 +153,7 @@ public interface FENRegistries {
      */
     default void registerTallPlantSeed(String name, Identifier... plants) {
         registerTallPlantSeed(name, new Lazy<>(() -> Arrays.stream(plants)
-            .map(Registry.BLOCK::get)
+            .map(Registries.BLOCK::get)
             .map(block -> (TallPlantBlock) block)
             .toArray(TallPlantBlock[]::new)));
     }
@@ -179,7 +179,7 @@ public interface FENRegistries {
      * @see #registerTransformingSeed(String, Lazy, Lazy)
      */
     default void registerTransformingSeed(String name, Identifier from, Identifier to) {
-        registerTransformingSeed(name, new Lazy<>(() -> Registry.BLOCK.get(from)), new Lazy<>(() -> Registry.BLOCK.get(to)));
+        registerTransformingSeed(name, new Lazy<>(() -> Registries.BLOCK.get(from)), new Lazy<>(() -> Registries.BLOCK.get(to)));
     }
 
     /**

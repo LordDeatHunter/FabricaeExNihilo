@@ -24,6 +24,17 @@ import org.jetbrains.annotations.Nullable;
 public class SieveBlock extends Block implements BlockEntityProvider, Waterloggable {
 
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+    private static final VoxelShape SHAPE;
+
+    static {
+        SHAPE = VoxelShapes.union(
+            createCuboidShape(0.0, 0.0, 0.0, 2.0, 12.0, 2.0),
+            createCuboidShape(14.0, 0.0, 0.0, 16.0, 12.0, 2.0),
+            createCuboidShape(0.0, 0.0, 14.0, 2.0, 12.0, 16.0),
+            createCuboidShape(14.0, 0.0, 14.0, 16.0, 12.0, 16.0),
+            createCuboidShape(0.0, 8.0, 0.0, 16.0, 12.0, 16.0)
+        );
+    }
 
     public SieveBlock(Settings settings) {
         super(settings.nonOpaque());
@@ -33,7 +44,7 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         if (state.get(WATERLOGGED)) {
-            world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
 
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
@@ -46,12 +57,12 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
         }
         return super.getFluidState(state);
     }
-    
+
     @Override
     public boolean isTranslucent(BlockState state, BlockView world, BlockPos pos) {
         return true;
     }
-    
+
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
@@ -97,18 +108,6 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
             sieve.dropInventory();
             super.onStateReplaced(state, world, pos, newState, moved);
         }
-    }
-
-    private static final VoxelShape SHAPE;
-
-    static {
-        SHAPE = VoxelShapes.union(
-                createCuboidShape(0.0, 0.0, 0.0, 2.0, 12.0, 2.0),
-                createCuboidShape(14.0, 0.0, 0.0, 16.0, 12.0, 2.0),
-                createCuboidShape(0.0, 0.0, 14.0, 2.0, 12.0, 16.0),
-                createCuboidShape(14.0, 0.0, 14.0, 16.0, 12.0, 16.0),
-                createCuboidShape(0.0, 8.0, 0.0, 16.0, 12.0, 16.0)
-        );
     }
 
 }

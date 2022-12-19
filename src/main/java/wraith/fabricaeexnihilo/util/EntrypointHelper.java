@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 public class EntrypointHelper {
+
     public static final Map<ItemConvertible, List<ConditionJsonProvider>> CONDITIONS = Maps.newIdentityHashMap();
 
     public static void callEntrypoints() {
@@ -50,6 +51,7 @@ public class EntrypointHelper {
     }
 
     private static final class FENRegistriesImpl implements FENRegistries {
+
         @Nullable
         private final ConditionJsonProvider condition;
 
@@ -59,7 +61,7 @@ public class EntrypointHelper {
 
         @Override
         public FabricItemSettings defaultItemSettings() {
-            return new FabricItemSettings().group(FabricaeExNihilo.ITEM_GROUP);
+            return new FabricItemSettings();
         }
 
         @Override

@@ -1,0 +1,57 @@
+{
+    "sources": [
+        {
+            "type": "directory",
+            "source": "block/fluid/",
+            "prefix": "block/fluid/"
+        },
+        {
+            "type": "single",
+            "resource": "block/fluid/blood_flow"
+        },
+        {
+            "type": "single",
+            "resource": "block/fluid/blood_still"
+        },
+        {
+            "type": "single",
+            "resource": "block/fluid/blood_overlay"
+        },
+        {
+            "type": "single",
+            "resource": "block/fluid/brine_flow"
+        },
+        {
+            "type": "single",
+            "resource": "block/fluid/brine_still"
+        },
+        {
+            "type": "single",
+            "resource": "block/fluid/brine_overlay"
+        },
+        {
+            "type": "single",
+            "resource": "block/fluid/milk_flow"
+        },
+        {
+            "type": "single",
+            "resource": "block/fluid/milk_still"
+        },
+        {
+            "type": "single",
+            "resource": "block/fluid/milk_overlay"
+        },
+        {
+            "type": "single",
+            "resource": "block/fluid/witchwater_flow"
+        },
+        {
+            "type": "single",
+            "resource": "block/fluid/witchwater_still"
+        },
+        {
+            "type": "single",
+            "resource": "block/fluid/witchwater_overlay"
+        }
+    ]
+}

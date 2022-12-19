@@ -8,9 +8,9 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraft.tag.TagKey;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.modules.ModFluids;
 import wraith.fabricaeexnihilo.modules.base.AbstractFluid;
 import wraith.fabricaeexnihilo.modules.base.BaseFluidBlock;
@@ -24,7 +24,7 @@ public class MilkFluid extends AbstractFluid {
     public static final MilkFluid FLOWING = new MilkFluid(false);
     public static final MilkFluid STILL = new MilkFluid(true);
     public static final BaseFluidBlock BLOCK = new BaseFluidBlock(STILL, FabricBlockSettings.copyOf(ModFluids.getBlockSettings()));
-    public static final TagKey<Fluid> TAG = TagKey.of(Registry.FLUID_KEY, new Identifier("c:milk"));
+    public static final TagKey<Fluid> TAG = TagKey.of(Registries.FLUID.getKey(), new Identifier("c:milk"));
 
     static {
         // Milk buckets
@@ -45,4 +45,5 @@ public class MilkFluid extends AbstractFluid {
     public boolean matchesType(Fluid fluid) {
         return fluid == STILL || fluid == FLOWING;
     }
+
 }

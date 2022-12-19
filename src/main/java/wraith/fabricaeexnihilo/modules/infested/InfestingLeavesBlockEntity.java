@@ -6,9 +6,9 @@ import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
@@ -66,7 +66,7 @@ public class InfestingLeavesBlockEntity extends BaseBlockEntity implements Color
 
     @Override
     public int getColor(int index) {
-        var originalColor = MinecraftClient.getInstance().getBlockColors().getColor(Registry.BLOCK.get(target.getOld()).getDefaultState(), world, pos, 0);
+        var originalColor = MinecraftClient.getInstance().getBlockColors().getColor(Registries.BLOCK.get(target.getOld()).getDefaultState(), world, pos, 0);
         return Color.average(Color.WHITE, new Color(originalColor), progress).toInt();
     }
 
@@ -94,7 +94,7 @@ public class InfestingLeavesBlockEntity extends BaseBlockEntity implements Color
 
     public void readNbtWithoutWorldInfo(NbtCompound nbt) {
         progress = nbt.getDouble("progress");
-        target = Registry.BLOCK.getOrEmpty(new Identifier(nbt.getString("target")))
+        target = Registries.BLOCK.getOrEmpty(new Identifier(nbt.getString("target")))
             .flatMap(block -> block instanceof InfestedLeavesBlock infested ? Optional.of(infested) : Optional.empty())
             .orElse(ModBlocks.INFESTED_LEAVES.values().stream().findFirst().orElseThrow());
     }

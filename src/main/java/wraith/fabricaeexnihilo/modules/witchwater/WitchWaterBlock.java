@@ -12,13 +12,13 @@ import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.fluid.FlowableFluid;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
@@ -133,15 +133,15 @@ public class WitchWaterBlock extends BaseFluidBlock {
             if (livingEntity instanceof RabbitEntity rabbit) {
                 markEntity(rabbit);
                 // Killer Rabbit.
-                if (rabbit.getRabbitType() != 99) {
-                    rabbit.setRabbitType(99);
+                if (rabbit.getVariant() != RabbitEntity.RabbitType.EVIL) {
+                    rabbit.setVariant(RabbitEntity.RabbitType.EVIL);
                 }
                 return;
             }
             if (livingEntity instanceof PlayerEntity player && !player.isCreative()) {
                 FabricaeExNihilo.CONFIG.modules.witchWater.effects.forEach((effect, durationLevel) ->
                     applyStatusEffect(player,
-                        new StatusEffectInstance(Registry.STATUS_EFFECT.get(new Identifier(effect)),
+                        new StatusEffectInstance(Registries.STATUS_EFFECT.get(new Identifier(effect)),
                             durationLevel.duration,
                             durationLevel.amplifier
                         )

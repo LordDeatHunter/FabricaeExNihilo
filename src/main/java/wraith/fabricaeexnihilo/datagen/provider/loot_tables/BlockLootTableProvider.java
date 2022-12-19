@@ -1,6 +1,6 @@
 package wraith.fabricaeexnihilo.datagen.provider.loot_tables;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.resource.conditions.v1.ConditionJsonProvider;
 import net.fabricmc.fabric.impl.datagen.FabricDataGenHelper;
@@ -20,12 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlockLootTableProvider extends FabricBlockLootTableProvider {
-    public BlockLootTableProvider(FabricDataGenerator generator) {
+
+    public BlockLootTableProvider(FabricDataOutput generator) {
         super(generator);
     }
 
     @Override
-    protected void generateBlockLootTables() {
+    public void generate() {
         ModBlocks.STRAINERS.values().forEach(block -> addDrop(block, addConditions(drops(block), block)));
         ModBlocks.CRUSHED.values().forEach(block -> addDrop(block, addConditions(drops(block), block)));
         ModBlocks.CRUCIBLES.values().forEach(block -> addDrop(block, this::enchantableBlockEntityDrops));
@@ -49,13 +50,13 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
 
     private LootTable.Builder infestedLeavesDrops(Block block) {
         return addConditions(LootTable.builder().pool(addSurvivesExplosionCondition(block, LootPool.builder()
-                .rolls(ConstantLootNumberProvider.create(1))
-                .with(ItemEntry.builder(Items.STRING).conditionally(RandomChanceLootCondition.builder(0.1f))))), block);
+            .rolls(ConstantLootNumberProvider.create(1))
+            .with(ItemEntry.builder(Items.STRING).conditionally(RandomChanceLootCondition.builder(0.1f))))), block);
     }
 
     public LootTable.Builder enchantableBlockEntityDrops(Block block) {
         return addConditions(LootTable.builder().pool(addSurvivesExplosionCondition(block, LootPool.builder()
-                .rolls(ConstantLootNumberProvider.create(1))
-                .with(ItemEntry.builder(block).apply(CopyEnchantmentsLootFunction.builder())))), block);
+            .rolls(ConstantLootNumberProvider.create(1))
+            .with(ItemEntry.builder(block).apply(CopyEnchantmentsLootFunction.builder())))), block);
     }
 }

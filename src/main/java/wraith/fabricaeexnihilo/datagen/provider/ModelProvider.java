@@ -1,14 +1,14 @@
 package wraith.fabricaeexnihilo.datagen.provider;
 
 import com.google.gson.JsonElement;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.*;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import wraith.fabricaeexnihilo.mixins.ItemModelGeneratorAccess;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModItems;
@@ -25,14 +25,15 @@ import java.util.function.Supplier;
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public class ModelProvider extends FabricModelProvider {
-    private static final TextureKey PILAR_KEY = TextureKey.of("pilar");
-    public static final Model MESH_MODEL = new Model(Optional.of(id("item/mesh")), Optional.empty());
-    public static final Model CRUCIBLE_MODEL = new Model(Optional.of(id("block/crucible")), Optional.empty(), TextureKey.ALL);
-    public static final Model SIEVE_MODEL = new Model(Optional.of(id("block/sieve")), Optional.empty(), TextureKey.ALL);
-    public static final Model STRAINER_MODEL = new Model(Optional.of(id("block/strainer")), Optional.empty(), PILAR_KEY);
-    public static final Model BARREL_MODEL = new Model(Optional.of(id("block/barrel")), Optional.empty(), TextureKey.ALL);
 
-    public ModelProvider(FabricDataGenerator dataGenerator) {
+    public static final Model BARREL_MODEL = new Model(Optional.of(id("block/barrel")), Optional.empty(), TextureKey.ALL);
+    public static final Model CRUCIBLE_MODEL = new Model(Optional.of(id("block/crucible")), Optional.empty(), TextureKey.ALL);
+    public static final Model MESH_MODEL = new Model(Optional.of(id("item/mesh")), Optional.empty());
+    public static final Model SIEVE_MODEL = new Model(Optional.of(id("block/sieve")), Optional.empty(), TextureKey.ALL);
+    private static final TextureKey PILAR_KEY = TextureKey.of("pilar");
+    public static final Model STRAINER_MODEL = new Model(Optional.of(id("block/strainer")), Optional.empty(), PILAR_KEY);
+
+    public ModelProvider(FabricDataOutput dataGenerator) {
         super(dataGenerator);
     }
 
@@ -101,27 +102,27 @@ public class ModelProvider extends FabricModelProvider {
         register(new Model(Optional.of(new Identifier("block/acacia_leaves")), Optional.empty()), infestedLeaves.get(id("infested_acacia_leaves")), new TextureMap(), generator);
         register(new Model(Optional.of(new Identifier("block/jungle_leaves")), Optional.empty()), infestedLeaves.get(id("infested_jungle_leaves")), new TextureMap(), generator);
         register(new Model(Optional.of(new Identifier("block/acacia_leaves" /* We use acacia because the rubber texture has color */)), Optional.empty()), infestedLeaves.get(id("infested_rubber_leaves")), new TextureMap(), generator);
-        
+
         generator.blockStateCollector
-                .accept(
-                        VariantsBlockStateSupplier.create(ModBlocks.END_CAKE)
-                                .coordinate(
-                                        BlockStateVariantMap.create(Properties.BITES)
-                                                .register(0, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockModelId(ModBlocks.END_CAKE)))
-                                                .register(1, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice1")))
-                                                .register(2, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice2")))
-                                                .register(3, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice3")))
-                                                .register(4, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice4")))
-                                                .register(5, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice5")))
-                                                .register(6, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice6")))
-                                )
-                );
+            .accept(
+                VariantsBlockStateSupplier.create(ModBlocks.END_CAKE)
+                    .coordinate(
+                        BlockStateVariantMap.create(Properties.BITES)
+                            .register(0, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockModelId(ModBlocks.END_CAKE)))
+                            .register(1, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice1")))
+                            .register(2, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice2")))
+                            .register(3, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice3")))
+                            .register(4, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice4")))
+                            .register(5, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice5")))
+                            .register(6, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice6")))
+                    )
+            );
     }
 
     @Override
     public void generateItemModels(ItemModelGenerator generator) {
-        ModItems.DOLLS.forEach(id -> {
-            var item = Registry.ITEM.get(id);
+        ModItems.DOLLS.keySet().forEach(id -> {
+            var item = Registries.ITEM.get(id);
             uploadModel(Models.GENERATED, item, new Identifier(id.getNamespace(), "item/dolls/" + id.getPath()), generator);
         });
         ModItems.MESHES.forEach((id, item) -> uploadModel(MESH_MODEL, item, new Identifier(id.getNamespace(), "item/ore/" + id.getPath()), generator));
@@ -146,7 +147,7 @@ public class ModelProvider extends FabricModelProvider {
     }
 
     private void uploadModel(Model model, Item item, Identifier texture, ItemModelGenerator generator) {
-        uploadModel(model, ModelIds.getItemModelId(item), TextureMap.layer0(texture), ((ItemModelGeneratorAccess)generator).getWriter());
+        uploadModel(model, ModelIds.getItemModelId(item), TextureMap.layer0(texture), ((ItemModelGeneratorAccess) generator).getWriter());
     }
 
     private void register(Model model, Block block, Identifier texture, BlockStateModelGenerator generator) {

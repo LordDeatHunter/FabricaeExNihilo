@@ -6,8 +6,8 @@ import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.item.SpawnEggItem;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.RegistryEntry;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 import wraith.fabricaeexnihilo.recipe.barrel.MilkingRecipe;
 
@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 
 @SuppressWarnings("UnstableApiUsage")
 public final class MilkingDisplay implements Display {
+
     public final long amount;
     public final EntryIngredient entity;
     public final EntryIngredient result;
@@ -24,10 +25,10 @@ public final class MilkingDisplay implements Display {
 
     public MilkingDisplay(MilkingRecipe recipe) {
         this.entity = EntryIngredient.of(recipe.getEntity().stream()
-                .map(RegistryEntry::value)
-                .flatMap(entity -> Stream.ofNullable(SpawnEggItem.forEntity(entity)))
-                .map(EntryStacks::of)
-                .toList());
+            .map(RegistryEntry::value)
+            .flatMap(entity -> Stream.ofNullable(SpawnEggItem.forEntity(entity)))
+            .map(EntryStacks::of)
+            .toList());
         this.amount = recipe.getAmount();
         this.result = EntryIngredients.of(recipe.getFluid().getFluid(), amount);
         this.id = recipe.getId();

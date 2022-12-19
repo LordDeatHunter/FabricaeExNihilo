@@ -6,9 +6,9 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryEntry;
-import net.minecraft.util.registry.RegistryEntryList;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.entry.RegistryEntryList;
 import wraith.fabricaeexnihilo.compatibility.kubejs.FENKubePlugin;
 import wraith.fabricaeexnihilo.recipe.util.Loot;
 import wraith.fabricaeexnihilo.util.CodecUtils;
@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.stream.StreamSupport;
 
 public class ToolRecipeJS extends RecipeJS {
+
     private RegistryEntryList<Block> block;
     private Loot result;
 
@@ -28,33 +29,33 @@ public class ToolRecipeJS extends RecipeJS {
             .mapToDouble(obj -> (double) obj)
             .toArray());
 
-        block = FENKubePlugin.getEntryList(args, 2, Registry.BLOCK);
+        block = FENKubePlugin.getEntryList(args, 2, Registries.BLOCK);
     }
 
     @Override
     public boolean hasInput(IngredientMatch ingredientMatch) {
         return StreamSupport.stream(ingredientMatch.getAllItems().spliterator(), false)
-                .map(ItemStack::getItem)
-                .filter(BlockItem.class::isInstance)
-                .map(BlockItem.class::cast)
-                .map(BlockItem::getBlock)
-                .anyMatch(check -> block.contains(check.getRegistryEntry()));
+            .map(ItemStack::getItem)
+            .filter(BlockItem.class::isInstance)
+            .map(BlockItem.class::cast)
+            .map(BlockItem::getBlock)
+            .anyMatch(check -> block.contains(check.getRegistryEntry()));
     }
 
     @Override
     public boolean replaceInput(IngredientMatch match, Ingredient with, ItemInputTransformer transformer) {
         if (hasInput(match)) {
             var oldIngredient = Ingredient.ofItems(block.stream()
-                    .map(RegistryEntry::value)
-                    .map(Block::asItem)
-                    .toArray(Item[]::new));
+                .map(RegistryEntry::value)
+                .map(Block::asItem)
+                .toArray(Item[]::new));
 
             block = RegistryEntryList.of(Block::getRegistryEntry, Arrays.stream(transformer.transform(this, match, oldIngredient, with).getMatchingStacks())
-                    .map(ItemStack::getItem)
-                    .filter(BlockItem.class::isInstance)
-                    .map(BlockItem.class::cast)
-                    .map(BlockItem::getBlock)
-                    .toList());
+                .map(ItemStack::getItem)
+                .filter(BlockItem.class::isInstance)
+                .map(BlockItem.class::cast)
+                .map(BlockItem::getBlock)
+                .toList());
             return true;
         }
 
@@ -69,7 +70,7 @@ public class ToolRecipeJS extends RecipeJS {
     @Override
     public boolean replaceOutput(IngredientMatch match, ItemStack with, ItemOutputTransformer transformer) {
         if (match.contains(result.stack())) {
-            result = new Loot(transformer.transform(this, match, result.stack(), with),  result.chances());
+            result = new Loot(transformer.transform(this, match, result.stack(), with), result.chances());
             return true;
         }
         return false;
@@ -78,7 +79,7 @@ public class ToolRecipeJS extends RecipeJS {
     @Override
     public void deserialize() {
         result = CodecUtils.fromJson(Loot.CODEC, json.get("result"));
-        block = RegistryEntryLists.fromJson(Registry.BLOCK_KEY, json.get("block"));
+        block = RegistryEntryLists.fromJson(Registries.BLOCK.getKey(), json.get("block"));
     }
 
     @Override
@@ -86,6 +87,6 @@ public class ToolRecipeJS extends RecipeJS {
         if (serializeOutputs)
             json.add("result", CodecUtils.toJson(Loot.CODEC, result));
         if (serializeInputs)
-            json.add("block", RegistryEntryLists.toJson(Registry.BLOCK_KEY, block));
+            json.add("block", RegistryEntryLists.toJson(Registries.BLOCK.getKey(), block));
     }
 }
