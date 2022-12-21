@@ -21,12 +21,12 @@ public class StrainerLootTableProvider extends SimpleFabricLootTableProvider {
     @Override
     public void accept(BiConsumer<Identifier, LootTable.Builder> consumer) {
         consumer.accept(id("gameplay/strainer"), LootTable.builder()
-            .pool(LootPool.builder()
-                .with(LootTableEntry.builder(new Identifier("gameplay/fishing/junk"))
-                    .weight(10))
-                .with(LootTableEntry.builder(new Identifier("gameplay/fishing/fish"))
-                    .weight(85))
-            )
+                .pool(LootPool.builder()
+                        .with(LootTableEntry.builder(new Identifier("gameplay/fishing/junk"))
+                                .weight(10))
+                        .with(LootTableEntry.builder(new Identifier("gameplay/fishing/fish"))
+                                .weight(85))
+                )
         );
     }
 }

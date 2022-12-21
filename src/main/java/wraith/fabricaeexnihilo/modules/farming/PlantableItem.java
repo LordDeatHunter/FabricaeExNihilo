@@ -14,12 +14,12 @@ import java.util.List;
 
 public class PlantableItem extends Item {
     private final Lazy<Block[]> plants;
-    
+
     public PlantableItem(Lazy<Block[]> plants, FabricItemSettings settings) {
         super(settings);
         this.plants = plants;
     }
-    
+
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         var world = context.getWorld();
@@ -30,7 +30,7 @@ public class PlantableItem extends Item {
             var state = plant.getPlacementState(new ItemPlacementContext(context));
             if (state == null)
                 return ActionResult.PASS;
-    
+
             if (state.canPlaceAt(world, plantPos)) {
                 world.setBlockState(plantPos, state);
                 var player = context.getPlayer();
@@ -42,5 +42,5 @@ public class PlantableItem extends Item {
         }
         return super.useOnBlock(context);
     }
-    
+
 }

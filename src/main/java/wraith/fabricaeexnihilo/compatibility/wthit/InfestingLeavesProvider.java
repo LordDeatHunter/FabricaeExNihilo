@@ -12,7 +12,7 @@ public class InfestingLeavesProvider implements IBlockComponentProvider {
     public void appendBody(ITooltip tooltip, IBlockAccessor accessor, IPluginConfig config) {
         InfestingLeavesBlockEntity leaves = accessor.getBlockEntity();
         if (leaves == null) return;
-    
+
         tooltip.addLine(Text.translatable("fabricaeexnihilo.hud.infesting_leaves.progress", (int) (leaves.getProgress() * 100)));
     }
 }

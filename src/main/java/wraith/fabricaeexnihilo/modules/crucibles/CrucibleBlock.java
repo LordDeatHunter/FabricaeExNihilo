@@ -24,11 +24,11 @@ public class CrucibleBlock extends BlockWithEntity {
 
     static {
         SHAPE = VoxelShapes.union(
-            createCuboidShape(0.0, 0.0, 0.0, 3.0, 3.0, 3.0),
-            createCuboidShape(0.0, 0.0, 13.0, 3.0, 3.0, 16.0),
-            createCuboidShape(13.0, 0.0, 0.0, 16.0, 3.0, 3.0),
-            createCuboidShape(13.0, 0.0, 13.0, 16.0, 3.0, 16.0),
-            createCuboidShape(0.0, 3.0, 0.0, 16.0, 16.0, 16.0)
+                createCuboidShape(0.0, 0.0, 0.0, 3.0, 3.0, 3.0),
+                createCuboidShape(0.0, 0.0, 13.0, 3.0, 3.0, 16.0),
+                createCuboidShape(13.0, 0.0, 0.0, 16.0, 3.0, 3.0),
+                createCuboidShape(13.0, 0.0, 13.0, 16.0, 3.0, 16.0),
+                createCuboidShape(0.0, 3.0, 0.0, 16.0, 16.0, 16.0)
         );
     }
 

@@ -15,11 +15,11 @@ import wraith.fabricaeexnihilo.modules.base.EnchantmentContainer;
 
 public class CopyEnchantmentsLootFunction extends ConditionalLootFunction {
     public static final LootFunctionType TYPE = new LootFunctionType(new CopyEnchantmentsLootFunction.Serializer());
-    
+
     protected CopyEnchantmentsLootFunction(LootCondition[] conditions) {
         super(conditions);
     }
-    
+
     @Override
     protected ItemStack process(ItemStack stack, LootContext context) {
         if (context.get(LootContextParameters.BLOCK_ENTITY) instanceof EnchantableBlockEntity enchantable && enchantable.getEnchantmentContainer().getEnchantments().size() > 0) {
@@ -27,7 +27,7 @@ public class CopyEnchantmentsLootFunction extends ConditionalLootFunction {
         }
         return stack;
     }
-    
+
     @Override
     public LootFunctionType getType() {
         return TYPE;
@@ -54,7 +54,7 @@ public class CopyEnchantmentsLootFunction extends ConditionalLootFunction {
         public CopyEnchantmentsLootFunction fromJson(JsonObject json, JsonDeserializationContext context, LootCondition[] conditions) {
             return new CopyEnchantmentsLootFunction(conditions);
         }
-    
+
         @Override
         public void toJson(JsonObject json, CopyEnchantmentsLootFunction object, JsonSerializationContext context) {
             super.toJson(json, object, context);

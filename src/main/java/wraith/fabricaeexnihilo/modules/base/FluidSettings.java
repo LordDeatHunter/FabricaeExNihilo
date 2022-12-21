@@ -5,7 +5,6 @@ import net.minecraft.util.Identifier;
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public class FluidSettings {
-
     private final String basePath;
     private final Identifier flowingTexture;
     private final boolean infinite;

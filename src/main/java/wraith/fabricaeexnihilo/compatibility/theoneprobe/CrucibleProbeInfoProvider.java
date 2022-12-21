@@ -19,12 +19,12 @@ public class CrucibleProbeInfoProvider implements IProbeInfoProvider {
     public Identifier getID() {
         return id("crucible");
     }
-    
+
     @Override
     public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, PlayerEntity player, World world, BlockState blockState, IProbeHitData data) {
         if (!(blockState.getBlock() instanceof CrucibleBlock) || !(world.getBlockEntity(data.getPos()) instanceof CrucibleBlockEntity crucible))
             return;
-    
+
         if (crucible.getQueued() > 0 && mode == ProbeMode.EXTENDED) {
             probeInfo.text(Text.translatable("fabricaeexnihilo.hud.crucible.queued", crucible.getQueued() / 81 /* Convert to millibuckets */));
         }

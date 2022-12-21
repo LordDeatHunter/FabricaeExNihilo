@@ -51,7 +51,6 @@ public class EntrypointHelper {
     }
 
     private static final class FENRegistriesImpl implements FENRegistries {
-
         @Nullable
         private final ConditionJsonProvider condition;
 
@@ -145,7 +144,7 @@ public class EntrypointHelper {
         @Override
         public void registerOrePiece(String name, Item.Settings settings) {
             var id = id(name, "raw_", "_piece");
-            var item = ModItems.ORE_PIECES.computeIfAbsent(id, __ -> new Item(ModItems.BASE_SETTINGS));
+            var item = ModItems.ORE_PIECES.computeIfAbsent(id, __ -> new Item(settings));
             if (condition != null)
                 CONDITIONS.computeIfAbsent(item, __ -> new ArrayList<>()).add(condition);
         }

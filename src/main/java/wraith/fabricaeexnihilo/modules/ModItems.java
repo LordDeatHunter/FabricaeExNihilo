@@ -10,9 +10,7 @@ import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.modules.infested.SilkWormItem;
 import wraith.fabricaeexnihilo.modules.sieves.MeshItem;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;

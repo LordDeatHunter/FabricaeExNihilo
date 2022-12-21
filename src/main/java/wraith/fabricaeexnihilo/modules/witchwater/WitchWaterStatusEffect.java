@@ -12,9 +12,7 @@ public class WitchWaterStatusEffect extends StatusEffect {
     }
 
     public StatusEffectInstance getInstance() {
-        var instance = new StatusEffectInstance(this, 72000, 1, false, false, false);
-//        instance.setPermanent(true);
-        return instance;
+        return new StatusEffectInstance(this, 72000, 1, false, false, false);
     }
 
 }

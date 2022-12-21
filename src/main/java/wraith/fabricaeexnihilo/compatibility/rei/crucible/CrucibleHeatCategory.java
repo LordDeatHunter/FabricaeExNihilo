@@ -53,10 +53,10 @@ public class CrucibleHeatCategory implements DisplayCategory<CrucibleHeatDisplay
 
         Point startPoint = new Point(bounds.getCenterX() - 41, bounds.getCenterY() - 17);
         widgets.add(
-            Widgets.createLabel(new Point(bounds.x + 26, bounds.getCenterY()), Text.translatable("fabricaeexnihilo.rei.category.crucible_heat.speed", heat))
-                .color(0xFF404040, 0xFFBBBBBB)
-                .noShadow()
-                .leftAligned()
+                Widgets.createLabel(new Point(bounds.x + 26, bounds.getCenterY()), Text.translatable("fabricaeexnihilo.rei.category.crucible_heat.speed", heat))
+                        .color(0xFF404040, 0xFFBBBBBB)
+                        .noShadow()
+                        .leftAligned()
         );
         widgets.add(Widgets.createBurningFire(new Point(bounds.x + 6, startPoint.y + 1)).animationDurationTicks(100F / heat));
         widgets.add(Widgets.createSlot(new Point(bounds.x + 6, startPoint.y + 18)).entries(display.source).markInput());

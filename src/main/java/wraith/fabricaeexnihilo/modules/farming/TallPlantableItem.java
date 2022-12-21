@@ -14,14 +14,14 @@ import java.util.Collections;
 import java.util.List;
 
 public class TallPlantableItem extends Item {
-    
+
     private final Lazy<TallPlantBlock[]> plants;
-    
+
     public TallPlantableItem(Lazy<TallPlantBlock[]> plants, FabricItemSettings settings) {
         super(settings);
         this.plants = plants;
     }
-    
+
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         var world = context.getWorld();
@@ -46,5 +46,5 @@ public class TallPlantableItem extends Item {
         }
         return ActionResult.PASS;
     }
-    
+
 }

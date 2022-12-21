@@ -35,16 +35,16 @@ public abstract class BarrelMode implements BarrelModeStorage {
         ((NbtCompound) nbt).putString("id", mode.getId());
         return new Dynamic<>(NbtOps.INSTANCE, nbt);
     });
-    
+
     protected BarrelMode() {
     }
-    
+
     public abstract String getId();
-    
+
     public abstract BarrelMode copy();
 
     public abstract EntryIngredient getReiResult();
-    
+
     public void tick(BarrelBlockEntity barrel) {
     }
 

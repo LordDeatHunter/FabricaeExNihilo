@@ -27,7 +27,7 @@ public class FENKubePlugin extends KubeJSPlugin {
         var string = args.get(index).toString();
         if (list == null) {
             return string.startsWith("#") ? registry.getOrCreateEntryList(TagKey.of(registry.getKey(), new Identifier(string.substring(1))))
-                : RegistryEntryList.of(registry.getEntry(RegistryKey.of(registry.getKey(), new Identifier(string))).orElseThrow());
+                    : RegistryEntryList.of(registry.getEntry(RegistryKey.of(registry.getKey(), new Identifier(string))).orElseThrow());
         } else {
             return RegistryEntryList.of(list.stream().map(Object::toString).map(Identifier::new).map(id -> RegistryKey.of(registry.getKey(), id)).map(registry::getEntry).map(Optional::orElseThrow).toList());
         }

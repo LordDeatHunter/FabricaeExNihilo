@@ -20,18 +20,14 @@ public record Loot(ItemStack stack, List<Double> chances) {
                     .fieldOf("chances")
                     .forGetter(Loot::chances)
     ).apply(instance, Loot::new));
-    
+
     public Loot(ItemStack stack, double... chances) {
         this(stack, new ArrayList<>());
         for (var chance : chances) {
             this.chances.add(chance);
         }
     }
-    
-    public boolean isEmpty() {
-        return stack.isEmpty() || chances.isEmpty();
-    }
-    
+
     public ItemStack createStack(Random random) {
         var stack = this.stack.copy();
         stack.setCount((int) chances.stream()

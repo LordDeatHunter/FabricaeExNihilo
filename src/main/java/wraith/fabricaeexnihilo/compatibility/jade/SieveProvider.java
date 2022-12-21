@@ -14,7 +14,7 @@ public class SieveProvider implements IBlockComponentProvider {
     @Override
     public void appendTooltip(ITooltip tooltip, BlockAccessor blockAccessor, IPluginConfig iPluginConfig) {
         if (!(blockAccessor.getBlockEntity() instanceof SieveBlockEntity sieve)) return;
-    
+
         if (!sieve.getMesh().isEmpty()) {
             tooltip.add(Text.translatable("fabricaeexnihilo.hud.sieve.mesh", sieve.getMesh().getName()));
         }
@@ -23,7 +23,7 @@ public class SieveProvider implements IBlockComponentProvider {
             tooltip.add(Text.translatable("fabricaeexnihilo.hud.sieve.progress", (int) (sieve.getProgress() * 100)));
         }
     }
-    
+
     @Override
     public Identifier getUid() {
         return id("sieve");

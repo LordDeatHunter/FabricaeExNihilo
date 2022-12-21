@@ -5,6 +5,7 @@ import wraith.fabricaeexnihilo.util.StatusEffectStats;
 
 import java.util.Map;
 
+@SuppressWarnings("CanBeFinal")
 public class FabricaeExNihiloConfig {
 
     public ModuleConfig modules = new ModuleConfig();
@@ -145,11 +146,11 @@ public class FabricaeExNihiloConfig {
 
             // What effects should players get on contact
             public Map<String, StatusEffectStats> effects = Map.of(
-                "blindness", new StatusEffectStats(210, 0),
-                "hunger", new StatusEffectStats(210, 2),
-                "slowness", new StatusEffectStats(210, 0),
-                "weakness", new StatusEffectStats(210, 2),
-                "wither", new StatusEffectStats(210, 0)
+                    "blindness", new StatusEffectStats(210, 0),
+                    "hunger", new StatusEffectStats(210, 2),
+                    "slowness", new StatusEffectStats(210, 0),
+                    "weakness", new StatusEffectStats(210, 2),
+                    "wither", new StatusEffectStats(210, 0)
             );
         }
     }

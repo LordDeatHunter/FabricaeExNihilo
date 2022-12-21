@@ -54,16 +54,16 @@ public final class ModBlocks {
     public static void registerBlockItems() {
         SIEVES.forEach((identifier, block) -> Registry.register(Registries.ITEM, identifier, new BlockItem(block, ModItems.BASE_SETTINGS)));
         CRUCIBLES.forEach((identifier, block) -> {
-            var ench = block.getDefaultState().getMaterial() == Material.STONE
-                ? ToolMaterials.STONE.getEnchantability()
-                : ToolMaterials.WOOD.getEnchantability();
-            Registry.register(Registries.ITEM, identifier, new EnchantableBlockItem(block, ModItems.BASE_SETTINGS, ench));
+            var enchantability = block.getDefaultState().getMaterial() == Material.STONE
+                    ? ToolMaterials.STONE.getEnchantability()
+                    : ToolMaterials.WOOD.getEnchantability();
+            Registry.register(Registries.ITEM, identifier, new EnchantableBlockItem(block, ModItems.BASE_SETTINGS, enchantability));
         });
         BARRELS.forEach((identifier, block) -> {
-            var ench = block.getDefaultState().getMaterial() == Material.STONE
-                ? ToolMaterials.STONE.getEnchantability()
-                : ToolMaterials.WOOD.getEnchantability();
-            Registry.register(Registries.ITEM, identifier, new EnchantableBlockItem(block, ModItems.BASE_SETTINGS, ench));
+            var enchantability = block.getDefaultState().getMaterial() == Material.STONE
+                    ? ToolMaterials.STONE.getEnchantability()
+                    : ToolMaterials.WOOD.getEnchantability();
+            Registry.register(Registries.ITEM, identifier, new EnchantableBlockItem(block, ModItems.BASE_SETTINGS, enchantability));
         });
         CRUSHED.forEach((identifier, block) -> Registry.register(Registries.ITEM, identifier, new BlockItem(block, ModItems.BASE_SETTINGS)));
         STRAINERS.forEach((identifier, block) -> Registry.register(Registries.ITEM, identifier, new BlockItem(block, ModItems.BASE_SETTINGS)));

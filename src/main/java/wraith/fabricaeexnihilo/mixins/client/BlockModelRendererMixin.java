@@ -21,12 +21,12 @@ public class BlockModelRendererMixin {
     private static float fabricaeexnihilo$modifyRed(float original, MatrixStack.Entry entry, VertexConsumer consumer, float red, float green, float blue, List<BakedQuad> quads, int lighting, int overlay) {
         return BlockModelRendererFlags.isColorOverridden() ? MathHelper.clamp(red, 0, 1) : original;
     }
-    
+
     @ModifyVariable(method = "renderQuads", at = @At("LOAD"), index = 11)
     private static float fabricaeexnihilo$modifyGreen(float original, MatrixStack.Entry entry, VertexConsumer consumer, float red, float green, float blue, List<BakedQuad> quads, int lighting, int overlay) {
         return BlockModelRendererFlags.isColorOverridden() ? MathHelper.clamp(green, 0, 1) : original;
     }
-    
+
     @ModifyVariable(method = "renderQuads", at = @At("LOAD"), index = 12)
     private static float fabricaeexnihilo$modifyBlue(float original, MatrixStack.Entry entry, VertexConsumer consumer, float red, float green, float blue, List<BakedQuad> quads, int lighting, int overlay) {
         return BlockModelRendererFlags.isColorOverridden() ? MathHelper.clamp(blue, 0, 1) : original;

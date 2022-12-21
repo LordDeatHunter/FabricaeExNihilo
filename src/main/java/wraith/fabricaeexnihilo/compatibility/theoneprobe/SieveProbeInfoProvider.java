@@ -18,12 +18,12 @@ public class SieveProbeInfoProvider implements IProbeInfoProvider {
     public Identifier getID() {
         return id("sieve");
     }
-    
+
     @Override
     public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, PlayerEntity player, World world, BlockState blockState, IProbeHitData data) {
         if (!(blockState.getBlock() instanceof SieveBlock) || !(world.getBlockEntity(data.getPos()) instanceof SieveBlockEntity sieve))
             return;
-        
+
         if (!sieve.getMesh().isEmpty()) {
             probeInfo.text("fabricaeexnihilo.hud.sieve.mesh", sieve.getMesh().getName());
         }

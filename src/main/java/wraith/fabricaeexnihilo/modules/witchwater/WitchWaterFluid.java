@@ -22,10 +22,10 @@ public class WitchWaterFluid extends AbstractFluid {
 
     public WitchWaterFluid(boolean isStill) {
         super(isStill, FLUID_SETTINGS,
-            () -> BLOCK,
-            () -> BUCKET,
-            () -> FLOWING,
-            () -> STILL
+                () -> BLOCK,
+                () -> BUCKET,
+                () -> FLOWING,
+                () -> STILL
         );
     }
 

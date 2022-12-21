@@ -10,13 +10,13 @@ import wraith.fabricaeexnihilo.util.Lazy;
 public class TransformingItem extends Item {
     private final Lazy<Block> from;
     private final Lazy<Block> to;
-    
+
     public TransformingItem(Lazy<Block> from, Lazy<Block> to, FabricItemSettings settings) {
         super(settings);
         this.from = from;
         this.to = to;
     }
-    
+
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         var world = context.getWorld();
@@ -32,5 +32,5 @@ public class TransformingItem extends Item {
         }
         return ActionResult.PASS;
     }
-    
+
 }

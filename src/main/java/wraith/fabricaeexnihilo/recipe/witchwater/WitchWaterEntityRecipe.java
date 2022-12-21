@@ -77,7 +77,8 @@ public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.Co
         return result;
     }
 
-    protected record Context(Entity entity) implements RecipeContext {}
+    protected record Context(Entity entity) implements RecipeContext {
+    }
 
     public static class Serializer implements RecipeSerializer<WitchWaterEntityRecipe> {
 

@@ -13,7 +13,7 @@ public interface RecipeContext extends EmptyInventory {
     default int size() {
         return EmptyInventory.super.size();
     }
-    
+
     /**
      * @deprecated Not intended for direct use
      */
@@ -22,7 +22,7 @@ public interface RecipeContext extends EmptyInventory {
     default boolean isEmpty() {
         return EmptyInventory.super.isEmpty();
     }
-    
+
     /**
      * @deprecated Not intended for direct use
      */
@@ -31,7 +31,7 @@ public interface RecipeContext extends EmptyInventory {
     default ItemStack getStack(int slot) {
         return EmptyInventory.super.getStack(slot);
     }
-    
+
     /**
      * @deprecated Not intended for direct use
      */
@@ -40,7 +40,7 @@ public interface RecipeContext extends EmptyInventory {
     default ItemStack removeStack(int slot, int amount) {
         return EmptyInventory.super.removeStack(slot, amount);
     }
-    
+
     /**
      * @deprecated Not intended for direct use
      */
@@ -49,7 +49,7 @@ public interface RecipeContext extends EmptyInventory {
     default ItemStack removeStack(int slot) {
         return EmptyInventory.super.removeStack(slot);
     }
-    
+
     /**
      * @deprecated Not intended for direct use
      */
@@ -58,7 +58,7 @@ public interface RecipeContext extends EmptyInventory {
     default void setStack(int slot, ItemStack stack) {
         EmptyInventory.super.setStack(slot, stack);
     }
-    
+
     /**
      * @deprecated Not intended for direct use
      */
@@ -67,7 +67,7 @@ public interface RecipeContext extends EmptyInventory {
     default void markDirty() {
         EmptyInventory.super.markDirty();
     }
-    
+
     /**
      * @deprecated Not intended for direct use
      */
@@ -76,7 +76,7 @@ public interface RecipeContext extends EmptyInventory {
     default boolean canPlayerUse(PlayerEntity player) {
         return EmptyInventory.super.canPlayerUse(player);
     }
-    
+
     /**
      * @deprecated Not intended for direct use
      */

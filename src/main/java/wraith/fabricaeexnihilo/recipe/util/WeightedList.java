@@ -16,7 +16,7 @@ import java.util.function.Function;
 public class WeightedList {
 
     public static final Codec<WeightedList> CODEC = Codec.unboundedMap(Registries.BLOCK.getCodec(), Codec.INT)
-        .xmap(WeightedList::new, WeightedList::getValues);
+            .xmap(WeightedList::new, WeightedList::getValues);
 
     private final Map<Block, Integer> values;
     private int totalWeight;

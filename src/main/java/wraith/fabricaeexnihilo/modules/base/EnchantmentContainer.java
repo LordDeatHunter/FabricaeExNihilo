@@ -15,13 +15,13 @@ public class EnchantmentContainer {
 
     public static void addEnchantments(ItemStack itemStack, EnchantmentContainer container) {
         container.enchantments.entrySet().stream()
-            .filter(entry -> entry.getValue() > 0)
-            .forEach(entry -> {
-                var enchantment = Registries.ENCHANTMENT.get(entry.getKey());
-                if (enchantment != null) {
-                    itemStack.addEnchantment(enchantment, entry.getValue());
-                }
-            });
+                .filter(entry -> entry.getValue() > 0)
+                .forEach(entry -> {
+                    var enchantment = Registries.ENCHANTMENT.get(entry.getKey());
+                    if (enchantment != null) {
+                        itemStack.addEnchantment(enchantment, entry.getValue());
+                    }
+                });
     }
 
     public Map<Identifier, Integer> getEnchantments() {

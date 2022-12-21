@@ -12,7 +12,7 @@ public class CrucibleComponentProvider implements IBlockComponentProvider {
     public void appendBody(ITooltip tooltip, IBlockAccessor accessor, IPluginConfig config) {
         CrucibleBlockEntity crucible = accessor.getBlockEntity();
         if (crucible == null) return;
-        
+
         if (crucible.getQueued() > 0) {
             tooltip.addLine(Text.translatable("fabricaeexnihilo.hud.crucible.queued", crucible.getQueued() / 81 /* Convert to millibuckets */));
         }

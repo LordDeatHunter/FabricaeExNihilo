@@ -22,14 +22,14 @@ public enum ModToolMaterials implements ToolMaterial {
     CLAY(0, 1, 1.0f, 0.1f, 0, () -> Ingredient.ofItems(Items.CLAY_BALL)),
     PURPUR(3, 1561, 8.0f, 3.0f, 10, () -> Ingredient.ofItems(Items.POPPED_CHORUS_FRUIT, Items.CHORUS_FRUIT)),
     PRISMARINE(1, 131, 4.0f, 1.0f, 5, () -> Ingredient.ofItems(Items.PRISMARINE, Items.PRISMARINE_SHARD));
-    
+
     private final int miningLevel;
     private final int durability;
     private final float miningSpeed;
     private final float attackDamage;
     private final int enchantability;
     private final Supplier<Ingredient> repairIngredient;
-    
+
     ModToolMaterials(int miningLevel, int durability, float miningSpeed, float attackDamage, int enchantability, Supplier<Ingredient> repairIngredient) {
         this.miningLevel = miningLevel;
         this.durability = durability;
@@ -38,7 +38,7 @@ public enum ModToolMaterials implements ToolMaterial {
         this.enchantability = enchantability;
         this.repairIngredient = repairIngredient;
     }
-    
+
     ModToolMaterials(ToolMaterials material) {
         this(material.getMiningLevel(),
                 material.getDurability(),
@@ -48,35 +48,35 @@ public enum ModToolMaterials implements ToolMaterial {
                 material::getRepairIngredient
         );
     }
-    
+
     @Override
     public int getMiningLevel() {
         return this.miningLevel;
     }
-    
+
     @Override
     public int getDurability() {
         return this.durability;
     }
-    
+
     @Override
     public float getMiningSpeedMultiplier() {
         return this.miningSpeed;
     }
-    
+
     @Override
     public float getAttackDamage() {
         return this.attackDamage;
     }
-    
+
     @Override
     public int getEnchantability() {
         return this.enchantability;
     }
-    
+
     @Override
     public Ingredient getRepairIngredient() {
         return this.repairIngredient.get();
     }
-    
+
 }

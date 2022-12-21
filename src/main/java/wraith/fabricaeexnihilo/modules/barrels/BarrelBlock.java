@@ -34,7 +34,7 @@ import wraith.fabricaeexnihilo.modules.barrels.modes.ItemMode;
 import wraith.fabricaeexnihilo.modules.fluids.BloodFluid;
 import wraith.fabricaeexnihilo.recipe.barrel.MilkingRecipe;
 
-@SuppressWarnings({ "UnstableApiUsage", "deprecation" })
+@SuppressWarnings({"UnstableApiUsage", "deprecation"})
 public class BarrelBlock extends BlockWithEntity {
     private static final VoxelShape SHAPE = createCuboidShape(1.0, 0.0, 1.0, 15.0, 16.0, 15.0);
 
@@ -102,8 +102,8 @@ public class BarrelBlock extends BlockWithEntity {
             if (FabricaeExNihilo.CONFIG.modules.barrels.enableBleeding) {
                 var thorns = barrel.getEnchantmentContainer().getEnchantmentLevel(Enchantments.THORNS);
                 if (thorns > 0
-                    && barrel.fluidStorage.simulateInsert(FluidVariant.of(BloodFluid.STILL), 1, null) >= 1
-                    && livingEntity.damage(DamageSource.CACTUS, thorns / 2F)) {
+                        && barrel.fluidStorage.simulateInsert(FluidVariant.of(BloodFluid.STILL), 1, null) >= 1
+                        && livingEntity.damage(DamageSource.CACTUS, thorns / 2F)) {
                     var amount = FluidConstants.BUCKET * thorns / livingEntity.getMaxHealth();
                     try (Transaction t = Transaction.openOuter()) {
                         barrel.fluidStorage.insert(FluidVariant.of(BloodFluid.STILL), (long) amount, t);
@@ -135,8 +135,8 @@ public class BarrelBlock extends BlockWithEntity {
         }
         var blockEntity = world.getBlockEntity(pos);
         return blockEntity instanceof BarrelBlockEntity barrelBlock
-            ? barrelBlock.activate(player, hand)
-            : ActionResult.PASS;
+                ? barrelBlock.activate(player, hand)
+                : ActionResult.PASS;
     }
 
 }

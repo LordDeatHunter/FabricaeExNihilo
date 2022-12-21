@@ -5,22 +5,23 @@ import net.minecraft.fluid.Fluid;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.modules.crucibles.CrucibleBlockEntity;
 
+@SuppressWarnings("UnstableApiUsage")
 public class CrucibleFluidProvider extends FluidProvider<CrucibleBlockEntity> {
     @Override
     public int getSlotCount() {
         return 1;
     }
-    
+
     @Override
     public @Nullable Fluid getFluid(int slot) {
         return getObject().getFluid().getFluid();
     }
-    
+
     @Override
     public double getStored(int slot) {
         return droplets(getObject().getContained());
     }
-    
+
     @Override
     public double getMax(int slot) {
         return droplets(getObject().getMaxCapacity());

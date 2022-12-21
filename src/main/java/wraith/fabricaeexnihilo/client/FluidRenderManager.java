@@ -29,15 +29,9 @@ public class FluidRenderManager {
         var identifier = Registries.FLUID.getId(fluid);
         final Identifier listenerId = new Identifier(identifier.getNamespace(), identifier.getPath() + "_reload_listener");
 
-        final Sprite[] fluidSprites = { null, null, null };
+        final Sprite[] fluidSprites = {null, null, null};
 
         final FluidSettings fluidSettings = fluid.getFluidSettings();
-
-//        ClientSpriteRegistryCallback.event(BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
-//            registry.register(fluidSettings.getStillTexture());
-//            registry.register(fluidSettings.getFlowingTexture());
-//            registry.register(fluidSettings.getOverlayTexture());
-//        });
 
         ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
             @Override

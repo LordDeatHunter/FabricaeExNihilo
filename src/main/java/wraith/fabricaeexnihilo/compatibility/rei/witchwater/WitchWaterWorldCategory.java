@@ -42,7 +42,7 @@ public class WitchWaterWorldCategory implements DisplayCategory<WitchWaterWorldD
     public static final int OUTPUT_Y = MARGIN;
     public static final int WIDTH = (OUTPUT_SLOTS_X + 2) * 18 + MARGIN * 2;
     public static final int WITCH_X = MARGIN;
-    public static Identifier GLYPHS = id("textures/gui/rei/glyphs.png");
+    public static final Identifier GLYPHS = id("textures/gui/rei/glyphs.png");
 
     @Override
     public CategoryIdentifier<? extends WitchWaterWorldDisplay> getCategoryIdentifier() {

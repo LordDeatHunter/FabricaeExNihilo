@@ -12,7 +12,7 @@ import java.util.Collections;
 
 @Mixin(Enchantment.class)
 public abstract class EnchantmentMixin {
-    
+
     /**
      * This call is used (through super calls) by each enchantment instance and is invoked by anvils.
      *

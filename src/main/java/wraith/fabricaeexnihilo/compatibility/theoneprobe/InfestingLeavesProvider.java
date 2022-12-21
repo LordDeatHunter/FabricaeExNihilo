@@ -18,12 +18,12 @@ public class InfestingLeavesProvider implements IProbeInfoProvider {
     public Identifier getID() {
         return id("infesting_leaves");
     }
-    
+
     @Override
     public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, PlayerEntity player, World world, BlockState blockState, IProbeHitData data) {
         if (!(blockState.getBlock() instanceof InfestingLeavesBlock) || !(world.getBlockEntity(data.getPos()) instanceof InfestingLeavesBlockEntity leaves))
             return;
-        
+
         probeInfo.text("fabricaeexnihilo.hud.infesting_leaves.progress", (int) (leaves.getProgress() * 100));
     }
 }

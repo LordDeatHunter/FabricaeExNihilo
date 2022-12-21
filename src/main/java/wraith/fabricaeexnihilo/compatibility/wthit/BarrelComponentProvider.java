@@ -14,16 +14,16 @@ public class BarrelComponentProvider implements IBlockComponentProvider {
     public void appendBody(ITooltip tooltip, IBlockAccessor accessor, IPluginConfig config) {
         BarrelBlockEntity barrel = accessor.getBlockEntity();
         if (barrel == null) return;
-    
+
         var mode = barrel.getMode();
         if (mode instanceof CompostMode compostMode) {
             if (compostMode.getAmount() < 1) {
-                tooltip.addLine(Text.translatable("fabricaeexnihilo.hud.barrel.compost.filling", (int)(compostMode.getAmount() * 100)));
+                tooltip.addLine(Text.translatable("fabricaeexnihilo.hud.barrel.compost.filling", (int) (compostMode.getAmount() * 100)));
             } else {
-                tooltip.addLine(Text.translatable("fabricaeexnihilo.hud.barrel.compost.composting", (int)(compostMode.getProgress() * 100)));
+                tooltip.addLine(Text.translatable("fabricaeexnihilo.hud.barrel.compost.composting", (int) (compostMode.getProgress() * 100)));
             }
         } else if (mode instanceof AlchemyMode alchemyMode) {
-            tooltip.addLine(Text.translatable("fabricaeexnihilo.hud.barrel.alchemy.processing", (int)((100.0 / alchemyMode.getDuration()) * alchemyMode.getProgress())));
+            tooltip.addLine(Text.translatable("fabricaeexnihilo.hud.barrel.alchemy.processing", (int) ((100.0 / alchemyMode.getDuration()) * alchemyMode.getProgress())));
         }
     }
 }

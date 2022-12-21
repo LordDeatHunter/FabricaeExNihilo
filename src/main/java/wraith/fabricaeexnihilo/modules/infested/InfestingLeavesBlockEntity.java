@@ -15,21 +15,19 @@ import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.base.BaseBlockEntity;
 import wraith.fabricaeexnihilo.modules.base.Colored;
 import wraith.fabricaeexnihilo.util.Color;
-import wraith.fabricaeexnihilo.util.RegistryUtils;
 
 import java.util.Optional;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public class InfestingLeavesBlockEntity extends BaseBlockEntity implements Colored {
-
-    public static Identifier BLOCK_ENTITY_ID = id("infesting");
+    public static final Identifier BLOCK_ENTITY_ID = id("infesting");
     private double progress = 0.0;
     private InfestedLeavesBlock target = ModBlocks.INFESTED_LEAVES.values().stream().findFirst().orElseThrow();
     private int tickCounter;
     public static final BlockEntityType<InfestingLeavesBlockEntity> TYPE = FabricBlockEntityTypeBuilder.create(
-        InfestingLeavesBlockEntity::new,
-        ModBlocks.INFESTING_LEAVES
+            InfestingLeavesBlockEntity::new,
+            ModBlocks.INFESTING_LEAVES
     ).build(null);
 
     public InfestingLeavesBlockEntity(BlockPos pos, BlockState state) {
@@ -59,8 +57,8 @@ public class InfestingLeavesBlockEntity extends BaseBlockEntity implements Color
         }
         var curState = world.getBlockState(blockPos);
         var newState = infestedLeavesEntity.target.getDefaultState()
-            .with(LeavesBlock.DISTANCE, curState.get(LeavesBlock.DISTANCE))
-            .with(LeavesBlock.PERSISTENT, curState.get(LeavesBlock.PERSISTENT));
+                .with(LeavesBlock.DISTANCE, curState.get(LeavesBlock.DISTANCE))
+                .with(LeavesBlock.PERSISTENT, curState.get(LeavesBlock.PERSISTENT));
         world.setBlockState(blockPos, newState);
     }
 
@@ -95,13 +93,13 @@ public class InfestingLeavesBlockEntity extends BaseBlockEntity implements Color
     public void readNbtWithoutWorldInfo(NbtCompound nbt) {
         progress = nbt.getDouble("progress");
         target = Registries.BLOCK.getOrEmpty(new Identifier(nbt.getString("target")))
-            .flatMap(block -> block instanceof InfestedLeavesBlock infested ? Optional.of(infested) : Optional.empty())
-            .orElse(ModBlocks.INFESTED_LEAVES.values().stream().findFirst().orElseThrow());
+                .flatMap(block -> block instanceof InfestedLeavesBlock infested ? Optional.of(infested) : Optional.empty())
+                .orElse(ModBlocks.INFESTED_LEAVES.values().stream().findFirst().orElseThrow());
     }
 
     public void toNBTWithoutWorldInfo(NbtCompound nbt) {
         nbt.putDouble("progress", progress);
-        nbt.putString("target", RegistryUtils.getId(target).toString());
+        nbt.putString("target", Registries.BLOCK.getId(target).toString());
     }
 
     @Override

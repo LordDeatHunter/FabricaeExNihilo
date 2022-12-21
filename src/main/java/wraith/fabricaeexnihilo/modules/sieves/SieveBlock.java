@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public class SieveBlock extends Block implements BlockEntityProvider, Waterloggable {
 
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
@@ -28,11 +29,11 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
 
     static {
         SHAPE = VoxelShapes.union(
-            createCuboidShape(0.0, 0.0, 0.0, 2.0, 12.0, 2.0),
-            createCuboidShape(14.0, 0.0, 0.0, 16.0, 12.0, 2.0),
-            createCuboidShape(0.0, 0.0, 14.0, 2.0, 12.0, 16.0),
-            createCuboidShape(14.0, 0.0, 14.0, 16.0, 12.0, 16.0),
-            createCuboidShape(0.0, 8.0, 0.0, 16.0, 12.0, 16.0)
+                createCuboidShape(0.0, 0.0, 0.0, 2.0, 12.0, 2.0),
+                createCuboidShape(14.0, 0.0, 0.0, 16.0, 12.0, 2.0),
+                createCuboidShape(0.0, 0.0, 14.0, 2.0, 12.0, 16.0),
+                createCuboidShape(14.0, 0.0, 14.0, 16.0, 12.0, 16.0),
+                createCuboidShape(0.0, 8.0, 0.0, 16.0, 12.0, 16.0)
         );
     }
 

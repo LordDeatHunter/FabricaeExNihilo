@@ -27,36 +27,35 @@ import wraith.fabricaeexnihilo.util.ItemUtils;
 import java.nio.file.Files;
 
 public class FabricaeExNihilo implements ModInitializer {
-
     public static final ItemGroup ITEM_GROUP = FabricItemGroup.builder(new Identifier("fabricaeexnihilo", "general"))
-        .icon(() -> ItemUtils.getExNihiloItemStack("wooden_crook"))
-        .entries((enabledFeatures, entries, operatorEnabled) -> {
-            ModTools.CROOKS.values().stream().map(ItemStack::new).forEach(entries::add);
-            ModTools.HAMMERS.values().stream().map(ItemStack::new).forEach(entries::add);
-            ModBlocks.BARRELS.values().stream().map(ItemStack::new).forEach(entries::add);
-            ModBlocks.CRUCIBLES.values().stream().map(ItemStack::new).forEach(entries::add);
-            ModBlocks.CRUSHED.values().stream().map(ItemStack::new).forEach(entries::add);
-            ModBlocks.INFESTED_LEAVES.values().stream().map(ItemStack::new).forEach(entries::add);
-            ModBlocks.SIEVES.values().stream().map(ItemStack::new).forEach(entries::add);
-            ModBlocks.STRAINERS.values().stream().map(ItemStack::new).forEach(entries::add);
-            ModItems.DOLLS.values().stream().map(ItemStack::new).forEach(entries::add);
-            ModItems.MESHES.values().stream().map(ItemStack::new).forEach(entries::add);
-            ModItems.ORE_PIECES.values().stream().map(ItemStack::new).forEach(entries::add);
-            ModItems.PEBBLES.values().stream().map(ItemStack::new).forEach(entries::add);
-            ModItems.SEEDS.values().stream().map(ItemStack::new).forEach(entries::add);
+            .icon(() -> ItemUtils.getExNihiloItemStack("wooden_crook"))
+            .entries((enabledFeatures, entries, operatorEnabled) -> {
+                ModTools.CROOKS.values().stream().map(ItemStack::new).forEach(entries::add);
+                ModTools.HAMMERS.values().stream().map(ItemStack::new).forEach(entries::add);
+                ModBlocks.BARRELS.values().stream().map(ItemStack::new).forEach(entries::add);
+                ModBlocks.CRUCIBLES.values().stream().map(ItemStack::new).forEach(entries::add);
+                ModBlocks.CRUSHED.values().stream().map(ItemStack::new).forEach(entries::add);
+                ModBlocks.INFESTED_LEAVES.values().stream().map(ItemStack::new).forEach(entries::add);
+                ModBlocks.SIEVES.values().stream().map(ItemStack::new).forEach(entries::add);
+                ModBlocks.STRAINERS.values().stream().map(ItemStack::new).forEach(entries::add);
+                ModItems.DOLLS.values().stream().map(ItemStack::new).forEach(entries::add);
+                ModItems.MESHES.values().stream().map(ItemStack::new).forEach(entries::add);
+                ModItems.ORE_PIECES.values().stream().map(ItemStack::new).forEach(entries::add);
+                ModItems.PEBBLES.values().stream().map(ItemStack::new).forEach(entries::add);
+                ModItems.SEEDS.values().stream().map(ItemStack::new).forEach(entries::add);
 
-            entries.add(new ItemStack(ModItems.COOKED_SILKWORM));
-            entries.add(new ItemStack(ModItems.RAW_SILKWORM));
-            entries.add(new ItemStack(ModItems.PORCELAIN));
-            entries.add(new ItemStack(ModItems.UNFIRED_PORCELAIN_CRUCIBLE));
-            entries.add(new ItemStack(ModItems.SALT_BOTTLE));
-            entries.add(new ItemStack(ModBlocks.END_CAKE));
-            entries.add(new ItemStack(ModBlocks.INFESTING_LEAVES));
-            entries.add(new ItemStack(WitchWaterFluid.BUCKET));
-            entries.add(new ItemStack(BrineFluid.BUCKET));
-            entries.add(new ItemStack(BloodFluid.BUCKET));
-        })
-        .build();
+                entries.add(new ItemStack(ModItems.COOKED_SILKWORM));
+                entries.add(new ItemStack(ModItems.RAW_SILKWORM));
+                entries.add(new ItemStack(ModItems.PORCELAIN));
+                entries.add(new ItemStack(ModItems.UNFIRED_PORCELAIN_CRUCIBLE));
+                entries.add(new ItemStack(ModItems.SALT_BOTTLE));
+                entries.add(new ItemStack(ModBlocks.END_CAKE));
+                entries.add(new ItemStack(ModBlocks.INFESTING_LEAVES));
+                entries.add(new ItemStack(WitchWaterFluid.BUCKET));
+                entries.add(new ItemStack(BrineFluid.BUCKET));
+                entries.add(new ItemStack(BloodFluid.BUCKET));
+            })
+            .build();
     public static final Logger LOGGER = LogManager.getLogger("Fabricae Ex Nihilo");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().setLenient().create();
     public static final FabricaeExNihiloConfig CONFIG = initConfig();

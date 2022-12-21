@@ -16,10 +16,10 @@ import java.util.Map;
 
 public final class BonusEnchantingManager {
     public static final Map<Enchantment, List<Item>> DATA = new HashMap<>();
-    
+
     private BonusEnchantingManager() {
     }
-    
+
     public static void generateDefaultTags() {
         if (FabricaeExNihilo.CONFIG.modules.crucibles.efficiency) {
             DATA.computeIfAbsent(Enchantments.EFFICIENCY, enchantment -> new ArrayList<>()).addAll(ModBlocks.CRUCIBLES.values().stream().map(ItemConvertible::asItem).toList());
@@ -42,5 +42,5 @@ public final class BonusEnchantingManager {
         DATA.computeIfAbsent(Enchantments.EFFICIENCY, enchantment -> new ArrayList<>()).addAll(ModTools.HAMMERS.values());
         DATA.computeIfAbsent(Enchantments.EFFICIENCY, enchantment -> new ArrayList<>()).addAll(ModTools.CROOKS.values());
     }
-    
+
 }

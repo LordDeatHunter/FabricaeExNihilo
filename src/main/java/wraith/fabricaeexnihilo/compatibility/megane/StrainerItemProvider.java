@@ -10,7 +10,7 @@ public class StrainerItemProvider extends ItemProvider<StrainerBlockEntity> {
     public int getSlotCount() {
         return 8;
     }
-    
+
     @Override
     public @NotNull ItemStack getStack(int slot) {
         return getObject().getInventory().get(slot);

@@ -40,7 +40,7 @@ import java.util.Objects;
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public class PluginEntry implements REIClientPlugin {
-    public static final Lazy<EntryIngredient> BARRELS =  new Lazy<>(() -> EntryIngredient.of(ModBlocks.BARRELS.values().stream().map(EntryStacks::of).toList()));
+    public static final Lazy<EntryIngredient> BARRELS = new Lazy<>(() -> EntryIngredient.of(ModBlocks.BARRELS.values().stream().map(EntryStacks::of).toList()));
 
     public static final CategoryIdentifier<AlchemyDisplay> ALCHEMY = CategoryIdentifier.of(id("rei/barrel/alchemy"));
     public static final CategoryIdentifier<CompostDisplay> COMPOSTING = CategoryIdentifier.of(id("rei/barrel/composting"));
@@ -120,10 +120,10 @@ public class PluginEntry implements REIClientPlugin {
         registry.registerRecipeFiller(ToolRecipe.class, ModRecipes.HAMMER, recipe -> new ToolDisplay(recipe, CRUSHING));
         registry.registerRecipeFiller(ToolRecipe.class, ModRecipes.CROOK, recipe -> new ToolDisplay(recipe, CROOK));
         registry.registerRecipeFiller(
-            CrucibleRecipe.class,
-            type -> Objects.equals(ModRecipes.CRUCIBLE, type),
-            CrucibleRecipe::requiresFireproofCrucible,
-            recipe -> new CrucibleDisplay(recipe, FIREPROOF_CRUCIBLE)
+                CrucibleRecipe.class,
+                type -> Objects.equals(ModRecipes.CRUCIBLE, type),
+                CrucibleRecipe::requiresFireproofCrucible,
+                recipe -> new CrucibleDisplay(recipe, FIREPROOF_CRUCIBLE)
         );
         registry.registerRecipeFiller(CrucibleRecipe.class, ModRecipes.CRUCIBLE, recipe -> new CrucibleDisplay(recipe, WOOD_CRUCIBLE));
         registry.registerRecipeFiller(CrucibleHeatRecipe.class, ModRecipes.CRUCIBLE_HEAT, CrucibleHeatDisplay::new);
@@ -153,9 +153,9 @@ public class PluginEntry implements REIClientPlugin {
             }
         }
         list.stream()
-            .flatMap(recipe -> recipe.split(SieveCategory.MAX_OUTPUTS).stream())
-            .map(SieveDisplay::new)
-            .forEachOrdered(registry::add);
+                .flatMap(recipe -> recipe.split(SieveCategory.MAX_OUTPUTS).stream())
+                .map(SieveDisplay::new)
+                .forEachOrdered(registry::add);
     }
 
 }

@@ -16,7 +16,7 @@ public class StrainerProvider implements IBlockComponentProvider {
     public void appendTooltip(ITooltip tooltip, BlockAccessor blockAccessor, IPluginConfig iPluginConfig) {
         if (!(blockAccessor.getBlockEntity() instanceof StrainerBlockEntity strainer)) return;
         var helper = tooltip.getElementHelper();
-    
+
         var count = 0;
         for (ItemStack stack : strainer.getInventory()) {
             IElement item = helper.item(stack);
@@ -24,7 +24,7 @@ public class StrainerProvider implements IBlockComponentProvider {
             else tooltip.append(item);
         }
     }
-    
+
     @Override
     public Identifier getUid() {
         return id("strainer");

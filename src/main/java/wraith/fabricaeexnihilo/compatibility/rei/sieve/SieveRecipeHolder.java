@@ -7,22 +7,12 @@ import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.util.*;
 
-public class SieveRecipeHolder {
-    public final boolean waterlogged;
-    public final EntryIngredient input;
-    public final EntryIngredient mesh;
-    public final Map<EntryIngredient, List<Double>> outputs;
-
-    public SieveRecipeHolder(EntryIngredient input, boolean waterlogged, EntryIngredient mesh, Map<EntryIngredient, List<Double>> outputs) {
-        this.input = input;
-        this.waterlogged = waterlogged;
-        this.mesh = mesh;
-        this.outputs = outputs;
-    }
+public record SieveRecipeHolder(EntryIngredient input, boolean waterlogged, EntryIngredient mesh,
+                                Map<EntryIngredient, List<Double>> outputs) {
 
     public static List<SieveRecipeHolder> fromRecipe(SieveRecipe recipe) {
         var holders = new ArrayList<SieveRecipeHolder>();
-    
+
         var output = EntryIngredients.of(recipe.getResult());
 
         for (var entry : recipe.getRolls().entrySet()) {

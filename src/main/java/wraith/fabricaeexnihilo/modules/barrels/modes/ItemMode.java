@@ -18,19 +18,19 @@ public class ItemMode extends BarrelMode {
                             .fieldOf("stack")
                             .forGetter(ItemMode::getStack))
             .apply(instance, ItemMode::new));
-    
+
     private final ItemStack stack;
-    
+
     public ItemMode(ItemStack stack) {
         super();
         this.stack = stack == null ? ItemStack.EMPTY : stack;
     }
-    
+
     @Override
     public String getId() {
         return "item";
     }
-    
+
     @Override
     public BarrelMode copy() {
         return new ItemMode(stack.copy());
@@ -44,29 +44,29 @@ public class ItemMode extends BarrelMode {
     public ItemStack getStack() {
         return stack;
     }
-    
+
     @Override
     public long extractItem(ItemVariant item, long maxAmount, TransactionContext transaction, BarrelItemStorage storage) {
         StoragePreconditions.notBlankNotNegative(item, maxAmount);
         if (!ItemVariant.of(stack).equals(item)) return 0;
-        
+
         storage.updateSnapshots(transaction);
         var amount = Math.min(maxAmount, stack.getCount());
         stack.decrement((int) amount);
         if (stack.isEmpty()) storage.barrel.setMode(new EmptyMode());
         return amount;
     }
-    
+
     @Override
     public ItemVariant getItem() {
         return ItemVariant.of(stack);
     }
-    
+
     @Override
     public long getItemAmount() {
         return stack.getCount();
     }
-    
+
     @Override
     public long getItemCapacity() {
         return stack.getMaxCount();

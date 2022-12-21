@@ -13,22 +13,23 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.mixins.BlockWithEntityInvoker;
 
+@SuppressWarnings("deprecation")
 public class InfestingLeavesBlock extends LeavesBlock implements BlockEntityProvider, NonInfestableLeavesBlock {
     public InfestingLeavesBlock(FabricBlockSettings settings) {
         super(settings);
     }
-    
+
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.INVISIBLE;
     }
-    
+
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new InfestingLeavesBlockEntity(pos, state);
     }
-    
+
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {

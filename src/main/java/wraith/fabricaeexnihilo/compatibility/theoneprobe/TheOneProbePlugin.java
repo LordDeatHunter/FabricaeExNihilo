@@ -11,5 +11,5 @@ public class TheOneProbePlugin implements ITheOneProbePlugin {
         api.registerProvider(new SieveProbeInfoProvider());
         api.registerProvider(new InfestingLeavesProvider());
     }
-    
+
 }

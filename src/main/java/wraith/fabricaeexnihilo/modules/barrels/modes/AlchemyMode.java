@@ -38,26 +38,27 @@ public class AlchemyMode extends BarrelMode {
         mode.byproduct = byproduct.orElse(null);
         return mode;
     }));
-    
+
     private final BarrelMode before;
     private final BarrelMode after;
     private final EntityStack toSpawn;
     private int progress;
     private final int duration;
     private @Nullable Loot byproduct;
+
     public AlchemyMode(BarrelMode before, AlchemyRecipe recipe) {
         this(before, recipe.getResult().copy(), recipe.getToSpawn().copy(), recipe.getDelay());
         this.byproduct = recipe.getByproduct();
     }
-    
+
     public AlchemyMode(BarrelMode before, BarrelMode after, int duration) {
         this(before, after, EntityStack.EMPTY, duration);
     }
-    
+
     public AlchemyMode(BarrelMode before, BarrelMode after, EntityStack toSpawn, int duration) {
         this(before, after, toSpawn, 0, duration);
     }
-    
+
     public AlchemyMode(BarrelMode before, BarrelMode after, EntityStack toSpawn, int progress, int duration) {
         super();
         this.before = before;
@@ -66,12 +67,12 @@ public class AlchemyMode extends BarrelMode {
         this.progress = progress;
         this.duration = duration;
     }
-    
+
     @Override
     public @NotNull String getId() {
         return "alchemy";
     }
-    
+
     @Override
     public BarrelMode copy() {
         return new AlchemyMode(before.copy(), after.copy(), toSpawn.copy(), progress, duration);
@@ -103,23 +104,23 @@ public class AlchemyMode extends BarrelMode {
             barrel.setMode(after);
         }
     }
-    
+
     public int getDuration() {
         return duration;
     }
-    
+
     public int getProgress() {
         return progress;
     }
-    
+
     public BarrelMode getBefore() {
         return before;
     }
-    
+
     public BarrelMode getAfter() {
         return after;
     }
-    
+
     public EntityStack getToSpawn() {
         return toSpawn;
     }

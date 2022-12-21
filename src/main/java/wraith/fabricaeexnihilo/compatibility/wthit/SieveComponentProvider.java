@@ -12,7 +12,7 @@ public class SieveComponentProvider implements IBlockComponentProvider {
     public void appendBody(ITooltip tooltip, IBlockAccessor accessor, IPluginConfig config) {
         SieveBlockEntity sieve = accessor.getBlockEntity();
         if (sieve == null) return;
-    
+
         if (!sieve.getMesh().isEmpty()) {
             tooltip.addLine(Text.translatable("fabricaeexnihilo.hud.sieve.mesh", sieve.getMesh().getName()));
         }

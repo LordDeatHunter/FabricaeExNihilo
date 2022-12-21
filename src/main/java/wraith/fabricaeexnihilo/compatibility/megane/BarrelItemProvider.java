@@ -12,7 +12,7 @@ class BarrelItemProvider extends ItemProvider<BarrelBlockEntity> {
         if (!(getObject().getMode() instanceof ItemMode)) return 0;
         return 1;
     }
-    
+
     @Override
     public @NotNull ItemStack getStack(int slot) {
         if (!(getObject().getMode() instanceof ItemMode mode)) return ItemStack.EMPTY;

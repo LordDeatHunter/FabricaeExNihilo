@@ -14,17 +14,16 @@ import net.minecraft.util.math.BlockPos;
 import java.util.Optional;
 
 public class EntityStack {
-
     public static final Codec<EntityStack> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-        Registries.ENTITY_TYPE.getCodec()
-            .fieldOf("type")
-            .forGetter(EntityStack::getType),
-        Codec.INT
-            .optionalFieldOf("size")
-            .forGetter(entityStack -> Optional.of(entityStack.getSize())),
-        NbtCompound.CODEC
-            .optionalFieldOf("data")
-            .forGetter(entityStack -> Optional.of(entityStack.getData()))
+            Registries.ENTITY_TYPE.getCodec()
+                    .fieldOf("type")
+                    .forGetter(EntityStack::getType),
+            Codec.INT
+                    .optionalFieldOf("size")
+                    .forGetter(entityStack -> Optional.of(entityStack.getSize())),
+            NbtCompound.CODEC
+                    .optionalFieldOf("data")
+                    .forGetter(entityStack -> Optional.of(entityStack.getData()))
     ).apply(instance, (type, size, data) -> new EntityStack(type, size.orElse(1), data.orElse(new NbtCompound()))));
     public static final EntityStack EMPTY = new EntityStack(EntityType.PIG, 0);
     private EntityType<?> type;
@@ -47,10 +46,6 @@ public class EntityStack {
 
     public boolean isEmpty() {
         return this == EMPTY || size == 0;
-    }
-
-    public EntityType<?> getCategory() {
-        return type;
     }
 
     public EntityType<?> getType() {

@@ -6,7 +6,6 @@ import net.minecraft.item.ToolMaterials;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.materials.ModToolMaterials;
 import wraith.fabricaeexnihilo.modules.tools.CrookItem;
 import wraith.fabricaeexnihilo.modules.tools.HammerItem;

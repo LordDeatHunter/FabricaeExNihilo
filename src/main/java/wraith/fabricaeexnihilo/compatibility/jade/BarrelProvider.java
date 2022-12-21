@@ -15,6 +15,7 @@ import wraith.fabricaeexnihilo.modules.barrels.modes.ItemMode;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
+@SuppressWarnings("UnstableApiUsage")
 public class BarrelProvider implements IBlockComponentProvider {
     @Override
     public void appendTooltip(ITooltip tooltip, BlockAccessor blockAccessor, IPluginConfig iPluginConfig) {
@@ -38,7 +39,7 @@ public class BarrelProvider implements IBlockComponentProvider {
             tooltip.add(Text.translatable("fabricaeexnihilo.hud.hud.alchemy.processing", (int) (100.0 / alchemyMode.getDuration() * alchemyMode.getProgress())));
         }
     }
-    
+
     @Override
     public Identifier getUid() {
         return id("barrel");

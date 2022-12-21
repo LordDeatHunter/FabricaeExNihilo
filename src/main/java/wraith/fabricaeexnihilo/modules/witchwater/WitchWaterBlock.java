@@ -1,6 +1,7 @@
 package wraith.fabricaeexnihilo.modules.witchwater;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.FluidBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -23,12 +24,11 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.ModEffects;
-import wraith.fabricaeexnihilo.modules.base.BaseFluidBlock;
 import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterEntityRecipe;
 import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterWorldRecipe;
 
 @SuppressWarnings("deprecation")
-public class WitchWaterBlock extends BaseFluidBlock {
+public class WitchWaterBlock extends FluidBlock {
 
     public WitchWaterBlock(FlowableFluid fluid, Settings settings) {
         super(fluid, settings);
@@ -140,12 +140,12 @@ public class WitchWaterBlock extends BaseFluidBlock {
             }
             if (livingEntity instanceof PlayerEntity player && !player.isCreative()) {
                 FabricaeExNihilo.CONFIG.modules.witchWater.effects.forEach((effect, durationLevel) ->
-                    applyStatusEffect(player,
-                        new StatusEffectInstance(Registries.STATUS_EFFECT.get(new Identifier(effect)),
-                            durationLevel.duration,
-                            durationLevel.amplifier
+                        applyStatusEffect(player,
+                                new StatusEffectInstance(Registries.STATUS_EFFECT.get(new Identifier(effect)),
+                                        durationLevel.duration,
+                                        durationLevel.amplifier
+                                )
                         )
-                    )
                 );
                 return;
             }

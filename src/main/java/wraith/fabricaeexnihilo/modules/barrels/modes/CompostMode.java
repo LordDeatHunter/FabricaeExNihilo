@@ -32,32 +32,32 @@ public class CompostMode extends BarrelMode {
                             .forGetter(CompostMode::getColor)
             )
             .apply(instance, CompostMode::new));
-    
+
     private final ItemStack result;
     private double progress;
     private double amount;
     private Color color;
-    
+
     public CompostMode(CompostRecipe recipe) {
         this(recipe.getResult(), recipe.getIncrement(), recipe.getColor());
     }
-    
+
     public CompostMode(ItemStack result, double amount, Color color) {
         this(result, amount, 0, color);
     }
-    
+
     private CompostMode(ItemStack result, double amount, double progress, Color color) {
         this.result = result;
         this.amount = amount;
         this.color = color;
         this.progress = progress;
     }
-    
+
     @Override
     public String getId() {
         return "compost";
     }
-    
+
     @Override
     public BarrelMode copy() {
         return new CompostMode(result.copy(), amount, progress, color);
@@ -77,23 +77,23 @@ public class CompostMode extends BarrelMode {
             barrel.markDirty();
         }
     }
-    
+
     public double getProgress() {
         return progress;
     }
-    
+
     public ItemStack getResult() {
         return result;
     }
-    
+
     public double getAmount() {
         return amount;
     }
-    
+
     public Color getColor() {
         return color;
     }
-    
+
     @Override
     public long insertItem(ItemVariant item, long maxAmount, TransactionContext transaction, BarrelItemStorage storage) {
         var recipe = CompostRecipe.find(item.toStack(), storage.barrel.getWorld());
@@ -106,7 +106,7 @@ public class CompostMode extends BarrelMode {
         }
         return 0;
     }
-    
+
     @Override
     public long getItemCapacity() {
         return 1;

@@ -35,27 +35,27 @@ public class FluidTransformationRecipeJS extends RecipeJS {
     @Override
     public boolean hasInput(IngredientMatch ingredientMatch) {
         return StreamSupport.stream(ingredientMatch.getAllItems().spliterator(), false)
-            .map(ItemStack::getItem)
-            .filter(BlockItem.class::isInstance)
-            .map(BlockItem.class::cast)
-            .map(BlockItem::getBlock)
-            .anyMatch(check -> catalyst.contains(check.getRegistryEntry()));
+                .map(ItemStack::getItem)
+                .filter(BlockItem.class::isInstance)
+                .map(BlockItem.class::cast)
+                .map(BlockItem::getBlock)
+                .anyMatch(check -> catalyst.contains(check.getRegistryEntry()));
     }
 
     @Override
     public boolean replaceInput(IngredientMatch match, Ingredient with, ItemInputTransformer transformer) {
         if (hasInput(match)) {
             var oldIngredient = Ingredient.ofItems(catalyst.stream()
-                .map(RegistryEntry::value)
-                .map(Block::asItem)
-                .toArray(Item[]::new));
+                    .map(RegistryEntry::value)
+                    .map(Block::asItem)
+                    .toArray(Item[]::new));
 
             catalyst = RegistryEntryList.of(Block::getRegistryEntry, Arrays.stream(transformer.transform(this, match, oldIngredient, with).getMatchingStacks())
-                .map(ItemStack::getItem)
-                .filter(BlockItem.class::isInstance)
-                .map(BlockItem.class::cast)
-                .map(BlockItem::getBlock)
-                .toList());
+                    .map(ItemStack::getItem)
+                    .filter(BlockItem.class::isInstance)
+                    .map(BlockItem.class::cast)
+                    .map(BlockItem::getBlock)
+                    .toList());
             return true;
         }
 

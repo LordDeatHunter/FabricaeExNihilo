@@ -31,15 +31,15 @@ import wraith.fabricaeexnihilo.FabricaeExNihilo;
 public class StrainerBlock extends BlockWithEntity implements Waterloggable {
 
     public static final VoxelShape SHAPE = VoxelShapes.union(
-        createCuboidShape(0, 0, 0, 2, 16, 2),
-        createCuboidShape(14, 0, 14, 16, 16, 16),
-        createCuboidShape(0, 0, 14, 2, 16, 16),
-        createCuboidShape(14, 0, 0, 16, 16, 2),
-        VoxelShapes.combineAndSimplify(
-            createCuboidShape(0.5, 2, 0.5, 15.5, 15, 15.5),
-            createCuboidShape(1.5, 2, 1.5, 14.5, 15, 14.5),
-            BooleanBiFunction.ONLY_FIRST
-        )
+            createCuboidShape(0, 0, 0, 2, 16, 2),
+            createCuboidShape(14, 0, 14, 16, 16, 16),
+            createCuboidShape(0, 0, 14, 2, 16, 16),
+            createCuboidShape(14, 0, 0, 16, 16, 2),
+            VoxelShapes.combineAndSimplify(
+                    createCuboidShape(0.5, 2, 0.5, 15.5, 15, 15.5),
+                    createCuboidShape(1.5, 2, 1.5, 14.5, 15, 14.5),
+                    BooleanBiFunction.ONLY_FIRST
+            )
     );
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 

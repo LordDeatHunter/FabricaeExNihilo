@@ -26,9 +26,9 @@ public class WitchWaterWorldRecipeJS extends RecipeJS {
     @Override
     public void create(RecipeArguments listJS) {
         result = new WeightedList((MapJS.orEmpty(listJS.get(0))).entrySet()
-            .stream()
-            .map(entry -> new Pair<>(Registries.BLOCK.get(new Identifier((String) entry.getKey())), ((Number) entry.getValue()).intValue()))
-            .toList());
+                .stream()
+                .map(entry -> new Pair<>(Registries.BLOCK.get(new Identifier((String) entry.getKey())), ((Number) entry.getValue()).intValue()))
+                .toList());
         target = FENKubePlugin.getEntryList(listJS, 1, Registries.FLUID);
     }
 

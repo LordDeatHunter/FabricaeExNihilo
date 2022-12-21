@@ -19,16 +19,16 @@ import wraith.fabricaeexnihilo.recipe.barrel.CompostRecipe;
 @SuppressWarnings("UnstableApiUsage")
 public class EmptyMode extends BarrelMode {
     public static final Codec<EmptyMode> CODEC = Codec.unit(new EmptyMode());
-    
+
     public EmptyMode() {
         super();
     }
-    
+
     @Override
     public String getId() {
         return "empty";
     }
-    
+
     @Override
     public BarrelMode copy() {
         return new EmptyMode();
@@ -57,12 +57,12 @@ public class EmptyMode extends BarrelMode {
         storage.barrel.setMode(new CompostMode(recipe.get()));
         return 1;
     }
-    
+
     @Override
     public long getItemCapacity() {
         return 1;
     }
-    
+
     @Override
     public long insertFluid(FluidVariant fluid, long maxAmount, TransactionContext transaction, BarrelFluidStorage storage) {
         StoragePreconditions.notBlankNotNegative(fluid, maxAmount);
@@ -73,7 +73,7 @@ public class EmptyMode extends BarrelMode {
         storage.barrel.setMode(new FluidMode(fluid, amount));
         return amount;
     }
-    
+
     @Override
     public long getFluidCapacity() {
         return FluidConstants.BUCKET;

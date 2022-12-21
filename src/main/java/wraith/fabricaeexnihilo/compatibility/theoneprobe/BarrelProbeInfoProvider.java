@@ -21,12 +21,12 @@ class BarrelProbeInfoProvider implements IProbeInfoProvider {
     public Identifier getID() {
         return id("barrel");
     }
-    
+
     @Override
     public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, PlayerEntity player, World world, BlockState blockState, IProbeHitData data) {
         if (!(blockState.getBlock() instanceof BarrelBlock) || !(world.getBlockEntity(data.getPos()) instanceof BarrelBlockEntity barrel))
             return;
-        
+
         var barrelMode = barrel.getMode();
         if (barrelMode instanceof CompostMode compostMode) {
             if (compostMode.getAmount() < 1) {

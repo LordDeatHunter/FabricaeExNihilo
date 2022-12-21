@@ -16,7 +16,7 @@ public class InfestingLeavesProvider implements IBlockComponentProvider {
         if (!(blockAccessor.getBlockEntity() instanceof InfestingLeavesBlockEntity leaves)) return;
         tooltip.add(Text.translatable("fabricaeexnihilo.hud.infesting_leaves.progress", (int) (leaves.getProgress() * 100)));
     }
-    
+
     @Override
     public Identifier getUid() {
         return id("infesting_leaves");

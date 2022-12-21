@@ -9,7 +9,6 @@ import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
-import wraith.fabricaeexnihilo.mixins.ItemModelGeneratorAccess;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModItems;
 import wraith.fabricaeexnihilo.modules.ModTools;
@@ -104,19 +103,19 @@ public class ModelProvider extends FabricModelProvider {
         register(new Model(Optional.of(new Identifier("block/acacia_leaves" /* We use acacia because the rubber texture has color */)), Optional.empty()), infestedLeaves.get(id("infested_rubber_leaves")), new TextureMap(), generator);
 
         generator.blockStateCollector
-            .accept(
-                VariantsBlockStateSupplier.create(ModBlocks.END_CAKE)
-                    .coordinate(
-                        BlockStateVariantMap.create(Properties.BITES)
-                            .register(0, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockModelId(ModBlocks.END_CAKE)))
-                            .register(1, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice1")))
-                            .register(2, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice2")))
-                            .register(3, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice3")))
-                            .register(4, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice4")))
-                            .register(5, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice5")))
-                            .register(6, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice6")))
-                    )
-            );
+                .accept(
+                        VariantsBlockStateSupplier.create(ModBlocks.END_CAKE)
+                                .coordinate(
+                                        BlockStateVariantMap.create(Properties.BITES)
+                                                .register(0, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockModelId(ModBlocks.END_CAKE)))
+                                                .register(1, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice1")))
+                                                .register(2, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice2")))
+                                                .register(3, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice3")))
+                                                .register(4, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice4")))
+                                                .register(5, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice5")))
+                                                .register(6, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice6")))
+                                )
+                );
     }
 
     @Override
@@ -141,13 +140,13 @@ public class ModelProvider extends FabricModelProvider {
         generator.register(ModItems.PORCELAIN, Models.GENERATED);
         generator.register(ModBlocks.END_CAKE.asItem(), Models.GENERATED);
 
-        var writer = ((ItemModelGeneratorAccess) generator).getWriter();
+        var writer = generator.getWriter();
         // Special case: looks like block, but isn't
         CRUCIBLE_MODEL.upload(ModelIds.getItemModelId(ModItems.UNFIRED_PORCELAIN_CRUCIBLE), TextureMap.all(id("block/unfired_porcelain_crucible")), writer);
     }
 
     private void uploadModel(Model model, Item item, Identifier texture, ItemModelGenerator generator) {
-        uploadModel(model, ModelIds.getItemModelId(item), TextureMap.layer0(texture), ((ItemModelGeneratorAccess) generator).getWriter());
+        uploadModel(model, ModelIds.getItemModelId(item), TextureMap.layer0(texture), generator.getWriter());
     }
 
     private void register(Model model, Block block, Identifier texture, BlockStateModelGenerator generator) {

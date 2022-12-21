@@ -30,16 +30,16 @@ public abstract class EnchantmentHelperMixin {
     private static void getHighestApplicableEnchantmentsAtPower(int power, ItemStack stack, boolean hasTreasure, CallbackInfoReturnable<List<EnchantmentLevelEntry>> cir) {
         var list = cir.getReturnValue();
         Registries.ENCHANTMENT.stream()
-            .filter(enchantment -> (hasTreasure || !enchantment.isTreasure()) && BonusEnchantingManager.DATA.getOrDefault(enchantment, Collections.emptyList()).contains(stack.getItem()))
-            .map(enchantmentLevelEntry -> {
-                for (var level = enchantmentLevelEntry.getMaxLevel(); level > enchantmentLevelEntry.getMinLevel() - 1; level--) {
-                    if (power >= enchantmentLevelEntry.getMinPower(level) && power <= enchantmentLevelEntry.getMaxPower(level)) {
-                        return new EnchantmentLevelEntry(enchantmentLevelEntry, level);
+                .filter(enchantment -> (hasTreasure || !enchantment.isTreasure()) && BonusEnchantingManager.DATA.getOrDefault(enchantment, Collections.emptyList()).contains(stack.getItem()))
+                .map(enchantmentLevelEntry -> {
+                    for (var level = enchantmentLevelEntry.getMaxLevel(); level > enchantmentLevelEntry.getMinLevel() - 1; level--) {
+                        if (power >= enchantmentLevelEntry.getMinPower(level) && power <= enchantmentLevelEntry.getMaxPower(level)) {
+                            return new EnchantmentLevelEntry(enchantmentLevelEntry, level);
+                        }
                     }
-                }
-                return new EnchantmentLevelEntry(enchantmentLevelEntry, 1);
-            })
-            .filter(tag -> list.stream().noneMatch(entry -> entry.enchantment == tag.enchantment && entry.level == tag.level))
-            .forEach(list::add);
+                    return new EnchantmentLevelEntry(enchantmentLevelEntry, 1);
+                })
+                .filter(tag -> list.stream().noneMatch(entry -> entry.enchantment == tag.enchantment && entry.level == tag.level))
+                .forEach(list::add);
     }
 }

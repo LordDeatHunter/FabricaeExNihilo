@@ -44,8 +44,8 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
     public static final Identifier BLOCK_ENTITY_ID = id("barrel");
 
     public static final BlockEntityType<BarrelBlockEntity> TYPE = FabricBlockEntityTypeBuilder.create(
-        BarrelBlockEntity::new,
-        ModBlocks.BARRELS.values().toArray(new BarrelBlock[0])
+            BarrelBlockEntity::new,
+            ModBlocks.BARRELS.values().toArray(new BarrelBlock[0])
     ).build(null);
 
     static {
@@ -58,15 +58,15 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
     private final EnchantmentContainer enchantments = new EnchantmentContainer();
     private BarrelMode mode;
     private int tickCounter;
-    
+
     public BarrelBlockEntity(BlockPos pos, BlockState state) {
         super(TYPE, pos, state);
         this.mode = new EmptyMode();
         itemStorage = new BarrelItemStorage(this);
         fluidStorage = new BarrelFluidStorage(this);
         tickCounter = world == null
-            ? FabricaeExNihilo.CONFIG.modules.barrels.tickRate
-            : world.random.nextInt(FabricaeExNihilo.CONFIG.modules.barrels.tickRate);
+                ? FabricaeExNihilo.CONFIG.modules.barrels.tickRate
+                : world.random.nextInt(FabricaeExNihilo.CONFIG.modules.barrels.tickRate);
     }
 
     public static void ticker(World world, BlockPos blockPos, BlockState blockState, BarrelBlockEntity barrelEntity) {

@@ -26,19 +26,19 @@ public class FluidTagProvider extends FabricTagProvider.FluidTagProvider {
         getOrCreateTagBuilder(ConventionalFluidTags.LAVA);
 
         getOrCreateTagBuilder(ModTags.TRUE_LAVA)
-            .add(Fluids.LAVA, Fluids.FLOWING_LAVA);
+                .add(Fluids.LAVA, Fluids.FLOWING_LAVA);
         getOrCreateTagBuilder(ModTags.TRUE_WATER)
-            .add(Fluids.WATER, Fluids.FLOWING_WATER);
+                .add(Fluids.WATER, Fluids.FLOWING_WATER);
         getOrCreateTagBuilder(ModTags.Common.BRINE)
-            .add(BrineFluid.FLOWING, BrineFluid.STILL);
+                .add(BrineFluid.FLOWING, BrineFluid.STILL);
         getOrCreateTagBuilder(ModTags.Common.BLOOD)
-            .add(BloodFluid.FLOWING, BloodFluid.STILL);
+                .add(BloodFluid.FLOWING, BloodFluid.STILL);
         getOrCreateTagBuilder(ModTags.WITCHWATER)
-            .add(WitchWaterFluid.FLOWING, WitchWaterFluid.STILL);
+                .add(WitchWaterFluid.FLOWING, WitchWaterFluid.STILL);
         getOrCreateTagBuilder(ModTags.HOT)
-            .addTag(ConventionalFluidTags.LAVA)
-            .addOptionalTag(new Identifier("techreborn", "nitro_diesel"));
+                .addTag(ConventionalFluidTags.LAVA)
+                .addOptionalTag(new Identifier("techreborn", "nitro_diesel"));
         getOrCreateTagBuilder(ConventionalFluidTags.MILK)
-            .add(MilkFluid.FLOWING, MilkFluid.STILL);
+                .add(MilkFluid.FLOWING, MilkFluid.STILL);
     }
 }

@@ -24,13 +24,13 @@ import wraith.fabricaeexnihilo.util.CodecUtils;
 @SuppressWarnings("UnstableApiUsage")
 public class FluidMode extends BarrelMode {
     public static final Codec<FluidMode> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            CodecUtils.FLUID_VARIANT
-                .fieldOf("fluid")
-                .forGetter(FluidMode::getFluid),
-            Codec.LONG
-                .fieldOf("amount")
-                .forGetter(FluidMode::getAmount))
-        .apply(instance, FluidMode::new));
+                    CodecUtils.FLUID_VARIANT
+                            .fieldOf("fluid")
+                            .forGetter(FluidMode::getFluid),
+                    Codec.LONG
+                            .fieldOf("amount")
+                            .forGetter(FluidMode::getAmount))
+            .apply(instance, FluidMode::new));
     private final FluidVariant fluid;
     private long amount;
 

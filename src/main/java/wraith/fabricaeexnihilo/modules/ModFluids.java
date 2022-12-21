@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Material;
 import net.minecraft.item.Items;
-import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.base.AbstractFluid;
 import wraith.fabricaeexnihilo.modules.fluids.BloodFluid;
 import wraith.fabricaeexnihilo.modules.fluids.BrineFluid;
@@ -15,18 +14,11 @@ import wraith.fabricaeexnihilo.modules.witchwater.WitchWaterFluid;
 import java.util.List;
 
 public final class ModFluids {
-
     public static final List<AbstractFluid> FLUIDS = List.of(
-        WitchWaterFluid.STILL,
-        MilkFluid.STILL,
-        BrineFluid.STILL,
-        BloodFluid.STILL
-    );
-    public static final List<AbstractFluid> FLUIDS_FLOWING = List.of(
-        WitchWaterFluid.FLOWING,
-        MilkFluid.FLOWING,
-        BrineFluid.FLOWING,
-        BloodFluid.FLOWING
+            WitchWaterFluid.STILL,
+            MilkFluid.STILL,
+            BrineFluid.STILL,
+            BloodFluid.STILL
     );
 
     public static AbstractBlock.Settings getBlockSettings() {

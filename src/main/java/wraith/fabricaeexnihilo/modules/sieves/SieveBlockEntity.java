@@ -12,6 +12,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -28,7 +29,6 @@ import wraith.fabricaeexnihilo.modules.base.BaseBlockEntity;
 import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.SieveRecipe;
 import wraith.fabricaeexnihilo.util.ItemUtils;
-import wraith.fabricaeexnihilo.util.RegistryUtils;
 
 import java.util.*;
 
@@ -38,13 +38,14 @@ import static wraith.fabricaeexnihilo.modules.sieves.SieveBlock.WATERLOGGED;
 public class SieveBlockEntity extends BaseBlockEntity {
 
     public static final BlockEntityType<SieveBlockEntity> TYPE = FabricBlockEntityTypeBuilder.create(
-        SieveBlockEntity::new,
-        ModBlocks.SIEVES.values().toArray(new SieveBlock[0])
+            SieveBlockEntity::new,
+            ModBlocks.SIEVES.values().toArray(new SieveBlock[0])
     ).build(null);
     public static final Identifier BLOCK_ENTITY_ID = id("sieve");
     double progress = 0.0;
     private ItemStack contents = ItemStack.EMPTY;
     private ItemStack mesh = ItemStack.EMPTY;
+
     public SieveBlockEntity(BlockPos pos, BlockState state) {
         super(TYPE, pos, state);
     }
@@ -78,10 +79,10 @@ public class SieveBlockEntity extends BaseBlockEntity {
             markDirty();
             return ActionResult.SUCCESS;
         } else if (mesh.isEmpty() &&
-            world.getRecipeManager()
-                .listAllOfType(ModRecipes.SIEVE)
-                .stream()
-                .anyMatch(recipe -> recipe.getRolls().containsKey(RegistryUtils.getId(item)))
+                world.getRecipeManager()
+                        .listAllOfType(ModRecipes.SIEVE)
+                        .stream()
+                        .anyMatch(recipe -> recipe.getRolls().containsKey(Registries.ITEM.getId(item)))
         ) {
             // Add mesh
             mesh = ItemUtils.ofSize(held, 1);
@@ -93,7 +94,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
         }
 
         // Add a block
-        if (held.isEmpty() || SieveRecipe.find(held.getItem(), state.get(WATERLOGGED), RegistryUtils.getId(mesh.getItem()), world).isEmpty()) {
+        if (held.isEmpty() || SieveRecipe.find(held.getItem(), state.get(WATERLOGGED), Registries.ITEM.getId(mesh.getItem()), world).isEmpty()) {
             return ActionResult.PASS;
         }
         final ItemStack finalHeld = held;
@@ -110,13 +111,13 @@ public class SieveBlockEntity extends BaseBlockEntity {
         var hasteLevel = FabricaeExNihilo.CONFIG.modules.sieves.haste ? (haste == null ? -1 : haste.getAmplifier()) + 1 : 0;
 
         progress += FabricaeExNihilo.CONFIG.modules.sieves.baseProgress
-            + FabricaeExNihilo.CONFIG.modules.sieves.efficiencyScaleFactor * efficiency
-            + FabricaeExNihilo.CONFIG.modules.sieves.hasteScaleFactor * hasteLevel;
+                + FabricaeExNihilo.CONFIG.modules.sieves.efficiencyScaleFactor * efficiency
+                + FabricaeExNihilo.CONFIG.modules.sieves.hasteScaleFactor * hasteLevel;
 
         //TODO: spawn some particles
         if (progress > 1.0) {
             // The utility method for multiple items is less neat to use
-            for (var result : SieveRecipe.find(contents.getItem(), getCachedState().get(WATERLOGGED), RegistryUtils.getId(mesh.getItem()), world)) {
+            for (var result : SieveRecipe.find(contents.getItem(), getCachedState().get(WATERLOGGED), Registries.ITEM.getId(mesh.getItem()), world)) {
                 ItemScatterer.spawn(world, pos.getX(), pos.getY() + 1, pos.getZ(), result.createStack(world.random));
             }
             progress = 0.0;
@@ -154,17 +155,17 @@ public class SieveBlockEntity extends BaseBlockEntity {
                 sieves.add(sieve);
                 // Add adjacent locations to test to the stack
                 Arrays.stream(Direction.values())
-                    // Horizontals
-                    .filter(dir -> dir.getAxis().isHorizontal())
-                    // to BlockPos
-                    .map(popped::offset)
-                    // Remove already tested positions
-                    .filter(dir -> !tested.contains(dir) && !stack.contains(dir))
-                    // Remove positions too far away
-                    .filter(dir -> Math.abs(this.pos.getX() - dir.getX()) <= FabricaeExNihilo.CONFIG.modules.sieves.sieveRadius &&
-                        Math.abs(this.pos.getZ() - dir.getZ()) <= FabricaeExNihilo.CONFIG.modules.sieves.sieveRadius)
-                    // Add to the stack to be processed
-                    .forEach(stack::add);
+                        // Horizontals
+                        .filter(dir -> dir.getAxis().isHorizontal())
+                        // to BlockPos
+                        .map(popped::offset)
+                        // Remove already tested positions
+                        .filter(dir -> !tested.contains(dir) && !stack.contains(dir))
+                        // Remove positions too far away
+                        .filter(dir -> Math.abs(this.pos.getX() - dir.getX()) <= FabricaeExNihilo.CONFIG.modules.sieves.sieveRadius &&
+                                Math.abs(this.pos.getZ() - dir.getZ()) <= FabricaeExNihilo.CONFIG.modules.sieves.sieveRadius)
+                        // Add to the stack to be processed
+                        .forEach(stack::add);
             }
         }
 
@@ -251,8 +252,6 @@ public class SieveBlockEntity extends BaseBlockEntity {
         nbt.put("contents", contents.writeNbt(new NbtCompound()));
         nbt.putDouble("progress", progress);
     }
-
-
 
 
 }

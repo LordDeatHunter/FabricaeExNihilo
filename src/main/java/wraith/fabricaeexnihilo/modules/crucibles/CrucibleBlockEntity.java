@@ -49,8 +49,8 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
     public static final Identifier BLOCK_ENTITY_ID = id("crucible");
 
     public static final BlockEntityType<CrucibleBlockEntity> TYPE = FabricBlockEntityTypeBuilder.create(
-        CrucibleBlockEntity::new,
-        ModBlocks.CRUCIBLES.values().toArray(new CrucibleBlock[0])
+            CrucibleBlockEntity::new,
+            ModBlocks.CRUCIBLES.values().toArray(new CrucibleBlock[0])
     ).build(null);
 
     static {
@@ -71,12 +71,12 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
     private long queued = 0;
     private ItemStack renderStack = ItemStack.EMPTY;
     private int tickCounter;
-    
+
     public CrucibleBlockEntity(BlockPos pos, BlockState state) {
         super(TYPE, pos, state);
         tickCounter = world == null
-            ? FabricaeExNihilo.CONFIG.modules.crucibles.tickRate
-            : world.random.nextInt(FabricaeExNihilo.CONFIG.modules.crucibles.tickRate);
+                ? FabricaeExNihilo.CONFIG.modules.crucibles.tickRate
+                : world.random.nextInt(FabricaeExNihilo.CONFIG.modules.crucibles.tickRate);
     }
 
     @SuppressWarnings("unused") // lambda stuff
@@ -157,7 +157,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
     public ItemStack getRenderStack() {
         return renderStack;
     }
-    
+
     public boolean isFireproof() {
         return getCachedState().getBlock() instanceof CrucibleBlock crucible && crucible.isFireproof();
     }
@@ -237,7 +237,8 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
         nbt.put("enchantments", enchantments.writeNbt());
     }
 
-    private record CrucibleSnapshot(long contained, long queued, FluidVariant fluid, boolean requiresFireproof, ItemStack renderStack) {
+    private record CrucibleSnapshot(long contained, long queued, FluidVariant fluid, boolean requiresFireproof,
+                                    ItemStack renderStack) {
     }
 
     private class CrucibleFluidStorage extends SnapshotParticipant<CrucibleSnapshot> implements SingleSlotStorage<FluidVariant>, ExtractionOnlyStorage<FluidVariant> {

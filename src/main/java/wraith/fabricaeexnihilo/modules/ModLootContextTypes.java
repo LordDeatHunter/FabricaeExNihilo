@@ -12,7 +12,7 @@ public class ModLootContextTypes {
             .require(LootContextParameters.BLOCK_STATE)
             .require(LootContextParameters.ORIGIN)
             .build();
-    
+
     public static void register() {
         LootContextTypesAccess.fen$getMap().put(id("strainer"), STRAINER);
     }

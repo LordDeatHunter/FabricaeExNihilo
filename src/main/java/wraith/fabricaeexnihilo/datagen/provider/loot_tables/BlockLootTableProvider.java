@@ -50,13 +50,13 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
 
     private LootTable.Builder infestedLeavesDrops(Block block) {
         return addConditions(LootTable.builder().pool(addSurvivesExplosionCondition(block, LootPool.builder()
-            .rolls(ConstantLootNumberProvider.create(1))
-            .with(ItemEntry.builder(Items.STRING).conditionally(RandomChanceLootCondition.builder(0.1f))))), block);
+                .rolls(ConstantLootNumberProvider.create(1))
+                .with(ItemEntry.builder(Items.STRING).conditionally(RandomChanceLootCondition.builder(0.1f))))), block);
     }
 
     public LootTable.Builder enchantableBlockEntityDrops(Block block) {
         return addConditions(LootTable.builder().pool(addSurvivesExplosionCondition(block, LootPool.builder()
-            .rolls(ConstantLootNumberProvider.create(1))
-            .with(ItemEntry.builder(block).apply(CopyEnchantmentsLootFunction.builder())))), block);
+                .rolls(ConstantLootNumberProvider.create(1))
+                .with(ItemEntry.builder(block).apply(CopyEnchantmentsLootFunction.builder())))), block);
     }
 }

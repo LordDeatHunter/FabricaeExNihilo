@@ -12,20 +12,20 @@ class BarrelFluidProvider extends FluidProvider<BarrelBlockEntity> {
         if (!(getObject().getMode() instanceof FluidMode)) return 0;
         return 1;
     }
-    
+
     @SuppressWarnings("UnstableApiUsage")
     @Override
     public @Nullable Fluid getFluid(int slot) {
         if (!(getObject().getMode() instanceof FluidMode mode)) return null;
         return mode.getFluid().getFluid();
     }
-    
+
     @Override
     public double getStored(int slot) {
         if (!(getObject().getMode() instanceof FluidMode mode)) return 0;
         return droplets(mode.getFluidAmount());
     }
-    
+
     @Override
     public double getMax(int slot) {
         if (!(getObject().getMode() instanceof FluidMode mode)) return 0;

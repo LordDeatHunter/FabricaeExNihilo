@@ -40,10 +40,10 @@ public class SieveRecipe extends BaseRecipe<SieveRecipe.Context> {
             return List.of();
         }
         return world.getRecipeManager().getAllMatches(ModRecipes.SIEVE, new Context(item, waterlogged), world)
-            .stream()
-            .map(recipe -> new Loot(recipe.result, recipe.rolls.get(mesh)))
-            .filter(loot -> loot.chances() != null)
-            .toList();
+                .stream()
+                .map(recipe -> new Loot(recipe.result, recipe.rolls.get(mesh)))
+                .filter(loot -> loot.chances() != null)
+                .toList();
     }
 
     @Override
@@ -82,7 +82,8 @@ public class SieveRecipe extends BaseRecipe<SieveRecipe.Context> {
         return waterlogged;
     }
 
-    public record Context(Item input, boolean waterlogged) implements RecipeContext {}
+    public record Context(Item input, boolean waterlogged) implements RecipeContext {
+    }
 
     public static class Serializer implements RecipeSerializer<SieveRecipe> {
         @Override
@@ -95,9 +96,9 @@ public class SieveRecipe extends BaseRecipe<SieveRecipe.Context> {
                 var meshJson = entry.getKey();
                 var chancesJson = entry.getValue();
                 rolls.put(new Identifier(meshJson),
-                    StreamSupport.stream(chancesJson.getAsJsonArray().spliterator(), false)
-                        .map(JsonElement::getAsDouble)
-                        .toList());
+                        StreamSupport.stream(chancesJson.getAsJsonArray().spliterator(), false)
+                                .map(JsonElement::getAsDouble)
+                                .toList());
             });
 
             return new SieveRecipe(id, result, input, waterlogged, rolls);

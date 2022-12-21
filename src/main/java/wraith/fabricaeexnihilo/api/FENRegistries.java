@@ -58,14 +58,14 @@ public interface FENRegistries {
     /**
      * Register a new type of infested leaves. It will be registered under
      * {@code fabricaeexnihilo:infested_<name>_leaves}. You will have to manually provide all assets, but you can reuse
-     * the standard leaves model. The tintindex of 0 is provided as white.
+     * the standard leaves model. The tint index of 0 is provided as white.
      *
      * @param name     The name of the wood type.
      * @param source   The source of the transformation. Used in code.
      * @param settings Block settings for the leaves
      */
     void registerInfestedLeaves(String name, Identifier source, AbstractBlock.Settings settings);
-    
+
     /**
      * Register a new type of sieve. It will be registered under {@code fabricaeexnihilo:<name>_sieve}. You will have to
      * manually provide all assets. The model {@code fabricaeexnihilo:block/sieve} can be extended for convenience.
@@ -76,7 +76,7 @@ public interface FENRegistries {
      */
     //TODO: enchantability option
     void registerSieve(String name, boolean isFireproof, AbstractBlock.Settings settings);
-    
+
     /**
      * Register a new type of strainer. It will be registered under {@code fabricaeexnihilo:<name>_strainer}. You will
      * have to manually provide all assets. The model {@code fabricaeexnihilo:block/strainer} can be extended for
@@ -87,11 +87,11 @@ public interface FENRegistries {
      * @param settings    Block settings for the strainer.
      */
     void registerStrainer(String name, boolean isFireproof, AbstractBlock.Settings settings);
-    
+
     /**
      * Register a new type of mesh piece. It will be registered under {@code fabricaeexnihilo:<name>_mesh}. You will
      * have to manually provide all assets. The model {@code fabricaeexnihilo:item/mesh} can be directly extended.
-     * (tintindex 1 will be tinted based on {@code color}).
+     * (tint index 1 will be tinted based on {@code color}).
      *
      * @param name           The name of the mesh.
      * @param color          The color it will be tinted.
@@ -99,7 +99,7 @@ public interface FENRegistries {
      * @param settings       Item settings for the mesh.
      */
     void registerMesh(String name, Color color, int enchantability, Item.Settings settings);
-    
+
     /**
      * Register a new type of ore piece. It will be registered under {@code fabricaeexnihilo:<name>_piece}. You will
      * have to manually provide all assets. (layer1 will be tinted based on {@code color}).
@@ -108,7 +108,7 @@ public interface FENRegistries {
      * @param settings Item settings for the piece.
      */
     void registerOrePiece(String name, Item.Settings settings);
-    
+
     /**
      * Register a new type of seed that creates normal plants. It will be registered under
      * {@code fabricaeexnihilo:<name>_seeds}. You will have to manually provide all assets.
@@ -129,8 +129,8 @@ public interface FENRegistries {
      */
     default void registerSeed(String name, Identifier... plants) {
         registerSeed(name, new Lazy<>(() -> Arrays.stream(plants)
-            .map(Registries.BLOCK::get)
-            .toArray(Block[]::new)));
+                .map(Registries.BLOCK::get)
+                .toArray(Block[]::new)));
     }
 
     /**
@@ -153,9 +153,9 @@ public interface FENRegistries {
      */
     default void registerTallPlantSeed(String name, Identifier... plants) {
         registerTallPlantSeed(name, new Lazy<>(() -> Arrays.stream(plants)
-            .map(Registries.BLOCK::get)
-            .map(block -> (TallPlantBlock) block)
-            .toArray(TallPlantBlock[]::new)));
+                .map(Registries.BLOCK::get)
+                .map(block -> (TallPlantBlock) block)
+                .toArray(TallPlantBlock[]::new)));
     }
 
     /**
@@ -200,32 +200,32 @@ public interface FENRegistries {
         registerBarrel(name, fireproof, settings);
         registerCrucible(name, fireproof, settings);
     }
-    
+
     /**
      * Provides default item settings that all FEN items are based on.
      */
     FabricItemSettings defaultItemSettings();
-    
+
     /**
      * Provides wooden block settings that all wooden FEN blocks are based on.
      */
     FabricBlockSettings woodenBlockSettings();
-    
+
     /**
      * Provides stone block settings that all stone FEN blocks are based on.
      */
     FabricBlockSettings stoneBlockSettings();
-    
+
     /**
      * Provides sandy block settings that all sand-like FEN blocks use.
      */
     FabricBlockSettings sandyBlockSettings();
-    
+
     /**
      * Provides gravely block settings that all gravel-like FEN blocks use.
      */
     FabricBlockSettings gravelyBlockSettings();
-    
+
     /**
      * Provides infested leaves block settings that all infested leaves are based on.
      */
