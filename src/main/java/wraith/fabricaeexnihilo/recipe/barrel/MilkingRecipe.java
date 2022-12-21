@@ -8,27 +8,26 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.JsonHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
 import wraith.fabricaeexnihilo.util.CodecUtils;
-import wraith.fabricaeexnihilo.util.RegistryEntryLists;
 
 import java.util.Optional;
 
 @SuppressWarnings("UnstableApiUsage")
 public class MilkingRecipe extends BaseRecipe<MilkingRecipe.Context> {
 
-    private final RegistryEntryList<EntityType<?>> entity;
+    private final EntityType<?> entity;
     private final FluidVariant fluid;
     private final long amount;
     private final int cooldown;
 
-    public MilkingRecipe(Identifier id, RegistryEntryList<EntityType<?>> entity, FluidVariant fluid, long amount, int cooldown) {
+    public MilkingRecipe(Identifier id, EntityType<?> entity, FluidVariant fluid, long amount, int cooldown) {
         super(id);
         this.entity = entity;
         this.fluid = fluid;
@@ -45,7 +44,7 @@ public class MilkingRecipe extends BaseRecipe<MilkingRecipe.Context> {
 
     @Override
     public boolean matches(Context context, World world) {
-        return this.entity.contains(context.entity.getRegistryEntry());
+        return this.entity == context.entity;
     }
 
     @Override
@@ -75,7 +74,7 @@ public class MilkingRecipe extends BaseRecipe<MilkingRecipe.Context> {
         return ModRecipes.MILKING;
     }
 
-    public RegistryEntryList<EntityType<?>> getEntity() {
+    public EntityType<?> getEntity() {
         return entity;
     }
 
@@ -83,7 +82,7 @@ public class MilkingRecipe extends BaseRecipe<MilkingRecipe.Context> {
 
         @Override
         public MilkingRecipe read(Identifier id, JsonObject json) {
-            var entity = RegistryEntryLists.fromJson(Registries.ENTITY_TYPE.getKey(), json.get("entity"));
+            var entity = Registries.ENTITY_TYPE.get(new Identifier(JsonHelper.getString(json, "entity")));
             var fluid = CodecUtils.fromJson(CodecUtils.FLUID_VARIANT, json.get("fluid"));
             var amount = json.get("amount").getAsLong();
             var cooldown = json.get("cooldown").getAsInt();
@@ -93,7 +92,7 @@ public class MilkingRecipe extends BaseRecipe<MilkingRecipe.Context> {
 
         @Override
         public MilkingRecipe read(Identifier id, PacketByteBuf buf) {
-            var entity = RegistryEntryLists.fromPacket(Registries.ENTITY_TYPE.getKey(), buf);
+            var entity = Registries.ENTITY_TYPE.get(buf.readIdentifier());
             var fluid = CodecUtils.fromPacket(CodecUtils.FLUID_VARIANT, buf);
             var amount = buf.readLong();
             var cooldown = buf.readInt();
@@ -103,7 +102,7 @@ public class MilkingRecipe extends BaseRecipe<MilkingRecipe.Context> {
 
         @Override
         public void write(PacketByteBuf buf, MilkingRecipe recipe) {
-            RegistryEntryLists.toPacket(Registries.ENTITY_TYPE.getKey(), recipe.entity, buf);
+            buf.writeIdentifier(Registries.ENTITY_TYPE.getId(recipe.entity));
             CodecUtils.toPacket(CodecUtils.FLUID_VARIANT, recipe.fluid, buf);
             buf.writeLong(recipe.amount);
             buf.writeInt(recipe.cooldown);

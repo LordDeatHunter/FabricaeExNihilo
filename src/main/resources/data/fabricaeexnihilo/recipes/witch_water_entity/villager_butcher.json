@@ -1,6 +1,6 @@
 {
   "type": "fabricaeexnihilo:witch_water_entity",
   "target": "minecraft:villager",
-  "profession": "minecraft:butcher",
+  "nbt": "VillagerData{profession:\"minecraft:butcher\"}",
   "result": "minecraft:vindicator"
 }

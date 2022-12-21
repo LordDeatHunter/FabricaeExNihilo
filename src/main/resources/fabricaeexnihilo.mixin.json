@@ -8,13 +8,12 @@
     "BlockHarvestMixin",
     "BlockWithEntityInvoker",
     "BottleUseMixin",
-    "BucketItemAccess",
     "EnchantmentHelperMixin",
     "EnchantmentMixin",
-    "FluidBlockAccess",
     "FluidBlockMixin",
     "ItemModelGeneratorAccess",
-    "LootContextTypesAccess"
+    "LootContextTypesAccess",
+    "NbtPathAccess"
   ],
   "client": [
     "client.BlockModelRendererMixin"

@@ -19,7 +19,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
-import net.minecraft.village.VillagerProfession;
 import org.joml.Quaternionf;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.compatibility.rei.GlyphWidget;
@@ -28,7 +27,6 @@ import wraith.fabricaeexnihilo.modules.witchwater.WitchWaterFluid;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
@@ -124,8 +122,7 @@ public class WitchWaterEntityCategory implements DisplayCategory<WitchWaterEntit
     public List<Widget> setupDisplay(WitchWaterEntityDisplay display, Rectangle bounds) {
         var widgets = new ArrayList<Widget>();
 
-        // TODO: make separate displays for each entity type
-        Entity target = display.target.stream().map(e -> e.create(MinecraftClient.getInstance().world)).filter(Objects::nonNull).findFirst().orElse(null);
+        Entity target = display.target.create(MinecraftClient.getInstance().world);
         Entity result = display.result.create(MinecraftClient.getInstance().world);
 
         if (target == null || result == null) {
@@ -141,9 +138,9 @@ public class WitchWaterEntityCategory implements DisplayCategory<WitchWaterEntit
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + 70, bounds.getMinY() + 42)).entries(EntryIngredients.of(WitchWaterFluid.BUCKET)));
         List<Text> lines = new ArrayList<>();
         lines.add(target.getDisplayName());
-        VillagerProfession profession = display.profession;
-        if (profession != null) {
-            lines.add(Text.of("-> " + profession));
+        var nbt = display.nbt.toString();
+        if (!nbt.equals("{}")) {
+            lines.add(Text.of("Nbt required: " + nbt));
         }
         widgets.add(Widgets.createTooltip(targetBounds, lines));
         widgets.add(Widgets.createTooltip(resultBounds, result.getDisplayName()));

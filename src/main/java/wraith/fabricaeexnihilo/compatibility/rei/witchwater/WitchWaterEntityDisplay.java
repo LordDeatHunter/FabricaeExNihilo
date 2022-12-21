@@ -3,31 +3,25 @@ package wraith.fabricaeexnihilo.compatibility.rei.witchwater;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
+import net.minecraft.command.argument.NbtPathArgumentType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.Identifier;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.village.VillagerProfession;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterEntityRecipe;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class WitchWaterEntityDisplay implements Display {
-    public final VillagerProfession profession;
+    public final NbtPathArgumentType.NbtPath nbt;
     public final EntityType<?> result;
-    public final List<EntityType<?>> target;
+    public final EntityType<?> target;
     private final Identifier id;
 
     public WitchWaterEntityDisplay(WitchWaterEntityRecipe recipe) {
-        this.target = recipe.getTarget()
-                .stream()
-                .map(RegistryEntry::value)
-                // Use collector to avoid generics error
-                .collect(Collectors.toList());
+        this.target = recipe.getTarget();
         this.result = recipe.getResult();
-        this.profession = recipe.getProfession();
+        this.nbt = recipe.getNbt();
         this.id = recipe.getId();
     }
 

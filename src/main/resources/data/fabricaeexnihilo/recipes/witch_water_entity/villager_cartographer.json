@@ -1,6 +1,6 @@
 {
   "type": "fabricaeexnihilo:witch_water_entity",
   "target": "minecraft:villager",
-  "profession": "minecraft:cartographer",
+  "nbt": "VillagerData{profession:\"minecraft:cartographer\"}",
   "result": "minecraft:pillager"
 }
