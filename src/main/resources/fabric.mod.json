@@ -54,9 +54,7 @@
     },
     "loom:injected_interfaces": {
       "net/minecraft/class_4915": ["wraith/fabricaeexnihilo/mixins/ItemModelGeneratorAccess"],
-      "net/minecraft/class_1755": ["wraith/fabricaeexnihilo/mixins/BucketItemAccess"],
-      "net/minecraft/class_2203$class_2209": ["wraith/fabricaeexnihilo/mixins/NbtPathAccess"],
-      "net/minecraft/class_2404": ["wraith/fabricaeexnihilo/mixins/FluidBlockAccess"]
+      "net/minecraft/class_2203$class_2209": ["wraith/fabricaeexnihilo/mixins/NbtPathAccess"]
     }
   },
   "depends": {

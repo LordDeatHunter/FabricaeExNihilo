@@ -17,10 +17,10 @@ public class SieveDisplay implements Display {
     public final Map<EntryIngredient, List<Double>> outputs;
 
     public SieveDisplay(SieveRecipeHolder recipeHolder) {
-        this.waterlogged = recipeHolder.waterlogged;
-        this.input = recipeHolder.input;
-        this.mesh = recipeHolder.mesh;
-        this.outputs = recipeHolder.outputs;
+        this.waterlogged = recipeHolder.waterlogged();
+        this.input = recipeHolder.input();
+        this.mesh = recipeHolder.mesh();
+        this.outputs = recipeHolder.outputs();
     }
 
     @Override
