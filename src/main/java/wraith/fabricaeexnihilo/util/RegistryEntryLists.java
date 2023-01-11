@@ -17,7 +17,6 @@ import net.minecraft.registry.entry.RegistryEntryList;
 import java.util.function.Function;
 
 public class RegistryEntryLists {
-
     private static final DynamicRegistryManager STATIC_DRM = DynamicRegistryManager.of(Registries.REGISTRIES);
 
     public static <T> RegistryEntryList<T> fromJson(RegistryKey<? extends Registry<T>> registry, JsonElement json) {

@@ -6,25 +6,22 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import wraith.fabricaeexnihilo.recipe.util.BlockIngredient;
 import wraith.fabricaeexnihilo.recipe.util.Loot;
 import wraith.fabricaeexnihilo.util.CodecUtils;
-import wraith.fabricaeexnihilo.util.RegistryEntryLists;
 
 import java.util.List;
 
 public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
-
     private final ToolType tool;
-    private final RegistryEntryList<Block> block;
+    private final BlockIngredient block;
     private final Loot result;
 
-    public ToolRecipe(Identifier id, ToolType tool, RegistryEntryList<Block> block, Loot result) {
+    public ToolRecipe(Identifier id, ToolType tool, BlockIngredient block, Loot result) {
         super(id);
         this.tool = tool;
         this.block = block;
@@ -40,7 +37,7 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
 
     @Override
     public boolean matches(Context context, World world) {
-        return block.contains(context.block.getRegistryEntry());
+        return block.test(context.block);
     }
 
     @Override
@@ -62,7 +59,7 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
         return tool;
     }
 
-    public RegistryEntryList<Block> getBlock() {
+    public BlockIngredient getBlock() {
         return block;
     }
 
@@ -96,7 +93,7 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
         @Override
         public ToolRecipe read(Identifier id, JsonObject json) {
             var tool = ToolType.fromRecipeType(JsonHelper.getString(json, "type"));
-            var block = RegistryEntryLists.fromJson(Registries.BLOCK.getKey(), json.get("block"));
+            var block = BlockIngredient.fromJson(json.get("block"));
             var result = CodecUtils.fromJson(Loot.CODEC, json.get("result"));
 
             return new ToolRecipe(id, tool, block, result);
@@ -105,7 +102,7 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
         @Override
         public ToolRecipe read(Identifier id, PacketByteBuf buf) {
             var tool = buf.readEnumConstant(ToolType.class);
-            var block = RegistryEntryLists.fromPacket(Registries.BLOCK.getKey(), buf);
+            var block = BlockIngredient.fromPacket(buf);
             var result = CodecUtils.fromPacket(Loot.CODEC, buf);
 
             return new ToolRecipe(id, tool, block, result);
@@ -114,7 +111,7 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
         @Override
         public void write(PacketByteBuf buf, ToolRecipe recipe) {
             buf.writeEnumConstant(recipe.tool);
-            RegistryEntryLists.toPacket(Registries.BLOCK.getKey(), recipe.block, buf);
+            recipe.block.toPacket(buf);
             CodecUtils.toPacket(Loot.CODEC, recipe.result, buf);
         }
     }

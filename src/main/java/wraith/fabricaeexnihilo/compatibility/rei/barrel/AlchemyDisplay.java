@@ -4,12 +4,10 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
-import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 import wraith.fabricaeexnihilo.recipe.barrel.AlchemyRecipe;
-import wraith.fabricaeexnihilo.util.RegistryEntryLists;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +22,7 @@ public class AlchemyDisplay implements Display {
 
     public AlchemyDisplay(AlchemyRecipe recipe) {
         this.catalyst = EntryIngredients.ofIngredient(recipe.getCatalyst());
-        this.reactant = RegistryEntryLists.asReiIngredient(recipe.getReactant(), EntryStacks::of);
+        this.reactant = recipe.getReactant().asReiIngredient();
         this.result = recipe.getResult().getReiResult();
         this.byproduct = EntryIngredients.of(recipe.getByproduct().stack());
         this.entity = recipe.getToSpawn().isEmpty() ? EntryIngredient.empty() : EntryIngredients.of(SpawnEggItem.forEntity(recipe.getToSpawn().getType()));

@@ -50,7 +50,6 @@ public class FabricaeExNihilo implements ModInitializer {
                 entries.add(new ItemStack(ModItems.UNFIRED_PORCELAIN_CRUCIBLE));
                 entries.add(new ItemStack(ModItems.SALT_BOTTLE));
                 entries.add(new ItemStack(ModBlocks.END_CAKE));
-                entries.add(new ItemStack(ModBlocks.INFESTING_LEAVES));
                 entries.add(new ItemStack(WitchWaterFluid.BUCKET));
                 entries.add(new ItemStack(BrineFluid.BUCKET));
                 entries.add(new ItemStack(BloodFluid.BUCKET));

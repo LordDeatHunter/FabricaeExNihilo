@@ -4,13 +4,10 @@ import com.google.gson.JsonObject;
 import me.shedaniel.rei.api.common.entry.EntryStack;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.block.Block;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -18,19 +15,19 @@ import wraith.fabricaeexnihilo.modules.barrels.modes.BarrelMode;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
+import wraith.fabricaeexnihilo.recipe.util.BlockIngredient;
+import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
 import wraith.fabricaeexnihilo.util.CodecUtils;
-import wraith.fabricaeexnihilo.util.RegistryEntryLists;
 
 import java.util.Optional;
 
 @SuppressWarnings("UnstableApiUsage")
 public class FluidTransformationRecipe extends BaseRecipe<FluidTransformationRecipe.Context> {
-
-    private final RegistryEntryList<Fluid> fluid;
-    private final RegistryEntryList<Block> catalyst;
+    private final FluidIngredient fluid;
+    private final BlockIngredient catalyst;
     private final BarrelMode result;
 
-    public FluidTransformationRecipe(Identifier id, RegistryEntryList<Fluid> fluid, RegistryEntryList<Block> catalyst, BarrelMode result) {
+    public FluidTransformationRecipe(Identifier id, FluidIngredient fluid, BlockIngredient catalyst, BarrelMode result) {
         super(id);
         this.fluid = fluid;
         this.catalyst = catalyst;
@@ -46,7 +43,7 @@ public class FluidTransformationRecipe extends BaseRecipe<FluidTransformationRec
 
     @Override
     public boolean matches(Context context, World world) {
-        return fluid.contains(context.contained.getFluid().getRegistryEntry()) && catalyst.contains(context.catalyst.getRegistryEntry());
+        return fluid.test(context.contained.getFluid()) && catalyst.test(context.catalyst);
     }
 
     @Override
@@ -69,11 +66,11 @@ public class FluidTransformationRecipe extends BaseRecipe<FluidTransformationRec
         return result;
     }
 
-    public RegistryEntryList<Fluid> getFluid() {
+    public FluidIngredient getFluid() {
         return fluid;
     }
 
-    public RegistryEntryList<Block> getCatalyst() {
+    public BlockIngredient getCatalyst() {
         return catalyst;
     }
 
@@ -81,8 +78,8 @@ public class FluidTransformationRecipe extends BaseRecipe<FluidTransformationRec
 
         @Override
         public FluidTransformationRecipe read(Identifier id, JsonObject json) {
-            var fluid = RegistryEntryLists.fromJson(Registries.FLUID.getKey(), json.get("fluid"));
-            var catalyst = RegistryEntryLists.fromJson(Registries.BLOCK.getKey(), json.get("catalyst"));
+            var fluid = FluidIngredient.fromJson(json.get("fluid"));
+            var catalyst = BlockIngredient.fromJson(json.get("catalyst"));
             var result = CodecUtils.fromJson(BarrelMode.CODEC, json.get("result"));
 
             return new FluidTransformationRecipe(id, fluid, catalyst, result);
@@ -90,8 +87,8 @@ public class FluidTransformationRecipe extends BaseRecipe<FluidTransformationRec
 
         @Override
         public FluidTransformationRecipe read(Identifier id, PacketByteBuf buf) {
-            var fluid = RegistryEntryLists.fromPacket(Registries.FLUID.getKey(), buf);
-            var catalyst = RegistryEntryLists.fromPacket(Registries.BLOCK.getKey(), buf);
+            var fluid = FluidIngredient.fromPacket(buf);
+            var catalyst = BlockIngredient.fromPacket(buf);
             var result = CodecUtils.fromPacket(BarrelMode.CODEC, buf);
 
             return new FluidTransformationRecipe(id, fluid, catalyst, result);
@@ -99,8 +96,8 @@ public class FluidTransformationRecipe extends BaseRecipe<FluidTransformationRec
 
         @Override
         public void write(PacketByteBuf buf, FluidTransformationRecipe recipe) {
-            RegistryEntryLists.toPacket(Registries.FLUID.getKey(), recipe.fluid, buf);
-            RegistryEntryLists.toPacket(Registries.BLOCK.getKey(), recipe.catalyst, buf);
+            recipe.fluid.toPacket(buf);
+            recipe.catalyst.toPacket(buf);
             CodecUtils.toPacket(BarrelMode.CODEC, recipe.result, buf);
         }
     }

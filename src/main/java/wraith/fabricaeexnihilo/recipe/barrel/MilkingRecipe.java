@@ -21,7 +21,6 @@ import java.util.Optional;
 
 @SuppressWarnings("UnstableApiUsage")
 public class MilkingRecipe extends BaseRecipe<MilkingRecipe.Context> {
-
     private final EntityType<?> entity;
     private final FluidVariant fluid;
     private final long amount;

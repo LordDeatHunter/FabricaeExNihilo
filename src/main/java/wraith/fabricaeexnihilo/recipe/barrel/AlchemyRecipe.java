@@ -2,14 +2,11 @@ package wraith.fabricaeexnihilo.recipe.barrel;
 
 import com.google.gson.JsonObject;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.world.World;
@@ -20,23 +17,22 @@ import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
 import wraith.fabricaeexnihilo.recipe.util.EntityStack;
+import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
 import wraith.fabricaeexnihilo.recipe.util.Loot;
 import wraith.fabricaeexnihilo.util.CodecUtils;
-import wraith.fabricaeexnihilo.util.RegistryEntryLists;
 
 import java.util.Optional;
 
 @SuppressWarnings("UnstableApiUsage")
 public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.Context> {
-
-    private final RegistryEntryList<Fluid> reactant;
+    private final FluidIngredient reactant;
     private final Ingredient catalyst;
     private final Loot byproduct;
     private final int delay;
     private final EntityStack toSpawn;
     private final BarrelMode result;
 
-    public AlchemyRecipe(Identifier id, RegistryEntryList<Fluid> reactant, Ingredient catalyst, Loot byproduct, int delay, EntityStack toSpawn, BarrelMode result) {
+    public AlchemyRecipe(Identifier id, FluidIngredient reactant, Ingredient catalyst, Loot byproduct, int delay, EntityStack toSpawn, BarrelMode result) {
         super(id);
         this.reactant = reactant;
         this.catalyst = catalyst;
@@ -56,7 +52,7 @@ public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.Context> {
 
     @Override
     public boolean matches(Context context, World world) {
-        return reactant.contains(context.reactant.getFluid().getRegistryEntry()) && catalyst.test(context.catalyst);
+        return reactant.test(context.reactant.getFluid()) && catalyst.test(context.catalyst);
     }
 
     @Override
@@ -74,7 +70,7 @@ public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.Context> {
         return ModRecipes.ALCHEMY;
     }
 
-    public RegistryEntryList<Fluid> getReactant() {
+    public FluidIngredient getReactant() {
         return reactant;
     }
 
@@ -102,7 +98,7 @@ public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.Context> {
 
         @Override
         public AlchemyRecipe read(Identifier id, JsonObject json) {
-            var reactant = RegistryEntryLists.fromJson(Registries.FLUID.getKey(), json.get("reactant"));
+            var reactant = FluidIngredient.fromJson(json.get("reactant"));
             var catalyst = Ingredient.fromJson(json.get("catalyst"));
             var byproduct = json.has("byproduct") ? CodecUtils.fromJson(Loot.CODEC, json.get("byproduct")) : Loot.EMPTY;
             var delay = JsonHelper.getInt(json, "delay", 0);
@@ -114,7 +110,7 @@ public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.Context> {
 
         @Override
         public AlchemyRecipe read(Identifier id, PacketByteBuf buf) {
-            var reactant = RegistryEntryLists.fromPacket(Registries.FLUID.getKey(), buf);
+            var reactant = FluidIngredient.fromPacket(buf);
             var catalyst = Ingredient.fromPacket(buf);
             var byproduct = CodecUtils.fromPacket(Loot.CODEC, buf);
             var delay = buf.readInt();
@@ -126,7 +122,7 @@ public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.Context> {
 
         @Override
         public void write(PacketByteBuf buf, AlchemyRecipe recipe) {
-            RegistryEntryLists.toPacket(Registries.FLUID.getKey(), recipe.reactant, buf);
+            recipe.reactant.toPacket(buf);
             recipe.catalyst.write(buf);
             CodecUtils.toPacket(Loot.CODEC, recipe.byproduct, buf);
             buf.writeInt(recipe.delay);
