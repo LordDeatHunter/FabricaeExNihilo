@@ -12,7 +12,5 @@ import java.util.function.Supplier;
 @Mixin(ItemModelGenerator.class)
 public interface ItemModelGeneratorAccess {
     @Accessor
-    default BiConsumer<Identifier, Supplier<JsonElement>> getWriter() {
-        throw new IllegalStateException("Accessor called directly");
-    }
+    BiConsumer<Identifier, Supplier<JsonElement>> getWriter();
 }

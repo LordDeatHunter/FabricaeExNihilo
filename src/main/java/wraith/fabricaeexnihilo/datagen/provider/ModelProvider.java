@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
+import wraith.fabricaeexnihilo.mixins.ItemModelGeneratorAccess;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModItems;
 import wraith.fabricaeexnihilo.modules.ModTools;
@@ -140,13 +141,13 @@ public class ModelProvider extends FabricModelProvider {
         generator.register(ModItems.PORCELAIN, Models.GENERATED);
         generator.register(ModBlocks.END_CAKE.asItem(), Models.GENERATED);
 
-        var writer = generator.getWriter();
+        var writer = ((ItemModelGeneratorAccess)generator).getWriter();
         // Special case: looks like block, but isn't
         CRUCIBLE_MODEL.upload(ModelIds.getItemModelId(ModItems.UNFIRED_PORCELAIN_CRUCIBLE), TextureMap.all(id("block/unfired_porcelain_crucible")), writer);
     }
 
     private void uploadModel(Model model, Item item, Identifier texture, ItemModelGenerator generator) {
-        uploadModel(model, ModelIds.getItemModelId(item), TextureMap.layer0(texture), generator.getWriter());
+        uploadModel(model, ModelIds.getItemModelId(item), TextureMap.layer0(texture), ((ItemModelGeneratorAccess)generator).getWriter());
     }
 
     private void register(Model model, Block block, Identifier texture, BlockStateModelGenerator generator) {

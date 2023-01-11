@@ -12,8 +12,7 @@
     "EnchantmentMixin",
     "FluidBlockMixin",
     "ItemModelGeneratorAccess",
-    "LootContextTypesAccess",
-    "NbtPathAccess"
+    "LootContextTypesAccess"
   ],
   "client": [
     "client.BlockModelRendererMixin"
