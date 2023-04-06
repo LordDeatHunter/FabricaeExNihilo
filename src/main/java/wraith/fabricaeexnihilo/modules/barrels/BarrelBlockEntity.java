@@ -4,10 +4,9 @@ import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityT
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
-import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.block.Block;
@@ -19,6 +18,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -53,8 +53,8 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
         FluidStorage.SIDED.registerForBlockEntity((barrel, direction) -> barrel.fluidStorage, TYPE);
     }
 
-    public final Storage<FluidVariant> fluidStorage;
-    public final Storage<ItemVariant> itemStorage;
+    public final BarrelFluidStorage fluidStorage;
+    public final BarrelItemStorage itemStorage;
     private final EnchantmentContainer enchantments = new EnchantmentContainer();
     private BarrelMode mode;
     private int tickCounter;
@@ -146,9 +146,10 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
         markDirty();
     }
 
-    // NBT Serialization section
-
     public ActionResult insertFromHand(PlayerEntity player, Hand hand) {
+        if (world == null)
+            return ActionResult.PASS;
+
         var held = player.getStackInHand(hand);
         if (held.isEmpty()) return ActionResult.PASS;
 
@@ -172,7 +173,10 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
             long moved;
             if (amount == null) {
                 // Barrel to bucket
+                var fluid = fluidStorage.getResource();
                 moved = StorageUtil.move(fluidStorage, bucketFluidStorage, fluidVariant -> true, FluidConstants.BUCKET, t);
+                if (moved != 0)
+                    world.playSound(null, pos, FluidVariantAttributes.getEmptySound(fluid), SoundCategory.BLOCKS, 1.0F, 1.0F);
             } else {
                 // Bucket to barrel
                 if (player.isCreative()) {
@@ -180,6 +184,9 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
                 } else {
                     moved = StorageUtil.move(bucketFluidStorage, fluidStorage, fluidVariant -> true, FluidConstants.BUCKET, t);
                 }
+
+                if (moved != 0)
+                    world.playSound(null, pos, FluidVariantAttributes.getFillSound(fluidStorage.getResource()), SoundCategory.BLOCKS, 1.0F, 1.0F);
             }
             if (moved != 0) {
                 t.commit();
