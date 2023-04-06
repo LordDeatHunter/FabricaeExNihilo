@@ -317,11 +317,10 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
             var recipe = recipeOptional.get();
             if (!recipe.getFluid().equals(fluid) && !fluid.isBlank()) return 0;
 
-            var amount = Math.min(recipe.getAmount(), getMaxCapacity() - contained - queued);
-            if (amount == 0) return 0;
+            if (recipe.getAmount() > getMaxCapacity() - contained - queued) return 0;
             updateSnapshots(transaction);
             fluid = recipe.getFluid();
-            queued += amount;
+            queued += recipe.getAmount();
             requiresFireproof = recipe.requiresFireproofCrucible();
             renderStack = resource.toStack();
             return 1;
