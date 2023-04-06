@@ -2,7 +2,7 @@ import java.nio.file.Files
 
 var path = project.file("dev_settings.properties").toPath()
 var properties = new Properties()
-properties.putAll(wthit: "false", the_one_probe: "true", modmenu: "true", rei: "true", kubejs: "true", tech_reborn: "false", industrial_revolution: "false", modern_industrialization: "false", jade: "false")
+properties.putAll(wthit: "false", the_one_probe: "true", modmenu: "true", rei: "true", kubejs: "false", tech_reborn: "false", industrial_revolution: "false", modern_industrialization: "false", jade: "false")
 
 if (Files.exists(path)) {
     properties.load(Files.newBufferedReader(path))
