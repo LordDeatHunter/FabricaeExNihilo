@@ -10,8 +10,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BucketItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registry;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -72,17 +74,12 @@ public class SieveBlockEntity extends BaseBlockEntity {
 
         var item = held.getItem();
         // Removing mesh
-        if (!mesh.isEmpty() && player.getMainHandStack().isEmpty()) {
+        if (!mesh.isEmpty() && player.getStackInHand(hand).isEmpty() && player.isSneaking()) {
             player.getInventory().offerOrDrop(mesh.copy());
             mesh = ItemStack.EMPTY;
             markDirty();
             return ActionResult.SUCCESS;
-        } else if (mesh.isEmpty() &&
-            world.getRecipeManager()
-                .listAllOfType(ModRecipes.SIEVE)
-                .stream()
-                .anyMatch(recipe -> recipe.getRolls().containsKey(RegistryUtils.getId(item)))
-        ) {
+        } else if (mesh.isEmpty() && isValidMesh(item)) {
             // Add mesh
             mesh = ItemUtils.ofSize(held, 1);
             if (!player.isCreative()) {
@@ -99,6 +96,14 @@ public class SieveBlockEntity extends BaseBlockEntity {
         final ItemStack finalHeld = held;
         sieves.forEach(sieve -> sieve.setContents(finalHeld, !player.isCreative()));
         return ActionResult.SUCCESS;
+    }
+
+    private boolean isValidMesh(Item item) {
+        assert world != null;
+        return world.getRecipeManager()
+                .listAllOfType(ModRecipes.SIEVE)
+                .stream()
+                .anyMatch(recipe -> recipe.getRolls().containsKey(Registry.ITEM.getId(item)));
     }
 
     public void doProgress(PlayerEntity player) {
