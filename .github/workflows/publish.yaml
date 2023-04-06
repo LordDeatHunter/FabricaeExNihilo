@@ -1,0 +1,68 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      version-type:
+        description: The type of release
+        required: true
+        type: choice
+        options: ["release", "beta", "alpha"]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Gradle Caching
+        uses: burrunan/gradle-cache-action@v1
+        with:
+          gradle-distribution-sha-256-sum-warning: false
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Read mod version
+        id: versions
+        uses: christian-draeger/read-properties@1.1.0
+        with:
+          path: gradle.properties
+          properties: "mod_version minecraft_version"
+
+      - name: Read changelog
+        uses: juliangruber/read-file-action@v1
+        id: changelog
+        with:
+          path: "./changelog/${{ steps.versions.outputs.mod_version }}+${{ steps.versions.outputs.minecraft_version }}.md"
+
+      - name: Publish
+        uses: Kir-Antipov/mc-publish@v3.2
+        with:
+          name: "v${{ steps.versions.outputs.mod_version }} [${{ steps.versions.outputs.minecraft_version }}]"
+          version: ${{ steps.versions.outputs.mod_version }}+mc.${{ steps.versions.outputs.minecraft_version }}
+          version-type: ${{ inputs.version-type }}
+
+          loaders: fabric quilt
+          java: 17 18 19 20
+
+          game-versions: ${{ steps.versions.outputs.minecraft_version }}
+          changelog: ${{ steps.changelog.outputs.content }}
+
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          modrinth-id: j9JARqmz
+          modrinth-featured: false
+
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          curseforge-id: 596911
