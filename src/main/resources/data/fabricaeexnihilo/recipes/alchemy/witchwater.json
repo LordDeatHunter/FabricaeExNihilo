@@ -8,5 +8,11 @@
     "id": "fluid",
     "fluid": "fabricaeexnihilo:witchwater",
     "amount": 81000
-  }
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "fabricaeexnihilo:all_items_present",
+      "values": ["fabricaeexnihilo:mycelium_seeds"]
+    }
+  ]
 }
