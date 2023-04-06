@@ -205,11 +205,7 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
 
     private void readNbtWithoutWorldInfo(NbtCompound nbt) {
         mode = CodecUtils.fromNbt(BarrelMode.CODEC, nbt.getCompound("mode"));
-        if (nbt.contains("enchantments")) {
-            var readEnchantments = new EnchantmentContainer();
-            readEnchantments.readNbt(nbt.getCompound("enchantments"));
-            enchantments.setAllEnchantments(readEnchantments);
-        }
+        enchantments.readNbt(nbt.getCompound("enchantments"));
     }
 
     public void spawnByproduct(ItemStack stack) {
