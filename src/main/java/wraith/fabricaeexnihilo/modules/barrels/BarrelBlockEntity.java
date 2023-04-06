@@ -176,7 +176,7 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
                 var fluid = fluidStorage.getResource();
                 moved = StorageUtil.move(fluidStorage, bucketFluidStorage, fluidVariant -> true, FluidConstants.BUCKET, t);
                 if (moved != 0)
-                    world.playSound(null, pos, FluidVariantAttributes.getEmptySound(fluid), SoundCategory.BLOCKS, 1.0F, 1.0F);
+                    world.playSound(null, pos, FluidVariantAttributes.getFillSound(fluid), SoundCategory.BLOCKS, 1.0F, 1.0F);
             } else {
                 // Bucket to barrel
                 if (player.isCreative()) {
@@ -186,7 +186,7 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
                 }
 
                 if (moved != 0)
-                    world.playSound(null, pos, FluidVariantAttributes.getFillSound(fluidStorage.getResource()), SoundCategory.BLOCKS, 1.0F, 1.0F);
+                    world.playSound(null, pos, FluidVariantAttributes.getEmptySound(fluidStorage.getResource()), SoundCategory.BLOCKS, 1.0F, 1.0F);
             }
             if (moved != 0) {
                 t.commit();
