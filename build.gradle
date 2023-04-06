@@ -150,6 +150,14 @@ loom {
     }
 }
 
+// Hack to copy dependency overrides to datagen
+tasks.register('copyDatagenOverrides', Copy) {
+    from "run/config/fabric_loader_dependencies.json"
+    into "build/datagen/config"
+}
+clean.finalizedBy(tasks.copyDatagenOverrides)
+tasks.runDatagen.dependsOn(tasks.copyDatagenOverrides)
+
 // Delete datagen on clean
 clean.delete("src/main/generated")
 
@@ -172,7 +180,7 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
     it.options.encoding = "UTF-8"
-    it.options.release = 17
+    it.options.release.set(17)
 }
 
 java {
