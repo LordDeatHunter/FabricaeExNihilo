@@ -35,6 +35,7 @@ public class EnchantmentContainer {
     }
 
     public void readNbt(NbtCompound nbt) {
+        enchantments.clear();
         nbt.getKeys().forEach(key -> enchantments.put(new Identifier(key), nbt.getInt(key)));
     }
 
@@ -60,10 +61,5 @@ public class EnchantmentContainer {
 
     public void setEnchantmentLevel(Identifier enchantment, int level) {
         enchantments.put(enchantment, level);
-    }
-
-    public void setAllEnchantments(EnchantmentContainer other) {
-        enchantments.clear();
-        enchantments.putAll(other.enchantments);
     }
 }

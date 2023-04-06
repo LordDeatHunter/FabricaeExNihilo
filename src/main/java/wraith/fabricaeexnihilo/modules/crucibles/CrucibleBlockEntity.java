@@ -179,12 +179,8 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
         queued = nbt.getLong("queued");
         heat = nbt.getInt("heat");
         requiresFireproof = !nbt.contains("requiresFireproof") || nbt.getBoolean("requiresFireproof");
-        // Why? It always exists...
-        if (nbt.contains("enchantments")) {
-            var readEnchantments = new EnchantmentContainer();
-            readEnchantments.readNbt(nbt.getCompound("enchantments"));
-            enchantments.setAllEnchantments(readEnchantments);
-        }
+        enchantments.readNbt(nbt.getCompound("enchantments"));
+        updateHeat(); // Enchantments affect heat
     }
 
     public void tick() {
