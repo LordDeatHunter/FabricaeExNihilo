@@ -1,9 +1,16 @@
 # gradle
 
 .gradle/
-build/
 out/
 classes/
+
+# Exclude 'build', but include 'build/datagen/config/fabric_loader_dependencies.json'
+# Gitignore really doesn't like exceptions like these, so we have to hack a bit
+
+build/**
+!build/datagen
+!build/datagen/config
+!build/datagen/config/fabric_loader_dependencies.json
 
 # idea
 
