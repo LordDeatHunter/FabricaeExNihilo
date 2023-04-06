@@ -109,6 +109,11 @@ public class FluidMode extends BarrelMode {
     @Override
     public long insertItem(ItemVariant item, long maxAmount, TransactionContext transaction, BarrelItemStorage storage) {
         StoragePreconditions.notBlankNotNegative(item, maxAmount);
+
+        // Alchemy should only work on full barrels
+        if (getFluidAmount() < getFluidCapacity())
+            return 0;
+
         var result = AlchemyRecipe.find(fluid, item.toStack(), storage.barrel.getWorld());
         if (result.isEmpty() || !FabricaeExNihilo.CONFIG.modules.barrels.enableAlchemy) {
             return 0;
