@@ -148,7 +148,7 @@ public class FluidMode extends BarrelMode {
             var blockState = world.getBlockState(pos.down());
             if (!blockState.isAir() && config.transforming.enabled) {
                 var block = blockState.getBlock();
-                var recipe = FluidTransformationRecipe.find(this.fluid, block, world);
+                var recipe = FluidTransformationRecipe.find(this.fluid, blockState, world);
                 if (recipe.isPresent()) {
                     var num = barrel.countBelow(block, config.transforming.boostRadius);
                     barrel.setMode(new AlchemyMode(this, recipe.get().getResult().copy(), config.transforming.rate - (num - 1) * config.transforming.boost));
@@ -163,7 +163,7 @@ public class FluidMode extends BarrelMode {
         if (leakPos == null)
             return;
 
-        var recipe = LeakingRecipe.find(world.getBlockState(leakPos).getBlock(), this.fluid, world);
+        var recipe = LeakingRecipe.find(world.getBlockState(leakPos), this.fluid, world);
         if (recipe.isEmpty())
             return;
 

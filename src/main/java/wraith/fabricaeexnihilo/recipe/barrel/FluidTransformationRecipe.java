@@ -3,7 +3,7 @@ package wraith.fabricaeexnihilo.recipe.barrel;
 import com.google.gson.JsonObject;
 import me.shedaniel.rei.api.common.entry.EntryStack;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
@@ -34,7 +34,7 @@ public class FluidTransformationRecipe extends BaseRecipe<FluidTransformationRec
         this.result = result;
     }
 
-    public static Optional<FluidTransformationRecipe> find(FluidVariant contained, Block catalyst, @Nullable World world) {
+    public static Optional<FluidTransformationRecipe> find(FluidVariant contained, BlockState catalyst, @Nullable World world) {
         if (world == null) {
             return Optional.empty();
         }
@@ -102,6 +102,6 @@ public class FluidTransformationRecipe extends BaseRecipe<FluidTransformationRec
         }
     }
 
-    protected record Context(FluidVariant contained, Block catalyst) implements RecipeContext {
+    protected record Context(FluidVariant contained, BlockState catalyst) implements RecipeContext {
     }
 }

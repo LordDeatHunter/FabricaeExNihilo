@@ -202,9 +202,8 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
         }
         var oldHeat = heat;
         var state = world.getBlockState(pos.down());
-        var block = state.getBlock();
-        heat = CrucibleHeatRecipe.find(block, world).map(CrucibleHeatRecipe::getHeat).orElse(0);
-        if (block instanceof FluidBlock) {
+        heat = CrucibleHeatRecipe.find(state, world).map(CrucibleHeatRecipe::getHeat).orElse(0);
+        if (state.getBlock() instanceof FluidBlock) {
             heat *= state.getFluidState().getHeight();
         }
         heat += getFireAspectAdder();

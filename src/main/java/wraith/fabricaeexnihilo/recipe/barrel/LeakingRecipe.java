@@ -3,6 +3,7 @@ package wraith.fabricaeexnihilo.recipe.barrel;
 import com.google.gson.JsonObject;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
@@ -34,16 +35,16 @@ public class LeakingRecipe extends BaseRecipe<LeakingRecipe.Context> {
         this.result = result;
     }
 
-    public static Optional<LeakingRecipe> find(Block block, FluidVariant fluid, @Nullable World world) {
+    public static Optional<LeakingRecipe> find(BlockState state, FluidVariant fluid, @Nullable World world) {
         if (world == null) {
             return Optional.empty();
         }
-        return world.getRecipeManager().getFirstMatch(ModRecipes.LEAKING, new Context(block, fluid), world);
+        return world.getRecipeManager().getFirstMatch(ModRecipes.LEAKING, new Context(state, fluid), world);
     }
 
     @Override
     public boolean matches(Context context, World world) {
-        return block.test(context.block) && fluid.test(context.fluid.getFluid());
+        return block.test(context.state) && fluid.test(context.fluid.getFluid());
     }
 
     @Override
@@ -108,6 +109,6 @@ public class LeakingRecipe extends BaseRecipe<LeakingRecipe.Context> {
         }
     }
 
-    protected record Context(Block block, FluidVariant fluid) implements RecipeContext {
+    protected record Context(BlockState state, FluidVariant fluid) implements RecipeContext {
     }
 }

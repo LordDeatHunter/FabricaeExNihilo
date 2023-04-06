@@ -2,7 +2,7 @@ package wraith.fabricaeexnihilo.recipe.crucible;
 
 import com.google.gson.JsonObject;
 import me.shedaniel.rei.api.common.entry.EntryStack;
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
@@ -28,16 +28,16 @@ public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.Context> {
         this.heat = heat;
     }
 
-    public static Optional<CrucibleHeatRecipe> find(Block block, @Nullable World world) {
+    public static Optional<CrucibleHeatRecipe> find(BlockState state, @Nullable World world) {
         if (world == null) {
             return Optional.empty();
         }
-        return world.getRecipeManager().getFirstMatch(ModRecipes.CRUCIBLE_HEAT, new Context(block), world);
+        return world.getRecipeManager().getFirstMatch(ModRecipes.CRUCIBLE_HEAT, new Context(state), world);
     }
 
     @Override
     public boolean matches(Context context, World world) {
-        return block.test(context.block);
+        return block.test(context.state);
     }
 
     @Override
@@ -91,6 +91,6 @@ public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.Context> {
         }
     }
 
-    protected record Context(Block block) implements RecipeContext {
+    protected record Context(BlockState state) implements RecipeContext {
     }
 }

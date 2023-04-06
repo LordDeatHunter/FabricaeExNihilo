@@ -1,7 +1,7 @@
 package wraith.fabricaeexnihilo.recipe;
 
 import com.google.gson.JsonObject;
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
@@ -28,16 +28,16 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
         this.result = result;
     }
 
-    public static List<ToolRecipe> find(ToolType type, Block block, @Nullable World world) {
+    public static List<ToolRecipe> find(ToolType type, BlockState state, @Nullable World world) {
         if (world == null) {
             return List.of();
         }
-        return world.getRecipeManager().getAllMatches(type.type, new Context(block), world);
+        return world.getRecipeManager().getAllMatches(type.type, new Context(state), world);
     }
 
     @Override
     public boolean matches(Context context, World world) {
-        return block.test(context.block);
+        return block.test(context.state);
     }
 
     @Override
@@ -116,6 +116,6 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
         }
     }
 
-    public record Context(Block block) implements RecipeContext {
+    public record Context(BlockState state) implements RecipeContext {
     }
 }

@@ -24,7 +24,7 @@ public abstract class BlockHarvestMixin {
     public void getDroppedStacks(BlockState state, LootContext.Builder builder, CallbackInfoReturnable<List<ItemStack>> info) {
         ItemStack tool = builder.get(LootContextParameters.TOOL);
         if (CrookItem.isCrook(tool) || HammerItem.isHammer(tool)) {
-            var recipes = ToolRecipe.find(CrookItem.isCrook(tool) ? ToolRecipe.ToolType.CROOK : ToolRecipe.ToolType.HAMMER, state.getBlock(), builder.getWorld());
+            var recipes = ToolRecipe.find(CrookItem.isCrook(tool) ? ToolRecipe.ToolType.CROOK : ToolRecipe.ToolType.HAMMER, state, builder.getWorld());
             // Non-tool block. Just use default drops
             if (recipes.isEmpty())
                 return;
