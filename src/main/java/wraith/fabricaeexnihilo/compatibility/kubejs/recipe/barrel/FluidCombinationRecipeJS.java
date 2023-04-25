@@ -6,6 +6,8 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntryList;
 import wraith.fabricaeexnihilo.compatibility.kubejs.FENKubePlugin;
 import wraith.fabricaeexnihilo.modules.barrels.modes.BarrelMode;
@@ -47,16 +49,16 @@ public class FluidCombinationRecipeJS extends RecipeJS {
 
     @Override
     public void deserialize() {
-        contained = RegistryEntryLists.fromJson(Registries.FLUID.getKey(), json.get("contained"));
-        other = RegistryEntryLists.fromJson(Registries.FLUID.getKey(), json.get("other"));
+        contained = RegistryEntryLists.fromJson(RegistryKeys.FLUID, json.get("contained"));
+        other = RegistryEntryLists.fromJson(RegistryKeys.FLUID, json.get("other"));
         result = CodecUtils.fromJson(BarrelMode.CODEC, json.get("result"));
     }
 
     @Override
     public void serialize() {
         if (serializeInputs) {
-            json.add("contained", RegistryEntryLists.toJson(Registries.FLUID.getKey(), contained));
-            json.add("other", RegistryEntryLists.toJson(Registries.FLUID.getKey(), other));
+            json.add("contained", RegistryEntryLists.toJson(RegistryKeys.FLUID, contained));
+            json.add("other", RegistryEntryLists.toJson(RegistryKeys.FLUID, other));
         }
         if (serializeOutputs)
             json.add("result", CodecUtils.toJson(BarrelMode.CODEC, result));

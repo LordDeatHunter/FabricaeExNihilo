@@ -8,6 +8,8 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
@@ -65,7 +67,7 @@ public class WitchWaterWorldRecipeJS extends RecipeJS {
 
     @Override
     public void deserialize() {
-        target = RegistryEntryLists.fromJson(Registries.FLUID.getKey(), json.get("target"));
+        target = RegistryEntryLists.fromJson(RegistryKeys.FLUID, json.get("target"));
         result = CodecUtils.fromJson(WeightedList.CODEC, json.get("result"));
     }
 
@@ -74,7 +76,7 @@ public class WitchWaterWorldRecipeJS extends RecipeJS {
         if (serializeOutputs)
             json.add("result", CodecUtils.toJson(WeightedList.CODEC, result));
         if (serializeInputs)
-            json.add("target", RegistryEntryLists.toJson(Registries.FLUID.getKey(), target));
+            json.add("target", RegistryEntryLists.toJson(RegistryKeys.FLUID, target));
     }
 }
 

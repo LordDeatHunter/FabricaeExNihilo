@@ -8,6 +8,8 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
@@ -102,7 +104,7 @@ public class AlchemyRecipeJS extends RecipeJS {
 
     @Override
     public void deserialize() {
-        this.reactant = RegistryEntryLists.fromJson(Registries.FLUID.getKey(), json.get("reactant"));
+        this.reactant = RegistryEntryLists.fromJson(RegistryKeys.FLUID, json.get("reactant"));
         this.catalyst = Ingredient.fromJson(json.get("catalyst"));
         if (json.has("byproduct"))
             this.byproduct = CodecUtils.fromJson(Loot.CODEC, json.get("byproduct"));
@@ -117,7 +119,7 @@ public class AlchemyRecipeJS extends RecipeJS {
     @Override
     public void serialize() {
         if (serializeInputs) {
-            json.add("reactant", RegistryEntryLists.toJson(Registries.FLUID.getKey(), reactant));
+            json.add("reactant", RegistryEntryLists.toJson(RegistryKeys.FLUID, reactant));
             json.add("catalyst", catalyst.toJson());
             json.addProperty("delay", delay);
         }

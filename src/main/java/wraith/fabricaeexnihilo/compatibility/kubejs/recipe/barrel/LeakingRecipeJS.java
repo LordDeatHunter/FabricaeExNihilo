@@ -8,6 +8,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.util.Identifier;
@@ -74,8 +76,8 @@ public class LeakingRecipeJS extends RecipeJS {
 
     @Override
     public void deserialize() {
-        block = RegistryEntryLists.fromJson(Registries.BLOCK.getKey(), json.get("block"));
-        fluid = RegistryEntryLists.fromJson(Registries.FLUID.getKey(), json.get("fluid"));
+        block = RegistryEntryLists.fromJson(RegistryKeys.BLOCK, json.get("block"));
+        fluid = RegistryEntryLists.fromJson(RegistryKeys.FLUID, json.get("fluid"));
         amount = json.get("amount").getAsLong();
         result = Registries.BLOCK.get(new Identifier(json.get("result").getAsString()));
     }
@@ -83,8 +85,8 @@ public class LeakingRecipeJS extends RecipeJS {
     @Override
     public void serialize() {
         if (serializeInputs) {
-            json.add("fluid", RegistryEntryLists.toJson(Registries.FLUID.getKey(), fluid));
-            json.add("block", RegistryEntryLists.toJson(Registries.BLOCK.getKey(), block));
+            json.add("fluid", RegistryEntryLists.toJson(RegistryKeys.FLUID, fluid));
+            json.add("block", RegistryEntryLists.toJson(RegistryKeys.BLOCK, block));
             json.addProperty("amount", amount);
         }
         if (serializeOutputs)

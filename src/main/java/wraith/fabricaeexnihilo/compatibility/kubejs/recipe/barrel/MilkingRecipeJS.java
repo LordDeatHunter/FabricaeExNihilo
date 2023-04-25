@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntryList;
 import wraith.fabricaeexnihilo.compatibility.kubejs.FENKubePlugin;
 import wraith.fabricaeexnihilo.util.CodecUtils;
@@ -50,7 +51,7 @@ public class MilkingRecipeJS extends RecipeJS {
 
     @Override
     public void deserialize() {
-        entity = RegistryEntryLists.fromJson(Registries.ENTITY_TYPE.getKey(), json.get("entity"));
+        entity = RegistryEntryLists.fromJson(RegistryKeys.ENTITY_TYPE, json.get("entity"));
         fluid = CodecUtils.fromJson(CodecUtils.FLUID_VARIANT, json.get("fluid"));
         amount = json.get("amount").getAsLong();
         cooldown = json.get("cooldown").getAsInt();
@@ -59,7 +60,7 @@ public class MilkingRecipeJS extends RecipeJS {
     @Override
     public void serialize() {
         if (serializeInputs)
-            json.add("entity", RegistryEntryLists.toJson(Registries.ENTITY_TYPE.getKey(), entity));
+            json.add("entity", RegistryEntryLists.toJson(RegistryKeys.ENTITY_TYPE, entity));
         if (serializeOutputs) {
             json.add("fluid", CodecUtils.toJson(CodecUtils.FLUID_VARIANT, fluid));
             json.addProperty("amount", amount);

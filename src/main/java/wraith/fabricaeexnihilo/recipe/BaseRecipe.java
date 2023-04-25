@@ -22,15 +22,15 @@ public abstract class BaseRecipe<T extends RecipeContext> implements Recipe<T> {
         return id;
     }
 
-    @Override
-    public final ItemStack craft(T inventory) {
-        return getOutput().copy();
-    }
-
-    @Override
-    public final ItemStack getOutput() {
-        return getDisplayStack();
-    }
+//    @Override
+//    public final ItemStack craft(T inventory) {
+//        return getOutput().copy();
+//    }
+//
+//    @Override
+//    public final ItemStack getOutput() {
+//        return getDisplayStack();
+//    }
 
     @Override
     public abstract boolean matches(T context, World world);

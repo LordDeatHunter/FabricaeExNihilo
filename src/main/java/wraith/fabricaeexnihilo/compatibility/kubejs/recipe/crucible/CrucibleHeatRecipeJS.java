@@ -7,6 +7,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.util.JsonHelper;
@@ -69,14 +71,14 @@ public class CrucibleHeatRecipeJS extends RecipeJS {
 
     @Override
     public void deserialize() {
-        block = RegistryEntryLists.fromJson(Registries.BLOCK.getKey(), json.get("block"));
+        block = RegistryEntryLists.fromJson(RegistryKeys.BLOCK, json.get("block"));
         heat = JsonHelper.getInt(json, "heat");
     }
 
     @Override
     public void serialize() {
         if (serializeInputs)
-            json.add("block", RegistryEntryLists.toJson(Registries.BLOCK.getKey(), block));
+            json.add("block", RegistryEntryLists.toJson(RegistryKeys.BLOCK, block));
         if (serializeOutputs)
             json.addProperty("heat", heat);
     }

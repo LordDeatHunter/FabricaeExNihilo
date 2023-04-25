@@ -5,6 +5,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.util.Identifier;
@@ -56,7 +58,7 @@ public class WitchWaterEntityRecipeJS extends RecipeJS {
 
     @Override
     public void deserialize() {
-        target = RegistryEntryLists.fromJson(Registries.ENTITY_TYPE.getKey(), json.get("target"));
+        target = RegistryEntryLists.fromJson(RegistryKeys.ENTITY_TYPE, json.get("target"));
         profession = json.has("profession") ? Registries.VILLAGER_PROFESSION.get(new Identifier(JsonHelper.getString(json, "profession"))) : null;
         result = Registries.ENTITY_TYPE.get(new Identifier(JsonHelper.getString(json, "result")));
     }
@@ -66,7 +68,7 @@ public class WitchWaterEntityRecipeJS extends RecipeJS {
         if (serializeOutputs)
             json.addProperty("result", Registries.ENTITY_TYPE.getId(result).toString());
         if (serializeInputs) {
-            json.add("target", RegistryEntryLists.toJson(Registries.ENTITY_TYPE.getKey(), target));
+            json.add("target", RegistryEntryLists.toJson(RegistryKeys.ENTITY_TYPE, target));
             if (profession != null)
                 json.addProperty("profession", Registries.VILLAGER_PROFESSION.getId(profession).toString());
         }

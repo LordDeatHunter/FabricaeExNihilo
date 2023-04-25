@@ -9,6 +9,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.entry.RegistryEntryList;
 import wraith.fabricaeexnihilo.compatibility.kubejs.FENKubePlugin;
@@ -75,15 +77,15 @@ public class FluidTransformationRecipeJS extends RecipeJS {
     @Override
     public void deserialize() {
         result = CodecUtils.fromJson(BarrelMode.CODEC, json.get("result"));
-        fluid = RegistryEntryLists.fromJson(Registries.FLUID.getKey(), json.get("fluid"));
-        catalyst = RegistryEntryLists.fromJson(Registries.BLOCK.getKey(), json.get("catalyst"));
+        fluid = RegistryEntryLists.fromJson(RegistryKeys.FLUID, json.get("fluid"));
+        catalyst = RegistryEntryLists.fromJson(RegistryKeys.BLOCK, json.get("catalyst"));
     }
 
     @Override
     public void serialize() {
         if (serializeInputs) {
-            json.add("fluid", RegistryEntryLists.toJson(Registries.FLUID.getKey(), fluid));
-            json.add("catalyst", RegistryEntryLists.toJson(Registries.BLOCK.getKey(), catalyst));
+            json.add("fluid", RegistryEntryLists.toJson(RegistryKeys.FLUID, fluid));
+            json.add("catalyst", RegistryEntryLists.toJson(RegistryKeys.BLOCK, catalyst));
         }
         if (serializeOutputs) {
             json.add("result", CodecUtils.toJson(BarrelMode.CODEC, result));

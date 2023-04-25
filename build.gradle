@@ -5,7 +5,7 @@ buildscript {
 }
 
 plugins {
-    id 'fabric-loom' version '1.0-SNAPSHOT'
+    id 'fabric-loom' version '1.2-SNAPSHOT'
     id 'io.github.juuxel.loom-quiltflower' version '1.7.1'
     id 'maven-publish'
 }
@@ -93,7 +93,7 @@ dependencies {
         modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
         modRuntimeOnly "dev.architectury:architectury-fabric:$architectury_version"
     }
-    // Disabled: no 1.19.3 support
+    // Disabled: no 1.19.4 support
     //if (settings.kubejs) modRuntimeOnly "dev.latvian.mods:kubejs-fabric:$kubejs_version"
     if (settings.modmenu) modRuntimeOnly "com.terraformersmc:modmenu:$modmenu_version"
     if (settings.techReborn) modRuntimeOnly "TechReborn:TechReborn-1.19:$tech_reborn_version"
@@ -116,15 +116,15 @@ dependencies {
 
     // The one probe
     modCompileOnly "mcjty.theoneprobe:theoneprobe-fabric:$theoneprobe_version"
-    // Disabled: No 1.19.3 support
+    // Disabled: No 1.19.4 support
     //if (settings.theOneProbe) {
     //    modRuntimeOnly "mcjty.theoneprobe:theoneprobe-fabric:$theoneprobe_version"
     //    modRuntimeOnly "com.electronwill.night-config:toml:3.6.0"
     //}
 
-    modCompileOnly "curse.maven:jade-324717:4434061"
+    modCompileOnly "curse.maven:jade-324717:4438356"
     if (settings.jade) {
-        modRuntimeOnly "curse.maven:jade-324717:4434061"
+        modRuntimeOnly "curse.maven:jade-324717:4438356"
     }
 }
 
