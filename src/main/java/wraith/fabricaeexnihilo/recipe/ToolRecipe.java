@@ -42,16 +42,6 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
     }
 
     @Override
-    public ItemStack craft(Context inventory, DynamicRegistryManager registryManager) {
-        return null;
-    }
-
-    @Override
-    public ItemStack getOutput(DynamicRegistryManager registryManager) {
-        return null;
-    }
-
-    @Override
     public RecipeSerializer<?> getSerializer() {
         return tool.serializer;
     }
@@ -64,6 +54,16 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
     @Override
     public ItemStack getDisplayStack() {
         return result.stack();
+    }
+
+    @Override
+    public ItemStack getOutput(DynamicRegistryManager registryManager) {
+        return getDisplayStack();
+    }
+
+    @Override
+    public ItemStack craft(Context inventory, DynamicRegistryManager registryManager) {
+        return getOutput(registryManager).copy();
     }
 
     public ToolType getTool() {

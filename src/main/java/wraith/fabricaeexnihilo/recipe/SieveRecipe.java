@@ -53,16 +53,6 @@ public class SieveRecipe extends BaseRecipe<SieveRecipe.Context> {
     }
 
     @Override
-    public ItemStack craft(Context inventory, DynamicRegistryManager registryManager) {
-        return null;
-    }
-
-    @Override
-    public ItemStack getOutput(DynamicRegistryManager registryManager) {
-        return null;
-    }
-
-    @Override
     public RecipeSerializer<?> getSerializer() {
         return ModRecipes.SIEVE_SERIALIZER;
     }
@@ -75,6 +65,16 @@ public class SieveRecipe extends BaseRecipe<SieveRecipe.Context> {
     @Override
     public ItemStack getDisplayStack() {
         return result;
+    }
+
+    @Override
+    public ItemStack getOutput(DynamicRegistryManager registryManager) {
+        return getDisplayStack();
+    }
+
+    @Override
+    public ItemStack craft(Context inventory, DynamicRegistryManager registryManager) {
+        return getOutput(registryManager).copy();
     }
 
     public ItemStack getResult() {

@@ -62,18 +62,18 @@ public class CompostRecipe extends BaseRecipe<CompostRecipe.Context> {
     }
 
     @Override
-    public ItemStack craft(Context inventory, DynamicRegistryManager registryManager) {
-        return null;
+    public ItemStack getDisplayStack() {
+        return result;
     }
 
     @Override
     public ItemStack getOutput(DynamicRegistryManager registryManager) {
-        return getResult();
+        return getDisplayStack();
     }
 
     @Override
-    public ItemStack getDisplayStack() {
-        return result;
+    public ItemStack craft(Context inventory, DynamicRegistryManager registryManager) {
+        return getOutput(registryManager).copy();
     }
 
     @Override

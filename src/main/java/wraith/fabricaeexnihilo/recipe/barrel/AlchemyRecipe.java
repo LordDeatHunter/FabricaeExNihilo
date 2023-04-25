@@ -57,18 +57,18 @@ public class AlchemyRecipe extends BaseRecipe<AlchemyRecipe.Context> {
     }
 
     @Override
-    public ItemStack craft(Context inventory, DynamicRegistryManager registryManager) {
-        return null;
+    public ItemStack getDisplayStack() {
+        return byproduct.stack();
     }
 
     @Override
     public ItemStack getOutput(DynamicRegistryManager registryManager) {
-        return null;
+        return getDisplayStack();
     }
 
     @Override
-    public ItemStack getDisplayStack() {
-        return byproduct.stack();
+    public ItemStack craft(Context inventory, DynamicRegistryManager registryManager) {
+        return getOutput(registryManager).copy();
     }
 
     @Override

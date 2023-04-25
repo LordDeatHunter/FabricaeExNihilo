@@ -48,19 +48,19 @@ public class FluidTransformationRecipe extends BaseRecipe<FluidTransformationRec
     }
 
     @Override
-    public ItemStack craft(Context inventory, DynamicRegistryManager registryManager) {
-        return null;
+    public ItemStack getDisplayStack() {
+        // FIXME: should use the result somehow
+        return result.getReiResult().stream().map(EntryStack::cheatsAs).map(EntryStack::getValue).findFirst().orElse(ItemStack.EMPTY);
     }
 
     @Override
     public ItemStack getOutput(DynamicRegistryManager registryManager) {
-        return null;
+        return getDisplayStack();
     }
 
     @Override
-    public ItemStack getDisplayStack() {
-        // FIXME: should use the result somehow
-        return result.getReiResult().stream().map(EntryStack::cheatsAs).map(EntryStack::getValue).findFirst().orElse(ItemStack.EMPTY);
+    public ItemStack craft(Context inventory, DynamicRegistryManager registryManager) {
+        return getOutput(registryManager).copy();
     }
 
     @Override

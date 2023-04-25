@@ -42,16 +42,6 @@ public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.Context> {
     }
 
     @Override
-    public ItemStack craft(Context inventory, DynamicRegistryManager registryManager) {
-        return null;
-    }
-
-    @Override
-    public ItemStack getOutput(DynamicRegistryManager registryManager) {
-        return null;
-    }
-
-    @Override
     public RecipeSerializer<?> getSerializer() {
         return ModRecipes.CRUCIBLE_HEAT_SERIALIZER;
     }
@@ -68,6 +58,16 @@ public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.Context> {
                 .map(EntryStack::getValue)
                 .findFirst()
                 .orElse(ItemStack.EMPTY);
+    }
+
+    @Override
+    public ItemStack getOutput(DynamicRegistryManager registryManager) {
+        return getDisplayStack();
+    }
+
+    @Override
+    public ItemStack craft(Context inventory, DynamicRegistryManager registryManager) {
+        return getOutput(registryManager).copy();
     }
 
     public BlockIngredient getBlock() {

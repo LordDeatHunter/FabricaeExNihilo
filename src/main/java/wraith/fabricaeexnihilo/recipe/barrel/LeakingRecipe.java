@@ -49,18 +49,18 @@ public class LeakingRecipe extends BaseRecipe<LeakingRecipe.Context> {
     }
 
     @Override
-    public ItemStack craft(Context inventory, DynamicRegistryManager registryManager) {
-        return null;
+    public ItemStack getDisplayStack() {
+        return result.asItem().getDefaultStack();
     }
 
     @Override
     public ItemStack getOutput(DynamicRegistryManager registryManager) {
-        return null;
+        return getDisplayStack();
     }
 
     @Override
-    public ItemStack getDisplayStack() {
-        return result.asItem().getDefaultStack();
+    public ItemStack craft(Context inventory, DynamicRegistryManager registryManager) {
+        return getOutput(registryManager).copy();
     }
 
     @Override

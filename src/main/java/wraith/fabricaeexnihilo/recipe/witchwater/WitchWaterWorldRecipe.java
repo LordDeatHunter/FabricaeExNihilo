@@ -42,16 +42,6 @@ public class WitchWaterWorldRecipe extends BaseRecipe<WitchWaterWorldRecipe.Cont
     }
 
     @Override
-    public ItemStack craft(Context inventory, DynamicRegistryManager registryManager) {
-        return null;
-    }
-
-    @Override
-    public ItemStack getOutput(DynamicRegistryManager registryManager) {
-        return null;
-    }
-
-    @Override
     public RecipeSerializer<?> getSerializer() {
         return ModRecipes.WITCH_WATER_WORLD_SERIALIZER;
     }
@@ -64,6 +54,16 @@ public class WitchWaterWorldRecipe extends BaseRecipe<WitchWaterWorldRecipe.Cont
     @Override
     public ItemStack getDisplayStack() {
         return result.asListOfStacks().get(0);
+    }
+
+    @Override
+    public ItemStack getOutput(DynamicRegistryManager registryManager) {
+        return getDisplayStack();
+    }
+
+    @Override
+    public ItemStack craft(Context inventory, DynamicRegistryManager registryManager) {
+        return getOutput(registryManager).copy();
     }
 
     public FluidIngredient getTarget() {

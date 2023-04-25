@@ -45,19 +45,19 @@ public class FluidCombinationRecipe extends BaseRecipe<FluidCombinationRecipe.Co
     }
 
     @Override
-    public ItemStack craft(Context inventory, DynamicRegistryManager registryManager) {
-        return null;
+    public ItemStack getDisplayStack() {
+        var reiResult = result.getReiResult();
+        return reiResult.size() > 0 ? reiResult.get(0).cheatsAs().getValue() : ItemStack.EMPTY;
     }
 
     @Override
     public ItemStack getOutput(DynamicRegistryManager registryManager) {
-        return null;
+        return getDisplayStack();
     }
 
     @Override
-    public ItemStack getDisplayStack() {
-        var reiResult = result.getReiResult();
-        return reiResult.size() > 0 ? reiResult.get(0).cheatsAs().getValue() : ItemStack.EMPTY;
+    public ItemStack craft(Context inventory, DynamicRegistryManager registryManager) {
+        return getOutput(registryManager).copy();
     }
 
     @Override

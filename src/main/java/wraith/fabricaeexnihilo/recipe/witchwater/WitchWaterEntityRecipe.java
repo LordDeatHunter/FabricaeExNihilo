@@ -51,16 +51,6 @@ public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.Co
     }
 
     @Override
-    public ItemStack craft(Context inventory, DynamicRegistryManager registryManager) {
-        return null;
-    }
-
-    @Override
-    public ItemStack getOutput(DynamicRegistryManager registryManager) {
-        return null;
-    }
-
-    @Override
     public RecipeSerializer<?> getSerializer() {
         return ModRecipes.WITCH_WATER_ENTITY_SERIALIZER;
     }
@@ -74,6 +64,16 @@ public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.Co
     public ItemStack getDisplayStack() {
         var egg = SpawnEggItem.forEntity(result);
         return egg == null ? ItemStack.EMPTY : egg.getDefaultStack();
+    }
+
+    @Override
+    public ItemStack getOutput(DynamicRegistryManager registryManager) {
+        return getDisplayStack();
+    }
+
+    @Override
+    public ItemStack craft(Context inventory, DynamicRegistryManager registryManager) {
+        return getOutput(registryManager).copy();
     }
 
     public EntityType<?> getTarget() {

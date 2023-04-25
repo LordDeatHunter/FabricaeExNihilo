@@ -2,8 +2,10 @@ package wraith.fabricaeexnihilo.recipe;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Recipe;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
+import wraith.fabricaeexnihilo.recipe.barrel.CompostRecipe;
 
 public abstract class BaseRecipe<T extends RecipeContext> implements Recipe<T> {
     protected final Identifier id;
@@ -21,16 +23,6 @@ public abstract class BaseRecipe<T extends RecipeContext> implements Recipe<T> {
     public final Identifier getId() {
         return id;
     }
-
-//    @Override
-//    public final ItemStack craft(T inventory) {
-//        return getOutput().copy();
-//    }
-//
-//    @Override
-//    public final ItemStack getOutput() {
-//        return getDisplayStack();
-//    }
 
     @Override
     public abstract boolean matches(T context, World world);
