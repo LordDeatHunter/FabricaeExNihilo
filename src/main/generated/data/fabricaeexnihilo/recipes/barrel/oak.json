@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "fabricaeexnihilo:barrel",
+  "key": {
+    "#": {
+      "item": "minecraft:oak_planks"
+    },
+    "S": {
+      "item": "minecraft:oak_slab"
+    }
+  },
+  "pattern": [
+    "# #",
+    "# #",
+    "#S#"
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:oak_barrel"
+  },
+  "show_notification": true
+}

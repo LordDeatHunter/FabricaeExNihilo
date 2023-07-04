@@ -1,0 +1,33 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "techreborn"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "fabricaeexnihilo:crucible",
+  "key": {
+    "#": {
+      "item": "techreborn:rubber_log"
+    },
+    "I": {
+      "item": "minecraft:stick"
+    },
+    "S": {
+      "item": "techreborn:rubber_slab"
+    }
+  },
+  "pattern": [
+    "# #",
+    "#S#",
+    "I I"
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:rubber_crucible"
+  },
+  "show_notification": true
+}

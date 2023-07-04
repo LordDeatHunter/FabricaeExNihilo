@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "fabricaeexnihilo:crucible",
+  "key": {
+    "#": {
+      "item": "minecraft:dark_oak_log"
+    },
+    "I": {
+      "item": "minecraft:stick"
+    },
+    "S": {
+      "item": "minecraft:dark_oak_slab"
+    }
+  },
+  "pattern": [
+    "# #",
+    "#S#",
+    "I I"
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:dark_oak_crucible"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "fabricaeexnihilo:barrel",
+  "key": {
+    "#": {
+      "item": "minecraft:acacia_planks"
+    },
+    "S": {
+      "item": "minecraft:acacia_slab"
+    }
+  },
+  "pattern": [
+    "# #",
+    "# #",
+    "#S#"
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:acacia_barrel"
+  },
+  "show_notification": true
+}

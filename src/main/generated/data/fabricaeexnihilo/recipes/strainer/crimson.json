@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "fabricaeexnihilo:sieve",
+  "key": {
+    "#": {
+      "item": "minecraft:crimson_stem"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "#S#",
+    "SSS",
+    "#S#"
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:crimson_strainer"
+  },
+  "show_notification": true
+}

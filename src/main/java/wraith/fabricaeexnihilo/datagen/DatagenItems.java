@@ -43,6 +43,9 @@ public class DatagenItems {
     public static final Identifier TR_RAW_SILVER_ID = new Identifier("techreborn", "raw_silver");
     public static final Identifier TR_RAW_TIN_ID = new Identifier("techreborn", "raw_tin");
     public static final Identifier TR_RAW_TUNGSTEN_ID = new Identifier("techreborn", "raw_tungsten");
+    public static final Identifier TR_RUBBER_LOG_ID = new Identifier("techreborn", "rubber_log");
+    public static final Identifier TR_RUBBER_PLANKS_ID = new Identifier("techreborn", "rubber_planks");
+    public static final Identifier TR_RUBBER_SLAB_ID = new Identifier("techreborn", "rubber_slab");
 
     public static final Identifier MI_RAW_ANTIMONY_ID = new Identifier("modern_industrialization", "raw_antimony");
     public static final Identifier MI_RAW_LEAD_ID = new Identifier("modern_industrialization", "raw_lead");
@@ -73,7 +76,8 @@ public class DatagenItems {
         }
 
         if (!TECH_REBORN_INSTALLED) {
-            registerDummies(TR_RAW_IRIDIUM_ID, TR_RAW_LEAD_ID, TR_RAW_SILVER_ID, TR_RAW_TIN_ID, TR_RAW_TUNGSTEN_ID);
+            registerDummies(TR_RAW_IRIDIUM_ID, TR_RAW_LEAD_ID, TR_RAW_SILVER_ID, TR_RAW_TIN_ID, TR_RAW_TUNGSTEN_ID,
+                    TR_RUBBER_LOG_ID, TR_RUBBER_PLANKS_ID, TR_RUBBER_SLAB_ID);
         }
 
         if (!INDREV_INSTALLED) {

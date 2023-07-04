@@ -15,6 +15,7 @@ import java.util.function.Consumer;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 import static wraith.fabricaeexnihilo.datagen.DatagenItems.*;
+import static wraith.fabricaeexnihilo.modules.ModBlocks.*;
 import static wraith.fabricaeexnihilo.modules.ModItems.*;
 import static wraith.fabricaeexnihilo.modules.ModTools.CROOKS;
 import static wraith.fabricaeexnihilo.modules.ModTools.HAMMERS;
@@ -34,11 +35,69 @@ public class BaseRecipeProvider extends FabricRecipeProvider {
         var modernIndustrializationExporter = withConditions(exporter, DefaultResourceConditions.allModsLoaded("modern_industrialization"));
         var techRebornExporter = withConditions(exporter, DefaultResourceConditions.allModsLoaded("techreborn"));
 
+        offerWoodRecipes(exporter, techRebornExporter);
         offerHammerRecipes(exporter);
         offerCrookRecipes(exporter);
         offerMeshRecipes(exporter, mythicMetalsExporter);
         offerPebbleToRockRecipes(exporter);
         offerOrePieceRecipes(exporter, mythicMetalsExporter, indrevExporter, modernIndustrializationExporter, techRebornExporter);
+    }
+
+    private static void offerWoodRecipes(Consumer<RecipeJsonProvider> exporter, Consumer<RecipeJsonProvider> techRebornExporter) {
+        offerWoodSetRecipes(Items.ACACIA_LOG, Items.ACACIA_PLANKS, Items.ACACIA_SLAB, "acacia", exporter);
+        offerWoodSetRecipes(Items.BIRCH_LOG, Items.BIRCH_PLANKS, Items.BIRCH_SLAB, "birch", exporter);
+        offerWoodSetRecipes(Items.CRIMSON_STEM, Items.CRIMSON_PLANKS, Items.CRIMSON_SLAB, "crimson", exporter);
+        offerWoodSetRecipes(Items.DARK_OAK_LOG, Items.DARK_OAK_PLANKS, Items.DARK_OAK_SLAB, "dark_oak", exporter);
+        offerWoodSetRecipes(Items.JUNGLE_LOG, Items.JUNGLE_PLANKS, Items.JUNGLE_SLAB, "jungle", exporter);
+        offerWoodSetRecipes(Items.OAK_LOG, Items.OAK_PLANKS, Items.OAK_SLAB, "oak", exporter);
+        offerWoodSetRecipes(Items.SPRUCE_LOG, Items.SPRUCE_PLANKS, Items.SPRUCE_SLAB, "spruce", exporter);
+        offerWoodSetRecipes(Items.WARPED_STEM, Items.WARPED_PLANKS, Items.WARPED_SLAB, "warped", exporter);
+        offerWoodSetRecipes(getDummyItem(TR_RUBBER_LOG_ID), getDummyItem(TR_RUBBER_PLANKS_ID), getDummyItem(TR_RUBBER_SLAB_ID), "rubber", techRebornExporter);
+    }
+
+    private static void offerWoodSetRecipes(Item log, Item planks, Item slab, String name, Consumer<RecipeJsonProvider> exporter) {
+        ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, BARRELS.get(id(name + "_barrel")))
+                .group("fabricaeexnihilo:barrel")
+                .pattern("# #")
+                .pattern("# #")
+                .pattern("#S#")
+                .input('#', planks)
+                .input('S', slab)
+                .criterion("has_planks", conditionsFromItem(planks))
+                .offerTo(exporter, id("barrel/" + name));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, CRUCIBLES.get(id(name + "_crucible")))
+                .group("fabricaeexnihilo:crucible")
+                .pattern("# #")
+                .pattern("#S#")
+                .pattern("I I")
+                .input('#', log)
+                .input('S', slab)
+                .input('I', Items.STICK)
+                .criterion("has_log", conditionsFromItem(log))
+                .offerTo(exporter, id("crucible/" + name));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, SIEVES.get(id(name + "_sieve")))
+                .group("fabricaeexnihilo:sieve")
+                .pattern("# #")
+                .pattern("#S#")
+                .pattern("I I")
+                .input('#', planks)
+                .input('S', slab)
+                .input('I', Items.STICK)
+                .criterion("has_planks", conditionsFromItem(planks))
+                .offerTo(exporter, id("sieve/" + name));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, STRAINERS.get(id(name + "_strainer")))
+                .group("fabricaeexnihilo:sieve")
+                .pattern("#S#")
+                .pattern("SSS")
+                .pattern("#S#")
+                .input('#', log)
+                .input('S', Items.STRING)
+                .criterion("has_log", conditionsFromItem(log))
+                .offerTo(exporter, id("strainer/" + name));
+
     }
 
     private static void offerCrookRecipes(Consumer<RecipeJsonProvider> exporter) {
