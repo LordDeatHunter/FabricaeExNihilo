@@ -3,7 +3,7 @@ package wraith.fabricaeexnihilo.modules;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Material;
+import net.minecraft.block.MapColor;
 import net.minecraft.item.Items;
 import wraith.fabricaeexnihilo.modules.base.AbstractFluid;
 import wraith.fabricaeexnihilo.modules.fluids.BloodFluid;
@@ -22,7 +22,7 @@ public final class ModFluids {
     );
 
     public static AbstractBlock.Settings getBlockSettings() {
-        return FabricBlockSettings.of(Material.WATER).noCollision().strength(100.0f, 100.0f).dropsNothing();
+        return FabricBlockSettings.create().mapColor(MapColor.WATER_BLUE).noCollision().strength(100.0f, 100.0f).dropsNothing();
     }
 
     public static FabricItemSettings getBucketItemSettings() {

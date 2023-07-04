@@ -116,7 +116,7 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
         } else {
             matrices.translate(X_MIN, Y_MIN, X_MIN);
             matrices.scale(XZ_SCALE, yScale, XZ_SCALE);
-            MinecraftClient.getInstance().getItemRenderer().renderItem(mode.getResult(), ModelTransformation.Mode.NONE, light, overlays, matrices, vertexConsumers, (int) pos.asLong());
+            MinecraftClient.getInstance().getItemRenderer().renderItem(mode.getResult(), ModelTransformation.NONE, light, overlays, matrices, vertexConsumers, (int) pos.asLong());
         }
         matrices.pop();
     }

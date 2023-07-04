@@ -3,7 +3,7 @@ package wraith.fabricaeexnihilo.modules;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.Material;
+import net.minecraft.block.MapColor;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ToolMaterials;
@@ -38,7 +38,7 @@ public final class ModBlocks {
     public static final Map<Identifier, Block> CRUSHED = new HashMap<>();
     public static final EndCakeBlock END_CAKE = new EndCakeBlock(FabricBlockSettings.copyOf(Blocks.CAKE));
     public static final Map<Identifier, InfestedLeavesBlock> INFESTED_LEAVES = new HashMap<>();
-    public static final FabricBlockSettings INFESTED_LEAVES_SETTINGS = FabricBlockSettings.of(Material.LEAVES).nonOpaque().suffocates((state, world, pos) -> false).allowsSpawning((state, world, pos, type) -> type == EntityType.OCELOT || type == EntityType.PARROT).strength(0.2F).ticksRandomly().sounds(BlockSoundGroup.GRASS);
+    public static final FabricBlockSettings INFESTED_LEAVES_SETTINGS = FabricBlockSettings.create().mapColor(MapColor.WHITE).nonOpaque().suffocates((state, world, pos) -> false).allowsSpawning((state, world, pos, type) -> type == EntityType.OCELOT || type == EntityType.PARROT).strength(0.2F).ticksRandomly().sounds(BlockSoundGroup.GRASS);
     public static final InfestingLeavesBlock INFESTING_LEAVES = new InfestingLeavesBlock(FabricBlockSettings.copyOf(INFESTED_LEAVES_SETTINGS));
     public static final Map<Identifier, SieveBlock> SIEVES = new HashMap<>();
     public static final Map<Identifier, StrainerBlock> STRAINERS = new HashMap<>();
@@ -54,15 +54,15 @@ public final class ModBlocks {
     public static void registerBlockItems() {
         SIEVES.forEach((identifier, block) -> Registry.register(Registries.ITEM, identifier, new BlockItem(block, ModItems.BASE_SETTINGS)));
         CRUCIBLES.forEach((identifier, block) -> {
-            var enchantability = block.getDefaultState().getMaterial() == Material.STONE
-                    ? ToolMaterials.STONE.getEnchantability()
-                    : ToolMaterials.WOOD.getEnchantability();
+            var enchantability = block.getDefaultMapColor() == MapColor.STONE_GRAY
+                ? ToolMaterials.STONE.getEnchantability()
+                : ToolMaterials.WOOD.getEnchantability();
             Registry.register(Registries.ITEM, identifier, new EnchantableBlockItem(block, ModItems.BASE_SETTINGS, enchantability));
         });
         BARRELS.forEach((identifier, block) -> {
-            var enchantability = block.getDefaultState().getMaterial() == Material.STONE
-                    ? ToolMaterials.STONE.getEnchantability()
-                    : ToolMaterials.WOOD.getEnchantability();
+            var enchantability = block.getDefaultMapColor() == MapColor.STONE_GRAY
+                ? ToolMaterials.STONE.getEnchantability()
+                : ToolMaterials.WOOD.getEnchantability();
             Registry.register(Registries.ITEM, identifier, new EnchantableBlockItem(block, ModItems.BASE_SETTINGS, enchantability));
         });
         CRUSHED.forEach((identifier, block) -> Registry.register(Registries.ITEM, identifier, new BlockItem(block, ModItems.BASE_SETTINGS)));
