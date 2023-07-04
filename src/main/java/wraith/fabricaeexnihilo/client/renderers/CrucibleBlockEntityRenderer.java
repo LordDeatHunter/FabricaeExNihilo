@@ -10,12 +10,13 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
-import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
+import net.minecraft.world.World;
 import wraith.fabricaeexnihilo.modules.crucibles.CrucibleBlockEntity;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -47,7 +48,7 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
         }
 
         if (queued > 0 && !stack.isEmpty()) {
-            renderQueued(stack, queued / (float) crucible.getMaxCapacity(), matrices, vertexConsumers, light, overlay, (int) crucible.getPos().asLong());
+            renderQueued(stack, queued / (float) crucible.getMaxCapacity(), matrices, vertexConsumers, light, overlay, crucible.getWorld(), (int) crucible.getPos().asLong());
         }
 
     }
@@ -67,19 +68,18 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
 
         var emitter = RendererAccess.INSTANCE.getRenderer().meshBuilder().getEmitter();
         emitter.square(Direction.UP, X_MIN, Z_MIN, X_MAX, Z_MAX, 1 - MathHelper.lerp(level, Y_MIN, Y_MAX));
-        emitter.spriteBake(0, sprite, MutableQuadView.BAKE_LOCK_UV);
-        vertexConsumers.getBuffer(RenderLayer.getTranslucent()).quad(matrices.peek(), emitter.toBakedQuad(0, sprite, false), r, g, b, light, overlay);
+        emitter.spriteBake(sprite, MutableQuadView.BAKE_LOCK_UV);
+        vertexConsumers.getBuffer(RenderLayer.getTranslucent()).quad(matrices.peek(), emitter.toBakedQuad(sprite), r, g, b, light, overlay);
     }
 
-    public void renderQueued(ItemStack renderStack, float level, MatrixStack matrices, VertexConsumerProvider vertexConsumer, int light, int overlay, int seed) {
-        // Some magic. Could probably be simplified
-        var yScale = MathHelper.clamp((Y_MAX - Y_MIN) * level, 0, Y_MAX - Y_MIN);
+    public void renderQueued(ItemStack renderStack, float level, MatrixStack matrices, VertexConsumerProvider vertexConsumer, int light, int overlay, World world, int seed) {
+        var yScale = MathHelper.clampedLerp(0, Y_MAX - Y_MIN, level);
 
         matrices.push();
         matrices.translate(0.5, Y_MIN + yScale / 2, 0.5);
         matrices.scale(XZ_SCALE, yScale, XZ_SCALE);
         matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90));
-        MinecraftClient.getInstance().getItemRenderer().renderItem(renderStack, ModelTransformation.Mode.NONE, light, overlay, matrices, vertexConsumer, seed);
+        MinecraftClient.getInstance().getItemRenderer().renderItem(renderStack, ModelTransformationMode.NONE, light, overlay, matrices, vertexConsumer, world, seed);
         matrices.pop();
     }
 }

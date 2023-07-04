@@ -98,7 +98,7 @@ public class CompostMode extends BarrelMode {
     public long insertItem(ItemVariant item, long maxAmount, TransactionContext transaction, BarrelItemStorage storage) {
         var recipe = CompostRecipe.find(item.toStack(), storage.barrel.getWorld());
         storage.updateSnapshots(transaction);
-        if (recipe.isPresent() && amount < 1.0 && recipe.get().getResult().isItemEqual(result)) {
+        if (recipe.isPresent() && amount < 1.0 && recipe.get().getResult().isOf(result.getItem())) {
             amount = Math.min(amount + recipe.get().getIncrement(), 1.0);
             color = recipe.get().getColor();
             progress = 0;

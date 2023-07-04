@@ -103,7 +103,7 @@ public class BarrelBlock extends BlockWithEntity {
                 var thorns = barrel.getEnchantmentContainer().getEnchantmentLevel(Enchantments.THORNS);
                 if (thorns > 0
                         && barrel.fluidStorage.simulateInsert(FluidVariant.of(BloodFluid.STILL), 1, null) >= 1
-                        && livingEntity.damage(DamageSource.CACTUS, thorns / 2F)) {
+                        && livingEntity.damage(world.getDamageSources().cactus(), thorns / 2F)) {
                     var amount = FluidConstants.BUCKET * thorns / livingEntity.getMaxHealth();
                     try (Transaction t = Transaction.openOuter()) {
                         barrel.fluidStorage.insert(FluidVariant.of(BloodFluid.STILL), (long) amount, t);

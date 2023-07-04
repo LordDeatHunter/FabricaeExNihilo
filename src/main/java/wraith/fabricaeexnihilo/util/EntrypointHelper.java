@@ -65,7 +65,7 @@ public class EntrypointHelper {
 
         @Override
         public FabricBlockSettings gravelyBlockSettings() {
-            return FabricBlockSettings.copyOf(FabricBlockSettings.of(Material.AGGREGATE).strength(0.6f).sounds(BlockSoundGroup.GRAVEL));
+            return FabricBlockSettings.copyOf(Blocks.GRAVEL);
         }
 
         @Override
@@ -75,17 +75,17 @@ public class EntrypointHelper {
 
         @Override
         public FabricBlockSettings sandyBlockSettings() {
-            return FabricBlockSettings.copyOf(FabricBlockSettings.of(Material.AGGREGATE).strength(0.4f).sounds(BlockSoundGroup.SAND));
+            return FabricBlockSettings.copyOf(Blocks.SAND);
         }
 
         @Override
         public FabricBlockSettings stoneBlockSettings() {
-            return FabricBlockSettings.copyOf(FabricBlockSettings.of(Material.STONE).strength(2.0f, 6.0f).sounds(BlockSoundGroup.STONE).requiresTool());
+            return FabricBlockSettings.copyOf(Blocks.STONE).requiresTool();
         }
 
         @Override
         public FabricBlockSettings woodenBlockSettings() {
-            return FabricBlockSettings.copyOf(FabricBlockSettings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD));
+            return FabricBlockSettings.copyOf(Blocks.OAK_PLANKS);
         }
 
         @Override

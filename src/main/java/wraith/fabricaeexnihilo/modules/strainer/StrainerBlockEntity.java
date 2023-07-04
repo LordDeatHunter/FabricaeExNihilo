@@ -9,7 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
@@ -72,13 +72,15 @@ public class StrainerBlockEntity extends BaseBlockEntity {
         if (world.isClient || !state.get(StrainerBlock.WATERLOGGED))
             return;
         if (strainer.timeUntilCatch-- == 0) {
+            var params = new LootContextParameterSet.Builder((ServerWorld) world)
+                    .add(LootContextParameters.BLOCK_ENTITY, strainer)
+                    .add(LootContextParameters.BLOCK_STATE, state)
+                    .add(LootContextParameters.ORIGIN, Vec3d.of(blockPos))
+                    .build(ModLootContextTypes.STRAINER);
+
             var loot = world.getServer().getLootManager()
-                    .getTable(id("gameplay/strainer"))
-                    .generateLoot(new LootContext.Builder((ServerWorld) world)
-                            .parameter(LootContextParameters.BLOCK_ENTITY, strainer)
-                            .parameter(LootContextParameters.BLOCK_STATE, state)
-                            .parameter(LootContextParameters.ORIGIN, Vec3d.of(blockPos))
-                            .build(ModLootContextTypes.STRAINER));
+                    .getLootTable(id("gameplay/strainer"))
+                    .generateLoot(params);
             for (int i = 0; i < strainer.inventory.size(); i++) {
                 if (loot.isEmpty())
                     break;

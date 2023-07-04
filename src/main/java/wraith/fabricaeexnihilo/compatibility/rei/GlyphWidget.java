@@ -3,6 +3,7 @@ package wraith.fabricaeexnihilo.compatibility.rei;
 import com.mojang.blaze3d.systems.RenderSystem;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.widgets.WidgetWithBounds;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
@@ -37,9 +38,8 @@ public class GlyphWidget extends WidgetWithBounds {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        RenderSystem.setShaderTexture(0, texture);
-        drawTexture(matrices, x, y, u, v, width, height);
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        context.drawTexture(texture, x, y, u, v, width, height);
     }
 
     @Override

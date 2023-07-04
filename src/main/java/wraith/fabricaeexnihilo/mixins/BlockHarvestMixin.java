@@ -4,6 +4,7 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,7 +22,7 @@ public abstract class BlockHarvestMixin {
      * Injects calls to the Hammer and Crook registries if the tool used is identified as a Hammer or Crook
      */
     @Inject(at = @At("RETURN"), method = "getDroppedStacks", cancellable = true)
-    public void getDroppedStacks(BlockState state, LootContext.Builder builder, CallbackInfoReturnable<List<ItemStack>> info) {
+    public void getDroppedStacks(BlockState state, LootContextParameterSet.Builder builder, CallbackInfoReturnable<List<ItemStack>> info) {
         ItemStack tool = builder.get(LootContextParameters.TOOL);
         if (CrookItem.isCrook(tool) || HammerItem.isHammer(tool)) {
             var recipes = ToolRecipe.find(CrookItem.isCrook(tool) ? ToolRecipe.ToolType.CROOK : ToolRecipe.ToolType.HAMMER, state, builder.getWorld());

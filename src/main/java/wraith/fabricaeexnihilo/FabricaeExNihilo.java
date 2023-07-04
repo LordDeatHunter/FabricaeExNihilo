@@ -27,9 +27,9 @@ import wraith.fabricaeexnihilo.util.ItemUtils;
 import java.nio.file.Files;
 
 public class FabricaeExNihilo implements ModInitializer {
-    public static final ItemGroup ITEM_GROUP = FabricItemGroup.builder(new Identifier("fabricaeexnihilo", "general"))
+    public static final ItemGroup ITEM_GROUP = FabricItemGroup.builder()
             .icon(() -> ItemUtils.getExNihiloItemStack("wooden_crook"))
-            .entries((enabledFeatures, entries, operatorEnabled) -> {
+            .entries((context, entries) -> {
                 ModTools.CROOKS.values().stream().map(ItemStack::new).forEach(entries::add);
                 ModTools.HAMMERS.values().stream().map(ItemStack::new).forEach(entries::add);
                 ModBlocks.BARRELS.values().stream().map(ItemStack::new).forEach(entries::add);
@@ -120,6 +120,7 @@ public class FabricaeExNihilo implements ModInitializer {
             return true;
         });
         Registry.register(Registries.LOOT_FUNCTION_TYPE, id("copy_enchantments"), CopyEnchantmentsLootFunction.TYPE);
+        Registry.register(Registries.ITEM_GROUP, id("general"), ITEM_GROUP);
 
         LOGGER.debug("Registering Status Effects");
         ModEffects.registerEffects();
