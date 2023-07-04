@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_porcelain": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fabricaeexnihilo:porcelain"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fabricaeexnihilo:crucible/unfired_porcelain"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_porcelain",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fabricaeexnihilo:crucible/unfired_porcelain"
+    ]
+  },
+  "sends_telemetry_event": false
+}

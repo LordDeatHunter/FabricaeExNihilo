@@ -10,6 +10,7 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
+import wraith.fabricaeexnihilo.modules.ModTags;
 
 import java.util.function.Consumer;
 
@@ -35,12 +36,42 @@ public class BaseRecipeProvider extends FabricRecipeProvider {
         var modernIndustrializationExporter = withConditions(exporter, DefaultResourceConditions.allModsLoaded("modern_industrialization"));
         var techRebornExporter = withConditions(exporter, DefaultResourceConditions.allModsLoaded("techreborn"));
 
+        offerDollRecipes(exporter);
         offerWoodRecipes(exporter, techRebornExporter);
         offerHammerRecipes(exporter);
         offerCrookRecipes(exporter);
         offerMeshRecipes(exporter, mythicMetalsExporter);
         offerPebbleToRockRecipes(exporter);
         offerOrePieceRecipes(exporter, mythicMetalsExporter, indrevExporter, modernIndustrializationExporter, techRebornExporter);
+        offerMiscRecipes(exporter);
+    }
+
+    private static void offerDollRecipes(Consumer<RecipeJsonProvider> exporter) {
+        ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, DOLLS.get(id("doll")))
+                .pattern("xyx")
+                .pattern(" x ")
+                .pattern("x x")
+                .input('x', ModTags.Common.PORCELAIN)
+                .input('y', Items.EMERALD)
+                .criterion("has_porcelain", conditionsFromTag(ModTags.Common.PORCELAIN))
+                .offerTo(exporter, id("doll/base"));
+        createDollRecipe(Items.REDSTONE, Items.NETHER_WART, Items.BLACK_DYE, DOLLS.get(id("doll_enderman"))).offerTo(exporter, id("doll/enderman"));
+        createDollRecipe(Items.NETHER_WART, Items.REDSTONE, Items.BLAZE_POWDER, DOLLS.get(id("doll_blaze"))).offerTo(exporter, id("doll/blaze"));
+        createDollRecipe(Items.REDSTONE, Items.COD, Items.PRISMARINE_CRYSTALS, DOLLS.get(id("doll_guardian"))).offerTo(exporter, id("doll/guardian"));
+        createDollRecipe(Items.END_STONE, Items.ENDER_PEARL, Items.PURPLE_DYE, DOLLS.get(id("doll_shulker"))).offerTo(exporter, id("doll/shulker"));
+    }
+
+    private static ShapedRecipeJsonBuilder createDollRecipe(Item top, Item bottom, Item corner, Item result) {
+        return ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, result)
+                .pattern("ctc")
+                .pattern("sds")
+                .pattern("cbc")
+                .input('c', corner)
+                .input('t', top)
+                .input('b', bottom)
+                .input('s', Items.GLOWSTONE_DUST)
+                .input('d', DOLLS.get(id("doll")))
+                .criterion("has_doll", conditionsFromItem(DOLLS.get(id("doll"))));
     }
 
     private static void offerWoodRecipes(Consumer<RecipeJsonProvider> exporter, Consumer<RecipeJsonProvider> techRebornExporter) {
@@ -265,6 +296,57 @@ public class BaseRecipeProvider extends FabricRecipeProvider {
                 .input(piece)
                 .input(piece)
                 .criterion("has_piece", conditionsFromItem(piece));
+    }
+
+    private static void offerMiscRecipes(Consumer<RecipeJsonProvider> exporter) {
+        ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD, END_CAKE)
+                .pattern("###")
+                .pattern("#C#")
+                .pattern("###")
+                .input('#', Items.ENDER_EYE)
+                .input('C', Items.CAKE)
+                .criterion("has_ender_eye", conditionsFromItem(Items.ENDER_EYE))
+                .offerTo(exporter);
+
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, PORCELAIN)
+                .input(Items.CLAY_BALL)
+                .input(Items.BONE_MEAL)
+                .criterion("has_clay", conditionsFromItem(Items.CLAY_BALL))
+                .offerTo(exporter);
+
+        CookingRecipeJsonBuilder.createSmelting(Ingredient.ofItems(RAW_SILKWORM), RecipeCategory.FOOD, COOKED_SILKWORM, 0.35f, 200)
+                .criterion("has_silkworm", conditionsFromItem(RAW_SILKWORM))
+                .offerTo(exporter, id("silkworm_cooked"));
+        CookingRecipeJsonBuilder.createSmoking(Ingredient.ofItems(RAW_SILKWORM), RecipeCategory.FOOD, COOKED_SILKWORM, 0.35f, 100)
+                .criterion("has_silkworm", conditionsFromItem(RAW_SILKWORM))
+                .offerTo(exporter, id("silkworm_cooked_from_smoking"));
+        CookingRecipeJsonBuilder.createCampfireCooking(Ingredient.ofItems(RAW_SILKWORM), RecipeCategory.FOOD, COOKED_SILKWORM, 0.35f, 600)
+                .criterion("has_silkworm", conditionsFromItem(RAW_SILKWORM))
+                .offerTo(exporter, id("silkworm_cooked_from_campfire_cooking"));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, BARRELS.get(id("stone_barrel")))
+                .group("fabricaeexnihilo:barrel")
+                .pattern("# #")
+                .pattern("# #")
+                .pattern("#S#")
+                .input('#', Items.STONE)
+                .input('S', Items.STONE_SLAB)
+                .criterion("has_stone", conditionsFromItem(Items.STONE))
+                .offerTo(exporter, id("barrel/stone"));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, UNFIRED_PORCELAIN_CRUCIBLE)
+                .group("fabricaeexnihilo:crucible")
+                .pattern("# #")
+                .pattern("# #")
+                .pattern("###")
+                .input('#', PORCELAIN)
+                .criterion("has_porcelain", conditionsFromItem(PORCELAIN))
+                .offerTo(exporter, id("crucible/unfired_porcelain"));
+
+        CookingRecipeJsonBuilder.createSmelting(Ingredient.ofItems(UNFIRED_PORCELAIN_CRUCIBLE), RecipeCategory.DECORATIONS, CRUCIBLES.get(id("porcelain_crucible")), 0.15f, 200)
+                .group("fabricaeexnihilo:crucible")
+                .criterion("has_porcelain", conditionsFromItem(PORCELAIN))
+                .offerTo(exporter, id("crucible/uporcelain"));
     }
 
     private static SmithingTransformRecipeJsonBuilder createNetheriteRecipe(Item input, Item result, RecipeCategory recipeCategory) {

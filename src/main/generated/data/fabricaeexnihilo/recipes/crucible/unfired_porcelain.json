@@ -1,16 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "# #",
-    "# #",
-    "###"
-  ],
+  "category": "misc",
+  "group": "fabricaeexnihilo:crucible",
   "key": {
     "#": {
       "item": "fabricaeexnihilo:porcelain"
     }
   },
+  "pattern": [
+    "# #",
+    "# #",
+    "###"
+  ],
   "result": {
     "item": "fabricaeexnihilo:unfired_porcelain_crucible"
-  }
+  },
+  "show_notification": true
 }

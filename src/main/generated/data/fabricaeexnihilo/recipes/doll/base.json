@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "fabricaeexnihilo:doll",
-  "pattern": [
-    "xyx",
-    " x ",
-    "x x"
-  ],
+  "category": "equipment",
   "key": {
     "x": {
       "tag": "c:porcelain"
@@ -14,7 +9,13 @@
       "item": "minecraft:emerald"
     }
   },
+  "pattern": [
+    "xyx",
+    " x ",
+    "x x"
+  ],
   "result": {
     "item": "fabricaeexnihilo:doll"
-  }
+  },
+  "show_notification": true
 }

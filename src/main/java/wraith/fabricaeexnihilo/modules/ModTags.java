@@ -34,6 +34,7 @@ public final class ModTags {
         public static final TagKey<Item> SEEDS = TagKey.of(Registries.ITEM.getKey(), new Identifier("c", "seeds"));
         public static final TagKey<Block> TORCHES = TagKey.of(Registries.BLOCK.getKey(), new Identifier("c", "torches"));
         public static final TagKey<Item> VEGETABLES = TagKey.of(Registries.ITEM.getKey(), new Identifier("c", "vegetables"));
+        public static final TagKey<Item> PORCELAIN = TagKey.of(Registries.ITEM.getKey(), new Identifier("c", "porcelain"));
 
         private Common() {
         }

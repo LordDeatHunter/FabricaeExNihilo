@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "b": {
+      "item": "minecraft:ender_pearl"
+    },
+    "c": {
+      "item": "minecraft:purple_dye"
+    },
+    "d": {
+      "item": "fabricaeexnihilo:doll"
+    },
+    "s": {
+      "item": "minecraft:glowstone_dust"
+    },
+    "t": {
+      "item": "minecraft:end_stone"
+    }
+  },
+  "pattern": [
+    "ctc",
+    "sds",
+    "cbc"
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:doll_shulker"
+  },
+  "show_notification": true
+}

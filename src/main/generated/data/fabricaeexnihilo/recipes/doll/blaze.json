@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "b": {
+      "item": "minecraft:redstone"
+    },
+    "c": {
+      "item": "minecraft:blaze_powder"
+    },
+    "d": {
+      "item": "fabricaeexnihilo:doll"
+    },
+    "s": {
+      "item": "minecraft:glowstone_dust"
+    },
+    "t": {
+      "item": "minecraft:nether_wart"
+    }
+  },
+  "pattern": [
+    "ctc",
+    "sds",
+    "cbc"
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:doll_blaze"
+  },
+  "show_notification": true
+}

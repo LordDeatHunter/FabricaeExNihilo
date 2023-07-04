@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "fabricaeexnihilo:barrel",
+  "key": {
+    "#": {
+      "item": "minecraft:stone"
+    },
+    "S": {
+      "item": "minecraft:stone_slab"
+    }
+  },
+  "pattern": [
+    "# #",
+    "# #",
+    "#S#"
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:stone_barrel"
+  },
+  "show_notification": true
+}

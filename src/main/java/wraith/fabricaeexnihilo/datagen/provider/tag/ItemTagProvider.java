@@ -41,6 +41,8 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 .add(Items.COOKED_COD, Items.COOKED_SALMON, Items.COOKED_BEEF,
                         Items.COOKED_MUTTON, Items.COOKED_PORKCHOP, Items.COOKED_CHICKEN,
                         Items.COOKED_RABBIT, ModItems.COOKED_SILKWORM);
+        getOrCreateTagBuilder(ModTags.Common.PORCELAIN)
+                .add(ModItems.PORCELAIN);
     }
 
 }
