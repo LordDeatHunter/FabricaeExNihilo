@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "tag": "minecraft:planks"
+    },
+    "/": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    " # ",
+    " /#",
+    "/  "
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:wooden_hammer"
+  },
+  "show_notification": true
+}

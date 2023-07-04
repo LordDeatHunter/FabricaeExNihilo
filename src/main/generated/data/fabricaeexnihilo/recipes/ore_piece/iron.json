@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "fabricaeexnihilo:raw_iron_piece"
+    },
+    {
+      "item": "fabricaeexnihilo:raw_iron_piece"
+    },
+    {
+      "item": "fabricaeexnihilo:raw_iron_piece"
+    },
+    {
+      "item": "fabricaeexnihilo:raw_iron_piece"
+    }
+  ],
+  "result": {
+    "item": "minecraft:raw_iron"
+  }
+}

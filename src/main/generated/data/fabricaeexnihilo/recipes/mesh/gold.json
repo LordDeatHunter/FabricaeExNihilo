@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:gold_ingot"
+    },
+    "O": {
+      "item": "fabricaeexnihilo:copper_mesh"
+    }
+  },
+  "pattern": [
+    "# #",
+    "#O#",
+    "# #"
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:gold_mesh"
+  },
+  "show_notification": true
+}

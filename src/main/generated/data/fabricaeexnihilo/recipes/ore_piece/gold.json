@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "fabricaeexnihilo:raw_gold_piece"
+    },
+    {
+      "item": "fabricaeexnihilo:raw_gold_piece"
+    },
+    {
+      "item": "fabricaeexnihilo:raw_gold_piece"
+    },
+    {
+      "item": "fabricaeexnihilo:raw_gold_piece"
+    }
+  ],
+  "result": {
+    "item": "minecraft:raw_gold"
+  }
+}

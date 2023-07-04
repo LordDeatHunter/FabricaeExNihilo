@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "##",
+    " #",
+    " #"
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:wooden_crook"
+  },
+  "show_notification": true
+}

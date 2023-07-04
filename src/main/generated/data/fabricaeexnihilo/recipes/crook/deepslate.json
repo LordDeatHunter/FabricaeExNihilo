@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "fabricaeexnihilo:deepslate_pebble"
+    }
+  },
+  "pattern": [
+    "##",
+    " #",
+    " #"
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:deepslate_crook"
+  },
+  "show_notification": true
+}

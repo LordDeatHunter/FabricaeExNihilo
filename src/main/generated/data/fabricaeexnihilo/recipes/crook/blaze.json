@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "minecraft:blaze_rod"
+    }
+  },
+  "pattern": [
+    "##",
+    " #",
+    " #"
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:blaze_crook"
+  },
+  "show_notification": true
+}

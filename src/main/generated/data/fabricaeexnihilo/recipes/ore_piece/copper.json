@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "fabricaeexnihilo:raw_copper_piece"
+    },
+    {
+      "item": "fabricaeexnihilo:raw_copper_piece"
+    },
+    {
+      "item": "fabricaeexnihilo:raw_copper_piece"
+    },
+    {
+      "item": "fabricaeexnihilo:raw_copper_piece"
+    }
+  ],
+  "result": {
+    "item": "minecraft:raw_copper"
+  }
+}

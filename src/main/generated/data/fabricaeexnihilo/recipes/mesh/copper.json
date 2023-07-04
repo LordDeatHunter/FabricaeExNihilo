@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:copper_ingot"
+    },
+    "O": {
+      "item": "fabricaeexnihilo:flint_mesh"
+    }
+  },
+  "pattern": [
+    "# #",
+    "#O#",
+    "# #"
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:copper_mesh"
+  },
+  "show_notification": true
+}

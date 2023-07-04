@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "fabricaeexnihilo:basalt_pebble"
+    }
+  },
+  "pattern": [
+    "##",
+    " #",
+    " #"
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:basalt_crook"
+  },
+  "show_notification": true
+}

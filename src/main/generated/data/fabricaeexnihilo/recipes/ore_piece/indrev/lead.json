@@ -1,0 +1,29 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "indrev"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "fabricaeexnihilo:raw_lead_piece"
+    },
+    {
+      "item": "fabricaeexnihilo:raw_lead_piece"
+    },
+    {
+      "item": "fabricaeexnihilo:raw_lead_piece"
+    },
+    {
+      "item": "fabricaeexnihilo:raw_lead_piece"
+    }
+  ],
+  "result": {
+    "item": "indrev:raw_lead"
+  }
+}

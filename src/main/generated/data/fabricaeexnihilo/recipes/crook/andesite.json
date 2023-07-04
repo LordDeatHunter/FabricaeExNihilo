@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "fabricaeexnihilo:andesite_pebble"
+    }
+  },
+  "pattern": [
+    "##",
+    " #",
+    " #"
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:andesite_crook"
+  },
+  "show_notification": true
+}

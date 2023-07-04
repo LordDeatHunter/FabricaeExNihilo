@@ -1,0 +1,29 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "mythicmetals"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "fabricaeexnihilo:raw_osmium_piece"
+    },
+    {
+      "item": "fabricaeexnihilo:raw_osmium_piece"
+    },
+    {
+      "item": "fabricaeexnihilo:raw_osmium_piece"
+    },
+    {
+      "item": "fabricaeexnihilo:raw_osmium_piece"
+    }
+  ],
+  "result": {
+    "item": "mythicmetals:raw_osmium"
+  }
+}

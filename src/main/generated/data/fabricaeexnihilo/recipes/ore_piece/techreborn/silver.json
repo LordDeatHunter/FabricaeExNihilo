@@ -1,0 +1,29 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "techreborn"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "fabricaeexnihilo:raw_silver_piece"
+    },
+    {
+      "item": "fabricaeexnihilo:raw_silver_piece"
+    },
+    {
+      "item": "fabricaeexnihilo:raw_silver_piece"
+    },
+    {
+      "item": "fabricaeexnihilo:raw_silver_piece"
+    }
+  ],
+  "result": {
+    "item": "techreborn:raw_silver"
+  }
+}

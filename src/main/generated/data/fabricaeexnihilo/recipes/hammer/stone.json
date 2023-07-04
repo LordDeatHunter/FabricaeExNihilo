@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "minecraft:cobblestone"
+    },
+    "/": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    " # ",
+    " /#",
+    "/  "
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:stone_hammer"
+  },
+  "show_notification": true
+}

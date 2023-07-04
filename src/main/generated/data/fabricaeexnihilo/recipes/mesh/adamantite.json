@@ -1,0 +1,29 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "mythicmetals"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "mythicmetals:adamantite_ingot"
+    },
+    "O": {
+      "item": "fabricaeexnihilo:diamond_mesh"
+    }
+  },
+  "pattern": [
+    "# #",
+    "#O#",
+    "# #"
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:adamantite_mesh"
+  },
+  "show_notification": true
+}
