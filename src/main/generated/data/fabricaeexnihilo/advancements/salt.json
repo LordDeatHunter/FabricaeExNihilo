@@ -33,5 +33,6 @@
     [
       "salt"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

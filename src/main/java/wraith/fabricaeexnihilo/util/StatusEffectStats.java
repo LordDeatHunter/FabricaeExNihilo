@@ -1,7 +1,6 @@
 package wraith.fabricaeexnihilo.util;
 
 public final class StatusEffectStats {
-
     public int duration;
     public int amplifier;
 
@@ -9,5 +8,4 @@ public final class StatusEffectStats {
         this.duration = duration;
         this.amplifier = amplifier;
     }
-
 }

@@ -87,7 +87,7 @@ public class SieveBlock extends Block implements BlockEntityProvider, Waterlogga
             return ActionResult.PASS;
         }
         if (world.getBlockEntity(pos) instanceof SieveBlockEntity sieve) {
-            return sieve.activate(state, player, hand, hit);
+            return sieve.activate(state, player, hand);
         }
         return ActionResult.PASS;
     }

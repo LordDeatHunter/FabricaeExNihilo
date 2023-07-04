@@ -13,7 +13,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.Text;
@@ -42,7 +41,7 @@ public class WitchWaterEntityCategory implements DisplayCategory<WitchWaterEntit
 
     // Entity rendering voodoo
     // https://github.com/theorbtwo/RoughlyEnoughResources/blob/1f1c028fa20ebdd34df044e6f160e53cc8a1acf7/common/src/main/java/uk/me/desert_island/rer/rei_stuff/EntityLootCategory.java#L50
-    private void createEntityWidget(DrawContext context, int mouseX, int mouseY, float delta, Entity entity, Rectangle bounds) {
+    private void createEntityWidget(DrawContext context, int mouseX, int mouseY, Entity entity, Rectangle bounds) {
         float f = (float) Math.atan((bounds.getCenterX() - mouseX) / 40.0F);
         float g = (float) Math.atan((bounds.getCenterY() - mouseY) / 40.0F);
         float size = 32;
@@ -145,8 +144,8 @@ public class WitchWaterEntityCategory implements DisplayCategory<WitchWaterEntit
         }
         widgets.add(Widgets.createTooltip(targetBounds, lines));
         widgets.add(Widgets.createTooltip(resultBounds, result.getDisplayName()));
-        widgets.add(Widgets.createDrawableWidget((helper, mouseX, mouseY, delta) -> createEntityWidget(helper, mouseX, mouseY, delta, target, targetBounds)));
-        widgets.add(Widgets.createDrawableWidget((helper, mouseX, mouseY, delta) -> createEntityWidget(helper, mouseX, mouseY, delta, result, resultBounds)));
+        widgets.add(Widgets.createDrawableWidget((helper, mouseX, mouseY, delta) -> createEntityWidget(helper, mouseX, mouseY, target, targetBounds)));
+        widgets.add(Widgets.createDrawableWidget((helper, mouseX, mouseY, delta) -> createEntityWidget(helper, mouseX, mouseY, result, resultBounds)));
 
         return widgets;
     }

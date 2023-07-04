@@ -1,10 +1,13 @@
 {
-  "type": "minecraft:smithing",
+  "type": "minecraft:smithing_transform",
   "base": {
     "item": "fabricaeexnihilo:diamond_hammer"
   },
   "addition": {
     "item": "minecraft:netherite_ingot"
+  },
+  "template": {
+    "item": "minecraft:netherite_upgrade_smithing_template"
   },
   "result": {
     "item": "fabricaeexnihilo:netherite_hammer"

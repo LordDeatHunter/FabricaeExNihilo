@@ -17,6 +17,7 @@ import wraith.fabricaeexnihilo.util.RegistryEntryLists;
 import java.util.Arrays;
 import java.util.stream.StreamSupport;
 
+@SuppressWarnings("deprecation")
 public class ToolRecipeJS extends RecipeJS {
 
     private RegistryEntryList<Block> block;

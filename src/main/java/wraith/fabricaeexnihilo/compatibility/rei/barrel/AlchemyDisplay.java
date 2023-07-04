@@ -25,7 +25,12 @@ public class AlchemyDisplay implements Display {
         this.reactant = recipe.getReactant().asReiIngredient();
         this.result = recipe.getResult().getReiResult();
         this.byproduct = EntryIngredients.of(recipe.getByproduct().stack());
-        this.entity = recipe.getToSpawn().isEmpty() ? EntryIngredient.empty() : EntryIngredients.of(SpawnEggItem.forEntity(recipe.getToSpawn().getType()));
+        if (recipe.getToSpawn().isEmpty()) {
+            this.entity = EntryIngredient.empty();
+        } else {
+            var egg = SpawnEggItem.forEntity(recipe.getToSpawn().getType());
+            this.entity = egg == null ? EntryIngredient.empty() : EntryIngredients.of(egg);
+        }
         this.id = recipe.getId();
     }
 

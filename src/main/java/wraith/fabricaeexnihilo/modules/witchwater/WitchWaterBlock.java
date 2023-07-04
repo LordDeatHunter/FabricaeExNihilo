@@ -67,17 +67,14 @@ public class WitchWaterBlock extends FluidBlock {
         applyStatusEffect(entity, ModEffects.WITCH_WATERED.getInstance());
     }
 
-    public static boolean receiveNeighborFluids(WitchWaterBlock witchWaterBlock, World world, BlockPos pos, BlockState state) {
-        if (world == null || pos == null || state == null) {
-            return true;
-        }
+    public static boolean receiveNeighborFluids(World world, BlockPos pos) {
         for (var direction : Direction.values()) {
             var fluidState = world.getFluidState(pos.offset(direction));
             if (fluidState.isEmpty()) {
                 continue;
             }
             if (fluidInteraction(world, pos, pos.offset(direction)) && direction != Direction.DOWN) {
-                return true;
+                return false;
             }
         }
         return true;
@@ -139,14 +136,12 @@ public class WitchWaterBlock extends FluidBlock {
                 return;
             }
             if (livingEntity instanceof PlayerEntity player && !player.isCreative()) {
-                FabricaeExNihilo.CONFIG.modules.witchWater.effects.forEach((effect, durationLevel) ->
-                        applyStatusEffect(player,
-                                new StatusEffectInstance(Registries.STATUS_EFFECT.get(new Identifier(effect)),
-                                        durationLevel.duration,
-                                        durationLevel.amplifier
-                                )
-                        )
-                );
+                FabricaeExNihilo.CONFIG.modules.witchWater.effects.forEach((effectId, durationLevel) -> {
+                            var effect = Registries.STATUS_EFFECT.get(new Identifier(effectId));
+                            if (effect != null) {
+                                applyStatusEffect(player, new StatusEffectInstance(effect, durationLevel.duration, durationLevel.amplifier));
+                            }
+                        });
                 return;
             }
             var recipe = WitchWaterEntityRecipe.find(entity, world);

@@ -33,5 +33,6 @@
     [
       "mesh"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

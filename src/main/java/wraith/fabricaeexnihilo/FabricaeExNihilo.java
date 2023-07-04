@@ -10,6 +10,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import org.apache.logging.log4j.LogManager;
@@ -29,6 +30,7 @@ import java.nio.file.Files;
 public class FabricaeExNihilo implements ModInitializer {
     public static final ItemGroup ITEM_GROUP = FabricItemGroup.builder()
             .icon(() -> ItemUtils.getExNihiloItemStack("wooden_crook"))
+            .displayName(Text.translatable("itemGroup.fabricaeexnihilo.general"))
             .entries((context, entries) -> {
                 ModTools.CROOKS.values().stream().map(ItemStack::new).forEach(entries::add);
                 ModTools.HAMMERS.values().stream().map(ItemStack::new).forEach(entries::add);

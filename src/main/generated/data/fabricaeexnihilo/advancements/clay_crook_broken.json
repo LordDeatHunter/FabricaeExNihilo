@@ -32,5 +32,6 @@
     [
       "clay_crook_broken"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

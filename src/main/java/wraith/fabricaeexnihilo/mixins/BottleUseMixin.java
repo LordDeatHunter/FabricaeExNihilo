@@ -24,7 +24,6 @@ import wraith.fabricaeexnihilo.util.ItemUtils;
 //TODO: Replace by UseBlockCallback
 @Mixin(GlassBottleItem.class)
 public abstract class BottleUseMixin extends Item {
-
     public BottleUseMixin(Settings settings) {
         super(settings);
     }

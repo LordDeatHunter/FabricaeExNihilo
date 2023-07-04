@@ -4,10 +4,10 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.item.ItemConvertible;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.client.renderers.*;
@@ -29,11 +29,11 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
         // Fluid Rendering
         FluidRenderManager.setupClient();
         // Register BERs
-        BlockEntityRendererRegistry.register(SieveBlockEntity.TYPE, SieveBlockEntityRenderer::new);
-        BlockEntityRendererRegistry.register(CrucibleBlockEntity.TYPE, CrucibleBlockEntityRenderer::new);
-        BlockEntityRendererRegistry.register(BarrelBlockEntity.TYPE, BarrelBlockEntityRenderer::new);
-        BlockEntityRendererRegistry.register(InfestingLeavesBlockEntity.TYPE, InfestingLeavesBlockEntityRenderer::new);
-        BlockEntityRendererRegistry.register(StrainerBlockEntity.TYPE, StrainerBlockEntityRenderer::new);
+        BlockEntityRendererFactories.register(SieveBlockEntity.TYPE, SieveBlockEntityRenderer::new);
+        BlockEntityRendererFactories.register(CrucibleBlockEntity.TYPE, CrucibleBlockEntityRenderer::new);
+        BlockEntityRendererFactories.register(BarrelBlockEntity.TYPE, BarrelBlockEntityRenderer::new);
+        BlockEntityRendererFactories.register(InfestingLeavesBlockEntity.TYPE, InfestingLeavesBlockEntityRenderer::new);
+        BlockEntityRendererFactories.register(StrainerBlockEntity.TYPE, StrainerBlockEntityRenderer::new);
         FabricaeExNihilo.LOGGER.debug("Registered BERs");
 
         // Color Providers

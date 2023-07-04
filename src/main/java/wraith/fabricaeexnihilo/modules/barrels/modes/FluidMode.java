@@ -136,6 +136,7 @@ public class FluidMode extends BarrelMode {
     public void tick(BarrelBlockEntity barrel) {
         var config = FabricaeExNihilo.CONFIG.modules.barrels;
         var world = barrel.getWorld();
+        if (world == null) return;
         var pos = barrel.getPos();
 
         if (amount >= FluidConstants.BUCKET) {

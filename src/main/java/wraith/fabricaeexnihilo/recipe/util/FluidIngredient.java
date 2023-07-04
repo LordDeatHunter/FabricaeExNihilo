@@ -14,6 +14,7 @@ import net.minecraft.util.JsonHelper;
 
 import java.util.function.Predicate;
 
+@SuppressWarnings("deprecation")
 public sealed abstract class FluidIngredient implements Predicate<Fluid> {
     public static FluidIngredient fromJson(JsonElement json) {
         var data = JsonHelper.asString(json, "fluid ingredient");

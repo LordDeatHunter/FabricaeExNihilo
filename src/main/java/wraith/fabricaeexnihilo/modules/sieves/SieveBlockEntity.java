@@ -51,7 +51,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
         super(TYPE, pos, state);
     }
 
-    public ActionResult activate(BlockState state, PlayerEntity player, Hand hand, BlockHitResult hitResult) {
+    public ActionResult activate(BlockState state, PlayerEntity player, Hand hand) {
         if (world == null || player == null) {
             return ActionResult.PASS;
         }
@@ -131,6 +131,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
     }
 
     public void dropInventory() {
+        Objects.requireNonNull(world, "world");
         ItemScatterer.spawn(world, pos.getX(), pos.getY() + 1, pos.getZ(), mesh);
         ItemScatterer.spawn(world, pos.getX(), pos.getY() + 1, pos.getZ(), contents);
         mesh = ItemStack.EMPTY;

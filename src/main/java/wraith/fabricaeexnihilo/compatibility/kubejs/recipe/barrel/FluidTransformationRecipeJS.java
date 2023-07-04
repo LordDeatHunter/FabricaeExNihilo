@@ -19,6 +19,7 @@ import wraith.fabricaeexnihilo.util.RegistryEntryLists;
 import java.util.Arrays;
 import java.util.stream.StreamSupport;
 
+@SuppressWarnings("deprecation")
 public class FluidTransformationRecipeJS extends RecipeJS {
 
     private RegistryEntryList<Fluid> fluid;

@@ -33,5 +33,6 @@
     [
       "ancient_spores"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }
