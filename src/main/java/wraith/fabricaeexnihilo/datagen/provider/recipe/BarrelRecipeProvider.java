@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.resource.conditions.v1.DefaultResourceConditions;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalFluidTags;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.entity.EntityType;
@@ -16,10 +17,12 @@ import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.datagen.builder.recipe.BarrelRecipeJsonBuilder;
+import wraith.fabricaeexnihilo.datagen.builder.recipe.MilkingRecipeJsonBuilder;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModItems;
 import wraith.fabricaeexnihilo.modules.ModTags;
 import wraith.fabricaeexnihilo.modules.fluids.BrineFluid;
+import wraith.fabricaeexnihilo.modules.fluids.MilkFluid;
 import wraith.fabricaeexnihilo.modules.witchwater.WitchWaterFluid;
 import wraith.fabricaeexnihilo.recipe.util.BlockIngredient;
 
@@ -35,6 +38,9 @@ public class BarrelRecipeProvider extends FabricRecipeProvider {
 
     @Override
     public void generate(Consumer<RecipeJsonProvider> exporter) {
+        new MilkingRecipeJsonBuilder(EntityType.COW, FluidVariant.of(MilkFluid.STILL)).offerTo(exporter, "milking/cow");
+        new MilkingRecipeJsonBuilder(EntityType.WITCH, FluidVariant.of(WitchWaterFluid.STILL)).offerTo(exporter, "milking/witch");
+
         offerCompostingRecipes(exporter);
         offerLeakingRecipes(exporter);
         offerFluidTransformationRecipes(exporter);

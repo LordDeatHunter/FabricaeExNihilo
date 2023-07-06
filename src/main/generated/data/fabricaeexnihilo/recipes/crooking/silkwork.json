@@ -2,11 +2,14 @@
   "type": "fabricaeexnihilo:crook",
   "block": "#minecraft:leaves",
   "result": {
-    "stack": "fabricaeexnihilo:raw_silkworm",
     "chances": [
       0.1,
       0.2,
-      0.2
-    ]
+      0.3
+    ],
+    "stack": {
+      "count": 1,
+      "item": "fabricaeexnihilo:raw_silkworm"
+    }
   }
 }

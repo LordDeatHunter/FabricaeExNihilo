@@ -2,9 +2,12 @@
   "type": "fabricaeexnihilo:crook",
   "block": "#minecraft:leaves",
   "result": {
-    "stack": "minecraft:stick",
     "chances": [
       0.01
-    ]
+    ],
+    "stack": {
+      "count": 1,
+      "item": "minecraft:stick"
+    }
   }
 }

@@ -1,7 +1,0 @@
-{
-  "type": "fabricaeexnihilo:milking",
-  "entity": "minecraft:witch",
-  "fluid": "fabricaeexnihilo:witchwater",
-  "amount": 810,
-  "cooldown": 20
-}

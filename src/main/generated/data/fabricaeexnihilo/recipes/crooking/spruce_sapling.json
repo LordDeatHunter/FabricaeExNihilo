@@ -2,9 +2,12 @@
   "type": "fabricaeexnihilo:crook",
   "block": "minecraft:spruce_leaves",
   "result": {
-    "stack": "minecraft:spruce_sapling",
     "chances": [
       0.25
-    ]
+    ],
+    "stack": {
+      "count": 1,
+      "item": "minecraft:spruce_sapling"
+    }
   }
 }

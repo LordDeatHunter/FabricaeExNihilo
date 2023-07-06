@@ -2,9 +2,12 @@
   "type": "fabricaeexnihilo:crook",
   "block": "minecraft:dark_oak_leaves",
   "result": {
-    "stack": "minecraft:dark_oak_sapling",
     "chances": [
       0.25
-    ]
+    ],
+    "stack": {
+      "count": 1,
+      "item": "minecraft:dark_oak_sapling"
+    }
   }
 }
