@@ -1,0 +1,22 @@
+{
+  "type": "fabricaeexnihilo:barrel",
+  "actions": [
+    {
+      "type": "consume_fluid",
+      "amount": 8100,
+      "fluid": "#fabricaeexnihilo:witchwater"
+    },
+    {
+      "type": "convert_block",
+      "filter": "minecraft:gravel",
+      "result": {
+        "Name": "fabricaeexnihilo:crushed_netherrack"
+      }
+    }
+  ],
+  "icon": "fabricaeexnihilo:crushed_netherrack",
+  "trigger": {
+    "type": "tick",
+    "chance": 0.01
+  }
+}

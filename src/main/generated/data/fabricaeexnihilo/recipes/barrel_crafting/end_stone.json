@@ -1,0 +1,25 @@
+{
+  "type": "fabricaeexnihilo:barrel",
+  "actions": [
+    {
+      "type": "store_item",
+      "stack": {
+        "count": 1,
+        "item": "minecraft:end_stone"
+      }
+    }
+  ],
+  "conditions": [
+    {
+      "type": "fluid_in",
+      "fluid": "#fabricaeexnihilo:true_lava"
+    }
+  ],
+  "icon": "minecraft:end_stone",
+  "trigger": {
+    "type": "insert_item",
+    "item": {
+      "item": "minecraft:glowstone_dust"
+    }
+  }
+}

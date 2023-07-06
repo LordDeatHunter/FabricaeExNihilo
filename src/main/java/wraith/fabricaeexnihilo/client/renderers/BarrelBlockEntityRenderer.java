@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
 import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView;
 import net.fabricmc.fabric.api.transfer.v1.client.fluid.FluidVariantRendering;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.TexturedRenderLayers;
@@ -14,14 +15,13 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.client.BlockModelRendererFlags;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
-import wraith.fabricaeexnihilo.modules.barrels.modes.*;
 import wraith.fabricaeexnihilo.util.Color;
 
 public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBlockEntity> {
@@ -38,30 +38,22 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
     }
 
     @Override
-    public void render(@Nullable BarrelBlockEntity barrel, float tickDelta, @Nullable MatrixStack matrices, @Nullable VertexConsumerProvider vertexConsumers, int light, int overlays) {
-        if (matrices == null || vertexConsumers == null || barrel == null || barrel.getMode() == null) {
-            return;
-        }
+    public void render(BarrelBlockEntity barrel, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlays) {
+        var pos = barrel.getPos();
+        var world = barrel.getWorld();
 
-        renderMode(barrel.getMode(), barrel.getPos(), tickDelta, matrices, vertexConsumers, light, overlays, barrel.getWorld());
-    }
-
-    private void renderMode(BarrelMode mode, BlockPos pos, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlays, World world) {
-        if (mode instanceof FluidMode fluidMode) {
-            renderFluid(fluidMode, matrices, vertexConsumers, light, overlays);
-        } else if (mode instanceof ItemMode itemMode) {
-            renderItem(itemMode, pos, matrices, vertexConsumers, light, overlays, world);
-        } else if (mode instanceof AlchemyMode alchemyMode) {
-            renderAlchemy(alchemyMode, pos, tickDelta, matrices, vertexConsumers, light, overlays, world);
-        } else if (mode instanceof CompostMode compostMode) {
-            renderCompost(compostMode, pos, matrices, vertexConsumers, light, overlays, world);
+        switch (barrel.getState()) {
+            case EMPTY -> {}
+            case FLUID -> renderFluid(barrel.getFluid(), barrel.getFluidAmount(), matrices, vertexConsumers, light, overlays);
+            case ITEM -> renderItem(barrel.getItem(), pos, matrices, vertexConsumers, light, overlays, world);
+            case COMPOST -> renderCompost(barrel.getItem(), barrel.getCompostLevel(), barrel.getRecipeProgress(), new Color(0x573f17), pos, matrices, vertexConsumers, light, overlays, world);
         }
     }
 
     @SuppressWarnings("UnstableApiUsage")
-    private void renderFluid(FluidMode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlays) {
-        var sprite = FluidVariantRendering.getSprite(mode.getFluid());
-        var color = FluidVariantRendering.getColor(mode.getFluid());
+    private void renderFluid(FluidVariant fluid, long amount, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlays) {
+        var sprite = FluidVariantRendering.getSprite(fluid);
+        var color = FluidVariantRendering.getColor(fluid);
         var r = ((color >> 16) & 255) / 256f;
         var g = ((color >> 8) & 255) / 256f;
         var b = (color & 255) / 256f;
@@ -72,38 +64,31 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
 
         // Idea stolen from Modern Industrialisation
         var emitter = RendererAccess.INSTANCE.getRenderer().meshBuilder().getEmitter();
-        emitter.square(Direction.UP, X_MIN, Z_MIN, X_MAX, Z_MAX, 1 - MathHelper.lerp(mode.getAmount() / (float) FluidConstants.BUCKET, Y_MIN, Y_MAX));
+        emitter.square(Direction.UP, X_MIN, Z_MIN, X_MAX, Z_MAX, 1 - MathHelper.lerp(amount / (float) FluidConstants.BUCKET, Y_MIN, Y_MAX));
         emitter.spriteBake(sprite, MutableQuadView.BAKE_LOCK_UV);
         vertexConsumers.getBuffer(RenderLayer.getTranslucent()).quad(matrices.peek(), emitter.toBakedQuad(sprite), r, g, b, light, overlays);
     }
 
-    private void renderItem(ItemMode mode, BlockPos pos, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlays, World world) {
+    private void renderItem(ItemStack stack, BlockPos pos, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlays, World world) {
         var yScale = Y_MAX - Y_MIN;
 
         matrices.push();
         matrices.translate(0.5, Y_MIN + yScale / 2, 0.5);
         matrices.scale(XZ_SCALE, yScale, XZ_SCALE);
-        MinecraftClient.getInstance().getItemRenderer().renderItem(mode.getStack(), ModelTransformationMode.NONE, light, overlays, matrices, vertexConsumers, world, (int) pos.asLong());
+        MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformationMode.NONE, light, overlays, matrices, vertexConsumers, world, (int) pos.asLong());
         matrices.pop();
     }
 
-    private void renderAlchemy(AlchemyMode mode, BlockPos pos, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlays, World world) {
-        renderMode(mode.getBefore(), pos, tickDelta, matrices, vertexConsumers, light, overlays, world);
-        renderMode(mode.getAfter(), pos, tickDelta, matrices, vertexConsumers, light, overlays, world);
-    }
-
-    private void renderCompost(CompostMode mode, BlockPos pos, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlays, World world) {
-        var color = Color.average(Color.WHITE, mode.getColor(), Math.pow(mode.getProgress(), 4));
-        var r = color.r;
-        var g = color.g;
-        var b = color.b;
+    private void renderCompost(ItemStack result, double amount, double progress, Color color, BlockPos pos, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlays, World world) {
+        var finalColor = Color.average(Color.WHITE, color, Math.pow(progress, 4));
+        var r = finalColor.r;
+        var g = finalColor.g;
+        var b = finalColor.b;
 
         matrices.push();
 
-        var amount = mode.getAmount();
         var yScale = MathHelper.clamp((float) ((Y_MAX - Y_MIN) * Math.min(amount, 1.0f)), 0, 1);
 
-        var result = mode.getResult();
         if (result.getItem() instanceof BlockItem blockItem) {
             var block = blockItem.getBlock().getDefaultState();
             var model = MinecraftClient.getInstance().getBakedModelManager().getBlockModels().getModel(block);
@@ -116,7 +101,7 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
         } else {
             matrices.translate(X_MIN, Y_MIN, X_MIN);
             matrices.scale(XZ_SCALE, yScale, XZ_SCALE);
-            MinecraftClient.getInstance().getItemRenderer().renderItem(mode.getResult(), ModelTransformationMode.NONE, light, overlays, matrices, vertexConsumers, world, (int) pos.asLong());
+            MinecraftClient.getInstance().getItemRenderer().renderItem(result, ModelTransformationMode.NONE, light, overlays, matrices, vertexConsumers, world, (int) pos.asLong());
         }
         matrices.pop();
     }

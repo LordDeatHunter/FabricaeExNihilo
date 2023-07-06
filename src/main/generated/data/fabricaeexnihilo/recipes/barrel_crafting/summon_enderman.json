@@ -1,0 +1,27 @@
+{
+  "type": "fabricaeexnihilo:barrel",
+  "actions": [
+    {
+      "type": "spawn_entity",
+      "entities": {
+        "type": "minecraft:enderman",
+        "data": {},
+        "size": 1
+      }
+    }
+  ],
+  "conditions": [
+    {
+      "type": "fluid_in",
+      "fluid": "#fabricaeexnihilo:witchwater"
+    }
+  ],
+  "duration": 20,
+  "icon": "minecraft:enderman_spawn_egg",
+  "trigger": {
+    "type": "insert_item",
+    "item": {
+      "item": "fabricaeexnihilo:doll_enderman"
+    }
+  }
+}

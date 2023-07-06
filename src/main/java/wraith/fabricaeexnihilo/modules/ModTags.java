@@ -29,12 +29,13 @@ public final class ModTags {
         public static final TagKey<Fluid> BRINE = TagKey.of(Registries.FLUID.getKey(), new Identifier("c", "brine"));
         public static final TagKey<Block> CONCRETES = TagKey.of(Registries.BLOCK.getKey(), new Identifier("c", "concretes"));
         public static final TagKey<Block> CONCRETE_POWDERS = TagKey.of(Registries.BLOCK.getKey(), new Identifier("c", "concrete_powders"));
+        public static final TagKey<Block> TORCHES = TagKey.of(Registries.BLOCK.getKey(), new Identifier("c", "torches"));
         public static final TagKey<Item> COOKED_MEAT = TagKey.of(Registries.ITEM.getKey(), new Identifier("c", "cooked_meat"));
         public static final TagKey<Item> RAW_MEAT = TagKey.of(Registries.ITEM.getKey(), new Identifier("c", "raw_meat"));
         public static final TagKey<Item> SEEDS = TagKey.of(Registries.ITEM.getKey(), new Identifier("c", "seeds"));
-        public static final TagKey<Block> TORCHES = TagKey.of(Registries.BLOCK.getKey(), new Identifier("c", "torches"));
         public static final TagKey<Item> VEGETABLES = TagKey.of(Registries.ITEM.getKey(), new Identifier("c", "vegetables"));
         public static final TagKey<Item> PORCELAIN = TagKey.of(Registries.ITEM.getKey(), new Identifier("c", "porcelain"));
+        public static final TagKey<Item> SALT = TagKey.of(Registries.ITEM.getKey(), new Identifier("c", "salt"));
 
         private Common() {
         }

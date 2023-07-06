@@ -1,34 +1,36 @@
 package wraith.fabricaeexnihilo.compatibility.megane;
 
 import lol.bai.megane.api.provider.FluidProvider;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.minecraft.fluid.Fluid;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
-import wraith.fabricaeexnihilo.modules.barrels.modes.FluidMode;
+import wraith.fabricaeexnihilo.modules.barrels.BarrelState;
 
+@SuppressWarnings("UnstableApiUsage")
 class BarrelFluidProvider extends FluidProvider<BarrelBlockEntity> {
     @Override
     public int getSlotCount() {
-        if (!(getObject().getMode() instanceof FluidMode)) return 0;
+        var barrel = getObject();
+        if (barrel.getState() != BarrelState.FLUID || barrel.isCrafting()) return 0;
         return 1;
     }
 
-    @SuppressWarnings("UnstableApiUsage")
     @Override
     public @Nullable Fluid getFluid(int slot) {
-        if (!(getObject().getMode() instanceof FluidMode mode)) return null;
-        return mode.getFluid().getFluid();
+        var barrel = getObject();
+        if (barrel.getState() != BarrelState.FLUID || barrel.isCrafting()) return null;
+        return barrel.getFluid().getFluid();
     }
 
     @Override
     public double getStored(int slot) {
-        if (!(getObject().getMode() instanceof FluidMode mode)) return 0;
-        return droplets(mode.getFluidAmount());
+        var barrel = getObject();
+        return droplets(barrel.getFluidAmount());
     }
 
     @Override
     public double getMax(int slot) {
-        if (!(getObject().getMode() instanceof FluidMode mode)) return 0;
-        return droplets(mode.getFluidCapacity());
+        return droplets(FluidConstants.BUCKET);
     }
 }

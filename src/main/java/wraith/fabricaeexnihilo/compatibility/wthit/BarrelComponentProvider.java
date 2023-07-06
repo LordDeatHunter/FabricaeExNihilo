@@ -6,8 +6,7 @@ import mcp.mobius.waila.api.IPluginConfig;
 import mcp.mobius.waila.api.ITooltip;
 import net.minecraft.text.Text;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
-import wraith.fabricaeexnihilo.modules.barrels.modes.AlchemyMode;
-import wraith.fabricaeexnihilo.modules.barrels.modes.CompostMode;
+import wraith.fabricaeexnihilo.modules.barrels.BarrelState;
 
 public class BarrelComponentProvider implements IBlockComponentProvider {
     @Override
@@ -15,15 +14,17 @@ public class BarrelComponentProvider implements IBlockComponentProvider {
         BarrelBlockEntity barrel = accessor.getBlockEntity();
         if (barrel == null) return;
 
-        var mode = barrel.getMode();
-        if (mode instanceof CompostMode compostMode) {
-            if (compostMode.getAmount() < 1) {
-                tooltip.addLine(Text.translatable("fabricaeexnihilo.hud.barrel.compost.filling", (int) (compostMode.getAmount() * 100)));
+        if (barrel.isCrafting()) {
+            tooltip.addLine(Text.translatable("fabricaeexnihilo.hud.barrel.alchemy.processing", (int) (100.0 * barrel.getRecipeProgress())));
+            return;
+        }
+
+        if (barrel.getState() == BarrelState.COMPOST) {
+            if (barrel.getCompostLevel() < 1) {
+                tooltip.addLine(Text.translatable("fabricaeexnihilo.hud.barrel.compost.filling", (int) (barrel.getCompostLevel() * 100)));
             } else {
-                tooltip.addLine(Text.translatable("fabricaeexnihilo.hud.barrel.compost.composting", (int) (compostMode.getProgress() * 100)));
+                tooltip.addLine(Text.translatable("fabricaeexnihilo.hud.barrel.compost.composting", (int) (barrel.getRecipeProgress() * 100)));
             }
-        } else if (mode instanceof AlchemyMode alchemyMode) {
-            tooltip.addLine(Text.translatable("fabricaeexnihilo.hud.barrel.alchemy.processing", (int) ((100.0 / alchemyMode.getDuration()) * alchemyMode.getProgress())));
         }
     }
 }

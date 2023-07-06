@@ -46,6 +46,11 @@ public class BaseRecipeProvider extends FabricRecipeProvider {
         offerMiscRecipes(exporter);
     }
 
+    @Override
+    public String getName() {
+        return "Crafting Recipes";
+    }
+
     private static void offerDollRecipes(Consumer<RecipeJsonProvider> exporter) {
         ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, DOLLS.get(id("doll")))
                 .pattern("xyx")

@@ -1,7 +1,0 @@
-{
-  "type": "fabricaeexnihilo:leaking",
-  "block": "minecraft:sand",
-  "fluid": "#fabricaeexnihilo:witchwater",
-  "amount": 40500,
-  "result": "minecraft:soul_sand"
-}

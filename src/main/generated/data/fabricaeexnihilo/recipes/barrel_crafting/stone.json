@@ -1,0 +1,27 @@
+{
+  "type": "fabricaeexnihilo:barrel",
+  "actions": [
+    {
+      "type": "store_item",
+      "stack": {
+        "count": 1,
+        "item": "minecraft:stone"
+      }
+    }
+  ],
+  "conditions": [
+    {
+      "type": "fluid_in",
+      "fluid": "minecraft:water"
+    },
+    {
+      "type": "fluid_above",
+      "fluid": "minecraft:lava"
+    }
+  ],
+  "icon": "minecraft:stone",
+  "trigger": {
+    "type": "tick",
+    "chance": 1.0
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "fabricaeexnihilo:barrel",
+  "actions": [
+    {
+      "type": "consume_fluid",
+      "amount": 8100,
+      "fluid": "minecraft:water"
+    },
+    {
+      "type": "convert_block",
+      "filter": "minecraft:cobblestone",
+      "result": {
+        "Name": "minecraft:mossy_cobblestone"
+      }
+    }
+  ],
+  "icon": "minecraft:mossy_cobblestone",
+  "trigger": {
+    "type": "tick",
+    "chance": 0.01
+  }
+}

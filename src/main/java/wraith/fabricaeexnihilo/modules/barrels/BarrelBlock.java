@@ -16,6 +16,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -29,7 +30,6 @@ import net.minecraft.world.biome.Biome;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.ModEffects;
-import wraith.fabricaeexnihilo.modules.barrels.modes.ItemMode;
 import wraith.fabricaeexnihilo.modules.fluids.BloodFluid;
 import wraith.fabricaeexnihilo.recipe.barrel.MilkingRecipe;
 
@@ -63,15 +63,18 @@ public class BarrelBlock extends BlockWithEntity {
     @Override
     public void precipitationTick(BlockState state, World world, BlockPos pos, Biome.Precipitation precipitation) {
         var blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof BarrelBlockEntity barrel) {
-            barrel.precipitationTick(precipitation);
+        if (blockEntity instanceof BarrelBlockEntity barrel && precipitation == Biome.Precipitation.RAIN) {
+            try (var transaction = Transaction.openOuter()) {
+                var inserted = barrel.fluidStorage.insert(FluidVariant.of(Fluids.WATER), FluidConstants.BUCKET / 100, transaction);
+                if (inserted != 0) transaction.commit();
+            }
         }
     }
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return world.isClient ? null : checkType(type, BarrelBlockEntity.TYPE, BarrelBlockEntity::ticker);
+        return world.isClient ? null : checkType(type, BarrelBlockEntity.TYPE, (world1, blockPos, blockState, barrelEntity) -> barrelEntity.tick());
     }
 
     public boolean isFireproof() {
@@ -87,8 +90,8 @@ public class BarrelBlock extends BlockWithEntity {
 
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (!state.isOf(newState.getBlock()) && world.getBlockEntity(pos) instanceof BarrelBlockEntity barrel && barrel.getMode() instanceof ItemMode mode) {
-            ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), mode.getStack());
+        if (!state.isOf(newState.getBlock()) && world.getBlockEntity(pos) instanceof BarrelBlockEntity barrel && barrel.getState() == BarrelState.ITEM) {
+            ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), barrel.getItem());
         }
         super.onStateReplaced(state, world, pos, newState, moved);
     }

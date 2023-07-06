@@ -2,6 +2,7 @@ package wraith.fabricaeexnihilo.recipe.util;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
@@ -69,7 +70,17 @@ public sealed abstract class BlockIngredient implements Predicate<BlockState> {
         return true;
     }
 
+    public static BlockIngredient single(Block block) {
+        return new Single(block, Map.of());
+    }
+
+    public static BlockIngredient tag(TagKey<Block> tag) {
+        return new Tag(tag, Map.of());
+    }
+
     public abstract void toPacket(PacketByteBuf buf);
+
+    public abstract JsonElement toJson();
 
     public abstract EntryIngredient asReiIngredient();
 
@@ -91,6 +102,17 @@ public sealed abstract class BlockIngredient implements Predicate<BlockState> {
             buf.writeMap(properties, PacketByteBuf::writeString, PacketByteBuf::writeString);
             buf.writeByte(0);
             buf.writeRegistryValue(Registries.BLOCK, block);
+        }
+
+        @Override
+        public JsonElement toJson() {
+            if (properties.isEmpty()) return new JsonPrimitive(Registries.BLOCK.getId(block).toString());
+            var json = new JsonObject();
+            json.addProperty("id", Registries.BLOCK.getId(block).toString());
+            var states = new JsonObject();
+            properties.forEach(states::addProperty);
+            json.add("states", states);
+            return json;
         }
 
         @Override
@@ -117,6 +139,17 @@ public sealed abstract class BlockIngredient implements Predicate<BlockState> {
             buf.writeMap(properties, PacketByteBuf::writeString, PacketByteBuf::writeString);
             buf.writeByte(1);
             buf.writeIdentifier(tag.id());
+        }
+
+        @Override
+        public JsonElement toJson() {
+            if (properties.isEmpty()) return new JsonPrimitive("#" + tag.id().toString());
+            var json = new JsonObject();
+            json.addProperty("id", "#" + tag.id().toString());
+            var states = new JsonObject();
+            properties.forEach(states::addProperty);
+            json.add("states", states);
+            return json;
         }
 
         @Override

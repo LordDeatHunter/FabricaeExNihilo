@@ -1,0 +1,25 @@
+{
+  "type": "fabricaeexnihilo:barrel",
+  "actions": [
+    {
+      "type": "store_item",
+      "stack": {
+        "count": 1,
+        "item": "minecraft:fire_coral_block"
+      }
+    }
+  ],
+  "conditions": [
+    {
+      "type": "fluid_in",
+      "fluid": "#c:brine"
+    }
+  ],
+  "icon": "minecraft:fire_coral_block",
+  "trigger": {
+    "type": "insert_item",
+    "item": {
+      "item": "minecraft:red_dye"
+    }
+  }
+}

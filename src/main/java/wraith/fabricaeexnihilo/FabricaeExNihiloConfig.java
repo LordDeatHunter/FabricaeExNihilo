@@ -59,7 +59,6 @@ public class FabricaeExNihiloConfig {
             public static class LeakingConfig {
 
                 public boolean enabled = true;
-                // How much progress to add each time the barrel ticks
                 public int radius = 2;
 
             }

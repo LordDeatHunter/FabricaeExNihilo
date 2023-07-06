@@ -1,0 +1,20 @@
+{
+  "type": "fabricaeexnihilo:barrel",
+  "actions": [
+    {
+      "type": "fill_compost",
+      "increment": 0.25,
+      "result": {
+        "count": 1,
+        "item": "minecraft:end_stone"
+      }
+    }
+  ],
+  "icon": "minecraft:end_stone",
+  "trigger": {
+    "type": "insert_item",
+    "item": {
+      "item": "minecraft:chorus_flower"
+    }
+  }
+}

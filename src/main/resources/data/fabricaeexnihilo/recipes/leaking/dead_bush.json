@@ -1,7 +1,0 @@
-{
-  "type": "fabricaeexnihilo:leaking",
-  "block": "#minecraft:saplings",
-  "fluid": "#fabricaeexnihilo:witchwater",
-  "amount": 8100,
-  "result": "minecraft:dead_bush"
-}

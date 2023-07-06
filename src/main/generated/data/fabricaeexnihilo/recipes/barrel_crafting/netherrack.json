@@ -1,0 +1,25 @@
+{
+  "type": "fabricaeexnihilo:barrel",
+  "actions": [
+    {
+      "type": "store_item",
+      "stack": {
+        "count": 1,
+        "item": "minecraft:netherrack"
+      }
+    }
+  ],
+  "conditions": [
+    {
+      "type": "fluid_in",
+      "fluid": "#fabricaeexnihilo:true_lava"
+    }
+  ],
+  "icon": "minecraft:netherrack",
+  "trigger": {
+    "type": "insert_item",
+    "item": {
+      "item": "minecraft:redstone"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "type": "fabricaeexnihilo:barrel",
+  "actions": [
+    {
+      "type": "store_fluid",
+      "amount": 81000,
+      "fluid": {
+        "type": "fabricaeexnihilo:witchwater"
+      }
+    }
+  ],
+  "conditions": [
+    {
+      "type": "fluid_in",
+      "fluid": "#fabricaeexnihilo:true_water"
+    },
+    {
+      "type": "block_below",
+      "block": "minecraft:mycelium"
+    }
+  ],
+  "duration": 600,
+  "icon": "fabricaeexnihilo:witchwater_bucket",
+  "trigger": {
+    "type": "tick",
+    "chance": 1.0
+  }
+}

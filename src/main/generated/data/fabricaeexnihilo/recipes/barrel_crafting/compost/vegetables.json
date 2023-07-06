@@ -1,0 +1,20 @@
+{
+  "type": "fabricaeexnihilo:barrel",
+  "actions": [
+    {
+      "type": "fill_compost",
+      "increment": 0.0625,
+      "result": {
+        "count": 1,
+        "item": "minecraft:dirt"
+      }
+    }
+  ],
+  "icon": "minecraft:dirt",
+  "trigger": {
+    "type": "insert_item",
+    "item": {
+      "tag": "c:vegetables"
+    }
+  }
+}

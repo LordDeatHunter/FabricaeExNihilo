@@ -1,0 +1,25 @@
+{
+  "type": "fabricaeexnihilo:barrel",
+  "actions": [
+    {
+      "type": "store_item",
+      "stack": {
+        "count": 1,
+        "item": "minecraft:wet_sponge"
+      }
+    }
+  ],
+  "conditions": [
+    {
+      "type": "fluid_in",
+      "fluid": "#c:brine"
+    }
+  ],
+  "icon": "minecraft:wet_sponge",
+  "trigger": {
+    "type": "insert_item",
+    "item": {
+      "tag": "minecraft:wool"
+    }
+  }
+}

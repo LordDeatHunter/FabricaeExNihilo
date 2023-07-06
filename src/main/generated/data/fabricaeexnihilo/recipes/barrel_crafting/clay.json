@@ -1,0 +1,30 @@
+{
+  "type": "fabricaeexnihilo:barrel",
+  "actions": [
+    {
+      "type": "store_item",
+      "stack": {
+        "count": 1,
+        "item": "minecraft:clay"
+      }
+    }
+  ],
+  "conditions": [
+    {
+      "type": "fluid_in",
+      "fluid": "#fabricaeexnihilo:true_water"
+    }
+  ],
+  "icon": "minecraft:clay",
+  "trigger": {
+    "type": "insert_item",
+    "item": [
+      {
+        "item": "fabricaeexnihilo:silt"
+      },
+      {
+        "item": "fabricaeexnihilo:dust"
+      }
+    ]
+  }
+}

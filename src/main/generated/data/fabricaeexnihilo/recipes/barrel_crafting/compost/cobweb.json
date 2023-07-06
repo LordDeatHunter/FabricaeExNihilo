@@ -1,0 +1,20 @@
+{
+  "type": "fabricaeexnihilo:barrel",
+  "actions": [
+    {
+      "type": "fill_compost",
+      "increment": 0.5,
+      "result": {
+        "count": 1,
+        "item": "minecraft:white_wool"
+      }
+    }
+  ],
+  "icon": "minecraft:white_wool",
+  "trigger": {
+    "type": "insert_item",
+    "item": {
+      "item": "minecraft:cobweb"
+    }
+  }
+}

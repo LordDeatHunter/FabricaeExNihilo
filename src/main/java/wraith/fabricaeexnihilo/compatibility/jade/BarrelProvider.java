@@ -8,10 +8,6 @@ import snownee.jade.api.IBlockComponentProvider;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.config.IPluginConfig;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
-import wraith.fabricaeexnihilo.modules.barrels.modes.AlchemyMode;
-import wraith.fabricaeexnihilo.modules.barrels.modes.CompostMode;
-import wraith.fabricaeexnihilo.modules.barrels.modes.FluidMode;
-import wraith.fabricaeexnihilo.modules.barrels.modes.ItemMode;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
@@ -21,22 +17,30 @@ public class BarrelProvider implements IBlockComponentProvider {
     public void appendTooltip(ITooltip tooltip, BlockAccessor blockAccessor, IPluginConfig iPluginConfig) {
         if (!(blockAccessor.getBlockEntity() instanceof BarrelBlockEntity barrel)) return;
         var helper = tooltip.getElementHelper();
-        var mode = barrel.getMode();
-        if (mode instanceof ItemMode itemMode) {
-            tooltip.add(helper.item(itemMode.getStack()));
-        } else if (mode instanceof FluidMode fluidMode) {
-            //TODO: make this look good
-            var fluid = fluidMode.getFluid();
-            var name = FluidVariantAttributes.getName(fluid);
-            tooltip.add(Text.translatable("fabricaeexnihilo.hud.fluid_content", name, fluidMode.getFluidAmount() / 81, fluidMode.getFluidCapacity() / 81));
-        } else if (mode instanceof CompostMode compostMode) {
-            if (compostMode.getAmount() < 1) {
-                tooltip.add(Text.translatable("fabricaeexnihilo.hud.barrel.compost.filling", (int) (compostMode.getAmount() * 100)));
-            } else {
-                tooltip.add(Text.translatable("fabricaeexnihilo.hud.barrel.compost.composting", (int) (compostMode.getProgress() * 100)));
+
+        if (barrel.isCrafting()) {
+            tooltip.add(Text.translatable("fabricaeexnihilo.hud.barrel.alchemy.processing", (int) (100.0 * barrel.getRecipeProgress())));
+            return;
+        }
+
+        switch (barrel.getState()) {
+            case EMPTY -> {
             }
-        } else if (mode instanceof AlchemyMode alchemyMode) {
-            tooltip.add(Text.translatable("fabricaeexnihilo.hud.hud.alchemy.processing", (int) (100.0 / alchemyMode.getDuration() * alchemyMode.getProgress())));
+            case FLUID -> {
+                var fluid = barrel.getFluid();
+                var name = FluidVariantAttributes.getName(fluid);
+                tooltip.add(Text.translatable("fabricaeexnihilo.hud.fluid_content", name, barrel.getFluidAmount() / 81, 1000));
+            }
+            case ITEM -> {
+                tooltip.add(helper.item(barrel.getItem()));
+            }
+            case COMPOST -> {
+                if (barrel.getCompostLevel() < 1) {
+                    tooltip.add(Text.translatable("fabricaeexnihilo.hud.barrel.compost.filling", (int) (barrel.getCompostLevel() * 100)));
+                } else {
+                    tooltip.add(Text.translatable("fabricaeexnihilo.hud.barrel.compost.composting", (int) (barrel.getRecipeProgress() * 100)));
+                }
+            }
         }
     }
 

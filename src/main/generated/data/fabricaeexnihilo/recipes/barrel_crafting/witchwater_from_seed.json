@@ -1,0 +1,33 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "values": [
+        "fabricaeexnihilo:mycelium_seeds"
+      ]
+    }
+  ],
+  "type": "fabricaeexnihilo:barrel",
+  "actions": [
+    {
+      "type": "store_fluid",
+      "amount": 81000,
+      "fluid": {
+        "type": "fabricaeexnihilo:witchwater"
+      }
+    }
+  ],
+  "conditions": [
+    {
+      "type": "fluid_in",
+      "fluid": "#fabricaeexnihilo:true_water"
+    }
+  ],
+  "icon": "fabricaeexnihilo:witchwater_bucket",
+  "trigger": {
+    "type": "insert_item",
+    "item": {
+      "item": "fabricaeexnihilo:mycelium_seeds"
+    }
+  }
+}

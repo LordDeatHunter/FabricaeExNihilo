@@ -1,7 +1,0 @@
-{
-  "type": "fabricaeexnihilo:leaking",
-  "block": "minecraft:cobblestone",
-  "fluid": "#c:blood",
-  "amount": 8100,
-  "result": "minecraft:netherrack"
-}

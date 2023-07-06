@@ -24,17 +24,17 @@ public final class BonusEnchantingManager {
         if (FabricaeExNihilo.CONFIG.modules.crucibles.efficiency) {
             DATA.computeIfAbsent(Enchantments.EFFICIENCY, enchantment -> new ArrayList<>()).addAll(ModBlocks.CRUCIBLES.values().stream().map(ItemConvertible::asItem).toList());
         }
+        if (FabricaeExNihilo.CONFIG.modules.crucibles.fireAspect) {
+            DATA.computeIfAbsent(Enchantments.FIRE_ASPECT, enchantment -> new ArrayList<>()).addAll(ModBlocks.CRUCIBLES.values().stream().map(ItemConvertible::asItem).toList());
+        }
         if (FabricaeExNihilo.CONFIG.modules.barrels.enchantments.efficiency) {
             DATA.computeIfAbsent(Enchantments.EFFICIENCY, enchantment -> new ArrayList<>()).addAll(ModBlocks.BARRELS.values().stream().map(ItemConvertible::asItem).toList());
-        }
-        if (FabricaeExNihilo.CONFIG.modules.sieves.efficiency) {
-            DATA.computeIfAbsent(Enchantments.EFFICIENCY, enchantment -> new ArrayList<>()).addAll(ModItems.MESHES.values());
         }
         if (FabricaeExNihilo.CONFIG.modules.barrels.enchantments.thorns) {
             DATA.computeIfAbsent(Enchantments.THORNS, enchantment -> new ArrayList<>()).addAll(ModBlocks.BARRELS.values().stream().map(ItemConvertible::asItem).toList());
         }
-        if (FabricaeExNihilo.CONFIG.modules.crucibles.fireAspect) {
-            DATA.computeIfAbsent(Enchantments.FIRE_ASPECT, enchantment -> new ArrayList<>()).addAll(ModBlocks.CRUCIBLES.values().stream().map(ItemConvertible::asItem).toList());
+        if (FabricaeExNihilo.CONFIG.modules.sieves.efficiency) {
+            DATA.computeIfAbsent(Enchantments.EFFICIENCY, enchantment -> new ArrayList<>()).addAll(ModItems.MESHES.values());
         }
         if (FabricaeExNihilo.CONFIG.modules.sieves.fortune) {
             DATA.computeIfAbsent(Enchantments.FORTUNE, enchantment -> new ArrayList<>()).addAll(ModItems.MESHES.values());

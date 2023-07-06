@@ -1,0 +1,25 @@
+{
+  "type": "fabricaeexnihilo:barrel",
+  "actions": [
+    {
+      "type": "store_item",
+      "stack": {
+        "count": 1,
+        "item": "minecraft:red_sand"
+      }
+    }
+  ],
+  "conditions": [
+    {
+      "type": "fluid_in",
+      "fluid": "#c:blood"
+    }
+  ],
+  "icon": "minecraft:red_sand",
+  "trigger": {
+    "type": "insert_item",
+    "item": {
+      "item": "minecraft:sand"
+    }
+  }
+}

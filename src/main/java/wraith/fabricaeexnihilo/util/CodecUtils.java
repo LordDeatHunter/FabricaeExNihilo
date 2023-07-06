@@ -7,6 +7,7 @@ import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -26,7 +27,6 @@ import java.util.function.Function;
  */
 @SuppressWarnings("UnstableApiUsage")
 public class CodecUtils {
-
     public static final Codec<FluidVariant> FLUID_VARIANT = magicCodec(Registries.FLUID.getCodec()
                     .xmap(FluidVariant::of, FluidVariant::getFluid),
             RecordCodecBuilder.create(instance1 -> instance1.group(
@@ -37,6 +37,17 @@ public class CodecUtils {
                                     .optionalFieldOf("nbt")
                                     .forGetter(variant -> Optional.ofNullable(variant.getNbt())))
                     .apply(instance1, (fluid, nbt) -> FluidVariant.of(fluid, nbt.orElse(null)))));
+
+    public static final Codec<ItemVariant> ITEM_VARIANT = magicCodec(Registries.ITEM.getCodec()
+                    .xmap(ItemVariant::of, ItemVariant::getItem),
+            RecordCodecBuilder.create(instance -> instance.group(
+                            Registries.ITEM.getCodec()
+                                    .fieldOf("type")
+                                    .forGetter(ItemVariant::getItem),
+                            NbtCompound.CODEC
+                                    .optionalFieldOf("nbt")
+                                    .forGetter(variant -> Optional.ofNullable(variant.getNbt())))
+                    .apply(instance, (item, nbt) -> ItemVariant.of(item, nbt.orElse(null)))));
 
     public static final Codec<ItemStack> ITEM_STACK = magicCodec(Registries.ITEM.getCodec()
                     .xmap(Item::getDefaultStack, ItemStack::getItem),

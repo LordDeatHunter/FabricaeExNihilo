@@ -1,0 +1,27 @@
+{
+  "type": "fabricaeexnihilo:barrel",
+  "actions": [
+    {
+      "type": "spawn_entity",
+      "entities": {
+        "type": "minecraft:guardian",
+        "data": {},
+        "size": 1
+      }
+    }
+  ],
+  "conditions": [
+    {
+      "type": "fluid_in",
+      "fluid": "#c:brine"
+    }
+  ],
+  "duration": 20,
+  "icon": "minecraft:guardian_spawn_egg",
+  "trigger": {
+    "type": "insert_item",
+    "item": {
+      "item": "fabricaeexnihilo:doll_guardian"
+    }
+  }
+}

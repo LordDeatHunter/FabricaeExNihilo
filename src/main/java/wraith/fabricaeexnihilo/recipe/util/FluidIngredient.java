@@ -5,6 +5,7 @@ import com.google.gson.JsonPrimitive;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
@@ -33,11 +34,21 @@ public sealed abstract class FluidIngredient implements Predicate<Fluid> {
         };
     }
 
+    public static FluidIngredient single(Fluid fluid) {
+        return new Single(fluid);
+    }
+
+    public static FluidIngredient tag(TagKey<Fluid> tag) {
+        return new Tag(tag);
+    }
+
     public abstract void toPacket(PacketByteBuf buf);
 
     public abstract JsonElement toJson();
 
     public abstract EntryIngredient asReiIngredient();
+
+    public abstract boolean isEmpty();
 
     private static final class Single extends FluidIngredient {
         private final Fluid fluid;
@@ -65,6 +76,11 @@ public sealed abstract class FluidIngredient implements Predicate<Fluid> {
         @Override
         public EntryIngredient asReiIngredient() {
             return EntryIngredients.of(fluid);
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return fluid == Fluids.EMPTY;
         }
     }
 
@@ -94,6 +110,11 @@ public sealed abstract class FluidIngredient implements Predicate<Fluid> {
         @Override
         public EntryIngredient asReiIngredient() {
             return EntryIngredients.ofFluidTag(tag);
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return false;
         }
     }
 }

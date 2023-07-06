@@ -1,0 +1,27 @@
+{
+  "type": "fabricaeexnihilo:barrel",
+  "actions": [
+    {
+      "type": "spawn_entity",
+      "entities": {
+        "type": "minecraft:blaze",
+        "data": {},
+        "size": 1
+      }
+    }
+  ],
+  "conditions": [
+    {
+      "type": "fluid_in",
+      "fluid": "#fabricaeexnihilo:true_lava"
+    }
+  ],
+  "duration": 20,
+  "icon": "minecraft:blaze_spawn_egg",
+  "trigger": {
+    "type": "insert_item",
+    "item": {
+      "item": "fabricaeexnihilo:doll_blaze"
+    }
+  }
+}

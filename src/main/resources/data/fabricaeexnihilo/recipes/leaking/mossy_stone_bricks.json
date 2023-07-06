@@ -1,7 +1,0 @@
-{
-  "type": "fabricaeexnihilo:leaking",
-  "block": "minecraft:stone_bricks",
-  "fluid": "minecraft:water",
-  "amount": 8100,
-  "result": "minecraft:mossy_stone_bricks"
-}

@@ -1,0 +1,22 @@
+{
+  "type": "fabricaeexnihilo:barrel",
+  "actions": [
+    {
+      "type": "consume_fluid",
+      "amount": 8100,
+      "fluid": "minecraft:water"
+    },
+    {
+      "type": "convert_block",
+      "filter": "minecraft:stone_bricks",
+      "result": {
+        "Name": "minecraft:mossy_stone_bricks"
+      }
+    }
+  ],
+  "icon": "minecraft:mossy_stone_bricks",
+  "trigger": {
+    "type": "tick",
+    "chance": 0.01
+  }
+}

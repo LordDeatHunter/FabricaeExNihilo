@@ -1,32 +1,53 @@
 package wraith.fabricaeexnihilo.modules.barrels;
 
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
+import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.fabricmc.fabric.api.transfer.v1.transaction.base.SnapshotParticipant;
-import wraith.fabricaeexnihilo.modules.barrels.modes.BarrelMode;
+import wraith.fabricaeexnihilo.recipe.barrel.BarrelRecipe;
 
 @SuppressWarnings("UnstableApiUsage")
-public class BarrelItemStorage extends SnapshotParticipant<BarrelMode> implements SingleSlotStorage<ItemVariant> {
-    public final BarrelBlockEntity barrel;
+public class BarrelItemStorage extends SnapshotParticipant<BarrelBlockEntity.Snapshot> implements SingleSlotStorage<ItemVariant> {
+    private final BarrelBlockEntity barrel;
 
     public BarrelItemStorage(BarrelBlockEntity barrel) {
         this.barrel = barrel;
     }
 
     @Override
-    protected void onFinalCommit() {
-        barrel.markDirty();
+    public long insert(ItemVariant item, long maxAmount, TransactionContext transaction) {
+        StoragePreconditions.notBlankNotNegative(item, maxAmount);
+        if (barrel.isCrafting()) return 0;
+        if (barrel.getState() != BarrelState.EMPTY && barrel.getState() != BarrelState.FLUID && barrel.getState() != BarrelState.COMPOST) return 0;
+
+        var recipe = BarrelRecipe.findInsert(barrel, item);
+
+        if (recipe.isPresent()) {
+            updateSnapshots(transaction);
+            barrel.beginRecipe(recipe.get());
+            return 1;
+        }
+
+        return 0;
     }
 
     @Override
-    public long insert(ItemVariant resource, long maxAmount, TransactionContext transaction) {
-        return barrel.getMode().insertItem(resource, maxAmount, transaction, this);
-    }
+    public long extract(ItemVariant item, long maxAmount, TransactionContext transaction) {
+        StoragePreconditions.notBlankNotNegative(item, maxAmount);
+        if (barrel.isCrafting()) return 0;
+        if (barrel.getState() != BarrelState.ITEM) return 0;
+        if (!item.equals(getResource())) return 0;
 
-    @Override
-    public long extract(ItemVariant resource, long maxAmount, TransactionContext transaction) {
-        return barrel.getMode().extractItem(resource, maxAmount, transaction, this);
+        var extracted = Math.min(getAmount(), maxAmount);
+        if (extracted == 0) return 0;
+
+        updateSnapshots(transaction);
+        var stack = barrel.getItem();
+        stack.decrement((int) extracted);
+        barrel.setItem(stack); // this handles resetting the state with empty stack
+
+        return extracted;
     }
 
     @Override
@@ -36,26 +57,26 @@ public class BarrelItemStorage extends SnapshotParticipant<BarrelMode> implement
 
     @Override
     public ItemVariant getResource() {
-        return barrel.getMode().getItem();
+        return ItemVariant.of(barrel.getItem());
     }
 
     @Override
     public long getAmount() {
-        return barrel.getMode().getItemAmount();
+        return barrel.getItem().getCount();
     }
 
     @Override
     public long getCapacity() {
-        return barrel.getMode().getItemCapacity();
+        return barrel.getItem().getMaxCount();
     }
 
     @Override
-    protected BarrelMode createSnapshot() {
-        return barrel.getMode().copy();
+    protected BarrelBlockEntity.Snapshot createSnapshot() {
+        return barrel.new Snapshot();
     }
 
     @Override
-    protected void readSnapshot(BarrelMode snapshot) {
-        barrel.setMode(snapshot);
+    protected void readSnapshot(BarrelBlockEntity.Snapshot snapshot) {
+        snapshot.apply();
     }
 }

@@ -1,0 +1,33 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "values": [
+        "c:salt"
+      ]
+    }
+  ],
+  "type": "fabricaeexnihilo:barrel",
+  "actions": [
+    {
+      "type": "store_fluid",
+      "amount": 81000,
+      "fluid": {
+        "type": "fabricaeexnihilo:brine"
+      }
+    }
+  ],
+  "conditions": [
+    {
+      "type": "fluid_in",
+      "fluid": "#fabricaeexnihilo:true_water"
+    }
+  ],
+  "icon": "fabricaeexnihilo:brine_bucket",
+  "trigger": {
+    "type": "insert_item",
+    "item": {
+      "tag": "c:salt"
+    }
+  }
+}

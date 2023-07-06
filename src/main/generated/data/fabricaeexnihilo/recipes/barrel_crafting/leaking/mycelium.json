@@ -1,0 +1,25 @@
+{
+  "type": "fabricaeexnihilo:barrel",
+  "actions": [
+    {
+      "type": "consume_fluid",
+      "amount": 40500,
+      "fluid": "#fabricaeexnihilo:witchwater"
+    },
+    {
+      "type": "convert_block",
+      "filter": "minecraft:podzol",
+      "result": {
+        "Name": "minecraft:mycelium",
+        "Properties": {
+          "snowy": "false"
+        }
+      }
+    }
+  ],
+  "icon": "minecraft:mycelium",
+  "trigger": {
+    "type": "tick",
+    "chance": 0.01
+  }
+}

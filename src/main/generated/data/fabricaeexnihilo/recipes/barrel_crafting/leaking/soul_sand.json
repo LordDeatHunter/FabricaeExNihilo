@@ -1,0 +1,22 @@
+{
+  "type": "fabricaeexnihilo:barrel",
+  "actions": [
+    {
+      "type": "consume_fluid",
+      "amount": 40500,
+      "fluid": "#fabricaeexnihilo:witchwater"
+    },
+    {
+      "type": "convert_block",
+      "filter": "minecraft:sand",
+      "result": {
+        "Name": "minecraft:soul_sand"
+      }
+    }
+  ],
+  "icon": "minecraft:soul_sand",
+  "trigger": {
+    "type": "tick",
+    "chance": 0.01
+  }
+}

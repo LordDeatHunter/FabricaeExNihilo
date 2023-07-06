@@ -1,0 +1,28 @@
+{
+  "type": "fabricaeexnihilo:barrel",
+  "actions": [
+    {
+      "type": "store_item",
+      "stack": {
+        "count": 1,
+        "item": "minecraft:slime_block"
+      }
+    }
+  ],
+  "conditions": [
+    {
+      "type": "fluid_in",
+      "fluid": "#c:milk"
+    },
+    {
+      "type": "block_below",
+      "block": "minecraft:mycelium"
+    }
+  ],
+  "duration": 600,
+  "icon": "minecraft:slime_block",
+  "trigger": {
+    "type": "tick",
+    "chance": 1.0
+  }
+}
