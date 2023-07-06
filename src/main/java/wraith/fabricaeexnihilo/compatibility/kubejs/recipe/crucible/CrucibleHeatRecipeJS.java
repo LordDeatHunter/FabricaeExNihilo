@@ -69,7 +69,7 @@ public class CrucibleHeatRecipeJS extends RecipeJS {
 
     @Override
     public void deserialize() {
-        block = RegistryEntryLists.fromJson(Registries.BLOCK.getKey(), json.get("block"));
+        block = RegistryEntryLists.fromJson(Registries.BLOCK.getKey(), JsonHelper.getElement(json, "block"));
         heat = JsonHelper.getInt(json, "heat");
     }
 

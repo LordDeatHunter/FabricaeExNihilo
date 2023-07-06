@@ -9,6 +9,7 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.entry.RegistryEntryList;
+import net.minecraft.util.JsonHelper;
 import wraith.fabricaeexnihilo.compatibility.kubejs.FENKubePlugin;
 import wraith.fabricaeexnihilo.recipe.util.Loot;
 import wraith.fabricaeexnihilo.util.CodecUtils;
@@ -79,8 +80,8 @@ public class ToolRecipeJS extends RecipeJS {
 
     @Override
     public void deserialize() {
-        result = CodecUtils.fromJson(Loot.CODEC, json.get("result"));
-        block = RegistryEntryLists.fromJson(Registries.BLOCK.getKey(), json.get("block"));
+        result = CodecUtils.fromJson(Loot.CODEC, JsonHelper.getElement(json, "result"));
+        block = RegistryEntryLists.fromJson(Registries.BLOCK.getKey(), JsonHelper.getElement(json, "block"));
     }
 
     @Override

@@ -10,6 +10,7 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.JsonHelper;
 import net.minecraft.util.Pair;
 import wraith.fabricaeexnihilo.compatibility.kubejs.FENKubePlugin;
 import wraith.fabricaeexnihilo.recipe.util.WeightedList;
@@ -65,8 +66,8 @@ public class WitchWaterWorldRecipeJS extends RecipeJS {
 
     @Override
     public void deserialize() {
-        target = RegistryEntryLists.fromJson(Registries.FLUID.getKey(), json.get("target"));
-        result = CodecUtils.fromJson(WeightedList.CODEC, json.get("result"));
+        target = RegistryEntryLists.fromJson(Registries.FLUID.getKey(), JsonHelper.getElement(json, "target"));
+        result = CodecUtils.fromJson(WeightedList.CODEC, JsonHelper.getElement(json, "result"));
     }
 
     @Override

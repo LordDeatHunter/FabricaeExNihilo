@@ -56,9 +56,9 @@ public class CrucibleRecipeJS extends RecipeJS {
 
     @Override
     public void deserialize() {
-        input = Ingredient.fromJson(json.get("input"));
+        input = Ingredient.fromJson(JsonHelper.getElement(json, "input"));
         amount = JsonHelper.getLong(json, "amount");
-        fluid = CodecUtils.fromJson(CodecUtils.FLUID_VARIANT, json.get("fluid"));
+        fluid = CodecUtils.fromJson(CodecUtils.FLUID_VARIANT, JsonHelper.getElement(json, "fluid"));
     }
 
     @Override

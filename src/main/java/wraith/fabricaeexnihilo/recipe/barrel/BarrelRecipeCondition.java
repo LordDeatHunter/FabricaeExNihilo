@@ -62,7 +62,7 @@ public sealed interface BarrelRecipeCondition {
         private static final byte ID = 0;
 
         public FluidAbove(JsonObject json) {
-            this(FluidIngredient.fromJson(json.get("fluid")));
+            this(FluidIngredient.fromJson(JsonHelper.getElement(json, "fluid")));
         }
 
         public FluidAbove(PacketByteBuf buf) {
@@ -100,7 +100,7 @@ public sealed interface BarrelRecipeCondition {
         private static final byte ID = 1;
 
         public BlockAbove(JsonObject json) {
-            this(BlockIngredient.fromJson(json.get("fluid")));
+            this(BlockIngredient.fromJson(JsonHelper.getElement(json, "fluid")));
         }
 
         public BlockAbove(PacketByteBuf buf) {
@@ -138,7 +138,7 @@ public sealed interface BarrelRecipeCondition {
         private static final byte ID = 2;
 
         public BlockBelow(JsonObject json) {
-            this(BlockIngredient.fromJson(json.get("block")));
+            this(BlockIngredient.fromJson(JsonHelper.getElement(json, "block")));
         }
 
         public BlockBelow(PacketByteBuf buf) {
@@ -176,7 +176,7 @@ public sealed interface BarrelRecipeCondition {
         private static final byte ID = 3;
 
         public FluidIn(JsonObject json) {
-            this(FluidIngredient.fromJson(json.get("fluid")));
+            this(FluidIngredient.fromJson(JsonHelper.getElement(json, "fluid")));
         }
 
         public FluidIn(PacketByteBuf buf) {

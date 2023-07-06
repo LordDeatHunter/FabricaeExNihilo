@@ -11,7 +11,7 @@ public sealed interface BarrelRecipeTrigger {
         var type = JsonHelper.getString(json, "type");
         return switch (type) {
             case "tick" -> new Tick(JsonHelper.getFloat(json, "chance", 1));
-            case "insert_item" -> new ItemInserted(Ingredient.fromJson(json.get("item")));
+            case "insert_item" -> new ItemInserted(Ingredient.fromJson(JsonHelper.getElement(json, "item")));
             default -> throw new JsonParseException("Unknown trigger type: " + type);
         };
     }

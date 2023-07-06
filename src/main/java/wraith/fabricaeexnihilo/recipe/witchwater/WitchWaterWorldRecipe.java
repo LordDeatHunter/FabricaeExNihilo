@@ -7,6 +7,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.JsonHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
@@ -69,8 +70,8 @@ public class WitchWaterWorldRecipe extends BaseRecipe<WitchWaterWorldRecipe.Cont
     public static class Serializer implements RecipeSerializer<WitchWaterWorldRecipe> {
         @Override
         public WitchWaterWorldRecipe read(Identifier id, JsonObject json) {
-            var target = FluidIngredient.fromJson(json.get("target"));
-            var result = CodecUtils.fromJson(WeightedList.CODEC, json.get("result"));
+            var target = FluidIngredient.fromJson(JsonHelper.getElement(json, "target"));
+            var result = CodecUtils.fromJson(WeightedList.CODEC, JsonHelper.getElement(json, "result"));
 
             return new WitchWaterWorldRecipe(id, target, result);
         }

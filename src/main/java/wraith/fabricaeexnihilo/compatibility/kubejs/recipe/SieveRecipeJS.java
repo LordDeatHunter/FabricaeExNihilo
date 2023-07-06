@@ -71,8 +71,8 @@ public class SieveRecipeJS extends RecipeJS {
 
     @Override
     public void deserialize() {
-        result = CodecUtils.fromJson(CodecUtils.ITEM_STACK, json.get("result"));
-        input = Ingredient.fromJson(json.get("input"));
+        result = CodecUtils.fromJson(CodecUtils.ITEM_STACK, JsonHelper.getElement(json, "result"));
+        input = Ingredient.fromJson(JsonHelper.getElement(json, "input"));
         JsonHelper.getObject(json, "rolls").entrySet().forEach(entry -> {
             var meshJson = entry.getKey();
             var chancesJson = entry.getValue();

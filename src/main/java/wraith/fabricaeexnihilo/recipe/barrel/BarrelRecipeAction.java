@@ -84,7 +84,7 @@ public sealed interface BarrelRecipeAction {
         private static final byte ID = 0;
 
         public SpawnEntity(JsonObject json) {
-            this(CodecUtils.fromJson(EntityStack.CODEC, json.get("entities")));
+            this(CodecUtils.fromJson(EntityStack.CODEC, JsonHelper.getElement(json, "entities")));
         }
 
         @Override
@@ -123,7 +123,7 @@ public sealed interface BarrelRecipeAction {
         private static final byte ID = 1;
 
         public StoreItem(JsonObject json) {
-            this(CodecUtils.fromJson(CodecUtils.ITEM_STACK, json.get("stack")));
+            this(CodecUtils.fromJson(CodecUtils.ITEM_STACK, JsonHelper.getElement(json, "stack")));
         }
 
         @Override
@@ -157,7 +157,7 @@ public sealed interface BarrelRecipeAction {
         private static final byte ID = 2;
 
         public StoreFluid(JsonObject json) {
-            this(CodecUtils.fromJson(CodecUtils.FLUID_VARIANT, json.get("fluid")), JsonHelper.getLong(json, "amount", FluidConstants.BUCKET));
+            this(CodecUtils.fromJson(CodecUtils.FLUID_VARIANT, JsonHelper.getElement(json, "fluid")), JsonHelper.getLong(json, "amount", FluidConstants.BUCKET));
         }
 
         @Override
@@ -193,7 +193,7 @@ public sealed interface BarrelRecipeAction {
         private static final byte ID = 3;
 
         public ConsumeFluid(JsonObject json) {
-            this(FluidIngredient.fromJson(json.get("fluid")), JsonHelper.getLong(json, "amount", FluidConstants.BUCKET));
+            this(FluidIngredient.fromJson(JsonHelper.getElement(json, "fluid")), JsonHelper.getLong(json, "amount", FluidConstants.BUCKET));
         }
 
         @Override
@@ -235,7 +235,7 @@ public sealed interface BarrelRecipeAction {
         private static final byte ID = 4;
 
         public ConvertBlock(JsonObject json) {
-            this(BlockIngredient.fromJson(json.get("filter")), CodecUtils.fromJson(BlockState.CODEC, json.get("result")));
+            this(BlockIngredient.fromJson(JsonHelper.getElement(json, "filter")), CodecUtils.fromJson(BlockState.CODEC, JsonHelper.getElement(json, "result")));
         }
 
         @Override
@@ -289,7 +289,7 @@ public sealed interface BarrelRecipeAction {
         private static final byte ID = 5;
 
         public DropItem(JsonObject json) {
-            this(CodecUtils.fromJson(CodecUtils.ITEM_STACK, json.get("stack")));
+            this(CodecUtils.fromJson(CodecUtils.ITEM_STACK, JsonHelper.getElement(json, "stack")));
         }
 
         @Override

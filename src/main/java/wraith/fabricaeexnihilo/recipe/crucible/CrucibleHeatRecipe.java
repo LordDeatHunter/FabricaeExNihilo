@@ -70,7 +70,7 @@ public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.Context> {
     public static class Serializer implements RecipeSerializer<CrucibleHeatRecipe> {
         @Override
         public CrucibleHeatRecipe read(Identifier id, JsonObject json) {
-            var block = BlockIngredient.fromJson(json.get("block"));
+            var block = BlockIngredient.fromJson(JsonHelper.getElement(json, "block"));
             var heat = JsonHelper.getInt(json, "heat");
 
             return new CrucibleHeatRecipe(id, block, heat);

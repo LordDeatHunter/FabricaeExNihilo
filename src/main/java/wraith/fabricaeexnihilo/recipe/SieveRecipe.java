@@ -88,8 +88,8 @@ public class SieveRecipe extends BaseRecipe<SieveRecipe.Context> {
     public static class Serializer implements RecipeSerializer<SieveRecipe> {
         @Override
         public SieveRecipe read(Identifier id, JsonObject json) {
-            var result = CodecUtils.fromJson(CodecUtils.ITEM_STACK, json.get("result"));
-            var input = Ingredient.fromJson(json.get("input"));
+            var result = CodecUtils.fromJson(CodecUtils.ITEM_STACK, JsonHelper.getElement(json, "result"));
+            var input = Ingredient.fromJson(JsonHelper.getElement(json, "input"));
             var waterlogged = JsonHelper.getBoolean(json, "waterlogged", false);
             var rolls = new HashMap<Identifier, List<Double>>();
             JsonHelper.getObject(json, "rolls").entrySet().forEach(entry -> {

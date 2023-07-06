@@ -79,9 +79,9 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
     public static class Serializer implements RecipeSerializer<CrucibleRecipe> {
         @Override
         public CrucibleRecipe read(Identifier id, JsonObject json) {
-            var input = Ingredient.fromJson(json.get("input"));
+            var input = Ingredient.fromJson(JsonHelper.getElement(json, "input"));
             var amount = JsonHelper.getLong(json, "amount");
-            var fluid = CodecUtils.fromJson(CodecUtils.FLUID_VARIANT, json.get("fluid"));
+            var fluid = CodecUtils.fromJson(CodecUtils.FLUID_VARIANT, JsonHelper.getElement(json, "fluid"));
             var isFireproof = JsonHelper.getBoolean(json, "requiresFireproofCrucible"); // TODO: rename json field
 
 

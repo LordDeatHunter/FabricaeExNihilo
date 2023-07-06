@@ -82,9 +82,9 @@ public class MilkingRecipe extends BaseRecipe<MilkingRecipe.Context> {
         @Override
         public MilkingRecipe read(Identifier id, JsonObject json) {
             var entity = Registries.ENTITY_TYPE.get(new Identifier(JsonHelper.getString(json, "entity")));
-            var fluid = CodecUtils.fromJson(CodecUtils.FLUID_VARIANT, json.get("fluid"));
-            var amount = json.get("amount").getAsLong();
-            var cooldown = json.get("cooldown").getAsInt();
+            var fluid = CodecUtils.fromJson(CodecUtils.FLUID_VARIANT, JsonHelper.getElement(json, "fluid"));
+            var amount = JsonHelper.getLong(json, "amount");
+            var cooldown = JsonHelper.getInt(json, "cooldown");
 
             return new MilkingRecipe(id, entity, fluid, amount, cooldown);
         }

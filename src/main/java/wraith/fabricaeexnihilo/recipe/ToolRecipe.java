@@ -93,8 +93,8 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
         @Override
         public ToolRecipe read(Identifier id, JsonObject json) {
             var tool = ToolType.fromRecipeType(JsonHelper.getString(json, "type"));
-            var block = BlockIngredient.fromJson(json.get("block"));
-            var result = CodecUtils.fromJson(Loot.CODEC, json.get("result"));
+            var block = BlockIngredient.fromJson(JsonHelper.getElement(json, "block"));
+            var result = CodecUtils.fromJson(Loot.CODEC, JsonHelper.getElement(json, "result"));
 
             return new ToolRecipe(id, tool, block, result);
         }

@@ -56,7 +56,7 @@ public class WitchWaterEntityRecipeJS extends RecipeJS {
 
     @Override
     public void deserialize() {
-        target = RegistryEntryLists.fromJson(Registries.ENTITY_TYPE.getKey(), json.get("target"));
+        target = RegistryEntryLists.fromJson(Registries.ENTITY_TYPE.getKey(), JsonHelper.getElement(json, "target"));
         profession = json.has("profession") ? Registries.VILLAGER_PROFESSION.get(new Identifier(JsonHelper.getString(json, "profession"))) : null;
         result = Registries.ENTITY_TYPE.get(new Identifier(JsonHelper.getString(json, "result")));
     }
