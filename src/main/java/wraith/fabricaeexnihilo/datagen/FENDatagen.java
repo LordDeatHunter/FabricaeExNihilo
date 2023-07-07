@@ -6,10 +6,7 @@ import wraith.fabricaeexnihilo.datagen.provider.AdvancementProvider;
 import wraith.fabricaeexnihilo.datagen.provider.ModelProvider;
 import wraith.fabricaeexnihilo.datagen.provider.loot_tables.BlockLootTableProvider;
 import wraith.fabricaeexnihilo.datagen.provider.loot_tables.StrainerLootTableProvider;
-import wraith.fabricaeexnihilo.datagen.provider.recipe.BarrelRecipeProvider;
-import wraith.fabricaeexnihilo.datagen.provider.recipe.BaseRecipeProvider;
-import wraith.fabricaeexnihilo.datagen.provider.recipe.CrucibleRecipeProvider;
-import wraith.fabricaeexnihilo.datagen.provider.recipe.ToolRecipeProvider;
+import wraith.fabricaeexnihilo.datagen.provider.recipe.*;
 import wraith.fabricaeexnihilo.datagen.provider.tag.BlockTagProvider;
 import wraith.fabricaeexnihilo.datagen.provider.tag.FluidTagProvider;
 import wraith.fabricaeexnihilo.datagen.provider.tag.ItemTagProvider;
@@ -31,5 +28,6 @@ public class FENDatagen implements DataGeneratorEntrypoint {
         pack.addProvider(BarrelRecipeProvider::new);
         pack.addProvider(ToolRecipeProvider::new);
         pack.addProvider(CrucibleRecipeProvider::new);
+        pack.addProvider(WitchWaterRecipeProvider::new);
     }
 }

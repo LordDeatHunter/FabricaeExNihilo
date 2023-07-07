@@ -66,14 +66,14 @@ public class MilkingRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
 
     @Override
     public void offerTo(Consumer<RecipeJsonProvider> exporter, Identifier recipeId) {
-        exporter.accept(new MilkingRecipeJsonProvider(entity, fluid, amount, cooldown, recipeId));
+        exporter.accept(new Provider(entity, fluid, amount, cooldown, recipeId));
     }
 
-    private record MilkingRecipeJsonProvider(EntityType<?> entity,
-                                             FluidVariant fluid,
-                                             long amount,
-                                             int cooldown,
-                                             Identifier id) implements RecipeJsonProvider {
+    private record Provider(EntityType<?> entity,
+                            FluidVariant fluid,
+                            long amount,
+                            int cooldown,
+                            Identifier id) implements RecipeJsonProvider {
 
         @Override
         public void serialize(JsonObject json) {

@@ -85,14 +85,14 @@ public class CrucibleRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
 
     @Override
     public void offerTo(Consumer<RecipeJsonProvider> exporter, Identifier recipeId) {
-        exporter.accept(new CrucibleHeatRecipeJsonProvider(input, amount, fluid, requiresFireproofCrucible, recipeId));
+        exporter.accept(new Provider(input, amount, fluid, requiresFireproofCrucible, recipeId));
     }
 
-    private record CrucibleHeatRecipeJsonProvider(Ingredient input,
-                                                  long amount,
-                                                  FluidVariant fluid,
-                                                  boolean requiresFireproofCrucible,
-                                                  Identifier id) implements RecipeJsonProvider {
+    private record Provider(Ingredient input,
+                            long amount,
+                            FluidVariant fluid,
+                            boolean requiresFireproofCrucible,
+                            Identifier id) implements RecipeJsonProvider {
         @Override
         public void serialize(JsonObject json) {
             json.add("input", input.toJson());

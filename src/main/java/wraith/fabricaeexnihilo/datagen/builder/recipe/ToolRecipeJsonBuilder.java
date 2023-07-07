@@ -74,13 +74,13 @@ public class ToolRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
 
     @Override
     public void offerTo(Consumer<RecipeJsonProvider> exporter, Identifier recipeId) {
-        exporter.accept(new ToolRecipeJsonProvider(tool, block, result, recipeId));
+        exporter.accept(new Provider(tool, block, result, recipeId));
     }
 
-    private record ToolRecipeJsonProvider(ToolRecipe.ToolType tool,
-                                          BlockIngredient block,
-                                          Loot result,
-                                          Identifier id) implements RecipeJsonProvider {
+    private record Provider(ToolRecipe.ToolType tool,
+                            BlockIngredient block,
+                            Loot result,
+                            Identifier id) implements RecipeJsonProvider {
 
         @Override
         public void serialize(JsonObject json) {

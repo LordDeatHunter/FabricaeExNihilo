@@ -1,0 +1,10 @@
+{
+  "type": "fabricaeexnihilo:witch_water_world",
+  "result": {
+    "minecraft:andesite": 1,
+    "minecraft:cobblestone": 3,
+    "minecraft:diorite": 1,
+    "minecraft:granite": 1
+  },
+  "target": "#fabricaeexnihilo:true_lava"
+}

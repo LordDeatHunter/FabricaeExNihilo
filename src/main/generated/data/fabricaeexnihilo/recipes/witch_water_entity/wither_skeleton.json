@@ -1,0 +1,5 @@
+{
+  "type": "fabricaeexnihilo:witch_water_entity",
+  "result": "minecraft:wither_skeleton",
+  "target": "minecraft:skeleton"
+}

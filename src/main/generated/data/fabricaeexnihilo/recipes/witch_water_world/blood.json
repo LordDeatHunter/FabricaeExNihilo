@@ -1,0 +1,9 @@
+{
+  "type": "fabricaeexnihilo:witch_water_world",
+  "result": {
+    "minecraft:fire_coral_block": 4,
+    "minecraft:netherrack": 1,
+    "minecraft:red_sand": 16
+  },
+  "target": "#c:blood"
+}

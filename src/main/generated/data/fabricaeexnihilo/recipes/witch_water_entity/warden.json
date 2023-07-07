@@ -1,0 +1,5 @@
+{
+  "type": "fabricaeexnihilo:witch_water_entity",
+  "result": "minecraft:warden",
+  "target": "minecraft:iron_golem"
+}

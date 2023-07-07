@@ -249,15 +249,15 @@ public class BarrelRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
         if (icon == null) throw new IllegalStateException("No icon set");
         if (!hasStateCondition) throw new IllegalStateException("No state condition set, this recipe could trigger on all kinds of barrels");
 
-        exporter.accept(new BarrelRecipeJsonProvider(duration, icon, trigger, actions, conditions, recipeId));
+        exporter.accept(new Provider(duration, icon, trigger, actions, conditions, recipeId));
     }
 
-    private record BarrelRecipeJsonProvider(int duration,
-                                            Item icon,
-                                            BarrelRecipeTrigger trigger,
-                                            List<BarrelRecipeAction> actions,
-                                            List<BarrelRecipeCondition> conditions,
-                                            Identifier id) implements RecipeJsonProvider {
+    private record Provider(int duration,
+                            Item icon,
+                            BarrelRecipeTrigger trigger,
+                            List<BarrelRecipeAction> actions,
+                            List<BarrelRecipeCondition> conditions,
+                            Identifier id) implements RecipeJsonProvider {
 
         @Override
         public void serialize(JsonObject json) {

@@ -1,0 +1,6 @@
+{
+  "type": "fabricaeexnihilo:witch_water_entity",
+  "nbt": "VillagerData{profession:\"minecraft:none\"}",
+  "result": "minecraft:zombie_villager",
+  "target": "minecraft:villager"
+}
