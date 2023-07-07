@@ -1,9 +1,11 @@
 {
   "type": "fabricaeexnihilo:crucible",
+  "amount": 20250,
+  "fluid": {
+    "type": "minecraft:lava"
+  },
   "input": {
     "item": "minecraft:end_stone"
   },
-  "amount": 20250,
-  "fluid": "minecraft:lava",
   "requiresFireproofCrucible": true
 }

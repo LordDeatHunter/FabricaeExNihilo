@@ -1,9 +1,11 @@
 {
   "type": "fabricaeexnihilo:crucible",
+  "amount": 6750,
+  "fluid": {
+    "type": "minecraft:lava"
+  },
   "input": {
     "item": "minecraft:sand"
   },
-  "amount": 6750,
-  "fluid": "minecraft:lava",
   "requiresFireproofCrucible": true
 }

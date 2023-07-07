@@ -1,9 +1,11 @@
 {
   "type": "fabricaeexnihilo:crucible",
-  "input": {
-    "tag": "c:seeds"
-  },
   "amount": 8100,
-  "fluid": "minecraft:water",
+  "fluid": {
+    "type": "minecraft:water"
+  },
+  "input": {
+    "tag": "c:vegetables"
+  },
   "requiresFireproofCrucible": false
 }
