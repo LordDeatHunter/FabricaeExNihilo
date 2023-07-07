@@ -15,7 +15,6 @@ import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
-import wraith.fabricaeexnihilo.recipe.util.WeightedList;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
 import java.util.HashMap;

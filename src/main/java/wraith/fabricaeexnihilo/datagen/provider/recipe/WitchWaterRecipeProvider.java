@@ -5,21 +5,13 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.entity.EntityType;
-import net.minecraft.item.Items;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.village.VillagerProfession;
-import wraith.fabricaeexnihilo.datagen.builder.recipe.CrucibleHeatRecipeJsonBuilder;
-import wraith.fabricaeexnihilo.datagen.builder.recipe.CrucibleRecipeJsonBuilder;
 import wraith.fabricaeexnihilo.datagen.builder.recipe.WitchWaterEntityRecipeJsonBuilder;
 import wraith.fabricaeexnihilo.datagen.builder.recipe.WitchWaterWorldRecipeJsonBuilder;
-import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModTags;
-import wraith.fabricaeexnihilo.recipe.util.BlockIngredient;
 
 import java.util.function.Consumer;
-
-import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public class WitchWaterRecipeProvider extends FabricRecipeProvider {
     public WitchWaterRecipeProvider(FabricDataOutput output) {
