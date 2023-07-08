@@ -17,6 +17,9 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleType;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.ActionResult;
@@ -182,10 +185,10 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
     }
 
     public void tick() {
+        if (isCrafting() && world instanceof ServerWorld serverWorld) serverWorld.spawnParticles(ParticleTypes.EFFECT, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0.2, 0, 0.2, 0);
         if (tickCounter <= 0) {
             tickCounter = FabricaeExNihilo.CONFIG.modules.barrels.tickRate;
             markDirty();
-//            mode.tick(this);
             tickRecipe();
         } else {
             --tickCounter;
