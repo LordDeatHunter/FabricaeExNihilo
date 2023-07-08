@@ -1,17 +1,16 @@
 package wraith.fabricaeexnihilo.modules.fluids;
 
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage;
+import net.minecraft.block.FluidBlock;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import wraith.fabricaeexnihilo.modules.ModFluids;
 import wraith.fabricaeexnihilo.modules.base.AbstractFluid;
 import wraith.fabricaeexnihilo.modules.base.FluidSettings;
-import wraith.fabricaeexnihilo.modules.witchwater.WitchWaterBlock;
 
 @SuppressWarnings("UnstableApiUsage")
 public class MilkFluid extends AbstractFluid {
@@ -19,7 +18,7 @@ public class MilkFluid extends AbstractFluid {
     public static final Item BUCKET = Items.MILK_BUCKET;
     public static final MilkFluid FLOWING = new MilkFluid(false);
     public static final MilkFluid STILL = new MilkFluid(true);
-    public static final WitchWaterBlock BLOCK = new wraith.fabricaeexnihilo.modules.witchwater.WitchWaterBlock(STILL, FabricBlockSettings.copyOf(ModFluids.getBlockSettings()));
+    public static final FluidBlock BLOCK = new FluidBlock(STILL, ModFluids.getBlockSettings());
 
     static {
         // Milk buckets

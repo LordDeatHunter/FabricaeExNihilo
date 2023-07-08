@@ -10,8 +10,10 @@
     "BottleUseMixin",
     "EnchantmentHelperMixin",
     "EnchantmentMixin",
+    "EntityMixin",
     "FluidBlockMixin",
     "ItemModelGeneratorAccess",
+    "LivingEntityMixin",
     "LootContextTypesAccess"
   ],
   "client": [

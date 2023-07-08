@@ -112,8 +112,7 @@ public abstract class AbstractFluid extends FlowableFluid {
 
     @Override
     protected boolean canBeReplacedWith(FluidState state, BlockView world, BlockPos pos, Fluid fluid, Direction direction) {
-        // I have no clue what this function does.
-        return false;
+        return direction == Direction.DOWN && !matchesType(fluid);
     }
 
     public void registerFluids() {

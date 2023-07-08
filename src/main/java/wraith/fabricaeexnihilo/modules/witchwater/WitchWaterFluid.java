@@ -1,6 +1,5 @@
 package wraith.fabricaeexnihilo.modules.witchwater;
 
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BucketItem;
 import net.minecraft.registry.Registries;
@@ -17,7 +16,7 @@ public class WitchWaterFluid extends AbstractFluid {
     public static final WitchWaterFluid FLOWING = new WitchWaterFluid(false);
     public static final WitchWaterFluid STILL = new WitchWaterFluid(true);
     public static final BucketItem BUCKET = new BucketItem(STILL, ModFluids.getBucketItemSettings());
-    public static final WitchWaterBlock BLOCK = new WitchWaterBlock(STILL, FabricBlockSettings.copyOf(ModFluids.getBlockSettings()));
+    public static final WitchWaterBlock BLOCK = new WitchWaterBlock(STILL, ModFluids.getBlockSettings());
     public static final TagKey<Fluid> TAG = TagKey.of(Registries.FLUID.getKey(), id("witchwater"));
 
     public WitchWaterFluid(boolean isStill) {

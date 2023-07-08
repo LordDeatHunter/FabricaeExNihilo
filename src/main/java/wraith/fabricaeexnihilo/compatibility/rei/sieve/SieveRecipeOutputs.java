@@ -4,7 +4,6 @@ import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.recipe.SieveRecipe;
-import wraith.fabricaeexnihilo.util.ItemUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
