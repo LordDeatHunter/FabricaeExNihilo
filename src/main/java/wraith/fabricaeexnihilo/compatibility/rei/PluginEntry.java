@@ -15,9 +15,7 @@ import wraith.fabricaeexnihilo.compatibility.rei.crucible.CrucibleCategory;
 import wraith.fabricaeexnihilo.compatibility.rei.crucible.CrucibleDisplay;
 import wraith.fabricaeexnihilo.compatibility.rei.crucible.CrucibleHeatCategory;
 import wraith.fabricaeexnihilo.compatibility.rei.crucible.CrucibleHeatDisplay;
-import wraith.fabricaeexnihilo.compatibility.rei.sieve.SieveCategory;
-import wraith.fabricaeexnihilo.compatibility.rei.sieve.SieveDisplay;
-import wraith.fabricaeexnihilo.compatibility.rei.sieve.SieveRecipeHolder;
+import wraith.fabricaeexnihilo.compatibility.rei.sieve.*;
 import wraith.fabricaeexnihilo.compatibility.rei.tools.ToolCategory;
 import wraith.fabricaeexnihilo.compatibility.rei.tools.ToolDisplay;
 import wraith.fabricaeexnihilo.compatibility.rei.witchwater.WitchWaterEntityCategory;
@@ -39,6 +37,8 @@ import wraith.fabricaeexnihilo.util.ItemUtils;
 import wraith.fabricaeexnihilo.util.Lazy;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
@@ -127,21 +127,20 @@ public class PluginEntry implements REIClientPlugin {
 
     private static void registerSieveDisplays(DisplayRegistry registry) {
         var sieveRecipes = registry.getRecipeManager().listAllOfType(ModRecipes.SIEVE);
-        var list = new ArrayList<SieveRecipeHolder>();
-        for (var sieveRecipe : sieveRecipes) {
-            var holders = SieveRecipeHolder.fromRecipe(sieveRecipe);
-            for (var holder : holders) {
-                var index = list.indexOf(holder);
-                if (index == -1)
-                    list.add(holder);
-                else
-                    list.get(index).add(holder);
+        var map = new HashMap<SieveRecipeKey, SieveRecipeOutputs>();
+        for (var recipe : sieveRecipes) {
+            for (var key : SieveRecipeKey.getKeys(recipe)) {
+                var outputs = SieveRecipeOutputs.of(recipe, key.meshKey());
+                map.computeIfAbsent(key, __ -> new SieveRecipeOutputs(new HashMap<>()))
+                        .outputs()
+                        .putAll(outputs.outputs());
             }
         }
-        list.stream()
-                .flatMap(recipe -> recipe.split(SieveCategory.MAX_OUTPUTS).stream())
-                .map(SieveDisplay::new)
+
+        map.entrySet()
+                .stream()
+                .flatMap(entry -> entry.getValue().split(SieveCategory.MAX_OUTPUTS).stream().map(outputs -> Map.entry(entry.getKey(), outputs)))
+                .map(entry -> new SieveDisplay(entry.getKey(), entry.getValue()))
                 .forEachOrdered(registry::add);
     }
-
 }

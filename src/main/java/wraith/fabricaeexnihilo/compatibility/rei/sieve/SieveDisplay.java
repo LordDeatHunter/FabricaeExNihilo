@@ -16,11 +16,11 @@ public class SieveDisplay implements Display {
     public final EntryIngredient mesh;
     public final Map<EntryIngredient, List<Double>> outputs;
 
-    public SieveDisplay(SieveRecipeHolder recipeHolder) {
-        this.waterlogged = recipeHolder.waterlogged();
-        this.input = recipeHolder.input();
-        this.mesh = recipeHolder.mesh();
-        this.outputs = recipeHolder.outputs();
+    public SieveDisplay(SieveRecipeKey key, SieveRecipeOutputs outputs) {
+        this.waterlogged = key.waterlogged();
+        this.input = key.input();
+        this.mesh = key.mesh();
+        this.outputs = outputs.outputs();
     }
 
     @Override
