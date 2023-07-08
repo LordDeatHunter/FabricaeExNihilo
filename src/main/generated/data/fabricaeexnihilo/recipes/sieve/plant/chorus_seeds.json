@@ -1,0 +1,30 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "values": [
+        "fabricaeexnihilo:chorus_seeds"
+      ]
+    }
+  ],
+  "type": "fabricaeexnihilo:sieve",
+  "input": {
+    "item": "fabricaeexnihilo:crushed_endstone"
+  },
+  "result": {
+    "count": 1,
+    "item": "fabricaeexnihilo:chorus_seeds"
+  },
+  "rolls": {
+    "fabricaeexnihilo:copper_mesh": [
+      0.05
+    ],
+    "fabricaeexnihilo:emerald_mesh": [
+      0.2
+    ],
+    "fabricaeexnihilo:gold_mesh": [
+      0.1
+    ]
+  },
+  "waterlogged": false
+}

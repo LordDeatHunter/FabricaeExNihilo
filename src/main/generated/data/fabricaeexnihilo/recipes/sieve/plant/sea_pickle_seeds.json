@@ -1,0 +1,31 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "values": [
+        "fabricaeexnihilo:sea_pickle_seeds"
+      ]
+    }
+  ],
+  "type": "fabricaeexnihilo:sieve",
+  "input": {
+    "item": "minecraft:sand"
+  },
+  "result": {
+    "count": 1,
+    "item": "fabricaeexnihilo:sea_pickle_seeds"
+  },
+  "rolls": {
+    "fabricaeexnihilo:copper_mesh": [
+      0.12
+    ],
+    "fabricaeexnihilo:emerald_mesh": [
+      0.3,
+      0.3
+    ],
+    "fabricaeexnihilo:gold_mesh": [
+      0.2
+    ]
+  },
+  "waterlogged": true
+}

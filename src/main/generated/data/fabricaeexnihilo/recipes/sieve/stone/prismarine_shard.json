@@ -1,0 +1,25 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "input": {
+    "item": "minecraft:gravel"
+  },
+  "result": {
+    "count": 1,
+    "item": "minecraft:prismarine_shard"
+  },
+  "rolls": {
+    "fabricaeexnihilo:copper_mesh": [
+      0.02
+    ],
+    "fabricaeexnihilo:emerald_mesh": [
+      0.4
+    ],
+    "fabricaeexnihilo:flint_mesh": [
+      0.01
+    ],
+    "fabricaeexnihilo:gold_mesh": [
+      0.3
+    ]
+  },
+  "waterlogged": true
+}

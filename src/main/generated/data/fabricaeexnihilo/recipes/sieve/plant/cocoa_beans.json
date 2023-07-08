@@ -1,0 +1,39 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "input": {
+    "item": "minecraft:sand"
+  },
+  "result": {
+    "count": 1,
+    "item": "minecraft:cocoa_beans"
+  },
+  "rolls": {
+    "fabricaeexnihilo:copper_mesh": [
+      0.12,
+      0.08,
+      0.3
+    ],
+    "fabricaeexnihilo:emerald_mesh": [
+      0.3,
+      0.3,
+      0.2,
+      0.1,
+      0.05
+    ],
+    "fabricaeexnihilo:flint_mesh": [
+      0.08,
+      0.4
+    ],
+    "fabricaeexnihilo:gold_mesh": [
+      0.2,
+      0.1,
+      0.1,
+      0.05
+    ],
+    "fabricaeexnihilo:string_mesh": [
+      0.05,
+      0.025
+    ]
+  },
+  "waterlogged": false
+}

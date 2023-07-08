@@ -1,0 +1,27 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "input": {
+    "item": "minecraft:red_sand"
+  },
+  "result": {
+    "count": 1,
+    "item": "fabricaeexnihilo:raw_iron_piece"
+  },
+  "rolls": {
+    "fabricaeexnihilo:diamond_mesh": [
+      0.5,
+      0.1
+    ],
+    "fabricaeexnihilo:flint_mesh": [
+      0.05
+    ],
+    "fabricaeexnihilo:iron_mesh": [
+      0.1
+    ],
+    "fabricaeexnihilo:netherite_mesh": [
+      0.75,
+      0.4
+    ]
+  },
+  "waterlogged": false
+}

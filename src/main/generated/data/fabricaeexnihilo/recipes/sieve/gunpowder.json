@@ -1,0 +1,31 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "input": {
+    "item": "fabricaeexnihilo:dust"
+  },
+  "result": {
+    "count": 1,
+    "item": "minecraft:gunpowder"
+  },
+  "rolls": {
+    "fabricaeexnihilo:copper_mesh": [
+      0.3
+    ],
+    "fabricaeexnihilo:emerald_mesh": [
+      0.4,
+      0.2,
+      0.05
+    ],
+    "fabricaeexnihilo:flint_mesh": [
+      0.2
+    ],
+    "fabricaeexnihilo:gold_mesh": [
+      0.3,
+      0.1
+    ],
+    "fabricaeexnihilo:string_mesh": [
+      0.1
+    ]
+  },
+  "waterlogged": false
+}

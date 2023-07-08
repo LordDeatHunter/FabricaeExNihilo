@@ -1,0 +1,25 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "input": {
+    "item": "fabricaeexnihilo:crushed_netherrack"
+  },
+  "result": {
+    "count": 1,
+    "item": "fabricaeexnihilo:raw_gold_piece"
+  },
+  "rolls": {
+    "fabricaeexnihilo:diamond_mesh": [
+      0.2,
+      0.2
+    ],
+    "fabricaeexnihilo:iron_mesh": [
+      0.1,
+      0.1
+    ],
+    "fabricaeexnihilo:netherite_mesh": [
+      0.3,
+      0.3
+    ]
+  },
+  "waterlogged": false
+}

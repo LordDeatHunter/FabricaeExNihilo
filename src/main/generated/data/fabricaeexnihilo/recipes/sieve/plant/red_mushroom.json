@@ -1,0 +1,22 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "input": {
+    "item": "minecraft:dirt"
+  },
+  "result": {
+    "count": 1,
+    "item": "minecraft:red_mushroom"
+  },
+  "rolls": {
+    "fabricaeexnihilo:copper_mesh": [
+      0.05
+    ],
+    "fabricaeexnihilo:emerald_mesh": [
+      0.2
+    ],
+    "fabricaeexnihilo:gold_mesh": [
+      0.1
+    ]
+  },
+  "waterlogged": false
+}

@@ -1,0 +1,37 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "input": {
+    "item": "minecraft:soul_sand"
+  },
+  "result": {
+    "count": 1,
+    "item": "minecraft:quartz"
+  },
+  "rolls": {
+    "fabricaeexnihilo:diamond_mesh": [
+      1.0,
+      1.0,
+      0.8,
+      0.3
+    ],
+    "fabricaeexnihilo:flint_mesh": [
+      1.0,
+      0.33
+    ],
+    "fabricaeexnihilo:iron_mesh": [
+      0.4,
+      0.4,
+      0.2,
+      0.1,
+      0.1
+    ],
+    "fabricaeexnihilo:netherite_mesh": [
+      1.0,
+      1.0,
+      1.0,
+      0.5,
+      0.1
+    ]
+  },
+  "waterlogged": false
+}

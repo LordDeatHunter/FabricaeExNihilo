@@ -1,0 +1,30 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "input": {
+    "item": "minecraft:soul_sand"
+  },
+  "result": {
+    "count": 1,
+    "item": "minecraft:nether_wart"
+  },
+  "rolls": {
+    "fabricaeexnihilo:copper_mesh": [
+      0.2
+    ],
+    "fabricaeexnihilo:emerald_mesh": [
+      0.4,
+      0.15
+    ],
+    "fabricaeexnihilo:flint_mesh": [
+      0.15
+    ],
+    "fabricaeexnihilo:gold_mesh": [
+      0.3,
+      0.05
+    ],
+    "fabricaeexnihilo:string_mesh": [
+      0.1
+    ]
+  },
+  "waterlogged": false
+}

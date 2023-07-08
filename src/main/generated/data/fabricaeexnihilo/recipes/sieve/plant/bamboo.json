@@ -1,0 +1,23 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "input": {
+    "item": "minecraft:jungle_leaves"
+  },
+  "result": {
+    "count": 1,
+    "item": "minecraft:bamboo"
+  },
+  "rolls": {
+    "fabricaeexnihilo:copper_mesh": [
+      0.12
+    ],
+    "fabricaeexnihilo:emerald_mesh": [
+      0.3,
+      0.3
+    ],
+    "fabricaeexnihilo:gold_mesh": [
+      0.2
+    ]
+  },
+  "waterlogged": false
+}

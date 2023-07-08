@@ -1,0 +1,22 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "input": {
+    "item": "minecraft:gravel"
+  },
+  "result": {
+    "count": 1,
+    "item": "fabricaeexnihilo:raw_gold_piece"
+  },
+  "rolls": {
+    "fabricaeexnihilo:diamond_mesh": [
+      0.08
+    ],
+    "fabricaeexnihilo:iron_mesh": [
+      0.05
+    ],
+    "fabricaeexnihilo:netherite_mesh": [
+      0.12
+    ]
+  },
+  "waterlogged": false
+}

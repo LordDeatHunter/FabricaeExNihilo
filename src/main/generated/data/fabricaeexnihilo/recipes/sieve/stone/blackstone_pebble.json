@@ -1,0 +1,24 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "input": {
+    "item": "minecraft:soul_sand"
+  },
+  "result": {
+    "count": 1,
+    "item": "fabricaeexnihilo:blackstone_pebble"
+  },
+  "rolls": {
+    "fabricaeexnihilo:flint_mesh": [
+      0.33,
+      0.33,
+      0.33,
+      0.33
+    ],
+    "fabricaeexnihilo:string_mesh": [
+      0.5,
+      0.25,
+      0.1
+    ]
+  },
+  "waterlogged": false
+}

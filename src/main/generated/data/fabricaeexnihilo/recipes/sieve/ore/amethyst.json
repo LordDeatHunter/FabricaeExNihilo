@@ -1,0 +1,27 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "input": {
+    "item": "fabricaeexnihilo:crushed_calcite"
+  },
+  "result": {
+    "count": 1,
+    "item": "minecraft:amethyst_shard"
+  },
+  "rolls": {
+    "fabricaeexnihilo:diamond_mesh": [
+      0.3,
+      0.1
+    ],
+    "fabricaeexnihilo:flint_mesh": [
+      0.1
+    ],
+    "fabricaeexnihilo:iron_mesh": [
+      0.25
+    ],
+    "fabricaeexnihilo:netherite_mesh": [
+      0.4,
+      0.2
+    ]
+  },
+  "waterlogged": false
+}

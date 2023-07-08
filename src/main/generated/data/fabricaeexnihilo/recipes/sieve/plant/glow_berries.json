@@ -1,0 +1,29 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "input": {
+    "item": "minecraft:coarse_dirt"
+  },
+  "result": {
+    "count": 1,
+    "item": "minecraft:glow_berries"
+  },
+  "rolls": {
+    "fabricaeexnihilo:copper_mesh": [
+      0.12
+    ],
+    "fabricaeexnihilo:emerald_mesh": [
+      0.3,
+      0.3
+    ],
+    "fabricaeexnihilo:flint_mesh": [
+      0.08
+    ],
+    "fabricaeexnihilo:gold_mesh": [
+      0.2
+    ],
+    "fabricaeexnihilo:string_mesh": [
+      0.05
+    ]
+  },
+  "waterlogged": false
+}

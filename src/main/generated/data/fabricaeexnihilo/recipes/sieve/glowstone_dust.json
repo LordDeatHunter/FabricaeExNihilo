@@ -1,0 +1,29 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "input": {
+    "item": "fabricaeexnihilo:dust"
+  },
+  "result": {
+    "count": 1,
+    "item": "minecraft:glowstone_dust"
+  },
+  "rolls": {
+    "fabricaeexnihilo:copper_mesh": [
+      0.06
+    ],
+    "fabricaeexnihilo:emerald_mesh": [
+      0.8,
+      0.03
+    ],
+    "fabricaeexnihilo:flint_mesh": [
+      0.04
+    ],
+    "fabricaeexnihilo:gold_mesh": [
+      0.05,
+      0.025,
+      0.025,
+      0.01
+    ]
+  },
+  "waterlogged": false
+}

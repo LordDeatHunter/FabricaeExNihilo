@@ -212,10 +212,6 @@ public class BarrelRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
         return this;
     }
 
-    public BarrelRecipeJsonBuilder noIcon() {
-        return icon(Items.AIR);
-    }
-
     @Override
     public CraftingRecipeJsonBuilder criterion(String name, CriterionConditions conditions) {
         throw new UnsupportedOperationException();

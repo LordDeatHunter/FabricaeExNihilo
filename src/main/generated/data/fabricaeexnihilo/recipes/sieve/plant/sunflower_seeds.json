@@ -1,0 +1,34 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "values": [
+        "fabricaeexnihilo:sunflower_seeds"
+      ]
+    }
+  ],
+  "type": "fabricaeexnihilo:sieve",
+  "input": {
+    "item": "minecraft:dirt"
+  },
+  "result": {
+    "count": 1,
+    "item": "fabricaeexnihilo:sunflower_seeds"
+  },
+  "rolls": {
+    "fabricaeexnihilo:copper_mesh": [
+      0.12
+    ],
+    "fabricaeexnihilo:emerald_mesh": [
+      0.3,
+      0.3
+    ],
+    "fabricaeexnihilo:flint_mesh": [
+      0.08
+    ],
+    "fabricaeexnihilo:gold_mesh": [
+      0.2
+    ]
+  },
+  "waterlogged": false
+}

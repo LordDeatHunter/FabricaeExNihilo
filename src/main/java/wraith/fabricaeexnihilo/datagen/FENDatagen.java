@@ -29,5 +29,6 @@ public class FENDatagen implements DataGeneratorEntrypoint {
         pack.addProvider(ToolRecipeProvider::new);
         pack.addProvider(CrucibleRecipeProvider::new);
         pack.addProvider(WitchWaterRecipeProvider::new);
+        pack.addProvider(SieveRecipeProvider::new);
     }
 }

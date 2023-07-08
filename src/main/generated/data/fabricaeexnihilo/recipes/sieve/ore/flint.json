@@ -1,0 +1,19 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "input": {
+    "item": "minecraft:gravel"
+  },
+  "result": {
+    "count": 1,
+    "item": "minecraft:flint"
+  },
+  "rolls": {
+    "fabricaeexnihilo:flint_mesh": [
+      0.3
+    ],
+    "fabricaeexnihilo:string_mesh": [
+      0.25
+    ]
+  },
+  "waterlogged": false
+}

@@ -1,0 +1,28 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "values": [
+        "fabricaeexnihilo:warped_seeds"
+      ]
+    }
+  ],
+  "type": "fabricaeexnihilo:sieve",
+  "input": {
+    "item": "minecraft:dirt"
+  },
+  "result": {
+    "count": 1,
+    "item": "fabricaeexnihilo:warped_seeds"
+  },
+  "rolls": {
+    "fabricaeexnihilo:emerald_mesh": [
+      0.3,
+      0.3
+    ],
+    "fabricaeexnihilo:gold_mesh": [
+      0.2
+    ]
+  },
+  "waterlogged": false
+}

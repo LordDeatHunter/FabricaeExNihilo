@@ -1,0 +1,33 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "values": [
+        "fabricaeexnihilo:mycelium_seeds"
+      ]
+    }
+  ],
+  "type": "fabricaeexnihilo:sieve",
+  "input": {
+    "item": "minecraft:dirt"
+  },
+  "result": {
+    "count": 1,
+    "item": "fabricaeexnihilo:mycelium_seeds"
+  },
+  "rolls": {
+    "fabricaeexnihilo:copper_mesh": [
+      0.07
+    ],
+    "fabricaeexnihilo:emerald_mesh": [
+      0.14
+    ],
+    "fabricaeexnihilo:flint_mesh": [
+      0.04
+    ],
+    "fabricaeexnihilo:gold_mesh": [
+      0.11
+    ]
+  },
+  "waterlogged": false
+}

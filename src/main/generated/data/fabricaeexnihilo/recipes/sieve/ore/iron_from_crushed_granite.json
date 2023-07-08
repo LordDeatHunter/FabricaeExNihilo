@@ -1,0 +1,31 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "input": {
+    "item": "fabricaeexnihilo:crushed_granite"
+  },
+  "result": {
+    "count": 1,
+    "item": "fabricaeexnihilo:raw_iron_piece"
+  },
+  "rolls": {
+    "fabricaeexnihilo:diamond_mesh": [
+      0.5,
+      0.4,
+      0.3
+    ],
+    "fabricaeexnihilo:flint_mesh": [
+      0.1,
+      0.05
+    ],
+    "fabricaeexnihilo:iron_mesh": [
+      0.3,
+      0.15,
+      0.15
+    ],
+    "fabricaeexnihilo:netherite_mesh": [
+      1.0,
+      0.75
+    ]
+  },
+  "waterlogged": false
+}

@@ -1,0 +1,28 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "input": {
+    "item": "fabricaeexnihilo:silt"
+  },
+  "result": {
+    "count": 1,
+    "item": "minecraft:lapis_lazuli"
+  },
+  "rolls": {
+    "fabricaeexnihilo:diamond_mesh": [
+      0.5,
+      0.5
+    ],
+    "fabricaeexnihilo:flint_mesh": [
+      0.05
+    ],
+    "fabricaeexnihilo:iron_mesh": [
+      0.075
+    ],
+    "fabricaeexnihilo:netherite_mesh": [
+      0.5,
+      0.5,
+      0.5
+    ]
+  },
+  "waterlogged": false
+}
