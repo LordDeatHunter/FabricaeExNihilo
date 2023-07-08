@@ -302,18 +302,21 @@ public class BarrelRecipeProvider extends FabricRecipeProvider {
                 .fluid(ModTags.Common.BRINE)
                 .duration(20)
                 .spawnEntity(EntityType.GUARDIAN)
+                .storeFluid(Fluids.EMPTY)
                 .icon(Items.GUARDIAN_SPAWN_EGG)
                 .offerTo(exporter, "summon_guardian");
         BarrelRecipeJsonBuilder.itemTriggered(ModItems.DOLLS.get(id("doll_enderman")))
                 .fluid(ModTags.WITCHWATER)
                 .duration(20)
                 .spawnEntity(EntityType.ENDERMAN)
+                .storeFluid(Fluids.EMPTY)
                 .icon(Items.ENDERMAN_SPAWN_EGG)
                 .offerTo(exporter, "summon_enderman");
         BarrelRecipeJsonBuilder.itemTriggered(ModItems.DOLLS.get(id("doll_shulker")))
                 .fluid(ModTags.WITCHWATER)
                 .duration(20)
                 .spawnEntity(EntityType.SHULKER)
+                .storeFluid(Fluids.EMPTY)
                 .icon(Items.SHULKER_SPAWN_EGG)
                 .offerTo(exporter, "summon_shulker");
     }
