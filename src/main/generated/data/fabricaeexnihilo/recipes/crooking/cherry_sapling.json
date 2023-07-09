@@ -1,0 +1,13 @@
+{
+  "type": "fabricaeexnihilo:crook",
+  "block": "minecraft:cherry_leaves",
+  "result": {
+    "chances": [
+      0.25
+    ],
+    "stack": {
+      "count": 1,
+      "item": "minecraft:cherry_sapling"
+    }
+  }
+}

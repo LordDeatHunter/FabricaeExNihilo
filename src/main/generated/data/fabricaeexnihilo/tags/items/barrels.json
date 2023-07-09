@@ -14,6 +14,10 @@
       "required": false
     },
     {
+      "id": "fabricaeexnihilo:bamboo_barrel",
+      "required": false
+    },
+    {
       "id": "fabricaeexnihilo:spruce_barrel",
       "required": false
     },
@@ -35,6 +39,14 @@
     },
     {
       "id": "fabricaeexnihilo:crimson_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:cherry_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:mangrove_barrel",
       "required": false
     },
     {

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "fabricaeexnihilo:sieve",
+  "key": {
+    "#": {
+      "item": "minecraft:cherry_planks"
+    },
+    "I": {
+      "item": "minecraft:stick"
+    },
+    "S": {
+      "item": "minecraft:cherry_slab"
+    }
+  },
+  "pattern": [
+    "# #",
+    "#S#",
+    "I I"
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:cherry_sieve"
+  },
+  "show_notification": true
+}

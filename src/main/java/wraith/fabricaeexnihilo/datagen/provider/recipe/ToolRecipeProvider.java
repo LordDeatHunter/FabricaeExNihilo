@@ -30,6 +30,8 @@ public class ToolRecipeProvider extends FabricRecipeProvider {
         crooking(Blocks.JUNGLE_LEAVES, Items.JUNGLE_SAPLING, 0.25).offerTo(exporter, "crooking/jungle_sapling");
         crooking(Blocks.OAK_LEAVES, Items.OAK_SAPLING, 0.25).offerTo(exporter, "crooking/oak_sapling");
         crooking(Blocks.SPRUCE_LEAVES, Items.SPRUCE_SAPLING, 0.25).offerTo(exporter, "crooking/spruce_sapling");
+        crooking(Blocks.MANGROVE_LEAVES, Items.MANGROVE_PROPAGULE, 0.25).offerTo(exporter, "crooking/mangrove_propagule");
+        crooking(Blocks.CHERRY_LEAVES, Items.CHERRY_SAPLING, 0.25).offerTo(exporter, "crooking/cherry_sapling");
         crooking(BlockTags.LEAVES, ModItems.RAW_SILKWORM, 0.1, 0.2, 0.3).offerTo(exporter, "crooking/silkwork");
         crooking(BlockTags.LEAVES, Items.STICK, 0.01).offerTo(exporter, "crooking/stick");
         crooking(ModTags.INFESTED_LEAVES, Items.STRING, 0.75, 0.25).offerTo(exporter, "crooking/string");

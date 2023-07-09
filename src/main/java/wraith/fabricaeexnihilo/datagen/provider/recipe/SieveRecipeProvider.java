@@ -295,6 +295,12 @@ public class SieveRecipeProvider extends FabricRecipeProvider {
                 .from(Items.MUD)
                 .flintMesh(0.08).copperMesh(0.12).goldMesh(0.2).emeraldMesh(0.3, 0.3)
                 .offerTo(exporter, "plant/sapling/mangrove");
+        SieveRecipeJsonBuilder.of(Items.CHERRY_SAPLING)
+                .from(Items.CHERRY_LEAVES)
+                .flintMesh(0.1, 0.08).copperMesh(0.2, 0.1).goldMesh(0.05, 0.05, 0.05, 0.05).emeraldMesh(0.3, 0.3, 0.1)
+                .from(Items.DIRT)
+                .flintMesh(0.08).copperMesh(0.12).goldMesh(0.2).emeraldMesh(0.3, 0.3)
+                .offerTo(exporter, "plant/sapling/cherry");
     }
 
     private void offerOreRecipes(Consumer<RecipeJsonProvider> exporter) {

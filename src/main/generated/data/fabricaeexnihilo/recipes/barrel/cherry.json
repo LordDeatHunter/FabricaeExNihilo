@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "fabricaeexnihilo:barrel",
+  "key": {
+    "#": {
+      "item": "minecraft:cherry_planks"
+    },
+    "S": {
+      "item": "minecraft:cherry_slab"
+    }
+  },
+  "pattern": [
+    "# #",
+    "# #",
+    "#S#"
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:cherry_barrel"
+  },
+  "show_notification": true
+}

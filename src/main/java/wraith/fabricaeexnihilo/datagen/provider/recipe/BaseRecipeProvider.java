@@ -89,6 +89,8 @@ public class BaseRecipeProvider extends FabricRecipeProvider {
         offerWoodSetRecipes(Items.OAK_LOG, Items.OAK_PLANKS, Items.OAK_SLAB, "oak", exporter);
         offerWoodSetRecipes(Items.SPRUCE_LOG, Items.SPRUCE_PLANKS, Items.SPRUCE_SLAB, "spruce", exporter);
         offerWoodSetRecipes(Items.WARPED_STEM, Items.WARPED_PLANKS, Items.WARPED_SLAB, "warped", exporter);
+        offerWoodSetRecipes(Items.CHERRY_LOG, Items.CHERRY_PLANKS, Items.CHERRY_SLAB, "cherry", exporter);
+        offerWoodSetRecipes(Items.BAMBOO_BLOCK, Items.BAMBOO_PLANKS, Items.BAMBOO_SLAB, "bamboo", exporter);
         offerWoodSetRecipes(getDummyItem(TR_RUBBER_LOG_ID), getDummyItem(TR_RUBBER_PLANKS_ID), getDummyItem(TR_RUBBER_SLAB_ID), "rubber", techRebornExporter);
     }
 

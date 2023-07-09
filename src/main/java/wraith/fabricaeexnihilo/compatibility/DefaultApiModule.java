@@ -21,6 +21,9 @@ public class DefaultApiModule implements FENApiModule {
     public FENRegistries.WoodenBlockBundle jungleBlocks;
     public FENRegistries.WoodenBlockBundle warpedBlocks;
     public FENRegistries.WoodenBlockBundle crimsonBlocks;
+    public FENRegistries.WoodenBlockBundle mangroveBlocks;
+    public FENRegistries.WoodenBlockBundle cherryBlocks;
+    public FENRegistries.WoodenBlockBundle bambooBlocks;
     public Block dust;
     public Block silt;
     public Block crushedCalcite;
@@ -40,6 +43,8 @@ public class DefaultApiModule implements FENApiModule {
     public Block infestedAcaciaLeaves;
     public Block infestedDarkOakLeaves;
     public Block infestedJungleLeaves;
+    public Block infestedMangroveLeaves;
+    public Block infestedCherryLeaves;
     public Item stringMesh;
     public Item flintMesh;
     public Item ironMesh;
@@ -76,6 +81,9 @@ public class DefaultApiModule implements FENApiModule {
         jungleBlocks = registries.registerWood("jungle", false, registries.woodenBlockSettings());
         warpedBlocks = registries.registerWood("warped", true, registries.woodenBlockSettings());
         crimsonBlocks = registries.registerWood("crimson", true, registries.woodenBlockSettings());
+        mangroveBlocks = registries.registerWood("mangrove", false, registries.woodenBlockSettings());
+        cherryBlocks = registries.registerWood("cherry", false, registries.woodenBlockSettings());
+        bambooBlocks = registries.registerWood("bamboo", false, registries.woodenBlockSettings());
 
         dust = registries.registerCrushedBlock("dust", registries.sandyBlockSettings());
         silt = registries.registerCrushedBlock("silt", registries.sandyBlockSettings());
@@ -99,6 +107,8 @@ public class DefaultApiModule implements FENApiModule {
         infestedAcaciaLeaves = registries.registerInfestedLeaves("acacia", new Identifier("minecraft:acacia_leaves"), registries.infestedLeavesBlockSettings());
         infestedDarkOakLeaves = registries.registerInfestedLeaves("dark_oak", new Identifier("minecraft:dark_oak_leaves"), registries.infestedLeavesBlockSettings());
         infestedJungleLeaves = registries.registerInfestedLeaves("jungle", new Identifier("minecraft:jungle_leaves"), registries.infestedLeavesBlockSettings());
+        infestedMangroveLeaves = registries.registerInfestedLeaves("mangrove", new Identifier("minecraft:mangrove_leaves"), registries.infestedLeavesBlockSettings());
+        infestedCherryLeaves = registries.registerInfestedLeaves("cherry", new Identifier("minecraft:cherry_leaves"), registries.infestedLeavesBlockSettings());
 
         stringMesh = registries.registerMesh("string", Color.WHITE, 10, registries.defaultItemSettings());
         flintMesh = registries.registerMesh("flint", Color.GRAY, 12, registries.defaultItemSettings());

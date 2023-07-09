@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "fabricaeexnihilo:barrel",
+  "key": {
+    "#": {
+      "item": "minecraft:bamboo_planks"
+    },
+    "S": {
+      "item": "minecraft:bamboo_slab"
+    }
+  },
+  "pattern": [
+    "# #",
+    "# #",
+    "#S#"
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:bamboo_barrel"
+  },
+  "show_notification": true
+}

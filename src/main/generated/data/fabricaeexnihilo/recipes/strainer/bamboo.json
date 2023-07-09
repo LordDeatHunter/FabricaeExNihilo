@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "fabricaeexnihilo:sieve",
+  "key": {
+    "#": {
+      "item": "minecraft:bamboo_block"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "#S#",
+    "SSS",
+    "#S#"
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:bamboo_strainer"
+  },
+  "show_notification": true
+}

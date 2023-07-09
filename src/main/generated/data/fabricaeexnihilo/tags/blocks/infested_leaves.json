@@ -22,7 +22,15 @@
       "required": false
     },
     {
+      "id": "fabricaeexnihilo:infested_mangrove_leaves",
+      "required": false
+    },
+    {
       "id": "fabricaeexnihilo:infested_jungle_leaves",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:infested_cherry_leaves",
       "required": false
     },
     {
