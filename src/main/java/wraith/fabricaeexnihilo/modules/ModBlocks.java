@@ -26,21 +26,21 @@ import wraith.fabricaeexnihilo.modules.sieves.SieveBlockEntity;
 import wraith.fabricaeexnihilo.modules.strainer.StrainerBlock;
 import wraith.fabricaeexnihilo.modules.strainer.StrainerBlockEntity;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public final class ModBlocks {
-    public static final Map<Identifier, BarrelBlock> BARRELS = new HashMap<>();
-    public static final Map<Identifier, CrucibleBlock> CRUCIBLES = new HashMap<>();
-    public static final Map<Identifier, Block> CRUSHED = new HashMap<>();
+    public static final Map<Identifier, BarrelBlock> BARRELS = new LinkedHashMap<>();
+    public static final Map<Identifier, CrucibleBlock> CRUCIBLES = new LinkedHashMap<>();
+    public static final Map<Identifier, Block> CRUSHED = new LinkedHashMap<>();
     public static final EndCakeBlock END_CAKE = new EndCakeBlock(FabricBlockSettings.copyOf(Blocks.CAKE));
-    public static final Map<Identifier, InfestedLeavesBlock> INFESTED_LEAVES = new HashMap<>();
+    public static final Map<Identifier, InfestedLeavesBlock> INFESTED_LEAVES = new LinkedHashMap<>();
     public static final FabricBlockSettings INFESTED_LEAVES_SETTINGS = FabricBlockSettings.create().mapColor(MapColor.WHITE).nonOpaque().suffocates((state, world, pos) -> false).allowsSpawning((state, world, pos, type) -> type == EntityType.OCELOT || type == EntityType.PARROT).strength(0.2F).ticksRandomly().sounds(BlockSoundGroup.GRASS);
     public static final InfestingLeavesBlock INFESTING_LEAVES = new InfestingLeavesBlock(FabricBlockSettings.copyOf(INFESTED_LEAVES_SETTINGS));
-    public static final Map<Identifier, SieveBlock> SIEVES = new HashMap<>();
-    public static final Map<Identifier, StrainerBlock> STRAINERS = new HashMap<>();
+    public static final Map<Identifier, SieveBlock> SIEVES = new LinkedHashMap<>();
+    public static final Map<Identifier, StrainerBlock> STRAINERS = new LinkedHashMap<>();
 
     public static void registerBlockEntities() {
         Registry.register(Registries.BLOCK_ENTITY_TYPE, SieveBlockEntity.BLOCK_ENTITY_ID, SieveBlockEntity.TYPE);
