@@ -5,9 +5,11 @@ import net.minecraft.block.FluidBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.MagmaCubeEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.SlimeEntity;
 import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -105,6 +107,10 @@ public class WitchWaterBlock extends FluidBlock {
 
             // Set Health
             livingEntity.setHealth(livingEntity.getMaxHealth() * toKill.getHealth() / toKill.getMaxHealth());
+
+            if (livingEntity instanceof MobEntity mob && world instanceof ServerWorld serverWorld) {
+                mob.initialize(serverWorld, world.getLocalDifficulty(mob.getBlockPos()), SpawnReason.CONVERSION, null, null);
+            }
         }
         replaceMob(world, toKill, toSpawn);
     }
