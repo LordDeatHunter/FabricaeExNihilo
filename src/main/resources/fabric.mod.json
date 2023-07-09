@@ -22,11 +22,11 @@
       "wraith.fabricaeexnihilo.compatibility.theoneprobe.TheOneProbePlugin"
     ],
     "fabricaeexnihilo:api": [
-      "wraith.fabricaeexnihilo.compatibility.DefaultApiModule",
-      "wraith.fabricaeexnihilo.compatibility.TechRebornApiModule",
-      "wraith.fabricaeexnihilo.compatibility.IndustrialRevolutionApiModule",
-      "wraith.fabricaeexnihilo.compatibility.ModernIndustrializationApiModule",
-      "wraith.fabricaeexnihilo.compatibility.MythicMetalsApiModule"
+      "wraith.fabricaeexnihilo.compatibility.DefaultApiModule::INSTANCE",
+      "wraith.fabricaeexnihilo.compatibility.TechRebornApiModule::INSTANCE",
+      "wraith.fabricaeexnihilo.compatibility.IndustrialRevolutionApiModule::INSTANCE",
+      "wraith.fabricaeexnihilo.compatibility.ModernIndustrializationApiModule::INSTANCE",
+      "wraith.fabricaeexnihilo.compatibility.MythicMetalsApiModule::INSTANCE"
     ],
     "rei_client": [
       "wraith.fabricaeexnihilo.compatibility.rei.PluginEntry"

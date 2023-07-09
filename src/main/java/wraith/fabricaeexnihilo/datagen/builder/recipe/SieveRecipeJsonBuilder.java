@@ -14,8 +14,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.Nullable;
-import wraith.fabricaeexnihilo.modules.ModItems;
-import wraith.fabricaeexnihilo.modules.sieves.MeshItem;
+import wraith.fabricaeexnihilo.compatibility.DefaultApiModule;
 import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.util.CodecUtils;
 
@@ -24,8 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-
-import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public class SieveRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
     private static final Codec<Map<Item, double[]>> ROLLS_CODEC = Codec.unboundedMap(Registries.ITEM.getCodec(), Codec.DOUBLE.listOf()
@@ -66,47 +63,47 @@ public class SieveRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
         return fromWaterlogged(Ingredient.ofItems(input), Registries.ITEM.getId(input.asItem()).getPath());
     }
 
-    public SieveRecipeJsonBuilder mesh(MeshItem mesh, double... chances) {
+    public SieveRecipeJsonBuilder mesh(Item mesh, double... chances) {
         if (currentSegment == null) throw new IllegalStateException("No active segment");
         currentSegment.rolls.put(mesh, chances);
         return this;
     }
 
-    public SieveRecipeJsonBuilder meshes(Map<MeshItem, double[]> meshes) {
+    public SieveRecipeJsonBuilder meshes(Map<Item, double[]> meshes) {
         meshes.forEach(this::mesh);
         return this;
     }
 
     public SieveRecipeJsonBuilder stringMesh(double... chances) {
-        return mesh(ModItems.MESHES.get(id("string_mesh")), chances);
+        return mesh(DefaultApiModule.INSTANCE.stringMesh, chances);
     }
 
     public SieveRecipeJsonBuilder flintMesh(double... chances) {
-        return mesh(ModItems.MESHES.get(id("flint_mesh")), chances);
+        return mesh(DefaultApiModule.INSTANCE.flintMesh, chances);
     }
 
     public SieveRecipeJsonBuilder ironMesh(double... chances) {
-        return mesh(ModItems.MESHES.get(id("iron_mesh")), chances);
+        return mesh(DefaultApiModule.INSTANCE.ironMesh, chances);
     }
 
     public SieveRecipeJsonBuilder diamondMesh(double... chances) {
-        return mesh(ModItems.MESHES.get(id("diamond_mesh")), chances);
+        return mesh(DefaultApiModule.INSTANCE.diamondMesh, chances);
     }
 
     public SieveRecipeJsonBuilder netheriteMesh(double... chances) {
-        return mesh(ModItems.MESHES.get(id("netherite_mesh")), chances);
+        return mesh(DefaultApiModule.INSTANCE.netheriteMesh, chances);
     }
 
     public SieveRecipeJsonBuilder copperMesh(double... chances) {
-        return mesh(ModItems.MESHES.get(id("copper_mesh")), chances);
+        return mesh(DefaultApiModule.INSTANCE.copperMesh, chances);
     }
 
     public SieveRecipeJsonBuilder goldMesh(double... chances) {
-        return mesh(ModItems.MESHES.get(id("gold_mesh")), chances);
+        return mesh(DefaultApiModule.INSTANCE.goldMesh, chances);
     }
 
     public SieveRecipeJsonBuilder emeraldMesh(double... chances) {
-        return mesh(ModItems.MESHES.get(id("emerald_mesh")), chances);
+        return mesh(DefaultApiModule.INSTANCE.emeraldMesh, chances);
     }
 
     @Override

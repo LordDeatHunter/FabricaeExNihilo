@@ -13,6 +13,7 @@ import net.minecraft.predicate.NumberRange;
 import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import wraith.fabricaeexnihilo.compatibility.DefaultApiModule;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModItems;
 import wraith.fabricaeexnihilo.modules.ModTags;
@@ -34,7 +35,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
     @Override
     public void generateAdvancement(Consumer<Advancement> exporter) {
         var root = Advancement.Builder.create()
-                .display(ModBlocks.SIEVES.get(id("oak_sieve")),
+                .display(DefaultApiModule.INSTANCE.oakBlocks.sieve(),
                         Text.translatable("advancements.fabricaeexnihilo.root.title"),
                         Text.translatable("advancements.fabricaeexnihilo.root.description"),
                         new Identifier("textures/gui/advancements/backgrounds/stone.png"),
@@ -44,7 +45,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                 .build(exporter, "fabricaeexnihilo:root");
 
         // Barrels, clay and blood
-        var barrel = task(ModBlocks.BARRELS.get(id("oak_barrel")),
+        var barrel = task(DefaultApiModule.INSTANCE.oakBlocks.barrel(),
                 "barrel",
                 root,
                 "barrel",
@@ -68,7 +69,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                 "porcelain",
                 InventoryChangedCriterion.Conditions.items(ModItems.PORCELAIN),
                 exporter);
-        task(ModBlocks.CRUCIBLES.get(id("porcelain_crucible")),
+        task(DefaultApiModule.INSTANCE.porcelainCrucible,
                 "crucible",
                 porcelain,
                 "porcelain_crucible",
@@ -95,61 +96,61 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                 exporter);
 
         // Meshes
-        var stringMesh = task(ModItems.MESHES.get(id("string_mesh")),
+        var stringMesh = task(DefaultApiModule.INSTANCE.stringMesh,
                 "string_mesh",
                 silkworm,
                 "mesh",
-                InventoryChangedCriterion.Conditions.items(ModItems.MESHES.get(id("string_mesh"))),
+                InventoryChangedCriterion.Conditions.items(DefaultApiModule.INSTANCE.stringMesh),
                 exporter);
-        var flintMesh = task(ModItems.MESHES.get(id("flint_mesh")),
+        var flintMesh = task(DefaultApiModule.INSTANCE.flintMesh,
                 "flint_mesh",
                 stringMesh,
                 "mesh",
-                InventoryChangedCriterion.Conditions.items(ModItems.MESHES.get(id("flint_mesh"))),
+                InventoryChangedCriterion.Conditions.items(DefaultApiModule.INSTANCE.flintMesh),
                 exporter);
-        var ironMesh = task(ModItems.MESHES.get(id("iron_mesh")),
+        var ironMesh = task(DefaultApiModule.INSTANCE.ironMesh,
                 "iron_mesh",
                 flintMesh,
                 "mesh",
-                InventoryChangedCriterion.Conditions.items(ModItems.MESHES.get(id("iron_mesh"))),
+                InventoryChangedCriterion.Conditions.items(DefaultApiModule.INSTANCE.ironMesh),
                 exporter);
-        var diamondMesh = task(ModItems.MESHES.get(id("diamond_mesh")),
+        var diamondMesh = task(DefaultApiModule.INSTANCE.diamondMesh,
                 "diamond_mesh",
                 ironMesh,
                 "mesh",
-                InventoryChangedCriterion.Conditions.items(ModItems.MESHES.get(id("diamond_mesh"))),
+                InventoryChangedCriterion.Conditions.items(DefaultApiModule.INSTANCE.diamondMesh),
                 exporter);
-        task(ModItems.MESHES.get(id("netherite_mesh")),
+        task(DefaultApiModule.INSTANCE.netheriteMesh,
                 "netherite_mesh",
                 diamondMesh,
                 "mesh",
-                InventoryChangedCriterion.Conditions.items(ModItems.MESHES.get(id("netherite_mesh"))),
+                InventoryChangedCriterion.Conditions.items(DefaultApiModule.INSTANCE.netheriteMesh),
                 exporter);
-        var copperMesh = task(ModItems.MESHES.get(id("copper_mesh")),
+        var copperMesh = task(DefaultApiModule.INSTANCE.copperMesh,
                 "copper_mesh",
                 flintMesh,
                 "mesh",
-                InventoryChangedCriterion.Conditions.items(ModItems.MESHES.get(id("copper_mesh"))),
+                InventoryChangedCriterion.Conditions.items(DefaultApiModule.INSTANCE.copperMesh),
                 exporter);
-        var goldMesh = task(ModItems.MESHES.get(id("gold_mesh")),
+        var goldMesh = task(DefaultApiModule.INSTANCE.goldMesh,
                 "gold_mesh",
                 copperMesh,
                 "mesh",
-                InventoryChangedCriterion.Conditions.items(ModItems.MESHES.get(id("gold_mesh"))),
+                InventoryChangedCriterion.Conditions.items(DefaultApiModule.INSTANCE.goldMesh),
                 exporter);
-        task(ModItems.MESHES.get(id("emerald_mesh")),
+        task(DefaultApiModule.INSTANCE.emeraldMesh,
                 "emerald_mesh",
                 goldMesh,
                 "mesh",
-                InventoryChangedCriterion.Conditions.items(ModItems.MESHES.get(id("emerald_mesh"))),
+                InventoryChangedCriterion.Conditions.items(DefaultApiModule.INSTANCE.emeraldMesh),
                 exporter);
 
         // Witchwater
-        var spores = task(ModItems.SEEDS.get(id("mycelium_seeds")),
+        var spores = task(DefaultApiModule.INSTANCE.myceliumSeeds,
                 "ancient_spores",
                 stringMesh,
                 "ancient_spores",
-                InventoryChangedCriterion.Conditions.items(ModItems.SEEDS.get(id("mycelium_seeds"))),
+                InventoryChangedCriterion.Conditions.items(DefaultApiModule.INSTANCE.myceliumSeeds),
                 exporter);
         goal(WitchWaterFluid.BUCKET,
                 "witchwater",
@@ -219,17 +220,17 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                 "sand",
                 InventoryChangedCriterion.Conditions.items(Items.SAND),
                 exporter);
-        var silt = task(ModBlocks.CRUSHED.get(id("silt")),
+        var silt = task(DefaultApiModule.INSTANCE.silt,
                 "silt",
                 sand,
                 "silt",
-                InventoryChangedCriterion.Conditions.items(ModBlocks.CRUSHED.get(id("silt"))),
+                InventoryChangedCriterion.Conditions.items(DefaultApiModule.INSTANCE.silt),
                 exporter);
-        task(ModBlocks.CRUSHED.get(id("dust")),
+        task(DefaultApiModule.INSTANCE.dust,
                 "dust",
                 silt,
                 "dust",
-                InventoryChangedCriterion.Conditions.items(ModBlocks.CRUSHED.get(id("dust"))),
+                InventoryChangedCriterion.Conditions.items(DefaultApiModule.INSTANCE.dust),
                 exporter);
 
         // Salt

@@ -32,7 +32,6 @@ import java.util.Map;
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public final class ModBlocks {
-
     public static final Map<Identifier, BarrelBlock> BARRELS = new HashMap<>();
     public static final Map<Identifier, CrucibleBlock> CRUCIBLES = new HashMap<>();
     public static final Map<Identifier, Block> CRUSHED = new HashMap<>();

@@ -8,13 +8,12 @@ import net.minecraft.block.Blocks;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.item.Items;
 import net.minecraft.registry.tag.BlockTags;
-import wraith.fabricaeexnihilo.modules.ModBlocks;
+import wraith.fabricaeexnihilo.compatibility.DefaultApiModule;
 import wraith.fabricaeexnihilo.modules.ModItems;
 import wraith.fabricaeexnihilo.modules.ModTags;
 
 import java.util.function.Consumer;
 
-import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 import static wraith.fabricaeexnihilo.datagen.builder.recipe.ToolRecipeJsonBuilder.crooking;
 import static wraith.fabricaeexnihilo.datagen.builder.recipe.ToolRecipeJsonBuilder.hammering;
 
@@ -41,27 +40,27 @@ public class ToolRecipeProvider extends FabricRecipeProvider {
         offerCoralHammeringRecipes(Blocks.HORN_CORAL_BLOCK, Blocks.HORN_CORAL, Blocks.HORN_CORAL_FAN, "horn", exporter);
         offerCoralHammeringRecipes(Blocks.TUBE_CORAL_BLOCK, Blocks.TUBE_CORAL, Blocks.TUBE_CORAL_FAN, "tube", exporter);
 
-        hammering(Blocks.PRISMARINE, ModBlocks.CRUSHED.get(id("crushed_prismarine")), 1).offerTo(exporter, "hammering/rock/prismarine");
-        hammering(Blocks.ANDESITE, ModBlocks.CRUSHED.get(id("crushed_andesite")), 1).offerTo(exporter, "hammering/rock/andesite");
-        hammering(Blocks.CALCITE, ModBlocks.CRUSHED.get(id("crushed_calcite")), 1).offerTo(exporter, "hammering/rock/calcite");
-        hammering(Blocks.DIORITE, ModBlocks.CRUSHED.get(id("crushed_diorite")), 1).offerTo(exporter, "hammering/rock/diorite");
-        hammering(Blocks.GRANITE, ModBlocks.CRUSHED.get(id("crushed_granite")), 1).offerTo(exporter, "hammering/rock/granite");
-        hammering(ModBlocks.CRUSHED.get(id("crushed_granite")), Blocks.RED_SAND, 1).offerTo(exporter, "hammering/rock/crushed_granite");
-        hammering(Blocks.NETHERRACK, ModBlocks.CRUSHED.get(id("crushed_netherrack")), 1).offerTo(exporter, "hammering/rock/netherrack");
-        hammering(Blocks.NETHER_BRICKS, ModBlocks.CRUSHED.get(id("crushed_netherrack")), 1).offerTo(exporter, "hammering/rock/nether_bricks");
-        hammering(Blocks.END_STONE, ModBlocks.CRUSHED.get(id("crushed_endstone")), 1).offerTo(exporter, "hammering/rock/end_stone");
-        hammering(Blocks.END_STONE_BRICKS, ModBlocks.CRUSHED.get(id("crushed_endstone")), 1).offerTo(exporter, "hammering/rock/end_stone_bricks");
+        hammering(Blocks.PRISMARINE, DefaultApiModule.INSTANCE.crushedPrismarine, 1).offerTo(exporter, "hammering/rock/prismarine");
+        hammering(Blocks.ANDESITE, DefaultApiModule.INSTANCE.crushedAndesite, 1).offerTo(exporter, "hammering/rock/andesite");
+        hammering(Blocks.CALCITE, DefaultApiModule.INSTANCE.crushedCalcite, 1).offerTo(exporter, "hammering/rock/calcite");
+        hammering(Blocks.DIORITE, DefaultApiModule.INSTANCE.crushedDiorite, 1).offerTo(exporter, "hammering/rock/diorite");
+        hammering(Blocks.GRANITE, DefaultApiModule.INSTANCE.crushedGranite, 1).offerTo(exporter, "hammering/rock/granite");
+        hammering(DefaultApiModule.INSTANCE.crushedGranite, Blocks.RED_SAND, 1).offerTo(exporter, "hammering/rock/crushed_granite");
+        hammering(Blocks.NETHERRACK, DefaultApiModule.INSTANCE.crushedNetherrack, 1).offerTo(exporter, "hammering/rock/netherrack");
+        hammering(Blocks.NETHER_BRICKS, DefaultApiModule.INSTANCE.crushedNetherrack, 1).offerTo(exporter, "hammering/rock/nether_bricks");
+        hammering(Blocks.END_STONE, DefaultApiModule.INSTANCE.crushedEndstone, 1).offerTo(exporter, "hammering/rock/end_stone");
+        hammering(Blocks.END_STONE_BRICKS, DefaultApiModule.INSTANCE.crushedEndstone, 1).offerTo(exporter, "hammering/rock/end_stone_bricks");
 
-        hammering(Blocks.BLACKSTONE, ModBlocks.CRUSHED.get(id("crushed_blackstone")), 1).offerTo(exporter, "hammering/stone/blackstone");
+        hammering(Blocks.BLACKSTONE, DefaultApiModule.INSTANCE.crushedBlackstone, 1).offerTo(exporter, "hammering/stone/blackstone");
         hammering(Blocks.DEEPSLATE, Blocks.COBBLED_DEEPSLATE, 1).offerTo(exporter, "hammering/stone/deepslate");
-        hammering(Blocks.COBBLED_DEEPSLATE, ModBlocks.CRUSHED.get(id("crushed_deepslate")), 1).offerTo(exporter, "hammering/stone/cobbled_deepslate");
+        hammering(Blocks.COBBLED_DEEPSLATE, DefaultApiModule.INSTANCE.crushedDeepslate, 1).offerTo(exporter, "hammering/stone/cobbled_deepslate");
         hammering(Blocks.STONE, Blocks.COBBLESTONE, 1).offerTo(exporter, "hammering/stone/stone");
         hammering(Blocks.COBBLESTONE, Blocks.GRAVEL, 1).offerTo(exporter, "hammering/stone/cobblestone");
         hammering(Blocks.GRAVEL, Blocks.SAND, 1).offerTo(exporter, "hammering/stone/gravel");
-        hammering(Blocks.SAND, ModBlocks.CRUSHED.get(id("silt")), 1).offerTo(exporter, "hammering/stone/sand");
-        hammering(ModBlocks.CRUSHED.get(id("silt")), ModBlocks.CRUSHED.get(id("dust")), 1).offerTo(exporter, "hammering/stone/silt");
+        hammering(Blocks.SAND, DefaultApiModule.INSTANCE.silt, 1).offerTo(exporter, "hammering/stone/sand");
+        hammering(DefaultApiModule.INSTANCE.silt, DefaultApiModule.INSTANCE.dust, 1).offerTo(exporter, "hammering/stone/silt");
 
-        hammering(ModTags.Common.CONCRETE_POWDERS, ModBlocks.CRUSHED.get(id("silt")), 1).offerTo(exporter, "hammering/concrete_to_silt");
+        hammering(ModTags.Common.CONCRETE_POWDERS, DefaultApiModule.INSTANCE.silt, 1).offerTo(exporter, "hammering/concrete_to_silt");
         hammering(ConventionalBlockTags.GLASS_BLOCKS, Blocks.SAND, 1).offerTo(exporter, "hammering/glass_to_sand");
         hammering(BlockTags.WOOL, Items.STRING, 1, 1, 1, 1).offerTo(exporter, "hammering/wool_to_string");
     }

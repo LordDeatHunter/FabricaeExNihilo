@@ -6,15 +6,15 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.resource.conditions.v1.DefaultResourceConditions;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
+import wraith.fabricaeexnihilo.compatibility.DefaultApiModule;
 import wraith.fabricaeexnihilo.datagen.builder.recipe.SieveRecipeJsonBuilder;
-import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModItems;
-import wraith.fabricaeexnihilo.modules.sieves.MeshItem;
 
 import java.util.Map;
 import java.util.function.Consumer;
@@ -37,23 +37,23 @@ public class SieveRecipeProvider extends FabricRecipeProvider {
 
     private void offerMiscRecipes(Consumer<RecipeJsonProvider> exporter) {
         SieveRecipeJsonBuilder.of(Items.BLAZE_POWDER)
-                .from(ModBlocks.CRUSHED.get(id("dust")))
+                .from(DefaultApiModule.INSTANCE.dust)
                 .flintMesh(0.1).copperMesh(0.2).goldMesh(0.3, 0.05).emeraldMesh(0.4, 0.1)
                 .offerTo(exporter, "blaze_powder");
         SieveRecipeJsonBuilder.of(Items.BONE_MEAL)
-                .from(ModBlocks.CRUSHED.get(id("dust")))
+                .from(DefaultApiModule.INSTANCE.dust)
                 .stringMesh(0.2).flintMesh(0.3).copperMesh(0.4).goldMesh(0.4, 0.1).emeraldMesh(0.5, 0.25)
                 .offerTo(exporter, "bone_meal");
         SieveRecipeJsonBuilder.of(Items.GLOWSTONE_DUST)
-                .from(ModBlocks.CRUSHED.get(id("dust")))
+                .from(DefaultApiModule.INSTANCE.dust)
                 .flintMesh(0.04).copperMesh(0.06).goldMesh(0.05, 0.025, 0.025, 0.01).emeraldMesh(0.8, 0.03)
                 .offerTo(exporter, "glowstone_dust");
         SieveRecipeJsonBuilder.of(Items.GUNPOWDER)
-                .from(ModBlocks.CRUSHED.get(id("dust")))
+                .from(DefaultApiModule.INSTANCE.dust)
                 .stringMesh(0.1).flintMesh(0.2).copperMesh(0.3).goldMesh(0.3, 0.1).emeraldMesh(0.4, 0.2, 0.05)
                 .offerTo(exporter, "gunpowder");
         SieveRecipeJsonBuilder.of(Items.ENDER_PEARL)
-                .from(ModBlocks.CRUSHED.get(id("crushed_endstone")))
+                .from(DefaultApiModule.INSTANCE.crushedEndstone)
                 .copperMesh(0.005, 0.005).goldMesh(0.01, 0.005).emeraldMesh(0.015, 0.025)
                 .offerTo(exporter, "ender_pearl");
         SieveRecipeJsonBuilder.of(Items.GHAST_TEAR)
@@ -81,9 +81,9 @@ public class SieveRecipeProvider extends FabricRecipeProvider {
                 .offerTo(exporter, "stone/stone_pebble");
 
         SieveRecipeJsonBuilder.of(Items.PRISMARINE_CRYSTALS)
-                .from(ModBlocks.CRUSHED.get(id("crushed_prismarine")))
+                .from(DefaultApiModule.INSTANCE.crushedPrismarine)
                 .goldMesh(0.01).emeraldMesh(0.025)
-                .fromWaterlogged(Ingredient.ofItems(ModBlocks.CRUSHED.get(id("crushed_prismarine"))), "crushed_prismarine_in_water")
+                .fromWaterlogged(Ingredient.ofItems(DefaultApiModule.INSTANCE.crushedPrismarine), "crushed_prismarine_in_water")
                 .copperMesh(0.5, 0.01).goldMesh(0.66, 0.05).emeraldMesh(0.75, 0.1)
                 .offerTo(exporter, "stone/prismarine_crystals");
         SieveRecipeJsonBuilder.of(Items.PRISMARINE_SHARD)
@@ -92,7 +92,7 @@ public class SieveRecipeProvider extends FabricRecipeProvider {
                 .offerTo(exporter, "stone/prismarine_shard");
 
         SieveRecipeJsonBuilder.of(ModItems.PEBBLES.get(id("basalt_pebble")))
-                .from(ModBlocks.CRUSHED.get(id("crushed_netherrack")))
+                .from(DefaultApiModule.INSTANCE.crushedNetherrack)
                 .stringMesh(0.5, 0.25, 0.1).flintMesh(0.33, 0.33, 0.33, 0.33)
                 .offerTo(exporter, "stone/basalt_pebble");
         SieveRecipeJsonBuilder.of(ModItems.PEBBLES.get(id("blackstone_pebble")))
@@ -118,11 +118,11 @@ public class SieveRecipeProvider extends FabricRecipeProvider {
     }
 
     private void offerPlantRecipes(Consumer<RecipeJsonProvider> exporter) {
-        var plantRatesEmeraldPlus = Map.of(ModItems.MESHES.get(id("emerald_mesh")), new double[]{0.3, 0.3});
-        var plantRatesGoldPlus = ImmutableMap.<MeshItem, double[]>builder().putAll(plantRatesEmeraldPlus).put(ModItems.MESHES.get(id("gold_mesh")), new double[]{0.2}).build();
-        var plantRatesCopperPlus = ImmutableMap.<MeshItem, double[]>builder().putAll(plantRatesGoldPlus).put(ModItems.MESHES.get(id("copper_mesh")), new double[]{0.12}).build();
-        var plantRatesFlintPlus = ImmutableMap.<MeshItem, double[]>builder().putAll(plantRatesCopperPlus).put(ModItems.MESHES.get(id("flint_mesh")), new double[]{0.08}).build();
-        var plantRatesStringPlus = ImmutableMap.<MeshItem, double[]>builder().putAll(plantRatesFlintPlus).put(ModItems.MESHES.get(id("string_mesh")), new double[]{0.05}).build();
+        var plantRatesEmeraldPlus = Map.of(DefaultApiModule.INSTANCE.emeraldMesh, new double[]{0.3, 0.3});
+        var plantRatesGoldPlus = ImmutableMap.<Item, double[]>builder().putAll(plantRatesEmeraldPlus).put(DefaultApiModule.INSTANCE.goldMesh, new double[]{0.2}).build();
+        var plantRatesCopperPlus = ImmutableMap.<Item, double[]>builder().putAll(plantRatesGoldPlus).put(DefaultApiModule.INSTANCE.copperMesh, new double[]{0.12}).build();
+        var plantRatesFlintPlus = ImmutableMap.<Item, double[]>builder().putAll(plantRatesCopperPlus).put(DefaultApiModule.INSTANCE.flintMesh, new double[]{0.08}).build();
+        var plantRatesStringPlus = ImmutableMap.<Item, double[]>builder().putAll(plantRatesFlintPlus).put(DefaultApiModule.INSTANCE.stringMesh, new double[]{0.05}).build();
 
         // Misc Items
         SieveRecipeJsonBuilder.of(Items.APPLE)
@@ -138,7 +138,7 @@ public class SieveRecipeProvider extends FabricRecipeProvider {
                 .copperMesh(0.05).goldMesh(0.1).emeraldMesh(0.2)
                 .offerTo(exporter, "plant/brown_mushroom");
         SieveRecipeJsonBuilder.of(Items.LILY_PAD)
-                .fromWaterlogged(ModBlocks.CRUSHED.get(id("silt")))
+                .fromWaterlogged(DefaultApiModule.INSTANCE.silt)
                 .meshes(plantRatesFlintPlus)
                 .offerTo(exporter, "plant/lily_pad");
         SieveRecipeJsonBuilder.of(Items.RED_MUSHROOM)
@@ -151,44 +151,44 @@ public class SieveRecipeProvider extends FabricRecipeProvider {
                 .offerTo(exporter, "plant/silkworm");
 
         // Grass like seeds
-        SieveRecipeJsonBuilder.of(ModItems.SEEDS.get(id("crimson_seeds")))
+        SieveRecipeJsonBuilder.of(DefaultApiModule.INSTANCE.crimsonSeeds)
                 .from(Items.DIRT)
                 .meshes(plantRatesGoldPlus)
-                .offerTo(requireItem(exporter, ModItems.SEEDS.get(id("crimson_seeds"))), "plant/crimson_seeds");
-        SieveRecipeJsonBuilder.of(ModItems.SEEDS.get(id("warped_seeds")))
+                .offerTo(requireItem(exporter, DefaultApiModule.INSTANCE.crimsonSeeds), "plant/crimson_seeds");
+        SieveRecipeJsonBuilder.of(DefaultApiModule.INSTANCE.warpedSeeds)
                 .from(Items.DIRT)
                 .meshes(plantRatesGoldPlus)
-                .offerTo(requireItem(exporter, ModItems.SEEDS.get(id("warped_seeds"))), "plant/warped_seeds");
-        SieveRecipeJsonBuilder.of(ModItems.SEEDS.get(id("grass_seeds")))
+                .offerTo(requireItem(exporter, DefaultApiModule.INSTANCE.warpedSeeds), "plant/warped_seeds");
+        SieveRecipeJsonBuilder.of(DefaultApiModule.INSTANCE.grassSeeds)
                 .from(Items.DIRT)
                 .meshes(plantRatesStringPlus)
-                .offerTo(requireItem(exporter, ModItems.SEEDS.get(id("grass_seeds"))), "plant/grass_seeds");
-        SieveRecipeJsonBuilder.of(ModItems.SEEDS.get(id("mycelium_seeds")))
+                .offerTo(requireItem(exporter, DefaultApiModule.INSTANCE.grassSeeds), "plant/grass_seeds");
+        SieveRecipeJsonBuilder.of(DefaultApiModule.INSTANCE.myceliumSeeds)
                 .from(Items.DIRT)
                 .flintMesh(0.04).copperMesh(0.07).goldMesh(0.11).emeraldMesh(0.14)
-                .offerTo(requireItem(exporter, ModItems.SEEDS.get(id("mycelium_seeds"))), "plant/mycelium_seeds");
+                .offerTo(requireItem(exporter, DefaultApiModule.INSTANCE.myceliumSeeds), "plant/mycelium_seeds");
 
         // Misc FEN seeds
-        SieveRecipeJsonBuilder.of(ModItems.SEEDS.get(id("cactus_seeds")))
+        SieveRecipeJsonBuilder.of(DefaultApiModule.INSTANCE.cactusSeeds)
                 .from(Items.DIRT)
                 .meshes(plantRatesFlintPlus)
-                .offerTo(requireItem(exporter, ModItems.SEEDS.get(id("cactus_seeds"))), "plant/cactus_seeds");
-        SieveRecipeJsonBuilder.of(ModItems.SEEDS.get(id("chorus_seeds")))
-                .from(ModBlocks.CRUSHED.get(id("crushed_endstone")))
+                .offerTo(requireItem(exporter, DefaultApiModule.INSTANCE.cactusSeeds), "plant/cactus_seeds");
+        SieveRecipeJsonBuilder.of(DefaultApiModule.INSTANCE.chorusSeeds)
+                .from(DefaultApiModule.INSTANCE.crushedEndstone)
                 .copperMesh(0.05).goldMesh(0.1).emeraldMesh(0.2)
-                .offerTo(requireItem(exporter, ModItems.SEEDS.get(id("chorus_seeds"))), "plant/chorus_seeds");
-        SieveRecipeJsonBuilder.of(ModItems.SEEDS.get(id("kelp_seeds")))
+                .offerTo(requireItem(exporter, DefaultApiModule.INSTANCE.chorusSeeds), "plant/chorus_seeds");
+        SieveRecipeJsonBuilder.of(DefaultApiModule.INSTANCE.kelpSeeds)
                 .fromWaterlogged(Items.SAND)
                 .meshes(plantRatesCopperPlus)
-                .offerTo(requireItem(exporter, ModItems.SEEDS.get(id("kelp_seeds"))), "plant/kelp_seeds");
-        SieveRecipeJsonBuilder.of(ModItems.SEEDS.get(id("sea_pickle_seeds")))
+                .offerTo(requireItem(exporter, DefaultApiModule.INSTANCE.kelpSeeds), "plant/kelp_seeds");
+        SieveRecipeJsonBuilder.of(DefaultApiModule.INSTANCE.seaPickleSeeds)
                 .fromWaterlogged(Items.SAND)
                 .meshes(plantRatesCopperPlus)
-                .offerTo(requireItem(exporter, ModItems.SEEDS.get(id("sea_pickle_seeds"))), "plant/sea_pickle_seeds");
-        SieveRecipeJsonBuilder.of(ModItems.SEEDS.get(id("sugarcane_seeds")))
+                .offerTo(requireItem(exporter, DefaultApiModule.INSTANCE.seaPickleSeeds), "plant/sea_pickle_seeds");
+        SieveRecipeJsonBuilder.of(DefaultApiModule.INSTANCE.sugarcaneSeeds)
                 .fromWaterlogged(Items.SAND)
                 .meshes(plantRatesCopperPlus)
-                .offerTo(requireItem(exporter, ModItems.SEEDS.get(id("sugarcane_seeds"))), "plant/sugarcane_seeds");
+                .offerTo(requireItem(exporter, DefaultApiModule.INSTANCE.sugarcaneSeeds), "plant/sugarcane_seeds");
 
         // Vanilla seeds and similar
         SieveRecipeJsonBuilder.of(Items.GLOW_BERRIES)
@@ -233,22 +233,22 @@ public class SieveRecipeProvider extends FabricRecipeProvider {
                 .offerTo(exporter, "plant/pumpkin_seeds");
 
         // Two tall flower seeds
-        SieveRecipeJsonBuilder.of(ModItems.SEEDS.get(id("lilac_seeds")))
+        SieveRecipeJsonBuilder.of(DefaultApiModule.INSTANCE.lilacSeeds)
                 .from(Items.DIRT)
                 .meshes(plantRatesFlintPlus)
-                .offerTo(requireItem(exporter, ModItems.SEEDS.get(id("lilac_seeds"))), "plant/lilac_seeds");
-        SieveRecipeJsonBuilder.of(ModItems.SEEDS.get(id("peony_seeds")))
+                .offerTo(requireItem(exporter, DefaultApiModule.INSTANCE.lilacSeeds), "plant/lilac_seeds");
+        SieveRecipeJsonBuilder.of(DefaultApiModule.INSTANCE.peonySeeds)
                 .from(Items.DIRT)
                 .meshes(plantRatesFlintPlus)
-                .offerTo(requireItem(exporter, ModItems.SEEDS.get(id("peony_seeds"))), "plant/peony_seeds");
-        SieveRecipeJsonBuilder.of(ModItems.SEEDS.get(id("rose_bush_seeds")))
+                .offerTo(requireItem(exporter, DefaultApiModule.INSTANCE.peonySeeds), "plant/peony_seeds");
+        SieveRecipeJsonBuilder.of(DefaultApiModule.INSTANCE.roseBushSeeds)
                 .from(Items.DIRT)
                 .meshes(plantRatesFlintPlus)
-                .offerTo(requireItem(exporter, ModItems.SEEDS.get(id("rose_bush_seeds"))), "plant/rose_bush_seeds");
-        SieveRecipeJsonBuilder.of(ModItems.SEEDS.get(id("sunflower_seeds")))
+                .offerTo(requireItem(exporter, DefaultApiModule.INSTANCE.roseBushSeeds), "plant/rose_bush_seeds");
+        SieveRecipeJsonBuilder.of(DefaultApiModule.INSTANCE.sunflowerSeeds)
                 .from(Items.DIRT)
                 .meshes(plantRatesFlintPlus)
-                .offerTo(requireItem(exporter, ModItems.SEEDS.get(id("sunflower_seeds"))), "plant/sunflower_seeds");
+                .offerTo(requireItem(exporter, DefaultApiModule.INSTANCE.sunflowerSeeds), "plant/sunflower_seeds");
 
     }
 
@@ -299,7 +299,7 @@ public class SieveRecipeProvider extends FabricRecipeProvider {
 
     private void offerOreRecipes(Consumer<RecipeJsonProvider> exporter) {
         SieveRecipeJsonBuilder.of(Items.AMETHYST_SHARD)
-                .from(ModBlocks.CRUSHED.get(id("crushed_calcite")))
+                .from(DefaultApiModule.INSTANCE.crushedCalcite)
                 .flintMesh(0.1).ironMesh(0.25).diamondMesh(0.3, 0.1).netheriteMesh(0.4, 0.2)
                 .offerTo(exporter, "ore/amethyst");
         SieveRecipeJsonBuilder.of(Items.COAL)
@@ -308,7 +308,7 @@ public class SieveRecipeProvider extends FabricRecipeProvider {
                 .from(Items.SAND)
                 .ironMesh(0.05).diamondMesh(0.1).netheriteMesh(0.2)
                 .offerTo(exporter, "ore/coal");
-        SieveRecipeJsonBuilder.of(ModItems.ORE_PIECES.get(id("raw_copper_piece")))
+        SieveRecipeJsonBuilder.of(DefaultApiModule.INSTANCE.copperPiece)
                 .from(Items.GRAVEL)
                 .flintMesh(0.1).ironMesh(0.15).diamondMesh(0.25).netheriteMesh(0.32)
                 .from(Items.SAND)
@@ -326,14 +326,14 @@ public class SieveRecipeProvider extends FabricRecipeProvider {
                 .from(Items.GRAVEL)
                 .stringMesh(0.25).flintMesh(0.3)
                 .offerTo(exporter, "ore/flint");
-        SieveRecipeJsonBuilder.of(ModItems.ORE_PIECES.get(id("raw_gold_piece")))
-                .from(ModBlocks.CRUSHED.get(id("crushed_netherrack")))
+        SieveRecipeJsonBuilder.of(DefaultApiModule.INSTANCE.goldPiece)
+                .from(DefaultApiModule.INSTANCE.crushedNetherrack)
                 .ironMesh(0.1, 0.1).diamondMesh(0.2, 0.2).netheriteMesh(0.3, 0.3)
                 .from(Items.GRAVEL)
                 .ironMesh(0.05).diamondMesh(0.08).netheriteMesh(0.12)
                 .offerTo(exporter, "ore/gold");
-        SieveRecipeJsonBuilder.of(ModItems.ORE_PIECES.get(id("raw_iron_piece")))
-                .from(ModBlocks.CRUSHED.get(id("crushed_granite")))
+        SieveRecipeJsonBuilder.of(DefaultApiModule.INSTANCE.ironPiece)
+                .from(DefaultApiModule.INSTANCE.crushedGranite)
                 .flintMesh(0.1, 0.05).ironMesh(0.3, 0.15, 0.15).diamondMesh(0.5, 0.4, 0.3).netheriteMesh(1, 0.75)
                 .from(Items.GRAVEL)
                 .flintMesh(0.1, 0.05).ironMesh(0.25, 0.15, 0.1).diamondMesh(0.4, 0.4, 0.4).netheriteMesh(0.75, 0.66, 0.5)
@@ -345,11 +345,11 @@ public class SieveRecipeProvider extends FabricRecipeProvider {
         SieveRecipeJsonBuilder.of(Items.LAPIS_LAZULI)
                 .from(Items.GRAVEL)
                 .flintMesh(0.05)
-                .from(ModBlocks.CRUSHED.get(id("silt")))
+                .from(DefaultApiModule.INSTANCE.silt)
                 .flintMesh(0.05).ironMesh(0.075).diamondMesh(0.5, 0.5).netheriteMesh(0.5, 0.5, 0.5)
                 .offerTo(exporter, "ore/lapis_lazuli");
         SieveRecipeJsonBuilder.of(Items.NETHERITE_SCRAP)
-                .from(ModBlocks.CRUSHED.get(id("crushed_netherrack")))
+                .from(DefaultApiModule.INSTANCE.crushedNetherrack)
                 .ironMesh(0.008).diamondMesh(0.0012).netheriteMesh(0.016)
                 .offerTo(exporter, "ore/netherite");
         SieveRecipeJsonBuilder.of(Items.QUARTZ)
@@ -357,7 +357,7 @@ public class SieveRecipeProvider extends FabricRecipeProvider {
                 .flintMesh(1, 0.33).ironMesh(0.4, 0.4, 0.2, 0.1, 0.1).diamondMesh(1, 1, 0.8, 0.3).netheriteMesh(1, 1, 1, 0.5, 0.1)
                 .offerTo(exporter, "ore/quartz");
         SieveRecipeJsonBuilder.of(Items.REDSTONE)
-                .from(ModBlocks.CRUSHED.get(id("dust")))
+                .from(DefaultApiModule.INSTANCE.dust)
                 .flintMesh(0.15).ironMesh(0.15, 0.125).diamondMesh(0.25, 0.15, 0.1).netheriteMesh(0.4, 0.2, 0.1)
                 .offerTo(exporter, "ore/redstone");
     }

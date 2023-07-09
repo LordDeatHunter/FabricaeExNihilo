@@ -10,6 +10,7 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
+import wraith.fabricaeexnihilo.compatibility.*;
 import wraith.fabricaeexnihilo.modules.ModTags;
 
 import java.util.function.Consumer;
@@ -197,7 +198,7 @@ public class BaseRecipeProvider extends FabricRecipeProvider {
     }
 
     private static void offerMeshRecipes(Consumer<RecipeJsonProvider> exporter, Consumer<RecipeJsonProvider> mythicMetalsExporter) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, MESHES.get(id("string_mesh")))
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, DefaultApiModule.INSTANCE.stringMesh)
                 .input('#', Items.STRING)
                 .pattern("###")
                 .pattern("###")
@@ -205,16 +206,16 @@ public class BaseRecipeProvider extends FabricRecipeProvider {
                 .criterion("has_string", conditionsFromItem(Items.STRING))
                 .offerTo(exporter, id("mesh/string"));
 
-        createMeshRecipe(MESHES.get(id("string_mesh")), Items.FLINT, MESHES.get(id("flint_mesh"))).offerTo(exporter, id("mesh/flint"));
-        createMeshRecipe(MESHES.get(id("flint_mesh")), Items.IRON_INGOT, MESHES.get(id("iron_mesh"))).offerTo(exporter, id("mesh/iron"));
-        createMeshRecipe(MESHES.get(id("iron_mesh")), Items.DIAMOND, MESHES.get(id("diamond_mesh"))).offerTo(exporter, id("mesh/diamond"));
-        createMeshRecipe(MESHES.get(id("diamond_mesh")), getDummyItem(MM_ADAMANTITE_INGOT_ID), MESHES.get(id("adamantite_mesh"))).offerTo(mythicMetalsExporter, id("mesh/adamantite"));
-        createMeshRecipe(MESHES.get(id("flint_mesh")), Items.COPPER_INGOT, MESHES.get(id("copper_mesh"))).offerTo(exporter, id("mesh/copper"));
-        createMeshRecipe(MESHES.get(id("copper_mesh")), Items.GOLD_INGOT, MESHES.get(id("gold_mesh"))).offerTo(exporter, id("mesh/gold"));
-        createMeshRecipe(MESHES.get(id("gold_mesh")), Items.EMERALD, MESHES.get(id("emerald_mesh"))).offerTo(exporter, id("mesh/emerald"));
+        createMeshRecipe(DefaultApiModule.INSTANCE.stringMesh, Items.FLINT, DefaultApiModule.INSTANCE.flintMesh).offerTo(exporter, id("mesh/flint"));
+        createMeshRecipe(DefaultApiModule.INSTANCE.flintMesh, Items.IRON_INGOT, DefaultApiModule.INSTANCE.ironMesh).offerTo(exporter, id("mesh/iron"));
+        createMeshRecipe(DefaultApiModule.INSTANCE.ironMesh, Items.DIAMOND, DefaultApiModule.INSTANCE.diamondMesh).offerTo(exporter, id("mesh/diamond"));
+        createMeshRecipe(DefaultApiModule.INSTANCE.diamondMesh, getDummyItem(MM_ADAMANTITE_INGOT_ID), MythicMetalsApiModule.INSTANCE.adamantiteMesh).offerTo(mythicMetalsExporter, id("mesh/adamantite"));
+        createMeshRecipe(DefaultApiModule.INSTANCE.flintMesh, Items.COPPER_INGOT, DefaultApiModule.INSTANCE.copperMesh).offerTo(exporter, id("mesh/copper"));
+        createMeshRecipe(DefaultApiModule.INSTANCE.copperMesh, Items.GOLD_INGOT, DefaultApiModule.INSTANCE.goldMesh).offerTo(exporter, id("mesh/gold"));
+        createMeshRecipe(DefaultApiModule.INSTANCE.goldMesh, Items.EMERALD, DefaultApiModule.INSTANCE.emeraldMesh).offerTo(exporter, id("mesh/emerald"));
 
-        createNetheriteRecipe(MESHES.get(id("diamond_mesh")), MESHES.get(id("netherite_mesh")), RecipeCategory.MISC)
-                .criterion("has_previous", conditionsFromItem(MESHES.get(id("diamond_mesh"))))
+        createNetheriteRecipe(DefaultApiModule.INSTANCE.diamondMesh, DefaultApiModule.INSTANCE.netheriteMesh, RecipeCategory.MISC)
+                .criterion("has_previous", conditionsFromItem(DefaultApiModule.INSTANCE.diamondMesh))
                 .offerTo(exporter, id("mesh/netherite"));
     }
 
@@ -254,44 +255,44 @@ public class BaseRecipeProvider extends FabricRecipeProvider {
                                              Consumer<RecipeJsonProvider> indrevExporter,
                                              Consumer<RecipeJsonProvider> modernIndustrializationExporter,
                                              Consumer<RecipeJsonProvider> techRebornExporter) {
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_copper_piece")), Items.RAW_COPPER).offerTo(exporter, id("ore_piece/copper"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_gold_piece")), Items.RAW_GOLD).offerTo(exporter, id("ore_piece/gold"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_iron_piece")), Items.RAW_IRON).offerTo(exporter, id("ore_piece/iron"));
+        createOrePieceRecipe(DefaultApiModule.INSTANCE.copperPiece, Items.RAW_COPPER).offerTo(exporter, id("ore_piece/copper"));
+        createOrePieceRecipe(DefaultApiModule.INSTANCE.goldPiece, Items.RAW_GOLD).offerTo(exporter, id("ore_piece/gold"));
+        createOrePieceRecipe(DefaultApiModule.INSTANCE.ironPiece, Items.RAW_IRON).offerTo(exporter, id("ore_piece/iron"));
 
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_adamantite_piece")), getDummyItem(MM_RAW_ADAMANTITE_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/adamantite"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_aquarium_piece")), getDummyItem(MM_RAW_AQUARIUM_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/aquarium"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_banglum_piece")), getDummyItem(MM_RAW_BANGLUM_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/banglum"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_carmot_piece")), getDummyItem(MM_RAW_CARMOT_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/carmot"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_kyber_piece")), getDummyItem(MM_RAW_KYBER_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/kyber"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_manganese_piece")), getDummyItem(MM_RAW_MANGANESE_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/manganese"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_midas_gold_piece")), getDummyItem(MM_RAW_MIDAS_GOLD_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/midas_gold"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_mythril_piece")), getDummyItem(MM_RAW_MYTHRIL_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/mythril"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_orichalcum_piece")), getDummyItem(MM_RAW_ORICHALCUM_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/orichalcum"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_osmium_piece")), getDummyItem(MM_RAW_OSMIUM_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/osmium"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_palladium_piece")), getDummyItem(MM_RAW_PALLADIUM_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/palladium"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_platinum_piece")), getDummyItem(MM_RAW_PLATINUM_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/platinum"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_prometheum_piece")), getDummyItem(MM_RAW_PROMETHEUM_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/prometheum"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_quadrillum_piece")), getDummyItem(MM_RAW_QUADRILLUM_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/quadrillum"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_runite_piece")), getDummyItem(MM_RAW_RUNITE_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/runite"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_silver_piece")), getDummyItem(MM_RAW_SILVER_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/silver"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_stormyx_piece")), getDummyItem(MM_RAW_STORMYX_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/stormyx"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_tin_piece")), getDummyItem(MM_RAW_TIN_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/tin"));
+        createOrePieceRecipe(MythicMetalsApiModule.INSTANCE.adamantitePiece, getDummyItem(MM_RAW_ADAMANTITE_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/adamantite"));
+        createOrePieceRecipe(MythicMetalsApiModule.INSTANCE.aquariumPiece, getDummyItem(MM_RAW_AQUARIUM_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/aquarium"));
+        createOrePieceRecipe(MythicMetalsApiModule.INSTANCE.banglumPiece, getDummyItem(MM_RAW_BANGLUM_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/banglum"));
+        createOrePieceRecipe(MythicMetalsApiModule.INSTANCE.carmotPiece, getDummyItem(MM_RAW_CARMOT_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/carmot"));
+        createOrePieceRecipe(MythicMetalsApiModule.INSTANCE.kyberPiece, getDummyItem(MM_RAW_KYBER_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/kyber"));
+        createOrePieceRecipe(MythicMetalsApiModule.INSTANCE.manganesePiece, getDummyItem(MM_RAW_MANGANESE_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/manganese"));
+        createOrePieceRecipe(MythicMetalsApiModule.INSTANCE.midasGoldPiece, getDummyItem(MM_RAW_MIDAS_GOLD_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/midas_gold"));
+        createOrePieceRecipe(MythicMetalsApiModule.INSTANCE.mythrilPiece, getDummyItem(MM_RAW_MYTHRIL_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/mythril"));
+        createOrePieceRecipe(MythicMetalsApiModule.INSTANCE.orichalcumPiece, getDummyItem(MM_RAW_ORICHALCUM_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/orichalcum"));
+        createOrePieceRecipe(MythicMetalsApiModule.INSTANCE.osmiumPiece, getDummyItem(MM_RAW_OSMIUM_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/osmium"));
+        createOrePieceRecipe(MythicMetalsApiModule.INSTANCE.palladiumPiece, getDummyItem(MM_RAW_PALLADIUM_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/palladium"));
+        createOrePieceRecipe(MythicMetalsApiModule.INSTANCE.platinumPiece, getDummyItem(MM_RAW_PLATINUM_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/platinum"));
+        createOrePieceRecipe(MythicMetalsApiModule.INSTANCE.prometheumPiece, getDummyItem(MM_RAW_PROMETHEUM_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/prometheum"));
+        createOrePieceRecipe(MythicMetalsApiModule.INSTANCE.quadrillumPiece, getDummyItem(MM_RAW_QUADRILLUM_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/quadrillum"));
+        createOrePieceRecipe(MythicMetalsApiModule.INSTANCE.runitePiece, getDummyItem(MM_RAW_RUNITE_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/runite"));
+        createOrePieceRecipe(MythicMetalsApiModule.INSTANCE.silverPiece, getDummyItem(MM_RAW_SILVER_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/silver"));
+        createOrePieceRecipe(MythicMetalsApiModule.INSTANCE.stormyxPiece, getDummyItem(MM_RAW_STORMYX_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/stormyx"));
+        createOrePieceRecipe(MythicMetalsApiModule.INSTANCE.tinPiece, getDummyItem(MM_RAW_TIN_ID)).offerTo(mythicMetalsExporter, id("ore_piece/mythicmetals/tin"));
 
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_iridium_piece")), getDummyItem(TR_RAW_IRIDIUM_ID)).offerTo(techRebornExporter, id("ore_piece/techreborn/iridium"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_lead_piece")), getDummyItem(TR_RAW_LEAD_ID)).offerTo(techRebornExporter, id("ore_piece/techreborn/lead"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_silver_piece")), getDummyItem(TR_RAW_SILVER_ID)).offerTo(techRebornExporter, id("ore_piece/techreborn/silver"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_tin_piece")), getDummyItem(TR_RAW_TIN_ID)).offerTo(techRebornExporter, id("ore_piece/techreborn/tin"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_tungsten_piece")), getDummyItem(TR_RAW_TUNGSTEN_ID)).offerTo(techRebornExporter, id("ore_piece/techreborn/tungsten"));
+        createOrePieceRecipe(TechRebornApiModule.INSTANCE.iridiumPiece, getDummyItem(TR_RAW_IRIDIUM_ID)).offerTo(techRebornExporter, id("ore_piece/techreborn/iridium"));
+        createOrePieceRecipe(TechRebornApiModule.INSTANCE.leadPiece, getDummyItem(TR_RAW_LEAD_ID)).offerTo(techRebornExporter, id("ore_piece/techreborn/lead"));
+        createOrePieceRecipe(TechRebornApiModule.INSTANCE.silverPiece, getDummyItem(TR_RAW_SILVER_ID)).offerTo(techRebornExporter, id("ore_piece/techreborn/silver"));
+        createOrePieceRecipe(TechRebornApiModule.INSTANCE.tinPiece, getDummyItem(TR_RAW_TIN_ID)).offerTo(techRebornExporter, id("ore_piece/techreborn/tin"));
+        createOrePieceRecipe(TechRebornApiModule.INSTANCE.tungstenPiece, getDummyItem(TR_RAW_TUNGSTEN_ID)).offerTo(techRebornExporter, id("ore_piece/techreborn/tungsten"));
 
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_antimony_piece")), getDummyItem(MI_RAW_ANTIMONY_ID)).offerTo(modernIndustrializationExporter, id("ore_piece/modern_industrialization/antimony"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_lead_piece")), getDummyItem(MI_RAW_LEAD_ID)).offerTo(modernIndustrializationExporter, id("ore_piece/modern_industrialization/lead"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_nickel_piece")), getDummyItem(MI_RAW_NICKEL_ID)).offerTo(modernIndustrializationExporter, id("ore_piece/modern_industrialization/nickel"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_tin_piece")), getDummyItem(MI_RAW_TIN_ID)).offerTo(modernIndustrializationExporter, id("ore_piece/modern_industrialization/tin"));
+        createOrePieceRecipe(ModernIndustrializationApiModule.INSTANCE.antimonyPiece, getDummyItem(MI_RAW_ANTIMONY_ID)).offerTo(modernIndustrializationExporter, id("ore_piece/modern_industrialization/antimony"));
+        createOrePieceRecipe(ModernIndustrializationApiModule.INSTANCE.leadPiece, getDummyItem(MI_RAW_LEAD_ID)).offerTo(modernIndustrializationExporter, id("ore_piece/modern_industrialization/lead"));
+        createOrePieceRecipe(ModernIndustrializationApiModule.INSTANCE.nickelPiece, getDummyItem(MI_RAW_NICKEL_ID)).offerTo(modernIndustrializationExporter, id("ore_piece/modern_industrialization/nickel"));
+        createOrePieceRecipe(ModernIndustrializationApiModule.INSTANCE.tinPiece, getDummyItem(MI_RAW_TIN_ID)).offerTo(modernIndustrializationExporter, id("ore_piece/modern_industrialization/tin"));
 
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_lead_piece")), getDummyItem(IR_RAW_LEAD_ID)).offerTo(indrevExporter, id("ore_piece/indrev/lead"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_silver_piece")), getDummyItem(IR_RAW_SILVER_ID)).offerTo(indrevExporter, id("ore_piece/indrev/silver"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_tin_piece")), getDummyItem(IR_RAW_TIN_ID)).offerTo(indrevExporter, id("ore_piece/indrev/tin"));
-        createOrePieceRecipe(ORE_PIECES.get(id("raw_tungsten_piece")), getDummyItem(IR_RAW_TUNGSTEN_ID)).offerTo(indrevExporter, id("ore_piece/indrev/tungsten"));
+        createOrePieceRecipe(IndustrialRevolutionApiModule.INSTANCE.leadPiece, getDummyItem(IR_RAW_LEAD_ID)).offerTo(indrevExporter, id("ore_piece/indrev/lead"));
+        createOrePieceRecipe(IndustrialRevolutionApiModule.INSTANCE.silverPiece, getDummyItem(IR_RAW_SILVER_ID)).offerTo(indrevExporter, id("ore_piece/indrev/silver"));
+        createOrePieceRecipe(IndustrialRevolutionApiModule.INSTANCE.tinPiece, getDummyItem(IR_RAW_TIN_ID)).offerTo(indrevExporter, id("ore_piece/indrev/tin"));
+        createOrePieceRecipe(IndustrialRevolutionApiModule.INSTANCE.tungstenPiece, getDummyItem(IR_RAW_TUNGSTEN_ID)).offerTo(indrevExporter, id("ore_piece/indrev/tungsten"));
     }
 
     private static ShapelessRecipeJsonBuilder createOrePieceRecipe(Item piece, Item rawOre) {
@@ -329,7 +330,7 @@ public class BaseRecipeProvider extends FabricRecipeProvider {
                 .criterion("has_silkworm", conditionsFromItem(RAW_SILKWORM))
                 .offerTo(exporter, id("silkworm_cooked_from_campfire_cooking"));
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, BARRELS.get(id("stone_barrel")))
+        ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, DefaultApiModule.INSTANCE.stoneBarrel)
                 .group("fabricaeexnihilo:barrel")
                 .pattern("# #")
                 .pattern("# #")

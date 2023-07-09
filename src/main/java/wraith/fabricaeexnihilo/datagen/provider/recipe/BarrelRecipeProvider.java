@@ -16,9 +16,9 @@ import net.minecraft.item.Items;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
+import wraith.fabricaeexnihilo.compatibility.DefaultApiModule;
 import wraith.fabricaeexnihilo.datagen.builder.recipe.BarrelRecipeJsonBuilder;
 import wraith.fabricaeexnihilo.datagen.builder.recipe.MilkingRecipeJsonBuilder;
-import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModItems;
 import wraith.fabricaeexnihilo.modules.ModTags;
 import wraith.fabricaeexnihilo.modules.fluids.BrineFluid;
@@ -116,12 +116,12 @@ public class BarrelRecipeProvider extends FabricRecipeProvider {
         BarrelRecipeJsonBuilder.tickTriggered(0.01f)
                 .instant()
                 .consumeFluid(WitchWaterFluid.TAG, FluidConstants.BUCKET / 10)
-                .convertBlock(Blocks.GRAVEL, ModBlocks.CRUSHED.get(id("crushed_netherrack")))
+                .convertBlock(Blocks.GRAVEL, DefaultApiModule.INSTANCE.crushedNetherrack)
                 .offerTo(exporter, "leaking/crushed_netherrack");
         BarrelRecipeJsonBuilder.tickTriggered(0.01f)
                 .instant()
                 .consumeFluid(ModTags.Common.BLOOD, FluidConstants.BUCKET / 20)
-                .convertBlock(Blocks.GRAVEL, ModBlocks.CRUSHED.get(id("crushed_netherrack")))
+                .convertBlock(Blocks.GRAVEL, DefaultApiModule.INSTANCE.crushedNetherrack)
                 .offerTo(exporter, "leaking/crushed_netherrack_with_blood");
         BarrelRecipeJsonBuilder.tickTriggered(0.01f)
                 .instant()
@@ -198,7 +198,7 @@ public class BarrelRecipeProvider extends FabricRecipeProvider {
     }
 
     private void offerMiscAlchemyRecipes(Consumer<RecipeJsonProvider> exporter) {
-        BarrelRecipeJsonBuilder.itemTriggered(ModBlocks.CRUSHED.get(id("silt")), ModBlocks.CRUSHED.get(id("dust")))
+        BarrelRecipeJsonBuilder.itemTriggered(DefaultApiModule.INSTANCE.silt, DefaultApiModule.INSTANCE.dust)
                 .fluid(ModTags.TRUE_WATER)
                 .instant()
                 .storeItem(Items.CLAY)
@@ -254,12 +254,12 @@ public class BarrelRecipeProvider extends FabricRecipeProvider {
     }
 
     private void offerFluidRecipes(Consumer<RecipeJsonProvider> exporter) {
-        BarrelRecipeJsonBuilder.itemTriggered(ModItems.SEEDS.get(id("mycelium_seeds")))
+        BarrelRecipeJsonBuilder.itemTriggered(DefaultApiModule.INSTANCE.myceliumSeeds)
                 .fluid(ModTags.TRUE_WATER)
                 .instant()
                 .storeFluid(WitchWaterFluid.STILL)
                 .icon(WitchWaterFluid.BUCKET)
-                .offerTo(withConditions(exporter, DefaultResourceConditions.itemsRegistered(ModItems.SEEDS.get(id("mycelium_seeds")))), "witchwater_from_seed");
+                .offerTo(withConditions(exporter, DefaultResourceConditions.itemsRegistered(DefaultApiModule.INSTANCE.myceliumSeeds)), "witchwater_from_seed");
         BarrelRecipeJsonBuilder.itemTriggered(ModTags.Common.SALT)
                 .fluid(ModTags.TRUE_WATER)
                 .instant()

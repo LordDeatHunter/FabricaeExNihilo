@@ -3,37 +3,63 @@ package wraith.fabricaeexnihilo.compatibility;
 import net.fabricmc.fabric.api.resource.conditions.v1.ConditionJsonProvider;
 import net.fabricmc.fabric.api.resource.conditions.v1.DefaultResourceConditions;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.api.FENApiModule;
 import wraith.fabricaeexnihilo.api.FENRegistries;
 import wraith.fabricaeexnihilo.util.Color;
 
 public class MythicMetalsApiModule implements FENApiModule {
+    public static final MythicMetalsApiModule INSTANCE = new MythicMetalsApiModule();
+    public Item adamantitePiece;
+    public Item aquariumPiece;
+    public Item banglumPiece;
+    public Item carmotPiece;
+    public Item kyberPiece;
+    public Item manganesePiece;
+    public Item midasGoldPiece;
+    public Item mythrilPiece;
+    public Item orichalcumPiece;
+    public Item osmiumPiece;
+    public Item palladiumPiece;
+    public Item platinumPiece;
+    public Item prometheumPiece;
+    public Item quadrillumPiece;
+    public Item runitePiece;
+    public Item silverPiece;
+    public Item stormyxPiece;
+    public Item tinPiece;
+    public Block crushedBlackstone;
+    public Block crushedDeepslate;
+    public Item adamantiteMesh;
+
+
     @Override
     public void onInit(FENRegistries registries) {
-        registries.registerOrePiece("adamantite", registries.defaultItemSettings());
-        registries.registerOrePiece("aquarium", registries.defaultItemSettings());
-        registries.registerOrePiece("banglum", registries.defaultItemSettings());
-        registries.registerOrePiece("carmot", registries.defaultItemSettings());
-        registries.registerOrePiece("kyber", registries.defaultItemSettings());
-        registries.registerOrePiece("manganese", registries.defaultItemSettings());
-        registries.registerOrePiece("midas_gold", registries.defaultItemSettings());
-        registries.registerOrePiece("mythril", registries.defaultItemSettings());
-        registries.registerOrePiece("orichalcum", registries.defaultItemSettings());
-        registries.registerOrePiece("osmium", registries.defaultItemSettings());
-        registries.registerOrePiece("palladium", registries.defaultItemSettings());
-        registries.registerOrePiece("platinum", registries.defaultItemSettings());
-        registries.registerOrePiece("prometheum", registries.defaultItemSettings());
-        registries.registerOrePiece("quadrillum", registries.defaultItemSettings());
-        registries.registerOrePiece("runite", registries.defaultItemSettings());
-        registries.registerOrePiece("silver", registries.defaultItemSettings());
-        registries.registerOrePiece("stormyx", registries.defaultItemSettings());
-        registries.registerOrePiece("tin", registries.defaultItemSettings());
+        adamantitePiece = registries.registerOrePiece("adamantite", registries.defaultItemSettings());
+        aquariumPiece = registries.registerOrePiece("aquarium", registries.defaultItemSettings());
+        banglumPiece = registries.registerOrePiece("banglum", registries.defaultItemSettings());
+        carmotPiece = registries.registerOrePiece("carmot", registries.defaultItemSettings());
+        kyberPiece = registries.registerOrePiece("kyber", registries.defaultItemSettings());
+        manganesePiece = registries.registerOrePiece("manganese", registries.defaultItemSettings());
+        midasGoldPiece = registries.registerOrePiece("midas_gold", registries.defaultItemSettings());
+        mythrilPiece = registries.registerOrePiece("mythril", registries.defaultItemSettings());
+        orichalcumPiece = registries.registerOrePiece("orichalcum", registries.defaultItemSettings());
+        osmiumPiece = registries.registerOrePiece("osmium", registries.defaultItemSettings());
+        palladiumPiece = registries.registerOrePiece("palladium", registries.defaultItemSettings());
+        platinumPiece = registries.registerOrePiece("platinum", registries.defaultItemSettings());
+        prometheumPiece = registries.registerOrePiece("prometheum", registries.defaultItemSettings());
+        quadrillumPiece = registries.registerOrePiece("quadrillum", registries.defaultItemSettings());
+        runitePiece = registries.registerOrePiece("runite", registries.defaultItemSettings());
+        silverPiece = registries.registerOrePiece("silver", registries.defaultItemSettings());
+        stormyxPiece = registries.registerOrePiece("stormyx", registries.defaultItemSettings());
+        tinPiece = registries.registerOrePiece("tin", registries.defaultItemSettings());
 
-        registries.registerCrushedBlock("crushed_blackstone", registries.gravelyBlockSettings());
-        registries.registerCrushedBlock("crushed_deepslate", registries.gravelyBlockSettings());
+        crushedBlackstone = registries.registerCrushedBlock("crushed_blackstone", registries.gravelyBlockSettings());
+        crushedDeepslate = registries.registerCrushedBlock("crushed_deepslate", registries.gravelyBlockSettings());
 
-        registries.registerMesh("adamantite", Color.DARK_RED, 20, registries.defaultItemSettings());
+        adamantiteMesh = registries.registerMesh("adamantite", Color.DARK_RED, 20, registries.defaultItemSettings());
     }
 
     @Override

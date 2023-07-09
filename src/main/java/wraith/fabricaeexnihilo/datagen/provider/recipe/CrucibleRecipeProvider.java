@@ -7,15 +7,13 @@ import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.item.Items;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
+import wraith.fabricaeexnihilo.compatibility.DefaultApiModule;
 import wraith.fabricaeexnihilo.datagen.builder.recipe.CrucibleHeatRecipeJsonBuilder;
 import wraith.fabricaeexnihilo.datagen.builder.recipe.CrucibleRecipeJsonBuilder;
-import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModTags;
 import wraith.fabricaeexnihilo.recipe.util.BlockIngredient;
 
 import java.util.function.Consumer;
-
-import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public class CrucibleRecipeProvider extends FabricRecipeProvider {
     public CrucibleRecipeProvider(FabricDataOutput output) {
@@ -40,17 +38,17 @@ public class CrucibleRecipeProvider extends FabricRecipeProvider {
         CrucibleRecipeJsonBuilder.lava(Items.ANDESITE, 20250).offerTo(exporter, "lava_from_andesite");
         CrucibleRecipeJsonBuilder.lava(Items.DIORITE, 20250).offerTo(exporter, "lava_from_diorite");
         CrucibleRecipeJsonBuilder.lava(Items.GRANITE, 20250).offerTo(exporter, "lava_from_granite");
-        CrucibleRecipeJsonBuilder.lava(ModBlocks.CRUSHED.get(id("crushed_netherrack")), 10125).offerTo(exporter, "lava_from_crushed_netherrack");
-        CrucibleRecipeJsonBuilder.lava(ModBlocks.CRUSHED.get(id("crushed_endstone")), 10125).offerTo(exporter, "lava_from_crushed_endstone");
-        CrucibleRecipeJsonBuilder.lava(ModBlocks.CRUSHED.get(id("crushed_andesite")), 10125).offerTo(exporter, "lava_from_crushed_andesite");
-        CrucibleRecipeJsonBuilder.lava(ModBlocks.CRUSHED.get(id("crushed_diorite")), 10125).offerTo(exporter, "lava_from_crushed_diorite");
-        CrucibleRecipeJsonBuilder.lava(ModBlocks.CRUSHED.get(id("crushed_granite")), 10125).offerTo(exporter, "lava_from_crushed_granite");
+        CrucibleRecipeJsonBuilder.lava(DefaultApiModule.INSTANCE.crushedNetherrack, 10125).offerTo(exporter, "lava_from_crushed_netherrack");
+        CrucibleRecipeJsonBuilder.lava(DefaultApiModule.INSTANCE.crushedEndstone, 10125).offerTo(exporter, "lava_from_crushed_endstone");
+        CrucibleRecipeJsonBuilder.lava(DefaultApiModule.INSTANCE.crushedAndesite, 10125).offerTo(exporter, "lava_from_crushed_andesite");
+        CrucibleRecipeJsonBuilder.lava(DefaultApiModule.INSTANCE.crushedDiorite, 10125).offerTo(exporter, "lava_from_crushed_diorite");
+        CrucibleRecipeJsonBuilder.lava(DefaultApiModule.INSTANCE.crushedGranite, 10125).offerTo(exporter, "lava_from_crushed_granite");
 
         CrucibleRecipeJsonBuilder.lava(Items.STONE, 20250).offerTo(exporter, "lava_from_stone");
         CrucibleRecipeJsonBuilder.lava(Items.COBBLESTONE, 20250).offerTo(exporter, "lava_from_cobblestone");
         CrucibleRecipeJsonBuilder.lava(Items.GRAVEL, 10125).offerTo(exporter, "lava_from_gravel");
         CrucibleRecipeJsonBuilder.lava(Items.SAND, 6750).offerTo(exporter, "lava_from_sand");
-        CrucibleRecipeJsonBuilder.lava(ModBlocks.CRUSHED.get(id("dust")), 3375).offerTo(exporter, "lava_from_dust");
+        CrucibleRecipeJsonBuilder.lava(DefaultApiModule.INSTANCE.dust, 3375).offerTo(exporter, "lava_from_dust");
 
         CrucibleRecipeJsonBuilder.water(ItemTags.SMALL_FLOWERS, 8100).offerTo(exporter, "water_from_flowers");
         CrucibleRecipeJsonBuilder.water(ItemTags.LEAVES, 20250).offerTo(exporter, "water_from_leaves");

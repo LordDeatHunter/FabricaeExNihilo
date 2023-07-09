@@ -10,10 +10,9 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import wraith.fabricaeexnihilo.FabricaeExNihilo;
+import wraith.fabricaeexnihilo.compatibility.DefaultApiModule;
 import wraith.fabricaeexnihilo.compatibility.rei.GlyphWidget;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
-import wraith.fabricaeexnihilo.modules.ModBlocks;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,7 @@ public class BarrelCategory implements DisplayCategory<BarrelDisplay> {
 
     @Override
     public Renderer getIcon() {
-        return EntryStacks.of(ModBlocks.BARRELS.get(FabricaeExNihilo.id("oak_barrel")));
+        return EntryStacks.of(DefaultApiModule.INSTANCE.oakBlocks.barrel());
     }
 
     @Override
