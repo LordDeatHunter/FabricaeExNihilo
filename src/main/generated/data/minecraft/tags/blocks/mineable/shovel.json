@@ -1,0 +1,50 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "fabricaeexnihilo:dust",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:silt",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:crushed_calcite",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:crushed_andesite",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:crushed_diorite",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:crushed_granite",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:crushed_prismarine",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:crushed_endstone",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:crushed_netherrack",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:crushed_deepslate",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:crushed_blackstone",
+      "required": false
+    },
+    "#fabricaeexnihilo:infested_leaves"
+  ]
+}

@@ -2,19 +2,11 @@
   "replace": false,
   "values": [
     {
-      "id": "fabricaeexnihilo:infested_birch_leaves",
-      "required": false
-    },
-    {
       "id": "fabricaeexnihilo:infested_oak_leaves",
       "required": false
     },
     {
-      "id": "fabricaeexnihilo:infested_rubber_leaves",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:infested_dark_oak_leaves",
+      "id": "fabricaeexnihilo:infested_birch_leaves",
       "required": false
     },
     {
@@ -22,7 +14,11 @@
       "required": false
     },
     {
-      "id": "fabricaeexnihilo:infested_mangrove_leaves",
+      "id": "fabricaeexnihilo:infested_acacia_leaves",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:infested_dark_oak_leaves",
       "required": false
     },
     {
@@ -30,11 +26,15 @@
       "required": false
     },
     {
+      "id": "fabricaeexnihilo:infested_mangrove_leaves",
+      "required": false
+    },
+    {
       "id": "fabricaeexnihilo:infested_cherry_leaves",
       "required": false
     },
     {
-      "id": "fabricaeexnihilo:infested_acacia_leaves",
+      "id": "fabricaeexnihilo:infested_rubber_leaves",
       "required": false
     }
   ]

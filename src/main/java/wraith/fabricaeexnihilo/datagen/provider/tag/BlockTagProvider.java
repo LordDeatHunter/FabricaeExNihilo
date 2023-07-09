@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBlockTags;
 import net.minecraft.block.Blocks;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
+import wraith.fabricaeexnihilo.compatibility.DefaultApiModule;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModTags;
 import wraith.fabricaeexnihilo.util.ItemUtils;
@@ -20,13 +21,6 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup arg) {
-        // Generate dummies to avoid datagen errors (minecraft/fapi specify at runtime)
-        getOrCreateTagBuilder(ConventionalBlockTags.GLASS_BLOCKS);
-        getOrCreateTagBuilder(BlockTags.LEAVES);
-        getOrCreateTagBuilder(BlockTags.WOOL);
-        getOrCreateTagBuilder(BlockTags.CORAL_PLANTS);
-        getOrCreateTagBuilder(BlockTags.CORAL_BLOCKS);
-
         getOrCreateTagBuilder(ModTags.Common.CONCRETE_POWDERS)
                 .add(Blocks.WHITE_CONCRETE_POWDER, Blocks.ORANGE_CONCRETE_POWDER, Blocks.MAGENTA_CONCRETE_POWDER,
                         Blocks.LIGHT_BLUE_CONCRETE_POWDER, Blocks.YELLOW_CONCRETE_POWDER, Blocks.LIME_CONCRETE_POWDER,
@@ -46,18 +40,41 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         ModBlocks.INFESTED_LEAVES.keySet().forEach(getOrCreateTagBuilder(ModTags.INFESTED_LEAVES)::addOptional);
 
         getOrCreateTagBuilder(ModTags.CROOKABLES)
-                .addTag(BlockTags.LEAVES)
+                .forceAddTag(BlockTags.LEAVES)
                 .addTag(ModTags.INFESTED_LEAVES);
         getOrCreateTagBuilder(ModTags.HAMMERABLES)
-                .addTag(ConventionalBlockTags.GLASS_BLOCKS)
+                .forceAddTag(ConventionalBlockTags.GLASS_BLOCKS)
                 .addTag(ModTags.Common.CONCRETES)
                 .addTag(ModTags.Common.CONCRETE_POWDERS)
-                .addTag(BlockTags.WOOL)
-                .addTag(BlockTags.CORAL_PLANTS)
-                .addTag(BlockTags.CORAL_BLOCKS)
+                .forceAddTag(BlockTags.WOOL)
+                .forceAddTag(BlockTags.CORAL_PLANTS)
+                .forceAddTag(BlockTags.CORAL_BLOCKS)
                 .add(Blocks.STONE, Blocks.COBBLESTONE, Blocks.GRAVEL, Blocks.SAND, ItemUtils.getExNihiloBlock("silt"))
                 .add(Blocks.ANDESITE, Blocks.GRANITE, Blocks.DIORITE, Blocks.CALCITE, Blocks.PRISMARINE)
                 .add(Blocks.END_STONE, Blocks.END_STONE_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHERRACK)
                 .add(ItemUtils.getExNihiloBlock("crushed_granite"));
+
+        var pickaxeMineableTag = getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE);
+        var axeMineableTag = getOrCreateTagBuilder(BlockTags.AXE_MINEABLE);
+        var shovelMineableTag = getOrCreateTagBuilder(BlockTags.SHOVEL_MINEABLE);
+        var hoeMineableTag = getOrCreateTagBuilder(BlockTags.SHOVEL_MINEABLE);
+        ModBlocks.BARRELS.forEach((id, barrel) -> {
+            if (barrel == DefaultApiModule.INSTANCE.stoneBarrel) {
+                pickaxeMineableTag.add(barrel);
+            } else {
+                axeMineableTag.addOptional(id);
+            }
+        });
+        ModBlocks.CRUCIBLES.forEach((id, crucible) -> {
+            if (crucible == DefaultApiModule.INSTANCE.porcelainCrucible) {
+                pickaxeMineableTag.add(crucible);
+            } else {
+                axeMineableTag.addOptional(id);
+            }
+        });
+        ModBlocks.SIEVES.forEach((id, crucible) -> axeMineableTag.addOptional(id));
+        ModBlocks.STRAINERS.forEach((id, crucible) -> axeMineableTag.addOptional(id));
+        ModBlocks.CRUSHED.forEach((id, crucible) -> shovelMineableTag.addOptional(id));
+        hoeMineableTag.addTag(ModTags.INFESTED_LEAVES);
     }
 }

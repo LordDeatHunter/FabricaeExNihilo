@@ -1,0 +1,197 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "fabricaeexnihilo:oak_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:birch_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:spruce_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:acacia_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:dark_oak_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:jungle_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:warped_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:crimson_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:mangrove_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:cherry_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:bamboo_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:rubber_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:oak_crucible",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:birch_crucible",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:spruce_crucible",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:acacia_crucible",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:dark_oak_crucible",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:jungle_crucible",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:warped_crucible",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:crimson_crucible",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:mangrove_crucible",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:cherry_crucible",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:bamboo_crucible",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:rubber_crucible",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:oak_sieve",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:birch_sieve",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:spruce_sieve",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:acacia_sieve",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:dark_oak_sieve",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:jungle_sieve",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:warped_sieve",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:crimson_sieve",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:mangrove_sieve",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:cherry_sieve",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:bamboo_sieve",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:rubber_sieve",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:oak_strainer",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:birch_strainer",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:spruce_strainer",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:acacia_strainer",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:dark_oak_strainer",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:jungle_strainer",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:warped_strainer",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:crimson_strainer",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:mangrove_strainer",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:cherry_strainer",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:bamboo_strainer",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:rubber_strainer",
+      "required": false
+    }
+  ]
+}

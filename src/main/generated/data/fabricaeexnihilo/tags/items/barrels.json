@@ -2,19 +2,11 @@
   "replace": false,
   "values": [
     {
-      "id": "fabricaeexnihilo:rubber_barrel",
+      "id": "fabricaeexnihilo:oak_barrel",
       "required": false
     },
     {
-      "id": "fabricaeexnihilo:dark_oak_barrel",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:stone_barrel",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:bamboo_barrel",
+      "id": "fabricaeexnihilo:birch_barrel",
       "required": false
     },
     {
@@ -22,7 +14,11 @@
       "required": false
     },
     {
-      "id": "fabricaeexnihilo:warped_barrel",
+      "id": "fabricaeexnihilo:acacia_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:dark_oak_barrel",
       "required": false
     },
     {
@@ -30,11 +26,7 @@
       "required": false
     },
     {
-      "id": "fabricaeexnihilo:oak_barrel",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:acacia_barrel",
+      "id": "fabricaeexnihilo:warped_barrel",
       "required": false
     },
     {
@@ -42,15 +34,23 @@
       "required": false
     },
     {
-      "id": "fabricaeexnihilo:cherry_barrel",
-      "required": false
-    },
-    {
       "id": "fabricaeexnihilo:mangrove_barrel",
       "required": false
     },
     {
-      "id": "fabricaeexnihilo:birch_barrel",
+      "id": "fabricaeexnihilo:cherry_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:bamboo_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:stone_barrel",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:rubber_barrel",
       "required": false
     }
   ]

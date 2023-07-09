@@ -5,12 +5,33 @@
     "minecraft:pumpkin_seeds",
     "minecraft:melon_seeds",
     "minecraft:beetroot_seeds",
-    "fabricaeexnihilo:sea_pickle_seeds",
-    "fabricaeexnihilo:grass_seeds",
-    "fabricaeexnihilo:mycelium_seeds",
-    "fabricaeexnihilo:chorus_seeds",
-    "fabricaeexnihilo:cactus_seeds",
-    "fabricaeexnihilo:sugarcane_seeds",
-    "fabricaeexnihilo:kelp_seeds"
+    {
+      "id": "fabricaeexnihilo:sea_pickle_seeds",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:grass_seeds",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:mycelium_seeds",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:chorus_seeds",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:cactus_seeds",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:sugarcane_seeds",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:kelp_seeds",
+      "required": false
+    }
   ]
 }
