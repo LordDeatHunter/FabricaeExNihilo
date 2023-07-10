@@ -145,6 +145,10 @@ public class SieveRecipeProvider extends FabricRecipeProvider {
                 .from(Items.DIRT)
                 .copperMesh(0.05).goldMesh(0.1).emeraldMesh(0.2)
                 .offerTo(exporter, "plant/red_mushroom");
+        SieveRecipeJsonBuilder.of(Items.PINK_PETALS)
+                .from(Items.CHERRY_LEAVES)
+                .meshes(plantRatesStringPlus)
+                .offerTo(exporter, "plant/pink_petals");
         SieveRecipeJsonBuilder.of(ModItems.RAW_SILKWORM)
                 .from(Ingredient.fromTag(ItemTags.LEAVES), "leaves")
                 .meshes(plantRatesStringPlus)
