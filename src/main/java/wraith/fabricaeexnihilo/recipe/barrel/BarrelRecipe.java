@@ -155,8 +155,8 @@ public final class BarrelRecipe extends BaseRecipe<BarrelRecipe.Context> {
         public void write(PacketByteBuf buf, BarrelRecipe recipe) {
             recipe.trigger.toPacket(buf);
             buf.writeVarInt(recipe.duration);
-            buf.writeCollection(recipe.actions, (buf1, action) -> action.writePacket(buf1));
-            buf.writeCollection(recipe.conditions, (buf1, condition) -> condition.writePacket(buf1));
+            buf.writeCollection(recipe.actions, (buf1, action) -> action.toPacket(buf1));
+            buf.writeCollection(recipe.conditions, (buf1, condition) -> condition.toPacket(buf1));
             buf.writeRegistryValue(Registries.ITEM, recipe.icon);
         }
     }
