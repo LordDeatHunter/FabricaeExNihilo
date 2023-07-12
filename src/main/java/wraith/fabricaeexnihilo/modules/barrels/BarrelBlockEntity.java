@@ -198,6 +198,11 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
         if (world == null || world.isClient) return;
 
         if (getRecipe() != null) {
+            if (!getRecipe().canContinue(world, this)) {
+                recipe = null;
+                recipeProgress = 0;
+            }
+
             var duration = getRecipe().getDuration();
             recipeProgress += 1f / duration * getEfficiencyMultiplier();
             if (recipeProgress >= 1) {
