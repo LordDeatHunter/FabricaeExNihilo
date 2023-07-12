@@ -116,16 +116,11 @@ public class SieveCategory implements DisplayCategory<SieveDisplay> {
                 if (index < outputs.size()) {
                     var output = outputs.get(index);
                     List<Tooltip.Entry> tooltips = new ArrayList<>();
-                    var chances = display.outputs.get(output);
-                    for (var chance : chances) {
-                        if (chance <= 0) continue;
-                        tooltips.add(Tooltip.entry(Text.literal(chance * 100 + "%").formatted(Formatting.GRAY)));
-                    }
+                    var chance = display.outputs.get(output);
+                    tooltips.add(Tooltip.entry(Text.literal(chance * 100 + "%").formatted(Formatting.GRAY)));
 
-                    if (!tooltips.isEmpty()) {
-                        applyTooltip(output, tooltips);
-                        slot.entries(output);
-                    }
+                    applyTooltip(output, tooltips);
+                    slot.entries(output);
                 }
                 widgets.add(slot);
             }

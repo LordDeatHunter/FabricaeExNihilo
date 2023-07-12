@@ -25,8 +25,7 @@ public class EmiSieveRecipe extends BasicEmiRecipe {
         if (key.waterlogged()) catalysts.add(EmiStack.of(Fluids.WATER));
         this.key = key;
 
-        outputs.outputs().forEach((stack, chances) ->
-                this.outputs.add(EmiStack.of(stack).setChance((float) chances.stream().mapToDouble(Double::doubleValue).sum())));
+        outputs.outputs().forEach((stack, chance) -> this.outputs.add(EmiStack.of(stack).setChance((float)(double)chance)));
     }
 
     @Override

@@ -17,7 +17,7 @@ public class SieveDisplay implements Display {
     public final boolean waterlogged;
     public final EntryIngredient input;
     public final EntryIngredient mesh;
-    public final Map<EntryIngredient, List<Double>> outputs;
+    public final Map<EntryIngredient, Double> outputs;
 
     public SieveDisplay(SieveRecipeKey key, SieveRecipeOutputs outputs) {
         this.waterlogged = key.waterlogged();

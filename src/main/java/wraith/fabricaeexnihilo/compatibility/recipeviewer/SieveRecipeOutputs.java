@@ -1,7 +1,6 @@
 package wraith.fabricaeexnihilo.compatibility.recipeviewer;
 
 import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ImmutableMultimap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.recipe.SieveRecipe;
@@ -9,14 +8,19 @@ import wraith.fabricaeexnihilo.recipe.SieveRecipe;
 import java.util.ArrayList;
 import java.util.List;
 
-public record SieveRecipeOutputs(HashMultimap<ItemStack, List<Double>> outputs) {
+public record SieveRecipeOutputs(HashMultimap<ItemStack, Double> outputs) {
     public static SieveRecipeOutputs of(SieveRecipe recipe, Identifier mesh) {
-        return new SieveRecipeOutputs(HashMultimap.create(ImmutableMultimap.of(recipe.getResult(), recipe.getRolls().get(mesh))));
+        var map = HashMultimap.<ItemStack, Double>create();
+        for (var chance : recipe.getRolls().get(mesh)) {
+            map.put(recipe.getResult(), chance);
+        }
+
+        return new SieveRecipeOutputs(map);
     }
 
     public List<SieveRecipeOutputs> split(int targetSize) {
         var results = new ArrayList<SieveRecipeOutputs>();
-        var outputs = HashMultimap.<ItemStack, List<Double>>create();
+        var outputs = HashMultimap.<ItemStack, Double>create();
 
         int currentSize = 0;
         for (var entry : this.outputs.entries()) {
