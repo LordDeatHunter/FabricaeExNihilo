@@ -5,10 +5,13 @@ import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.minecraft.fluid.Fluids;
+import wraith.fabricaeexnihilo.compatibility.recipeviewer.SieveRecipeKey;
+import wraith.fabricaeexnihilo.compatibility.recipeviewer.SieveRecipeOutputs;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class SieveDisplay implements Display {
     public final boolean waterlogged;
@@ -18,9 +21,13 @@ public class SieveDisplay implements Display {
 
     public SieveDisplay(SieveRecipeKey key, SieveRecipeOutputs outputs) {
         this.waterlogged = key.waterlogged();
-        this.input = key.input();
-        this.mesh = key.mesh();
-        this.outputs = outputs.outputs();
+        this.input = EntryIngredients.ofIngredient(key.input());
+        this.mesh = EntryIngredients.of(key.mesh());
+        this.outputs = outputs.outputs()
+                .entries()
+                .stream()
+                .map(entry -> Map.entry(EntryIngredients.of(entry.getKey()), entry.getValue()))
+                .collect(Collectors.toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     @Override

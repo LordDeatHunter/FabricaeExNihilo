@@ -10,16 +10,12 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.RotationAxis;
-import org.joml.Quaternionf;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
+import wraith.fabricaeexnihilo.compatibility.recipeviewer.EntityRenderer;
 import wraith.fabricaeexnihilo.compatibility.rei.GlyphWidget;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
 import wraith.fabricaeexnihilo.modules.witchwater.WitchWaterFluid;
@@ -38,61 +34,6 @@ public class WitchWaterEntityCategory implements DisplayCategory<WitchWaterEntit
     public static final int ARROW_OUT_V = 16 * 4;
     public static final int HEIGHT = 3 * 18 + 6 * 4;
     public static final int WIDTH = 8 * 18 + 6 * 2;
-
-    // Entity rendering voodoo
-    // https://github.com/theorbtwo/RoughlyEnoughResources/blob/1f1c028fa20ebdd34df044e6f160e53cc8a1acf7/common/src/main/java/uk/me/desert_island/rer/rei_stuff/EntityLootCategory.java#L50
-    private void createEntityWidget(DrawContext context, int mouseX, int mouseY, Entity entity, Rectangle bounds) {
-        float f = (float) Math.atan((bounds.getCenterX() - mouseX) / 40.0F);
-        float g = (float) Math.atan((bounds.getCenterY() - mouseY) / 40.0F);
-        float size = 32;
-        if (Math.max(entity.getWidth(), entity.getHeight()) > 1.0) {
-            size /= Math.max(entity.getWidth(), entity.getHeight());
-        }
-
-        var matrices = context.getMatrices();
-        matrices.push();
-        matrices.translate(bounds.getCenterX(), bounds.getCenterY() + 20, 1050.0);
-        matrices.scale(1, 1, -1);
-        matrices.translate(0.0D, 0.0D, 1000.0D);
-        matrices.scale(size, size, size);
-        Quaternionf quaternion = RotationAxis.POSITIVE_Z.rotationDegrees(180.0F);
-        Quaternionf quaternion2 = RotationAxis.POSITIVE_X.rotationDegrees(g * 20.0F);
-        quaternion.dot(quaternion2);
-        matrices.multiply(quaternion);
-        float i = entity.getYaw();
-        float j = entity.getPitch();
-        float h = 0, k = 0, l = 0;
-        entity.setYaw(180.0F + f * 40.0F);
-        entity.setPitch(-g * 20.0F);
-
-        if (entity instanceof LivingEntity living) {
-            h = living.bodyYaw;
-            k = living.prevHeadYaw;
-            l = living.headYaw;
-            living.bodyYaw = 180.0F + f * 20.0F;
-            living.headYaw = entity.getYaw();
-            living.prevHeadYaw = entity.getYaw();
-        }
-
-        EntityRenderDispatcher entityRenderDispatcher = MinecraftClient.getInstance().getEntityRenderDispatcher();
-        quaternion2.conjugate();
-        entityRenderDispatcher.setRotation(quaternion2);
-        entityRenderDispatcher.setRenderShadows(false);
-        VertexConsumerProvider.Immediate immediate = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
-        entityRenderDispatcher.render(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, matrices, immediate, 15728880);
-        immediate.draw();
-        entityRenderDispatcher.setRenderShadows(true);
-        entity.setYaw(i);
-        entity.setPitch(j);
-
-        if (entity instanceof LivingEntity living) {
-            living.bodyYaw = h;
-            living.prevHeadYaw = k;
-            living.headYaw = l;
-        }
-
-        matrices.pop();
-    }
 
     @Override
     public CategoryIdentifier<? extends WitchWaterEntityDisplay> getCategoryIdentifier() {
@@ -136,16 +77,17 @@ public class WitchWaterEntityCategory implements DisplayCategory<WitchWaterEntit
         widgets.add(new GlyphWidget(bounds, bounds.getMinX() + 60, bounds.getMinY() + 20, 16, 16, ARROW, ARROW_IN_U, ARROW_IN_V));
         widgets.add(new GlyphWidget(bounds, bounds.getMinX() + 80, bounds.getMinY() + 20, 16, 16, ARROW, ARROW_OUT_U, ARROW_OUT_V));
         widgets.add(Widgets.createSlot(new Point(bounds.getMinX() + 70, bounds.getMinY() + 42)).entries(EntryIngredients.of(WitchWaterFluid.BUCKET)));
-        List<Text> lines = new ArrayList<>();
-        lines.add(target.getDisplayName());
+
+        var targetTooltip = new ArrayList<>(List.of(target.getDisplayName()));
         var nbt = display.nbt.toString();
         if (!nbt.equals("{}")) {
-            lines.add(Text.of("Nbt required: " + nbt));
+            targetTooltip.add(Text.translatable("emi.category.fabricaeexnihilo.witch_water_entity.nbt_required").formatted(Formatting.GRAY));
+            targetTooltip.add(Text.literal("  ").append(Text.literal(nbt).formatted(Formatting.YELLOW)));
         }
-        widgets.add(Widgets.createTooltip(targetBounds, lines));
+        widgets.add(Widgets.createTooltip(targetBounds, targetTooltip));
         widgets.add(Widgets.createTooltip(resultBounds, result.getDisplayName()));
-        widgets.add(Widgets.createDrawableWidget((helper, mouseX, mouseY, delta) -> createEntityWidget(helper, mouseX, mouseY, target, targetBounds)));
-        widgets.add(Widgets.createDrawableWidget((helper, mouseX, mouseY, delta) -> createEntityWidget(helper, mouseX, mouseY, result, resultBounds)));
+        widgets.add(Widgets.createDrawableWidget((helper, mouseX, mouseY, delta) -> EntityRenderer.drawEntity(helper, mouseX, mouseY, target, targetBounds.getMinX(), targetBounds.getMinY(), targetBounds.getMaxX(), targetBounds.getMaxY(), 32)));
+        widgets.add(Widgets.createDrawableWidget((helper, mouseX, mouseY, delta) -> EntityRenderer.drawEntity(helper, mouseX, mouseY, result, resultBounds.getMinX(), resultBounds.getMinY(), resultBounds.getMaxX(), resultBounds.getMaxY(), 32)));
 
         return widgets;
     }

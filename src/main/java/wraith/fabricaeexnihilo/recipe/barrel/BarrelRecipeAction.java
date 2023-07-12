@@ -255,6 +255,7 @@ public sealed interface BarrelRecipeAction {
             var radius = FabricaeExNihilo.CONFIG.modules.barrels.leaking.radius;
 
             var positions = BlockPos.stream(pos.add(-radius, 0, -radius), pos.add(radius, -2, radius))
+                    .map(BlockPos::toImmutable)
                     .filter(candidate -> filter.test(world.getBlockState(candidate)))
                     .toList();
             var chosen = positions.get(world.random.nextInt(positions.size()));

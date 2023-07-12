@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "fabricaeexnihilo:sieve",
+  "key": {
+    "#": {
+      "item": "minecraft:mangrove_log"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "#S#",
+    "SSS",
+    "#S#"
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:mangrove_strainer"
+  },
+  "show_notification": true
+}

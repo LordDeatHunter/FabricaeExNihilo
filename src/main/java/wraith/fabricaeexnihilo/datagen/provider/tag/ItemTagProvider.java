@@ -27,6 +27,8 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
         ModTools.CROOKS.keySet().forEach(getOrCreateTagBuilder(ModTags.CROOKS)::addOptional);
         ModTools.HAMMERS.keySet().forEach(getOrCreateTagBuilder(ModTags.HAMMERS)::addOptional);
         ModBlocks.BARRELS.keySet().forEach(getOrCreateTagBuilder(ModTags.BARRELS)::addOptional);
+        ModBlocks.CRUCIBLES.keySet().forEach(getOrCreateTagBuilder(ModTags.CRUCIBLES)::addOptional);
+        ModBlocks.SIEVES.keySet().forEach(getOrCreateTagBuilder(ModTags.SIEVES)::addOptional);
 
         getOrCreateTagBuilder(ModTags.Common.VEGETABLES)
                 .add(Items.POTATO, Items.CARROT, Items.BEETROOT);

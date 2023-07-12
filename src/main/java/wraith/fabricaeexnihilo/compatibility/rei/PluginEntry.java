@@ -7,6 +7,7 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
+import wraith.fabricaeexnihilo.compatibility.recipeviewer.SieveRecipeCombiner;
 import wraith.fabricaeexnihilo.compatibility.rei.barrel.BarrelCategory;
 import wraith.fabricaeexnihilo.compatibility.rei.barrel.BarrelDisplay;
 import wraith.fabricaeexnihilo.compatibility.rei.barrel.MilkingCategory;
@@ -17,8 +18,6 @@ import wraith.fabricaeexnihilo.compatibility.rei.crucible.CrucibleHeatCategory;
 import wraith.fabricaeexnihilo.compatibility.rei.crucible.CrucibleHeatDisplay;
 import wraith.fabricaeexnihilo.compatibility.rei.sieve.SieveCategory;
 import wraith.fabricaeexnihilo.compatibility.rei.sieve.SieveDisplay;
-import wraith.fabricaeexnihilo.compatibility.rei.sieve.SieveRecipeKey;
-import wraith.fabricaeexnihilo.compatibility.rei.sieve.SieveRecipeOutputs;
 import wraith.fabricaeexnihilo.compatibility.rei.tools.ToolCategory;
 import wraith.fabricaeexnihilo.compatibility.rei.tools.ToolDisplay;
 import wraith.fabricaeexnihilo.compatibility.rei.witchwater.WitchWaterEntityCategory;
@@ -39,9 +38,8 @@ import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterWorldRecipe;
 import wraith.fabricaeexnihilo.util.ItemUtils;
 import wraith.fabricaeexnihilo.util.Lazy;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
@@ -117,9 +115,12 @@ public class PluginEntry implements REIClientPlugin {
                 CrucibleRecipe::requiresFireproofCrucible,
                 recipe -> new CrucibleDisplay(recipe, FIREPROOF_CRUCIBLE)
         );
-        registry.registerRecipeFiller(CrucibleRecipe.class, ModRecipes.CRUCIBLE, recipe -> new CrucibleDisplay(recipe, WOOD_CRUCIBLE));
+        registry.registerRecipeFiller(CrucibleRecipe.class,
+                type -> Objects.equals(ModRecipes.CRUCIBLE, type),
+                Predicate.not(CrucibleRecipe::requiresFireproofCrucible),
+                recipe -> new CrucibleDisplay(recipe, WOOD_CRUCIBLE));
         registry.registerRecipeFiller(CrucibleHeatRecipe.class, ModRecipes.CRUCIBLE_HEAT, CrucibleHeatDisplay::new);
-        registerSieveDisplays(registry);
+        SieveRecipeCombiner.combineRecipes(registry.getRecipeManager(), SieveCategory.MAX_OUTPUTS, (key, outputs) -> registry.add(new SieveDisplay(key, outputs)));
         registry.registerRecipeFiller(BarrelRecipe.class, ModRecipes.BARREL, BarrelDisplay::new);
         registry.registerRecipeFiller(MilkingRecipe.class, ModRecipes.MILKING, MilkingDisplay::new);
         registry.registerRecipeFiller(WitchWaterEntityRecipe.class, ModRecipes.WITCH_WATER_ENTITY, WitchWaterEntityDisplay::new);
@@ -127,22 +128,4 @@ public class PluginEntry implements REIClientPlugin {
         registry.registerRecipeFiller(WitchWaterWorldRecipe.class, ModRecipes.WITCH_WATER_WORLD, WitchWaterWorldDisplay::new);
     }
 
-    private static void registerSieveDisplays(DisplayRegistry registry) {
-        var sieveRecipes = registry.getRecipeManager().listAllOfType(ModRecipes.SIEVE);
-        var map = new HashMap<SieveRecipeKey, SieveRecipeOutputs>();
-        for (var recipe : sieveRecipes) {
-            for (var key : SieveRecipeKey.getKeys(recipe)) {
-                var outputs = SieveRecipeOutputs.of(recipe, key.meshKey());
-                map.computeIfAbsent(key, __ -> new SieveRecipeOutputs(new HashMap<>()))
-                        .outputs()
-                        .putAll(outputs.outputs());
-            }
-        }
-
-        map.entrySet()
-                .stream()
-                .flatMap(entry -> entry.getValue().split(SieveCategory.MAX_OUTPUTS).stream().map(outputs -> Map.entry(entry.getKey(), outputs)))
-                .map(entry -> new SieveDisplay(entry.getKey(), entry.getValue()))
-                .forEachOrdered(registry::add);
-    }
 }

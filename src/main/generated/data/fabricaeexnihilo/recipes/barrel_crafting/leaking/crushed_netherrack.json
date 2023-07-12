@@ -17,6 +17,6 @@
   "icon": "fabricaeexnihilo:crushed_netherrack",
   "trigger": {
     "type": "tick",
-    "chance": 0.01
+    "chance": 0.1
   }
 }

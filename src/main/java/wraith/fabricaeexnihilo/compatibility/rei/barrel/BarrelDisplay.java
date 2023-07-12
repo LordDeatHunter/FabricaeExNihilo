@@ -78,8 +78,10 @@ public class BarrelDisplay implements Display {
         } else if (action instanceof BarrelRecipeAction.StoreItem storeItem) {
             outputs.add(EntryIngredients.of(storeItem.stack()));
         } else if (action instanceof BarrelRecipeAction.StoreFluid storeFluid) {
+            if (storeFluid.fluid().isBlank()) return;
             outputs.add(EntryIngredients.of(FluidStackHooksFabric.fromFabric(storeFluid.fluid(), storeFluid.amount())));
         } else if (action instanceof BarrelRecipeAction.ConsumeFluid consumeFluid) {
+            if (consumeFluid.fluid().isEmpty()) return;
             inputFluid = ReiIngredientUtil.of(consumeFluid.fluid()).map(entryStack -> ClientEntryStacks.setFluidRenderRatio(EntryStacks.of(entryStack.<FluidStack>cast().getValue().copyWithAmount(consumeFluid.amount())), (float) consumeFluid.amount() / FluidConstants.BUCKET));
         } else if (action instanceof BarrelRecipeAction.ConvertBlock convertBlock) {
             nearby = ReiIngredientUtil.of(convertBlock.filter());

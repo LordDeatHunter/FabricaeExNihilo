@@ -20,6 +20,6 @@
   "icon": "minecraft:mycelium",
   "trigger": {
     "type": "tick",
-    "chance": 0.01
+    "chance": 0.1
   }
 }

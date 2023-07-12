@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "fabricaeexnihilo:crucible",
+  "key": {
+    "#": {
+      "item": "minecraft:mangrove_log"
+    },
+    "I": {
+      "item": "minecraft:stick"
+    },
+    "S": {
+      "item": "minecraft:mangrove_slab"
+    }
+  },
+  "pattern": [
+    "# #",
+    "#S#",
+    "I I"
+  ],
+  "result": {
+    "item": "fabricaeexnihilo:mangrove_crucible"
+  },
+  "show_notification": true
+}

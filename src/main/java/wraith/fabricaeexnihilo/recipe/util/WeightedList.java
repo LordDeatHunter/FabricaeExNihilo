@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.function.Function;
 
 public class WeightedList {
-
     public static final Codec<WeightedList> CODEC = Codec.unboundedMap(Registries.BLOCK.getCodec(), Codec.INT)
             .xmap(WeightedList::new, WeightedList::getValues);
 
@@ -40,6 +39,10 @@ public class WeightedList {
 
     private void setTotalWeight() {
         this.totalWeight = this.values.values().stream().mapToInt(Integer::intValue).sum();
+    }
+
+    public int getTotalWeight() {
+        return totalWeight;
     }
 
     public Block choose(Random random) {

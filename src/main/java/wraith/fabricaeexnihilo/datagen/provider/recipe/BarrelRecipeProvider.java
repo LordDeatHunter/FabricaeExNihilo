@@ -113,47 +113,48 @@ public class BarrelRecipeProvider extends FabricRecipeProvider {
     }
 
     private void offerLeakingRecipes(Consumer<RecipeJsonProvider> exporter) {
-        BarrelRecipeJsonBuilder.tickTriggered(0.01f)
+        float chance = 0.1f;
+        BarrelRecipeJsonBuilder.tickTriggered(chance)
                 .instant()
                 .consumeFluid(WitchWaterFluid.TAG, FluidConstants.BUCKET / 10)
                 .convertBlock(Blocks.GRAVEL, DefaultApiModule.INSTANCE.crushedNetherrack)
                 .offerTo(exporter, "leaking/crushed_netherrack");
-        BarrelRecipeJsonBuilder.tickTriggered(0.01f)
+        BarrelRecipeJsonBuilder.tickTriggered(chance)
                 .instant()
                 .consumeFluid(ModTags.Common.BLOOD, FluidConstants.BUCKET / 20)
                 .convertBlock(Blocks.GRAVEL, DefaultApiModule.INSTANCE.crushedNetherrack)
                 .offerTo(exporter, "leaking/crushed_netherrack_with_blood");
-        BarrelRecipeJsonBuilder.tickTriggered(0.01f)
+        BarrelRecipeJsonBuilder.tickTriggered(chance)
                 .instant()
                 .consumeFluid(Fluids.WATER, FluidConstants.BUCKET / 10)
                 .convertBlock(Blocks.COBBLESTONE, Blocks.MOSSY_COBBLESTONE)
                 .offerTo(exporter, "leaking/mossy_cobblestone");
-        BarrelRecipeJsonBuilder.tickTriggered(0.01f)
+        BarrelRecipeJsonBuilder.tickTriggered(chance)
                 .instant()
                 .consumeFluid(Fluids.WATER, FluidConstants.BUCKET / 10)
                 .convertBlock(Blocks.STONE_BRICKS, Blocks.MOSSY_STONE_BRICKS)
                 .offerTo(exporter, "leaking/mossy_stone_bricks");
-        BarrelRecipeJsonBuilder.tickTriggered(0.01f)
+        BarrelRecipeJsonBuilder.tickTriggered(chance)
                 .instant()
                 .consumeFluid(WitchWaterFluid.TAG, FluidConstants.BUCKET / 2)
                 .convertBlock(BlockIngredient.tag(BlockTags.SMALL_FLOWERS), Blocks.BROWN_MUSHROOM.getDefaultState())
                 .offerTo(exporter, "leaking/mushroom");
-        BarrelRecipeJsonBuilder.tickTriggered(0.01f)
+        BarrelRecipeJsonBuilder.tickTriggered(chance)
                 .instant()
                 .consumeFluid(WitchWaterFluid.TAG, FluidConstants.BUCKET / 2)
                 .convertBlock(Blocks.PODZOL, Blocks.MYCELIUM)
                 .offerTo(exporter, "leaking/mycelium");
-        BarrelRecipeJsonBuilder.tickTriggered(0.01f)
+        BarrelRecipeJsonBuilder.tickTriggered(chance)
                 .instant()
                 .consumeFluid(ModTags.Common.BLOOD, FluidConstants.BUCKET / 10)
                 .convertBlock(Blocks.COBBLESTONE, Blocks.NETHERRACK)
                 .offerTo(exporter, "leaking/netherrack");
-        BarrelRecipeJsonBuilder.tickTriggered(0.01f)
+        BarrelRecipeJsonBuilder.tickTriggered(chance)
                 .instant()
                 .consumeFluid(WitchWaterFluid.TAG, FluidConstants.BUCKET / 2)
                 .convertBlock(Blocks.SAND, Blocks.SOUL_SAND)
                 .offerTo(exporter, "leaking/soul_sand");
-        BarrelRecipeJsonBuilder.tickTriggered(0.01f)
+        BarrelRecipeJsonBuilder.tickTriggered(chance)
                 .instant()
                 .consumeFluid(WitchWaterFluid.TAG, FluidConstants.BUCKET / 2)
                 .convertBlock(Blocks.COARSE_DIRT, Blocks.SOUL_SOIL)
