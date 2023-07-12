@@ -15,6 +15,7 @@ import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
+import wraith.fabricaeexnihilo.compatibility.rei.ReiIngredientUtil;
 import wraith.fabricaeexnihilo.recipe.barrel.BarrelRecipe;
 import wraith.fabricaeexnihilo.recipe.barrel.BarrelRecipeAction;
 import wraith.fabricaeexnihilo.recipe.barrel.BarrelRecipeCondition;
@@ -56,13 +57,13 @@ public class BarrelDisplay implements Display {
 
     private void processCondition(BarrelRecipeCondition condition) {
         if (condition instanceof BarrelRecipeCondition.BlockAbove blockAbove) {
-            above = blockAbove.block().asReiIngredient();
+            above = ReiIngredientUtil.of(blockAbove.block());
         } else if (condition instanceof BarrelRecipeCondition.FluidAbove fluidAbove) {
-            above = fluidAbove.fluid().asReiIngredient();
+            above = ReiIngredientUtil.of(fluidAbove.fluid());
         } else if (condition instanceof BarrelRecipeCondition.BlockBelow blockBelow) {
-            below = blockBelow.block().asReiIngredient();
+            below = ReiIngredientUtil.of(blockBelow.block());
         } else if (condition instanceof BarrelRecipeCondition.FluidIn fluidIn) {
-            inputFluid = fluidIn.fluid().asReiIngredient();
+            inputFluid = ReiIngredientUtil.of(fluidIn.fluid());
         } else {
             FabricaeExNihilo.LOGGER.warn("Unsupported barrel recipe condition in REI code: " + condition);
         }
@@ -79,9 +80,9 @@ public class BarrelDisplay implements Display {
         } else if (action instanceof BarrelRecipeAction.StoreFluid storeFluid) {
             outputs.add(EntryIngredients.of(FluidStackHooksFabric.fromFabric(storeFluid.fluid(), storeFluid.amount())));
         } else if (action instanceof BarrelRecipeAction.ConsumeFluid consumeFluid) {
-            inputFluid = consumeFluid.fluid().asReiIngredient().map(entryStack -> ClientEntryStacks.setFluidRenderRatio(EntryStacks.of(entryStack.<FluidStack>cast().getValue().copyWithAmount(consumeFluid.amount())), (float) consumeFluid.amount() / FluidConstants.BUCKET));
+            inputFluid = ReiIngredientUtil.of(consumeFluid.fluid()).map(entryStack -> ClientEntryStacks.setFluidRenderRatio(EntryStacks.of(entryStack.<FluidStack>cast().getValue().copyWithAmount(consumeFluid.amount())), (float) consumeFluid.amount() / FluidConstants.BUCKET));
         } else if (action instanceof BarrelRecipeAction.ConvertBlock convertBlock) {
-            nearby = convertBlock.filter().asReiIngredient();
+            nearby = ReiIngredientUtil.of(convertBlock.filter());
             conversionOutput = EntryIngredients.of(convertBlock.result().getBlock());
         } else if (action instanceof BarrelRecipeAction.DropItem dropItem) {
             outputs.add(EntryIngredients.of(dropItem.stack()));

@@ -3,18 +3,11 @@ package wraith.fabricaeexnihilo.util;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.JsonOps;
-import me.shedaniel.rei.api.common.entry.EntryIngredient;
-import me.shedaniel.rei.api.common.entry.EntryStack;
-import me.shedaniel.rei.api.common.util.EntryStacks;
-import net.minecraft.item.ItemConvertible;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.registry.*;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.entry.RegistryEntryList;
-
-import java.util.function.Function;
 
 public class RegistryEntryLists {
     private static final DynamicRegistryManager STATIC_DRM = DynamicRegistryManager.of(Registries.REGISTRIES);
@@ -40,14 +33,6 @@ public class RegistryEntryLists {
         var wrapper = new NbtCompound();
         wrapper.put("value", nbt);
         buf.writeNbt(wrapper);
-    }
-
-    public static <T> EntryIngredient asReiIngredient(RegistryEntryList<T> list, Function<T, EntryStack<?>> transformer) {
-        return EntryIngredient.of(list.stream().map(RegistryEntry::value).map(transformer).toList());
-    }
-
-    public static EntryIngredient asReiIngredient(RegistryEntryList<? extends ItemConvertible> list) {
-        return EntryIngredient.of(list.stream().map(RegistryEntry::value).map(EntryStacks::of).toList());
     }
 
     private static <O> RegistryOps<O> getRegistryOps(DynamicOps<O> ops) {

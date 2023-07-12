@@ -6,6 +6,8 @@ import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
+import wraith.fabricaeexnihilo.compatibility.rei.ReiIngredientUtil;
+import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
 import wraith.fabricaeexnihilo.recipe.witchwater.WitchWaterWorldRecipe;
 
 import java.util.List;
@@ -17,7 +19,8 @@ public class WitchWaterWorldDisplay implements Display {
     private final Identifier id;
 
     public WitchWaterWorldDisplay(WitchWaterWorldRecipe recipe) {
-        this.input = recipe.getTarget().asReiIngredient();
+        FluidIngredient fluidIngredient = recipe.getTarget();
+        this.input = ReiIngredientUtil.of(fluidIngredient);
         this.outputs = recipe.getResult().flatten(EntryIngredients::of);
         this.id = recipe.getId();
     }

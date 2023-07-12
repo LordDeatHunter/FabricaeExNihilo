@@ -5,7 +5,9 @@ import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.minecraft.util.Identifier;
+import wraith.fabricaeexnihilo.compatibility.rei.ReiIngredientUtil;
 import wraith.fabricaeexnihilo.recipe.ToolRecipe;
+import wraith.fabricaeexnihilo.recipe.util.BlockIngredient;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +21,8 @@ public class ToolDisplay implements Display {
 
     public ToolDisplay(ToolRecipe recipe, CategoryIdentifier<ToolDisplay> category) {
         this.category = category;
-        this.block = recipe.getBlock().asReiIngredient();
+        BlockIngredient blockIngredient = recipe.getBlock();
+        this.block = ReiIngredientUtil.of(blockIngredient);
         this.result = EntryIngredients.of(recipe.getResult().stack());
         this.id = recipe.getId();
     }

@@ -1,12 +1,14 @@
 package wraith.fabricaeexnihilo.recipe.crucible;
 
 import com.google.gson.JsonObject;
-import me.shedaniel.rei.api.common.entry.EntryStack;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.world.World;
@@ -17,6 +19,7 @@ import wraith.fabricaeexnihilo.recipe.RecipeContext;
 import wraith.fabricaeexnihilo.recipe.util.BlockIngredient;
 
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.Context> {
     private final BlockIngredient block;
@@ -52,11 +55,15 @@ public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.Context> {
 
     @Override
     public ItemStack getDisplayStack() {
-        return block.asReiIngredient().stream()
-                .map(EntryStack::cheatsAs)
-                .map(EntryStack::getValue)
+        return block.getValue().map(ItemStack::new, tag -> Registries.BLOCK
+                .getEntryList(tag)
+                .stream()
+                .flatMap(RegistryEntryList::stream)
+                .map(RegistryEntry::value)
+                .map(ItemStack::new)
+                .filter(Predicate.not(ItemStack::isEmpty))
                 .findFirst()
-                .orElse(ItemStack.EMPTY);
+                .orElse(ItemStack.EMPTY));
     }
 
     public BlockIngredient getBlock() {

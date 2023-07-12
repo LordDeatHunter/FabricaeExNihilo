@@ -3,9 +3,7 @@ package wraith.fabricaeexnihilo.recipe.util;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import me.shedaniel.rei.api.common.entry.EntryIngredient;
-import me.shedaniel.rei.api.common.util.EntryIngredients;
-import me.shedaniel.rei.api.common.util.EntryStacks;
+import com.mojang.datafixers.util.Either;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.network.PacketByteBuf;
@@ -82,7 +80,7 @@ public sealed abstract class BlockIngredient implements Predicate<BlockState> {
 
     public abstract JsonElement toJson();
 
-    public abstract EntryIngredient asReiIngredient();
+    public abstract Either<Block, TagKey<Block>> getValue();
 
     private static final class Single extends BlockIngredient {
         private final Block block;
@@ -116,8 +114,8 @@ public sealed abstract class BlockIngredient implements Predicate<BlockState> {
         }
 
         @Override
-        public EntryIngredient asReiIngredient() {
-            return EntryIngredients.of(block.asItem());
+        public Either<Block, TagKey<Block>> getValue() {
+            return Either.left(block);
         }
     }
 
@@ -153,8 +151,8 @@ public sealed abstract class BlockIngredient implements Predicate<BlockState> {
         }
 
         @Override
-        public EntryIngredient asReiIngredient() {
-            return EntryIngredients.ofTag(tag, block -> EntryStacks.of(block.value().asItem(), 1));
+        public Either<Block, TagKey<Block>> getValue() {
+            return Either.right(tag);
         }
     }
 }

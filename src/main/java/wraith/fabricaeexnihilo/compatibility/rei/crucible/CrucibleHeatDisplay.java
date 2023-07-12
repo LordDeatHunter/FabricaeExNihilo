@@ -5,7 +5,9 @@ import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
+import wraith.fabricaeexnihilo.compatibility.rei.ReiIngredientUtil;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleHeatRecipe;
+import wraith.fabricaeexnihilo.recipe.util.BlockIngredient;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +18,8 @@ public class CrucibleHeatDisplay implements Display {
     private final Identifier id;
 
     public CrucibleHeatDisplay(CrucibleHeatRecipe recipe) {
-        this.source = recipe.getBlock().asReiIngredient();
+        BlockIngredient blockIngredient = recipe.getBlock();
+        this.source = ReiIngredientUtil.of(blockIngredient);
         this.heat = recipe.getHeat();
         this.id = recipe.getId();
     }

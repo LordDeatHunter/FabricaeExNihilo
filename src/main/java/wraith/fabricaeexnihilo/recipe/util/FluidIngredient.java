@@ -2,8 +2,7 @@ package wraith.fabricaeexnihilo.recipe.util;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
-import me.shedaniel.rei.api.common.entry.EntryIngredient;
-import me.shedaniel.rei.api.common.util.EntryIngredients;
+import com.mojang.datafixers.util.Either;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.network.PacketByteBuf;
@@ -42,11 +41,11 @@ public sealed abstract class FluidIngredient implements Predicate<Fluid> {
         return new Tag(tag);
     }
 
+    public abstract Either<Fluid, TagKey<Fluid>> getValue();
+
     public abstract void toPacket(PacketByteBuf buf);
 
     public abstract JsonElement toJson();
-
-    public abstract EntryIngredient asReiIngredient();
 
     public abstract boolean isEmpty();
 
@@ -63,6 +62,11 @@ public sealed abstract class FluidIngredient implements Predicate<Fluid> {
         }
 
         @Override
+        public Either<Fluid, TagKey<Fluid>> getValue() {
+            return Either.left(fluid);
+        }
+
+        @Override
         public void toPacket(PacketByteBuf buf) {
             buf.writeByte(0);
             buf.writeRegistryValue(Registries.FLUID, fluid);
@@ -71,11 +75,6 @@ public sealed abstract class FluidIngredient implements Predicate<Fluid> {
         @Override
         public JsonElement toJson() {
             return new JsonPrimitive(Registries.FLUID.getId(fluid).toString());
-        }
-
-        @Override
-        public EntryIngredient asReiIngredient() {
-            return EntryIngredients.of(fluid);
         }
 
         @Override
@@ -97,6 +96,11 @@ public sealed abstract class FluidIngredient implements Predicate<Fluid> {
         }
 
         @Override
+        public Either<Fluid, TagKey<Fluid>> getValue() {
+            return Either.right(tag);
+        }
+
+        @Override
         public void toPacket(PacketByteBuf buf) {
             buf.writeByte(1);
             buf.writeIdentifier(tag.id());
@@ -105,11 +109,6 @@ public sealed abstract class FluidIngredient implements Predicate<Fluid> {
         @Override
         public JsonElement toJson() {
             return new JsonPrimitive("#" + tag.id().toString());
-        }
-
-        @Override
-        public EntryIngredient asReiIngredient() {
-            return EntryIngredients.ofFluidTag(tag);
         }
 
         @Override
