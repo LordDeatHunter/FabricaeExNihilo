@@ -100,7 +100,7 @@ public sealed interface BarrelRecipeCondition {
         private static final byte ID = 1;
 
         public BlockAbove(JsonObject json) {
-            this(BlockIngredient.fromJson(JsonHelper.getElement(json, "fluid")));
+            this(BlockIngredient.fromJson(JsonHelper.getElement(json, "block")));
         }
 
         public BlockAbove(PacketByteBuf buf) {
