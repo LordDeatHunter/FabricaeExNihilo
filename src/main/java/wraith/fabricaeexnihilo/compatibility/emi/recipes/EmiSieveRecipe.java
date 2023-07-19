@@ -5,15 +5,12 @@ import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.compatibility.emi.FENEmiPlugin;
+import wraith.fabricaeexnihilo.compatibility.emi.FENEmiTextures;
 import wraith.fabricaeexnihilo.compatibility.recipeviewer.SieveRecipeKey;
 import wraith.fabricaeexnihilo.compatibility.recipeviewer.SieveRecipeOutputs;
 
-import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
-
 public class EmiSieveRecipe extends BasicEmiRecipe {
-    private static final Identifier GLYPHS = id("textures/gui/rei/glyphs.png");
     private static final int WIDTH = 11 * 18;
     private static final int HEIGHT = 3 * 18;
     private final SieveRecipeKey key;
@@ -35,7 +32,7 @@ public class EmiSieveRecipe extends BasicEmiRecipe {
         if (key.waterlogged())
             widgets.addSlot(EmiStack.of(Fluids.WATER), 0, 36).catalyst(true);
 
-        widgets.addTexture(GLYPHS, 18, 18, 16, 16, 0, 0);
+        widgets.addTexture(FENEmiTextures.ARROW_RIGHT, 18, 18);
 
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 3; y++) {

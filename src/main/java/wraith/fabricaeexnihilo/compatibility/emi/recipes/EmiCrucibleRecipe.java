@@ -5,17 +5,12 @@ import dev.emi.emi.api.recipe.BasicEmiRecipe;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
-import net.minecraft.util.Identifier;
-import wraith.fabricaeexnihilo.compatibility.emi.EmiIngredientUtil;
 import wraith.fabricaeexnihilo.compatibility.emi.FENEmiPlugin;
-import wraith.fabricaeexnihilo.recipe.ToolRecipe;
+import wraith.fabricaeexnihilo.compatibility.emi.FENEmiTextures;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleRecipe;
-
-import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 @SuppressWarnings("UnstableApiUsage")
 public class EmiCrucibleRecipe extends BasicEmiRecipe {
-    private static final Identifier GLYPHS = id("textures/gui/rei/glyphs.png");
     private static final int WIDTH = 3 * 18;
     private static final int HEIGHT = 18;
     private final EmiIngredient input;
@@ -32,7 +27,7 @@ public class EmiCrucibleRecipe extends BasicEmiRecipe {
     @Override
     public void addWidgets(WidgetHolder widgets) {
         widgets.addSlot(input, 0, 0);
-        widgets.addTexture(GLYPHS, 18, 0, 16, 16, 0, 0);
+        widgets.addTexture(FENEmiTextures.ARROW_RIGHT, 18, 0);
         widgets.addSlot(output, 18 * 2, 0).recipeContext(this);
     }
 }

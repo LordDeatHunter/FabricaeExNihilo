@@ -5,15 +5,11 @@ import dev.emi.emi.api.render.EmiTexture;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.widget.WidgetHolder;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.compatibility.emi.EmiIngredientUtil;
 import wraith.fabricaeexnihilo.compatibility.emi.FENEmiPlugin;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleHeatRecipe;
 
-import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
-
 public class EmiCrucibleHeatRecipe extends BasicEmiRecipe {
-    private static final Identifier GLYPHS = id("textures/gui/rei/glyphs.png");
     private static final int WIDTH = 150;
     private static final int HEIGHT = 18 * 2;
     private final EmiIngredient block;

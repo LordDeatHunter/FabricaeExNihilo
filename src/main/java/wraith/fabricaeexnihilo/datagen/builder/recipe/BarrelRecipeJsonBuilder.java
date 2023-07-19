@@ -11,6 +11,7 @@ import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.entity.EntityType;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
@@ -166,7 +167,7 @@ public class BarrelRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
     }
 
     public BarrelRecipeJsonBuilder storeFluid(Fluid fluid) {
-        return storeFluid(fluid, FluidConstants.BUCKET);
+        return storeFluid(fluid, fluid == Fluids.EMPTY ? 0 : FluidConstants.BUCKET);
     }
 
     public BarrelRecipeJsonBuilder consumeFluid(FluidIngredient fluid, long amount) {

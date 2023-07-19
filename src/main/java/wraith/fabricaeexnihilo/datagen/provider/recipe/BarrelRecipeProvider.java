@@ -297,6 +297,7 @@ public class BarrelRecipeProvider extends FabricRecipeProvider {
                 .fluid(ModTags.TRUE_LAVA)
                 .duration(20)
                 .spawnEntity(EntityType.BLAZE)
+                .storeFluid(Fluids.EMPTY)
                 .icon(Items.BLAZE_SPAWN_EGG)
                 .offerTo(exporter, "summon_blaze");
         BarrelRecipeJsonBuilder.itemTriggered(ModItems.DOLLS.get(id("doll_guardian")))

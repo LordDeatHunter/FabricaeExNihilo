@@ -7,19 +7,15 @@ import dev.emi.emi.api.render.EmiTexture;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
-import me.shedaniel.rei.api.client.gui.widgets.Widgets;
-import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
-import wraith.fabricaeexnihilo.compatibility.emi.FENEmiPlugin;
 import wraith.fabricaeexnihilo.compatibility.emi.EmiIngredientUtil;
-import wraith.fabricaeexnihilo.compatibility.rei.GlyphWidget;
-import wraith.fabricaeexnihilo.compatibility.rei.PluginEntry;
-import wraith.fabricaeexnihilo.modules.ModItems;
+import wraith.fabricaeexnihilo.compatibility.emi.FENEmiPlugin;
+import wraith.fabricaeexnihilo.compatibility.emi.FENEmiTextures;
 import wraith.fabricaeexnihilo.modules.ModTags;
 import wraith.fabricaeexnihilo.recipe.barrel.BarrelRecipe;
 import wraith.fabricaeexnihilo.recipe.barrel.BarrelRecipeAction;
@@ -29,11 +25,8 @@ import wraith.fabricaeexnihilo.recipe.barrel.BarrelRecipeTrigger;
 import java.util.ArrayList;
 import java.util.List;
 
-import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
-
 @SuppressWarnings("UnstableApiUsage")
 public class EmiBarrelRecipe implements EmiRecipe {
-    private static final Identifier GLYPHS = id("textures/gui/rei/glyphs.png");
     private static final int WIDTH = 8 * 18;
     private static final int HEIGHT = 3 * 18;
     private final Identifier id;
@@ -170,13 +163,13 @@ public class EmiBarrelRecipe implements EmiRecipe {
         if (below != null) widgets.addSlot(below, 2 * 18, 2 * 18);
         if (triggerItem != null) widgets.addSlot(triggerItem, 0, inputFluid == null ? 18 : 9);
         if (inputFluid != null) widgets.addSlot(inputFluid, 0, triggerItem == null ? 18 : 18 + 9);
-        widgets.addTexture(GLYPHS, 19, 18, 16, 16, 0, 0);
+        widgets.addTexture(FENEmiTextures.ARROW_RIGHT, 19, 18);
         widgets.addSlot(EmiIngredient.of(ModTags.BARRELS), 2 * 18, 18).drawBack(false);
 
         if (nearby != null && conversionOutput != null) {
             widgets.addText(Text.translatable("emi.category.fabricaeexnihilo.barrel.nearby"), 3 * 18 + 4, 18 + 6, 0xffffffff, true);
             widgets.addSlot(nearby, 3 * 18 + 4, 2 * 18);
-            widgets.addTexture(GLYPHS, 18 * 4 - 1, 18 * 2, 16, 16, 0, 0);
+            widgets.addTexture(FENEmiTextures.ARROW_RIGHT, 18 * 4 - 1, 18 * 2);
             widgets.addSlot(conversionOutput, 4 * 18 + 13, 2 * 18).recipeContext(this);
         }
 
