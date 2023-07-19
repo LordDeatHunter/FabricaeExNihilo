@@ -85,8 +85,8 @@ dependencies {
     modCompileOnly "dev.latvian.mods:kubejs-fabric:$kubejs_version"
     modCompileOnly "com.terraformersmc:modmenu:$modmenu_version"
 
-    include(implementation("com.github.LlamaLad7:MixinExtras:0.1.1"))
-    annotationProcessor("com.github.LlamaLad7:MixinExtras:0.1.1")
+    include(implementation("com.github.LlamaLad7:MixinExtras:0.2.0-beta.9"))
+    annotationProcessor("com.github.LlamaLad7:MixinExtras:0.2.0-beta.9")
 
     // Add generated data to runtime classpath (slightly hacky)
     runtimeOnly files("src/main/generated")

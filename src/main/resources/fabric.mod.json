@@ -35,13 +35,10 @@
       "wraith.fabricaeexnihilo.compatibility.emi.FENEmiPlugin"
     ],
     "jade": [
-    "wraith.fabricaeexnihilo.compatibility.jade.FENJadePlugin"
-    ],
-    "preLaunch": [
-    "com.llamalad7.mixinextras.MixinExtrasBootstrap::init"
+      "wraith.fabricaeexnihilo.compatibility.jade.FENJadePlugin"
     ],
     "fabric-datagen": [
-    "wraith.fabricaeexnihilo.datagen.FENDatagen"
+      "wraith.fabricaeexnihilo.datagen.FENDatagen"
     ]
   },
   "mixins": [
