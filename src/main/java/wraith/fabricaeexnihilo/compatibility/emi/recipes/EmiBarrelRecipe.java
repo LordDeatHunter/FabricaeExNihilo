@@ -110,7 +110,7 @@ public class EmiBarrelRecipe implements EmiRecipe {
 
     @Override
     public EmiRecipeCategory getCategory() {
-        return FENEmiPlugin.BARREL;
+        return FENEmiPlugin.BARREL_CATEGORY;
     }
 
     @Override

@@ -27,11 +27,11 @@ public class FENEmiPlugin implements EmiPlugin {
     public static final EmiRecipeCategory SIEVE_CATEGORY = new EmiRecipeCategory(id("sieve"), EmiStack.of(DefaultApiModule.INSTANCE.oakBlocks.sieve()));
     public static final EmiRecipeCategory WITCH_WATER_WORLD_CATEGORY = new EmiRecipeCategory(id("witch_water_world"), EmiStack.of(WitchWaterFluid.STILL));
     public static final EmiRecipeCategory WITCH_WATER_ENTITY_CATEGORY = new EmiRecipeCategory(id("witch_water_entity"), EmiStack.of(WitchWaterFluid.STILL));
+    public static final EmiRecipeCategory CRUCIBLE_HEAT_CATEGORY = new EmiRecipeCategory(id("crucible_heat"), EmiStack.of(DefaultApiModule.INSTANCE.porcelainCrucible));
     public static final EmiRecipeCategory FIREPROOF_CRUCIBLE = new EmiRecipeCategory(id("fireproof_crucible"), EmiStack.of(DefaultApiModule.INSTANCE.porcelainCrucible));
-    public static final EmiRecipeCategory CRUCIBLE_HEAT = new EmiRecipeCategory(id("crucible_heat"), EmiStack.of(DefaultApiModule.INSTANCE.porcelainCrucible));
-    public static final EmiRecipeCategory WOODEN_CRUCIBLE = new EmiRecipeCategory(id("wooden_crucible"), EmiStack.of(DefaultApiModule.INSTANCE.oakBlocks.crucible()));
-    public static final EmiRecipeCategory MILKING = new EmiRecipeCategory(id("barrel/milking"), EmiStack.of(DefaultApiModule.INSTANCE.oakBlocks.barrel()));
-    public static final EmiRecipeCategory BARREL = new EmiRecipeCategory(id("barrel"), EmiStack.of(DefaultApiModule.INSTANCE.oakBlocks.barrel()));
+    public static final EmiRecipeCategory WOODEN_CRUCIBLE_CATEGORY = new EmiRecipeCategory(id("wooden_crucible"), EmiStack.of(DefaultApiModule.INSTANCE.oakBlocks.crucible()));
+    public static final EmiRecipeCategory MILKING_CATEGORY = new EmiRecipeCategory(id("barrel/milking"), EmiStack.of(DefaultApiModule.INSTANCE.oakBlocks.barrel()));
+    public static final EmiRecipeCategory BARREL_CATEGORY = new EmiRecipeCategory(id("barrel"), EmiStack.of(DefaultApiModule.INSTANCE.oakBlocks.barrel()));
 
     @Override
     public void register(EmiRegistry registry) {
@@ -47,14 +47,14 @@ public class FENEmiPlugin implements EmiPlugin {
         registry.addWorkstation(WITCH_WATER_ENTITY_CATEGORY, EmiIngredient.of(WitchWaterFluid.TAG));
         registry.addCategory(FIREPROOF_CRUCIBLE);
         registry.addWorkstation(FIREPROOF_CRUCIBLE, EmiStack.of(DefaultApiModule.INSTANCE.porcelainCrucible));
-        registry.addCategory(CRUCIBLE_HEAT);
-        registry.addWorkstation(CRUCIBLE_HEAT, EmiIngredient.of(ModTags.CRUCIBLES));
-        registry.addCategory(WOODEN_CRUCIBLE);
-        registry.addWorkstation(WOODEN_CRUCIBLE, EmiIngredient.of(ModTags.CRUCIBLES));
-        registry.addCategory(MILKING);
-        registry.addWorkstation(MILKING, EmiIngredient.of(ModTags.BARRELS));
-        registry.addCategory(BARREL);
-        registry.addWorkstation(BARREL, EmiIngredient.of(ModTags.BARRELS));
+        registry.addCategory(CRUCIBLE_HEAT_CATEGORY);
+        registry.addWorkstation(CRUCIBLE_HEAT_CATEGORY, EmiIngredient.of(ModTags.CRUCIBLES));
+        registry.addCategory(WOODEN_CRUCIBLE_CATEGORY);
+        registry.addWorkstation(WOODEN_CRUCIBLE_CATEGORY, EmiIngredient.of(ModTags.CRUCIBLES));
+        registry.addCategory(MILKING_CATEGORY);
+        registry.addWorkstation(MILKING_CATEGORY, EmiIngredient.of(ModTags.BARRELS));
+        registry.addCategory(BARREL_CATEGORY);
+        registry.addWorkstation(BARREL_CATEGORY, EmiIngredient.of(ModTags.BARRELS));
 
         addRecipes(registry, ModRecipes.CROOK, EmiToolRecipe::new);
         addRecipes(registry, ModRecipes.HAMMER, EmiToolRecipe::new);

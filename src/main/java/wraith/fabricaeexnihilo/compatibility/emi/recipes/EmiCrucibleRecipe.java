@@ -17,7 +17,7 @@ public class EmiCrucibleRecipe extends BasicEmiRecipe {
     private final EmiStack output;
 
     public EmiCrucibleRecipe(CrucibleRecipe recipe) {
-        super(recipe.requiresFireproofCrucible() ? FENEmiPlugin.FIREPROOF_CRUCIBLE : FENEmiPlugin.WOODEN_CRUCIBLE, recipe.getId(), WIDTH, HEIGHT);
+        super(recipe.requiresFireproofCrucible() ? FENEmiPlugin.FIREPROOF_CRUCIBLE : FENEmiPlugin.WOODEN_CRUCIBLE_CATEGORY, recipe.getId(), WIDTH, HEIGHT);
         input = EmiIngredient.of(recipe.getInput());
         inputs.add(input);
         output = FabricEmiStack.of(recipe.getFluid()).setAmount(recipe.getAmount());

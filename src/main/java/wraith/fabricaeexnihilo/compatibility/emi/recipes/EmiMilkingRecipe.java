@@ -23,7 +23,7 @@ public class EmiMilkingRecipe extends BasicEmiRecipe {
     private final int cooldown;
 
     public EmiMilkingRecipe(MilkingRecipe recipe) {
-        super(FENEmiPlugin.MILKING, recipe.getId(), WIDTH, HEIGHT);
+        super(FENEmiPlugin.MILKING_CATEGORY, recipe.getId(), WIDTH, HEIGHT);
         entity = recipe.getEntity();
         fluid = FabricEmiStack.of(recipe.getFluid(), recipe.getAmount());
         outputs.add(fluid);

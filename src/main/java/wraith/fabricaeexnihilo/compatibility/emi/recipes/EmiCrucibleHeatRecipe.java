@@ -16,7 +16,7 @@ public class EmiCrucibleHeatRecipe extends BasicEmiRecipe {
     private final int heat;
 
     public EmiCrucibleHeatRecipe(CrucibleHeatRecipe recipe) {
-        super(FENEmiPlugin.CRUCIBLE_HEAT, recipe.getId(), WIDTH, HEIGHT);
+        super(FENEmiPlugin.CRUCIBLE_HEAT_CATEGORY, recipe.getId(), WIDTH, HEIGHT);
         block = EmiIngredientUtil.ingredientOf(recipe.getBlock());
         catalysts.add(block);
         heat = recipe.getHeat();
