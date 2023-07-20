@@ -90,7 +90,7 @@ dependencies {
 
     // Add generated data to runtime classpath (slightly hacky)
     runtimeOnly files("src/main/generated")
-    modRuntimeOnly "me.shedaniel.cloth:cloth-config-fabric:$cloth_config_version"
+//    modRuntimeOnly "me.shedaniel.cloth:cloth-config-fabric:$cloth_config_version"
 
     if (settings.rei) {
         modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"

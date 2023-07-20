@@ -91,7 +91,7 @@ public class EmiBarrelRecipe implements EmiRecipe {
         } else if (action instanceof BarrelRecipeAction.DropItem dropItem) {
             outputs.add(EmiStack.of(dropItem.stack()));
         } else if (action instanceof BarrelRecipeAction.FillCompost fillCompost) {
-            compostResult = EmiStack.of(fillCompost.result());
+            compostResult = EmiStack.of(fillCompost.result()).setChance(compostAmount);
             compostAmount = fillCompost.increment();
         } else {
             FabricaeExNihilo.LOGGER.warn("Unsupported barrel recipe action in REI code: " + action);
