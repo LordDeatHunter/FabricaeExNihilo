@@ -50,7 +50,7 @@ public class EmiBarrelRecipe implements EmiRecipe {
 
     public EmiBarrelRecipe(BarrelRecipe recipe) {
         id = recipe.getId();
-        duration = recipe.getDuration() * FabricaeExNihilo.CONFIG.modules.barrels.tickRate / 20;
+        duration = recipe.getDuration() * FabricaeExNihilo.CONFIG.get().barrels().tickRate() / 20;
         triggerItem = getTriggerItem(recipe);
 
         recipe.getConditions().forEach(this::processCondition);

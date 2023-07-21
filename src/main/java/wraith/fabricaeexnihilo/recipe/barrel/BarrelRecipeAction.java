@@ -242,7 +242,7 @@ public sealed interface BarrelRecipeAction {
         public boolean canRun(BarrelRecipe recipe, BarrelBlockEntity barrel) {
             var world = Objects.requireNonNull(barrel.getWorld(), "world is null");
             var pos = barrel.getPos();
-            var radius = FabricaeExNihilo.CONFIG.modules.barrels.leaking.radius;
+            var radius = FabricaeExNihilo.CONFIG.get().barrels().leakRadius();
 
             return BlockPos.stream(pos.add(-radius, 0, -radius), pos.add(radius, -2, radius))
                     .map(world::getBlockState)
@@ -252,7 +252,7 @@ public sealed interface BarrelRecipeAction {
         @Override
         public void apply(ServerWorld world, BarrelBlockEntity barrel) {
             var pos = barrel.getPos();
-            var radius = FabricaeExNihilo.CONFIG.modules.barrels.leaking.radius;
+            var radius = FabricaeExNihilo.CONFIG.get().barrels().leakRadius();
 
             var positions = BlockPos.stream(pos.add(-radius, 0, -radius), pos.add(radius, -2, radius))
                     .map(BlockPos::toImmutable)

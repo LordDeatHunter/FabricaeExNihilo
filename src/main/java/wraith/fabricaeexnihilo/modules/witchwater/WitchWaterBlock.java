@@ -8,9 +8,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.CreeperEntity;
-import net.minecraft.entity.mob.MagmaCubeEntity;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.SlimeEntity;
 import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
@@ -19,7 +17,6 @@ import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -101,9 +98,9 @@ public class WitchWaterBlock extends FluidBlock {
             livingEntity.headYaw = toKill.headYaw;
 
             // Slime -> Magma Slime
-            if (toKill instanceof SlimeEntity slimeEntity && livingEntity instanceof MagmaCubeEntity magmaCubeEntity) {
+            /*if (toKill instanceof SlimeEntity slimeEntity && livingEntity instanceof MagmaCubeEntity magmaCubeEntity) {
                 //TODO: mixin for setting slime size
-            }
+            }*/
 
             // Set Health
             livingEntity.setHealth(livingEntity.getMaxHealth() * toKill.getHealth() / toKill.getMaxHealth());
@@ -142,10 +139,10 @@ public class WitchWaterBlock extends FluidBlock {
                 return;
             }
             if (livingEntity instanceof PlayerEntity player && !player.isCreative()) {
-                FabricaeExNihilo.CONFIG.modules.witchWater.effects.forEach((effectId, durationLevel) -> {
-                            var effect = Registries.STATUS_EFFECT.get(new Identifier(effectId));
-                            if (effect != null) {
-                                applyStatusEffect(player, new StatusEffectInstance(effect, durationLevel.duration, durationLevel.amplifier));
+                FabricaeExNihilo.CONFIG.get().witchwater().effects().forEach((effect) -> {
+                            var type = Registries.STATUS_EFFECT.get(effect.type());
+                            if (type != null) {
+                                applyStatusEffect(player, new StatusEffectInstance(type, effect.duration(), effect.amplifier()));
                             }
                         });
                 return;

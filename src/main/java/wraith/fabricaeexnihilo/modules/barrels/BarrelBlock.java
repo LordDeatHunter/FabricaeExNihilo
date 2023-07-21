@@ -101,7 +101,7 @@ public class BarrelBlock extends BlockWithEntity {
     public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
         var blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof BarrelBlockEntity barrel && entity instanceof LivingEntity livingEntity) {
-            if (FabricaeExNihilo.CONFIG.modules.barrels.enableBleeding) {
+            if (FabricaeExNihilo.CONFIG.get().barrels().bleeding()) {
                 var thorns = barrel.getEnchantmentContainer().getEnchantmentLevel(Enchantments.THORNS);
                 if (thorns > 0
                         && barrel.fluidStorage.simulateInsert(FluidVariant.of(BloodFluid.STILL), 1, null) >= 1
@@ -113,7 +113,7 @@ public class BarrelBlock extends BlockWithEntity {
                     }
                 }
             }
-            if (!(livingEntity instanceof PlayerEntity) && !livingEntity.hasStatusEffect(ModEffects.MILKED) && FabricaeExNihilo.CONFIG.modules.barrels.enableMilking) {
+            if (!(livingEntity instanceof PlayerEntity) && !livingEntity.hasStatusEffect(ModEffects.MILKED) && FabricaeExNihilo.CONFIG.get().barrels().milking()) {
                 var recipe = MilkingRecipe.find(livingEntity.getType(), world);
                 if (recipe.isPresent()) {
                     long inserted;

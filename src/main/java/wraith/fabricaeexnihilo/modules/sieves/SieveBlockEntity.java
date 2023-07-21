@@ -110,12 +110,12 @@ public class SieveBlockEntity extends BaseBlockEntity {
             return;
         }
         var haste = player.getActiveStatusEffects().get(StatusEffects.HASTE);
-        var efficiency = FabricaeExNihilo.CONFIG.modules.sieves.efficiency ? EnchantmentHelper.getLevel(Enchantments.EFFICIENCY, mesh) : 0;
-        var hasteLevel = FabricaeExNihilo.CONFIG.modules.sieves.haste ? (haste == null ? -1 : haste.getAmplifier()) + 1 : 0;
+        var efficiency = FabricaeExNihilo.CONFIG.get().sieves().efficiency() ? EnchantmentHelper.getLevel(Enchantments.EFFICIENCY, mesh) : 0;
+        var hasteLevel = FabricaeExNihilo.CONFIG.get().sieves().haste() ? (haste == null ? -1 : haste.getAmplifier()) + 1 : 0;
 
-        progress += FabricaeExNihilo.CONFIG.modules.sieves.baseProgress
-                + FabricaeExNihilo.CONFIG.modules.sieves.efficiencyScaleFactor * efficiency
-                + FabricaeExNihilo.CONFIG.modules.sieves.hasteScaleFactor * hasteLevel;
+        progress += FabricaeExNihilo.CONFIG.get().sieves().baseProgress()
+                    + FabricaeExNihilo.CONFIG.get().sieves().efficiencyScaleFactor() * efficiency
+                    + FabricaeExNihilo.CONFIG.get().sieves().hasteScaleFactor() * hasteLevel;
 
         //TODO: spawn some particles
         if (progress > 1.0) {
@@ -166,8 +166,8 @@ public class SieveBlockEntity extends BaseBlockEntity {
                         // Remove already tested positions
                         .filter(dir -> !tested.contains(dir) && !stack.contains(dir))
                         // Remove positions too far away
-                        .filter(dir -> Math.abs(this.pos.getX() - dir.getX()) <= FabricaeExNihilo.CONFIG.modules.sieves.sieveRadius &&
-                                Math.abs(this.pos.getZ() - dir.getZ()) <= FabricaeExNihilo.CONFIG.modules.sieves.sieveRadius)
+                        .filter(dir -> Math.abs(this.pos.getX() - dir.getX()) <= FabricaeExNihilo.CONFIG.get().sieves().sieveRadius() &&
+                                       Math.abs(this.pos.getZ() - dir.getZ()) <= FabricaeExNihilo.CONFIG.get().sieves().sieveRadius())
                         // Add to the stack to be processed
                         .forEach(stack::add);
             }

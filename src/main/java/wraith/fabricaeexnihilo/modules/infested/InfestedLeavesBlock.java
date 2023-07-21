@@ -48,6 +48,6 @@ public class InfestedLeavesBlock extends LeavesBlock implements Colored, NonInfe
         if (world.isClient) {
             return;
         }
-        InfestedHelper.tryToSpreadFrom(world, pos, FabricaeExNihilo.CONFIG.modules.silkworms.infestedSpreadAttempts);
+        InfestedHelper.tryToSpreadFrom(world, pos, FabricaeExNihilo.CONFIG.get().infested().infestedSpreadAttempts());
     }
 }

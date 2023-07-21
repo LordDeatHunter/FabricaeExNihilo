@@ -8,7 +8,7 @@ import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.fabricmc.fabric.api.transfer.v1.transaction.base.SnapshotParticipant;
 import wraith.fabricaeexnihilo.modules.ModTags;
 
-@SuppressWarnings("UnstableApiUsage")
+@SuppressWarnings({"UnstableApiUsage", "deprecation"})
 public class BarrelFluidStorage extends SnapshotParticipant<BarrelBlockEntity.Snapshot> implements SingleSlotStorage<FluidVariant> {
     private final BarrelBlockEntity barrel;
 
@@ -22,7 +22,6 @@ public class BarrelFluidStorage extends SnapshotParticipant<BarrelBlockEntity.Sn
         if (barrel.isCrafting()) return 0;
         if (barrel.getState() == BarrelState.FLUID && !fluid.equals(barrel.getFluid())) return 0;
         if (barrel.getState() != BarrelState.FLUID && barrel.getState() != BarrelState.EMPTY) return 0;
-        //noinspection deprecation
         if (fluid.getFluid().isIn(ModTags.HOT) && !barrel.isFireproof()) return 0;
 
         var inserted = Math.min(getCapacity() - getAmount(), maxAmount);

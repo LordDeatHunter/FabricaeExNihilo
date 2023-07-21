@@ -1,11 +1,9 @@
 package wraith.fabricaeexnihilo;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import io.github.mattidragon.configloader.api.ConfigManager;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
@@ -15,6 +13,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import wraith.fabricaeexnihilo.config.FabricaeExNihiloConfig;
 import wraith.fabricaeexnihilo.loot.CopyEnchantmentsLootFunction;
 import wraith.fabricaeexnihilo.modules.*;
 import wraith.fabricaeexnihilo.modules.fluids.BloodFluid;
@@ -24,8 +23,6 @@ import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.util.BonusEnchantingManager;
 import wraith.fabricaeexnihilo.util.EntrypointHelper;
 import wraith.fabricaeexnihilo.util.ItemUtils;
-
-import java.nio.file.Files;
 
 public class FabricaeExNihilo implements ModInitializer {
     public static final ItemGroup ITEM_GROUP = FabricItemGroup.builder()
@@ -58,42 +55,10 @@ public class FabricaeExNihilo implements ModInitializer {
             })
             .build();
     public static final Logger LOGGER = LogManager.getLogger("Fabricae Ex Nihilo");
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().setLenient().create();
-    public static final FabricaeExNihiloConfig CONFIG = initConfig();
+    public static final ConfigManager<wraith.fabricaeexnihilo.config.FabricaeExNihiloConfig> CONFIG = ConfigManager.create(wraith.fabricaeexnihilo.config.FabricaeExNihiloConfig.CODEC, FabricaeExNihiloConfig.DEFAULT, "fabricaeexnihilo");
 
     public static Identifier id(String path) {
         return new Identifier("fabricaeexnihilo", path);
-    }
-
-    public static FabricaeExNihiloConfig initConfig() {
-        var file = FabricLoader.getInstance().getConfigDir().resolve("fabricaeexnihilo.json");
-        var defaultConf = new FabricaeExNihiloConfig();
-
-        if (Files.isRegularFile(file)) {
-            try (var reader = Files.newBufferedReader(file)) {
-                var config = GSON.fromJson(reader, FabricaeExNihiloConfig.class);
-                if (config == null)
-                    throw new IllegalStateException("Invalid config file " + file + ". Please fix or delete it.");
-                return config;
-            } catch (Exception ex) {
-                LOGGER.error("Config-Error", ex);
-                LOGGER.info("Something is wrong with the config file, loading with default...");
-                return defaultConf;
-            }
-        } else if (!Files.exists(file)) {
-            LOGGER.info("Missing config file, writing defaults!");
-            try {
-                Files.createFile(file);
-                Files.writeString(file, GSON.toJson(defaultConf));
-            } catch (Exception ex) {
-                LOGGER.error("Config-Error", ex);
-            }
-            return defaultConf;
-        } else {
-            LOGGER.error("Config file " + file + " is not a file! Please delete whatever it is.");
-            LOGGER.info("Loading with default...");
-            return defaultConf;
-        }
     }
 
     @Override

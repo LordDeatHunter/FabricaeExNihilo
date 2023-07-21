@@ -51,7 +51,7 @@ public final class InfestedHelper {
 
     public static void tryToSpreadFrom(World world, BlockPos pos, int tries) {
         for (var attempt = 0; attempt < tries; ++attempt) {
-            if ((world.random.nextFloat()) < FabricaeExNihilo.CONFIG.modules.silkworms.spreadChance) {
+            if ((world.random.nextFloat()) < FabricaeExNihilo.CONFIG.get().infested().spreadChance()) {
                 var i = world.random.nextInt(3) - 1;
                 var j = world.random.nextInt(3) - 1;
                 var k = world.random.nextInt(3) - 1;

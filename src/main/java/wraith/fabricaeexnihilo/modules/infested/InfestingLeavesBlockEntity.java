@@ -32,21 +32,21 @@ public class InfestingLeavesBlockEntity extends BaseBlockEntity implements Color
 
     public InfestingLeavesBlockEntity(BlockPos pos, BlockState state) {
         super(TYPE, pos, state);
-        tickCounter = world == null ? 0 : world.random.nextInt(FabricaeExNihilo.CONFIG.modules.barrels.tickRate);
+        tickCounter = world == null ? 0 : world.random.nextInt(FabricaeExNihilo.CONFIG.get().barrels().tickRate());
     }
 
     public static void ticker(World world, BlockPos blockPos, BlockState blockState, InfestingLeavesBlockEntity infestedLeavesEntity) {
         // Don't update every single tick
-        if (++infestedLeavesEntity.tickCounter % FabricaeExNihilo.CONFIG.modules.silkworms.updateFrequency != 0) {
+        if (++infestedLeavesEntity.tickCounter % FabricaeExNihilo.CONFIG.get().infested().updateFrequency() != 0) {
             return;
         }
         // Advance
-        infestedLeavesEntity.progress += FabricaeExNihilo.CONFIG.modules.silkworms.progressPerUpdate;
+        infestedLeavesEntity.progress += FabricaeExNihilo.CONFIG.get().infested().progressPerUpdate();
 
         if (infestedLeavesEntity.progress < 1f) {
             infestedLeavesEntity.markDirty();
-            if (infestedLeavesEntity.progress > FabricaeExNihilo.CONFIG.modules.silkworms.minimumSpreadPercent && world != null) {
-                InfestedHelper.tryToSpreadFrom(world, blockPos, FabricaeExNihilo.CONFIG.modules.silkworms.infestingSpreadAttempts);
+            if (infestedLeavesEntity.progress > FabricaeExNihilo.CONFIG.get().infested().minimumSpreadProgress() && world != null) {
+                InfestedHelper.tryToSpreadFrom(world, blockPos, FabricaeExNihilo.CONFIG.get().infested().infestingSpreadAttempts());
             }
             return;
         }

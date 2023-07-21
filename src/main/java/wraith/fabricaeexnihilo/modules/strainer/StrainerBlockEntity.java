@@ -39,7 +39,7 @@ public class StrainerBlockEntity extends BaseBlockEntity {
 
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(8, ItemStack.EMPTY);
     private final StrainerItemStorage storage = new StrainerItemStorage();
-    private int timeUntilCatch = FabricaeExNihilo.CONFIG.modules.strainers.maxWaitTime;
+    private int timeUntilCatch = FabricaeExNihilo.CONFIG.get().strainers().maxWaitTime();
 
     static {
         ItemStorage.SIDED.registerForBlockEntity((entity, dir) -> entity.storage, TYPE);
@@ -88,8 +88,8 @@ public class StrainerBlockEntity extends BaseBlockEntity {
                     strainer.inventory.set(i, loot.remove(0));
                 }
             }
-            var config = FabricaeExNihilo.CONFIG.modules.strainers;
-            strainer.timeUntilCatch = world.random.nextBetweenExclusive(config.minWaitTime, config.maxWaitTime);
+            var config = FabricaeExNihilo.CONFIG.get().strainers();
+            strainer.timeUntilCatch = world.random.nextBetweenExclusive(config.minWaitTime(), config.maxWaitTime());
         }
         strainer.markDirty();
     }

@@ -119,35 +119,35 @@ public class DefaultApiModule implements FENApiModule {
         goldMesh = registries.registerMesh("gold", Color.GOLDEN, 22, registries.defaultItemSettings());
         emeraldMesh = registries.registerMesh("emerald", Color.DARK_GREEN, 24, registries.defaultItemSettings());
 
-        var seedConfig = FabricaeExNihilo.CONFIG.modules.seeds;
-        if (seedConfig.enabled) {
-            if (seedConfig.mycelium) {
+        var seedConfig = FabricaeExNihilo.CONFIG.get().seeds();
+        if (seedConfig.enabled()) {
+            if (seedConfig.mycelium()) {
                 myceliumSeeds = registries.registerTransformingSeed("mycelium", new Identifier("minecraft:dirt"), new Identifier("minecraft:mycelium"));
             }
-            if (seedConfig.netherSpores) {
+            if (seedConfig.netherSpores()) {
                 warpedSeeds = registries.registerTransformingSeed("warped", new Identifier("minecraft:netherrack"), new Identifier("minecraft:warped_nylium"));
                 crimsonSeeds = registries.registerTransformingSeed("crimson", new Identifier("minecraft:netherrack"), new Identifier("minecraft:crimson_nylium"));
             }
-            if (seedConfig.grass) {
+            if (seedConfig.grass()) {
                 grassSeeds = registries.registerTransformingSeed("grass", new Identifier("minecraft:dirt"), new Identifier("minecraft:grass_block"));
             }
             //TODO: Replace seeds bellow with vanilla variants
-            if (seedConfig.chorus) {
+            if (seedConfig.chorus()) {
                 chorusSeeds = registries.registerSeed("chorus", new Identifier("minecraft:chorus_flower"));
             }
-            if (seedConfig.seaPickle) {
+            if (seedConfig.seaPickle()) {
                 seaPickleSeeds = registries.registerSeed("sea_pickle", new Identifier("minecraft:sea_pickle"));
             }
-            if (seedConfig.sugarCane) {
+            if (seedConfig.sugarCane()) {
                 sugarcaneSeeds = registries.registerSeed("sugarcane", new Identifier("minecraft:sugar_cane"));
             }
-            if (seedConfig.cactus) {
+            if (seedConfig.cactus()) {
                 cactusSeeds = registries.registerSeed("cactus", new Identifier("minecraft:cactus"));
             }
-            if (seedConfig.kelp) {
+            if (seedConfig.kelp()) {
                 kelpSeeds = registries.registerSeed("kelp", new Identifier("minecraft:kelp"));
             }
-            if (seedConfig.flowerSeeds) {
+            if (seedConfig.flowerSeeds()) {
                 sunflowerSeeds = registries.registerTallPlantSeed("sunflower", new Identifier("minecraft:sunflower"));
                 lilacSeeds = registries.registerTallPlantSeed("lilac", new Identifier("minecraft:lilac"));
                 roseBushSeeds = registries.registerTallPlantSeed("rose_bush", new Identifier("minecraft:rose_bush"));

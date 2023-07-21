@@ -12,7 +12,7 @@ public class MeshItem extends Item implements Colored {
     private final int enchantability;
 
     public MeshItem(Color color, int enchantability, Settings settings) {
-        super(settings.maxCount(FabricaeExNihilo.CONFIG.modules.sieves.meshStackSize));
+        super(settings.maxCount(FabricaeExNihilo.CONFIG.get().sieves().meshStackSize()));
         this.color = color;
         this.enchantability = enchantability;
     }

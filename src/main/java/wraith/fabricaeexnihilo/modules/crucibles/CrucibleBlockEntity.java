@@ -75,8 +75,8 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
     public CrucibleBlockEntity(BlockPos pos, BlockState state) {
         super(TYPE, pos, state);
         tickCounter = world == null
-                ? FabricaeExNihilo.CONFIG.modules.crucibles.tickRate
-                : world.random.nextInt(FabricaeExNihilo.CONFIG.modules.crucibles.tickRate);
+                ? FabricaeExNihilo.CONFIG.get().crucibles().tickRate()
+                : world.random.nextInt(FabricaeExNihilo.CONFIG.get().crucibles().tickRate());
     }
 
     @SuppressWarnings("unused") // lambda stuff
@@ -143,11 +143,11 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
     }
 
     public long getMaxCapacity() {
-        return FluidConstants.BUCKET * (isFireproof() ? FabricaeExNihilo.CONFIG.modules.crucibles.stoneVolume : FabricaeExNihilo.CONFIG.modules.crucibles.woodVolume);
+        return FluidConstants.BUCKET * (isFireproof() ? FabricaeExNihilo.CONFIG.get().crucibles().stoneVolume() : FabricaeExNihilo.CONFIG.get().crucibles().woodVolume());
     }
 
-    public long getProcessingSpeed() {
-        return getEfficiencyMultiplier() * (isFireproof() ? (requiresFireproof ? heat : 1) * FabricaeExNihilo.CONFIG.modules.crucibles.baseProcessRate : FabricaeExNihilo.CONFIG.modules.crucibles.woodenProcessingRate);
+    public int getProcessingSpeed() {
+        return getEfficiencyMultiplier() * (isFireproof() ? (requiresFireproof ? heat : 1) * FabricaeExNihilo.CONFIG.get().crucibles().stoneProcessingRate() : FabricaeExNihilo.CONFIG.get().crucibles().woodProcessingRate());
     }
 
     public long getQueued() {
@@ -192,7 +192,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
             contained += amount;
             queued -= amount;
             markDirty();
-            tickCounter = FabricaeExNihilo.CONFIG.modules.crucibles.tickRate;
+            tickCounter = FabricaeExNihilo.CONFIG.get().crucibles().tickRate();
         }
     }
 

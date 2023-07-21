@@ -21,22 +21,22 @@ public final class BonusEnchantingManager {
     }
 
     public static void generateDefaultTags() {
-        if (FabricaeExNihilo.CONFIG.modules.crucibles.efficiency) {
+        if (FabricaeExNihilo.CONFIG.get().crucibles().efficiency()) {
             DATA.computeIfAbsent(Enchantments.EFFICIENCY, enchantment -> new ArrayList<>()).addAll(ModBlocks.CRUCIBLES.values().stream().map(ItemConvertible::asItem).toList());
         }
-        if (FabricaeExNihilo.CONFIG.modules.crucibles.fireAspect) {
+        if (FabricaeExNihilo.CONFIG.get().crucibles().fireAspect()) {
             DATA.computeIfAbsent(Enchantments.FIRE_ASPECT, enchantment -> new ArrayList<>()).addAll(ModBlocks.CRUCIBLES.values().stream().map(ItemConvertible::asItem).toList());
         }
-        if (FabricaeExNihilo.CONFIG.modules.barrels.enchantments.efficiency) {
+        if (FabricaeExNihilo.CONFIG.get().barrels().efficiency()) {
             DATA.computeIfAbsent(Enchantments.EFFICIENCY, enchantment -> new ArrayList<>()).addAll(ModBlocks.BARRELS.values().stream().map(ItemConvertible::asItem).toList());
         }
-        if (FabricaeExNihilo.CONFIG.modules.barrels.enchantments.thorns) {
+        if (FabricaeExNihilo.CONFIG.get().barrels().thorns()) {
             DATA.computeIfAbsent(Enchantments.THORNS, enchantment -> new ArrayList<>()).addAll(ModBlocks.BARRELS.values().stream().map(ItemConvertible::asItem).toList());
         }
-        if (FabricaeExNihilo.CONFIG.modules.sieves.efficiency) {
+        if (FabricaeExNihilo.CONFIG.get().sieves().efficiency()) {
             DATA.computeIfAbsent(Enchantments.EFFICIENCY, enchantment -> new ArrayList<>()).addAll(ModItems.MESHES.values());
         }
-        if (FabricaeExNihilo.CONFIG.modules.sieves.fortune) {
+        if (FabricaeExNihilo.CONFIG.get().sieves().fortune()) {
             DATA.computeIfAbsent(Enchantments.FORTUNE, enchantment -> new ArrayList<>()).addAll(ModItems.MESHES.values());
         }
         DATA.computeIfAbsent(Enchantments.EFFICIENCY, enchantment -> new ArrayList<>()).addAll(ModTools.HAMMERS.values());

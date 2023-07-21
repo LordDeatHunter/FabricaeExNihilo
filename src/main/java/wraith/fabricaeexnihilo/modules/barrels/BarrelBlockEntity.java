@@ -67,8 +67,8 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
         fluidStorage = new BarrelFluidStorage(this);
         itemStorage = new BarrelItemStorage(this);
         tickCounter = world == null
-                ? FabricaeExNihilo.CONFIG.modules.barrels.tickRate
-                : world.random.nextInt(FabricaeExNihilo.CONFIG.modules.barrels.tickRate);
+                ? FabricaeExNihilo.CONFIG.get().barrels().tickRate()
+                : world.random.nextInt(FabricaeExNihilo.CONFIG.get().barrels().tickRate());
     }
 
     public ActionResult activate(@Nullable PlayerEntity player, @Nullable Hand hand) {
@@ -185,7 +185,7 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
     public void tick() {
         if (isCrafting() && world instanceof ServerWorld serverWorld) serverWorld.spawnParticles(ParticleTypes.EFFECT, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0.2, 0, 0.2, 0);
         if (tickCounter <= 0) {
-            tickCounter = FabricaeExNihilo.CONFIG.modules.barrels.tickRate;
+            tickCounter = FabricaeExNihilo.CONFIG.get().barrels().tickRate();
             markDirty();
             tickRecipe();
         } else {
@@ -225,7 +225,7 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
             case ITEM -> {}
             case COMPOST -> {
                 if (compostLevel < 1) break;
-                recipeProgress += FabricaeExNihilo.CONFIG.modules.barrels.compost.rate * getEfficiencyMultiplier();
+                recipeProgress += FabricaeExNihilo.CONFIG.get().barrels().compostRate() * getEfficiencyMultiplier();
                 if (recipeProgress >= 1) finishCompost();
                 markDirty();
             }

@@ -21,6 +21,9 @@
     "top_plugin": [
       "wraith.fabricaeexnihilo.compatibility.theoneprobe.TheOneProbePlugin"
     ],
+    "modmenu": [
+      "wraith.fabricaeexnihilo.client.config.ModmenuPlugin"
+    ],
     "fabricaeexnihilo:api": [
       "wraith.fabricaeexnihilo.compatibility.DefaultApiModule::INSTANCE",
       "wraith.fabricaeexnihilo.compatibility.TechRebornApiModule::INSTANCE",
