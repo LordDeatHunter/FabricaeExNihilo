@@ -412,5 +412,8 @@
   "config.fabricaeexnihlio.category.witchwater":  "Witchwater",
   "config.fabricaeexnihlio.option.witchwater.effects_not_available": "Effects (not available)",
   "config.fabricaeexnihlio.option.witchwater.effects_not_available.description":  "Witchwater effects can't be configured ingame due to limitations of the config library. You can press the button to open the config folder for manual editing.",
-  "config.fabricaeexnihlio.option.witchwater.effects_not_available.action": "Open Config Folder"
+  "config.fabricaeexnihlio.option.witchwater.effects_not_available.action": "Open Config Folder",
+  "config.fabricaeexnihlio.category.misc": "Misc",
+  "config.fabricaeexnihlio.option.misc.enableSaltCollection": "Enable Salt Collection",
+  "config.fabricaeexnihlio.option.misc.enableSaltCollection.description": "If enabled, salt can be collected by clicking on sand with glass bottles."
 }

@@ -5,14 +5,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.mattidragon.configloader.api.DefaultedFieldCodec;
 import io.github.mattidragon.configloader.api.GenerateMutable;
 
-/**
- * @param baseProgress  Progress per click = baseProgress + efficiencyScaleFactor*efficiencyLevel + hasteScaleFactor*hasteLevel
- * @param efficiency    Can meshes be enchanted with efficiency
- * @param fortune       Can meshes be enchanted with fortune
- * @param haste         Do haste beacons/potions affect sieving speed
- * @param meshStackSize Do meshes use up durability (WIP)public boolean meshDurability = false;
- * @param sieveRadius   How far can sieves be connected
- */
 @GenerateMutable(useFancyMethodNames = true)
 public record SieveConfig(double baseProgress, boolean efficiency, double efficiencyScaleFactor,
                           boolean fortune, boolean haste, double hasteScaleFactor, int meshStackSize,

@@ -10,8 +10,9 @@ public record FabricaeExNihiloConfig(BarrelConfig barrels,
                                      SieveConfig sieves,
                                      InfestedConfig infested,
                                      StrainerConfig strainers,
-                                     WitchWaterConfig witchwater) {
-    public static final FabricaeExNihiloConfig DEFAULT = new FabricaeExNihiloConfig(BarrelConfig.DEFAULT, CrucibleConfig.DEFAULT, SeedConfig.DEFAULT, SieveConfig.DEFAULT, InfestedConfig.DEFAULT, StrainerConfig.DEFAULT, WitchWaterConfig.DEFAULT);
+                                     WitchWaterConfig witchwater,
+                                     MiscConfig misc) {
+    public static final FabricaeExNihiloConfig DEFAULT = new FabricaeExNihiloConfig(BarrelConfig.DEFAULT, CrucibleConfig.DEFAULT, SeedConfig.DEFAULT, SieveConfig.DEFAULT, InfestedConfig.DEFAULT, StrainerConfig.DEFAULT, WitchWaterConfig.DEFAULT, MiscConfig.DEFAULT);
     public static final Codec<FabricaeExNihiloConfig> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                     DefaultedFieldCodec.of(BarrelConfig.CODEC, "barrels", FabricaeExNihiloConfig.DEFAULT.barrels).forGetter(FabricaeExNihiloConfig::barrels),
                     DefaultedFieldCodec.of(CrucibleConfig.CODEC, "crucibles", FabricaeExNihiloConfig.DEFAULT.crucibles).forGetter(FabricaeExNihiloConfig::crucibles),
@@ -19,6 +20,7 @@ public record FabricaeExNihiloConfig(BarrelConfig barrels,
                     DefaultedFieldCodec.of(SieveConfig.CODEC, "sieves", FabricaeExNihiloConfig.DEFAULT.sieves).forGetter(FabricaeExNihiloConfig::sieves),
                     DefaultedFieldCodec.of(InfestedConfig.CODEC, "infested", FabricaeExNihiloConfig.DEFAULT.infested).forGetter(FabricaeExNihiloConfig::infested),
                     DefaultedFieldCodec.of(StrainerConfig.CODEC, "strainers", FabricaeExNihiloConfig.DEFAULT.strainers).forGetter(FabricaeExNihiloConfig::strainers),
-                    DefaultedFieldCodec.of(WitchWaterConfig.CODEC, "witchWater", FabricaeExNihiloConfig.DEFAULT.witchwater).forGetter(FabricaeExNihiloConfig::witchwater))
+                    DefaultedFieldCodec.of(WitchWaterConfig.CODEC, "witchWater", FabricaeExNihiloConfig.DEFAULT.witchwater).forGetter(FabricaeExNihiloConfig::witchwater),
+                    MiscConfig.CODEC.forGetter(FabricaeExNihiloConfig::misc)) // Spread misc config props into the main config body
             .apply(instance, FabricaeExNihiloConfig::new));
 }

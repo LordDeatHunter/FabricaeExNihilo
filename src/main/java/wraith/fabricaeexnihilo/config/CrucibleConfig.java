@@ -6,13 +6,6 @@ import io.github.mattidragon.configloader.api.DefaultedFieldCodec;
 import io.github.mattidragon.configloader.api.GenerateMutable;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 
-/**
- * @param efficiency  Can crucibles be enchanted with efficiency.
- * @param fireAspect  Can stone crucibles be enchanted with fire aspect.
- * @param stoneVolume How many buckets of liquid can a stone crucible store
- * @param tickRate    How many ticks between updates
- * @param woodVolume  How many buckets of liquid can a wooden crucible store
- */
 @SuppressWarnings("UnstableApiUsage")
 @GenerateMutable(useFancyMethodNames = true)
 public record CrucibleConfig(int stoneProcessingRate, int woodProcessingRate, int stoneVolume, int woodVolume,

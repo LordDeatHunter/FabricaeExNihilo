@@ -8,9 +8,6 @@ import net.minecraft.util.Identifier;
 
 import java.util.List;
 
-/**
- * @param effects What effects should players get on contact
- */
 @GenerateMutable(useFancyMethodNames = true)
 public record WitchWaterConfig(List<StatusEffectStats> effects) implements MutableWitchWaterConfig.Source {
     public static final WitchWaterConfig DEFAULT = new WitchWaterConfig(List.of(

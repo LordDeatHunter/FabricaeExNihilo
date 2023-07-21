@@ -5,10 +5,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.mattidragon.configloader.api.DefaultedFieldCodec;
 import io.github.mattidragon.configloader.api.GenerateMutable;
 
-/**
- * @param bleeding Requires that thorns be enabled too.
- * @param tickRate       How many ticks between updates
- */
 @GenerateMutable(useFancyMethodNames = true)
 public record BarrelConfig(double compostRate,
                            boolean bleeding,

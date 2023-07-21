@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.ModItems;
 
 @Debug(export = true)
@@ -41,6 +42,7 @@ public abstract class BottleUseMixin extends Item {
     */
     @Inject(method = "use", at = @At(value = "INVOKE", target="Lnet/minecraft/world/World;canPlayerModifyAt(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/math/BlockPos;)Z"), cancellable = true)
     private void fabricaeexnihilo$collectSalt(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir, @Local BlockHitResult hitResult) {
+        if (!FabricaeExNihilo.CONFIG.get().misc().enableSaltCollection()) return;
         if (!world.canPlayerModifyAt(user, hitResult.getBlockPos())) return;
         if (!world.getBlockState(hitResult.getBlockPos()).isIn(BlockTags.SAND)) return;
 

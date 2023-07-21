@@ -21,10 +21,11 @@ public class ConfigScreenBuilder {
         var infested = config.infested().toMutable();
         var strainers = config.strainers().toMutable();
         var witchwater = config.witchwater().toMutable();
+        var misc = config.misc().toMutable();
 
         return YetAnotherConfigLib.createBuilder()
                 .title(Text.translatable("config.fabricaeexnihlio.title"))
-                .save(() -> FabricaeExNihilo.CONFIG.set(new FabricaeExNihiloConfig(barrels.toImmutable(), crucibles.toImmutable(), seeds.toImmutable(), sieves.toImmutable(), infested.toImmutable(), strainers.toImmutable(), witchwater.toImmutable())))
+                .save(() -> FabricaeExNihilo.CONFIG.set(new FabricaeExNihiloConfig(barrels.toImmutable(), crucibles.toImmutable(), seeds.toImmutable(), sieves.toImmutable(), infested.toImmutable(), strainers.toImmutable(), witchwater.toImmutable(), misc.toImmutable())))
                 .category(createBarrelCategory(barrels))
                 .category(createCrucibleCategory(crucibles))
                 .category(createInfestedCategory(infested))
@@ -32,6 +33,7 @@ public class ConfigScreenBuilder {
                 .category(createSieveCategory(sieves))
                 .category(createStrainerCategory(strainers))
                 .category(createWitchwaterRedirectCategory())
+                .category(createMiscCategory(misc))
                 .build()
                 .generateScreen(parent);
     }
@@ -341,6 +343,18 @@ public class ConfigScreenBuilder {
                         .text(Text.translatable("config.fabricaeexnihlio.option.witchwater.effects_not_available.action"))
                         // We can't open the config file itself because the code for opening links on windows doesn't seem to work with files
                         .action((screen, button) -> Util.getOperatingSystem().open(FabricLoader.getInstance().getConfigDir().toUri()))
+                        .build())
+                .build();
+    }
+
+    private static ConfigCategory createMiscCategory(MutableMiscConfig misc) {
+        return ConfigCategory.createBuilder()
+                .name(Text.translatable("config.fabricaeexnihlio.category.misc"))
+                .option(Option.<Boolean>createBuilder()
+                        .name(Text.translatable("config.fabricaeexnihlio.option.misc.enableSaltCollection"))
+                        .description(OptionDescription.of(Text.translatable("config.fabricaeexnihlio.option.misc.enableSaltCollection.description")))
+                        .controller(TickBoxControllerBuilder::create)
+                        .binding(MiscConfig.DEFAULT.enableSaltCollection(), misc::getEnableSaltCollection, misc::setEnableSaltCollection)
                         .build())
                 .build();
     }
