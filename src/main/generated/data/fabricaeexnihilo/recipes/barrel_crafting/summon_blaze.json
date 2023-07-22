@@ -8,6 +8,13 @@
         "data": {},
         "size": 1
       }
+    },
+    {
+      "type": "store_fluid",
+      "amount": 0,
+      "fluid": {
+        "type": "minecraft:empty"
+      }
     }
   ],
   "conditions": [

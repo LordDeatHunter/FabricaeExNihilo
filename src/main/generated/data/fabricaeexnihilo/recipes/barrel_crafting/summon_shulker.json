@@ -11,7 +11,7 @@
     },
     {
       "type": "store_fluid",
-      "amount": 81000,
+      "amount": 0,
       "fluid": {
         "type": "minecraft:empty"
       }
