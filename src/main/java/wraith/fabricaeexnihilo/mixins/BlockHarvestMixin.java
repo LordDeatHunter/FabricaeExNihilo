@@ -1,5 +1,6 @@
 package wraith.fabricaeexnihilo.mixins;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
@@ -7,8 +8,6 @@ import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import wraith.fabricaeexnihilo.modules.tools.CrookItem;
 import wraith.fabricaeexnihilo.modules.tools.HammerItem;
 import wraith.fabricaeexnihilo.recipe.ToolRecipe;
@@ -17,21 +16,19 @@ import java.util.List;
 
 @Mixin(AbstractBlock.class)
 public abstract class BlockHarvestMixin {
-    /**
-     * Injects calls to the Hammer and Crook registries if the tool used is identified as a Hammer or Crook
-     */
-    @Inject(at = @At("RETURN"), method = "getDroppedStacks", cancellable = true)
-    public void getDroppedStacks(BlockState state, LootContextParameterSet.Builder builder, CallbackInfoReturnable<List<ItemStack>> info) {
+    @ModifyReturnValue(method = "getDroppedStacks", at = @At("RETURN"))
+    public List<ItemStack> fabricaeexnihilo$applyToolRecipes(List<ItemStack> original, BlockState state, LootContextParameterSet.Builder builder) {
         ItemStack tool = builder.get(LootContextParameters.TOOL);
-        if (CrookItem.isCrook(tool) || HammerItem.isHammer(tool)) {
-            var recipes = ToolRecipe.find(CrookItem.isCrook(tool) ? ToolRecipe.ToolType.CROOK : ToolRecipe.ToolType.HAMMER, state, builder.getWorld());
-            // Non-tool block. Just use default drops
-            if (recipes.isEmpty())
-                return;
-            info.setReturnValue(recipes.stream()
-                    .map(ToolRecipe::getResult)
-                    .map(loot -> loot.createStack(builder.getWorld().random))
-                    .toList());
-        }
+        List<ToolRecipe> recipes;
+        if (CrookItem.isCrook(tool))
+            recipes = ToolRecipe.find(ToolRecipe.ToolType.CROOK, state, builder.getWorld());
+        else if (HammerItem.isHammer(tool))
+            recipes = ToolRecipe.find(ToolRecipe.ToolType.HAMMER, state, builder.getWorld());
+        else return original;
+
+        return recipes.stream()
+                .map(ToolRecipe::getResult)
+                .map(loot -> loot.createStack(builder.getWorld().random))
+                .toList();
     }
 }

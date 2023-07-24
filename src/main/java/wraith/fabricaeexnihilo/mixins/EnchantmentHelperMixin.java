@@ -27,7 +27,7 @@ public abstract class EnchantmentHelperMixin {
      * @param cir         Callback info.
      */
     @Inject(method = "getPossibleEntries", at = @At(value = "RETURN"))
-    private static void getHighestApplicableEnchantmentsAtPower(int power, ItemStack stack, boolean hasTreasure, CallbackInfoReturnable<List<EnchantmentLevelEntry>> cir) {
+    private static void fabricaeexnihilo$injectEnchantments(int power, ItemStack stack, boolean hasTreasure, CallbackInfoReturnable<List<EnchantmentLevelEntry>> cir) {
         var list = cir.getReturnValue();
         Registries.ENCHANTMENT.stream()
                 .filter(enchantment -> (hasTreasure || !enchantment.isTreasure()) && BonusEnchantingManager.DATA.getOrDefault(enchantment, Collections.emptyList()).contains(stack.getItem()))

@@ -13,11 +13,10 @@ import wraith.fabricaeexnihilo.modules.witchwater.WitchWaterBlock;
 @Mixin(FluidBlock.class)
 public class FluidBlockMixin {
     @Inject(method = "receiveNeighborFluids", at = @At("HEAD"), cancellable = true)
-    public void receiveNeighborFluids(World world, BlockPos pos, BlockState state, CallbackInfoReturnable<Boolean> cir) {
+    public void fabricaeexnihilo$updateWitchWater(World world, BlockPos pos, BlockState state, CallbackInfoReturnable<Boolean> cir) {
         //noinspection ConstantValue
         if ((FluidBlock) (Object) this instanceof WitchWaterBlock) {
             cir.setReturnValue(WitchWaterBlock.receiveNeighborFluids(world, pos));
-            cir.cancel();
         }
     }
 }
