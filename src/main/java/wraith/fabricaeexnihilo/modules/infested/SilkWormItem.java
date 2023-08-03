@@ -13,9 +13,6 @@ public class SilkWormItem extends Item {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        if (context == null || context.getWorld().isClient) {
-            return super.useOnBlock(context);
-        }
         var result = InfestedHelper.tryToInfest(context.getWorld(), context.getBlockPos());
         if (result == ActionResult.SUCCESS && (context.getPlayer() == null || !context.getPlayer().isCreative())) {
             context.getStack().decrement(1);
