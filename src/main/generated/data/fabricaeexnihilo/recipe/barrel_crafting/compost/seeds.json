@@ -15,8 +15,6 @@
   "icon": "minecraft:dirt",
   "trigger": {
     "type": "insert_item",
-    "item": {
-      "tag": "c:seeds"
-    }
+    "item": "#c:seeds"
   }
 }

@@ -20,15 +20,19 @@ import java.util.Optional;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
+
 public class InfestingLeavesBlockEntity extends BaseBlockEntity implements Colored {
     public static final Identifier BLOCK_ENTITY_ID = id("infesting");
     private double progress = 0.0;
     private InfestedLeavesBlock target = ModBlocks.INFESTED_LEAVES.values().stream().findFirst().orElseThrow();
     private int tickCounter = 0;
-    public static final BlockEntityType<InfestingLeavesBlockEntity> TYPE = BlockEntityType.Builder.create(
+    public static final BlockEntityType<InfestingLeavesBlockEntity> TYPE = FabricBlockEntityTypeBuilder.create(
             InfestingLeavesBlockEntity::new,
             ModBlocks.INFESTING_LEAVES
-    ).build(null);
+    ).build();
 
     public InfestingLeavesBlockEntity(BlockPos pos, BlockState state) {
         super(TYPE, pos, state);
@@ -48,7 +52,7 @@ public class InfestingLeavesBlockEntity extends BaseBlockEntity implements Color
                     .with(LeavesBlock.DISTANCE, state.get(LeavesBlock.DISTANCE))
                     .with(LeavesBlock.PERSISTENT, state.get(LeavesBlock.PERSISTENT));
             world.setBlockState(pos, newState);
-        } else if (!world.isClient && blockEntity.progress > FabricaeExNihilo.CONFIG.get().infested().minimumSpreadProgress()) {
+        } else if (!world.isClient() && blockEntity.progress > FabricaeExNihilo.CONFIG.get().infested().minimumSpreadProgress()) {
             InfestedHelper.tryToSpreadFrom(world, pos, FabricaeExNihilo.CONFIG.get().infested().infestingSpreadAttempts());
         }
     }
@@ -72,27 +76,18 @@ public class InfestingLeavesBlockEntity extends BaseBlockEntity implements Color
     }
 
     @Override
-    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.readNbt(nbt, registryLookup);
-        readNbtWithoutWorldInfo(nbt, registryLookup);
-    }
-
-    public void readNbtWithoutWorldInfo(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        progress = nbt.getDouble("progress");
-        target = Registries.BLOCK.getOrEmpty(Identifier.of(nbt.getString("target")))
+    protected void readData(ReadView view) {
+        super.readData(view);
+        progress = view.getDouble("progress", 0.0);
+        target = Registries.BLOCK.getOptionalValue(Identifier.of(view.getString("target", "")))
                 .flatMap(block -> block instanceof InfestedLeavesBlock infested ? Optional.of(infested) : Optional.empty())
                 .orElse(ModBlocks.INFESTED_LEAVES.values().stream().findFirst().orElseThrow());
     }
 
-    @SuppressWarnings("deprecation")
-    public void toNBTWithoutWorldInfo(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        nbt.putDouble("progress", progress);
-        nbt.putString("target", target.getRegistryEntry().registryKey().getValue().toString());
-    }
-
     @Override
-    public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.writeNbt(nbt, registryLookup);
-        toNBTWithoutWorldInfo(nbt, registryLookup);
+    protected void writeData(WriteView view) {
+        super.writeData(view);
+        view.putDouble("progress", progress);
+        view.putString("target", target.getRegistryEntry().getKey().get().getValue().toString());
     }
 }

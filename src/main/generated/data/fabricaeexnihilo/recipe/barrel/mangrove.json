@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "fabricaeexnihilo:barrel",
   "key": {
-    "#": {
-      "item": "minecraft:mangrove_planks"
-    },
-    "S": {
-      "item": "minecraft:mangrove_slab"
-    }
+    "#": "minecraft:mangrove_planks",
+    "S": "minecraft:mangrove_slab"
   },
   "pattern": [
     "# #",

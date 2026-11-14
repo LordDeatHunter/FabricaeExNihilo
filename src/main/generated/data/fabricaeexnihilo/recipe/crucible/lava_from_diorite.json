@@ -4,8 +4,6 @@
   "fluid": {
     "fluid": "minecraft:lava"
   },
-  "input": {
-    "item": "minecraft:diorite"
-  },
+  "input": "minecraft:diorite",
   "requiresFireproofCrucible": true
 }

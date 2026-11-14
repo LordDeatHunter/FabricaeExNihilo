@@ -19,8 +19,6 @@
   "icon": "minecraft:horn_coral_block",
   "trigger": {
     "type": "insert_item",
-    "item": {
-      "item": "minecraft:yellow_dye"
-    }
+    "item": "minecraft:yellow_dye"
   }
 }

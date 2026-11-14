@@ -17,7 +17,7 @@ public abstract class BaseBlockEntity extends BlockEntity {
     }
 
     public final void markForUpdate() {
-        if (this.world != null && this.world instanceof ServerWorld serverWorld) {
+        if (this.world instanceof ServerWorld serverWorld) {
             var chunkManager = serverWorld.getChunkManager();
             if (chunkManager != null) {
                 chunkManager.markForUpdate(pos);
@@ -32,6 +32,6 @@ public abstract class BaseBlockEntity extends BlockEntity {
 
     @Override
     public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
-        return createNbt(registryLookup);
+        return createComponentlessNbt(registryLookup);
     }
 }

@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "fabricaeexnihilo:sieve",
   "key": {
-    "#": {
-      "item": "minecraft:warped_stem"
-    },
-    "S": {
-      "item": "minecraft:string"
-    }
+    "#": "minecraft:warped_stem",
+    "S": "minecraft:string"
   },
   "pattern": [
     "#S#",

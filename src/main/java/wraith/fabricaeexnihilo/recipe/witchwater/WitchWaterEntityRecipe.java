@@ -25,6 +25,7 @@ import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
+import wraith.fabricaeexnihilo.recipe.RecipeHelper;
 
 import java.util.Optional;
 
@@ -43,23 +44,25 @@ public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.Co
         if (world == null) {
             return Optional.empty();
         }
-        return world.getRecipeManager().getFirstMatch(ModRecipes.WITCH_WATER_ENTITY, new Context(entity), world);
+        return RecipeHelper.getFirstMatch(ModRecipes.WITCH_WATER_ENTITY, new Context(entity), world);
     }
 
     @Override
     public boolean matches(Context context, World world) {
         if (target != context.entity.getType())
             return false;
-        return nbt.count(context.entity.writeNbt(new NbtCompound())) > 0;
+        var view = net.minecraft.storage.NbtWriteView.create(net.minecraft.util.ErrorReporter.EMPTY, world.getRegistryManager());
+        context.entity.writeData(view);
+        return nbt.count(view.getNbt()) > 0;
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<WitchWaterEntityRecipe> getSerializer() {
         return ModRecipes.WITCH_WATER_ENTITY_SERIALIZER;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<WitchWaterEntityRecipe> getType() {
         return ModRecipes.WITCH_WATER_ENTITY;
     }
 
@@ -85,12 +88,19 @@ public class WitchWaterEntityRecipe extends BaseRecipe<WitchWaterEntityRecipe.Co
     }
 
     public static class Serializer implements RecipeSerializer<WitchWaterEntityRecipe> {
+        private static final Codec<EntityType<?>> ENTITY_TYPE_CODEC = Codec.either(
+                Registries.ENTITY_TYPE.getCodec(),
+                RecordCodecBuilder.<EntityType<?>>create(inst -> inst.group(
+                        Registries.ENTITY_TYPE.getCodec().fieldOf("id").forGetter(e -> e)
+                ).apply(inst, e -> e))
+        ).xmap(either -> either.map(e -> e, e -> e), com.mojang.datafixers.util.Either::left);
+
         public static final MapCodec<WitchWaterEntityRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
-                        Registries.ENTITY_TYPE.getCodec().fieldOf("target").forGetter(recipe -> recipe.target),
+                        ENTITY_TYPE_CODEC.fieldOf("target").forGetter(recipe -> recipe.target),
                         Codec.STRING.xmap(Serializer::parseNbtPath, NbtPathArgumentType.NbtPath::toString)
                                 .fieldOf("nbt").forGetter(recipe -> recipe.nbt),
-                        Registries.ENTITY_TYPE.getCodec().fieldOf("result").forGetter(recipe -> recipe.result)
+                        ENTITY_TYPE_CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
                 ).apply(instance, WitchWaterEntityRecipe::new)
         );
 

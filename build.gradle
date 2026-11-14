@@ -5,7 +5,7 @@ buildscript {
 }
 
 plugins {
-    id 'fabric-loom' version '1.6-SNAPSHOT'
+    id 'fabric-loom' version '1.13.1'
     id 'maven-publish'
 }
 
@@ -25,22 +25,9 @@ repositories {
     maven { url "https://maven.architectury.dev/" }
     maven { url "https://maven.quiltmc.org/repository/release" }
     maven {
-        url "https://maven.blamejared.com"
-        content {
-            includeGroup "com.faux.ingredientextension"
-        }
-    }
-    maven {
         url "https://maven.isxander.dev/releases"
         content {
             includeGroup "dev.isxander"
-        }
-    }
-    maven {
-        url "http://maven.modmuss50.me/"
-        allowInsecureProtocol = true
-        content {
-            includeGroup "TechReborn"
         }
     }
     maven {
@@ -50,7 +37,7 @@ repositories {
         }
     }
     maven {
-        url "https://www.cursemaven.com"
+        url "https://cursemaven.com"
         content {
             includeGroup "curse.maven"
         }
@@ -62,9 +49,6 @@ repositories {
         }
     }
 }
-
-// toggle this if you need to make a change to allow intellij to refresh
-boolean nothing = true
 
 var settings = new Object() {
     boolean wthit
@@ -79,6 +63,38 @@ var settings = new Object() {
 }
 apply from: "config.gradle", to: settings
 
+sourceSets {
+    main {
+        java {
+            exclude 'wraith/fabricaeexnihilo/datagen/**'
+            if (!settings.rei) {
+                exclude 'wraith/fabricaeexnihilo/compatibility/rei/**'
+            }
+            if (!settings.emi) {
+                exclude 'wraith/fabricaeexnihilo/compatibility/emi/**'
+            }
+            if (!settings.rei && !settings.emi) {
+                exclude 'wraith/fabricaeexnihilo/compatibility/recipeviewer/**'
+            }
+            if (!settings.jade) {
+                exclude 'wraith/fabricaeexnihilo/compatibility/jade/**'
+            }
+            if (!settings.wthit) {
+                exclude 'wraith/fabricaeexnihilo/compatibility/wthit/**'
+            }
+            if (!settings.megane) {
+                exclude 'wraith/fabricaeexnihilo/compatibility/megane/**'
+            }
+            if (!settings.modmenu) {
+                exclude 'wraith/fabricaeexnihilo/client/config/ModmenuPlugin.java'
+            }
+        }
+        resources {
+            srcDir("src/main/generated")
+        }
+    }
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:$minecraft_version"
     mappings "net.fabricmc:yarn:$yarn_mappings:v2"
@@ -86,45 +102,51 @@ dependencies {
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:$fabric_version"
 
-    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:$rei_version"
-    modCompileOnly "dev.architectury:architectury-fabric:$architectury_version"
-    modCompileOnly "dev.emi:emi-fabric:$emi_version:api"
-    modApi "me.shedaniel.cloth:basic-math:0.6.1"
-    modCompileOnly "com.terraformersmc:modmenu:$modmenu_version"
-
     modImplementation include("dev.isxander:yet-another-config-lib:$yacl_version")
-    modImplementation annotationProcessor(include("com.github.mattidragon:configtoolkit:$configtoolkit_version"))
+    modImplementation include("com.github.mattidragon:configtoolkit:$configtoolkit_version")
 
-    // Add generated data to runtime classpath (slightly hacky)
+    // Add generated data to runtime classpath
     runtimeOnly files("src/main/generated")
 
     if (settings.rei) {
+        modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:$rei_version"
+        modCompileOnly "dev.architectury:architectury-fabric:$architectury_version"
         modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
         modRuntimeOnly "dev.architectury:architectury-fabric:$architectury_version"
     }
     if (settings.emi) {
+        modCompileOnly "dev.emi:emi-fabric:$emi_version:api"
         modRuntimeOnly "dev.emi:emi-fabric:$emi_version"
     }
-    if (settings.modmenu) modRuntimeOnly "com.terraformersmc:modmenu:$modmenu_version"
-    if (settings.techReborn) modRuntimeOnly "TechReborn:TechReborn-1.21:$tech_reborn_version"
-    if (settings.modernIndustrialization) modRuntimeOnly "maven.modrinth:modern-industrialization:$modern_industrialization_version"
-    if (settings.industrialRevolution) modRuntimeOnly "curse.maven:industrial-revolution-391708:$industrial_revolution_version"
-
-    // WTHIT and Megane
-    modCompileOnly "mcp.mobius.waila:wthit-api:fabric-$wthit_version"
+    if (settings.modmenu) {
+        modCompileOnly "com.terraformersmc:modmenu:$modmenu_version"
+        modRuntimeOnly "com.terraformersmc:modmenu:$modmenu_version"
+    }
+    if (settings.techReborn) {
+        modRuntimeOnly "TechReborn:TechReborn-1.19:$tech_reborn_version"
+    }
+    if (settings.modernIndustrialization) {
+        modRuntimeOnly "maven.modrinth:modern-industrialization:$modern_industrialization_version"
+    }
+    if (settings.industrialRevolution) {
+        modRuntimeOnly "curse.maven:industrial-revolution-391708:$industrial_revolution_version"
+    }
     if (settings.wthit) {
+        modCompileOnly "mcp.mobius.waila:wthit-api:fabric-$wthit_version"
         modRuntimeOnly "mcp.mobius.waila:wthit:fabric-$wthit_version"
     }
-    modCompileOnly "lol.bai.megane:megane-api:$megane_version"
     if (settings.megane) {
+        // Compile against the same API version that ships at runtime. Pinning an
+        // older API here lets the code compile against methods that no longer
+        // exist in the version the game actually loads.
+        modCompileOnly "lol.bai.megane:megane-api:$megane_version"
         modRuntimeOnly "lol.bai:badpackets:fabric-0.1.2"
         modRuntimeOnly "lol.bai.megane:megane-runtime:$megane_version"
         modRuntimeOnly "lol.bai.megane:megane-vanilla:$megane_version"
         modRuntimeOnly "lol.bai.megane:megane-api:$megane_version"
     }
-
-    modCompileOnly "maven.modrinth:jade:$jade_version+fabric"
     if (settings.jade) {
+        modCompileOnly "maven.modrinth:jade:$jade_version+fabric"
         modRuntimeOnly "maven.modrinth:jade:$jade_version+fabric"
     }
 }
@@ -137,15 +159,12 @@ loom {
             vmArg "-Dfabric-api.datagen"
             vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
             vmArg "-Dfabric-api.datagen.modid=fabricaeexnihilo"
-            //vmArg "-Dfabric-api.datagen.strict-validation"
 
             ideConfigGenerated = true
-
             runDir "build/datagen/"
         }
     }
 
-    // Apply datagen at runtime
     mods {
         fabricaeexnihilo {
             sourceSet sourceSets.main
@@ -154,7 +173,6 @@ loom {
     }
 }
 
-// Hack to copy dependency overrides to datagen
 tasks.register('copyDatagenOverrides', Copy) {
     from "run/config/fabric_loader_dependencies.json"
     into "build/datagen/config"
@@ -162,9 +180,7 @@ tasks.register('copyDatagenOverrides', Copy) {
 clean.finalizedBy(tasks.copyDatagenOverrides)
 tasks.runDatagen.dependsOn(tasks.copyDatagenOverrides)
 
-// Delete datagen on clean
 clean.delete("src/main/generated")
-
 
 import groovy.json.JsonException
 import groovy.json.JsonSlurper
@@ -200,11 +216,10 @@ java {
 }
 
 jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from("LICENSE") {
         rename { "${it}_${archives_base_name}" }
     }
-    // Copy datagen to jar
-    dependsOn tasks.runDatagen
     from("src/main/generated") {
         exclude "README.md"
         exclude ".cache"
@@ -215,4 +230,9 @@ publishing {
     publications.register("mavenJava", MavenPublication) {
         from components.java
     }
+}
+
+tasks.named('runServer') {
+    systemProperty 'fabricaeexnihilo.test', System.getProperty('fabricaeexnihilo.test', 'false')
+    environment 'FEN_TEST', System.getenv('FEN_TEST') ?: 'false'
 }

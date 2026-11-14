@@ -1,0 +1,30 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": {
+    "id": "mythicmetals:aquarium_pearl"
+  },
+  "input": "fabricaeexnihilo:crushed_prismarine",
+  "rolls": {
+    "fabricaeexnihilo:iron_mesh": [
+      0.01
+    ],
+    "fabricaeexnihilo:diamond_mesh": [
+      0.02
+    ],
+    "fabricaeexnihilo:netherite_mesh": [
+      0.03
+    ],
+    "fabricaeexnihilo:adamantite_mesh": [
+      0.06
+    ]
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "registry": "minecraft:item",
+      "values": [
+        "mythicmetals:aquarium_pearl"
+      ]
+    }
+  ]
+}

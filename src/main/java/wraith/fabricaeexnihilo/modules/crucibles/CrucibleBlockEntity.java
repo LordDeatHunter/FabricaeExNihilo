@@ -27,7 +27,7 @@ import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.ItemActionResult;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -42,16 +42,20 @@ import wraith.fabricaeexnihilo.util.CodecUtils;
 
 import java.util.Iterator;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
+
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableBlockEntity {
 
     public static final Identifier BLOCK_ENTITY_ID = id("crucible");
 
-    public static final BlockEntityType<CrucibleBlockEntity> TYPE = BlockEntityType.Builder.create(
+    public static final BlockEntityType<CrucibleBlockEntity> TYPE = FabricBlockEntityTypeBuilder.create(
             CrucibleBlockEntity::new,
             ModBlocks.CRUCIBLES.values().toArray(new CrucibleBlock[0])
-    ).build(null);
+    ).build();
 
     static {
         ItemStorage.SIDED.registerForBlockEntity((crucible, direction) -> crucible.itemStorage, TYPE);
@@ -76,13 +80,13 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
                 : world.random.nextInt(FabricaeExNihilo.CONFIG.get().crucibles().tickRate());
     }
 
-    public ItemActionResult activate(@Nullable PlayerEntity player, @Nullable Hand hand) {
+    public ActionResult activate(@Nullable PlayerEntity player, @Nullable Hand hand) {
         if (world == null || player == null) {
-            return ItemActionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
+            return ActionResult.PASS;
         }
         var held = player.getStackInHand(hand == null ? player.getActiveHand() : hand);
         if (held == null || held.isEmpty()) {
-            return ItemActionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
+            return ActionResult.PASS;
         }
 
         var bucketFluidStorage = FluidStorage.ITEM.find(held, ContainerItemContext.ofPlayerHand(player, hand));
@@ -90,7 +94,7 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
             var amount = StorageUtil.move(fluidStorage, bucketFluidStorage, fluid -> true, Long.MAX_VALUE, null);
             if (amount > 0) {
                 markDirty();
-                return ItemActionResult.SUCCESS;
+                return ActionResult.SUCCESS;
             }
         }
 
@@ -102,11 +106,11 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
                     held.decrement((int) amount);
                 }
                 markDirty();
-                return ItemActionResult.SUCCESS;
+                return ActionResult.SUCCESS;
             }
         }
 
-        return ItemActionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
+        return ActionResult.PASS;
     }
 
     public long getContained() {
@@ -155,23 +159,15 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
     }
 
     @Override
-    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.readNbt(nbt, registryLookup);
-        if (nbt == null) {
-            FabricaeExNihilo.LOGGER.warn("A crucible at {} is missing data.", pos);
-            return;
-        }
-        readNbtWithoutWorldInfo(nbt, registryLookup);
-    }
-
-    private void readNbtWithoutWorldInfo(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        renderStack = ItemStack.fromNbtOrEmpty(registryLookup, nbt.getCompound("render"));
-        fluid = CodecUtils.fromNbt(FluidVariant.CODEC, nbt.getCompound("fluid"), registryLookup);
-        contained = nbt.getLong("contained");
-        queued = nbt.getLong("queued");
-        heat = nbt.getInt("heat");
-        requiresFireproof = !nbt.contains("requiresFireproof") || nbt.getBoolean("requiresFireproof");
-        enchantments.readNbt(nbt.getCompound("enchantments"), registryLookup);
+    protected void readData(ReadView view) {
+        super.readData(view);
+        renderStack = view.read("render", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY);
+        fluid = view.read("fluid", FluidVariant.CODEC).orElse(FluidVariant.blank());
+        contained = view.getLong("contained", 0L);
+        queued = view.getLong("queued", 0L);
+        heat = view.getInt("heat", 0);
+        requiresFireproof = view.getBoolean("requiresFireproof", true);
+        enchantments.readData(view);
         updateHeat(); // Enchantments affect heat
     }
 
@@ -209,19 +205,15 @@ public class CrucibleBlockEntity extends BaseBlockEntity implements EnchantableB
      */
 
     @Override
-    public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.writeNbt(nbt, registryLookup);
-        writeNbtWithoutWorldInfo(nbt, registryLookup);
-    }
-
-    private void writeNbtWithoutWorldInfo(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        nbt.put("render", renderStack.encodeAllowEmpty(registryLookup));
-        nbt.put("fluid", FluidVariant.CODEC.encodeStart(registryLookup.getOps(NbtOps.INSTANCE), fluid).getOrThrow());
-        nbt.putLong("contained", contained);
-        nbt.putLong("queued", queued);
-        nbt.putInt("heat", heat);
-        nbt.putBoolean("requiresFireproof", requiresFireproof);
-        nbt.put("enchantments", enchantments.writeNbt());
+    protected void writeData(WriteView view) {
+        super.writeData(view);
+        view.put("render", ItemStack.OPTIONAL_CODEC, renderStack);
+        view.put("fluid", FluidVariant.CODEC, fluid);
+        view.putLong("contained", contained);
+        view.putLong("queued", queued);
+        view.putInt("heat", heat);
+        view.putBoolean("requiresFireproof", requiresFireproof);
+        enchantments.writeData(view);
     }
 
     private record CrucibleSnapshot(long contained, long queued, FluidVariant fluid, boolean requiresFireproof,

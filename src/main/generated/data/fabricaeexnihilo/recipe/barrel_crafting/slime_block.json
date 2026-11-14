@@ -20,12 +20,8 @@
   "trigger": {
     "type": "insert_item",
     "item": [
-      {
-        "item": "minecraft:red_mushroom"
-      },
-      {
-        "item": "minecraft:brown_mushroom"
-      }
+      "minecraft:red_mushroom",
+      "minecraft:brown_mushroom"
     ]
   }
 }

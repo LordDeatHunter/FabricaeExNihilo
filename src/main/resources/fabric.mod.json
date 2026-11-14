@@ -18,32 +18,18 @@
     "client": [
       "wraith.fabricaeexnihilo.client.FabricaeExNihiloClient"
     ],
-    "modmenu": [
-      "wraith.fabricaeexnihilo.client.config.ModmenuPlugin"
-    ],
     "fabricaeexnihilo:api": [
       "wraith.fabricaeexnihilo.compatibility.DefaultApiModule::INSTANCE",
       "wraith.fabricaeexnihilo.compatibility.TechRebornApiModule::INSTANCE",
       "wraith.fabricaeexnihilo.compatibility.IndustrialRevolutionApiModule::INSTANCE",
       "wraith.fabricaeexnihilo.compatibility.ModernIndustrializationApiModule::INSTANCE",
       "wraith.fabricaeexnihilo.compatibility.MythicMetalsApiModule::INSTANCE"
-    ],
-    "rei_client": [
-      "wraith.fabricaeexnihilo.compatibility.rei.PluginEntry"
-    ],
-    "emi": [
-      "wraith.fabricaeexnihilo.compatibility.emi.FENEmiPlugin"
-    ],
-    "jade": [
-      "wraith.fabricaeexnihilo.compatibility.jade.FENJadePlugin"
-    ],
-    "fabric-datagen": [
-      "wraith.fabricaeexnihilo.datagen.FENDatagen"
     ]
   },
   "mixins": [
     "fabricaeexnihilo.mixin.json"
   ],
+<<<<<<< HEAD
   "custom": {
     "megane:modules": [
       "wraith.fabricaeexnihilo.compatibility.megane.FENMeganeModule"
@@ -53,10 +39,16 @@
       "net/minecraft/class_2203\u0024class_2209": ["wraith/fabricaeexnihilo/mixins/NbtPathAccess"]
     }
   },
+=======
+>>>>>>> af27b1fa (feat: Port to Minecraft 1.21.11 (Fabric))
   "depends": {
-    "fabricloader": ">=0.15.10",
+    "fabricloader": ">=0.18.4",
     "fabric-api": "*",
+<<<<<<< HEAD
     "minecraft": ">=1.21",
+=======
+    "minecraft": "~1.21.11",
+>>>>>>> af27b1fa (feat: Port to Minecraft 1.21.11 (Fabric))
     "java": ">=21"
   }
 }

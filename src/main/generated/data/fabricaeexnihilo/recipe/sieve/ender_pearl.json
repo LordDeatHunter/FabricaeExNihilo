@@ -1,8 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "input": {
-    "item": "fabricaeexnihilo:crushed_endstone"
-  },
+  "input": "fabricaeexnihilo:crushed_endstone",
   "result": {
     "count": 1,
     "id": "minecraft:ender_pearl"

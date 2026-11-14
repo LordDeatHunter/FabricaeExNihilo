@@ -11,12 +11,8 @@
   "category": "misc",
   "group": "fabricaeexnihilo:sieve",
   "key": {
-    "#": {
-      "item": "techreborn:rubber_log"
-    },
-    "S": {
-      "item": "minecraft:string"
-    }
+    "#": "techreborn:rubber_log",
+    "S": "minecraft:string"
   },
   "pattern": [
     "#S#",

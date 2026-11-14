@@ -8,17 +8,14 @@
     "BlockHarvestMixin",
     "BlockWithEntityInvoker",
     "BottleUseMixin",
-    "EnchantmentMixin",
     "EntityMixin",
     "FluidBlockAccess",
     "FluidBlockMixin",
     "ItemEntityMixin",
-    "ItemModelGeneratorAccess",
     "LivingEntityMixin",
     "LootContextTypesAccess"
   ],
   "client": [
-    "client.BlockModelRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "fabricaeexnihilo:crucible",
   "key": {
-    "#": {
-      "item": "minecraft:cherry_log"
-    },
-    "I": {
-      "item": "minecraft:stick"
-    },
-    "S": {
-      "item": "minecraft:cherry_slab"
-    }
+    "#": "minecraft:cherry_log",
+    "I": "minecraft:stick",
+    "S": "minecraft:cherry_slab"
   },
   "pattern": [
     "# #",

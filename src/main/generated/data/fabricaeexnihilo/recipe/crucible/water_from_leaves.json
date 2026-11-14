@@ -4,8 +4,6 @@
   "fluid": {
     "fluid": "minecraft:water"
   },
-  "input": {
-    "tag": "minecraft:leaves"
-  },
+  "input": "#minecraft:leaves",
   "requiresFireproofCrucible": false
 }

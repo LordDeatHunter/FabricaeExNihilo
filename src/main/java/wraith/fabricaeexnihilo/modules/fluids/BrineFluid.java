@@ -7,12 +7,14 @@ import wraith.fabricaeexnihilo.modules.ModFluids;
 import wraith.fabricaeexnihilo.modules.base.AbstractFluid;
 import wraith.fabricaeexnihilo.modules.base.FluidSettings;
 
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
+
 public class BrineFluid extends AbstractFluid {
     private static final FluidSettings FLUID_SETTINGS = new FluidSettings("brine", 0xACC4B9, false, true);
     public static final BrineFluid STILL = new BrineFluid(true);
-    public static final BucketItem BUCKET = new BucketItem(STILL, ModFluids.getBucketItemSettings());
+    public static final BucketItem BUCKET = new BucketItem(STILL, ModFluids.getBucketItemSettings(id("brine_bucket")));
     public static final BrineFluid FLOWING = new BrineFluid(false);
-    public static final FluidBlock BLOCK = new FluidBlock(STILL, ModFluids.getBlockSettings());
+    public static final FluidBlock BLOCK = new FluidBlock(STILL, ModFluids.getBlockSettings(id("brine")));
 
     @Override
     public boolean matchesType(Fluid fluid) {

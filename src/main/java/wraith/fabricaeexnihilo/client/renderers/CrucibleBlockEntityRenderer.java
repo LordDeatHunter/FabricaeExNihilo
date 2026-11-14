@@ -1,25 +1,27 @@
 package wraith.fabricaeexnihilo.client.renderers;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
-import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView;
 import net.fabricmc.fabric.api.transfer.v1.client.fluid.FluidVariantRendering;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.item.ItemModelManager;
+import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
-import net.minecraft.client.render.model.json.ModelTransformationMode;
+import net.minecraft.client.render.block.entity.state.BlockEntityRenderState;
+import net.minecraft.client.render.command.ModelCommandRenderer;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
+import net.minecraft.client.render.item.ItemRenderState;
+import net.minecraft.client.render.state.CameraRenderState;
+import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.ItemDisplayContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
-import net.minecraft.world.World;
+import net.minecraft.util.math.Vec3d;
 import wraith.fabricaeexnihilo.modules.crucibles.CrucibleBlockEntity;
 
-public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<CrucibleBlockEntity> {
+public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<CrucibleBlockEntity, CrucibleBlockEntityRenderer.CrucibleRenderState> {
 
     private static final float XZ_SCALE = 12.0F / 16.0F;
     private static final float X_MIN = 2.0F / 16.0F;
@@ -29,56 +31,88 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
     private static final float Y_MIN = 5.0F / 16.0F;
     private static final float Y_MAX = 15.0F / 16.0F;
 
+    private final ItemModelManager itemModelManager;
+
     public CrucibleBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
+        this.itemModelManager = ctx.itemModelManager();
     }
 
     @Override
-    public void render(CrucibleBlockEntity crucible, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        if (crucible == null) {
-            return;
-        }
+    public CrucibleRenderState createRenderState() {
+        return new CrucibleRenderState();
+    }
+
+    @Override
+    public void updateRenderState(CrucibleBlockEntity crucible, CrucibleRenderState state, float tickDelta, Vec3d cameraPos, ModelCommandRenderer.CrumblingOverlayCommand crumblingOverlayCommand) {
+        BlockEntityRenderState.updateBlockEntityRenderState(crucible, state, crumblingOverlayCommand);
         var fluid = crucible.getFluid();
         var contained = crucible.getContained();
         var queued = crucible.getQueued();
         var stack = crucible.getRenderStack();
 
-        if (contained > 0) {
-            renderFluidVolume(fluid, contained / (float) crucible.getMaxCapacity(), matrices, vertexConsumers, light, overlay);
+        state.hasFluid = contained > 0 && !fluid.isBlank();
+        if (state.hasFluid) {
+            state.fluidLevel = contained / (float) crucible.getMaxCapacity();
+            state.fluidSprite = FluidVariantRendering.getSprite(fluid);
+            int color = FluidVariantRendering.getColor(fluid);
+            state.fluidR = ((color >> 16) & 255) / 256f;
+            state.fluidG = ((color >> 8) & 255) / 256f;
+            state.fluidB = (color & 255) / 256f;
+        } else {
+            state.fluidSprite = null;
         }
 
-        if (queued > 0 && !stack.isEmpty()) {
-            renderQueued(stack, queued / (float) crucible.getMaxCapacity(), matrices, vertexConsumers, light, overlay, crucible.getWorld(), (int) crucible.getPos().asLong());
+        state.hasQueued = queued > 0 && !stack.isEmpty();
+        if (state.hasQueued) {
+            state.queuedLevel = queued / (float) crucible.getMaxCapacity();
+            this.itemModelManager.clearAndUpdate(state.queuedItemState, stack, ItemDisplayContext.NONE, crucible.getWorld(), null, (int) crucible.getPos().asLong());
+        } else {
+            state.queuedItemState.clear();
+        }
+    }
+
+    @Override
+    public void render(CrucibleRenderState state, MatrixStack matrices, OrderedRenderCommandQueue queue, CameraRenderState cameraState) {
+        if (state.hasFluid && state.fluidSprite != null) {
+            float y = MathHelper.lerp(state.fluidLevel, Y_MIN, Y_MAX);
+            Sprite sprite = state.fluidSprite;
+            float u0 = sprite.getMinU();
+            float u1 = sprite.getMaxU();
+            float v0 = sprite.getMinV();
+            float v1 = sprite.getMaxV();
+            float r = state.fluidR;
+            float g = state.fluidG;
+            float b = state.fluidB;
+            int light = state.lightmapCoordinates;
+            int overlay = OverlayTexture.DEFAULT_UV;
+
+            queue.submitCustom(matrices, TexturedRenderLayers.getBlockTranslucentCull(), (entry, consumer) -> {
+                consumer.vertex(entry, X_MIN, y, Z_MIN).color(r, g, b, 1.0f).texture(u0, v0).overlay(overlay).light(light).normal(entry, 0, 1, 0);
+                consumer.vertex(entry, X_MIN, y, Z_MAX).color(r, g, b, 1.0f).texture(u0, v1).overlay(overlay).light(light).normal(entry, 0, 1, 0);
+                consumer.vertex(entry, X_MAX, y, Z_MAX).color(r, g, b, 1.0f).texture(u1, v1).overlay(overlay).light(light).normal(entry, 0, 1, 0);
+                consumer.vertex(entry, X_MAX, y, Z_MIN).color(r, g, b, 1.0f).texture(u1, v0).overlay(overlay).light(light).normal(entry, 0, 1, 0);
+            });
         }
 
+        if (state.hasQueued) {
+            var yScale = MathHelper.clampedLerp(0, Y_MAX - Y_MIN, state.queuedLevel);
+            matrices.push();
+            matrices.translate(0.5, Y_MIN + yScale / 2, 0.5);
+            matrices.scale(XZ_SCALE, yScale, XZ_SCALE);
+            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90));
+            state.queuedItemState.render(matrices, queue, state.lightmapCoordinates, OverlayTexture.DEFAULT_UV, 0);
+            matrices.pop();
+        }
     }
 
-    public void renderFluidVolume(FluidVariant fluid, float level, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        var sprite = FluidVariantRendering.getSprite(fluid);
-        var color = FluidVariantRendering.getColor(fluid);
-        var r = ((color >> 16) & 255) / 256f;
-        var g = ((color >> 8) & 255) / 256f;
-        var b = (color & 255) / 256f;
+    public static class CrucibleRenderState extends BlockEntityRenderState {
+        public boolean hasFluid;
+        public float fluidLevel;
+        public Sprite fluidSprite;
+        public float fluidR, fluidG, fluidB;
 
-        if (sprite == null) return;
-
-        RenderSystem.enableDepthTest();
-
-        // Idea stolen from Modern Industrialisation
-
-        var emitter = RendererAccess.INSTANCE.getRenderer().meshBuilder().getEmitter();
-        emitter.square(Direction.UP, X_MIN, Z_MIN, X_MAX, Z_MAX, 1 - MathHelper.lerp(level, Y_MIN, Y_MAX));
-        emitter.spriteBake(sprite, MutableQuadView.BAKE_LOCK_UV);
-        vertexConsumers.getBuffer(RenderLayer.getTranslucent()).quad(matrices.peek(), emitter.toBakedQuad(sprite), r, g, b, 1F, light, overlay);
-    }
-
-    public void renderQueued(ItemStack renderStack, float level, MatrixStack matrices, VertexConsumerProvider vertexConsumer, int light, int overlay, World world, int seed) {
-        var yScale = MathHelper.clampedLerp(0, Y_MAX - Y_MIN, level);
-
-        matrices.push();
-        matrices.translate(0.5, Y_MIN + yScale / 2, 0.5);
-        matrices.scale(XZ_SCALE, yScale, XZ_SCALE);
-        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90));
-        MinecraftClient.getInstance().getItemRenderer().renderItem(renderStack, ModelTransformationMode.NONE, light, overlay, matrices, vertexConsumer, world, seed);
-        matrices.pop();
+        public boolean hasQueued;
+        public float queuedLevel;
+        public final ItemRenderState queuedItemState = new ItemRenderState();
     }
 }

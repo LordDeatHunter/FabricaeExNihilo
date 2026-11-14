@@ -19,8 +19,6 @@
   "icon": "minecraft:red_sand",
   "trigger": {
     "type": "insert_item",
-    "item": {
-      "item": "minecraft:sand"
-    }
+    "item": "minecraft:sand"
   }
 }

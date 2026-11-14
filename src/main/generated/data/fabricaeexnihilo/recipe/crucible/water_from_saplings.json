@@ -4,8 +4,6 @@
   "fluid": {
     "fluid": "minecraft:water"
   },
-  "input": {
-    "tag": "minecraft:saplings"
-  },
+  "input": "#minecraft:saplings",
   "requiresFireproofCrucible": false
 }

@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "fabricaeexnihilo:sieve",
   "key": {
-    "#": {
-      "item": "minecraft:crimson_planks"
-    },
-    "I": {
-      "item": "minecraft:stick"
-    },
-    "S": {
-      "item": "minecraft:crimson_slab"
-    }
+    "#": "minecraft:crimson_planks",
+    "I": "minecraft:stick",
+    "S": "minecraft:crimson_slab"
   },
   "pattern": [
     "# #",

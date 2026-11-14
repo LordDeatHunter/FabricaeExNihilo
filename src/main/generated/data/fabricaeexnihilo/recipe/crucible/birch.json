@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "fabricaeexnihilo:crucible",
   "key": {
-    "#": {
-      "item": "minecraft:birch_log"
-    },
-    "I": {
-      "item": "minecraft:stick"
-    },
-    "S": {
-      "item": "minecraft:birch_slab"
-    }
+    "#": "minecraft:birch_log",
+    "I": "minecraft:stick",
+    "S": "minecraft:birch_slab"
   },
   "pattern": [
     "# #",

@@ -27,8 +27,6 @@
   "icon": "minecraft:guardian_spawn_egg",
   "trigger": {
     "type": "insert_item",
-    "item": {
-      "item": "fabricaeexnihilo:doll_guardian"
-    }
+    "item": "fabricaeexnihilo:doll_guardian"
   }
 }

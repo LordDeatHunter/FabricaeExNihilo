@@ -20,12 +20,12 @@ public final class ModFluids {
             BloodFluid.STILL
     );
 
-    public static AbstractBlock.Settings getBlockSettings() {
-        return AbstractBlock.Settings.copy(Blocks.WATER).liquid().replaceable().noCollision();
+    public static AbstractBlock.Settings getBlockSettings(net.minecraft.util.Identifier id) {
+        return AbstractBlock.Settings.copy(Blocks.WATER).liquid().replaceable().noCollision().registryKey(net.minecraft.registry.RegistryKey.of(net.minecraft.registry.RegistryKeys.BLOCK, id));
     }
 
-    public static Item.Settings getBucketItemSettings() {
-        return new Item.Settings().maxCount(1).recipeRemainder(Items.BUCKET);
+    public static Item.Settings getBucketItemSettings(net.minecraft.util.Identifier id) {
+        return new Item.Settings().registryKey(net.minecraft.registry.RegistryKey.of(net.minecraft.registry.RegistryKeys.ITEM, id)).maxCount(1).recipeRemainder(Items.BUCKET);
     }
 
     public static void registerBuckets() {

@@ -1,8 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "input": {
-    "item": "minecraft:soul_sand"
-  },
+  "input": "minecraft:soul_sand",
   "result": {
     "count": 1,
     "id": "minecraft:quartz"

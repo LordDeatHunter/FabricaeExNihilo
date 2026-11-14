@@ -3,9 +3,7 @@
   "category": "equipment",
   "group": "fabricaeexnihilo:crooks",
   "key": {
-    "#": {
-      "item": "minecraft:stick"
-    }
+    "#": "minecraft:stick"
   },
   "pattern": [
     "##",

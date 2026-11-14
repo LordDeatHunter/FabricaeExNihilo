@@ -4,8 +4,6 @@
   "fluid": {
     "fluid": "minecraft:water"
   },
-  "input": {
-    "tag": "minecraft:small_flowers"
-  },
+  "input": "#minecraft:small_flowers",
   "requiresFireproofCrucible": false
 }

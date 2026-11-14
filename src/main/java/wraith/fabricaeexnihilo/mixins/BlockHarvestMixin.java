@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContextParameterSet;
+import net.minecraft.loot.context.LootWorldContext;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.recipe.RecipeEntry;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,7 +18,7 @@ import java.util.List;
 @Mixin(AbstractBlock.class)
 public abstract class BlockHarvestMixin {
     @ModifyReturnValue(method = "getDroppedStacks", at = @At("RETURN"))
-    public List<ItemStack> fabricaeexnihilo$applyToolRecipes(List<ItemStack> original, BlockState state, LootContextParameterSet.Builder builder) {
+    public List<ItemStack> fabricaeexnihilo$applyToolRecipes(List<ItemStack> original, BlockState state, LootWorldContext.Builder builder) {
         ItemStack tool = builder.get(LootContextParameters.TOOL);
         List<RecipeEntry<ToolRecipe>> recipes;
         if (CrookItem.isCrook(tool))

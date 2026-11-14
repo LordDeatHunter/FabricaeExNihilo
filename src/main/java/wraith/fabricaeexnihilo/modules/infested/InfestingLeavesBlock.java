@@ -1,17 +1,31 @@
 package wraith.fabricaeexnihilo.modules.infested;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.mixins.BlockWithEntityInvoker;
 
 public class InfestingLeavesBlock extends LeavesBlock implements BlockEntityProvider, NonInfestableLeavesBlock {
+
+    public static final MapCodec<InfestingLeavesBlock> CODEC = createCodec(InfestingLeavesBlock::new);
+
     public InfestingLeavesBlock(AbstractBlock.Settings settings) {
-        super(settings);
+        super(0.01f, settings);
+    }
+
+    @Override
+    public MapCodec<InfestingLeavesBlock> getCodec() {
+        return CODEC;
+    }
+
+    @Override
+    protected void spawnLeafParticle(World world, BlockPos pos, Random random) {
     }
 
     @Override

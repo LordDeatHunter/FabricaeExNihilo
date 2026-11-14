@@ -1,8 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "input": {
-    "item": "fabricaeexnihilo:silt"
-  },
+  "input": "fabricaeexnihilo:silt",
   "result": {
     "count": 1,
     "id": "minecraft:lapis_lazuli"

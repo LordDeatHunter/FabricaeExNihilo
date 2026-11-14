@@ -1,8 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "input": {
-    "item": "fabricaeexnihilo:crushed_netherrack"
-  },
+  "input": "fabricaeexnihilo:crushed_netherrack",
   "result": {
     "count": 1,
     "id": "fabricaeexnihilo:raw_gold_piece"

@@ -1,0 +1,30 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": {
+    "id": "fabricaeexnihilo:raw_silver_piece"
+  },
+  "input": "fabricaeexnihilo:crushed_endstone",
+  "rolls": {
+    "fabricaeexnihilo:iron_mesh": [
+      0.1,
+      0.1
+    ],
+    "fabricaeexnihilo:diamond_mesh": [
+      0.2,
+      0.2
+    ],
+    "fabricaeexnihilo:netherite_mesh": [
+      0.3,
+      0.3
+    ]
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "registry": "minecraft:item",
+      "values": [
+        "fabricaeexnihilo:raw_silver_piece"
+      ]
+    }
+  ]
+}

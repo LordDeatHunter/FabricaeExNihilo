@@ -8,6 +8,7 @@ import net.minecraft.block.FluidBlock;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 import wraith.fabricaeexnihilo.modules.ModFluids;
 import wraith.fabricaeexnihilo.modules.base.AbstractFluid;
 import wraith.fabricaeexnihilo.modules.base.FluidSettings;
@@ -17,7 +18,7 @@ public class MilkFluid extends AbstractFluid {
     public static final Item BUCKET = Items.MILK_BUCKET;
     public static final MilkFluid FLOWING = new MilkFluid(false);
     public static final MilkFluid STILL = new MilkFluid(true);
-    public static final FluidBlock BLOCK = new FluidBlock(STILL, ModFluids.getBlockSettings());
+    public static final FluidBlock BLOCK = new FluidBlock(STILL, ModFluids.getBlockSettings(id("milk")));
 
     static {
         // Milk buckets

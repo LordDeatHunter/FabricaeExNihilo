@@ -18,6 +18,7 @@ import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
+import wraith.fabricaeexnihilo.recipe.RecipeHelper;
 
 import java.util.Optional;
 
@@ -38,7 +39,7 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
         if (world == null) {
             return Optional.empty();
         }
-        return world.getRecipeManager().getFirstMatch(ModRecipes.CRUCIBLE, new Context(input, isFireproof), world);
+        return RecipeHelper.getFirstMatch(ModRecipes.CRUCIBLE, new Context(input, isFireproof), world);
     }
 
     @Override
@@ -60,12 +61,12 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<CrucibleRecipe> getSerializer() {
         return ModRecipes.CRUCIBLE_SERIALIZER;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<CrucibleRecipe> getType() {
         return ModRecipes.CRUCIBLE;
     }
 
@@ -84,7 +85,7 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
     public static class Serializer implements RecipeSerializer<CrucibleRecipe> {
         public static final MapCodec<CrucibleRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
-                        Ingredient.ALLOW_EMPTY_CODEC.fieldOf("input").forGetter(recipe -> recipe.input),
+                        Ingredient.CODEC.fieldOf("input").forGetter(recipe -> recipe.input),
                         Codec.LONG.fieldOf("amount").forGetter(recipe -> recipe.amount),
                         FluidVariant.CODEC.fieldOf("fluid").forGetter(recipe -> recipe.fluid),
                         Codec.BOOL.fieldOf("requiresFireproofCrucible").forGetter(recipe -> recipe.requiresFireproofCrucible)
@@ -92,9 +93,9 @@ public class CrucibleRecipe extends BaseRecipe<CrucibleRecipe.Context> {
         );
         public static final PacketCodec<RegistryByteBuf, CrucibleRecipe> PACKET_CODEC = PacketCodec.tuple(
                 Ingredient.PACKET_CODEC, recipe -> recipe.input,
-                PacketCodec.ofStatic(PacketByteBuf::writeLong, PacketByteBuf::readLong), recipe -> recipe.amount,
+                PacketCodecs.VAR_LONG.cast(), recipe -> recipe.amount,
                 FluidVariant.PACKET_CODEC, recipe-> recipe.fluid,
-                PacketCodecs.BOOL, recipe -> recipe.requiresFireproofCrucible,
+                PacketCodecs.BOOLEAN.cast(), recipe -> recipe.requiresFireproofCrucible,
                 CrucibleRecipe::new
         );
 

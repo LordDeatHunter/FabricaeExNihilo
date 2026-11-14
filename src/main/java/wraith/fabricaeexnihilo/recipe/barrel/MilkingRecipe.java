@@ -19,6 +19,7 @@ import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
+import wraith.fabricaeexnihilo.recipe.RecipeHelper;
 
 import java.util.Optional;
 
@@ -39,7 +40,7 @@ public class MilkingRecipe extends BaseRecipe<MilkingRecipe.Context> {
         if (world == null) {
             return Optional.empty();
         }
-        return world.getRecipeManager().getFirstMatch(ModRecipes.MILKING, new Context(entity), world);
+        return RecipeHelper.getFirstMatch(ModRecipes.MILKING, new Context(entity), world);
     }
 
     @Override
@@ -65,12 +66,12 @@ public class MilkingRecipe extends BaseRecipe<MilkingRecipe.Context> {
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<MilkingRecipe> getSerializer() {
         return ModRecipes.MILKING_SERIALIZER;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<MilkingRecipe> getType() {
         return ModRecipes.MILKING;
     }
 

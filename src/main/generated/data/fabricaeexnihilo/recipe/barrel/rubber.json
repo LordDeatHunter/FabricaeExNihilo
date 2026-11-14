@@ -11,12 +11,8 @@
   "category": "misc",
   "group": "fabricaeexnihilo:barrel",
   "key": {
-    "#": {
-      "item": "techreborn:rubber_planks"
-    },
-    "S": {
-      "item": "techreborn:rubber_slab"
-    }
+    "#": "techreborn:rubber_planks",
+    "S": "techreborn:rubber_slab"
   },
   "pattern": [
     "# #",

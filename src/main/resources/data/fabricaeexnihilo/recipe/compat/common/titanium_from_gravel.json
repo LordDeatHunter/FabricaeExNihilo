@@ -1,0 +1,26 @@
+{
+  "type": "fabricaeexnihilo:sieve",
+  "result": {
+    "id": "fabricaeexnihilo:raw_platinum_piece"
+  },
+  "input": "minecraft:gravel",
+  "rolls": {
+    "fabricaeexnihilo:diamond_mesh": [
+      0.2,
+      0.2
+    ],
+    "fabricaeexnihilo:netherite_mesh": [
+      0.35,
+      0.3
+    ]
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "registry": "minecraft:item",
+      "values": [
+        "fabricaeexnihilo:raw_titanium_piece"
+      ]
+    }
+  ]
+}

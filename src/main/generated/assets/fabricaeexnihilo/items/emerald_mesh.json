@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "fabricaeexnihilo:item/emerald_mesh",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -16733696
+      }
+    ]
+  }
+}

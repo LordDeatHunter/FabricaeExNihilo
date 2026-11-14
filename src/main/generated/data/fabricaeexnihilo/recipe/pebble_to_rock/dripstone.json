@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "fabricaeexnihilo:dripstone_pebble"
-    }
+    "#": "fabricaeexnihilo:dripstone_pebble"
   },
   "pattern": [
     "##",

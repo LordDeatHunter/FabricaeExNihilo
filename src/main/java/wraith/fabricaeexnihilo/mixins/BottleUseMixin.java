@@ -6,8 +6,8 @@ import net.minecraft.item.GlassBottleItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Debug;
@@ -34,18 +34,18 @@ public abstract class BottleUseMixin extends Item {
     If someone else modifies bottle behaviour we have a higher chance to interact with their changes like this.
 
     Injection point has to be carefully chosen so that the hit result local is in scope.
-    We have to inject before the canPlayerModifyAt check because the jump after it causes a frame change
+    We have to inject before the canEntityModifyAt check because the jump after it causes a frame change
     where the local goes out of scope as the original code doesn't need it anymore.
 
     We want to capture the hit result local to avoid raycasting again.
     It also makes this mixin more reliable as the raycast is only done once.
     */
-    @Inject(method = "use", at = @At(value = "INVOKE", target="Lnet/minecraft/world/World;canPlayerModifyAt(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/math/BlockPos;)Z"), cancellable = true)
-    private void fabricaeexnihilo$collectSalt(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir, @Local BlockHitResult hitResult) {
+    @Inject(method = "use", at = @At(value = "INVOKE", target="Lnet/minecraft/world/World;canEntityModifyAt(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/math/BlockPos;)Z"), cancellable = true)
+    private void fabricaeexnihilo$collectSalt(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<ActionResult> cir, @Local BlockHitResult hitResult) {
         if (!FabricaeExNihilo.CONFIG.get().misc().enableSaltCollection()) return;
-        if (!world.canPlayerModifyAt(user, hitResult.getBlockPos())) return;
+        if (!world.canEntityModifyAt(user, hitResult.getBlockPos())) return;
         if (!world.getBlockState(hitResult.getBlockPos()).isIn(BlockTags.SAND)) return;
 
-        cir.setReturnValue(TypedActionResult.success(this.fill(user.getStackInHand(hand), user, new ItemStack(ModItems.SALT_BOTTLE))));
+        cir.setReturnValue(ActionResult.SUCCESS.withNewHandStack(this.fill(user.getStackInHand(hand), user, new ItemStack(ModItems.SALT_BOTTLE))));
     }
 }

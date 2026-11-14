@@ -85,7 +85,9 @@ public class EntityStack {
 
     public Entity getEntity(ServerWorld world, BlockPos pos, SpawnReason spawnType) {
         var entity = type.create(world, null, pos, spawnType, true, true);
-        NbtComponent.of(data).applyToEntity(entity);
+        if (entity != null && !data.isEmpty()) {
+            entity.readData(net.minecraft.storage.NbtReadView.create(net.minecraft.util.ErrorReporter.EMPTY, world.getRegistryManager(), data));
+        }
         return entity;
     }
 

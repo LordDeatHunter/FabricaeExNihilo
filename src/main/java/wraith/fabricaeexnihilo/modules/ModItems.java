@@ -5,6 +5,8 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.modules.infested.SilkWormItem;
 import wraith.fabricaeexnihilo.modules.sieves.MeshItem;
@@ -16,7 +18,10 @@ import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public final class ModItems {
 
-    public static final Item.Settings BASE_SETTINGS = new Item.Settings();
+    public static Item.Settings createSettings(Identifier id) {
+        return new Item.Settings().registryKey(RegistryKey.of(RegistryKeys.ITEM, id));
+    }
+
     public static final Item COOKED_SILKWORM;
     public static final Map<Identifier, Item> DOLLS = new LinkedHashMap<>();
     public static final Map<Identifier, MeshItem> MESHES = new LinkedHashMap<>();
@@ -30,28 +35,38 @@ public final class ModItems {
 
     static {
         // TODO: replace RESOURCES with PEBBLES and single block fields
-        PEBBLES.put(id("andesite_pebble"), new Item(BASE_SETTINGS));
-        PEBBLES.put(id("basalt_pebble"), new Item(BASE_SETTINGS));
-        PEBBLES.put(id("blackstone_pebble"), new Item(BASE_SETTINGS));
-        PEBBLES.put(id("calcite_pebble"), new Item(BASE_SETTINGS));
-        PEBBLES.put(id("dripstone_pebble"), new Item(BASE_SETTINGS));
-        PEBBLES.put(id("deepslate_pebble"), new Item(BASE_SETTINGS));
-        PEBBLES.put(id("diorite_pebble"), new Item(BASE_SETTINGS));
-        PEBBLES.put(id("granite_pebble"), new Item(BASE_SETTINGS));
-        PEBBLES.put(id("stone_pebble"), new Item(BASE_SETTINGS));
-        PEBBLES.put(id("tuff_pebble"), new Item(BASE_SETTINGS));
+        putPebble("andesite_pebble");
+        putPebble("basalt_pebble");
+        putPebble("blackstone_pebble");
+        putPebble("calcite_pebble");
+        putPebble("dripstone_pebble");
+        putPebble("deepslate_pebble");
+        putPebble("diorite_pebble");
+        putPebble("granite_pebble");
+        putPebble("stone_pebble");
+        putPebble("tuff_pebble");
 
-        PORCELAIN = new Item(BASE_SETTINGS);
-        UNFIRED_PORCELAIN_CRUCIBLE = new Item(BASE_SETTINGS);
-        SALT_BOTTLE = new Item(BASE_SETTINGS);
-        RAW_SILKWORM = new SilkWormItem(new Item.Settings().maxCount(64).food(FoodComponents.COD));
-        COOKED_SILKWORM = new Item(new Item.Settings().maxCount(64).food(FoodComponents.COOKED_COD));
+        PORCELAIN = new Item(createSettings(id("porcelain")));
+        UNFIRED_PORCELAIN_CRUCIBLE = new Item(createSettings(id("unfired_porcelain_crucible")));
+        SALT_BOTTLE = new Item(createSettings(id("salt_bottle")));
+        RAW_SILKWORM = new SilkWormItem(createSettings(id("raw_silkworm")).maxCount(64).food(FoodComponents.COD));
+        COOKED_SILKWORM = new Item(createSettings(id("cooked_silkworm")).maxCount(64).food(FoodComponents.COOKED_COD));
 
-        DOLLS.put(id("doll"), new Item(BASE_SETTINGS));
-        DOLLS.put(id("doll_blaze"), new Item(BASE_SETTINGS));
-        DOLLS.put(id("doll_enderman"), new Item(BASE_SETTINGS));
-        DOLLS.put(id("doll_guardian"), new Item(BASE_SETTINGS));
-        DOLLS.put(id("doll_shulker"), new Item(BASE_SETTINGS));
+        putDoll("doll");
+        putDoll("doll_blaze");
+        putDoll("doll_enderman");
+        putDoll("doll_guardian");
+        putDoll("doll_shulker");
+    }
+
+    private static void putPebble(String name) {
+        var identifier = id(name);
+        PEBBLES.put(identifier, new Item(createSettings(identifier)));
+    }
+
+    private static void putDoll(String name) {
+        var identifier = id(name);
+        DOLLS.put(identifier, new Item(createSettings(identifier)));
     }
 
     public static void registerItems() {
@@ -67,7 +82,7 @@ public final class ModItems {
         PEBBLES.forEach((identifier, item) -> Registry.register(Registries.ITEM, identifier, item));
         DOLLS.forEach((identifier, item) -> Registry.register(Registries.ITEM, identifier, item));
         ORE_PIECES.forEach((identifier, item) -> Registry.register(Registries.ITEM, identifier, item));
-        Registry.register(Registries.ITEM, id("end_cake"), new BlockItem(ModBlocks.END_CAKE, new Item.Settings().maxCount(1)));
+        Registry.register(Registries.ITEM, id("end_cake"), new BlockItem(ModBlocks.END_CAKE, createSettings(id("end_cake")).maxCount(1)));
         ModFluids.registerBuckets();
     }
 

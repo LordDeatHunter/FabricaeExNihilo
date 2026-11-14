@@ -87,6 +87,8 @@ public class FabricaeExNihilo implements ModInitializer {
         BonusEnchantingManager.init();
         LOGGER.debug("Creating Recipes");
         ModRecipes.register();
+
+        wraith.fabricaeexnihilo.util.ModTestRunner.register();
     }
 
 }

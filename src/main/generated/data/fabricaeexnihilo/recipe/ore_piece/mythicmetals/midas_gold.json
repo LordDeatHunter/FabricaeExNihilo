@@ -10,18 +10,10 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "fabricaeexnihilo:raw_midas_gold_piece"
-    },
-    {
-      "item": "fabricaeexnihilo:raw_midas_gold_piece"
-    },
-    {
-      "item": "fabricaeexnihilo:raw_midas_gold_piece"
-    },
-    {
-      "item": "fabricaeexnihilo:raw_midas_gold_piece"
-    }
+    "fabricaeexnihilo:raw_midas_gold_piece",
+    "fabricaeexnihilo:raw_midas_gold_piece",
+    "fabricaeexnihilo:raw_midas_gold_piece",
+    "fabricaeexnihilo:raw_midas_gold_piece"
   ],
   "result": {
     "count": 1,

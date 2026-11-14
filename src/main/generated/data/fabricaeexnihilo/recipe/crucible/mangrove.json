@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "fabricaeexnihilo:crucible",
   "key": {
-    "#": {
-      "item": "minecraft:mangrove_log"
-    },
-    "I": {
-      "item": "minecraft:stick"
-    },
-    "S": {
-      "item": "minecraft:mangrove_slab"
-    }
+    "#": "minecraft:mangrove_log",
+    "I": "minecraft:stick",
+    "S": "minecraft:mangrove_slab"
   },
   "pattern": [
     "# #",

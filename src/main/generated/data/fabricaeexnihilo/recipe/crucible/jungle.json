@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "fabricaeexnihilo:crucible",
   "key": {
-    "#": {
-      "item": "minecraft:jungle_log"
-    },
-    "I": {
-      "item": "minecraft:stick"
-    },
-    "S": {
-      "item": "minecraft:jungle_slab"
-    }
+    "#": "minecraft:jungle_log",
+    "I": "minecraft:stick",
+    "S": "minecraft:jungle_slab"
   },
   "pattern": [
     "# #",

@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "fabricaeexnihilo:sieve",
   "key": {
-    "#": {
-      "item": "minecraft:jungle_log"
-    },
-    "S": {
-      "item": "minecraft:string"
-    }
+    "#": "minecraft:jungle_log",
+    "S": "minecraft:string"
   },
   "pattern": [
     "#S#",

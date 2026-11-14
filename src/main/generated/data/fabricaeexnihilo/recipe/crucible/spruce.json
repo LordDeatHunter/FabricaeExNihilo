@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "fabricaeexnihilo:crucible",
   "key": {
-    "#": {
-      "item": "minecraft:spruce_log"
-    },
-    "I": {
-      "item": "minecraft:stick"
-    },
-    "S": {
-      "item": "minecraft:spruce_slab"
-    }
+    "#": "minecraft:spruce_log",
+    "I": "minecraft:stick",
+    "S": "minecraft:spruce_slab"
   },
   "pattern": [
     "# #",

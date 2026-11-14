@@ -20,6 +20,7 @@ import wraith.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
+import wraith.fabricaeexnihilo.recipe.RecipeHelper;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,14 +44,14 @@ public final class BarrelRecipe extends BaseRecipe<BarrelRecipe.Context> {
     public static Optional<RecipeEntry<BarrelRecipe>> findTick(BarrelBlockEntity barrel) {
         var world = barrel.getWorld();
         if (world == null) return Optional.empty();
-        var recipes = world.getRecipeManager().getAllMatches(ModRecipes.BARREL, new Context(barrel, Optional.empty()), world);
+        var recipes = RecipeHelper.getAllMatches(ModRecipes.BARREL, new Context(barrel, Optional.empty()), world);
         return !recipes.isEmpty() ? Optional.of(recipes.get(world.random.nextInt(recipes.size()))) : Optional.empty();
     }
 
     public static Optional<RecipeEntry<BarrelRecipe>> findInsert(BarrelBlockEntity barrel, ItemVariant inserted) {
         var world = barrel.getWorld();
         if (world == null) return Optional.empty();
-        var recipes = world.getRecipeManager().getAllMatches(ModRecipes.BARREL, new Context(barrel, Optional.of(inserted)), world);
+        var recipes = RecipeHelper.getAllMatches(ModRecipes.BARREL, new Context(barrel, Optional.of(inserted)), world);
         return !recipes.isEmpty() ? Optional.of(recipes.get(world.random.nextInt(recipes.size()))) : Optional.empty();
     }
 
@@ -86,12 +87,12 @@ public final class BarrelRecipe extends BaseRecipe<BarrelRecipe.Context> {
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<BarrelRecipe> getSerializer() {
         return ModRecipes.BARREL_SERIALIZER;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<BarrelRecipe> getType() {
         return ModRecipes.BARREL;
     }
 

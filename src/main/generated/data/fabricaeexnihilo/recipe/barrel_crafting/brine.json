@@ -28,8 +28,6 @@
   "icon": "fabricaeexnihilo:brine_bucket",
   "trigger": {
     "type": "insert_item",
-    "item": {
-      "tag": "c:salt"
-    }
+    "item": "#c:salt"
   }
 }

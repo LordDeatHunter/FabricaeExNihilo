@@ -4,8 +4,6 @@
   "fluid": {
     "fluid": "minecraft:lava"
   },
-  "input": {
-    "item": "fabricaeexnihilo:crushed_granite"
-  },
+  "input": "fabricaeexnihilo:crushed_granite",
   "requiresFireproofCrucible": true
 }

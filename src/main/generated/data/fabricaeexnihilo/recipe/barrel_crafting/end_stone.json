@@ -19,8 +19,6 @@
   "icon": "minecraft:end_stone",
   "trigger": {
     "type": "insert_item",
-    "item": {
-      "item": "minecraft:glowstone_dust"
-    }
+    "item": "minecraft:glowstone_dust"
   }
 }

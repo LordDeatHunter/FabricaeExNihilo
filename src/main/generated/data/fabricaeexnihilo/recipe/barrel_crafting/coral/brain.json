@@ -19,8 +19,6 @@
   "icon": "minecraft:brain_coral_block",
   "trigger": {
     "type": "insert_item",
-    "item": {
-      "item": "minecraft:pink_dye"
-    }
+    "item": "minecraft:pink_dye"
   }
 }

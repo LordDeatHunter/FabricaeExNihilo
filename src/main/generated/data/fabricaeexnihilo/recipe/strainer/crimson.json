@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "fabricaeexnihilo:sieve",
   "key": {
-    "#": {
-      "item": "minecraft:crimson_stem"
-    },
-    "S": {
-      "item": "minecraft:string"
-    }
+    "#": "minecraft:crimson_stem",
+    "S": "minecraft:string"
   },
   "pattern": [
     "#S#",

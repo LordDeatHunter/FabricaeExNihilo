@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "fabricaeexnihilo:barrel",
   "key": {
-    "#": {
-      "item": "minecraft:bamboo_planks"
-    },
-    "S": {
-      "item": "minecraft:bamboo_slab"
-    }
+    "#": "minecraft:bamboo_planks",
+    "S": "minecraft:bamboo_slab"
   },
   "pattern": [
     "# #",
