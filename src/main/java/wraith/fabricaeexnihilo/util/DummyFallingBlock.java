@@ -20,6 +20,14 @@ public class DummyFallingBlock extends FallingBlock {
 
     @Override
     public int getColor(BlockState state, BlockView world, BlockPos pos) {
-        return 0;
+        // 1.21.11 turned FallingBlock#getColor into an abstract method, so it
+        // has to be implemented here. The only caller in the game is the
+        // falling-dust particle factory, which lets this value override the
+        // colour BlockColors would otherwise derive from the block's texture.
+        // Returning a constant 0 made every crushed block's dust pure black;
+        // the map colour is what the original 1.21 branch produced, because
+        // BlockColors#getParticleColor falls back to it when no colour
+        // provider is registered for the block.
+        return state.getMapColor(world, pos).color;
     }
 }

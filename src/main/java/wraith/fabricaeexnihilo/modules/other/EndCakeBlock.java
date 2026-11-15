@@ -3,16 +3,16 @@ package wraith.fabricaeexnihilo.modules.other;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CakeBlock;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.EndPortalBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.TeleportTarget;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
@@ -36,12 +36,11 @@ public class EndCakeBlock extends CakeBlock {
             world.removeBlock(pos, false);
             world.emitGameEvent(player, GameEvent.BLOCK_DESTROY, pos);
         }
-        RegistryKey<World> registryKey = world.getRegistryKey() == World.END ? World.OVERWORLD : World.END;
-        ServerWorld destination = serverWorld.getServer().getWorld(registryKey);
+        TeleportTarget destination = ((EndPortalBlock) Blocks.END_PORTAL).createTeleportTarget(serverWorld, player, pos);
         if (destination == null) {
             return ActionResult.FAIL;
         }
-        player.teleportTo(new TeleportTarget(destination, Vec3d.ofBottomCenter(destination.getSpawnPoint().getPos()), Vec3d.ZERO, player.getYaw(), player.getPitch(), TeleportTarget.NO_OP));
+        player.teleportTo(destination);
         return ActionResult.SUCCESS;
     }
 
