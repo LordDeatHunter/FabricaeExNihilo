@@ -61,16 +61,17 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
             state.fluidSprite = null;
         }
 
-        // Show the stored item for as long as the crucible still holds something for it.
-        // `queued` drains to 0 as soon as the last of the input has been melted, but the
-        // resulting fluid is still inside - keying the item on `queued` alone made it
-        // vanish the instant processing finished, which reads as "the item disappeared".
-        // `getDisplayStack` applies exactly that rule, shared with the tooltips so the
-        // block and the HUD can never disagree again.
+        // Which of the two contents owns the visuals is decided by weight, matching the
+        // user-facing rule: while the unmelted solid outweighs the melt, show the solid;
+        // once the fluid dominates (e.g. a full crucible of lava), show the fluid surface
+        // so the contents read like a liquid tank instead of a rock sitting on lava.
+        // Equal amounts render both, fluid first and solid on top - the same order the
+        // HUD lists them in. `getDisplayStack` still decides WHETHER a solid exists at
+        // all (it stays available to the tooltips even after `queued` drains to 0).
         var stack = crucible.getDisplayStack();
-        state.hasQueued = !stack.isEmpty();
+        state.hasQueued = !stack.isEmpty() && queued >= contained;
         if (state.hasQueued) {
-            state.queuedLevel = Math.max(queued, contained) / (float) crucible.getMaxCapacity();
+            state.queuedLevel = queued / (float) crucible.getMaxCapacity();
             this.itemModelManager.clearAndUpdate(state.queuedItemState, stack, ItemDisplayContext.NONE, crucible.getWorld(), null, (int) crucible.getPos().asLong());
         } else {
             state.queuedItemState.clear();

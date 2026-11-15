@@ -92,8 +92,6 @@ public class FabricaeExNihilo implements ModInitializer {
         // sieve serializer in so recipe viewers can show real drop data on clients.
         net.fabricmc.fabric.api.recipe.v1.sync.RecipeSynchronization
                 .synchronizeRecipeSerializer(ModRecipes.SIEVE_SERIALIZER);
-
-        wraith.fabricaeexnihilo.util.ModTestRunner.register();
     }
 
 }

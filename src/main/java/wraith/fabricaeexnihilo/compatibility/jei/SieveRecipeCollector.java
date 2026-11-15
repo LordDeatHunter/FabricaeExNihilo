@@ -52,7 +52,7 @@ public final class SieveRecipeCollector {
         Collection<RecipeEntry<SieveRecipe>> recipes = allSieveRecipes();
         if (recipes.isEmpty()) {
             FabricaeExNihilo.LOGGER.warn(
-                    "[FEN/JEI] no sieve recipes available yet; the sieve category will be rebuilt when recipe sync completes");
+                    "No sieve recipes available yet; the sieve category will be rebuilt when recipe sync completes");
             return List.of();
         }
 

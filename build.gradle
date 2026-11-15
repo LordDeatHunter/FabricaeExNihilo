@@ -250,6 +250,32 @@ processResources {
     }
 
     doLast {
+        // Optional integrations are compiled out when their switch is off, so
+        // their entrypoints must not survive into the manifest either: Fabric
+        // aborts the launch when an entrypoint names a class that is not in the
+        // jar. Each entrypoint below is therefore emitted only while the
+        // matching source set is part of the build.
+        def manifestPath = new File(destinationDir, "fabric.mod.json")
+        if (manifestPath.exists()) {
+            def manifest = new JsonSlurper().parse(manifestPath.text)
+            manifest.entrypoints.remove("jade")
+            manifest.entrypoints.remove("modmenu")
+            if (manifest.custom == null) {
+                manifest.custom = [:]
+            }
+            manifest.custom.remove("megane:modules")
+            if (settings.jade) {
+                manifest.entrypoints.jade = ["wraith.fabricaeexnihilo.compatibility.jade.FENJadePlugin"]
+            }
+            if (settings.megane) {
+                manifest.custom["megane:modules"] = ["wraith.fabricaeexnihilo.compatibility.megane.FENMeganeModule"]
+            }
+            if (settings.modmenu) {
+                manifest.entrypoints.modmenu = ["wraith.fabricaeexnihilo.client.config.ModmenuPlugin"]
+            }
+            manifestPath.text = JsonOutput.toJson(manifest)
+        }
+
         fileTree(dir: outputs.files.asPath, include: "**/*.json").each { File file ->
             try {
                 file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
@@ -280,15 +306,16 @@ jar {
         exclude "README.md"
         exclude ".cache"
     }
+    // WTHIT discovers its plugins through this file. When the integration is
+    // compiled out the class is missing from the jar, so the file has to go
+    // as well - otherwise WTHIT fails to initialise the plugin.
+    if (!settings.wthit) {
+        exclude "waila_plugins.json"
+    }
 }
 
 publishing {
     publications.register("mavenJava", MavenPublication) {
         from components.java
     }
-}
-
-tasks.named('runServer') {
-    systemProperty 'fabricaeexnihilo.test', System.getProperty('fabricaeexnihilo.test', 'false')
-    environment 'FEN_TEST', System.getenv('FEN_TEST') ?: 'false'
 }
