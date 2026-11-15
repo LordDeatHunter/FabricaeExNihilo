@@ -1,6 +1,6 @@
 {
   "parent": "block/block",
-  "textures": {"all": "minecraft:block/white_wool"},
+  "textures": {"all": "minecraft:block/white_wool", "particle": "#all"},
   "elements": [
     {
       "from": [  3,  9.5,  0.5 ],
