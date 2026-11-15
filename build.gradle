@@ -149,7 +149,7 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:$fabric_version"
 
     modImplementation include("dev.isxander:yet-another-config-lib:$yacl_version")
-    modImplementation include("com.github.mattidragon:configtoolkit:$configtoolkit_version")
+    modImplementation annotationProcessor(include("com.github.mattidragon:configtoolkit:$configtoolkit_version"))
 
     // Add generated data to runtime classpath
     runtimeOnly files("src/main/generated")
