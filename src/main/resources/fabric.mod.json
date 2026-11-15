@@ -35,26 +35,10 @@
   "mixins": [
     "fabricaeexnihilo.mixin.json"
   ],
-<<<<<<< HEAD
-  "custom": {
-    "megane:modules": [
-      "wraith.fabricaeexnihilo.compatibility.megane.FENMeganeModule"
-    ],
-    "DISABLED(II doesn't work well with accessor mixins for the time being), loom:injected_interfaces": {
-      "net/minecraft/class_4915": ["wraith/fabricaeexnihilo/mixins/ItemModelGeneratorAccess"],
-      "net/minecraft/class_2203\u0024class_2209": ["wraith/fabricaeexnihilo/mixins/NbtPathAccess"]
-    }
-  },
-=======
->>>>>>> af27b1fa (feat: Port to Minecraft 1.21.11 (Fabric))
   "depends": {
     "fabricloader": ">=0.18.4",
     "fabric-api": "*",
-<<<<<<< HEAD
-    "minecraft": ">=1.21",
-=======
     "minecraft": "~1.21.11",
->>>>>>> af27b1fa (feat: Port to Minecraft 1.21.11 (Fabric))
     "java": ">=21"
   }
 }

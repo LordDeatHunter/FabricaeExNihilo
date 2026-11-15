@@ -257,7 +257,7 @@ processResources {
         // matching source set is part of the build.
         def manifestPath = new File(destinationDir, "fabric.mod.json")
         if (manifestPath.exists()) {
-            def manifest = new JsonSlurper().parse(manifestPath.text)
+            def manifest = new JsonSlurper().parseText(manifestPath.text)
             manifest.entrypoints.remove("jade")
             manifest.entrypoints.remove("modmenu")
             if (manifest.custom == null) {
@@ -278,7 +278,7 @@ processResources {
 
         fileTree(dir: outputs.files.asPath, include: "**/*.json").each { File file ->
             try {
-                file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
+                file.text = JsonOutput.toJson(new JsonSlurper().parseText(file.text))
             } catch (JsonException e) {
                 throw new RuntimeException("Failed to minify json for $file", e)
             }
