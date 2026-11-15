@@ -82,6 +82,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
             player.getInventory().offerOrDrop(mesh.copy());
             mesh = ItemStack.EMPTY;
             markDirty();
+            markForUpdate();
             return ActionResult.SUCCESS;
         } else if (mesh.isEmpty() && isValidMesh(item)) {
             // Add mesh
@@ -90,6 +91,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
                 held.decrement(1);
             }
             markDirty();
+            markForUpdate();
             return ActionResult.SUCCESS;
         }
 
@@ -145,6 +147,12 @@ public class SieveBlockEntity extends BaseBlockEntity {
         ItemScatterer.spawn(world, pos.getX(), pos.getY() + 1, pos.getZ(), contents);
         mesh = ItemStack.EMPTY;
         contents = ItemStack.EMPTY;
+    }
+
+    @Override
+    public void onBlockReplaced(BlockPos pos, BlockState state) {
+        dropInventory();
+        super.onBlockReplaced(pos, state);
     }
 
     public List<SieveBlockEntity> getConnectedSieves() {
@@ -212,6 +220,7 @@ public class SieveBlockEntity extends BaseBlockEntity {
     public void setMesh(ItemStack mesh) {
         this.mesh = mesh;
         markDirty();
+        markForUpdate();
     }
 
     public double getProgress() {

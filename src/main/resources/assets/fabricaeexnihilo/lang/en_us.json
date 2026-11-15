@@ -1,4 +1,9 @@
 {
+  "fabricaeexnihilo.jei.category.sieve": "Sieving",
+  "fabricaeexnihilo.jei.sieve.input": "Block to sift",
+  "fabricaeexnihilo.jei.sieve.mesh": "Mesh",
+  "fabricaeexnihilo.jei.sieve.waterlogged": "Requires a waterlogged sieve",
+  "fabricaeexnihilo.jei.sieve.chance": "Chance: %s",
   "itemGroup.fabricaeexnihilo.general": "Fabricae Ex Nihilo",
   "block.fabricaeexnihilo.oak_barrel": "Oak Barrel",
   "block.fabricaeexnihilo.spruce_barrel": "Spruce Barrel",
@@ -182,6 +187,7 @@
   "fabricaeexnihilo.hud.barrel.compost.filling": "Filling compost: %s%%",
   "fabricaeexnihilo.hud.barrel.alchemy.processing": "Transforming: %s%%",
   "fabricaeexnihilo.hud.crucible.queued": "Solid remaining: %smb",
+  "fabricaeexnihilo.hud.crucible.contents": "Solid: %s x%s",
   "fabricaeexnihilo.hud.sieve.mesh": "Mesh: %s",
   "fabricaeexnihilo.hud.sieve.progress": "Progress: %s%%",
   "fabricaeexnihilo.hud.sieve.content": "Sieving: %s",

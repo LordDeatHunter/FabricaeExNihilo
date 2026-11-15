@@ -16,6 +16,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -71,6 +72,15 @@ public class StrainerBlockEntity extends BaseBlockEntity {
 
     public DefaultedList<ItemStack> getInventory() {
         return inventory;
+    }
+
+    @Override
+    public void onBlockReplaced(BlockPos pos, BlockState state) {
+        if (world != null) {
+            ItemScatterer.spawn(world, pos, getInventory());
+            world.updateComparators(pos, state.getBlock());
+        }
+        super.onBlockReplaced(pos, state);
     }
 
     public static void tick(World world, BlockPos blockPos, BlockState state, StrainerBlockEntity strainer) {

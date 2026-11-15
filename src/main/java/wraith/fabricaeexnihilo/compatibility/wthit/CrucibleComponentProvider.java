@@ -13,6 +13,13 @@ public class CrucibleComponentProvider implements IBlockComponentProvider {
         CrucibleBlockEntity crucible = accessor.getBlockEntity();
         if (crucible == null) return;
 
+        // Keep this in step with the Jade provider: the solid is reported for as long as the
+        // crucible still holds something it came from, not just while it is still melting.
+        var stack = crucible.getDisplayStack();
+        if (!stack.isEmpty()) {
+            tooltip.addLine(Text.translatable("fabricaeexnihilo.hud.crucible.contents",
+                    stack.getName(), stack.getCount()));
+        }
         if (crucible.getQueued() > 0) {
             tooltip.addLine(Text.translatable("fabricaeexnihilo.hud.crucible.queued", crucible.getQueued() / 81 /* Convert to millibuckets */));
         }

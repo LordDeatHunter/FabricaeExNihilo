@@ -16,6 +16,15 @@ public class CrucibleProvider implements IBlockComponentProvider {
     public void appendTooltip(ITooltip tooltip, BlockAccessor blockAccessor, IPluginConfig iPluginConfig) {
         if (!(blockAccessor.getBlockEntity() instanceof CrucibleBlockEntity crucible)) return;
 
+        // Which solid is inside. `queued` only reports what is left to melt, so on its own
+        // it goes quiet the moment the last piece finishes - the crucible then looks empty
+        // even though the fluid it produced is still in there. Report the solid for as long
+        // as there is anything to show it for, and the remaining melt separately.
+        var stack = crucible.getDisplayStack();
+        if (!stack.isEmpty()) {
+            tooltip.add(Text.translatable("fabricaeexnihilo.hud.crucible.contents",
+                    stack.getName(), stack.getCount()));
+        }
         if (crucible.getQueued() > 0) {
             tooltip.add(Text.translatable("fabricaeexnihilo.hud.crucible.queued", crucible.getQueued() / 81));
         }

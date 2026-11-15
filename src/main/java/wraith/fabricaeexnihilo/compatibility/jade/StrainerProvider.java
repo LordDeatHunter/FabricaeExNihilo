@@ -6,7 +6,6 @@ import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.IBlockComponentProvider;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.config.IPluginConfig;
-import snownee.jade.api.ui.IElement;
 import snownee.jade.impl.ui.ItemStackElement;
 import wraith.fabricaeexnihilo.modules.strainer.StrainerBlockEntity;
 
@@ -20,7 +19,7 @@ public class StrainerProvider implements IBlockComponentProvider {
 
         var count = 0;
         for (ItemStack stack : strainer.getInventory()) {
-            IElement item = ItemStackElement.of(stack);
+            var item = ItemStackElement.of(stack);
             if (count++ % 4 == 0) tooltip.add(item);
             else tooltip.append(item);
         }

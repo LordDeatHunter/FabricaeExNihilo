@@ -17,31 +17,46 @@ public class BarrelProvider implements IBlockComponentProvider {
     public void appendTooltip(ITooltip tooltip, BlockAccessor blockAccessor, IPluginConfig iPluginConfig) {
         if (!(blockAccessor.getBlockEntity() instanceof BarrelBlockEntity barrel)) return;
 
-
-        if (barrel.isCrafting()) {
-            tooltip.add(Text.translatable("fabricaeexnihilo.hud.barrel.alchemy.processing", (int) (100.0 * barrel.getRecipeProgress())));
-            return;
-        }
-
         switch (barrel.getState()) {
             case EMPTY -> {
+                if (barrel.isCrafting()) {
+                    tooltip.add(Text.translatable("fabricaeexnihilo.hud.barrel.alchemy.processing", progress(barrel)));
+                }
             }
             case FLUID -> {
                 var fluid = barrel.getFluid();
-                var name = FluidVariantAttributes.getName(fluid);
-                tooltip.add(Text.translatable("fabricaeexnihilo.hud.fluid_content", name, barrel.getFluidAmount() / 81, 1000));
+                tooltip.add(Text.translatable("fabricaeexnihilo.hud.fluid_content",
+                        FluidVariantAttributes.getName(fluid),
+                        barrel.getFluidAmount() / 81,
+                        barrel.fluidStorage.getCapacity() / 81));
+                if (barrel.isCrafting()) {
+                    tooltip.add(Text.translatable("fabricaeexnihilo.hud.barrel.alchemy.processing", progress(barrel)));
+                }
             }
             case ITEM -> {
-                tooltip.add(ItemStackElement.of(barrel.getItem()));
+                var stack = barrel.getItem();
+                if (!stack.isEmpty()) {
+                    tooltip.add(ItemStackElement.of(stack));
+                    tooltip.append(stack.getName());
+                }
             }
             case COMPOST -> {
+                var result = barrel.getItem();
+                if (!result.isEmpty()) {
+                    tooltip.add(ItemStackElement.of(result));
+                    tooltip.append(result.getName());
+                }
                 if (barrel.getCompostLevel() < 1) {
                     tooltip.add(Text.translatable("fabricaeexnihilo.hud.barrel.compost.filling", (int) (barrel.getCompostLevel() * 100)));
                 } else {
-                    tooltip.add(Text.translatable("fabricaeexnihilo.hud.barrel.compost.composting", (int) (barrel.getRecipeProgress() * 100)));
+                    tooltip.add(Text.translatable("fabricaeexnihilo.hud.barrel.compost.composting", progress(barrel)));
                 }
             }
         }
+    }
+
+    private static int progress(BarrelBlockEntity barrel) {
+        return (int) (barrel.getRecipeProgress() * 100);
     }
 
     @Override

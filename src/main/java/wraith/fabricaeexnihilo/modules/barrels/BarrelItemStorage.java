@@ -21,14 +21,31 @@ public class BarrelItemStorage extends SnapshotParticipant<BarrelBlockEntity.Sna
         if (barrel.getState() == BarrelState.ITEM) return 0;
 
         var recipe = BarrelRecipe.findInsert(barrel, item);
+        if (recipe.isEmpty()) return 0;
 
-        if (recipe.isPresent()) {
-            updateSnapshots(transaction);
+        // Vanilla hoppers call `setStack`, which returns void: anything we do not
+        // consume is silently dropped by the caller. So consume the whole offered
+        // stack here. Insert-triggered barrel recipes are instant (duration 0), and
+        // instant ones can simply be applied repeatedly until the barrel is full.
+        updateSnapshots(transaction);
+
+        if (recipe.get().value().getDuration() != 0) {
+            // Timed recipe: it occupies the barrel for a while, accept a single item.
             barrel.beginRecipe(recipe.get());
             return 1;
         }
 
-        return 0;
+        var consumed = 0L;
+        var limit = Math.min(maxAmount, item.toStack().getMaxCount());
+        for (var i = 0L; i < limit; i++) {
+            if (barrel.getState() == BarrelState.ITEM) break;
+            if (barrel.getState() == BarrelState.COMPOST && barrel.getCompostLevel() >= 1) break;
+            var next = BarrelRecipe.findInsert(barrel, item);
+            if (next.isEmpty()) break;
+            if (!barrel.consumeInstantRecipe(next.get())) break;
+            consumed++;
+        }
+        return consumed;
     }
 
     @Override
@@ -42,7 +59,10 @@ public class BarrelItemStorage extends SnapshotParticipant<BarrelBlockEntity.Sna
         if (extracted == 0) return 0;
 
         updateSnapshots(transaction);
-        var stack = barrel.getItem();
+        // Copy first: `getItem()` hands out the live field, so decrementing it in
+        // place would mutate the barrel before `setItem` runs and make the snapshot
+        // rollback restore an already-shrunk stack.
+        var stack = barrel.getItem().copy();
         stack.decrement((int) extracted);
         barrel.setItem(stack); // this handles resetting the state with empty stack
 

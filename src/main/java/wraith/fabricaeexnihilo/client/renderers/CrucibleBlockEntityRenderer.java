@@ -48,7 +48,6 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
         var fluid = crucible.getFluid();
         var contained = crucible.getContained();
         var queued = crucible.getQueued();
-        var stack = crucible.getRenderStack();
 
         state.hasFluid = contained > 0 && !fluid.isBlank();
         if (state.hasFluid) {
@@ -62,9 +61,16 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
             state.fluidSprite = null;
         }
 
-        state.hasQueued = queued > 0 && !stack.isEmpty();
+        // Show the stored item for as long as the crucible still holds something for it.
+        // `queued` drains to 0 as soon as the last of the input has been melted, but the
+        // resulting fluid is still inside - keying the item on `queued` alone made it
+        // vanish the instant processing finished, which reads as "the item disappeared".
+        // `getDisplayStack` applies exactly that rule, shared with the tooltips so the
+        // block and the HUD can never disagree again.
+        var stack = crucible.getDisplayStack();
+        state.hasQueued = !stack.isEmpty();
         if (state.hasQueued) {
-            state.queuedLevel = queued / (float) crucible.getMaxCapacity();
+            state.queuedLevel = Math.max(queued, contained) / (float) crucible.getMaxCapacity();
             this.itemModelManager.clearAndUpdate(state.queuedItemState, stack, ItemDisplayContext.NONE, crucible.getWorld(), null, (int) crucible.getPos().asLong());
         } else {
             state.queuedItemState.clear();

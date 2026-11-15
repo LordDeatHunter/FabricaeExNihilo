@@ -10,13 +10,11 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -102,15 +100,6 @@ public class StrainerBlock extends BlockWithEntity implements Waterloggable {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         return validateTicker(type, StrainerBlockEntity.TYPE, StrainerBlockEntity::tick);
-    }
-
-    @Override
-    protected void onStateReplaced(BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
-        if (world.getBlockEntity(pos) instanceof StrainerBlockEntity strainer) {
-            ItemScatterer.spawn(world, pos, strainer.getInventory());
-            world.updateComparators(pos, this);
-        }
-        super.onStateReplaced(state, world, pos, moved);
     }
 
     @Override

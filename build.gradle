@@ -16,6 +16,7 @@ group = project.maven_group
 repositories {
     mavenCentral()
 
+    maven { url "https://maven.blamejared.com" }
     maven { url "https://maven.fabricmc.net/" }
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/" }
@@ -95,6 +96,51 @@ sourceSets {
     }
 }
 
+// --- Compatibility mods built with a newer Loom -----------------------------
+// Jade (1.14.10) and JEI (1.17.20) declare a newer Loom version than this
+// project uses, and Loom refuses such mods while setting up dependencies.
+// Repackage them into build-local copies with only that single manifest entry
+// removed, so we can compile against their APIs without forcing a Loom / Gradle
+// upgrade.
+def compatCompileDir = file("$buildDir/compat-compile")
+def patchLoomManifest = { File src, File dst ->
+    dst.parentFile.mkdirs()
+    new java.util.zip.ZipOutputStream(dst.newOutputStream()).withCloseable { zos ->
+        def zin = new java.util.zip.ZipFile(src)
+        zin.entries().each { entry ->
+            zos.putNextEntry(new java.util.zip.ZipEntry(entry.name))
+            def input = zin.getInputStream(entry)
+            if (entry.name == "META-INF/MANIFEST.MF") {
+                def text = input.getText("UTF-8").readLines()
+                        .findAll { !it.startsWith("Fabric-Loom-Version:") }
+                        .join("\r\n") + "\r\n\r\n"
+                zos.write(text.getBytes("UTF-8"))
+            } else {
+                zos << input
+            }
+            input.close()
+            zos.closeEntry()
+        }
+        zin.close()
+    }
+    return dst
+}
+
+def jeiRawConfig = configurations.detachedConfiguration(
+        dependencies.create("mezz.jei:jei-1.21.11-fabric:$jei_version"))
+jeiRawConfig.transitive = false
+def jeiCompileJar = patchLoomManifest(
+        jeiRawConfig.singleFile, new File(compatCompileDir, "jei-compile.jar"))
+
+def jadeCompileJar = null
+if (settings.jade) {
+    def jadeRawConfig = configurations.detachedConfiguration(
+            dependencies.create("maven.modrinth:jade:$jade_version+fabric"))
+    jadeRawConfig.transitive = false
+    jadeCompileJar = patchLoomManifest(
+            jadeRawConfig.singleFile, new File(compatCompileDir, "jade-compile.jar"))
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:$minecraft_version"
     mappings "net.fabricmc:yarn:$yarn_mappings:v2"
@@ -146,9 +192,14 @@ dependencies {
         modRuntimeOnly "lol.bai.megane:megane-api:$megane_version"
     }
     if (settings.jade) {
-        modCompileOnly "maven.modrinth:jade:$jade_version+fabric"
-        modRuntimeOnly "maven.modrinth:jade:$jade_version+fabric"
+        modCompileOnly files(jadeCompileJar)
+        modRuntimeOnly files(jadeCompileJar)
     }
+
+    // Compile against the build-local JEI copy prepared above. The plugin class
+    // is discovered through the "jei_mod_plugin" entrypoint and is never loaded
+    // when JEI is absent, so JEI stays a soft dependency.
+    modCompileOnly files(jeiCompileJar)
 }
 
 loom {
@@ -180,7 +231,12 @@ tasks.register('copyDatagenOverrides', Copy) {
 clean.finalizedBy(tasks.copyDatagenOverrides)
 tasks.runDatagen.dependsOn(tasks.copyDatagenOverrides)
 
-clean.delete("src/main/generated")
+// src/main/generated is checked into git and is the ONLY source for recipes,
+// advancements and item models: the fabric-datagen entrypoint is not wired up
+// in fabric.mod.json, so deleting it here would silently drop 1136 tracked files
+// and produce a broken jar with no way to regenerate them. Mesh tints now live
+// in src/main/resources, but the rest of this tree still must survive clean.
+// clean.delete("src/main/generated")
 
 import groovy.json.JsonException
 import groovy.json.JsonSlurper

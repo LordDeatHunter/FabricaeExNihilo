@@ -5,7 +5,7 @@ import net.minecraft.recipe.input.RecipeInput;
 
 /**
  * Shared base for all of our recipe "inputs". These are not real inventories: each recipe type
- * carries its own small record of match parameters (an item, a blockstate, a fluid, ...) and
+ * carries its own small record of match parameters (an item, a block state, a fluid, ...) and
  * tests them itself in {@code matches()}.
  * <p>
  * 1.21.11 changed {@code RecipeManager.getFirstMatch} to short-circuit on

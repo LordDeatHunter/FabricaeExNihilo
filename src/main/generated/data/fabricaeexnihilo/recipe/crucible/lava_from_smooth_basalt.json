@@ -1,0 +1,9 @@
+{
+  "type": "fabricaeexnihilo:crucible",
+  "amount": 20250,
+  "fluid": {
+    "fluid": "minecraft:lava"
+  },
+  "input": "minecraft:smooth_basalt",
+  "requiresFireproofCrucible": true
+}

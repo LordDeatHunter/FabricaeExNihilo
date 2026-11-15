@@ -35,6 +35,10 @@ public class CrucibleRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
         return lava(Ingredient.ofItems(input), amount);
     }
 
+    public static CrucibleRecipeJsonBuilder lava(TagKey<Item> input, long amount) {
+        return lava(Ingredient.fromTag(input), amount);
+    }
+
     public static CrucibleRecipeJsonBuilder water(Ingredient input, long amount) {
         return new CrucibleRecipeJsonBuilder(input, FluidVariant.of(Fluids.WATER), amount);
     }

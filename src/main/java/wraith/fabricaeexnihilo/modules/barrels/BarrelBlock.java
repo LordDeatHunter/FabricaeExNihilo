@@ -26,7 +26,6 @@ import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
@@ -105,14 +104,6 @@ public class BarrelBlock extends BlockWithEntity {
                 e.getKey().getKey().ifPresent(k -> barrelEntity.getEnchantmentContainer().setEnchantmentLevel(k.getValue(), e.getIntValue()));
             });
         }
-    }
-
-    @Override
-    protected void onStateReplaced(BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
-        if (world.getBlockEntity(pos) instanceof BarrelBlockEntity barrel && barrel.getState() == BarrelState.ITEM) {
-            ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), barrel.getItem());
-        }
-        super.onStateReplaced(state, world, pos, moved);
     }
 
     // Milking
