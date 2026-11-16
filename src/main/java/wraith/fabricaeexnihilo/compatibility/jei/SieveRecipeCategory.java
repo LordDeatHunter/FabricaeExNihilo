@@ -26,6 +26,12 @@ import java.util.Locale;
  * <p>Slot coordinates are the top-left corner of an 18x18 slot. The grid width is
  * derived from the column count and the panel is sized around the largest recipe
  * so slots never overlap the panel border.
+ *
+ * <p>Every slot, including the outputs, uses the 18x18 standard slot background.
+ * JEI's output slot background is 26x26 in JEI 27 (it matches the enlarged vanilla
+ * output slot introduced in 1.21.9), with a (-5, -5) offset, so it is only meant
+ * for a single isolated output slot. Drawing it once per cell of an 18px grid made
+ * neighbouring backgrounds overlap by 8px and every output look oversized.
  */
 public class SieveRecipeCategory implements IRecipeCategory<JeiSieveRecipe> {
 
@@ -112,7 +118,7 @@ public class SieveRecipeCategory implements IRecipeCategory<JeiSieveRecipe> {
             List<Double> chances = output.chances();
             builder.addOutputSlot(x, y)
                     .addItemStack(output.stack())
-                    .setOutputSlotBackground()
+                    .setStandardSlotBackground()
                     .addRichTooltipCallback((view, tooltip) ->
                             tooltip.add(Text.translatable(
                                     "fabricaeexnihilo.jei.sieve.chance", formatChances(chances))));
