@@ -3,7 +3,6 @@
   "addition": "minecraft:netherite_ingot",
   "base": "fabricaeexnihilo:diamond_hammer",
   "result": {
-    "count": 1,
     "id": "fabricaeexnihilo:netherite_hammer"
   },
   "template": "minecraft:netherite_upgrade_smithing_template"

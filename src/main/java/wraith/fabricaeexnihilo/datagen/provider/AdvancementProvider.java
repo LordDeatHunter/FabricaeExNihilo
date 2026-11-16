@@ -12,6 +12,7 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.predicate.NumberRange;
 import net.minecraft.predicate.item.ItemPredicate;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -53,7 +54,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                 "barrel",
                 root,
                 "barrel",
-                InventoryChangedCriterion.Conditions.items(ItemPredicate.Builder.create().tag(ModTags.BARRELS).build()),
+                InventoryChangedCriterion.Conditions.items(ItemPredicate.Builder.create().tag(lookup.getOrThrow(RegistryKeys.ITEM), ModTags.BARRELS).build()),
                 exporter);
         goal(BloodFluid.BUCKET,
                 "blood",
@@ -83,7 +84,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                 "clay_crook_broken",
                 clay,
                 "clay_crook_broken",
-                ItemDurabilityChangedCriterion.Conditions.create(Optional.of(ItemPredicate.Builder.create().items(ModTools.CROOKS.get(id("clay_crook"))).build()), NumberRange.IntRange.ANY),
+                ItemDurabilityChangedCriterion.Conditions.create(Optional.of(ItemPredicate.Builder.create().items(lookup.getOrThrow(RegistryKeys.ITEM), ModTools.CROOKS.get(id("clay_crook"))).build()), NumberRange.IntRange.ANY),
                 exporter);
 
         var crook = task(ModTools.CROOKS.get(id("wooden_crook")),

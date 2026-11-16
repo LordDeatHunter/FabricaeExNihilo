@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "fabricaeexnihilo:item/oak_sieve"
+    "model": "fabricaeexnihilo:block/oak_sieve"
   }
 }

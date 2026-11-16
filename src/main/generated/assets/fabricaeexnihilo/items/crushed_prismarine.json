@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "fabricaeexnihilo:item/crushed_prismarine"
+    "model": "fabricaeexnihilo:block/crushed_prismarine"
   }
 }

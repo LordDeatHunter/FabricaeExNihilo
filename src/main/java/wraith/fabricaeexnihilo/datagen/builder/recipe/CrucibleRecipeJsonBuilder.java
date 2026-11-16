@@ -1,13 +1,17 @@
 package wraith.fabricaeexnihilo.datagen.builder.recipe;
 
+import net.minecraft.registry.RegistryWrapper;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.advancement.AdvancementCriterion;
-import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.recipe.CraftingRecipeJsonBuilder;
+import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
@@ -15,6 +19,13 @@ import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.recipe.crucible.CrucibleRecipe;
 
 public class CrucibleRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
+    /** 1.21.11 needs a registry entry list, which only the datagen run can supply. */
+    public static RegistryWrapper.WrapperLookup LOOKUP;
+
+    private static Ingredient tagIngredient(TagKey<Item> tag) {
+        return Ingredient.ofTag(LOOKUP.getOrThrow(RegistryKeys.ITEM).getOrThrow(tag));
+    }
+
     private final Ingredient input;
     private final long amount;
     private final FluidVariant fluid;
@@ -36,7 +47,7 @@ public class CrucibleRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
     }
 
     public static CrucibleRecipeJsonBuilder lava(TagKey<Item> input, long amount) {
-        return lava(Ingredient.fromTag(input), amount);
+        return lava(tagIngredient(input), amount);
     }
 
     public static CrucibleRecipeJsonBuilder water(Ingredient input, long amount) {
@@ -48,7 +59,7 @@ public class CrucibleRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
     }
 
     public static CrucibleRecipeJsonBuilder water(TagKey<Item> input, long amount) {
-        return water(Ingredient.fromTag(input), amount);
+        return water(tagIngredient(input), amount);
     }
 
     public CrucibleRecipeJsonBuilder requiresFireproofCrucible() {
@@ -72,7 +83,11 @@ public class CrucibleRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
     }
 
     @Override
+    public void offerTo(RecipeExporter exporter, RegistryKey<Recipe<?>> recipeKey) {
+        offerTo(exporter, recipeKey.getValue());
+    }
+
     public void offerTo(RecipeExporter exporter, Identifier recipeId) {
-        exporter.accept(recipeId, new CrucibleRecipe(input, amount, fluid, requiresFireproofCrucible), null);
+        exporter.accept(RecipeIds.key(exporter, recipeId), new CrucibleRecipe(input, amount, fluid, requiresFireproofCrucible), null);
     }
 }

@@ -3,7 +3,8 @@ package wraith.fabricaeexnihilo.datagen.provider.recipe;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Blocks;
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
@@ -22,7 +23,17 @@ public class CrucibleRecipeProvider extends FabricRecipeProvider {
     }
 
     @Override
-    public void generate(RecipeExporter exporter) {
+    protected RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registries, RecipeExporter exporter) {
+        CrucibleRecipeJsonBuilder.LOOKUP = registries;
+        return new RecipeGenerator(registries, exporter) {
+            @Override
+            public void generate() {
+                generateRecipes(this.exporter);
+            }
+        };
+    }
+
+    private void generateRecipes(RecipeExporter exporter) {
         new CrucibleHeatRecipeJsonBuilder(BlockIngredient.tag(ModTags.Common.TORCHES), 1).offerTo(exporter, "heat_from_torch");
         new CrucibleHeatRecipeJsonBuilder(Blocks.GLOWSTONE, 2).offerTo(exporter, "heat_from_glowstone");
         new CrucibleHeatRecipeJsonBuilder(Blocks.SHROOMLIGHT, 2).offerTo(exporter, "heat_from_shroomlight");

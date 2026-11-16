@@ -1,8 +1,11 @@
 package wraith.fabricaeexnihilo.datagen.builder.recipe;
 
+import net.minecraft.recipe.Recipe;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.advancement.AdvancementCriterion;
-import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.recipe.CraftingRecipeJsonBuilder;
+import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -26,8 +29,8 @@ public class WitchWaterEntityRecipeJsonBuilder implements CraftingRecipeJsonBuil
         return new WitchWaterEntityRecipeJsonBuilder(from, "", to);
     }
 
-    public static WitchWaterEntityRecipeJsonBuilder villager(VillagerProfession from, EntityType<?> to) {
-        return new WitchWaterEntityRecipeJsonBuilder(EntityType.VILLAGER, "VillagerData{profession:\"%s\"}".formatted(Registries.VILLAGER_PROFESSION.getId(from).toString()), to);
+    public static WitchWaterEntityRecipeJsonBuilder villager(RegistryKey<VillagerProfession> from, EntityType<?> to) {
+        return new WitchWaterEntityRecipeJsonBuilder(EntityType.VILLAGER, "VillagerData{profession:\"%s\"}".formatted(from.getValue().toString()), to);
     }
 
     @Override
@@ -57,7 +60,11 @@ public class WitchWaterEntityRecipeJsonBuilder implements CraftingRecipeJsonBuil
     }
 
     @Override
+    public void offerTo(RecipeExporter exporter, RegistryKey<Recipe<?>> recipeKey) {
+        offerTo(exporter, recipeKey.getValue());
+    }
+
     public void offerTo(RecipeExporter exporter, Identifier recipeId) {
-        exporter.accept(recipeId, new WitchWaterEntityRecipe(target, WitchWaterEntityRecipe.Serializer.parseNbtPath(nbt), result), null);
+        exporter.accept(RecipeIds.key(exporter, recipeId), new WitchWaterEntityRecipe(target, WitchWaterEntityRecipe.Serializer.parseNbtPath(nbt), result), null);
     }
 }

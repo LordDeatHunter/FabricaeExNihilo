@@ -3,7 +3,6 @@
   "addition": "minecraft:netherite_ingot",
   "base": "fabricaeexnihilo:diamond_mesh",
   "result": {
-    "count": 1,
     "id": "fabricaeexnihilo:netherite_mesh"
   },
   "template": "minecraft:netherite_upgrade_smithing_template"

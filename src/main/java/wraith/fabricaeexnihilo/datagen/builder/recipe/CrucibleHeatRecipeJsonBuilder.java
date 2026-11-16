@@ -1,9 +1,12 @@
 package wraith.fabricaeexnihilo.datagen.builder.recipe;
 
+import net.minecraft.recipe.Recipe;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.advancement.AdvancementCriterion;
 import net.minecraft.block.Block;
-import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.recipe.CraftingRecipeJsonBuilder;
+import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
@@ -50,7 +53,11 @@ public class CrucibleHeatRecipeJsonBuilder implements CraftingRecipeJsonBuilder 
     }
 
     @Override
+    public void offerTo(RecipeExporter exporter, RegistryKey<Recipe<?>> recipeKey) {
+        offerTo(exporter, recipeKey.getValue());
+    }
+
     public void offerTo(RecipeExporter exporter, Identifier recipeId) {
-        exporter.accept(recipeId, new CrucibleHeatRecipe(block, heat), null);
+        exporter.accept(RecipeIds.key(exporter, recipeId), new CrucibleHeatRecipe(block, heat), null);
     }
 }

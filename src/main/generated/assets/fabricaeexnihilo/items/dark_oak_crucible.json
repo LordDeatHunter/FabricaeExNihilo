@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "fabricaeexnihilo:item/dark_oak_crucible"
+    "model": "fabricaeexnihilo:block/dark_oak_crucible"
   }
 }

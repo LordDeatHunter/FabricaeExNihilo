@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "fabricaeexnihilo:item/warped_strainer"
+    "model": "fabricaeexnihilo:block/warped_strainer"
   }
 }

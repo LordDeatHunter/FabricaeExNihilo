@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "fabricaeexnihilo:item/infested_cherry_leaves"
+    "model": "fabricaeexnihilo:block/infested_cherry_leaves"
   }
 }

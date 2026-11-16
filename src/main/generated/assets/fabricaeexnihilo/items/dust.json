@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "fabricaeexnihilo:item/dust"
+    "model": "fabricaeexnihilo:block/dust"
   }
 }

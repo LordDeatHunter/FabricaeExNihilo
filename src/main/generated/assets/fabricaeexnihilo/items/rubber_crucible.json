@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "fabricaeexnihilo:item/rubber_crucible"
+    "model": "fabricaeexnihilo:block/rubber_crucible"
   }
 }

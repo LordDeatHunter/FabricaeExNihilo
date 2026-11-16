@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "fabricaeexnihilo:item/bamboo_crucible"
+    "model": "fabricaeexnihilo:block/bamboo_crucible"
   }
 }

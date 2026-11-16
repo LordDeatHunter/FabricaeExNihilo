@@ -1,60 +1,18 @@
 {
   "values": [
-    {
-      "id": "fabricaeexnihilo:stone_crook",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:terracotta_crook",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:diorite_crook",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:blackstone_crook",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:wooden_crook",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:clay_crook",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:deepslate_crook",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:prismarine_crook",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:basalt_crook",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:granite_crook",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:purpur_crook",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:andesite_crook",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:bone_crook",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:blaze_crook",
-      "required": false
-    }
+    "fabricaeexnihilo:stone_crook",
+    "fabricaeexnihilo:terracotta_crook",
+    "fabricaeexnihilo:diorite_crook",
+    "fabricaeexnihilo:blackstone_crook",
+    "fabricaeexnihilo:wooden_crook",
+    "fabricaeexnihilo:clay_crook",
+    "fabricaeexnihilo:deepslate_crook",
+    "fabricaeexnihilo:prismarine_crook",
+    "fabricaeexnihilo:basalt_crook",
+    "fabricaeexnihilo:granite_crook",
+    "fabricaeexnihilo:purpur_crook",
+    "fabricaeexnihilo:andesite_crook",
+    "fabricaeexnihilo:bone_crook",
+    "fabricaeexnihilo:blaze_crook"
   ]
 }

@@ -1,56 +1,17 @@
 {
   "values": [
-    {
-      "id": "fabricaeexnihilo:oak_crucible",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:birch_crucible",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:spruce_crucible",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:acacia_crucible",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:dark_oak_crucible",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:jungle_crucible",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:warped_crucible",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:crimson_crucible",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:mangrove_crucible",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:cherry_crucible",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:bamboo_crucible",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:porcelain_crucible",
-      "required": false
-    },
-    {
-      "id": "fabricaeexnihilo:rubber_crucible",
-      "required": false
-    }
+    "fabricaeexnihilo:oak_crucible",
+    "fabricaeexnihilo:birch_crucible",
+    "fabricaeexnihilo:spruce_crucible",
+    "fabricaeexnihilo:acacia_crucible",
+    "fabricaeexnihilo:dark_oak_crucible",
+    "fabricaeexnihilo:jungle_crucible",
+    "fabricaeexnihilo:warped_crucible",
+    "fabricaeexnihilo:crimson_crucible",
+    "fabricaeexnihilo:mangrove_crucible",
+    "fabricaeexnihilo:cherry_crucible",
+    "fabricaeexnihilo:bamboo_crucible",
+    "fabricaeexnihilo:porcelain_crucible",
+    "fabricaeexnihilo:rubber_crucible"
   ]
 }

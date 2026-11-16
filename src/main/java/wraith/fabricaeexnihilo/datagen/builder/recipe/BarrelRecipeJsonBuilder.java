@@ -1,12 +1,13 @@
 package wraith.fabricaeexnihilo.datagen.builder.recipe;
 
+import net.minecraft.registry.RegistryWrapper;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.advancement.AdvancementCriterion;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.recipe.CraftingRecipeJsonBuilder;
+import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.entity.EntityType;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
@@ -14,6 +15,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
@@ -31,6 +35,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BarrelRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
+    /** 1.21.11 needs a registry entry list, which only the datagen run can supply. */
+    public static RegistryWrapper.WrapperLookup LOOKUP;
+
+    private static Ingredient tagIngredient(TagKey<Item> tag) {
+        return Ingredient.ofTag(LOOKUP.getOrThrow(RegistryKeys.ITEM).getOrThrow(tag));
+    }
+
     private final BarrelRecipeTrigger trigger;
     private final List<BarrelRecipeCondition> conditions = new ArrayList<>();
     private final List<BarrelRecipeAction> actions = new ArrayList<>();
@@ -59,7 +70,7 @@ public class BarrelRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
     }
 
     public static BarrelRecipeJsonBuilder itemTriggered(TagKey<Item> items) {
-        return itemTriggered(Ingredient.fromTag(items));
+        return itemTriggered(tagIngredient(items));
     }
 
     public BarrelRecipeJsonBuilder fluid(FluidIngredient fluid) {
@@ -243,12 +254,16 @@ public class BarrelRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
     }
 
     @Override
+    public void offerTo(RecipeExporter exporter, RegistryKey<Recipe<?>> recipeKey) {
+        offerTo(exporter, recipeKey.getValue());
+    }
+
     public void offerTo(RecipeExporter exporter, Identifier recipeId) {
         if (duration == -1) throw new IllegalStateException("Duration not set");
         if (actions.isEmpty()) throw new IllegalStateException("No actions set");
         if (icon == null) throw new IllegalStateException("No icon set");
         if (!hasStateCondition) throw new IllegalStateException("No state condition set, this recipe could trigger on all kinds of barrels");
 
-        exporter.accept(recipeId, new BarrelRecipe(trigger, duration, actions, conditions, icon), null);
+        exporter.accept(RecipeIds.key(exporter, recipeId), new BarrelRecipe(trigger, duration, actions, conditions, icon), null);
     }
 }

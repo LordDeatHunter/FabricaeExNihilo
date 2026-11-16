@@ -1,6 +1,9 @@
 {
   "values": [
-    "#minecraft:leaves",
+    {
+      "id": "#minecraft:leaves",
+      "required": false
+    },
     "#fabricaeexnihilo:infested_leaves"
   ]
 }

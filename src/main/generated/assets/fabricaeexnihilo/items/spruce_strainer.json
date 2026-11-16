@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "fabricaeexnihilo:item/spruce_strainer"
+    "model": "fabricaeexnihilo:block/spruce_strainer"
   }
 }

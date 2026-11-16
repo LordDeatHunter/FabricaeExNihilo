@@ -12,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.api.FENApiModule;
 import wraith.fabricaeexnihilo.api.FENRegistries;
+import wraith.fabricaeexnihilo.datagen.DatagenItems;
 import wraith.fabricaeexnihilo.modules.ModBlocks;
 import wraith.fabricaeexnihilo.modules.ModItems;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlock;
@@ -34,7 +35,13 @@ public class EntrypointHelper {
     public static void callEntrypoints() {
         var entrypoints = FabricLoader.getInstance().getEntrypoints("fabricaeexnihilo:api", FENApiModule.class).stream();
 
-        entrypoints = entrypoints.filter(FENApiModule::shouldLoad);
+        // Enable all compat modules when running datagen to ensure all
+        // data gets generated regardless of currently active dependencies
+        if (System.getProperty("fabric-api.datagen") != null) {
+            DatagenItems.register();
+        } else {
+            entrypoints = entrypoints.filter(FENApiModule::shouldLoad);
+        }
 
         entrypoints.forEach(entrypoint -> entrypoint.onInit(new FENRegistriesImpl(entrypoint.getResourceCondition())));
     }
