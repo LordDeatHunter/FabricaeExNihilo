@@ -18,7 +18,9 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
+          # Loom 1.19 requires a JVM 25 to run; the mod itself still targets 21
+          # via options.release in build.gradle.
+          java-version: '25'
           distribution: 'temurin'
           cache: 'gradle'
 

@@ -5,7 +5,7 @@ buildscript {
 }
 
 plugins {
-    id 'fabric-loom' version '1.13.1'
+    id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
     id 'maven-publish'
 }
 
@@ -16,8 +16,14 @@ group = project.maven_group
 repositories {
     mavenCentral()
 
-    maven { url "https://maven.blamejared.com" }
     maven { url "https://maven.fabricmc.net/" }
+    maven {
+        url "https://maven.blamejared.com"
+        content {
+            includeGroup "com.faux.ingredientextension"
+            includeGroup "mezz.jei"
+        }
+    }
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/" }
     maven { url "https://maven.saps.dev/minecraft" }
@@ -32,13 +38,20 @@ repositories {
         }
     }
     maven {
+        url "http://maven.modmuss50.me/"
+        allowInsecureProtocol = true
+        content {
+            includeGroup "TechReborn"
+        }
+    }
+    maven {
         url "https://api.modrinth.com/maven"
         content {
             includeGroup "maven.modrinth"
         }
     }
     maven {
-        url "https://cursemaven.com"
+        url "https://www.cursemaven.com"
         content {
             includeGroup "curse.maven"
         }
@@ -50,6 +63,9 @@ repositories {
         }
     }
 }
+
+// toggle this if you need to make a change to allow intellij to refresh
+boolean nothing = true
 
 var settings = new Object() {
     boolean wthit
@@ -67,78 +83,16 @@ apply from: "config.gradle", to: settings
 sourceSets {
     main {
         java {
-            exclude 'wraith/fabricaeexnihilo/datagen/**'
-            if (!settings.rei) {
-                exclude 'wraith/fabricaeexnihilo/compatibility/rei/**'
-            }
-            if (!settings.emi) {
-                exclude 'wraith/fabricaeexnihilo/compatibility/emi/**'
-            }
-            if (!settings.rei && !settings.emi) {
-                exclude 'wraith/fabricaeexnihilo/compatibility/recipeviewer/**'
-            }
-            if (!settings.jade) {
-                exclude 'wraith/fabricaeexnihilo/compatibility/jade/**'
-            }
-            if (!settings.wthit) {
-                exclude 'wraith/fabricaeexnihilo/compatibility/wthit/**'
-            }
-            if (!settings.megane) {
-                exclude 'wraith/fabricaeexnihilo/compatibility/megane/**'
-            }
-            if (!settings.modmenu) {
-                exclude 'wraith/fabricaeexnihilo/client/config/ModmenuPlugin.java'
-            }
-        }
-        resources {
-            srcDir("src/main/generated")
+            // REI and EMI are not ported to 1.21.11 yet. Their sources stay in
+            // the tree, but they are left out of the build until they compile
+            // against the 1.21.11 APIs. Every other optional integration below
+            // is always compiled; the config.gradle switches only decide which
+            // mods are loaded at runtime.
+            exclude 'wraith/fabricaeexnihilo/compatibility/rei/**'
+            exclude 'wraith/fabricaeexnihilo/compatibility/emi/**'
+            exclude 'wraith/fabricaeexnihilo/compatibility/recipeviewer/**'
         }
     }
-}
-
-// --- Compatibility mods built with a newer Loom -----------------------------
-// Jade (1.14.10) and JEI (1.17.20) declare a newer Loom version than this
-// project uses, and Loom refuses such mods while setting up dependencies.
-// Repackage them into build-local copies with only that single manifest entry
-// removed, so we can compile against their APIs without forcing a Loom / Gradle
-// upgrade.
-def compatCompileDir = file("$buildDir/compat-compile")
-def patchLoomManifest = { File src, File dst ->
-    dst.parentFile.mkdirs()
-    new java.util.zip.ZipOutputStream(dst.newOutputStream()).withCloseable { zos ->
-        def zin = new java.util.zip.ZipFile(src)
-        zin.entries().each { entry ->
-            zos.putNextEntry(new java.util.zip.ZipEntry(entry.name))
-            def input = zin.getInputStream(entry)
-            if (entry.name == "META-INF/MANIFEST.MF") {
-                def text = input.getText("UTF-8").readLines()
-                        .findAll { !it.startsWith("Fabric-Loom-Version:") }
-                        .join("\r\n") + "\r\n\r\n"
-                zos.write(text.getBytes("UTF-8"))
-            } else {
-                zos << input
-            }
-            input.close()
-            zos.closeEntry()
-        }
-        zin.close()
-    }
-    return dst
-}
-
-def jeiRawConfig = configurations.detachedConfiguration(
-        dependencies.create("mezz.jei:jei-1.21.11-fabric:$jei_version"))
-jeiRawConfig.transitive = false
-def jeiCompileJar = patchLoomManifest(
-        jeiRawConfig.singleFile, new File(compatCompileDir, "jei-compile.jar"))
-
-def jadeCompileJar = null
-if (settings.jade) {
-    def jadeRawConfig = configurations.detachedConfiguration(
-            dependencies.create("maven.modrinth:jade:$jade_version+fabric"))
-    jadeRawConfig.transitive = false
-    jadeCompileJar = patchLoomManifest(
-            jadeRawConfig.singleFile, new File(compatCompileDir, "jade-compile.jar"))
 }
 
 dependencies {
@@ -148,74 +102,66 @@ dependencies {
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:$fabric_version"
 
+    modCompileOnly "com.terraformersmc:modmenu:$modmenu_version"
+
     modImplementation include("dev.isxander:yet-another-config-lib:$yacl_version")
     modImplementation annotationProcessor(include("com.github.mattidragon:configtoolkit:$configtoolkit_version"))
 
-    // Add generated data to runtime classpath
+    // Add generated data to runtime classpath (slightly hacky)
     runtimeOnly files("src/main/generated")
 
-    if (settings.rei) {
-        modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:$rei_version"
-        modCompileOnly "dev.architectury:architectury-fabric:$architectury_version"
-        modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
-        modRuntimeOnly "dev.architectury:architectury-fabric:$architectury_version"
-    }
-    if (settings.emi) {
-        modCompileOnly "dev.emi:emi-fabric:$emi_version:api"
-        modRuntimeOnly "dev.emi:emi-fabric:$emi_version"
-    }
-    if (settings.modmenu) {
-        modCompileOnly "com.terraformersmc:modmenu:$modmenu_version"
-        modRuntimeOnly "com.terraformersmc:modmenu:$modmenu_version"
-    }
-    if (settings.techReborn) {
-        modRuntimeOnly "TechReborn:TechReborn-1.19:$tech_reborn_version"
-    }
-    if (settings.modernIndustrialization) {
-        modRuntimeOnly "maven.modrinth:modern-industrialization:$modern_industrialization_version"
-    }
-    if (settings.industrialRevolution) {
-        modRuntimeOnly "curse.maven:industrial-revolution-391708:$industrial_revolution_version"
-    }
+    if (settings.modmenu) modRuntimeOnly "com.terraformersmc:modmenu:$modmenu_version"
+    if (settings.techReborn) modRuntimeOnly "TechReborn:TechReborn-1.21:$tech_reborn_version"
+    if (settings.modernIndustrialization) modRuntimeOnly "maven.modrinth:modern-industrialization:$modern_industrialization_version"
+    if (settings.industrialRevolution) modRuntimeOnly "curse.maven:industrial-revolution-391708:$industrial_revolution_version"
+
+    // WTHIT and Megane
+    modCompileOnly "mcp.mobius.waila:wthit-api:fabric-$wthit_version"
     if (settings.wthit) {
-        modCompileOnly "mcp.mobius.waila:wthit-api:fabric-$wthit_version"
         modRuntimeOnly "mcp.mobius.waila:wthit:fabric-$wthit_version"
+        // WTHIT 18 declares a hard dependency on badpackets 0.11 or newer.
+        modRuntimeOnly "lol.bai:badpackets:fabric-$badpackets_version"
     }
-    if (settings.megane) {
-        // Compile against the same API version that ships at runtime. Pinning an
-        // older API here lets the code compile against methods that no longer
-        // exist in the version the game actually loads.
-        modCompileOnly "lol.bai.megane:megane-api:$megane_version"
-        modRuntimeOnly "lol.bai:badpackets:fabric-0.1.2"
-        modRuntimeOnly "lol.bai.megane:megane-runtime:$megane_version"
-        modRuntimeOnly "lol.bai.megane:megane-vanilla:$megane_version"
-        modRuntimeOnly "lol.bai.megane:megane-api:$megane_version"
-    }
+    modCompileOnly "lol.bai.megane:megane-api:$megane_version"
+    // Megane has no 1.21.11 build yet: 8.4.0 targets 1.21.x and its title
+    // screen mixin fails on startup, so only the API stays on the classpath
+    // until a 1.21.11 release exists.
+    // if (settings.megane) {
+    //     modRuntimeOnly "lol.bai:badpackets:fabric-0.1.2"
+    //     modRuntimeOnly "lol.bai.megane:megane-runtime:$megane_version"
+    //     modRuntimeOnly "lol.bai.megane:megane-vanilla:$megane_version"
+    //     modRuntimeOnly "lol.bai.megane:megane-api:$megane_version"
+    // }
+
+    modCompileOnly "maven.modrinth:jade:$jade_version+fabric"
     if (settings.jade) {
-        modCompileOnly files(jadeCompileJar)
-        modRuntimeOnly files(jadeCompileJar)
+        modRuntimeOnly "maven.modrinth:jade:$jade_version+fabric"
     }
 
-    // Compile against the build-local JEI copy prepared above. The plugin class
-    // is discovered through the "jei_mod_plugin" entrypoint and is never loaded
-    // when JEI is absent, so JEI stays a soft dependency.
-    modCompileOnly files(jeiCompileJar)
+    modCompileOnly "mezz.jei:jei-1.21.11-fabric:$jei_version"
 }
 
 loom {
     runs {
         datagen {
-            inherit server
+            // The 1.21 branch uses `inherit server`. 1.21.11 moved the model
+            // generators into the client source set
+            // (net.fabricmc.fabric.api.client.datagen.v1...), so models can only
+            // be generated from a client run.
+            inherit client
             name "Data Generation"
             vmArg "-Dfabric-api.datagen"
             vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
             vmArg "-Dfabric-api.datagen.modid=fabricaeexnihilo"
+            //vmArg "-Dfabric-api.datagen.strict-validation"
 
             ideConfigGenerated = true
+
             runDir "build/datagen/"
         }
     }
 
+    // Apply datagen at runtime
     mods {
         fabricaeexnihilo {
             sourceSet sourceSets.main
@@ -224,6 +170,7 @@ loom {
     }
 }
 
+// Hack to copy dependency overrides to datagen
 tasks.register('copyDatagenOverrides', Copy) {
     from "run/config/fabric_loader_dependencies.json"
     into "build/datagen/config"
@@ -231,12 +178,9 @@ tasks.register('copyDatagenOverrides', Copy) {
 clean.finalizedBy(tasks.copyDatagenOverrides)
 tasks.runDatagen.dependsOn(tasks.copyDatagenOverrides)
 
-// src/main/generated is checked into git and is the ONLY source for recipes,
-// advancements and item models: the fabric-datagen entrypoint is not wired up
-// in fabric.mod.json, so deleting it here would silently drop 1136 tracked files
-// and produce a broken jar with no way to regenerate them. Mesh tints now live
-// in src/main/resources, but the rest of this tree still must survive clean.
-// clean.delete("src/main/generated")
+// Delete datagen on clean
+clean.delete("src/main/generated")
+
 
 import groovy.json.JsonException
 import groovy.json.JsonSlurper
@@ -250,35 +194,9 @@ processResources {
     }
 
     doLast {
-        // Optional integrations are compiled out when their switch is off, so
-        // their entrypoints must not survive into the manifest either: Fabric
-        // aborts the launch when an entrypoint names a class that is not in the
-        // jar. Each entrypoint below is therefore emitted only while the
-        // matching source set is part of the build.
-        def manifestPath = new File(destinationDir, "fabric.mod.json")
-        if (manifestPath.exists()) {
-            def manifest = new JsonSlurper().parseText(manifestPath.text)
-            manifest.entrypoints.remove("jade")
-            manifest.entrypoints.remove("modmenu")
-            if (manifest.custom == null) {
-                manifest.custom = [:]
-            }
-            manifest.custom.remove("megane:modules")
-            if (settings.jade) {
-                manifest.entrypoints.jade = ["wraith.fabricaeexnihilo.compatibility.jade.FENJadePlugin"]
-            }
-            if (settings.megane) {
-                manifest.custom["megane:modules"] = ["wraith.fabricaeexnihilo.compatibility.megane.FENMeganeModule"]
-            }
-            if (settings.modmenu) {
-                manifest.entrypoints.modmenu = ["wraith.fabricaeexnihilo.client.config.ModmenuPlugin"]
-            }
-            manifestPath.text = JsonOutput.toJson(manifest)
-        }
-
         fileTree(dir: outputs.files.asPath, include: "**/*.json").each { File file ->
             try {
-                file.text = JsonOutput.toJson(new JsonSlurper().parseText(file.text))
+                file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
             } catch (JsonException e) {
                 throw new RuntimeException("Failed to minify json for $file", e)
             }
@@ -298,19 +216,14 @@ java {
 }
 
 jar {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from("LICENSE") {
         rename { "${it}_${archives_base_name}" }
     }
+    // Copy datagen to jar
+    dependsOn tasks.runDatagen
     from("src/main/generated") {
         exclude "README.md"
         exclude ".cache"
-    }
-    // WTHIT discovers its plugins through this file. When the integration is
-    // compiled out the class is missing from the jar, so the file has to go
-    // as well - otherwise WTHIT fails to initialise the plugin.
-    if (!settings.wthit) {
-        exclude "waila_plugins.json"
     }
 }
 
