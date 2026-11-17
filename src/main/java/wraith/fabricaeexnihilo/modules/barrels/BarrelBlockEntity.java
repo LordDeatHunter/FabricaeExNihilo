@@ -107,7 +107,14 @@ public class BarrelBlockEntity extends BaseBlockEntity implements EnchantableBlo
     @Override
     public void onBlockReplaced(BlockPos pos, BlockState state) {
         if (world != null && getState() == BarrelState.ITEM) {
-            ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), getItem().copy());
+            // Clear our own copy before calling super(). We implement SidedInventory,
+            // and the default BlockEntity#onBlockReplaced scatters whatever an
+            // Inventory still reports ("if (this instanceof Inventory) ...
+            // ItemScatterer.spawn"). Dropping here and then letting super() run
+            // without clearing would spawn the same stack twice.
+            ItemStack dropped = getItem().copy();
+            setItem(ItemStack.EMPTY);
+            ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), dropped);
         }
         super.onBlockReplaced(pos, state);
     }

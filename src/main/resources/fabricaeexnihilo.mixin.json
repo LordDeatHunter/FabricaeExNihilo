@@ -12,11 +12,11 @@
     "FluidBlockAccess",
     "FluidBlockMixin",
     "ItemEntityMixin",
-    "ItemModelGeneratorAccess",
     "LivingEntityMixin",
     "LootContextTypesAccess"
   ],
   "client": [
+    "ItemModelGeneratorAccess"
   ],
   "injectors": {
     "defaultRequire": 1

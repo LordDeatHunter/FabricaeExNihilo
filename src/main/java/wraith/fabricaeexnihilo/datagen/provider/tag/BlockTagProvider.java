@@ -1,10 +1,12 @@
 package wraith.fabricaeexnihilo.datagen.provider.tag;
 
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.Registries;
 import net.minecraft.data.tag.ProvidedTagBuilder;
 import net.minecraft.block.Block;
+import net.minecraft.util.Identifier;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
@@ -29,6 +31,23 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         return builder(key).mapped(v -> Registries.BLOCK.getKey(v).orElseThrow());
     }
 
+    /**
+     * Builder that keeps RegistryKey values instead of mapped Block objects.
+     *
+     * <p>1.21.11's mapped adapter forwards addOptional() to the underlying add()
+     * (bytecode: ProvidedTagBuilder$2.method_71560 calls field_60484.method_71554),
+     * which silently turns optional entries into hard entries. Tags that contain
+     * blocks from optional mods must therefore be built through this raw builder so
+     * the generated JSON keeps "required": false.
+     */
+    private ProvidedTagBuilder<RegistryKey<Block>, Block> keyedTag(TagKey<Block> key) {
+        return builder(key);
+    }
+
+    private static RegistryKey<Block> blockKey(Identifier id) {
+        return RegistryKey.of(RegistryKeys.BLOCK, id);
+    }
+
     @Override
     protected void configure(RegistryWrapper.WrapperLookup arg) {
         tag(ModTags.Common.CONCRETE_POWDERS)
@@ -47,7 +66,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 .add(Blocks.TORCH, Blocks.WALL_TORCH, Blocks.SOUL_TORCH, Blocks.SOUL_WALL_TORCH);
 
         // Optional to avoid issues with optional modules
-        ModBlocks.INFESTED_LEAVES.keySet().forEach(id -> tag(ModTags.INFESTED_LEAVES).addOptional(Registries.BLOCK.get(id)));
+        ModBlocks.INFESTED_LEAVES.keySet().forEach(id -> keyedTag(ModTags.INFESTED_LEAVES).addOptional(blockKey(id)));
 
         tag(ModTags.CROOKABLES)
                 .addOptionalTag(BlockTags.LEAVES)
@@ -66,26 +85,26 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 .add(ItemUtils.getExNihiloBlock("crushed_granite"));
 
         var pickaxeMineableTag = tag(BlockTags.PICKAXE_MINEABLE);
-        var axeMineableTag = tag(BlockTags.AXE_MINEABLE);
-        var shovelMineableTag = tag(BlockTags.SHOVEL_MINEABLE);
+        var axeMineableTag = keyedTag(BlockTags.AXE_MINEABLE);
+        var shovelMineableTag = keyedTag(BlockTags.SHOVEL_MINEABLE);
         var hoeMineableTag = tag(BlockTags.SHOVEL_MINEABLE);
         ModBlocks.BARRELS.forEach((id, barrel) -> {
             if (barrel == DefaultApiModule.INSTANCE.stoneBarrel) {
                 pickaxeMineableTag.add(barrel);
             } else {
-                axeMineableTag.addOptional(Registries.BLOCK.get(id));
+                axeMineableTag.addOptional(blockKey(id));
             }
         });
         ModBlocks.CRUCIBLES.forEach((id, crucible) -> {
             if (crucible == DefaultApiModule.INSTANCE.porcelainCrucible) {
                 pickaxeMineableTag.add(crucible);
             } else {
-                axeMineableTag.addOptional(Registries.BLOCK.get(id));
+                axeMineableTag.addOptional(blockKey(id));
             }
         });
-        ModBlocks.SIEVES.forEach((id, crucible) -> axeMineableTag.addOptional(Registries.BLOCK.get(id)));
-        ModBlocks.STRAINERS.forEach((id, crucible) -> axeMineableTag.addOptional(Registries.BLOCK.get(id)));
-        ModBlocks.CRUSHED.forEach((id, crucible) -> shovelMineableTag.addOptional(Registries.BLOCK.get(id)));
+        ModBlocks.SIEVES.forEach((id, crucible) -> axeMineableTag.addOptional(blockKey(id)));
+        ModBlocks.STRAINERS.forEach((id, crucible) -> axeMineableTag.addOptional(blockKey(id)));
+        ModBlocks.CRUSHED.forEach((id, crucible) -> shovelMineableTag.addOptional(blockKey(id)));
         hoeMineableTag.addTag(ModTags.INFESTED_LEAVES);
     }
 }

@@ -1,16 +1,52 @@
 {
   "values": [
-    "fabricaeexnihilo:oak_sieve",
-    "fabricaeexnihilo:birch_sieve",
-    "fabricaeexnihilo:spruce_sieve",
-    "fabricaeexnihilo:acacia_sieve",
-    "fabricaeexnihilo:dark_oak_sieve",
-    "fabricaeexnihilo:jungle_sieve",
-    "fabricaeexnihilo:warped_sieve",
-    "fabricaeexnihilo:crimson_sieve",
-    "fabricaeexnihilo:mangrove_sieve",
-    "fabricaeexnihilo:cherry_sieve",
-    "fabricaeexnihilo:bamboo_sieve",
-    "fabricaeexnihilo:rubber_sieve"
+    {
+      "id": "fabricaeexnihilo:oak_sieve",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:birch_sieve",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:spruce_sieve",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:acacia_sieve",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:dark_oak_sieve",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:jungle_sieve",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:warped_sieve",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:crimson_sieve",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:mangrove_sieve",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:cherry_sieve",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:bamboo_sieve",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:rubber_sieve",
+      "required": false
+    }
   ]
 }

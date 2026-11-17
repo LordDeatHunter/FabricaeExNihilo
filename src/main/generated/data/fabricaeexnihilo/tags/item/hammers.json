@@ -1,10 +1,28 @@
 {
   "values": [
-    "fabricaeexnihilo:wooden_hammer",
-    "fabricaeexnihilo:netherite_hammer",
-    "fabricaeexnihilo:stone_hammer",
-    "fabricaeexnihilo:golden_hammer",
-    "fabricaeexnihilo:diamond_hammer",
-    "fabricaeexnihilo:iron_hammer"
+    {
+      "id": "fabricaeexnihilo:wooden_hammer",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:netherite_hammer",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:stone_hammer",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:golden_hammer",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:diamond_hammer",
+      "required": false
+    },
+    {
+      "id": "fabricaeexnihilo:iron_hammer",
+      "required": false
+    }
   ]
 }

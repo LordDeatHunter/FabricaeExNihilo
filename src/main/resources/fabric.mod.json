@@ -41,6 +41,11 @@
   "mixins": [
     "fabricaeexnihilo.mixin.json"
   ],
+  "custom": {
+    "megane:modules": [
+      "wraith.fabricaeexnihilo.compatibility.megane.FENMeganeModule"
+    ]
+  },
   "depends": {
     "fabricloader": ">=0.18.4",
     "fabric-api": "*",
