@@ -23,9 +23,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeEntry;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ItemActionResult;
-import net.minecraft.util.ItemScatterer;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
@@ -100,16 +100,10 @@ public class BarrelBlock extends BlockWithEntity {
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         if (world.getBlockEntity(pos) instanceof BarrelBlockEntity barrelEntity) {
-            EnchantmentHelper.getEnchantments(itemStack).getEnchantmentEntries().forEach((e) -> barrelEntity.getEnchantmentContainer().setEnchantmentLevel(e.getKey(), e.getIntValue()));
+            EnchantmentHelper.getEnchantments(itemStack).getEnchantmentEntries().forEach(e -> {
+                e.getKey().getKey().ifPresent(k -> barrelEntity.getEnchantmentContainer().setEnchantmentLevel(k.getValue(), e.getIntValue()));
+            });
         }
-    }
-
-    @Override
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (!state.isOf(newState.getBlock()) && world.getBlockEntity(pos) instanceof BarrelBlockEntity barrel && barrel.getState() == BarrelState.ITEM) {
-            ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), barrel.getItem());
-        }
-        super.onStateReplaced(state, world, pos, newState, moved);
     }
 
     // Milking
@@ -117,11 +111,11 @@ public class BarrelBlock extends BlockWithEntity {
     public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
         var blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof BarrelBlockEntity barrel && entity instanceof LivingEntity livingEntity) {
-            if (FabricaeExNihilo.CONFIG.get().barrels().bleeding()) {
+            if (world instanceof ServerWorld serverWorld && FabricaeExNihilo.CONFIG.get().barrels().bleeding()) {
                 var thorns = barrel.getEnchantmentContainer().getEnchantmentLevel(Enchantments.THORNS);
                 if (thorns > 0
                     && StorageUtil.simulateInsert(barrel.fluidStorage, FluidVariant.of(BloodFluid.STILL), 1, null) >= 1
-                                   && livingEntity.damage(world.getDamageSources().cactus(), thorns / 2F)) {
+                    && livingEntity.damage(serverWorld, world.getDamageSources().cactus(), thorns / 2F)) {
                     var amount = FluidConstants.BUCKET * thorns / livingEntity.getMaxHealth();
                     try (Transaction t = Transaction.openOuter()) {
                         barrel.fluidStorage.insert(FluidVariant.of(BloodFluid.STILL), (long) amount, t);
@@ -147,14 +141,14 @@ public class BarrelBlock extends BlockWithEntity {
     }
 
     @Override
-    public ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hitResult) {
+    public ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hitResult) {
         if (world == null || pos == null) {
-            return ItemActionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
+            return ActionResult.PASS;
         }
         var blockEntity = world.getBlockEntity(pos);
         return blockEntity instanceof BarrelBlockEntity barrelBlock
                 ? barrelBlock.activate(player, hand)
-                : ItemActionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
+                : ActionResult.PASS;
     }
 
 }

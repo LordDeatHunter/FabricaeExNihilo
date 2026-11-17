@@ -19,8 +19,6 @@
   "icon": "minecraft:netherrack",
   "trigger": {
     "type": "insert_item",
-    "item": {
-      "item": "minecraft:redstone"
-    }
+    "item": "minecraft:redstone"
   }
 }

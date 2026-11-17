@@ -26,12 +26,18 @@ public final class BonusEnchantingManager {
     public static void init() {
         generateDefaultTags();
 
-        // Allow items to be enchanted with bonus enchantments
+        // Allow items to be enchanted with bonus enchantments.
+        //
+        // The upstream 1.21 branch did this through a mixin on
+        // Enchantment#isAcceptableItem. That is no longer possible in 1.21.11:
+        // Enchantment became a final record there, so the class cannot be
+        // subclassed and the mixin cannot be applied at all. Fabric's own
+        // ALLOW_ENCHANTING event is the supported route and does the same job.
         EnchantmentEvents.ALLOW_ENCHANTING.register((entry, stack, ctx) -> {
             if (entry == null || entry.getKey().isEmpty()) return TriState.DEFAULT;
             var key = entry.getKey().get();
-            if (!BonusEnchantingManager.DATA.containsKey(key)) return TriState.DEFAULT;
-            if (!BonusEnchantingManager.DATA.get(key).contains(stack.getItem())) return TriState.DEFAULT;
+            var items = BonusEnchantingManager.DATA.get(key);
+            if (items == null || !items.contains(stack.getItem())) return TriState.DEFAULT;
             return TriState.TRUE;
         });
     }
@@ -59,4 +65,16 @@ public final class BonusEnchantingManager {
         DATA.computeIfAbsent(Enchantments.EFFICIENCY, enchantment -> new ArrayList<>()).addAll(ModTools.CROOKS.values());
     }
 
+    /**
+     * Checks whether an item may carry one of the bonus enchantments.
+     *
+     * <p>The enchantment is matched by its registry key rather than by its
+     * display name, so the lookup survives the 1.21.11 rewrite of Enchantment
+     * into a record where the registry key is no longer reachable from the
+     * instance itself.
+     */
+    public static boolean isBonusEnchantable(RegistryKey<Enchantment> key, Item item) {
+        var items = DATA.get(key);
+        return items != null && items.contains(item);
+    }
 }

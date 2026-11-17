@@ -1,16 +1,9 @@
 {
   "type": "minecraft:smithing_transform",
-  "addition": {
-    "item": "minecraft:netherite_ingot"
-  },
-  "base": {
-    "item": "fabricaeexnihilo:diamond_mesh"
-  },
+  "addition": "minecraft:netherite_ingot",
+  "base": "fabricaeexnihilo:diamond_mesh",
   "result": {
-    "count": 1,
     "id": "fabricaeexnihilo:netherite_mesh"
   },
-  "template": {
-    "item": "minecraft:netherite_upgrade_smithing_template"
-  }
+  "template": "minecraft:netherite_upgrade_smithing_template"
 }

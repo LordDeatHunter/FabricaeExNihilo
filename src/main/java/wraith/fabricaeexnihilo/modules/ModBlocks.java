@@ -6,9 +6,11 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.MapColor;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.ToolMaterials;
+import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import wraith.fabricaeexnihilo.modules.barrels.BarrelBlock;
@@ -36,9 +38,9 @@ public final class ModBlocks {
     public static final Map<Identifier, BarrelBlock> BARRELS = new LinkedHashMap<>();
     public static final Map<Identifier, CrucibleBlock> CRUCIBLES = new LinkedHashMap<>();
     public static final Map<Identifier, Block> CRUSHED = new LinkedHashMap<>();
-    public static final EndCakeBlock END_CAKE = new EndCakeBlock(AbstractBlock.Settings.copy(Blocks.CAKE));
+    public static final EndCakeBlock END_CAKE = new EndCakeBlock(AbstractBlock.Settings.copy(Blocks.CAKE).registryKey(RegistryKey.of(RegistryKeys.BLOCK, id("end_cake"))));
     public static final Map<Identifier, InfestedLeavesBlock> INFESTED_LEAVES = new LinkedHashMap<>();
-    public static final AbstractBlock.Settings INFESTED_LEAVES_SETTINGS = AbstractBlock.Settings.create().mapColor(MapColor.WHITE).nonOpaque().suffocates((state, world, pos) -> false).allowsSpawning((state, world, pos, type) -> type == EntityType.OCELOT || type == EntityType.PARROT).strength(0.2F).ticksRandomly().sounds(BlockSoundGroup.GRASS);
+    public static final AbstractBlock.Settings INFESTED_LEAVES_SETTINGS = AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, id("infesting_leaves"))).mapColor(MapColor.WHITE).nonOpaque().suffocates((state, world, pos) -> false).allowsSpawning((state, world, pos, type) -> type == EntityType.OCELOT || type == EntityType.PARROT).strength(0.2F).ticksRandomly().sounds(BlockSoundGroup.GRASS);
     public static final InfestingLeavesBlock INFESTING_LEAVES = new InfestingLeavesBlock(INFESTED_LEAVES_SETTINGS);
     public static final Map<Identifier, SieveBlock> SIEVES = new LinkedHashMap<>();
     public static final Map<Identifier, StrainerBlock> STRAINERS = new LinkedHashMap<>();
@@ -52,22 +54,22 @@ public final class ModBlocks {
     }
 
     public static void registerBlockItems() {
-        SIEVES.forEach((identifier, block) -> Registry.register(Registries.ITEM, identifier, new BlockItem(block, ModItems.BASE_SETTINGS)));
+        SIEVES.forEach((identifier, block) -> Registry.register(Registries.ITEM, identifier, new BlockItem(block, ModItems.createSettings(identifier))));
         CRUCIBLES.forEach((identifier, block) -> {
             var enchantability = block.getDefaultMapColor() == MapColor.STONE_GRAY
-                ? ToolMaterials.STONE.getEnchantability()
-                : ToolMaterials.WOOD.getEnchantability();
-            Registry.register(Registries.ITEM, identifier, new EnchantableBlockItem(block, ModItems.BASE_SETTINGS, enchantability));
+                ? ToolMaterial.STONE.enchantmentValue()
+                : ToolMaterial.WOOD.enchantmentValue();
+            Registry.register(Registries.ITEM, identifier, new EnchantableBlockItem(block, ModItems.createSettings(identifier), enchantability));
         });
         BARRELS.forEach((identifier, block) -> {
             var enchantability = block.getDefaultMapColor() == MapColor.STONE_GRAY
-                ? ToolMaterials.STONE.getEnchantability()
-                : ToolMaterials.WOOD.getEnchantability();
-            Registry.register(Registries.ITEM, identifier, new EnchantableBlockItem(block, ModItems.BASE_SETTINGS, enchantability));
+                ? ToolMaterial.STONE.enchantmentValue()
+                : ToolMaterial.WOOD.enchantmentValue();
+            Registry.register(Registries.ITEM, identifier, new EnchantableBlockItem(block, ModItems.createSettings(identifier), enchantability));
         });
-        CRUSHED.forEach((identifier, block) -> Registry.register(Registries.ITEM, identifier, new BlockItem(block, ModItems.BASE_SETTINGS)));
-        STRAINERS.forEach((identifier, block) -> Registry.register(Registries.ITEM, identifier, new BlockItem(block, ModItems.BASE_SETTINGS)));
-        INFESTED_LEAVES.forEach((identifier, block) -> Registry.register(Registries.ITEM, identifier, new InfestedLeavesItem(block, ModItems.BASE_SETTINGS)));
+        CRUSHED.forEach((identifier, block) -> Registry.register(Registries.ITEM, identifier, new BlockItem(block, ModItems.createSettings(identifier))));
+        STRAINERS.forEach((identifier, block) -> Registry.register(Registries.ITEM, identifier, new BlockItem(block, ModItems.createSettings(identifier))));
+        INFESTED_LEAVES.forEach((identifier, block) -> Registry.register(Registries.ITEM, identifier, new InfestedLeavesItem(block, ModItems.createSettings(identifier))));
     }
 
     public static void registerBlocks() {

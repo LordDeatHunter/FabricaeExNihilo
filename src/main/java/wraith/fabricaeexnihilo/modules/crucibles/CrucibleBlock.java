@@ -12,7 +12,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ItemActionResult;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
@@ -80,8 +80,8 @@ public class CrucibleBlock extends BlockWithEntity {
     }
 
     @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
-        if (fromPos == null || !fromPos.equals(pos == null ? null : pos.down()) || world == null) {
+    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, @Nullable net.minecraft.world.block.WireOrientation wireOrientation, boolean notify) {
+        if (world == null || pos == null) {
             return;
         }
         if (world.getBlockEntity(pos) instanceof CrucibleBlockEntity crucible) {
@@ -105,15 +105,17 @@ public class CrucibleBlock extends BlockWithEntity {
             return;
         }
         if (world.getBlockEntity(pos) instanceof CrucibleBlockEntity crucible) {
-            EnchantmentHelper.getEnchantments(itemStack).getEnchantmentEntries().forEach(e -> crucible.getEnchantments().setEnchantmentLevel(e.getKey(), e.getIntValue()));
+            EnchantmentHelper.getEnchantments(itemStack).getEnchantmentEntries().forEach(e -> {
+                e.getKey().getKey().ifPresent(k -> crucible.getEnchantments().setEnchantmentLevel(k.getValue(), e.getIntValue()));
+            });
             crucible.updateHeat();
         }
     }
 
     @Override
-    public ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hitResult) {
+    public ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hitResult) {
         if (world == null || pos == null) {
-            return ItemActionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
+            return ActionResult.PASS;
         }
         if (world.getBlockEntity(pos) instanceof CrucibleBlockEntity crucible) {
             return crucible.activate(player, hand);

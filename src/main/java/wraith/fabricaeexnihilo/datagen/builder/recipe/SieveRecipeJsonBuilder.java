@@ -1,11 +1,14 @@
 package wraith.fabricaeexnihilo.datagen.builder.recipe;
 
 import net.minecraft.advancement.AdvancementCriterion;
-import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.recipe.CraftingRecipeJsonBuilder;
+import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
@@ -123,16 +126,20 @@ public class SieveRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
     }
 
     @Override
+    public void offerTo(RecipeExporter exporter, RegistryKey<Recipe<?>> recipeKey) {
+        offerTo(exporter, recipeKey.getValue());
+    }
+
     public void offerTo(RecipeExporter exporter, Identifier recipeId) {
         if (currentSegment == null) throw new IllegalStateException("No segments");
         segments.add(currentSegment);
         if (segments.size() == 1) {
-            exporter.accept(recipeId,
+            exporter.accept(RecipeIds.key(exporter, recipeId),
                     new SieveRecipe(result, currentSegment.input, currentSegment.waterlogged, currentSegment.rolls), null);
             return;
         }
         for (var segment : segments) {
-            exporter.accept(recipeId.withSuffixedPath("_from_" + segment.name),
+            exporter.accept(RecipeIds.key(exporter, recipeId.withSuffixedPath("_from_" + segment.name)),
                     new SieveRecipe(result, segment.input, segment.waterlogged, segment.rolls), null);
         }
     }

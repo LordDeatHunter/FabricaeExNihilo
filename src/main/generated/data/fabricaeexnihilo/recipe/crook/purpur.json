@@ -3,9 +3,7 @@
   "category": "equipment",
   "group": "fabricaeexnihilo:crooks",
   "key": {
-    "#": {
-      "item": "minecraft:popped_chorus_fruit"
-    }
+    "#": "minecraft:popped_chorus_fruit"
   },
   "pattern": [
     "##",

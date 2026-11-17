@@ -3,7 +3,8 @@ package wraith.fabricaeexnihilo.datagen.provider.recipe;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Blocks;
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
@@ -22,7 +23,17 @@ public class CrucibleRecipeProvider extends FabricRecipeProvider {
     }
 
     @Override
-    public void generate(RecipeExporter exporter) {
+    protected RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registries, RecipeExporter exporter) {
+        CrucibleRecipeJsonBuilder.LOOKUP = registries;
+        return new RecipeGenerator(registries, exporter) {
+            @Override
+            public void generate() {
+                generateRecipes(this.exporter);
+            }
+        };
+    }
+
+    private void generateRecipes(RecipeExporter exporter) {
         new CrucibleHeatRecipeJsonBuilder(BlockIngredient.tag(ModTags.Common.TORCHES), 1).offerTo(exporter, "heat_from_torch");
         new CrucibleHeatRecipeJsonBuilder(Blocks.GLOWSTONE, 2).offerTo(exporter, "heat_from_glowstone");
         new CrucibleHeatRecipeJsonBuilder(Blocks.SHROOMLIGHT, 2).offerTo(exporter, "heat_from_shroomlight");
@@ -51,6 +62,26 @@ public class CrucibleRecipeProvider extends FabricRecipeProvider {
         CrucibleRecipeJsonBuilder.lava(Items.GRAVEL, 10125).offerTo(exporter, "lava_from_gravel");
         CrucibleRecipeJsonBuilder.lava(Items.SAND, 6750).offerTo(exporter, "lava_from_sand");
         CrucibleRecipeJsonBuilder.lava(DefaultApiModule.INSTANCE.dust, 3375).offerTo(exporter, "lava_from_dust");
+
+        // Deepslate family - same tier as stone, it is just the deep variant of it.
+        CrucibleRecipeJsonBuilder.lava(Items.DEEPSLATE, 20250).offerTo(exporter, "lava_from_deepslate");
+        CrucibleRecipeJsonBuilder.lava(Items.COBBLED_DEEPSLATE, 20250).offerTo(exporter, "lava_from_cobbled_deepslate");
+        CrucibleRecipeJsonBuilder.lava(Items.POLISHED_DEEPSLATE, 20250).offerTo(exporter, "lava_from_polished_deepslate");
+
+        // Other overworld stones.
+        CrucibleRecipeJsonBuilder.lava(Items.BLACKSTONE, 20250).offerTo(exporter, "lava_from_blackstone");
+        CrucibleRecipeJsonBuilder.lava(Items.POLISHED_BLACKSTONE, 20250).offerTo(exporter, "lava_from_polished_blackstone");
+        CrucibleRecipeJsonBuilder.lava(Items.STONE_BRICKS, 20250).offerTo(exporter, "lava_from_stone_bricks");
+
+        // Basalt family - nether stone, denser, keep the standard tier.
+        CrucibleRecipeJsonBuilder.lava(Items.BASALT, 20250).offerTo(exporter, "lava_from_basalt");
+        CrucibleRecipeJsonBuilder.lava(Items.SMOOTH_BASALT, 20250).offerTo(exporter, "lava_from_smooth_basalt");
+        CrucibleRecipeJsonBuilder.lava(Items.POLISHED_BASALT, 20250).offerTo(exporter, "lava_from_polished_basalt");
+
+        // Softer / porous stones melt for less.
+        CrucibleRecipeJsonBuilder.lava(Items.TUFF, 10125).offerTo(exporter, "lava_from_tuff");
+        CrucibleRecipeJsonBuilder.lava(Items.CALCITE, 10125).offerTo(exporter, "lava_from_calcite");
+        CrucibleRecipeJsonBuilder.lava(Items.DRIPSTONE_BLOCK, 10125).offerTo(exporter, "lava_from_dripstone_block");
 
         CrucibleRecipeJsonBuilder.water(ItemTags.SMALL_FLOWERS, 8100).offerTo(exporter, "water_from_flowers");
         CrucibleRecipeJsonBuilder.water(ItemTags.LEAVES, 20250).offerTo(exporter, "water_from_leaves");

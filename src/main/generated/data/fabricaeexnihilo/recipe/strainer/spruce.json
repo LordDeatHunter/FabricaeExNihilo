@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "fabricaeexnihilo:sieve",
   "key": {
-    "#": {
-      "item": "minecraft:spruce_log"
-    },
-    "S": {
-      "item": "minecraft:string"
-    }
+    "#": "minecraft:spruce_log",
+    "S": "minecraft:string"
   },
   "pattern": [
     "#S#",

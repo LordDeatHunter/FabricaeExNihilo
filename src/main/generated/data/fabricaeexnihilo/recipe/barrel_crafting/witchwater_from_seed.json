@@ -28,8 +28,6 @@
   "icon": "fabricaeexnihilo:witchwater_bucket",
   "trigger": {
     "type": "insert_item",
-    "item": {
-      "item": "fabricaeexnihilo:mycelium_seeds"
-    }
+    "item": "fabricaeexnihilo:mycelium_seeds"
   }
 }

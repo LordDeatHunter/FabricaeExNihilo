@@ -8,7 +8,8 @@ import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.block.Blocks;
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.entity.EntityType;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
@@ -37,7 +38,17 @@ public class BarrelRecipeProvider extends FabricRecipeProvider {
     }
 
     @Override
-    public void generate(RecipeExporter exporter) {
+    protected RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registries, RecipeExporter exporter) {
+        BarrelRecipeJsonBuilder.LOOKUP = registries;
+        return new RecipeGenerator(registries, exporter) {
+            @Override
+            public void generate() {
+                generateRecipes(this.exporter);
+            }
+        };
+    }
+
+    private void generateRecipes(RecipeExporter exporter) {
         new MilkingRecipeJsonBuilder(EntityType.COW, FluidVariant.of(MilkFluid.STILL)).offerTo(exporter, "milking/cow");
         new MilkingRecipeJsonBuilder(EntityType.WITCH, FluidVariant.of(WitchWaterFluid.STILL)).offerTo(exporter, "milking/witch");
 

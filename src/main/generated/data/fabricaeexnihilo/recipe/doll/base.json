@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "x": {
-      "tag": "c:porcelain"
-    },
-    "y": {
-      "item": "minecraft:emerald"
-    }
+    "x": "#c:porcelain",
+    "y": "minecraft:emerald"
   },
   "pattern": [
     "xyx",

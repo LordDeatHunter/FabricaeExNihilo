@@ -19,6 +19,7 @@ import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
+import wraith.fabricaeexnihilo.recipe.RecipeHelper;
 import wraith.fabricaeexnihilo.recipe.util.BlockIngredient;
 
 import java.util.Optional;
@@ -37,7 +38,7 @@ public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.Context> {
         if (world == null) {
             return Optional.empty();
         }
-        return world.getRecipeManager().getFirstMatch(ModRecipes.CRUCIBLE_HEAT, new Context(state), world);
+        return RecipeHelper.getFirstMatch(ModRecipes.CRUCIBLE_HEAT, new Context(state), world);
     }
 
     @Override
@@ -46,22 +47,20 @@ public class CrucibleHeatRecipe extends BaseRecipe<CrucibleHeatRecipe.Context> {
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<CrucibleHeatRecipe> getSerializer() {
         return ModRecipes.CRUCIBLE_HEAT_SERIALIZER;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<CrucibleHeatRecipe> getType() {
         return ModRecipes.CRUCIBLE_HEAT;
     }
 
     @Override
     public ItemStack getDisplayStack() {
-        return block.getValue().map(ItemStack::new, tag -> Registries.BLOCK
-                .getEntryList(tag)
-                .stream()
-                .flatMap(RegistryEntryList::stream)
-                .map(RegistryEntry::value)
+        return block.getValue().map(ItemStack::new, tag -> java.util.stream.StreamSupport.stream(Registries.BLOCK
+                .iterateEntries(tag).spliterator(), false)
+                .map(net.minecraft.registry.entry.RegistryEntry::value)
                 .map(ItemStack::new)
                 .filter(Predicate.not(ItemStack::isEmpty))
                 .findFirst()

@@ -10,18 +10,10 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "fabricaeexnihilo:raw_platinum_piece"
-    },
-    {
-      "item": "fabricaeexnihilo:raw_platinum_piece"
-    },
-    {
-      "item": "fabricaeexnihilo:raw_platinum_piece"
-    },
-    {
-      "item": "fabricaeexnihilo:raw_platinum_piece"
-    }
+    "fabricaeexnihilo:raw_platinum_piece",
+    "fabricaeexnihilo:raw_platinum_piece",
+    "fabricaeexnihilo:raw_platinum_piece",
+    "fabricaeexnihilo:raw_platinum_piece"
   ],
   "result": {
     "count": 1,

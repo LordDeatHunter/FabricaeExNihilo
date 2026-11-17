@@ -1,9 +1,12 @@
 package wraith.fabricaeexnihilo.datagen.builder.recipe;
 
+import net.minecraft.recipe.Recipe;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.advancement.AdvancementCriterion;
-import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.recipe.CraftingRecipeJsonBuilder;
+import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
@@ -58,7 +61,11 @@ public class MilkingRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
     }
 
     @Override
+    public void offerTo(RecipeExporter exporter, RegistryKey<Recipe<?>> recipeKey) {
+        offerTo(exporter, recipeKey.getValue());
+    }
+
     public void offerTo(RecipeExporter exporter, Identifier recipeId) {
-        exporter.accept(recipeId, new MilkingRecipe(entity, fluid, amount, cooldown), null);
+        exporter.accept(RecipeIds.key(exporter, recipeId), new MilkingRecipe(entity, fluid, amount, cooldown), null);
     }
 }

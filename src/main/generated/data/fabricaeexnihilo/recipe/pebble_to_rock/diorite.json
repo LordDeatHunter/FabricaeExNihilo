@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "fabricaeexnihilo:diorite_pebble"
-    }
+    "#": "fabricaeexnihilo:diorite_pebble"
   },
   "pattern": [
     "##",

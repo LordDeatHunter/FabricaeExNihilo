@@ -14,6 +14,7 @@ import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.recipe.BaseRecipe;
 import wraith.fabricaeexnihilo.recipe.ModRecipes;
 import wraith.fabricaeexnihilo.recipe.RecipeContext;
+import wraith.fabricaeexnihilo.recipe.RecipeHelper;
 import wraith.fabricaeexnihilo.recipe.util.FluidIngredient;
 import wraith.fabricaeexnihilo.recipe.util.WeightedList;
 
@@ -32,7 +33,7 @@ public class WitchWaterWorldRecipe extends BaseRecipe<WitchWaterWorldRecipe.Cont
         if (world == null) {
             return Optional.empty();
         }
-        return world.getRecipeManager().getFirstMatch(ModRecipes.WITCH_WATER_WORLD, new Context(fluid), world);
+        return RecipeHelper.getFirstMatch(ModRecipes.WITCH_WATER_WORLD, new Context(fluid), world);
     }
 
     @Override
@@ -41,12 +42,12 @@ public class WitchWaterWorldRecipe extends BaseRecipe<WitchWaterWorldRecipe.Cont
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<WitchWaterWorldRecipe> getSerializer() {
         return ModRecipes.WITCH_WATER_WORLD_SERIALIZER;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<WitchWaterWorldRecipe> getType() {
         return ModRecipes.WITCH_WATER_WORLD;
     }
 

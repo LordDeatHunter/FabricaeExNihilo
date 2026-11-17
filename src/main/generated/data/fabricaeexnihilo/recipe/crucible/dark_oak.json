@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "fabricaeexnihilo:crucible",
   "key": {
-    "#": {
-      "item": "minecraft:dark_oak_log"
-    },
-    "I": {
-      "item": "minecraft:stick"
-    },
-    "S": {
-      "item": "minecraft:dark_oak_slab"
-    }
+    "#": "minecraft:dark_oak_log",
+    "I": "minecraft:stick",
+    "S": "minecraft:dark_oak_slab"
   },
   "pattern": [
     "# #",

@@ -1,8 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "input": {
-    "item": "minecraft:sand"
-  },
+  "input": "minecraft:sand",
   "result": {
     "count": 1,
     "id": "fabricaeexnihilo:raw_copper_piece"

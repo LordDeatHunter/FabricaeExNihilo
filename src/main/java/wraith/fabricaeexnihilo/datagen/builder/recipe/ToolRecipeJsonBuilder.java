@@ -1,9 +1,12 @@
 package wraith.fabricaeexnihilo.datagen.builder.recipe;
 
+import net.minecraft.recipe.Recipe;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.advancement.AdvancementCriterion;
 import net.minecraft.block.Block;
-import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.recipe.CraftingRecipeJsonBuilder;
+import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
@@ -68,7 +71,11 @@ public class ToolRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
     }
 
     @Override
+    public void offerTo(RecipeExporter exporter, RegistryKey<Recipe<?>> recipeKey) {
+        offerTo(exporter, recipeKey.getValue());
+    }
+
     public void offerTo(RecipeExporter exporter, Identifier recipeId) {
-        exporter.accept(recipeId, new ToolRecipe(tool, block, result), null);
+        exporter.accept(RecipeIds.key(exporter, recipeId), new ToolRecipe(tool, block, result), null);
     }
 }

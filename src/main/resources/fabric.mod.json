@@ -28,14 +28,11 @@
       "wraith.fabricaeexnihilo.compatibility.ModernIndustrializationApiModule::INSTANCE",
       "wraith.fabricaeexnihilo.compatibility.MythicMetalsApiModule::INSTANCE"
     ],
-    "rei_client": [
-      "wraith.fabricaeexnihilo.compatibility.rei.PluginEntry"
-    ],
-    "emi": [
-      "wraith.fabricaeexnihilo.compatibility.emi.FENEmiPlugin"
-    ],
     "jade": [
       "wraith.fabricaeexnihilo.compatibility.jade.FENJadePlugin"
+    ],
+    "jei_mod_plugin": [
+      "wraith.fabricaeexnihilo.compatibility.jei.FENJeiPlugin"
     ],
     "fabric-datagen": [
       "wraith.fabricaeexnihilo.datagen.FENDatagen"
@@ -47,16 +44,12 @@
   "custom": {
     "megane:modules": [
       "wraith.fabricaeexnihilo.compatibility.megane.FENMeganeModule"
-    ],
-    "DISABLED(II doesn't work well with accessor mixins for the time being), loom:injected_interfaces": {
-      "net/minecraft/class_4915": ["wraith/fabricaeexnihilo/mixins/ItemModelGeneratorAccess"],
-      "net/minecraft/class_2203\u0024class_2209": ["wraith/fabricaeexnihilo/mixins/NbtPathAccess"]
-    }
+    ]
   },
   "depends": {
-    "fabricloader": ">=0.15.10",
+    "fabricloader": ">=0.18.4",
     "fabric-api": "*",
-    "minecraft": ">=1.21",
+    "minecraft": "~1.21.11",
     "java": ">=21"
   }
 }

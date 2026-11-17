@@ -1,10 +1,12 @@
 package wraith.fabricaeexnihilo.datagen.provider;
 
-import com.google.gson.JsonElement;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
+import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
-import net.minecraft.data.client.*;
+import net.minecraft.client.data.*;
+import net.minecraft.client.render.item.model.BasicItemModel;
+import net.minecraft.client.render.item.tint.ConstantTintSource;
+import net.minecraft.client.render.item.tint.TintSource;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.state.property.Properties;
@@ -18,11 +20,12 @@ import wraith.fabricaeexnihilo.modules.ModTools;
 import wraith.fabricaeexnihilo.modules.fluids.BloodFluid;
 import wraith.fabricaeexnihilo.modules.fluids.BrineFluid;
 import wraith.fabricaeexnihilo.modules.fluids.MilkFluid;
+import wraith.fabricaeexnihilo.modules.sieves.MeshItem;
 import wraith.fabricaeexnihilo.modules.witchwater.WitchWaterFluid;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.BiConsumer;
-import java.util.function.Supplier;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
@@ -59,7 +62,6 @@ public class ModelProvider extends FabricModelProvider {
         register(CRUCIBLE_MODEL, DefaultApiModule.INSTANCE.acaciaBlocks.crucible(), Identifier.of("block/acacia_log"), generator);
         register(CRUCIBLE_MODEL, DefaultApiModule.INSTANCE.crimsonBlocks.crucible(), Identifier.of("block/crimson_stem"), generator);
         register(CRUCIBLE_MODEL, DefaultApiModule.INSTANCE.warpedBlocks.crucible(), Identifier.of("block/warped_stem"), generator);
-        register(CRUCIBLE_MODEL, TechRebornApiModule.INSTANCE.rubberBlocks.crucible(), Identifier.of("techreborn:block/rubber_log_side"), generator);
         register(CRUCIBLE_MODEL, DefaultApiModule.INSTANCE.mangroveBlocks.crucible(), Identifier.of("block/mangrove_log"), generator);
         register(CRUCIBLE_MODEL, DefaultApiModule.INSTANCE.cherryBlocks.crucible(), Identifier.of("block/cherry_log"), generator);
         register(CRUCIBLE_MODEL, DefaultApiModule.INSTANCE.bambooBlocks.crucible(), Identifier.of("block/bamboo_block"), generator);
@@ -72,7 +74,6 @@ public class ModelProvider extends FabricModelProvider {
         register(SIEVE_MODEL, DefaultApiModule.INSTANCE.acaciaBlocks.sieve(), Identifier.of("block/acacia_planks"), generator);
         register(SIEVE_MODEL, DefaultApiModule.INSTANCE.crimsonBlocks.sieve(), Identifier.of("block/crimson_planks"), generator);
         register(SIEVE_MODEL, DefaultApiModule.INSTANCE.warpedBlocks.sieve(), Identifier.of("block/warped_planks"), generator);
-        register(SIEVE_MODEL, TechRebornApiModule.INSTANCE.rubberBlocks.sieve(), Identifier.of("techreborn:block/rubber_planks"), generator);
         register(SIEVE_MODEL, DefaultApiModule.INSTANCE.mangroveBlocks.sieve(), Identifier.of("block/mangrove_planks"), generator);
         register(SIEVE_MODEL, DefaultApiModule.INSTANCE.cherryBlocks.sieve(), Identifier.of("block/cherry_planks"), generator);
         register(SIEVE_MODEL, DefaultApiModule.INSTANCE.bambooBlocks.sieve(), Identifier.of("block/bamboo_planks"), generator);
@@ -86,7 +87,6 @@ public class ModelProvider extends FabricModelProvider {
         register(BARREL_MODEL, DefaultApiModule.INSTANCE.acaciaBlocks.barrel(), Identifier.of("block/acacia_planks"), generator);
         register(BARREL_MODEL, DefaultApiModule.INSTANCE.crimsonBlocks.barrel(), Identifier.of("block/crimson_planks"), generator);
         register(BARREL_MODEL, DefaultApiModule.INSTANCE.warpedBlocks.barrel(), Identifier.of("block/warped_planks"), generator);
-        register(BARREL_MODEL, TechRebornApiModule.INSTANCE.rubberBlocks.barrel(), Identifier.of("techreborn:block/rubber_planks"), generator);
         register(BARREL_MODEL, DefaultApiModule.INSTANCE.mangroveBlocks.barrel(), Identifier.of("block/mangrove_planks"), generator);
         register(BARREL_MODEL, DefaultApiModule.INSTANCE.cherryBlocks.barrel(), Identifier.of("block/cherry_planks"), generator);
         register(BARREL_MODEL, DefaultApiModule.INSTANCE.bambooBlocks.barrel(), Identifier.of("block/bamboo_planks"), generator);
@@ -99,7 +99,6 @@ public class ModelProvider extends FabricModelProvider {
         register(STRAINER_MODEL, DefaultApiModule.INSTANCE.acaciaBlocks.strainer(), new TextureMap().put(PILAR_KEY, Identifier.of("block/acacia_log")), generator);
         register(STRAINER_MODEL, DefaultApiModule.INSTANCE.crimsonBlocks.strainer(), new TextureMap().put(PILAR_KEY, Identifier.of("block/crimson_stem")), generator);
         register(STRAINER_MODEL, DefaultApiModule.INSTANCE.warpedBlocks.strainer(), new TextureMap().put(PILAR_KEY, Identifier.of("block/warped_stem")), generator);
-        register(STRAINER_MODEL, TechRebornApiModule.INSTANCE.rubberBlocks.strainer(), new TextureMap().put(PILAR_KEY, Identifier.of("techreborn:block/rubber_log_side")), generator);
         register(STRAINER_MODEL, DefaultApiModule.INSTANCE.mangroveBlocks.strainer(), new TextureMap().put(PILAR_KEY, Identifier.of("block/mangrove_log")), generator);
         register(STRAINER_MODEL, DefaultApiModule.INSTANCE.cherryBlocks.strainer(), new TextureMap().put(PILAR_KEY, Identifier.of("block/cherry_log")), generator);
         register(STRAINER_MODEL, DefaultApiModule.INSTANCE.bambooBlocks.strainer(), new TextureMap().put(PILAR_KEY, Identifier.of("block/bamboo_block")), generator);
@@ -113,22 +112,33 @@ public class ModelProvider extends FabricModelProvider {
         register(new Model(Optional.of(Identifier.of("block/jungle_leaves")), Optional.empty()), DefaultApiModule.INSTANCE.infestedJungleLeaves, new TextureMap(), generator);
         register(new Model(Optional.of(Identifier.of("block/mangrove_leaves")), Optional.empty()), DefaultApiModule.INSTANCE.infestedMangroveLeaves, new TextureMap(), generator);
         register(new Model(Optional.of(Identifier.of("block/oak_leaves")), Optional.empty()), DefaultApiModule.INSTANCE.infestedCherryLeaves, new TextureMap(), generator);
-        register(new Model(Optional.of(Identifier.of("block/acacia_leaves")), Optional.empty()), TechRebornApiModule.INSTANCE.infestedRubberLeaves, new TextureMap(), generator);
 
         generator.blockStateCollector
                 .accept(
-                        VariantsBlockStateSupplier.create(ModBlocks.END_CAKE)
-                                .coordinate(
-                                        BlockStateVariantMap.create(Properties.BITES)
-                                                .register(0, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockModelId(ModBlocks.END_CAKE)))
-                                                .register(1, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice1")))
-                                                .register(2, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice2")))
-                                                .register(3, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice3")))
-                                                .register(4, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice4")))
-                                                .register(5, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice5")))
-                                                .register(6, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice6")))
+                        VariantsBlockModelDefinitionCreator.of(ModBlocks.END_CAKE)
+                                .with(
+                                        BlockStateVariantMap.models(Properties.BITES)
+                                                .register(0, BlockStateModelGenerator.createWeightedVariant(ModelIds.getBlockModelId(ModBlocks.END_CAKE)))
+                                                .register(1, BlockStateModelGenerator.createWeightedVariant(ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice1")))
+                                                .register(2, BlockStateModelGenerator.createWeightedVariant(ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice2")))
+                                                .register(3, BlockStateModelGenerator.createWeightedVariant(ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice3")))
+                                                .register(4, BlockStateModelGenerator.createWeightedVariant(ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice4")))
+                                                .register(5, BlockStateModelGenerator.createWeightedVariant(ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice5")))
+                                                .register(6, BlockStateModelGenerator.createWeightedVariant(ModelIds.getBlockSubModelId(ModBlocks.END_CAKE, "_slice6")))
                                 )
                 );
+
+        // TechReborn is optional, so its blocks only get models when it is
+        // actually present. The datagen run must survive without it.
+        if (TechRebornApiModule.INSTANCE.rubberBlocks != null) {
+            register(CRUCIBLE_MODEL, TechRebornApiModule.INSTANCE.rubberBlocks.crucible(), Identifier.of("techreborn:block/rubber_log_side"), generator);
+            register(SIEVE_MODEL, TechRebornApiModule.INSTANCE.rubberBlocks.sieve(), Identifier.of("techreborn:block/rubber_planks"), generator);
+            register(BARREL_MODEL, TechRebornApiModule.INSTANCE.rubberBlocks.barrel(), Identifier.of("techreborn:block/rubber_planks"), generator);
+            register(STRAINER_MODEL, TechRebornApiModule.INSTANCE.rubberBlocks.strainer(), new TextureMap().put(PILAR_KEY, Identifier.of("techreborn:block/rubber_log_side")), generator);
+        }
+        if (TechRebornApiModule.INSTANCE.infestedRubberLeaves != null) {
+            register(new Model(Optional.of(Identifier.of("block/acacia_leaves")), Optional.empty()), TechRebornApiModule.INSTANCE.infestedRubberLeaves, new TextureMap(), generator);
+        }
     }
 
     @Override
@@ -137,29 +147,46 @@ public class ModelProvider extends FabricModelProvider {
             var item = Registries.ITEM.get(id);
             uploadModel(Models.GENERATED, item, Identifier.of(id.getNamespace(), "item/dolls/" + id.getPath()), generator);
         });
-        ModItems.MESHES.forEach((id, item) -> uploadModel(MESH_MODEL, item, Identifier.of(id.getNamespace(), "item/ore/" + id.getPath()), generator));
+        ModItems.MESHES.forEach((id, item) -> uploadModel(MESH_MODEL, item, Identifier.of(id.getNamespace(), "item/ore/" + id.getPath()),
+                List.of(new ConstantTintSource(((MeshItem) item).getColor(0))), generator));
         ModItems.ORE_PIECES.forEach((id, item) -> uploadModel(Models.GENERATED, item, Identifier.of(id.getNamespace(), "item/ore/" + id.getPath()), generator));
         ModItems.PEBBLES.forEach((id, item) -> uploadModel(Models.GENERATED, item, Identifier.of(id.getNamespace(), "item/pebbles/" + id.getPath()), generator));
         ModItems.SEEDS.forEach((id, item) -> uploadModel(Models.GENERATED, item, Identifier.of(id.getNamespace(), "item/seeds/" + id.getPath()), generator));
         ModTools.CROOKS.forEach((id, item) -> uploadModel(Models.HANDHELD, item, Identifier.of(id.getNamespace(), "item/tools/crook/" + id.getPath()), generator));
         ModTools.HAMMERS.forEach((id, item) -> uploadModel(Models.HANDHELD, item, Identifier.of(id.getNamespace(), "item/tools/hammer/" + id.getPath()), generator));
 
-        generator.register(BloodFluid.BUCKET, Models.GENERATED);
-        generator.register(BrineFluid.BUCKET, Models.GENERATED);
-        generator.register(WitchWaterFluid.BUCKET, Models.GENERATED);
-        generator.register(ModItems.COOKED_SILKWORM, Models.GENERATED);
-        generator.register(ModItems.RAW_SILKWORM, Models.GENERATED);
-        generator.register(ModItems.SALT_BOTTLE, Models.GENERATED);
-        generator.register(ModItems.PORCELAIN, Models.GENERATED);
-        generator.register(ModBlocks.END_CAKE.asItem(), Models.GENERATED);
+        ((ItemModelGeneratorAccess) generator).invokeRegister(BloodFluid.BUCKET, Models.GENERATED);
+        ((ItemModelGeneratorAccess) generator).invokeRegister(BrineFluid.BUCKET, Models.GENERATED);
+        ((ItemModelGeneratorAccess) generator).invokeRegister(WitchWaterFluid.BUCKET, Models.GENERATED);
+        ((ItemModelGeneratorAccess) generator).invokeRegister(ModItems.COOKED_SILKWORM, Models.GENERATED);
+        ((ItemModelGeneratorAccess) generator).invokeRegister(ModItems.RAW_SILKWORM, Models.GENERATED);
+        ((ItemModelGeneratorAccess) generator).invokeRegister(ModItems.SALT_BOTTLE, Models.GENERATED);
+        ((ItemModelGeneratorAccess) generator).invokeRegister(ModItems.PORCELAIN, Models.GENERATED);
+        ((ItemModelGeneratorAccess) generator).invokeRegister(ModBlocks.END_CAKE.asItem(), Models.GENERATED);
 
-        var writer = ((ItemModelGeneratorAccess)generator).getWriter();
         // Special case: looks like block, but isn't
-        CRUCIBLE_MODEL.upload(ModelIds.getItemModelId(ModItems.UNFIRED_PORCELAIN_CRUCIBLE), TextureMap.all(id("block/unfired_porcelain_crucible")), writer);
+        uploadModel(CRUCIBLE_MODEL, ModItems.UNFIRED_PORCELAIN_CRUCIBLE,
+                ModelIds.getItemModelId(ModItems.UNFIRED_PORCELAIN_CRUCIBLE),
+                TextureMap.all(id("block/unfired_porcelain_crucible")), List.of(), generator);
     }
 
     private void uploadModel(Model model, Item item, Identifier texture, ItemModelGenerator generator) {
-        uploadModel(model, ModelIds.getItemModelId(item), TextureMap.layer0(texture), ((ItemModelGeneratorAccess)generator).getWriter());
+        uploadModel(model, item, ModelIds.getItemModelId(item), TextureMap.layer0(texture), List.of(), generator);
+    }
+
+    private void uploadModel(Model model, Item item, Identifier texture, List<TintSource> tints, ItemModelGenerator generator) {
+        uploadModel(model, item, ModelIds.getItemModelId(item), TextureMap.layer0(texture), tints, generator);
+    }
+
+    /**
+     * Writes both halves of an item's model: the model json itself, and the item
+     * definition under {@code assets/<ns>/items/} that points at it. Since 1.21.4
+     * an item without that definition has no model in game.
+     */
+    private void uploadModel(Model model, Item item, Identifier modelId, TextureMap texture, List<TintSource> tints, ItemModelGenerator generator) {
+        var access = (ItemModelGeneratorAccess) generator;
+        model.upload(modelId, texture, access.getModelCollector());
+        access.getOutput().accept(item, new BasicItemModel.Unbaked(modelId, tints));
     }
 
     private void register(Model model, Block block, Identifier texture, BlockStateModelGenerator generator) {
@@ -169,10 +196,10 @@ public class ModelProvider extends FabricModelProvider {
     private void register(Model model, Block block, TextureMap textures, BlockStateModelGenerator generator) {
         var modelId = ModelIds.getBlockModelId(block);
         uploadModel(model, modelId, textures, generator.modelCollector);
-        generator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(block, modelId));
+        generator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(block, BlockStateModelGenerator.createWeightedVariant(modelId)));
     }
 
-    private void uploadModel(Model model, Identifier modelId, TextureMap texture, BiConsumer<Identifier, Supplier<JsonElement>> exporter) {
+    private void uploadModel(Model model, Identifier modelId, TextureMap texture, BiConsumer<Identifier, ModelSupplier> exporter) {
         model.upload(modelId, texture, exporter);
     }
 }

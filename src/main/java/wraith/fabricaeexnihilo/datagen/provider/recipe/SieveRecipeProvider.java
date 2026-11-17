@@ -5,10 +5,12 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
 import net.minecraft.block.Blocks;
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
@@ -26,8 +28,20 @@ public class SieveRecipeProvider extends FabricRecipeProvider {
         super(output, registriesFuture);
     }
 
+    private RegistryWrapper.WrapperLookup registries;
+
     @Override
-    public void generate(RecipeExporter exporter) {
+    protected RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registries, RecipeExporter exporter) {
+        this.registries = registries;
+        return new RecipeGenerator(registries, exporter) {
+            @Override
+            public void generate() {
+                generateRecipes(this.exporter);
+            }
+        };
+    }
+
+    private void generateRecipes(RecipeExporter exporter) {
         offerMiscRecipes(exporter);
         offerStoneRecipes(exporter);
         offerPlantRecipes(exporter);
@@ -126,7 +140,7 @@ public class SieveRecipeProvider extends FabricRecipeProvider {
 
         // Misc Items
         SieveRecipeJsonBuilder.of(Items.APPLE)
-                .from(Ingredient.fromTag(ItemTags.LEAVES), "leaves")
+                .from(Ingredient.ofTag(registries.getOrThrow(RegistryKeys.ITEM).getOrThrow(ItemTags.LEAVES)), "leaves")
                 .meshes(plantRatesStringPlus)
                 .offerTo(exporter, "plant/apple");
         SieveRecipeJsonBuilder.of(Items.BAMBOO)
@@ -150,7 +164,7 @@ public class SieveRecipeProvider extends FabricRecipeProvider {
                 .meshes(plantRatesStringPlus)
                 .offerTo(exporter, "plant/pink_petals");
         SieveRecipeJsonBuilder.of(ModItems.RAW_SILKWORM)
-                .from(Ingredient.fromTag(ItemTags.LEAVES), "leaves")
+                .from(Ingredient.ofTag(registries.getOrThrow(RegistryKeys.ITEM).getOrThrow(ItemTags.LEAVES)), "leaves")
                 .meshes(plantRatesStringPlus)
                 .offerTo(exporter, "plant/silkworm");
 

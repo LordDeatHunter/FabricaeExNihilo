@@ -11,11 +11,11 @@ import java.util.List;
 @GenerateMutable(useFancyMethodNames = true)
 public record WitchWaterConfig(List<StatusEffectStats> effects) implements MutableWitchWaterConfig.Source {
     public static final WitchWaterConfig DEFAULT = new WitchWaterConfig(List.of(
-            new StatusEffectStats(Identifier.of("blindness"), 210, 0),
-            new StatusEffectStats(Identifier.of("hunger"), 210, 2),
-            new StatusEffectStats(Identifier.of("slowness"), 210, 0),
-            new StatusEffectStats(Identifier.of("weakness"), 210, 2),
-            new StatusEffectStats(Identifier.of("wither"), 210, 0)
+            new StatusEffectStats(Identifier.ofVanilla("blindness"), 210, 0),
+            new StatusEffectStats(Identifier.ofVanilla("hunger"), 210, 2),
+            new StatusEffectStats(Identifier.ofVanilla("slowness"), 210, 0),
+            new StatusEffectStats(Identifier.ofVanilla("weakness"), 210, 2),
+            new StatusEffectStats(Identifier.ofVanilla("wither"), 210, 0)
     ));
     public static final Codec<WitchWaterConfig> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             AlwaysSerializedOptionalFieldCodec.create(StatusEffectStats.CODEC.listOf(),"effects", WitchWaterConfig.DEFAULT.effects).forGetter(WitchWaterConfig::effects)

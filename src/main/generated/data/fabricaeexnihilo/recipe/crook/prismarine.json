@@ -3,9 +3,7 @@
   "category": "equipment",
   "group": "fabricaeexnihilo:crooks",
   "key": {
-    "#": {
-      "item": "minecraft:prismarine_shard"
-    }
+    "#": "minecraft:prismarine_shard"
   },
   "pattern": [
     "##",

@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "fabricaeexnihilo:sieve",
   "key": {
-    "#": {
-      "item": "minecraft:bamboo_planks"
-    },
-    "I": {
-      "item": "minecraft:stick"
-    },
-    "S": {
-      "item": "minecraft:bamboo_slab"
-    }
+    "#": "minecraft:bamboo_planks",
+    "I": "minecraft:stick",
+    "S": "minecraft:bamboo_slab"
   },
   "pattern": [
     "# #",

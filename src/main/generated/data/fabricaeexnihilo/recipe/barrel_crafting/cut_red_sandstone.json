@@ -19,8 +19,6 @@
   "icon": "minecraft:cut_red_sandstone",
   "trigger": {
     "type": "insert_item",
-    "item": {
-      "item": "minecraft:cut_sandstone"
-    }
+    "item": "minecraft:cut_sandstone"
   }
 }

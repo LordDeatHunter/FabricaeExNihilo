@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "fabricaeexnihilo:crucible",
   "key": {
-    "#": {
-      "item": "fabricaeexnihilo:porcelain"
-    }
+    "#": "fabricaeexnihilo:porcelain"
   },
   "pattern": [
     "# #",

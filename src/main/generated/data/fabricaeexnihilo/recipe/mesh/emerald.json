@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "item": "minecraft:emerald"
-    },
-    "O": {
-      "item": "fabricaeexnihilo:gold_mesh"
-    }
+    "#": "minecraft:emerald",
+    "O": "fabricaeexnihilo:gold_mesh"
   },
   "pattern": [
     "# #",

@@ -5,16 +5,22 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import wraith.fabricaeexnihilo.modules.ModTags;
 
-public class CrookItem extends ToolItem {
+public class CrookItem extends Item {
+
+    private final ToolMaterial material;
 
     public CrookItem(ToolMaterial material, Item.Settings settings) {
-        super(material, settings);
+        super(settings.maxDamage(material.durability()));
+        this.material = material;
+    }
+
+    public ToolMaterial getMaterial() {
+        return material;
     }
 
     public static boolean isCrook(ItemStack stack) {
@@ -23,7 +29,7 @@ public class CrookItem extends ToolItem {
 
     @Override
     public float getMiningSpeed(ItemStack stack, BlockState state) {
-        return isCorrectForDrops(stack, state) ? getMaterial().getMiningSpeedMultiplier() : 1F;
+        return isCorrectForDrops(stack, state) ? material.speed() : 1F;
     }
 
     @Override
@@ -33,7 +39,7 @@ public class CrookItem extends ToolItem {
 
     @Override
     public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
-        if (!world.isClient && state.getHardness(world, pos) != 0.0f) {
+        if (!world.isClient() && state.getHardness(world, pos) != 0.0f) {
             stack.damage(1, miner, EquipmentSlot.MAINHAND);
         }
         return true;

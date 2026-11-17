@@ -3,9 +3,7 @@
   "category": "equipment",
   "group": "fabricaeexnihilo:crooks",
   "key": {
-    "#": {
-      "item": "fabricaeexnihilo:diorite_pebble"
-    }
+    "#": "fabricaeexnihilo:diorite_pebble"
   },
   "pattern": [
     "##",

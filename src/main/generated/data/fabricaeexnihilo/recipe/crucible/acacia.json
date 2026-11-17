@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "fabricaeexnihilo:crucible",
   "key": {
-    "#": {
-      "item": "minecraft:acacia_log"
-    },
-    "I": {
-      "item": "minecraft:stick"
-    },
-    "S": {
-      "item": "minecraft:acacia_slab"
-    }
+    "#": "minecraft:acacia_log",
+    "I": "minecraft:stick",
+    "S": "minecraft:acacia_slab"
   },
   "pattern": [
     "# #",

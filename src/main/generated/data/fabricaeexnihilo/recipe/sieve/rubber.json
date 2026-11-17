@@ -11,15 +11,9 @@
   "category": "misc",
   "group": "fabricaeexnihilo:sieve",
   "key": {
-    "#": {
-      "item": "techreborn:rubber_planks"
-    },
-    "I": {
-      "item": "minecraft:stick"
-    },
-    "S": {
-      "item": "techreborn:rubber_slab"
-    }
+    "#": "techreborn:rubber_planks",
+    "I": "minecraft:stick",
+    "S": "techreborn:rubber_slab"
   },
   "pattern": [
     "# #",

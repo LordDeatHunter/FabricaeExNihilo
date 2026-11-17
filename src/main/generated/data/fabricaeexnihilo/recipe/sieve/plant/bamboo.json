@@ -1,8 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "input": {
-    "item": "minecraft:jungle_leaves"
-  },
+  "input": "minecraft:jungle_leaves",
   "result": {
     "count": 1,
     "id": "minecraft:bamboo"

@@ -3,9 +3,7 @@
   "category": "equipment",
   "group": "fabricaeexnihilo:crooks",
   "key": {
-    "#": {
-      "item": "minecraft:blaze_rod"
-    }
+    "#": "minecraft:blaze_rod"
   },
   "pattern": [
     "##",

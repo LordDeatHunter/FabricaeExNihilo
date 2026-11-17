@@ -87,6 +87,11 @@ public class FabricaeExNihilo implements ModInitializer {
         BonusEnchantingManager.init();
         LOGGER.debug("Creating Recipes");
         ModRecipes.register();
+
+        // Since 1.21.2 vanilla no longer syncs full recipes to the client. Opt the
+        // sieve serializer in so recipe viewers can show real drop data on clients.
+        net.fabricmc.fabric.api.recipe.v1.sync.RecipeSynchronization
+                .synchronizeRecipeSerializer(ModRecipes.SIEVE_SERIALIZER);
     }
 
 }

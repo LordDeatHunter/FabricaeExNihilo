@@ -19,8 +19,6 @@
   "icon": "minecraft:tube_coral_block",
   "trigger": {
     "type": "insert_item",
-    "item": {
-      "item": "minecraft:blue_dye"
-    }
+    "item": "minecraft:blue_dye"
   }
 }

@@ -8,12 +8,14 @@ import wraith.fabricaeexnihilo.modules.ModFluids;
 import wraith.fabricaeexnihilo.modules.base.AbstractFluid;
 import wraith.fabricaeexnihilo.modules.base.FluidSettings;
 
+import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
+
 public class BloodFluid extends AbstractFluid {
     private static final FluidSettings FLUID_SETTINGS = new FluidSettings("blood", 0x6F0000, false, false);
     public static final BloodFluid FLOWING = new BloodFluid(false);
     public static final BloodFluid STILL = new BloodFluid(true);
-    public static final BucketItem BUCKET = new BucketItem(STILL, ModFluids.getBucketItemSettings());
-    public static final FluidBlock BLOCK = new FluidBlock(STILL, ModFluids.getBlockSettings());
+    public static final BucketItem BUCKET = new BucketItem(STILL, ModFluids.getBucketItemSettings(id("blood_bucket")));
+    public static final FluidBlock BLOCK = new FluidBlock(STILL, ModFluids.getBlockSettings(id("blood")));
 
     public BloodFluid(boolean isStill) {
         super(isStill, FLUID_SETTINGS,
@@ -30,7 +32,7 @@ public class BloodFluid extends AbstractFluid {
     }
 
     @Override
-    public int getFlowSpeed(WorldView world) {
+    public int getMaxFlowDistance(WorldView world) {
         return 3;
     }
 

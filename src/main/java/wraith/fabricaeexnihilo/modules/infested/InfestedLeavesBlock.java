@@ -1,5 +1,7 @@
 package wraith.fabricaeexnihilo.modules.infested;
 
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeavesBlock;
@@ -8,6 +10,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.World;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
 import wraith.fabricaeexnihilo.modules.base.Colored;
 import wraith.fabricaeexnihilo.util.Color;
@@ -15,13 +18,27 @@ import wraith.fabricaeexnihilo.util.Lazy;
 
 public class InfestedLeavesBlock extends LeavesBlock implements Colored, NonInfestableLeavesBlock {
 
+    public static final MapCodec<InfestedLeavesBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            Identifier.CODEC.fieldOf("old").forGetter(InfestedLeavesBlock::getOld),
+            createSettingsCodec()
+    ).apply(instance, InfestedLeavesBlock::new));
+
     private final Identifier old;
     private final Lazy<Block> leafBlock;
 
     public InfestedLeavesBlock(Identifier leafBlock, Settings settings) {
-        super(settings);
+        super(0.01f, settings);
         this.old = leafBlock;
         this.leafBlock = new Lazy<>(() -> Registries.BLOCK.get(leafBlock));
+    }
+
+    @Override
+    public MapCodec<InfestedLeavesBlock> getCodec() {
+        return CODEC;
+    }
+
+    @Override
+    protected void spawnLeafParticle(World world, BlockPos pos, Random random) {
     }
 
     @Override
@@ -45,7 +62,7 @@ public class InfestedLeavesBlock extends LeavesBlock implements Colored, NonInfe
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         super.randomTick(state, world, pos, random);
-        if (world.isClient) {
+        if (world.isClient()) {
             return;
         }
         InfestedHelper.tryToSpreadFrom(world, pos, FabricaeExNihilo.CONFIG.get().infested().infestedSpreadAttempts());

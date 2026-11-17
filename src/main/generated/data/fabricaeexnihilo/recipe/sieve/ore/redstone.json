@@ -1,8 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "input": {
-    "item": "fabricaeexnihilo:dust"
-  },
+  "input": "fabricaeexnihilo:dust",
   "result": {
     "count": 1,
     "id": "minecraft:redstone"

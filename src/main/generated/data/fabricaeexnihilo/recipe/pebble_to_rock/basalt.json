@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "fabricaeexnihilo:basalt_pebble"
-    }
+    "#": "fabricaeexnihilo:basalt_pebble"
   },
   "pattern": [
     "##",

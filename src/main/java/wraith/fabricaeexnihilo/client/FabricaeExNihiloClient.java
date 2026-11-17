@@ -3,10 +3,10 @@ package wraith.fabricaeexnihilo.client;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.BlockRenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.item.ItemConvertible;
 import wraith.fabricaeexnihilo.FabricaeExNihilo;
@@ -37,21 +37,13 @@ public class FabricaeExNihiloClient implements ClientModInitializer {
         FabricaeExNihilo.LOGGER.debug("Registered BERs");
 
         // Color Providers
-        var coloredItems = new ArrayList<ItemConvertible>();
-
-        coloredItems.addAll(ModItems.MESHES.values());
-        coloredItems.addAll(ModItems.ORE_PIECES.values());
-        coloredItems.addAll(ModBlocks.INFESTED_LEAVES.values());
-
-        ColorProviderRegistry.ITEM.register(FENItemColorProvider.INSTANCE, coloredItems.toArray(ItemConvertible[]::new));
-
         ColorProviderRegistry.BLOCK.register(FENBlockColorProvider.INSTANCE, ModBlocks.INFESTED_LEAVES.values().toArray(Block[]::new));
         FabricaeExNihilo.LOGGER.debug("Registered color providers");
 
         // Render Layers
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), ModBlocks.SIEVES.values().toArray(Block[]::new));
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), ModBlocks.CRUCIBLES.values().toArray(Block[]::new));
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), ModBlocks.STRAINERS.values().toArray(Block[]::new));
+        BlockRenderLayerMap.putBlocks(BlockRenderLayer.CUTOUT, ModBlocks.SIEVES.values().toArray(Block[]::new));
+        BlockRenderLayerMap.putBlocks(BlockRenderLayer.CUTOUT, ModBlocks.CRUCIBLES.values().toArray(Block[]::new));
+        BlockRenderLayerMap.putBlocks(BlockRenderLayer.CUTOUT, ModBlocks.STRAINERS.values().toArray(Block[]::new));
     }
 
 }

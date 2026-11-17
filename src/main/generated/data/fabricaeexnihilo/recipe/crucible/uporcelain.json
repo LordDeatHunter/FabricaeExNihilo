@@ -4,9 +4,7 @@
   "cookingtime": 200,
   "experience": 0.15,
   "group": "fabricaeexnihilo:crucible",
-  "ingredient": {
-    "item": "fabricaeexnihilo:unfired_porcelain_crucible"
-  },
+  "ingredient": "fabricaeexnihilo:unfired_porcelain_crucible",
   "result": {
     "id": "fabricaeexnihilo:porcelain_crucible"
   }

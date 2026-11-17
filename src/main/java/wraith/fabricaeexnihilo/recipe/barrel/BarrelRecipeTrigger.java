@@ -79,7 +79,7 @@ public sealed interface BarrelRecipeTrigger {
         public static final String TYPE = "insert_item";
         public static final byte ID = 1;
 
-        public static final MapCodec<ItemInserted> CODEC = Ingredient.ALLOW_EMPTY_CODEC.fieldOf("item").xmap(ItemInserted::new, ItemInserted::predicate);
+        public static final MapCodec<ItemInserted> CODEC = Ingredient.CODEC.fieldOf("item").xmap(ItemInserted::new, ItemInserted::predicate);
         public static final PacketCodec<RegistryByteBuf, ItemInserted> PACKET_CODEC = PacketCodec.of(ItemInserted::writePacket, ItemInserted::new);
 
         public ItemInserted(RegistryByteBuf buf) {

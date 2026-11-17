@@ -1,37 +1,49 @@
 package wraith.fabricaeexnihilo.client.renderers;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.RenderLayers;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
+import net.minecraft.client.render.block.entity.state.BlockEntityRenderState;
+import net.minecraft.client.render.command.ModelCommandRenderer;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
+import net.minecraft.client.render.model.BlockStateModel;
+import net.minecraft.client.render.state.CameraRenderState;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.math.Vec3d;
 import wraith.fabricaeexnihilo.modules.infested.InfestingLeavesBlockEntity;
 
-public class InfestingLeavesBlockEntityRenderer implements BlockEntityRenderer<InfestingLeavesBlockEntity> {
+public class InfestingLeavesBlockEntityRenderer implements BlockEntityRenderer<InfestingLeavesBlockEntity, InfestingLeavesBlockEntityRenderer.InfestingLeavesRenderState> {
 
     public InfestingLeavesBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
     }
 
     @Override
-    public void render(InfestingLeavesBlockEntity infesting, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        if (infesting == null) {
-            return;
-        }
-        var color = infesting.getColor(0) | 0xff000000;
-        var state = infesting.getTarget().getLeafBlock().getDefaultState();
-        var model = MinecraftClient.getInstance().getBakedModelManager().getBlockModels().getModel(state);
-
-        matrices.push();
-
-        var r = (color >> 16 & 255) / 255.0F;
-        var g = (color >> 8 & 255) / 255.0F;
-        var b = (color & 255) / 255.0F;
-
-        var consumer = vertexConsumers.getBuffer(RenderLayers.getEntityBlockLayer(state, false));
-        MinecraftClient.getInstance().getBlockRenderManager().getModelRenderer().render(matrices.peek(), consumer, state, model, r, g, b, light, overlay);
-
-        matrices.pop();
+    public InfestingLeavesRenderState createRenderState() {
+        return new InfestingLeavesRenderState();
     }
 
+    @Override
+    public void updateRenderState(InfestingLeavesBlockEntity infesting, InfestingLeavesRenderState state, float tickDelta, Vec3d cameraPos, ModelCommandRenderer.CrumblingOverlayCommand crumblingOverlayCommand) {
+        BlockEntityRenderState.updateBlockEntityRenderState(infesting, state, crumblingOverlayCommand);
+        var color = infesting.getColor(0) | 0xff000000;
+        BlockState targetBlockState = infesting.getTarget().getLeafBlock().getDefaultState();
+        state.model = MinecraftClient.getInstance().getBakedModelManager().getBlockModels().getModel(targetBlockState);
+        state.r = (color >> 16 & 255) / 255.0F;
+        state.g = (color >> 8 & 255) / 255.0F;
+        state.b = (color & 255) / 255.0F;
+    }
+
+    @Override
+    public void render(InfestingLeavesRenderState state, MatrixStack matrices, OrderedRenderCommandQueue queue, CameraRenderState cameraState) {
+        if (state.model == null) return;
+        queue.submitBlockStateModel(matrices, TexturedRenderLayers.getEntityCutout(), state.model, state.r, state.g, state.b, state.lightmapCoordinates, OverlayTexture.DEFAULT_UV, 0);
+    }
+
+    public static class InfestingLeavesRenderState extends BlockEntityRenderState {
+        public BlockStateModel model;
+        public float r, g, b;
+    }
 }

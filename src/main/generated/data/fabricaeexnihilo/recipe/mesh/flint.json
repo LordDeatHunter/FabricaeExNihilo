@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "item": "minecraft:flint"
-    },
-    "O": {
-      "item": "fabricaeexnihilo:string_mesh"
-    }
+    "#": "minecraft:flint",
+    "O": "fabricaeexnihilo:string_mesh"
   },
   "pattern": [
     "# #",

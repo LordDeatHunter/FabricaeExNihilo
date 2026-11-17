@@ -26,8 +26,6 @@
   "icon": "fabricaeexnihilo:brine_bucket",
   "trigger": {
     "type": "insert_item",
-    "item": {
-      "item": "fabricaeexnihilo:salt_bottle"
-    }
+    "item": "fabricaeexnihilo:salt_bottle"
   }
 }

@@ -2,21 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "b": {
-      "item": "minecraft:ender_pearl"
-    },
-    "c": {
-      "item": "minecraft:purple_dye"
-    },
-    "d": {
-      "item": "fabricaeexnihilo:doll"
-    },
-    "s": {
-      "item": "minecraft:glowstone_dust"
-    },
-    "t": {
-      "item": "minecraft:end_stone"
-    }
+    "b": "minecraft:ender_pearl",
+    "c": "minecraft:purple_dye",
+    "d": "fabricaeexnihilo:doll",
+    "s": "minecraft:glowstone_dust",
+    "t": "minecraft:end_stone"
   },
   "pattern": [
     "ctc",

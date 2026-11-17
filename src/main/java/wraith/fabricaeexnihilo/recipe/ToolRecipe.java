@@ -49,7 +49,7 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
         if (world == null) {
             return List.of();
         }
-        return world.getRecipeManager().getAllMatches(type.type, new Context(state), world);
+        return RecipeHelper.getAllMatches(type.type, new Context(state), world);
     }
 
     @Override
@@ -58,12 +58,12 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<ToolRecipe> getSerializer() {
         return tool.serializer;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<ToolRecipe> getType() {
         return tool.type;
     }
 
@@ -92,9 +92,9 @@ public class ToolRecipe extends BaseRecipe<ToolRecipe.Context> {
 
         public final String id;
         public final RecipeType<ToolRecipe> type;
-        public final RecipeSerializer<?> serializer;
+        public final RecipeSerializer<ToolRecipe> serializer;
 
-        ToolType(String name, RecipeType<ToolRecipe> type, RecipeSerializer<?> serializer) {
+        ToolType(String name, RecipeType<ToolRecipe> type, RecipeSerializer<ToolRecipe> serializer) {
             this.id = "fabricaeexnihilo:" + name;
             this.type = type;
             this.serializer = serializer;

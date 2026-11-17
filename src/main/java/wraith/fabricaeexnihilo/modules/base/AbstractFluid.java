@@ -8,6 +8,7 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -59,7 +60,7 @@ public abstract class AbstractFluid extends FlowableFluid {
     }
 
     @Override
-    public int getFlowSpeed(WorldView world) {
+    public int getMaxFlowDistance(WorldView world) {
         return 4;
     }
 
@@ -84,7 +85,7 @@ public abstract class AbstractFluid extends FlowableFluid {
     }
 
     @Override
-    public boolean isInfinite(World world) {
+    protected boolean isInfinite(ServerWorld world) {
         return fluidSettings.isInfinite();
     }
 

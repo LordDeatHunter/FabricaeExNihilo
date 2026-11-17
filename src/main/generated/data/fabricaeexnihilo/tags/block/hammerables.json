@@ -1,11 +1,23 @@
 {
   "values": [
-    "#c:glass_blocks",
+    {
+      "id": "#c:glass_blocks",
+      "required": false
+    },
     "#c:concretes",
     "#c:concrete_powders",
-    "#minecraft:wool",
-    "#minecraft:coral_plants",
-    "#minecraft:coral_blocks",
+    {
+      "id": "#minecraft:wool",
+      "required": false
+    },
+    {
+      "id": "#minecraft:coral_plants",
+      "required": false
+    },
+    {
+      "id": "#minecraft:coral_blocks",
+      "required": false
+    },
     "minecraft:stone",
     "minecraft:cobblestone",
     "minecraft:gravel",

@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "fabricaeexnihilo:crucible",
   "key": {
-    "#": {
-      "item": "minecraft:bamboo_block"
-    },
-    "I": {
-      "item": "minecraft:stick"
-    },
-    "S": {
-      "item": "minecraft:bamboo_slab"
-    }
+    "#": "minecraft:bamboo_block",
+    "I": "minecraft:stick",
+    "S": "minecraft:bamboo_slab"
   },
   "pattern": [
     "# #",

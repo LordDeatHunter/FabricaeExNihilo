@@ -3,9 +3,7 @@
   "category": "misc",
   "cookingtime": 200,
   "experience": 0.15,
-  "ingredient": {
-    "item": "fabricaeexnihilo:clay_crook"
-  },
+  "ingredient": "fabricaeexnihilo:clay_crook",
   "result": {
     "id": "fabricaeexnihilo:terracotta_crook"
   }

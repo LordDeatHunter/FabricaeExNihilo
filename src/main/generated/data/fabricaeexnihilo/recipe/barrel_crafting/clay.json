@@ -20,12 +20,8 @@
   "trigger": {
     "type": "insert_item",
     "item": [
-      {
-        "item": "fabricaeexnihilo:silt"
-      },
-      {
-        "item": "fabricaeexnihilo:dust"
-      }
+      "fabricaeexnihilo:silt",
+      "fabricaeexnihilo:dust"
     ]
   }
 }

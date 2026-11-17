@@ -4,8 +4,6 @@
   "fluid": {
     "fluid": "minecraft:lava"
   },
-  "input": {
-    "item": "minecraft:netherrack"
-  },
+  "input": "minecraft:netherrack",
   "requiresFireproofCrucible": true
 }

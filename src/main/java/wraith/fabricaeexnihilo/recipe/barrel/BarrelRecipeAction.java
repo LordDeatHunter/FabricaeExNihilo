@@ -394,7 +394,7 @@ public sealed interface BarrelRecipeAction {
 
         @Override
         public void apply(ServerWorld world, BarrelBlockEntity barrel) {
-            barrel.fillCompost(result, increment);
+            barrel.fillCompost(result.copy(), increment);
         }
 
         @Override

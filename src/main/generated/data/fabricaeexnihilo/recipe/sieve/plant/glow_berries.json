@@ -1,8 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "input": {
-    "item": "minecraft:coarse_dirt"
-  },
+  "input": "minecraft:coarse_dirt",
   "result": {
     "count": 1,
     "id": "minecraft:glow_berries"

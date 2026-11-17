@@ -5,7 +5,7 @@ buildscript {
 }
 
 plugins {
-    id 'fabric-loom' version '1.6-SNAPSHOT'
+    id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
     id 'maven-publish'
 }
 
@@ -17,6 +17,13 @@ repositories {
     mavenCentral()
 
     maven { url "https://maven.fabricmc.net/" }
+    maven {
+        url "https://maven.blamejared.com"
+        content {
+            includeGroup "com.faux.ingredientextension"
+            includeGroup "mezz.jei"
+        }
+    }
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/" }
     maven { url "https://maven.saps.dev/minecraft" }
@@ -24,12 +31,6 @@ repositories {
     maven { url "https://maven.wispforest.io" }
     maven { url "https://maven.architectury.dev/" }
     maven { url "https://maven.quiltmc.org/repository/release" }
-    maven {
-        url "https://maven.blamejared.com"
-        content {
-            includeGroup "com.faux.ingredientextension"
-        }
-    }
     maven {
         url "https://maven.isxander.dev/releases"
         content {
@@ -79,6 +80,21 @@ var settings = new Object() {
 }
 apply from: "config.gradle", to: settings
 
+sourceSets {
+    main {
+        java {
+            // REI and EMI are not ported to 1.21.11 yet. Their sources stay in
+            // the tree, but they are left out of the build until they compile
+            // against the 1.21.11 APIs. Every other optional integration below
+            // is always compiled; the config.gradle switches only decide which
+            // mods are loaded at runtime.
+            exclude 'wraith/fabricaeexnihilo/compatibility/rei/**'
+            exclude 'wraith/fabricaeexnihilo/compatibility/emi/**'
+            exclude 'wraith/fabricaeexnihilo/compatibility/recipeviewer/**'
+        }
+    }
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:$minecraft_version"
     mappings "net.fabricmc:yarn:$yarn_mappings:v2"
@@ -86,10 +102,6 @@ dependencies {
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:$fabric_version"
 
-    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:$rei_version"
-    modCompileOnly "dev.architectury:architectury-fabric:$architectury_version"
-    modCompileOnly "dev.emi:emi-fabric:$emi_version:api"
-    modApi "me.shedaniel.cloth:basic-math:0.6.1"
     modCompileOnly "com.terraformersmc:modmenu:$modmenu_version"
 
     modImplementation include("dev.isxander:yet-another-config-lib:$yacl_version")
@@ -98,13 +110,6 @@ dependencies {
     // Add generated data to runtime classpath (slightly hacky)
     runtimeOnly files("src/main/generated")
 
-    if (settings.rei) {
-        modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
-        modRuntimeOnly "dev.architectury:architectury-fabric:$architectury_version"
-    }
-    if (settings.emi) {
-        modRuntimeOnly "dev.emi:emi-fabric:$emi_version"
-    }
     if (settings.modmenu) modRuntimeOnly "com.terraformersmc:modmenu:$modmenu_version"
     if (settings.techReborn) modRuntimeOnly "TechReborn:TechReborn-1.21:$tech_reborn_version"
     if (settings.modernIndustrialization) modRuntimeOnly "maven.modrinth:modern-industrialization:$modern_industrialization_version"
@@ -114,25 +119,36 @@ dependencies {
     modCompileOnly "mcp.mobius.waila:wthit-api:fabric-$wthit_version"
     if (settings.wthit) {
         modRuntimeOnly "mcp.mobius.waila:wthit:fabric-$wthit_version"
+        // WTHIT 18 declares a hard dependency on badpackets 0.11 or newer.
+        modRuntimeOnly "lol.bai:badpackets:fabric-$badpackets_version"
     }
     modCompileOnly "lol.bai.megane:megane-api:$megane_version"
-    if (settings.megane) {
-        modRuntimeOnly "lol.bai:badpackets:fabric-0.1.2"
-        modRuntimeOnly "lol.bai.megane:megane-runtime:$megane_version"
-        modRuntimeOnly "lol.bai.megane:megane-vanilla:$megane_version"
-        modRuntimeOnly "lol.bai.megane:megane-api:$megane_version"
-    }
+    // Megane has no 1.21.11 build yet: 8.4.0 targets 1.21.x and its title
+    // screen mixin fails on startup, so only the API stays on the classpath
+    // until a 1.21.11 release exists.
+    // if (settings.megane) {
+    //     modRuntimeOnly "lol.bai:badpackets:fabric-0.1.2"
+    //     modRuntimeOnly "lol.bai.megane:megane-runtime:$megane_version"
+    //     modRuntimeOnly "lol.bai.megane:megane-vanilla:$megane_version"
+    //     modRuntimeOnly "lol.bai.megane:megane-api:$megane_version"
+    // }
 
     modCompileOnly "maven.modrinth:jade:$jade_version+fabric"
     if (settings.jade) {
         modRuntimeOnly "maven.modrinth:jade:$jade_version+fabric"
     }
+
+    modCompileOnly "mezz.jei:jei-1.21.11-fabric:$jei_version"
 }
 
 loom {
     runs {
         datagen {
-            inherit server
+            // The 1.21 branch uses `inherit server`. 1.21.11 moved the model
+            // generators into the client source set
+            // (net.fabricmc.fabric.api.client.datagen.v1...), so models can only
+            // be generated from a client run.
+            inherit client
             name "Data Generation"
             vmArg "-Dfabric-api.datagen"
             vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"

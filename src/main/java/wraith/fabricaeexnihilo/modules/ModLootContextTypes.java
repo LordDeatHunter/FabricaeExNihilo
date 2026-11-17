@@ -1,13 +1,13 @@
 package wraith.fabricaeexnihilo.modules;
 
 import net.minecraft.loot.context.LootContextParameters;
-import net.minecraft.loot.context.LootContextType;
+import net.minecraft.util.context.ContextType;
 import wraith.fabricaeexnihilo.mixins.LootContextTypesAccess;
 
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public class ModLootContextTypes {
-    public static final LootContextType STRAINER = new LootContextType.Builder()
+    public static final ContextType STRAINER = new ContextType.Builder()
             .require(LootContextParameters.BLOCK_ENTITY)
             .require(LootContextParameters.BLOCK_STATE)
             .require(LootContextParameters.ORIGIN)

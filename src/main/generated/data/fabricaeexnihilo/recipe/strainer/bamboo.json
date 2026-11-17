@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "fabricaeexnihilo:sieve",
   "key": {
-    "#": {
-      "item": "minecraft:bamboo_block"
-    },
-    "S": {
-      "item": "minecraft:string"
-    }
+    "#": "minecraft:bamboo_block",
+    "S": "minecraft:string"
   },
   "pattern": [
     "#S#",

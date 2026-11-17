@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "fabricaeexnihilo:sieve",
   "key": {
-    "#": {
-      "item": "minecraft:cherry_log"
-    },
-    "S": {
-      "item": "minecraft:string"
-    }
+    "#": "minecraft:cherry_log",
+    "S": "minecraft:string"
   },
   "pattern": [
     "#S#",

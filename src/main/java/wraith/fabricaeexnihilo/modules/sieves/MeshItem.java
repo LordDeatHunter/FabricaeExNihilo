@@ -12,7 +12,7 @@ public class MeshItem extends Item implements Colored {
     private final int enchantability;
 
     public MeshItem(Color color, int enchantability, Settings settings) {
-        super(settings.maxCount(FabricaeExNihilo.CONFIG.get().sieves().meshStackSize()));
+        super(settings.maxCount(FabricaeExNihilo.CONFIG.get().sieves().meshStackSize()).enchantable(enchantability));
         this.color = color;
         this.enchantability = enchantability;
     }
@@ -22,12 +22,6 @@ public class MeshItem extends Item implements Colored {
         return color.toInt();
     }
 
-    @Override
-    public boolean isEnchantable(ItemStack stack) {
-        return true;
-    }
-
-    @Override
     public int getEnchantability() {
         return this.enchantability;
     }

@@ -5,7 +5,8 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
@@ -24,7 +25,16 @@ public class ToolRecipeProvider extends FabricRecipeProvider {
     }
 
     @Override
-    public void generate(RecipeExporter exporter) {
+    protected RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registries, RecipeExporter exporter) {
+        return new RecipeGenerator(registries, exporter) {
+            @Override
+            public void generate() {
+                generateRecipes(this.exporter);
+            }
+        };
+    }
+
+    private void generateRecipes(RecipeExporter exporter) {
         crooking(Blocks.ACACIA_LEAVES, Items.ACACIA_SAPLING, 0.25).offerTo(exporter, "crooking/acacia_sapling");
         crooking(Blocks.BIRCH_LEAVES, Items.BIRCH_SAPLING, 0.25).offerTo(exporter, "crooking/birch_sapling");
         crooking(Blocks.DARK_OAK_LEAVES, Items.DARK_OAK_SAPLING, 0.25).offerTo(exporter, "crooking/dark_oak_sapling");

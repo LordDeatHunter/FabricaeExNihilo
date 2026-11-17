@@ -1,56 +1,61 @@
 package wraith.fabricaeexnihilo.modules.base;
 
-import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import com.mojang.serialization.Codec;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.Identifier;
+
+import java.util.HashMap;
 import java.util.Map;
 
 public class EnchantmentContainer {
 
-    private final Map<RegistryEntry.Reference<Enchantment>, Integer> enchantments = new Object2IntOpenHashMap<>();
+    private static final Codec<Map<Identifier, Integer>> CODEC = Codec.unboundedMap(Identifier.CODEC, Codec.INT);
 
-    public static void addEnchantments(ItemStack itemStack, EnchantmentContainer container) {
+    private final Map<Identifier, Integer> enchantments = new HashMap<>();
+
+    public static void addEnchantments(ItemStack itemStack, EnchantmentContainer container, RegistryWrapper.WrapperLookup registries) {
+        if (registries == null) return;
+        var enchantmentRegistry = registries.getOrThrow(RegistryKeys.ENCHANTMENT);
         container.enchantments.entrySet().stream()
                 .filter(entry -> entry.getValue() > 0)
                 .forEach(entry -> {
-                    var enchantment = entry.getKey();
-                    if (enchantment != null) {
-                        itemStack.addEnchantment(enchantment, entry.getValue());
-                    }
+                    var key = RegistryKey.of(RegistryKeys.ENCHANTMENT, entry.getKey());
+                    enchantmentRegistry.getOptional(key).ifPresent(ref -> itemStack.addEnchantment(ref, entry.getValue()));
                 });
     }
 
-    public Map<RegistryEntry.Reference<Enchantment>, Integer> getEnchantments() {
+    public Map<Identifier, Integer> getEnchantments() {
         return enchantments;
     }
 
-    public NbtCompound writeNbt() {
-        var nbt = new NbtCompound();
-        enchantments.forEach((enchantment, level) -> nbt.putInt(enchantment.registryKey().getValue().toString(), level));
-        return nbt;
+    public void writeData(WriteView view) {
+        view.put("enchantments", CODEC, enchantments);
     }
 
-    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+    public void readData(ReadView view) {
         enchantments.clear();
-        var enchantmentRegistry = registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
-        nbt.getKeys().forEach(key -> enchantments.put(
-                enchantmentRegistry.getOrThrow(RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(key))),
-                nbt.getInt(key)));
+        view.read("enchantments", CODEC).ifPresent(enchantments::putAll);
     }
 
-    public int getEnchantmentLevel(RegistryKey<Enchantment> enchantmentKey) {
-        var id = enchantmentKey.getValue();
-        var enchantment = enchantments.entrySet().stream().filter(e -> e.getKey().registryKey().getValue().equals(id)).findAny();
-        return enchantment.isEmpty() ? 0 : enchantments.getOrDefault(enchantment.get().getKey(), 0);
+    public int getEnchantmentLevel(RegistryKey<Enchantment> key) {
+        return getEnchantmentLevel(key.getValue());
     }
 
-    public void setEnchantmentLevel(RegistryEntry<Enchantment> enchantment, int level) {
-        enchantments.put((RegistryEntry.Reference<Enchantment>) enchantment, level);
+    public int getEnchantmentLevel(Identifier enchantment) {
+        return enchantments.getOrDefault(enchantment, 0);
+    }
+
+    public void setEnchantmentLevel(RegistryKey<Enchantment> key, int level) {
+        setEnchantmentLevel(key.getValue(), level);
+    }
+
+    public void setEnchantmentLevel(Identifier enchantment, int level) {
+        enchantments.put(enchantment, level);
     }
 }

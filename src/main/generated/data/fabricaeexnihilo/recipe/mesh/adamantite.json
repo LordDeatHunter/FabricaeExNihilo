@@ -10,12 +10,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "item": "mythicmetals:adamantite_ingot"
-    },
-    "O": {
-      "item": "fabricaeexnihilo:diamond_mesh"
-    }
+    "#": "mythicmetals:adamantite_ingot",
+    "O": "fabricaeexnihilo:diamond_mesh"
   },
   "pattern": [
     "# #",

@@ -8,7 +8,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContextParameterSet;
+import net.minecraft.loot.context.LootWorldContext;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryKey;
@@ -16,6 +16,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -27,14 +28,18 @@ import wraith.fabricaeexnihilo.modules.base.BaseBlockEntity;
 
 import java.util.stream.IntStream;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
+
 import static wraith.fabricaeexnihilo.FabricaeExNihilo.id;
 
 public class StrainerBlockEntity extends BaseBlockEntity {
 
-    public static final BlockEntityType<StrainerBlockEntity> TYPE = BlockEntityType.Builder.create(
+    public static final BlockEntityType<StrainerBlockEntity> TYPE = FabricBlockEntityTypeBuilder.create(
             StrainerBlockEntity::new,
             ModBlocks.STRAINERS.values().toArray(StrainerBlock[]::new)
-    ).build(null);
+    ).build();
 
     public static final Identifier BLOCK_ENTITY_ID = id("strainer");
 
@@ -51,29 +56,38 @@ public class StrainerBlockEntity extends BaseBlockEntity {
     }
 
     @Override
-    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.readNbt(nbt, registryLookup);
+    protected void readData(ReadView view) {
+        super.readData(view);
         inventory.clear();
-        Inventories.readNbt(nbt, inventory, registryLookup);
-        timeUntilCatch = nbt.getInt("timeUntilCatch");
+        Inventories.readData(view, inventory);
+        timeUntilCatch = view.getInt("timeUntilCatch", 0);
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.writeNbt(nbt, registryLookup);
-        Inventories.writeNbt(nbt, inventory, registryLookup);
-        nbt.putInt("timeUntilCatch", timeUntilCatch);
+    protected void writeData(WriteView view) {
+        super.writeData(view);
+        Inventories.writeData(view, inventory);
+        view.putInt("timeUntilCatch", timeUntilCatch);
     }
 
     public DefaultedList<ItemStack> getInventory() {
         return inventory;
     }
 
+    @Override
+    public void onBlockReplaced(BlockPos pos, BlockState state) {
+        if (world != null) {
+            ItemScatterer.spawn(world, pos, getInventory());
+            world.updateComparators(pos, state.getBlock());
+        }
+        super.onBlockReplaced(pos, state);
+    }
+
     public static void tick(World world, BlockPos blockPos, BlockState state, StrainerBlockEntity strainer) {
-        if (world.isClient || !state.get(StrainerBlock.WATERLOGGED))
+        if (world.isClient() || !state.get(StrainerBlock.WATERLOGGED))
             return;
         if (strainer.timeUntilCatch-- <= 0) {
-            var params = new LootContextParameterSet.Builder((ServerWorld) world)
+            var params = new LootWorldContext.Builder((ServerWorld) world)
                     .add(LootContextParameters.BLOCK_ENTITY, strainer)
                     .add(LootContextParameters.BLOCK_STATE, state)
                     .add(LootContextParameters.ORIGIN, Vec3d.of(blockPos))

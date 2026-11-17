@@ -19,8 +19,6 @@
   "icon": "minecraft:wet_sponge",
   "trigger": {
     "type": "insert_item",
-    "item": {
-      "tag": "minecraft:wool"
-    }
+    "item": "#minecraft:wool"
   }
 }

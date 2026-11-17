@@ -1,8 +1,6 @@
 {
   "type": "fabricaeexnihilo:sieve",
-  "input": {
-    "item": "fabricaeexnihilo:crushed_calcite"
-  },
+  "input": "fabricaeexnihilo:crushed_calcite",
   "result": {
     "count": 1,
     "id": "minecraft:amethyst_shard"

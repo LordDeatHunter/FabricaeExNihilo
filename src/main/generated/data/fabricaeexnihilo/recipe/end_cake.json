@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "item": "minecraft:ender_eye"
-    },
-    "C": {
-      "item": "minecraft:cake"
-    }
+    "#": "minecraft:ender_eye",
+    "C": "minecraft:cake"
   },
   "pattern": [
     "###",

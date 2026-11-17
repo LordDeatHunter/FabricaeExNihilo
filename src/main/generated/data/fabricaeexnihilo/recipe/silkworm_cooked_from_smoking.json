@@ -3,9 +3,7 @@
   "category": "food",
   "cookingtime": 100,
   "experience": 0.35,
-  "ingredient": {
-    "item": "fabricaeexnihilo:raw_silkworm"
-  },
+  "ingredient": "fabricaeexnihilo:raw_silkworm",
   "result": {
     "id": "fabricaeexnihilo:cooked_silkworm"
   }

@@ -1,7 +1,7 @@
 package wraith.fabricaeexnihilo.modules;
 
 import net.minecraft.item.Item;
-import net.minecraft.item.ToolMaterials;
+import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -24,15 +24,20 @@ public class ModTools {
     static {
         for (var toolMaterial : ModToolMaterials.values()) {
             var crookId = id(toolMaterial.name().toLowerCase(Locale.ROOT) + "_crook");
-            var crook = new CrookItem(toolMaterial, new Item.Settings());
+            var crook = new CrookItem(toolMaterial.getMaterial(), ModItems.createSettings(crookId));
             CROOKS.put(crookId, crook);
         }
-        HAMMERS.put(id("wooden_hammer"), new HammerItem(ToolMaterials.WOOD, new Item.Settings()));
-        HAMMERS.put(id("stone_hammer"), new HammerItem(ToolMaterials.STONE, new Item.Settings()));
-        HAMMERS.put(id("iron_hammer"), new HammerItem(ToolMaterials.IRON, new Item.Settings()));
-        HAMMERS.put(id("golden_hammer"), new HammerItem(ToolMaterials.GOLD, new Item.Settings()));
-        HAMMERS.put(id("diamond_hammer"), new HammerItem(ToolMaterials.DIAMOND, new Item.Settings()));
-        HAMMERS.put(id("netherite_hammer"), new HammerItem(ToolMaterials.NETHERITE, new Item.Settings()));
+        putHammer("wooden_hammer", ToolMaterial.WOOD);
+        putHammer("stone_hammer", ToolMaterial.STONE);
+        putHammer("iron_hammer", ToolMaterial.IRON);
+        putHammer("golden_hammer", ToolMaterial.GOLD);
+        putHammer("diamond_hammer", ToolMaterial.DIAMOND);
+        putHammer("netherite_hammer", ToolMaterial.NETHERITE);
+    }
+
+    private static void putHammer(String name, ToolMaterial material) {
+        var identifier = id(name);
+        HAMMERS.put(identifier, new HammerItem(material, ModItems.createSettings(identifier)));
     }
 
     public static void registerItems() {

@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "fabricaeexnihilo:barrel",
   "key": {
-    "#": {
-      "item": "minecraft:spruce_planks"
-    },
-    "S": {
-      "item": "minecraft:spruce_slab"
-    }
+    "#": "minecraft:spruce_planks",
+    "S": "minecraft:spruce_slab"
   },
   "pattern": [
     "# #",

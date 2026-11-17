@@ -2,7 +2,9 @@ package wraith.fabricaeexnihilo.modules.witchwater;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FluidBlock;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCollisionHandler;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
@@ -89,7 +91,7 @@ public class WitchWaterBlock extends FluidBlock {
     }
 
     public static void replaceMob(World world, LivingEntity toKill, EntityType<?> spawnType) {
-        var toSpawn = spawnType.create(world);
+        var toSpawn = spawnType.create(world, SpawnReason.CONVERSION);
         if (toSpawn instanceof LivingEntity livingEntity) {
             // Set position and angles
             livingEntity.refreshPositionAndAngles(toKill.getBlockPos(), toKill.getYaw(), toKill.getPitch());
@@ -105,14 +107,14 @@ public class WitchWaterBlock extends FluidBlock {
             livingEntity.setHealth(livingEntity.getMaxHealth() * toKill.getHealth() / toKill.getMaxHealth());
 
             if (livingEntity instanceof MobEntity mob && world instanceof ServerWorld serverWorld) {
-                mob.initialize(serverWorld, world.getLocalDifficulty(mob.getBlockPos()), SpawnReason.CONVERSION, null);
+                mob.initialize(serverWorld, serverWorld.getLocalDifficulty(mob.getBlockPos()), SpawnReason.CONVERSION, null);
             }
         }
         replaceMob(world, toKill, toSpawn);
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean moved) {
         if (world == null || entity == null || !entity.isAlive() || entity.isRemoved()) {
             return;
         }
@@ -121,9 +123,9 @@ public class WitchWaterBlock extends FluidBlock {
                 case CreeperEntity creeper -> {
                     markEntity(livingEntity);
                     if (!creeper.isIgnited()) {
-                        var lightning = EntityType.LIGHTNING_BOLT.create(world);
+                        var lightning = EntityType.LIGHTNING_BOLT.create(world, SpawnReason.TRIGGERED);
                         if (world instanceof ServerWorld serverWorld && lightning != null) {
-                            lightning.setPos(creeper.getPos().x, creeper.getPos().y, creeper.getPos().z);
+                            lightning.setPosition(creeper.getEntityPos());
                             creeper.onStruckByLightning(serverWorld, lightning);
                         }
                     }
@@ -133,8 +135,8 @@ public class WitchWaterBlock extends FluidBlock {
                 case RabbitEntity rabbit -> {
                     markEntity(rabbit);
                     // Killer Rabbit.
-                    if (rabbit.getVariant() != RabbitEntity.RabbitType.EVIL) {
-                        rabbit.setVariant(RabbitEntity.RabbitType.EVIL);
+                    if (rabbit.getVariant() != RabbitEntity.Variant.EVIL) {
+                        rabbit.setComponent(DataComponentTypes.RABBIT_VARIANT, RabbitEntity.Variant.EVIL);
                     }
                     return;
                 }
@@ -158,7 +160,7 @@ public class WitchWaterBlock extends FluidBlock {
         }
         if (entity instanceof ArrowEntity arrow) {
             // Replace arrows with shulker bullets
-            var bullet = EntityType.SHULKER_BULLET.create(world);
+            var bullet = EntityType.SHULKER_BULLET.create(world, SpawnReason.TRIGGERED);
             if (bullet != null) {
                 bullet.setVelocity(arrow.getVelocity());
                 bullet.refreshPositionAndAngles(arrow.getBlockPos(), arrow.getYaw(), arrow.getPitch());

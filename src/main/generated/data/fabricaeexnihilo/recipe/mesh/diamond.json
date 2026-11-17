@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "item": "minecraft:diamond"
-    },
-    "O": {
-      "item": "fabricaeexnihilo:iron_mesh"
-    }
+    "#": "minecraft:diamond",
+    "O": "fabricaeexnihilo:iron_mesh"
   },
   "pattern": [
     "# #",

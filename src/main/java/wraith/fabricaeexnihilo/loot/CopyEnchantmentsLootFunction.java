@@ -28,7 +28,7 @@ public class CopyEnchantmentsLootFunction extends ConditionalLootFunction {
     @Override
     protected ItemStack process(ItemStack stack, LootContext context) {
         if (context.get(LootContextParameters.BLOCK_ENTITY) instanceof EnchantableBlockEntity enchantable && !enchantable.getEnchantmentContainer().getEnchantments().isEmpty()) {
-            EnchantmentContainer.addEnchantments(stack, enchantable.getEnchantmentContainer());
+            EnchantmentContainer.addEnchantments(stack, enchantable.getEnchantmentContainer(), context.getWorld().getRegistryManager());
         }
         return stack;
     }

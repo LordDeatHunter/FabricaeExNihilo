@@ -16,6 +16,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import wraith.fabricaeexnihilo.recipe.util.Loot;
+import wraith.fabricaeexnihilo.recipe.RecipeHelper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +39,7 @@ public class SieveRecipe extends BaseRecipe<SieveRecipe.Context> {
         if (world == null) {
             return List.of();
         }
-        return world.getRecipeManager().getAllMatches(ModRecipes.SIEVE, new Context(item, waterlogged), world)
+        return RecipeHelper.getAllMatches(ModRecipes.SIEVE, new Context(item, waterlogged), world)
                 .stream()
                 .map(RecipeEntry::value)
                 .map(recipe -> new Loot(recipe.result, recipe.rolls.get(mesh)))
@@ -52,12 +53,12 @@ public class SieveRecipe extends BaseRecipe<SieveRecipe.Context> {
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<SieveRecipe> getSerializer() {
         return ModRecipes.SIEVE_SERIALIZER;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<SieveRecipe> getType() {
         return ModRecipes.SIEVE;
     }
 
@@ -89,7 +90,7 @@ public class SieveRecipe extends BaseRecipe<SieveRecipe.Context> {
         public static final MapCodec<SieveRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
                         ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
-                        Ingredient.ALLOW_EMPTY_CODEC.fieldOf("input").forGetter(recipe -> recipe.input),
+                        Ingredient.CODEC.fieldOf("input").forGetter(recipe -> recipe.input),
                         Codec.BOOL.fieldOf("waterlogged").orElse(false).forGetter(recipe -> recipe.waterlogged),
                         Codec.unboundedMap(Identifier.CODEC, Codec.DOUBLE.listOf()).fieldOf("rolls").forGetter(recipe -> recipe.rolls)
                 ).apply(instance, SieveRecipe::new)
@@ -98,7 +99,7 @@ public class SieveRecipe extends BaseRecipe<SieveRecipe.Context> {
         public static final PacketCodec<RegistryByteBuf, SieveRecipe> PACKET_CODEC = PacketCodec.tuple(
                 ItemStack.PACKET_CODEC, recipe -> recipe.result,
                 Ingredient.PACKET_CODEC, recipe -> recipe.input,
-                PacketCodecs.BOOL, recipe -> recipe.waterlogged,
+                PacketCodecs.BOOLEAN.cast(), recipe -> recipe.waterlogged,
                 PacketCodecs.map(HashMap::new, Identifier.PACKET_CODEC, PacketCodecs.DOUBLE.collect(PacketCodecs.toList())), recipe -> recipe.rolls,
                 SieveRecipe::new
         );

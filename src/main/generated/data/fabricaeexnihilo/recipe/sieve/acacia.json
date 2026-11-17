@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "fabricaeexnihilo:sieve",
   "key": {
-    "#": {
-      "item": "minecraft:acacia_planks"
-    },
-    "I": {
-      "item": "minecraft:stick"
-    },
-    "S": {
-      "item": "minecraft:acacia_slab"
-    }
+    "#": "minecraft:acacia_planks",
+    "I": "minecraft:stick",
+    "S": "minecraft:acacia_slab"
   },
   "pattern": [
     "# #",

@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "fabricaeexnihilo:barrel",
   "key": {
-    "#": {
-      "item": "minecraft:stone"
-    },
-    "S": {
-      "item": "minecraft:stone_slab"
-    }
+    "#": "minecraft:stone",
+    "S": "minecraft:stone_slab"
   },
   "pattern": [
     "# #",

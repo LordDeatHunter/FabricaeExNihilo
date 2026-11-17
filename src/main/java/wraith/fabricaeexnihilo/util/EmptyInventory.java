@@ -8,7 +8,7 @@ import net.minecraft.recipe.input.RecipeInput;
  */
 public interface EmptyInventory extends RecipeInput {
     @Override
-    default int getSize() {
+    default int size() {
         return 0;
     }
 

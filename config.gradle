@@ -2,7 +2,10 @@ import java.nio.file.Files
 
 var path = project.file("dev_settings.properties").toPath()
 var properties = new Properties()
-properties.putAll(wthit: "false", modmenu: "true", rei: "true", emi: "false", tech_reborn: "false", industrial_revolution: "false", modern_industrialization: "false", jade: "false")
+// Defaults for a fresh checkout. REI and EMI are off by default because their
+// integrations do not compile against 1.21.11 yet; enabling them has to be a
+// deliberate choice, not something that happens because the file is missing.
+properties.putAll(wthit: "true", modmenu: "true", rei: "false", emi: "false", tech_reborn: "false", industrial_revolution: "false", modern_industrialization: "false", jade: "true", megane: "true")
 
 if (Files.exists(path)) {
     properties.load(Files.newBufferedReader(path))
